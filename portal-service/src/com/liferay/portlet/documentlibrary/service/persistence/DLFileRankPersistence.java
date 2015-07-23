@@ -46,13 +46,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @return the matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByUserId(long userId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByUserId(
+		long userId);
 
 	/**
 	* Returns a range of all the document library file ranks where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -60,14 +61,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param end the upper bound of the range of document library file ranks (not inclusive)
 	* @return the range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByUserId(long userId, int start,
-		int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByUserId(
+		long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file ranks where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -76,9 +77,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByUserId(long userId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where userId = &#63;.
@@ -86,10 +87,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -99,8 +101,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where userId = &#63;.
@@ -108,10 +111,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -121,8 +125,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where userId = &#63;.
@@ -131,10 +136,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file rank
-	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
-	public DLFileRank[] findByUserId_PrevAndNext(long fileRankId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByUserId_PrevAndNext(
+		long fileRankId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -158,13 +164,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileEntryId the file entry ID
 	* @return the matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByFileEntryId(long fileEntryId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByFileEntryId(
+		long fileEntryId);
 
 	/**
 	* Returns a range of all the document library file ranks where fileEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
@@ -172,14 +179,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param end the upper bound of the range of document library file ranks (not inclusive)
 	* @return the range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByFileEntryId(long fileEntryId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByFileEntryId(
+		long fileEntryId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file ranks where fileEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
@@ -188,9 +195,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByFileEntryId(long fileEntryId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByFileEntryId(
+		long fileEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where fileEntryId = &#63;.
@@ -198,10 +205,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByFileEntryId_First(long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByFileEntryId_First(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -211,8 +219,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByFileEntryId_First(long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByFileEntryId_First(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where fileEntryId = &#63;.
@@ -220,10 +229,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByFileEntryId_Last(long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByFileEntryId_Last(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -233,8 +243,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByFileEntryId_Last(long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByFileEntryId_Last(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where fileEntryId = &#63;.
@@ -243,11 +254,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file rank
-	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
-	public DLFileRank[] findByFileEntryId_PrevAndNext(long fileRankId,
-		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByFileEntryId_PrevAndNext(
+		long fileRankId, long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -272,13 +283,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @return the matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByG_U(long groupId, long userId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U(
+		long groupId, long userId);
 
 	/**
 	* Returns a range of all the document library file ranks where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -287,14 +299,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param end the upper bound of the range of document library file ranks (not inclusive)
 	* @return the range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByG_U(long groupId, long userId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U(
+		long groupId, long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file ranks where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -304,9 +316,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByG_U(long groupId, long userId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
@@ -315,10 +327,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByG_U_First(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -329,8 +342,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByG_U_First(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
@@ -339,10 +353,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByG_U_Last(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -353,8 +368,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByG_U_Last(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
@@ -364,11 +380,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file rank
-	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
-	public DLFileRank[] findByG_U_PrevAndNext(long fileRankId, long groupId,
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByG_U_PrevAndNext(
+		long fileRankId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -396,14 +412,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param active the active
 	* @return the matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByG_U_A(long groupId, long userId,
-		boolean active);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U_A(
+		long groupId, long userId, boolean active);
 
 	/**
 	* Returns a range of all the document library file ranks where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -413,14 +429,14 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param end the upper bound of the range of document library file ranks (not inclusive)
 	* @return the range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByG_U_A(long groupId, long userId,
-		boolean active, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U_A(
+		long groupId, long userId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file ranks where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -431,9 +447,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file ranks
 	*/
-	public java.util.List<DLFileRank> findByG_U_A(long groupId, long userId,
-		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U_A(
+		long groupId, long userId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -443,11 +459,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByG_U_A_First(long groupId, long userId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_A_First(
+		long groupId, long userId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -459,9 +475,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByG_U_A_First(long groupId, long userId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_A_First(
+		long groupId, long userId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -471,11 +487,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByG_U_A_Last(long groupId, long userId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_A_Last(
+		long groupId, long userId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -487,9 +503,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByG_U_A_Last(long groupId, long userId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_A_Last(
+		long groupId, long userId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -500,11 +516,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file rank
-	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
-	public DLFileRank[] findByG_U_A_PrevAndNext(long fileRankId, long groupId,
-		long userId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByG_U_A_PrevAndNext(
+		long fileRankId, long groupId, long userId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -527,15 +543,16 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	public int countByG_U_A(long groupId, long userId, boolean active);
 
 	/**
-	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a {@link NoSuchFileRankException} if it could not be found.
+	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileRankException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param userId the user ID
 	* @param fileEntryId the file entry ID
 	* @return the matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
 	*/
-	public DLFileRank findByC_U_F(long companyId, long userId, long fileEntryId)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByC_U_F(
+		long companyId, long userId, long fileEntryId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -546,7 +563,8 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileEntryId the file entry ID
 	* @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByC_U_F(long companyId, long userId, long fileEntryId);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByC_U_F(
+		long companyId, long userId, long fileEntryId);
 
 	/**
 	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -557,8 +575,8 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	*/
-	public DLFileRank fetchByC_U_F(long companyId, long userId,
-		long fileEntryId, boolean retrieveFromCache);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByC_U_F(
+		long companyId, long userId, long fileEntryId, boolean retrieveFromCache);
 
 	/**
 	* Removes the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; from the database.
@@ -568,8 +586,8 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileEntryId the file entry ID
 	* @return the document library file rank that was removed
 	*/
-	public DLFileRank removeByC_U_F(long companyId, long userId,
-		long fileEntryId)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank removeByC_U_F(
+		long companyId, long userId, long fileEntryId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -587,14 +605,16 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*
 	* @param dlFileRank the document library file rank
 	*/
-	public void cacheResult(DLFileRank dlFileRank);
+	public void cacheResult(
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
 
 	/**
 	* Caches the document library file ranks in the entity cache if it is enabled.
 	*
 	* @param dlFileRanks the document library file ranks
 	*/
-	public void cacheResult(java.util.List<DLFileRank> dlFileRanks);
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> dlFileRanks);
 
 	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
@@ -602,28 +622,32 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileRankId the primary key for the new document library file rank
 	* @return the new document library file rank
 	*/
-	public DLFileRank create(long fileRankId);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank create(
+		long fileRankId);
 
 	/**
 	* Removes the document library file rank with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileRankId the primary key of the document library file rank
 	* @return the document library file rank that was removed
-	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
-	public DLFileRank remove(long fileRankId)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank remove(
+		long fileRankId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
-	public DLFileRank updateImpl(DLFileRank dlFileRank);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank updateImpl(
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
 
 	/**
-	* Returns the document library file rank with the primary key or throws a {@link NoSuchFileRankException} if it could not be found.
+	* Returns the document library file rank with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileRankException} if it could not be found.
 	*
 	* @param fileRankId the primary key of the document library file rank
 	* @return the document library file rank
-	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
-	public DLFileRank findByPrimaryKey(long fileRankId)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank findByPrimaryKey(
+		long fileRankId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -632,10 +656,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param fileRankId the primary key of the document library file rank
 	* @return the document library file rank, or <code>null</code> if a document library file rank with the primary key could not be found
 	*/
-	public DLFileRank fetchByPrimaryKey(long fileRankId);
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByPrimaryKey(
+		long fileRankId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, DLFileRank> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFileRank> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -643,26 +668,27 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*
 	* @return the document library file ranks
 	*/
-	public java.util.List<DLFileRank> findAll();
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findAll();
 
 	/**
 	* Returns a range of all the document library file ranks.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file ranks
 	* @param end the upper bound of the range of document library file ranks (not inclusive)
 	* @return the range of document library file ranks
 	*/
-	public java.util.List<DLFileRank> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file ranks.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file ranks
@@ -670,8 +696,9 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of document library file ranks
 	*/
-	public java.util.List<DLFileRank> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileRank> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Removes all the document library file ranks from the database.

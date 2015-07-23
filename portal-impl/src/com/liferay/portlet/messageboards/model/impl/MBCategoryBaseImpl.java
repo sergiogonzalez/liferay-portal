@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBCategoryImpl
- * @see MBCategory
+ * @see com.liferay.portlet.messageboards.model.MBCategory
  * @generated
  */
 @ProviderType

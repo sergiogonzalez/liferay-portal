@@ -195,7 +195,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	* @return the create date of this workflow instance link
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _workflowInstanceLink.getCreateDate();
 	}
 
@@ -220,7 +220,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	* @return the modified date of this workflow instance link
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _workflowInstanceLink.getModifiedDate();
 	}
 
@@ -370,7 +370,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	* @param createDate the create date of this workflow instance link
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_workflowInstanceLink.setCreateDate(createDate);
 	}
 
@@ -407,7 +407,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	* @param modifiedDate the modified date of this workflow instance link
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_workflowInstanceLink.setModifiedDate(modifiedDate);
 	}
 

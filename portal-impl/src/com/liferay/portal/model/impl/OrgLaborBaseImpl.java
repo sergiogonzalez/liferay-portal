@@ -28,7 +28,7 @@ import com.liferay.portal.service.OrgLaborLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see OrgLaborImpl
- * @see OrgLabor
+ * @see com.liferay.portal.model.OrgLabor
  * @generated
  */
 @ProviderType

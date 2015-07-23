@@ -303,7 +303,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 *
 	 * @return the portal preferences local service
 	 */
-	public PortalPreferencesLocalService getPortalPreferencesLocalService() {
+	public com.liferay.portal.service.PortalPreferencesLocalService getPortalPreferencesLocalService() {
 		return portalPreferencesLocalService;
 	}
 
@@ -313,7 +313,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @param portalPreferencesLocalService the portal preferences local service
 	 */
 	public void setPortalPreferencesLocalService(
-		PortalPreferencesLocalService portalPreferencesLocalService) {
+		com.liferay.portal.service.PortalPreferencesLocalService portalPreferencesLocalService) {
 		this.portalPreferencesLocalService = portalPreferencesLocalService;
 	}
 
@@ -417,8 +417,8 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = PortalPreferencesLocalService.class)
-	protected PortalPreferencesLocalService portalPreferencesLocalService;
+	@BeanReference(type = com.liferay.portal.service.PortalPreferencesLocalService.class)
+	protected com.liferay.portal.service.PortalPreferencesLocalService portalPreferencesLocalService;
 	@BeanReference(type = PortalPreferencesPersistence.class)
 	protected PortalPreferencesPersistence portalPreferencesPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

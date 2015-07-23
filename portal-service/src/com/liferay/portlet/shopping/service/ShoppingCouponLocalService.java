@@ -57,7 +57,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 		java.lang.String limitSkus, double minOrder, double discount,
 		java.lang.String discountType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the shopping coupon to the database. Also notifies the appropriate model listeners.
@@ -81,7 +81,8 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	public void deleteCoupon(
 		com.liferay.portlet.shopping.model.ShoppingCoupon coupon);
 
-	public void deleteCoupon(long couponId) throws PortalException;
+	public void deleteCoupon(long couponId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteCoupons(long groupId);
 
@@ -91,7 +92,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
@@ -102,7 +103,8 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.shopping.model.ShoppingCoupon deleteShoppingCoupon(
-		long couponId) throws PortalException;
+		long couponId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
@@ -195,16 +197,19 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
-		java.lang.String code) throws PortalException;
+		java.lang.String code)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
-		long couponId) throws PortalException;
+		long couponId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the shopping coupon with the primary key.
@@ -215,7 +220,8 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCoupon getShoppingCoupon(
-		long couponId) throws PortalException;
+		long couponId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the shopping coupons.
@@ -265,7 +271,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 		java.lang.String limitCategories, java.lang.String limitSkus,
 		double minOrder, double discount, java.lang.String discountType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the shopping coupon in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

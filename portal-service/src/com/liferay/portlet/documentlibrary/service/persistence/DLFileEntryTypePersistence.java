@@ -46,13 +46,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param uuid the uuid
 	* @return the matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the document library file entry types where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -60,14 +61,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -76,9 +77,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the first document library file entry type in the ordered set where uuid = &#63;.
@@ -86,10 +87,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -99,8 +101,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the last document library file entry type in the ordered set where uuid = &#63;.
@@ -108,10 +111,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -121,8 +125,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set where uuid = &#63;.
@@ -131,11 +136,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file entry type
-	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
-	public DLFileEntryType[] findByUuid_PrevAndNext(long fileEntryTypeId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] findByUuid_PrevAndNext(
+		long fileEntryTypeId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -154,14 +159,15 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the document library file entry type where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFileEntryTypeException} if it could not be found.
+	* Returns the document library file entry type where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -171,7 +177,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUUID_G(java.lang.String uuid, long groupId);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUUID_G(
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the document library file entry type where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -181,8 +188,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the document library file entry type where uuid = &#63; and groupId = &#63; from the database.
@@ -191,7 +198,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @return the document library file entry type that was removed
 	*/
-	public DLFileEntryType removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -210,14 +218,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param companyId the company ID
 	* @return the matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid_C(
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the document library file entry types where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,14 +234,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -243,9 +251,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the first document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -254,11 +262,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -269,9 +277,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the last document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -280,11 +288,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -295,9 +303,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -307,11 +315,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file entry type
-	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
-	public DLFileEntryType[] findByUuid_C_PrevAndNext(long fileEntryTypeId,
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] findByUuid_C_PrevAndNext(
+		long fileEntryTypeId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -337,13 +345,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @return the matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByGroupId(long groupId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the document library file entry types where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -351,14 +360,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByGroupId(long groupId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -367,9 +376,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByGroupId(long groupId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the first document library file entry type in the ordered set where groupId = &#63;.
@@ -377,10 +386,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -390,8 +400,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the last document library file entry type in the ordered set where groupId = &#63;.
@@ -399,10 +410,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -412,8 +424,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set where groupId = &#63;.
@@ -422,11 +435,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file entry type
-	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
-	public DLFileEntryType[] findByGroupId_PrevAndNext(long fileEntryTypeId,
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] findByGroupId_PrevAndNext(
+		long fileEntryTypeId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -435,13 +448,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @return the matching document library file entry types that the user has permission to view
 	*/
-	public java.util.List<DLFileEntryType> filterFindByGroupId(long groupId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the document library file entry types that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -449,14 +463,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types that the user has permission to view
 	*/
-	public java.util.List<DLFileEntryType> filterFindByGroupId(long groupId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -465,9 +479,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types that the user has permission to view
 	*/
-	public java.util.List<DLFileEntryType> filterFindByGroupId(long groupId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set of document library file entry types that the user has permission to view where groupId = &#63;.
@@ -476,11 +490,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file entry type
-	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
-	public DLFileEntryType[] filterFindByGroupId_PrevAndNext(
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] filterFindByGroupId_PrevAndNext(
 		long fileEntryTypeId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -489,13 +503,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param groupIds the group IDs
 	* @return the matching document library file entry types that the user has permission to view
 	*/
-	public java.util.List<DLFileEntryType> filterFindByGroupId(long[] groupIds);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
+		long[] groupIds);
 
 	/**
 	* Returns a range of all the document library file entry types that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -503,14 +518,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types that the user has permission to view
 	*/
-	public java.util.List<DLFileEntryType> filterFindByGroupId(
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
 		long[] groupIds, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -519,27 +534,28 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types that the user has permission to view
 	*/
-	public java.util.List<DLFileEntryType> filterFindByGroupId(
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns all the document library file entry types where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
 	* @return the matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByGroupId(long[] groupIds);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
+		long[] groupIds);
 
 	/**
 	* Returns a range of all the document library file entry types where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -547,14 +563,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByGroupId(long[] groupIds,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
+		long[] groupIds, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -563,9 +579,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findByGroupId(long[] groupIds,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Removes all the document library file entry types where groupId = &#63; from the database.
@@ -607,15 +623,15 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	public int filterCountByGroupId(long[] groupIds);
 
 	/**
-	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or throws a {@link NoSuchFileEntryTypeException} if it could not be found.
+	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param fileEntryTypeKey the file entry type key
 	* @return the matching document library file entry type
-	* @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType findByG_F(long groupId,
-		java.lang.String fileEntryTypeKey)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByG_F(
+		long groupId, java.lang.String fileEntryTypeKey)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -625,8 +641,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param fileEntryTypeKey the file entry type key
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByG_F(long groupId,
-		java.lang.String fileEntryTypeKey);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_F(
+		long groupId, java.lang.String fileEntryTypeKey);
 
 	/**
 	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -636,8 +652,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
-	public DLFileEntryType fetchByG_F(long groupId,
-		java.lang.String fileEntryTypeKey, boolean retrieveFromCache);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_F(
+		long groupId, java.lang.String fileEntryTypeKey,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; from the database.
@@ -646,8 +663,8 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param fileEntryTypeKey the file entry type key
 	* @return the document library file entry type that was removed
 	*/
-	public DLFileEntryType removeByG_F(long groupId,
-		java.lang.String fileEntryTypeKey)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType removeByG_F(
+		long groupId, java.lang.String fileEntryTypeKey)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -664,14 +681,16 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*
 	* @param dlFileEntryType the document library file entry type
 	*/
-	public void cacheResult(DLFileEntryType dlFileEntryType);
+	public void cacheResult(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
 	/**
 	* Caches the document library file entry types in the entity cache if it is enabled.
 	*
 	* @param dlFileEntryTypes the document library file entry types
 	*/
-	public void cacheResult(java.util.List<DLFileEntryType> dlFileEntryTypes);
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes);
 
 	/**
 	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
@@ -679,28 +698,32 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param fileEntryTypeId the primary key for the new document library file entry type
 	* @return the new document library file entry type
 	*/
-	public DLFileEntryType create(long fileEntryTypeId);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType create(
+		long fileEntryTypeId);
 
 	/**
 	* Removes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileEntryTypeId the primary key of the document library file entry type
 	* @return the document library file entry type that was removed
-	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
-	public DLFileEntryType remove(long fileEntryTypeId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType remove(
+		long fileEntryTypeId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
-	public DLFileEntryType updateImpl(DLFileEntryType dlFileEntryType);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType updateImpl(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
 	/**
-	* Returns the document library file entry type with the primary key or throws a {@link NoSuchFileEntryTypeException} if it could not be found.
+	* Returns the document library file entry type with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
 	*
 	* @param fileEntryTypeId the primary key of the document library file entry type
 	* @return the document library file entry type
-	* @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	*/
-	public DLFileEntryType findByPrimaryKey(long fileEntryTypeId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByPrimaryKey(
+		long fileEntryTypeId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -709,10 +732,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param fileEntryTypeId the primary key of the document library file entry type
 	* @return the document library file entry type, or <code>null</code> if a document library file entry type with the primary key could not be found
 	*/
-	public DLFileEntryType fetchByPrimaryKey(long fileEntryTypeId);
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByPrimaryKey(
+		long fileEntryTypeId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, DLFileEntryType> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFileEntryType> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -720,26 +744,27 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*
 	* @return the document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findAll();
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findAll();
 
 	/**
 	* Returns a range of all the document library file entry types.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file entry types
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file entry types.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file entry types
@@ -747,8 +772,9 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of document library file entry types
 	*/
-	public java.util.List<DLFileEntryType> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Removes all the document library file entry types from the database.
@@ -783,7 +809,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* Returns a range of all the document library folders associated with the document library file entry type.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the document library file entry type
@@ -798,7 +824,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	* Returns an ordered range of all the document library folders associated with the document library file entry type.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the document library file entry type

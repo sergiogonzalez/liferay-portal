@@ -68,7 +68,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean allowAnonymous, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
@@ -80,7 +80,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 		long mailingListId);
 
 	public void deleteCategoryMailingList(long groupId, long categoryId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
@@ -91,7 +91,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.messageboards.model.MBMailingList deleteMBMailingList(
-		long mailingListId) throws PortalException;
+		long mailingListId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
@@ -105,9 +106,10 @@ public interface MBMailingListLocalService extends BaseLocalService,
 
 	public void deleteMailingList(
 		com.liferay.portlet.messageboards.model.MBMailingList mailingList)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteMailingList(long mailingListId) throws PortalException;
+	public void deleteMailingList(long mailingListId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -115,7 +117,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -213,7 +215,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMailingList getCategoryMailingList(
-		long groupId, long categoryId) throws PortalException;
+		long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -228,7 +231,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMailingList getMBMailingList(
-		long mailingListId) throws PortalException;
+		long mailingListId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the message boards mailing list matching the UUID and group.
@@ -240,7 +244,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMailingList getMBMailingListByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the message boards mailing lists.
@@ -294,7 +299,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -323,5 +329,5 @@ public interface MBMailingListLocalService extends BaseLocalService,
 		java.lang.String outUserName, java.lang.String outPassword,
 		boolean allowAnonymous, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

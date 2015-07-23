@@ -605,7 +605,7 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the document library folder local service
 	 */
-	public DLFolderLocalService getDLFolderLocalService() {
+	public com.liferay.portlet.documentlibrary.service.DLFolderLocalService getDLFolderLocalService() {
 		return dlFolderLocalService;
 	}
 
@@ -615,7 +615,7 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dlFolderLocalService the document library folder local service
 	 */
 	public void setDLFolderLocalService(
-		DLFolderLocalService dlFolderLocalService) {
+		com.liferay.portlet.documentlibrary.service.DLFolderLocalService dlFolderLocalService) {
 		this.dlFolderLocalService = dlFolderLocalService;
 	}
 
@@ -1547,8 +1547,8 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = DLFolderLocalService.class)
-	protected DLFolderLocalService dlFolderLocalService;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFolderLocalService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLFolderLocalService dlFolderLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFolderService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFolderService dlFolderService;
 	@BeanReference(type = DLFolderPersistence.class)

@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBMailingListImpl
- * @see MBMailingList
+ * @see com.liferay.portlet.messageboards.model.MBMailingList
  * @generated
  */
 @ProviderType

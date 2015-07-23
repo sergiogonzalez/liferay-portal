@@ -301,7 +301,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the create date of this message boards mailing list
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _mbMailingList.getCreateDate();
 	}
 
@@ -416,7 +416,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @return the modified date of this message boards mailing list
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _mbMailingList.getModifiedDate();
 	}
 
@@ -671,7 +671,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param createDate the create date of this message boards mailing list
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_mbMailingList.setCreateDate(createDate);
 	}
 
@@ -799,7 +799,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	* @param modifiedDate the modified date of this message boards mailing list
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_mbMailingList.setModifiedDate(modifiedDate);
 	}
 

@@ -46,13 +46,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param uuid the uuid
 	* @return the matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the polls choices where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -60,14 +61,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param end the upper bound of the range of polls choices (not inclusive)
 	* @return the range of matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls choices where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -76,9 +77,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the first polls choice in the ordered set where uuid = &#63;.
@@ -88,8 +89,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the first matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -99,8 +101,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public com.liferay.polls.model.PollsChoice fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the last polls choice in the ordered set where uuid = &#63;.
@@ -110,8 +113,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the last matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -121,8 +125,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public com.liferay.polls.model.PollsChoice fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the polls choices before and after the current polls choice in the ordered set where uuid = &#63;.
@@ -133,9 +138,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the previous, current, and next polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
-	public PollsChoice[] findByUuid_PrevAndNext(long choiceId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice[] findByUuid_PrevAndNext(
+		long choiceId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -161,7 +166,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.polls.model.PollsChoice findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -171,7 +177,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param groupId the group ID
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByUUID_G(java.lang.String uuid, long groupId);
+	public com.liferay.polls.model.PollsChoice fetchByUUID_G(
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the polls choice where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -181,8 +188,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public com.liferay.polls.model.PollsChoice fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the polls choice where uuid = &#63; and groupId = &#63; from the database.
@@ -191,7 +198,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param groupId the group ID
 	* @return the polls choice that was removed
 	*/
-	public PollsChoice removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.polls.model.PollsChoice removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -210,14 +218,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param companyId the company ID
 	* @return the matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByUuid_C(
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the polls choices where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,14 +234,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param end the upper bound of the range of polls choices (not inclusive)
 	* @return the range of matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls choices where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -243,9 +251,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the first polls choice in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -256,9 +264,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the first matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -269,9 +277,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public com.liferay.polls.model.PollsChoice fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the last polls choice in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -282,8 +290,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the last matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByUuid_C_Last(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -294,9 +303,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public com.liferay.polls.model.PollsChoice fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the polls choices before and after the current polls choice in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -308,9 +317,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the previous, current, and next polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
-	public PollsChoice[] findByUuid_C_PrevAndNext(long choiceId,
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice[] findByUuid_C_PrevAndNext(
+		long choiceId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -336,13 +345,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param questionId the question ID
 	* @return the matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByQuestionId(long questionId);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByQuestionId(
+		long questionId);
 
 	/**
 	* Returns a range of all the polls choices where questionId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param questionId the question ID
@@ -350,14 +360,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param end the upper bound of the range of polls choices (not inclusive)
 	* @return the range of matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByQuestionId(long questionId,
-		int start, int end);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByQuestionId(
+		long questionId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls choices where questionId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param questionId the question ID
@@ -366,9 +376,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls choices
 	*/
-	public java.util.List<PollsChoice> findByQuestionId(long questionId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findByQuestionId(
+		long questionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the first polls choice in the ordered set where questionId = &#63;.
@@ -378,8 +388,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the first matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByQuestionId_First(long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice findByQuestionId_First(
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -389,8 +400,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByQuestionId_First(long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public com.liferay.polls.model.PollsChoice fetchByQuestionId_First(
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the last polls choice in the ordered set where questionId = &#63;.
@@ -400,8 +412,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the last matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByQuestionId_Last(long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice findByQuestionId_Last(
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -411,8 +424,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByQuestionId_Last(long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public com.liferay.polls.model.PollsChoice fetchByQuestionId_Last(
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Returns the polls choices before and after the current polls choice in the ordered set where questionId = &#63;.
@@ -423,9 +437,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the previous, current, and next polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
-	public PollsChoice[] findByQuestionId_PrevAndNext(long choiceId,
-		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator)
+	public com.liferay.polls.model.PollsChoice[] findByQuestionId_PrevAndNext(
+		long choiceId, long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -451,7 +465,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public PollsChoice findByQ_N(long questionId, java.lang.String name)
+	public com.liferay.polls.model.PollsChoice findByQ_N(long questionId,
+		java.lang.String name)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -461,7 +476,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param name the name
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByQ_N(long questionId, java.lang.String name);
+	public com.liferay.polls.model.PollsChoice fetchByQ_N(long questionId,
+		java.lang.String name);
 
 	/**
 	* Returns the polls choice where questionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -471,8 +487,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public PollsChoice fetchByQ_N(long questionId, java.lang.String name,
-		boolean retrieveFromCache);
+	public com.liferay.polls.model.PollsChoice fetchByQ_N(long questionId,
+		java.lang.String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the polls choice where questionId = &#63; and name = &#63; from the database.
@@ -481,7 +497,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param name the name
 	* @return the polls choice that was removed
 	*/
-	public PollsChoice removeByQ_N(long questionId, java.lang.String name)
+	public com.liferay.polls.model.PollsChoice removeByQ_N(long questionId,
+		java.lang.String name)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -498,14 +515,15 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	*
 	* @param pollsChoice the polls choice
 	*/
-	public void cacheResult(PollsChoice pollsChoice);
+	public void cacheResult(com.liferay.polls.model.PollsChoice pollsChoice);
 
 	/**
 	* Caches the polls choices in the entity cache if it is enabled.
 	*
 	* @param pollsChoices the polls choices
 	*/
-	public void cacheResult(java.util.List<PollsChoice> pollsChoices);
+	public void cacheResult(
+		java.util.List<com.liferay.polls.model.PollsChoice> pollsChoices);
 
 	/**
 	* Creates a new polls choice with the primary key. Does not add the polls choice to the database.
@@ -513,7 +531,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
-	public PollsChoice create(long choiceId);
+	public com.liferay.polls.model.PollsChoice create(long choiceId);
 
 	/**
 	* Removes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.
@@ -522,10 +540,11 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the polls choice that was removed
 	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
-	public PollsChoice remove(long choiceId)
+	public com.liferay.polls.model.PollsChoice remove(long choiceId)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
-	public PollsChoice updateImpl(PollsChoice pollsChoice);
+	public com.liferay.polls.model.PollsChoice updateImpl(
+		com.liferay.polls.model.PollsChoice pollsChoice);
 
 	/**
 	* Returns the polls choice with the primary key or throws a {@link com.liferay.polls.NoSuchChoiceException} if it could not be found.
@@ -534,7 +553,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
-	public PollsChoice findByPrimaryKey(long choiceId)
+	public com.liferay.polls.model.PollsChoice findByPrimaryKey(long choiceId)
 		throws com.liferay.polls.exception.NoSuchChoiceException;
 
 	/**
@@ -543,10 +562,10 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param choiceId the primary key of the polls choice
 	* @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
 	*/
-	public PollsChoice fetchByPrimaryKey(long choiceId);
+	public com.liferay.polls.model.PollsChoice fetchByPrimaryKey(long choiceId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, PollsChoice> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.polls.model.PollsChoice> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -554,26 +573,27 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	*
 	* @return the polls choices
 	*/
-	public java.util.List<PollsChoice> findAll();
+	public java.util.List<com.liferay.polls.model.PollsChoice> findAll();
 
 	/**
 	* Returns a range of all the polls choices.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of polls choices
 	* @param end the upper bound of the range of polls choices (not inclusive)
 	* @return the range of polls choices
 	*/
-	public java.util.List<PollsChoice> findAll(int start, int end);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls choices.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.polls.model.impl.PollsChoiceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of polls choices
@@ -581,8 +601,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of polls choices
 	*/
-	public java.util.List<PollsChoice> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice> orderByComparator);
+	public java.util.List<com.liferay.polls.model.PollsChoice> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsChoice> orderByComparator);
 
 	/**
 	* Removes all the polls choices from the database.

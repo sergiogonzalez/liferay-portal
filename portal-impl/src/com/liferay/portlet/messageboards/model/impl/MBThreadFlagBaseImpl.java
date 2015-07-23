@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagImpl
- * @see MBThreadFlag
+ * @see com.liferay.portlet.messageboards.model.MBThreadFlag
  * @generated
  */
 @ProviderType

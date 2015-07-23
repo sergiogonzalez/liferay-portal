@@ -51,7 +51,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addActivity(
 		com.liferay.portlet.social.model.SocialActivity activity,
 		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Records an activity in the database, using a time based on the current
@@ -69,7 +69,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraData, long receiverUserId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Records an activity with the given time in the database.
@@ -112,7 +112,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addActivity(long userId, long groupId,
 		java.util.Date createDate, java.lang.String className, long classPK,
 		int type, java.lang.String extraData, long receiverUserId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the social activity to the database. Also notifies the appropriate model listeners.
@@ -145,7 +145,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addUniqueActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraData, long receiverUserId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Records an activity in the database, but only if there isn't already an
@@ -169,7 +169,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addUniqueActivity(long userId, long groupId,
 		java.util.Date createDate, java.lang.String className, long classPK,
 		int type, java.lang.String extraData, long receiverUserId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new social activity with the primary key. Does not add the social activity to the database.
@@ -188,7 +188,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	public void deleteActivities(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes stored activities for the asset identified by the class name and
@@ -200,7 +200,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	deleted
 	*/
 	public void deleteActivities(java.lang.String className, long classPK)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteActivities(long groupId);
 
@@ -213,7 +213,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	public void deleteActivity(
 		com.liferay.portlet.social.model.SocialActivity activity)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes the stored activity from the database.
@@ -221,7 +221,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param activityId the primary key of the stored activity
 	* @throws PortalException if the activity could not be found
 	*/
-	public void deleteActivity(long activityId) throws PortalException;
+	public void deleteActivity(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -229,7 +230,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
@@ -240,7 +241,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
-		long activityId) throws PortalException;
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
@@ -264,7 +266,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @throws PortalException if the user's activity counters could not be
 	deleted
 	*/
-	public void deleteUserActivities(long userId) throws PortalException;
+	public void deleteUserActivities(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -351,8 +354,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -374,8 +376,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -398,8 +399,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -425,8 +425,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -498,7 +497,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getActivity(
-		long activityId) throws PortalException;
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivitySetActivities(
@@ -523,8 +523,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -563,8 +562,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -600,7 +598,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(
-		long mirrorActivityId) throws PortalException;
+		long mirrorActivityId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the activities done in the organization. This
@@ -611,8 +610,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -644,8 +642,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -671,7 +668,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the activities done by users in a relationship
@@ -682,9 +680,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <>0</code> refers
 	* to the first result in the set. Setting both <code>start</code> and
-	* <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
+	* <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result
+	* set.
 	* </p>
 	*
 	* @param userId the primary key of the user
@@ -706,8 +703,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -775,7 +771,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getSocialActivity(
-		long activityId) throws PortalException;
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the activities done by the user.
@@ -785,8 +782,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -817,8 +813,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -850,8 +845,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -883,8 +877,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*

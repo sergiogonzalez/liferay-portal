@@ -93,7 +93,7 @@ public abstract class RepositoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the repository remote service
 	 */
-	public RepositoryService getRepositoryService() {
+	public com.liferay.portal.service.RepositoryService getRepositoryService() {
 		return repositoryService;
 	}
 
@@ -102,7 +102,8 @@ public abstract class RepositoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param repositoryService the repository remote service
 	 */
-	public void setRepositoryService(RepositoryService repositoryService) {
+	public void setRepositoryService(
+		com.liferay.portal.service.RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
 	}
 
@@ -1050,8 +1051,8 @@ public abstract class RepositoryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.RepositoryLocalService.class)
 	protected com.liferay.portal.service.RepositoryLocalService repositoryLocalService;
-	@BeanReference(type = RepositoryService.class)
-	protected RepositoryService repositoryService;
+	@BeanReference(type = com.liferay.portal.service.RepositoryService.class)
+	protected com.liferay.portal.service.RepositoryService repositoryService;
 	@BeanReference(type = RepositoryPersistence.class)
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

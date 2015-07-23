@@ -167,7 +167,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @return the create date of this shopping category
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _shoppingCategory.getCreateDate();
 	}
 
@@ -202,7 +202,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @return the modified date of this shopping category
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _shoppingCategory.getModifiedDate();
 	}
 
@@ -332,7 +332,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @param createDate the create date of this shopping category
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_shoppingCategory.setCreateDate(createDate);
 	}
 
@@ -380,7 +380,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* @param modifiedDate the modified date of this shopping category
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_shoppingCategory.setModifiedDate(modifiedDate);
 	}
 

@@ -4,7 +4,7 @@
 		module="spring-core"
 		revision="3.2.10.RELEASE"
 		status="release"
-		publication="20140715202544"
+		publication="20140715172544"
 	>
 		<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="https://github.com/SpringSource/spring-framework">

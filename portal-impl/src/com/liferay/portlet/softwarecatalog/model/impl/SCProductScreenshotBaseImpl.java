@@ -28,7 +28,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServi
  *
  * @author Brian Wing Shun Chan
  * @see SCProductScreenshotImpl
- * @see SCProductScreenshot
+ * @see com.liferay.portlet.softwarecatalog.model.SCProductScreenshot
  * @generated
  */
 @ProviderType

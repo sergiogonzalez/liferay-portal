@@ -115,7 +115,8 @@ public class AssetLinkUtil {
 	* @param entryId1 the entry id1
 	* @return the matching asset links
 	*/
-	public static List<AssetLink> findByE1(long entryId1) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE1(
+		long entryId1) {
 		return getPersistence().findByE1(entryId1);
 	}
 
@@ -123,7 +124,7 @@ public class AssetLinkUtil {
 	* Returns a range of all the asset links where entryId1 = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId1 the entry id1
@@ -131,7 +132,8 @@ public class AssetLinkUtil {
 	* @param end the upper bound of the range of asset links (not inclusive)
 	* @return the range of matching asset links
 	*/
-	public static List<AssetLink> findByE1(long entryId1, int start, int end) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE1(
+		long entryId1, int start, int end) {
 		return getPersistence().findByE1(entryId1, start, end);
 	}
 
@@ -139,7 +141,7 @@ public class AssetLinkUtil {
 	* Returns an ordered range of all the asset links where entryId1 = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId1 the entry id1
@@ -148,8 +150,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset links
 	*/
-	public static List<AssetLink> findByE1(long entryId1, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE1(
+		long entryId1, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence().findByE1(entryId1, start, end, orderByComparator);
 	}
 
@@ -159,10 +162,11 @@ public class AssetLinkUtil {
 	* @param entryId1 the entry id1
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE1_First(long entryId1,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE1_First(
+		long entryId1,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().findByE1_First(entryId1, orderByComparator);
 	}
@@ -174,8 +178,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE1_First(long entryId1,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE1_First(
+		long entryId1,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence().fetchByE1_First(entryId1, orderByComparator);
 	}
 
@@ -185,10 +190,11 @@ public class AssetLinkUtil {
 	* @param entryId1 the entry id1
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE1_Last(long entryId1,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE1_Last(
+		long entryId1,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().findByE1_Last(entryId1, orderByComparator);
 	}
@@ -200,8 +206,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE1_Last(long entryId1,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE1_Last(
+		long entryId1,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence().fetchByE1_Last(entryId1, orderByComparator);
 	}
 
@@ -212,10 +219,11 @@ public class AssetLinkUtil {
 	* @param entryId1 the entry id1
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset link
-	* @throws NoSuchLinkException if a asset link with the primary key could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	*/
-	public static AssetLink[] findByE1_PrevAndNext(long linkId, long entryId1,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink[] findByE1_PrevAndNext(
+		long linkId, long entryId1,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE1_PrevAndNext(linkId, entryId1, orderByComparator);
@@ -246,7 +254,8 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @return the matching asset links
 	*/
-	public static List<AssetLink> findByE2(long entryId2) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE2(
+		long entryId2) {
 		return getPersistence().findByE2(entryId2);
 	}
 
@@ -254,7 +263,7 @@ public class AssetLinkUtil {
 	* Returns a range of all the asset links where entryId2 = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId2 the entry id2
@@ -262,7 +271,8 @@ public class AssetLinkUtil {
 	* @param end the upper bound of the range of asset links (not inclusive)
 	* @return the range of matching asset links
 	*/
-	public static List<AssetLink> findByE2(long entryId2, int start, int end) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE2(
+		long entryId2, int start, int end) {
 		return getPersistence().findByE2(entryId2, start, end);
 	}
 
@@ -270,7 +280,7 @@ public class AssetLinkUtil {
 	* Returns an ordered range of all the asset links where entryId2 = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId2 the entry id2
@@ -279,8 +289,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset links
 	*/
-	public static List<AssetLink> findByE2(long entryId2, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE2(
+		long entryId2, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence().findByE2(entryId2, start, end, orderByComparator);
 	}
 
@@ -290,10 +301,11 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE2_First(long entryId2,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE2_First(
+		long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().findByE2_First(entryId2, orderByComparator);
 	}
@@ -305,8 +317,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE2_First(long entryId2,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE2_First(
+		long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence().fetchByE2_First(entryId2, orderByComparator);
 	}
 
@@ -316,10 +329,11 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE2_Last(long entryId2,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE2_Last(
+		long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().findByE2_Last(entryId2, orderByComparator);
 	}
@@ -331,8 +345,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE2_Last(long entryId2,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE2_Last(
+		long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence().fetchByE2_Last(entryId2, orderByComparator);
 	}
 
@@ -343,10 +358,11 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset link
-	* @throws NoSuchLinkException if a asset link with the primary key could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	*/
-	public static AssetLink[] findByE2_PrevAndNext(long linkId, long entryId2,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink[] findByE2_PrevAndNext(
+		long linkId, long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE2_PrevAndNext(linkId, entryId2, orderByComparator);
@@ -378,7 +394,8 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @return the matching asset links
 	*/
-	public static List<AssetLink> findByE_E(long entryId1, long entryId2) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE_E(
+		long entryId1, long entryId2) {
 		return getPersistence().findByE_E(entryId1, entryId2);
 	}
 
@@ -386,7 +403,7 @@ public class AssetLinkUtil {
 	* Returns a range of all the asset links where entryId1 = &#63; and entryId2 = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId1 the entry id1
@@ -395,8 +412,8 @@ public class AssetLinkUtil {
 	* @param end the upper bound of the range of asset links (not inclusive)
 	* @return the range of matching asset links
 	*/
-	public static List<AssetLink> findByE_E(long entryId1, long entryId2,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE_E(
+		long entryId1, long entryId2, int start, int end) {
 		return getPersistence().findByE_E(entryId1, entryId2, start, end);
 	}
 
@@ -404,7 +421,7 @@ public class AssetLinkUtil {
 	* Returns an ordered range of all the asset links where entryId1 = &#63; and entryId2 = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId1 the entry id1
@@ -414,8 +431,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset links
 	*/
-	public static List<AssetLink> findByE_E(long entryId1, long entryId2,
-		int start, int end, OrderByComparator<AssetLink> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE_E(
+		long entryId1, long entryId2, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .findByE_E(entryId1, entryId2, start, end, orderByComparator);
 	}
@@ -427,10 +445,11 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE_E_First(long entryId1, long entryId2,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE_E_First(
+		long entryId1, long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE_E_First(entryId1, entryId2, orderByComparator);
@@ -444,8 +463,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE_E_First(long entryId1, long entryId2,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE_E_First(
+		long entryId1, long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByE_E_First(entryId1, entryId2, orderByComparator);
 	}
@@ -457,10 +477,11 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE_E_Last(long entryId1, long entryId2,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE_E_Last(
+		long entryId1, long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE_E_Last(entryId1, entryId2, orderByComparator);
@@ -474,8 +495,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE_E_Last(long entryId1, long entryId2,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE_E_Last(
+		long entryId1, long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByE_E_Last(entryId1, entryId2, orderByComparator);
 	}
@@ -488,10 +510,11 @@ public class AssetLinkUtil {
 	* @param entryId2 the entry id2
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset link
-	* @throws NoSuchLinkException if a asset link with the primary key could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	*/
-	public static AssetLink[] findByE_E_PrevAndNext(long linkId, long entryId1,
-		long entryId2, OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink[] findByE_E_PrevAndNext(
+		long linkId, long entryId1, long entryId2,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE_E_PrevAndNext(linkId, entryId1, entryId2,
@@ -526,7 +549,8 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @return the matching asset links
 	*/
-	public static List<AssetLink> findByE1_T(long entryId1, int type) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE1_T(
+		long entryId1, int type) {
 		return getPersistence().findByE1_T(entryId1, type);
 	}
 
@@ -534,7 +558,7 @@ public class AssetLinkUtil {
 	* Returns a range of all the asset links where entryId1 = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId1 the entry id1
@@ -543,8 +567,8 @@ public class AssetLinkUtil {
 	* @param end the upper bound of the range of asset links (not inclusive)
 	* @return the range of matching asset links
 	*/
-	public static List<AssetLink> findByE1_T(long entryId1, int type,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE1_T(
+		long entryId1, int type, int start, int end) {
 		return getPersistence().findByE1_T(entryId1, type, start, end);
 	}
 
@@ -552,7 +576,7 @@ public class AssetLinkUtil {
 	* Returns an ordered range of all the asset links where entryId1 = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId1 the entry id1
@@ -562,8 +586,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset links
 	*/
-	public static List<AssetLink> findByE1_T(long entryId1, int type,
-		int start, int end, OrderByComparator<AssetLink> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE1_T(
+		long entryId1, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .findByE1_T(entryId1, type, start, end, orderByComparator);
 	}
@@ -575,10 +600,11 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE1_T_First(long entryId1, int type,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE1_T_First(
+		long entryId1, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE1_T_First(entryId1, type, orderByComparator);
@@ -592,8 +618,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE1_T_First(long entryId1, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE1_T_First(
+		long entryId1, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByE1_T_First(entryId1, type, orderByComparator);
 	}
@@ -605,10 +632,11 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE1_T_Last(long entryId1, int type,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE1_T_Last(
+		long entryId1, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE1_T_Last(entryId1, type, orderByComparator);
@@ -622,8 +650,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE1_T_Last(long entryId1, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE1_T_Last(
+		long entryId1, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByE1_T_Last(entryId1, type, orderByComparator);
 	}
@@ -636,10 +665,11 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset link
-	* @throws NoSuchLinkException if a asset link with the primary key could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	*/
-	public static AssetLink[] findByE1_T_PrevAndNext(long linkId,
-		long entryId1, int type, OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink[] findByE1_T_PrevAndNext(
+		long linkId, long entryId1, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE1_T_PrevAndNext(linkId, entryId1, type,
@@ -674,7 +704,8 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @return the matching asset links
 	*/
-	public static List<AssetLink> findByE2_T(long entryId2, int type) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE2_T(
+		long entryId2, int type) {
 		return getPersistence().findByE2_T(entryId2, type);
 	}
 
@@ -682,7 +713,7 @@ public class AssetLinkUtil {
 	* Returns a range of all the asset links where entryId2 = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId2 the entry id2
@@ -691,8 +722,8 @@ public class AssetLinkUtil {
 	* @param end the upper bound of the range of asset links (not inclusive)
 	* @return the range of matching asset links
 	*/
-	public static List<AssetLink> findByE2_T(long entryId2, int type,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE2_T(
+		long entryId2, int type, int start, int end) {
 		return getPersistence().findByE2_T(entryId2, type, start, end);
 	}
 
@@ -700,7 +731,7 @@ public class AssetLinkUtil {
 	* Returns an ordered range of all the asset links where entryId2 = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId2 the entry id2
@@ -710,8 +741,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset links
 	*/
-	public static List<AssetLink> findByE2_T(long entryId2, int type,
-		int start, int end, OrderByComparator<AssetLink> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findByE2_T(
+		long entryId2, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .findByE2_T(entryId2, type, start, end, orderByComparator);
 	}
@@ -723,10 +755,11 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE2_T_First(long entryId2, int type,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE2_T_First(
+		long entryId2, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE2_T_First(entryId2, type, orderByComparator);
@@ -740,8 +773,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE2_T_First(long entryId2, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE2_T_First(
+		long entryId2, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByE2_T_First(entryId2, type, orderByComparator);
 	}
@@ -753,10 +787,11 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE2_T_Last(long entryId2, int type,
-		OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink findByE2_T_Last(
+		long entryId2, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE2_T_Last(entryId2, type, orderByComparator);
@@ -770,8 +805,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE2_T_Last(long entryId2, int type,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE2_T_Last(
+		long entryId2, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByE2_T_Last(entryId2, type, orderByComparator);
 	}
@@ -784,10 +820,11 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset link
-	* @throws NoSuchLinkException if a asset link with the primary key could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	*/
-	public static AssetLink[] findByE2_T_PrevAndNext(long linkId,
-		long entryId2, int type, OrderByComparator<AssetLink> orderByComparator)
+	public static com.liferay.portlet.asset.model.AssetLink[] findByE2_T_PrevAndNext(
+		long linkId, long entryId2, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence()
 				   .findByE2_T_PrevAndNext(linkId, entryId2, type,
@@ -816,15 +853,16 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	* Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or throws a {@link NoSuchLinkException} if it could not be found.
+	* Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or throws a {@link com.liferay.portlet.asset.NoSuchLinkException} if it could not be found.
 	*
 	* @param entryId1 the entry id1
 	* @param entryId2 the entry id2
 	* @param type the type
 	* @return the matching asset link
-	* @throws NoSuchLinkException if a matching asset link could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a matching asset link could not be found
 	*/
-	public static AssetLink findByE_E_T(long entryId1, long entryId2, int type)
+	public static com.liferay.portlet.asset.model.AssetLink findByE_E_T(
+		long entryId1, long entryId2, int type)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().findByE_E_T(entryId1, entryId2, type);
 	}
@@ -837,7 +875,8 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @return the matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE_E_T(long entryId1, long entryId2, int type) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE_E_T(
+		long entryId1, long entryId2, int type) {
 		return getPersistence().fetchByE_E_T(entryId1, entryId2, type);
 	}
 
@@ -850,8 +889,8 @@ public class AssetLinkUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching asset link, or <code>null</code> if a matching asset link could not be found
 	*/
-	public static AssetLink fetchByE_E_T(long entryId1, long entryId2,
-		int type, boolean retrieveFromCache) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByE_E_T(
+		long entryId1, long entryId2, int type, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByE_E_T(entryId1, entryId2, type, retrieveFromCache);
 	}
@@ -864,7 +903,8 @@ public class AssetLinkUtil {
 	* @param type the type
 	* @return the asset link that was removed
 	*/
-	public static AssetLink removeByE_E_T(long entryId1, long entryId2, int type)
+	public static com.liferay.portlet.asset.model.AssetLink removeByE_E_T(
+		long entryId1, long entryId2, int type)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().removeByE_E_T(entryId1, entryId2, type);
 	}
@@ -886,7 +926,8 @@ public class AssetLinkUtil {
 	*
 	* @param assetLink the asset link
 	*/
-	public static void cacheResult(AssetLink assetLink) {
+	public static void cacheResult(
+		com.liferay.portlet.asset.model.AssetLink assetLink) {
 		getPersistence().cacheResult(assetLink);
 	}
 
@@ -895,7 +936,8 @@ public class AssetLinkUtil {
 	*
 	* @param assetLinks the asset links
 	*/
-	public static void cacheResult(List<AssetLink> assetLinks) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.asset.model.AssetLink> assetLinks) {
 		getPersistence().cacheResult(assetLinks);
 	}
 
@@ -905,7 +947,7 @@ public class AssetLinkUtil {
 	* @param linkId the primary key for the new asset link
 	* @return the new asset link
 	*/
-	public static AssetLink create(long linkId) {
+	public static com.liferay.portlet.asset.model.AssetLink create(long linkId) {
 		return getPersistence().create(linkId);
 	}
 
@@ -914,26 +956,27 @@ public class AssetLinkUtil {
 	*
 	* @param linkId the primary key of the asset link
 	* @return the asset link that was removed
-	* @throws NoSuchLinkException if a asset link with the primary key could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	*/
-	public static AssetLink remove(long linkId)
+	public static com.liferay.portlet.asset.model.AssetLink remove(long linkId)
 		throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().remove(linkId);
 	}
 
-	public static AssetLink updateImpl(AssetLink assetLink) {
+	public static com.liferay.portlet.asset.model.AssetLink updateImpl(
+		com.liferay.portlet.asset.model.AssetLink assetLink) {
 		return getPersistence().updateImpl(assetLink);
 	}
 
 	/**
-	* Returns the asset link with the primary key or throws a {@link NoSuchLinkException} if it could not be found.
+	* Returns the asset link with the primary key or throws a {@link com.liferay.portlet.asset.NoSuchLinkException} if it could not be found.
 	*
 	* @param linkId the primary key of the asset link
 	* @return the asset link
-	* @throws NoSuchLinkException if a asset link with the primary key could not be found
+	* @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	*/
-	public static AssetLink findByPrimaryKey(long linkId)
-		throws com.liferay.portlet.asset.NoSuchLinkException {
+	public static com.liferay.portlet.asset.model.AssetLink findByPrimaryKey(
+		long linkId) throws com.liferay.portlet.asset.NoSuchLinkException {
 		return getPersistence().findByPrimaryKey(linkId);
 	}
 
@@ -943,11 +986,12 @@ public class AssetLinkUtil {
 	* @param linkId the primary key of the asset link
 	* @return the asset link, or <code>null</code> if a asset link with the primary key could not be found
 	*/
-	public static AssetLink fetchByPrimaryKey(long linkId) {
+	public static com.liferay.portlet.asset.model.AssetLink fetchByPrimaryKey(
+		long linkId) {
 		return getPersistence().fetchByPrimaryKey(linkId);
 	}
 
-	public static java.util.Map<java.io.Serializable, AssetLink> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetLink> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -957,7 +1001,7 @@ public class AssetLinkUtil {
 	*
 	* @return the asset links
 	*/
-	public static List<AssetLink> findAll() {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -965,14 +1009,15 @@ public class AssetLinkUtil {
 	* Returns a range of all the asset links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of asset links
 	* @param end the upper bound of the range of asset links (not inclusive)
 	* @return the range of asset links
 	*/
-	public static List<AssetLink> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -980,7 +1025,7 @@ public class AssetLinkUtil {
 	* Returns an ordered range of all the asset links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of asset links
@@ -988,8 +1033,9 @@ public class AssetLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of asset links
 	*/
-	public static List<AssetLink> findAll(int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.asset.model.AssetLink> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetLink> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

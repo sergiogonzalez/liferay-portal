@@ -86,7 +86,8 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
-		long statsUserId) throws PortalException;
+		long statsUserId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -94,9 +95,10 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteStatsUser(long statsUserId) throws PortalException;
+	public void deleteStatsUser(long statsUserId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteStatsUser(
 		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers);
@@ -193,7 +195,8 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.blogs.model.BlogsStatsUser getBlogsStatsUser(
-		long statsUserId) throws PortalException;
+		long statsUserId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the blogs stats users.
@@ -261,11 +264,13 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.blogs.model.BlogsStatsUser getStatsUser(
-		long groupId, long userId) throws PortalException;
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -285,8 +290,9 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser);
 
 	public void updateStatsUser(long groupId, long userId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void updateStatsUser(long groupId, long userId,
-		java.util.Date displayDate) throws PortalException;
+		java.util.Date displayDate)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

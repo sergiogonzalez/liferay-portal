@@ -28,7 +28,7 @@ import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoValueImpl
- * @see ExpandoValue
+ * @see com.liferay.portlet.expando.model.ExpandoValue
  * @generated
  */
 @ProviderType

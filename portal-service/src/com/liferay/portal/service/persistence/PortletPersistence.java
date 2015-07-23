@@ -44,13 +44,14 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param companyId the company ID
 	* @return the matching portlets
 	*/
-	public java.util.List<Portlet> findByCompanyId(long companyId);
+	public java.util.List<com.liferay.portal.model.Portlet> findByCompanyId(
+		long companyId);
 
 	/**
 	* Returns a range of all the portlets where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -58,14 +59,14 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param end the upper bound of the range of portlets (not inclusive)
 	* @return the range of matching portlets
 	*/
-	public java.util.List<Portlet> findByCompanyId(long companyId, int start,
-		int end);
+	public java.util.List<com.liferay.portal.model.Portlet> findByCompanyId(
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the portlets where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -74,9 +75,9 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching portlets
 	*/
-	public java.util.List<Portlet> findByCompanyId(long companyId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator);
+	public java.util.List<com.liferay.portal.model.Portlet> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
 
 	/**
 	* Returns the first portlet in the ordered set where companyId = &#63;.
@@ -84,10 +85,11 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching portlet
-	* @throws NoSuchPortletException if a matching portlet could not be found
+	* @throws com.liferay.portal.NoSuchPortletException if a matching portlet could not be found
 	*/
-	public Portlet findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator)
+	public com.liferay.portal.model.Portlet findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -97,8 +99,9 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public Portlet fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator);
+	public com.liferay.portal.model.Portlet fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
 
 	/**
 	* Returns the last portlet in the ordered set where companyId = &#63;.
@@ -106,10 +109,11 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching portlet
-	* @throws NoSuchPortletException if a matching portlet could not be found
+	* @throws com.liferay.portal.NoSuchPortletException if a matching portlet could not be found
 	*/
-	public Portlet findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator)
+	public com.liferay.portal.model.Portlet findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -119,8 +123,9 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public Portlet fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator);
+	public com.liferay.portal.model.Portlet fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
 
 	/**
 	* Returns the portlets before and after the current portlet in the ordered set where companyId = &#63;.
@@ -129,10 +134,11 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next portlet
-	* @throws NoSuchPortletException if a portlet with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchPortletException if a portlet with the primary key could not be found
 	*/
-	public Portlet[] findByCompanyId_PrevAndNext(long id, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator)
+	public com.liferay.portal.model.Portlet[] findByCompanyId_PrevAndNext(
+		long id, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -151,14 +157,15 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	* Returns the portlet where companyId = &#63; and portletId = &#63; or throws a {@link NoSuchPortletException} if it could not be found.
+	* Returns the portlet where companyId = &#63; and portletId = &#63; or throws a {@link com.liferay.portal.NoSuchPortletException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @return the matching portlet
-	* @throws NoSuchPortletException if a matching portlet could not be found
+	* @throws com.liferay.portal.NoSuchPortletException if a matching portlet could not be found
 	*/
-	public Portlet findByC_P(long companyId, java.lang.String portletId)
+	public com.liferay.portal.model.Portlet findByC_P(long companyId,
+		java.lang.String portletId)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -168,7 +175,8 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param portletId the portlet ID
 	* @return the matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public Portlet fetchByC_P(long companyId, java.lang.String portletId);
+	public com.liferay.portal.model.Portlet fetchByC_P(long companyId,
+		java.lang.String portletId);
 
 	/**
 	* Returns the portlet where companyId = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -178,8 +186,8 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching portlet, or <code>null</code> if a matching portlet could not be found
 	*/
-	public Portlet fetchByC_P(long companyId, java.lang.String portletId,
-		boolean retrieveFromCache);
+	public com.liferay.portal.model.Portlet fetchByC_P(long companyId,
+		java.lang.String portletId, boolean retrieveFromCache);
 
 	/**
 	* Removes the portlet where companyId = &#63; and portletId = &#63; from the database.
@@ -188,7 +196,8 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param portletId the portlet ID
 	* @return the portlet that was removed
 	*/
-	public Portlet removeByC_P(long companyId, java.lang.String portletId)
+	public com.liferay.portal.model.Portlet removeByC_P(long companyId,
+		java.lang.String portletId)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -205,14 +214,15 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*
 	* @param portlet the portlet
 	*/
-	public void cacheResult(Portlet portlet);
+	public void cacheResult(com.liferay.portal.model.Portlet portlet);
 
 	/**
 	* Caches the portlets in the entity cache if it is enabled.
 	*
 	* @param portlets the portlets
 	*/
-	public void cacheResult(java.util.List<Portlet> portlets);
+	public void cacheResult(
+		java.util.List<com.liferay.portal.model.Portlet> portlets);
 
 	/**
 	* Creates a new portlet with the primary key. Does not add the portlet to the database.
@@ -220,28 +230,29 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param id the primary key for the new portlet
 	* @return the new portlet
 	*/
-	public Portlet create(long id);
+	public com.liferay.portal.model.Portlet create(long id);
 
 	/**
 	* Removes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the portlet
 	* @return the portlet that was removed
-	* @throws NoSuchPortletException if a portlet with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchPortletException if a portlet with the primary key could not be found
 	*/
-	public Portlet remove(long id)
+	public com.liferay.portal.model.Portlet remove(long id)
 		throws com.liferay.portal.NoSuchPortletException;
 
-	public Portlet updateImpl(Portlet portlet);
+	public com.liferay.portal.model.Portlet updateImpl(
+		com.liferay.portal.model.Portlet portlet);
 
 	/**
-	* Returns the portlet with the primary key or throws a {@link NoSuchPortletException} if it could not be found.
+	* Returns the portlet with the primary key or throws a {@link com.liferay.portal.NoSuchPortletException} if it could not be found.
 	*
 	* @param id the primary key of the portlet
 	* @return the portlet
-	* @throws NoSuchPortletException if a portlet with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchPortletException if a portlet with the primary key could not be found
 	*/
-	public Portlet findByPrimaryKey(long id)
+	public com.liferay.portal.model.Portlet findByPrimaryKey(long id)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -250,10 +261,10 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param id the primary key of the portlet
 	* @return the portlet, or <code>null</code> if a portlet with the primary key could not be found
 	*/
-	public Portlet fetchByPrimaryKey(long id);
+	public com.liferay.portal.model.Portlet fetchByPrimaryKey(long id);
 
 	@Override
-	public java.util.Map<java.io.Serializable, Portlet> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Portlet> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -261,26 +272,27 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*
 	* @return the portlets
 	*/
-	public java.util.List<Portlet> findAll();
+	public java.util.List<com.liferay.portal.model.Portlet> findAll();
 
 	/**
 	* Returns a range of all the portlets.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of portlets
 	* @param end the upper bound of the range of portlets (not inclusive)
 	* @return the range of portlets
 	*/
-	public java.util.List<Portlet> findAll(int start, int end);
+	public java.util.List<com.liferay.portal.model.Portlet> findAll(int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the portlets.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of portlets
@@ -288,8 +300,9 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of portlets
 	*/
-	public java.util.List<Portlet> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator);
+	public java.util.List<com.liferay.portal.model.Portlet> findAll(int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
 
 	/**
 	* Removes all the portlets from the database.

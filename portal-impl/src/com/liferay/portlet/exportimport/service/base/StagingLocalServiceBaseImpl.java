@@ -163,7 +163,7 @@ public abstract class StagingLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the staging local service
 	 */
-	public StagingLocalService getStagingLocalService() {
+	public com.liferay.portlet.exportimport.service.StagingLocalService getStagingLocalService() {
 		return stagingLocalService;
 	}
 
@@ -172,7 +172,8 @@ public abstract class StagingLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param stagingLocalService the staging local service
 	 */
-	public void setStagingLocalService(StagingLocalService stagingLocalService) {
+	public void setStagingLocalService(
+		com.liferay.portlet.exportimport.service.StagingLocalService stagingLocalService) {
 		this.stagingLocalService = stagingLocalService;
 	}
 
@@ -743,8 +744,8 @@ public abstract class StagingLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)
 	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
-	@BeanReference(type = StagingLocalService.class)
-	protected StagingLocalService stagingLocalService;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingLocalService.class)
+	protected com.liferay.portlet.exportimport.service.StagingLocalService stagingLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingService.class)
 	protected com.liferay.portlet.exportimport.service.StagingService stagingService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

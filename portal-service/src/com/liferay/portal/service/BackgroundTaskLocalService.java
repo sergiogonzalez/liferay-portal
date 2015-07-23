@@ -62,14 +62,15 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		java.lang.Class<?> taskExecutorClass,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addBackgroundTaskAttachment(long userId, long backgroundTaskId,
-		java.lang.String fileName, java.io.File file) throws PortalException;
+		java.lang.String fileName, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addBackgroundTaskAttachment(long userId, long backgroundTaskId,
 		java.lang.String fileName, java.io.InputStream inputStream)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
@@ -108,7 +109,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the background task with the primary key from the database. Also notifies the appropriate model listeners.
@@ -119,13 +120,14 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
-		long backgroundTaskId) throws PortalException;
+		long backgroundTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteCompanyBackgroundTasks(long companyId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteGroupBackgroundTasks(long groupId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -133,7 +135,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -231,7 +233,8 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BackgroundTask getBackgroundTask(
-		long backgroundTaskId) throws PortalException;
+		long backgroundTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -351,7 +354,8 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	public void resumeBackgroundTask(long backgroundTaskId);

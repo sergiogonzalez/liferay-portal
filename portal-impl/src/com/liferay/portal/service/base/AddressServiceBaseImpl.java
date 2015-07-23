@@ -78,7 +78,7 @@ public abstract class AddressServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the address remote service
 	 */
-	public AddressService getAddressService() {
+	public com.liferay.portal.service.AddressService getAddressService() {
 		return addressService;
 	}
 
@@ -87,7 +87,8 @@ public abstract class AddressServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param addressService the address remote service
 	 */
-	public void setAddressService(AddressService addressService) {
+	public void setAddressService(
+		com.liferay.portal.service.AddressService addressService) {
 		this.addressService = addressService;
 	}
 
@@ -412,8 +413,8 @@ public abstract class AddressServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.AddressLocalService.class)
 	protected com.liferay.portal.service.AddressLocalService addressLocalService;
-	@BeanReference(type = AddressService.class)
-	protected AddressService addressService;
+	@BeanReference(type = com.liferay.portal.service.AddressService.class)
+	protected com.liferay.portal.service.AddressService addressService;
 	@BeanReference(type = AddressPersistence.class)
 	protected AddressPersistence addressPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

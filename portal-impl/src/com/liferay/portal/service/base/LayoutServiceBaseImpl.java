@@ -102,7 +102,7 @@ public abstract class LayoutServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the layout remote service
 	 */
-	public LayoutService getLayoutService() {
+	public com.liferay.portal.service.LayoutService getLayoutService() {
 		return layoutService;
 	}
 
@@ -111,7 +111,8 @@ public abstract class LayoutServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param layoutService the layout remote service
 	 */
-	public void setLayoutService(LayoutService layoutService) {
+	public void setLayoutService(
+		com.liferay.portal.service.LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
 
@@ -1398,8 +1399,8 @@ public abstract class LayoutServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.LayoutLocalService.class)
 	protected com.liferay.portal.service.LayoutLocalService layoutLocalService;
-	@BeanReference(type = LayoutService.class)
-	protected LayoutService layoutService;
+	@BeanReference(type = com.liferay.portal.service.LayoutService.class)
+	protected com.liferay.portal.service.LayoutService layoutService;
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
 	@BeanReference(type = LayoutFinder.class)

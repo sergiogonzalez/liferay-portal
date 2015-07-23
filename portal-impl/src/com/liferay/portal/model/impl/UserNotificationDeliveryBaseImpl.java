@@ -28,7 +28,7 @@ import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see UserNotificationDeliveryImpl
- * @see UserNotificationDelivery
+ * @see com.liferay.portal.model.UserNotificationDelivery
  * @generated
  */
 @ProviderType

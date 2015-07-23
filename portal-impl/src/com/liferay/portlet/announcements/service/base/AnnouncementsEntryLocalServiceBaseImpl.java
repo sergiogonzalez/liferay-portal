@@ -420,7 +420,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 *
 	 * @return the announcements entry local service
 	 */
-	public AnnouncementsEntryLocalService getAnnouncementsEntryLocalService() {
+	public com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService getAnnouncementsEntryLocalService() {
 		return announcementsEntryLocalService;
 	}
 
@@ -430,7 +430,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param announcementsEntryLocalService the announcements entry local service
 	 */
 	public void setAnnouncementsEntryLocalService(
-		AnnouncementsEntryLocalService announcementsEntryLocalService) {
+		com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService announcementsEntryLocalService) {
 		this.announcementsEntryLocalService = announcementsEntryLocalService;
 	}
 
@@ -1225,8 +1225,8 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = AnnouncementsEntryLocalService.class)
-	protected AnnouncementsEntryLocalService announcementsEntryLocalService;
+	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService.class)
+	protected com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService announcementsEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryService.class)
 	protected com.liferay.portlet.announcements.service.AnnouncementsEntryService announcementsEntryService;
 	@BeanReference(type = AnnouncementsEntryPersistence.class)

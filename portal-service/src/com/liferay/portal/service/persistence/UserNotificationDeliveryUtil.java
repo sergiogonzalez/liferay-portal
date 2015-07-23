@@ -117,7 +117,8 @@ public class UserNotificationDeliveryUtil {
 	* @param userId the user ID
 	* @return the matching user notification deliveries
 	*/
-	public static List<UserNotificationDelivery> findByUserId(long userId) {
+	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
+		long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -125,7 +126,7 @@ public class UserNotificationDeliveryUtil {
 	* Returns a range of all the user notification deliveries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -133,8 +134,8 @@ public class UserNotificationDeliveryUtil {
 	* @param end the upper bound of the range of user notification deliveries (not inclusive)
 	* @return the range of matching user notification deliveries
 	*/
-	public static List<UserNotificationDelivery> findByUserId(long userId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
+		long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -142,7 +143,7 @@ public class UserNotificationDeliveryUtil {
 	* Returns an ordered range of all the user notification deliveries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -151,9 +152,9 @@ public class UserNotificationDeliveryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user notification deliveries
 	*/
-	public static List<UserNotificationDelivery> findByUserId(long userId,
-		int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -164,10 +165,11 @@ public class UserNotificationDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification delivery
-	* @throws NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
 	*/
-	public static UserNotificationDelivery findByUserId_First(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator)
+	public static com.liferay.portal.model.UserNotificationDelivery findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -179,8 +181,9 @@ public class UserNotificationDeliveryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
-	public static UserNotificationDelivery fetchByUserId_First(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+	public static com.liferay.portal.model.UserNotificationDelivery fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -190,10 +193,11 @@ public class UserNotificationDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification delivery
-	* @throws NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
 	*/
-	public static UserNotificationDelivery findByUserId_Last(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator)
+	public static com.liferay.portal.model.UserNotificationDelivery findByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -205,8 +209,9 @@ public class UserNotificationDeliveryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
-	public static UserNotificationDelivery fetchByUserId_Last(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+	public static com.liferay.portal.model.UserNotificationDelivery fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -217,11 +222,11 @@ public class UserNotificationDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user notification delivery
-	* @throws NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
 	*/
-	public static UserNotificationDelivery[] findByUserId_PrevAndNext(
+	public static com.liferay.portal.model.UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(userNotificationDeliveryId,
@@ -248,7 +253,7 @@ public class UserNotificationDeliveryUtil {
 	}
 
 	/**
-	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a {@link NoSuchUserNotificationDeliveryException} if it could not be found.
+	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param portletId the portlet ID
@@ -256,11 +261,11 @@ public class UserNotificationDeliveryUtil {
 	* @param notificationType the notification type
 	* @param deliveryType the delivery type
 	* @return the matching user notification delivery
-	* @throws NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
 	*/
-	public static UserNotificationDelivery findByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType)
+	public static com.liferay.portal.model.UserNotificationDelivery findByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
 				   .findByU_P_C_N_D(userId, portletId, classNameId,
@@ -277,9 +282,9 @@ public class UserNotificationDeliveryUtil {
 	* @param deliveryType the delivery type
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
-	public static UserNotificationDelivery fetchByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType) {
+	public static com.liferay.portal.model.UserNotificationDelivery fetchByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType) {
 		return getPersistence()
 				   .fetchByU_P_C_N_D(userId, portletId, classNameId,
 			notificationType, deliveryType);
@@ -296,9 +301,9 @@ public class UserNotificationDeliveryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	*/
-	public static UserNotificationDelivery fetchByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType, boolean retrieveFromCache) {
+	public static com.liferay.portal.model.UserNotificationDelivery fetchByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_P_C_N_D(userId, portletId, classNameId,
 			notificationType, deliveryType, retrieveFromCache);
@@ -314,9 +319,9 @@ public class UserNotificationDeliveryUtil {
 	* @param deliveryType the delivery type
 	* @return the user notification delivery that was removed
 	*/
-	public static UserNotificationDelivery removeByU_P_C_N_D(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType)
+	public static com.liferay.portal.model.UserNotificationDelivery removeByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
 				   .removeByU_P_C_N_D(userId, portletId, classNameId,
@@ -346,7 +351,7 @@ public class UserNotificationDeliveryUtil {
 	* @param userNotificationDelivery the user notification delivery
 	*/
 	public static void cacheResult(
-		UserNotificationDelivery userNotificationDelivery) {
+		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery) {
 		getPersistence().cacheResult(userNotificationDelivery);
 	}
 
@@ -356,7 +361,7 @@ public class UserNotificationDeliveryUtil {
 	* @param userNotificationDeliveries the user notification deliveries
 	*/
 	public static void cacheResult(
-		List<UserNotificationDelivery> userNotificationDeliveries) {
+		java.util.List<com.liferay.portal.model.UserNotificationDelivery> userNotificationDeliveries) {
 		getPersistence().cacheResult(userNotificationDeliveries);
 	}
 
@@ -366,7 +371,7 @@ public class UserNotificationDeliveryUtil {
 	* @param userNotificationDeliveryId the primary key for the new user notification delivery
 	* @return the new user notification delivery
 	*/
-	public static UserNotificationDelivery create(
+	public static com.liferay.portal.model.UserNotificationDelivery create(
 		long userNotificationDeliveryId) {
 		return getPersistence().create(userNotificationDeliveryId);
 	}
@@ -376,27 +381,27 @@ public class UserNotificationDeliveryUtil {
 	*
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
 	* @return the user notification delivery that was removed
-	* @throws NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
 	*/
-	public static UserNotificationDelivery remove(
+	public static com.liferay.portal.model.UserNotificationDelivery remove(
 		long userNotificationDeliveryId)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence().remove(userNotificationDeliveryId);
 	}
 
-	public static UserNotificationDelivery updateImpl(
-		UserNotificationDelivery userNotificationDelivery) {
+	public static com.liferay.portal.model.UserNotificationDelivery updateImpl(
+		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery) {
 		return getPersistence().updateImpl(userNotificationDelivery);
 	}
 
 	/**
-	* Returns the user notification delivery with the primary key or throws a {@link NoSuchUserNotificationDeliveryException} if it could not be found.
+	* Returns the user notification delivery with the primary key or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
 	*
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
 	* @return the user notification delivery
-	* @throws NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
 	*/
-	public static UserNotificationDelivery findByPrimaryKey(
+	public static com.liferay.portal.model.UserNotificationDelivery findByPrimaryKey(
 		long userNotificationDeliveryId)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByPrimaryKey(userNotificationDeliveryId);
@@ -408,12 +413,12 @@ public class UserNotificationDeliveryUtil {
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
 	* @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
 	*/
-	public static UserNotificationDelivery fetchByPrimaryKey(
+	public static com.liferay.portal.model.UserNotificationDelivery fetchByPrimaryKey(
 		long userNotificationDeliveryId) {
 		return getPersistence().fetchByPrimaryKey(userNotificationDeliveryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, UserNotificationDelivery> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.UserNotificationDelivery> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -423,7 +428,7 @@ public class UserNotificationDeliveryUtil {
 	*
 	* @return the user notification deliveries
 	*/
-	public static List<UserNotificationDelivery> findAll() {
+	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -431,14 +436,15 @@ public class UserNotificationDeliveryUtil {
 	* Returns a range of all the user notification deliveries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user notification deliveries
 	* @param end the upper bound of the range of user notification deliveries (not inclusive)
 	* @return the range of user notification deliveries
 	*/
-	public static List<UserNotificationDelivery> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -446,7 +452,7 @@ public class UserNotificationDeliveryUtil {
 	* Returns an ordered range of all the user notification deliveries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user notification deliveries
@@ -454,8 +460,9 @@ public class UserNotificationDeliveryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of user notification deliveries
 	*/
-	public static List<UserNotificationDelivery> findAll(int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

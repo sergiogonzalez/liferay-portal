@@ -28,7 +28,7 @@ import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ServiceComponentImpl
- * @see ServiceComponent
+ * @see com.liferay.portal.model.ServiceComponent
  * @generated
  */
 @ProviderType

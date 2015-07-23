@@ -302,7 +302,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 *
 	 * @return the user tracker path local service
 	 */
-	public UserTrackerPathLocalService getUserTrackerPathLocalService() {
+	public com.liferay.portal.service.UserTrackerPathLocalService getUserTrackerPathLocalService() {
 		return userTrackerPathLocalService;
 	}
 
@@ -312,7 +312,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @param userTrackerPathLocalService the user tracker path local service
 	 */
 	public void setUserTrackerPathLocalService(
-		UserTrackerPathLocalService userTrackerPathLocalService) {
+		com.liferay.portal.service.UserTrackerPathLocalService userTrackerPathLocalService) {
 		this.userTrackerPathLocalService = userTrackerPathLocalService;
 	}
 
@@ -416,8 +416,8 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = UserTrackerPathLocalService.class)
-	protected UserTrackerPathLocalService userTrackerPathLocalService;
+	@BeanReference(type = com.liferay.portal.service.UserTrackerPathLocalService.class)
+	protected com.liferay.portal.service.UserTrackerPathLocalService userTrackerPathLocalService;
 	@BeanReference(type = UserTrackerPathPersistence.class)
 	protected UserTrackerPathPersistence userTrackerPathPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

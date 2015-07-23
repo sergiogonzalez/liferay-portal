@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordSetImpl
- * @see DDLRecordSet
+ * @see com.liferay.dynamic.data.lists.model.DDLRecordSet
  * @generated
  */
 @ProviderType

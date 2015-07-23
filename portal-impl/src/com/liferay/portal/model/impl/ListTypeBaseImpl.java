@@ -28,7 +28,7 @@ import com.liferay.portal.service.ListTypeLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ListTypeImpl
- * @see ListType
+ * @see com.liferay.portal.model.ListType
  * @generated
  */
 @ProviderType

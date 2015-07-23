@@ -82,7 +82,7 @@ public interface DDMTemplateService extends BaseService {
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a template with additional parameters.
@@ -129,7 +129,7 @@ public interface DDMTemplateService extends BaseService {
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Copies the template, creating a new template with all the values
@@ -153,12 +153,12 @@ public interface DDMTemplateService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate copyTemplate(
 		long templateId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Copies all the templates matching the class name ID, class PK, and type.
@@ -185,7 +185,7 @@ public interface DDMTemplateService extends BaseService {
 		long classNameId, long oldClassPK, long resourceClassNameId,
 		long newClassPK, java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the template and its resources.
@@ -194,7 +194,8 @@ public interface DDMTemplateService extends BaseService {
 	* @throws PortalException if the user did not have permission to delete the
 	template or if a portal exception occurred
 	*/
-	public void deleteTemplate(long templateId) throws PortalException;
+	public void deleteTemplate(long templateId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the template matching the group and template key.
@@ -211,7 +212,7 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
 		long groupId, long classNameId, java.lang.String templateKey)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -233,7 +234,7 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the template matching the group and template key, optionally
@@ -260,7 +261,8 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
-		boolean includeAncestorTemplates) throws PortalException;
+		boolean includeAncestorTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the template with the ID.
@@ -272,7 +274,8 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		long templateId) throws PortalException;
+		long templateId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the templates matching the group and class name ID.
@@ -303,7 +306,8 @@ public interface DDMTemplateService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
 		long groupId, long classNameId, long classPK,
-		boolean includeAncestorTemplates) throws PortalException;
+		boolean includeAncestorTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the templates matching the class name ID, class PK, type, and
@@ -384,7 +388,7 @@ public interface DDMTemplateService extends BaseService {
 
 	public void revertTemplate(long templateId, java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns an ordered range of all the templates matching the group, class
@@ -736,7 +740,7 @@ public interface DDMTemplateService extends BaseService {
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script, boolean cacheable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the template matching the ID.
@@ -775,5 +779,5 @@ public interface DDMTemplateService extends BaseService {
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -78,7 +78,7 @@ public abstract class SACPEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the s a c p entry remote service
 	 */
-	public SACPEntryService getSACPEntryService() {
+	public com.liferay.service.access.control.profile.service.SACPEntryService getSACPEntryService() {
 		return sacpEntryService;
 	}
 
@@ -87,7 +87,8 @@ public abstract class SACPEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param sacpEntryService the s a c p entry remote service
 	 */
-	public void setSACPEntryService(SACPEntryService sacpEntryService) {
+	public void setSACPEntryService(
+		com.liferay.service.access.control.profile.service.SACPEntryService sacpEntryService) {
 		this.sacpEntryService = sacpEntryService;
 	}
 
@@ -434,8 +435,8 @@ public abstract class SACPEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryLocalService.class)
 	protected com.liferay.service.access.control.profile.service.SACPEntryLocalService sacpEntryLocalService;
-	@BeanReference(type = SACPEntryService.class)
-	protected SACPEntryService sacpEntryService;
+	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryService.class)
+	protected com.liferay.service.access.control.profile.service.SACPEntryService sacpEntryService;
 	@BeanReference(type = SACPEntryPersistence.class)
 	protected SACPEntryPersistence sacpEntryPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

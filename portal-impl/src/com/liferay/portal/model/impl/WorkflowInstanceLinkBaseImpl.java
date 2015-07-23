@@ -28,7 +28,7 @@ import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see WorkflowInstanceLinkImpl
- * @see WorkflowInstanceLink
+ * @see com.liferay.portal.model.WorkflowInstanceLink
  * @generated
  */
 @ProviderType

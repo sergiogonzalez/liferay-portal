@@ -550,7 +550,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	 *
 	 * @return the calendar booking local service
 	 */
-	public CalendarBookingLocalService getCalendarBookingLocalService() {
+	public com.liferay.calendar.service.CalendarBookingLocalService getCalendarBookingLocalService() {
 		return calendarBookingLocalService;
 	}
 
@@ -560,7 +560,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	 * @param calendarBookingLocalService the calendar booking local service
 	 */
 	public void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
+		com.liferay.calendar.service.CalendarBookingLocalService calendarBookingLocalService) {
 		this.calendarBookingLocalService = calendarBookingLocalService;
 	}
 
@@ -1486,8 +1486,8 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	protected CalendarPersistence calendarPersistence;
 	@BeanReference(type = CalendarFinder.class)
 	protected CalendarFinder calendarFinder;
-	@BeanReference(type = CalendarBookingLocalService.class)
-	protected CalendarBookingLocalService calendarBookingLocalService;
+	@BeanReference(type = com.liferay.calendar.service.CalendarBookingLocalService.class)
+	protected com.liferay.calendar.service.CalendarBookingLocalService calendarBookingLocalService;
 	@BeanReference(type = com.liferay.calendar.service.CalendarBookingService.class)
 	protected com.liferay.calendar.service.CalendarBookingService calendarBookingService;
 	@BeanReference(type = CalendarBookingPersistence.class)

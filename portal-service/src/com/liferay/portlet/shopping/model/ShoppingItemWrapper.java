@@ -341,7 +341,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the create date of this shopping item
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _shoppingItem.getCreateDate();
 	}
 
@@ -517,7 +517,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @return the modified date of this shopping item
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _shoppingItem.getModifiedDate();
 	}
 
@@ -853,7 +853,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param createDate the create date of this shopping item
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_shoppingItem.setCreateDate(createDate);
 	}
 
@@ -1037,7 +1037,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	* @param modifiedDate the modified date of this shopping item
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_shoppingItem.setModifiedDate(modifiedDate);
 	}
 

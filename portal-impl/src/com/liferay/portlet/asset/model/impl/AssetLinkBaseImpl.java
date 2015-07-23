@@ -28,7 +28,7 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AssetLinkImpl
- * @see AssetLink
+ * @see com.liferay.portlet.asset.model.AssetLink
  * @generated
  */
 @ProviderType

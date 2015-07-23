@@ -51,25 +51,25 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addCategoryResources(
 		com.liferay.portlet.shopping.model.ShoppingCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addCategoryResources(
 		com.liferay.portlet.shopping.model.ShoppingCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addCategoryResources(long categoryId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the shopping category to the database. Also notifies the appropriate model listeners.
@@ -90,13 +90,15 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	public com.liferay.portlet.shopping.model.ShoppingCategory createShoppingCategory(
 		long categoryId);
 
-	public void deleteCategories(long groupId) throws PortalException;
+	public void deleteCategories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteCategory(
 		com.liferay.portlet.shopping.model.ShoppingCategory category)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteCategory(long categoryId) throws PortalException;
+	public void deleteCategory(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -104,7 +106,7 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the shopping category with the primary key from the database. Also notifies the appropriate model listeners.
@@ -115,7 +117,8 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.shopping.model.ShoppingCategory deleteShoppingCategory(
-		long categoryId) throws PortalException;
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the shopping category from the database. Also notifies the appropriate model listeners.
@@ -219,7 +222,8 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory(
-		long categoryId) throws PortalException;
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory(
@@ -228,21 +232,23 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getParentCategories(
 		com.liferay.portlet.shopping.model.ShoppingCategory category)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getParentCategories(
-		long categoryId) throws PortalException;
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCategory getParentCategory(
 		com.liferay.portlet.shopping.model.ShoppingCategory category)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the shopping categories.
@@ -276,7 +282,8 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCategory getShoppingCategory(
-		long categoryId) throws PortalException;
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubcategoryIds(java.util.List<java.lang.Long> categoryIds,
@@ -293,7 +300,7 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentCategory,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

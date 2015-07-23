@@ -118,7 +118,8 @@ public class WikiPageResourceUtil {
 	* @param uuid the uuid
 	* @return the matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid(java.lang.String uuid) {
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> findByUuid(
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -126,7 +127,7 @@ public class WikiPageResourceUtil {
 	* Returns a range of all the wiki page resources where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -134,8 +135,8 @@ public class WikiPageResourceUtil {
 	* @param end the upper bound of the range of wiki page resources (not inclusive)
 	* @return the range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> findByUuid(
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -143,7 +144,7 @@ public class WikiPageResourceUtil {
 	* Returns an ordered range of all the wiki page resources where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -152,9 +153,9 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki page resources
 	*/
-	public static List<WikiPageResource> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<WikiPageResource> orderByComparator) {
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,8 +167,9 @@ public class WikiPageResourceUtil {
 	* @return the first matching wiki page resource
 	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUuid_First(java.lang.String uuid,
-		OrderByComparator<WikiPageResource> orderByComparator)
+	public static com.liferay.wiki.model.WikiPageResource findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -179,8 +181,9 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUuid_First(java.lang.String uuid,
-		OrderByComparator<WikiPageResource> orderByComparator) {
+	public static com.liferay.wiki.model.WikiPageResource fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -192,8 +195,9 @@ public class WikiPageResourceUtil {
 	* @return the last matching wiki page resource
 	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUuid_Last(java.lang.String uuid,
-		OrderByComparator<WikiPageResource> orderByComparator)
+	public static com.liferay.wiki.model.WikiPageResource findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -205,8 +209,9 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUuid_Last(java.lang.String uuid,
-		OrderByComparator<WikiPageResource> orderByComparator) {
+	public static com.liferay.wiki.model.WikiPageResource fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -219,9 +224,9 @@ public class WikiPageResourceUtil {
 	* @return the previous, current, and next wiki page resource
 	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
-	public static WikiPageResource[] findByUuid_PrevAndNext(
+	public static com.liferay.wiki.model.WikiPageResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
-		OrderByComparator<WikiPageResource> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(resourcePrimKey, uuid,
@@ -255,8 +260,8 @@ public class WikiPageResourceUtil {
 	* @return the matching wiki page resource
 	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static com.liferay.wiki.model.WikiPageResource findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -268,8 +273,8 @@ public class WikiPageResourceUtil {
 	* @param groupId the group ID
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static com.liferay.wiki.model.WikiPageResource fetchByUUID_G(
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -281,8 +286,8 @@ public class WikiPageResourceUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static com.liferay.wiki.model.WikiPageResource fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -293,8 +298,8 @@ public class WikiPageResourceUtil {
 	* @param groupId the group ID
 	* @return the wiki page resource that was removed
 	*/
-	public static WikiPageResource removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static com.liferay.wiki.model.WikiPageResource removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -318,7 +323,8 @@ public class WikiPageResourceUtil {
 	* @return the matching wiki page resource
 	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource findByN_T(long nodeId, java.lang.String title)
+	public static com.liferay.wiki.model.WikiPageResource findByN_T(
+		long nodeId, java.lang.String title)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByN_T(nodeId, title);
 	}
@@ -330,8 +336,8 @@ public class WikiPageResourceUtil {
 	* @param title the title
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByN_T(long nodeId,
-		java.lang.String title) {
+	public static com.liferay.wiki.model.WikiPageResource fetchByN_T(
+		long nodeId, java.lang.String title) {
 		return getPersistence().fetchByN_T(nodeId, title);
 	}
 
@@ -343,8 +349,8 @@ public class WikiPageResourceUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public static WikiPageResource fetchByN_T(long nodeId,
-		java.lang.String title, boolean retrieveFromCache) {
+	public static com.liferay.wiki.model.WikiPageResource fetchByN_T(
+		long nodeId, java.lang.String title, boolean retrieveFromCache) {
 		return getPersistence().fetchByN_T(nodeId, title, retrieveFromCache);
 	}
 
@@ -355,8 +361,8 @@ public class WikiPageResourceUtil {
 	* @param title the title
 	* @return the wiki page resource that was removed
 	*/
-	public static WikiPageResource removeByN_T(long nodeId,
-		java.lang.String title)
+	public static com.liferay.wiki.model.WikiPageResource removeByN_T(
+		long nodeId, java.lang.String title)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().removeByN_T(nodeId, title);
 	}
@@ -377,7 +383,8 @@ public class WikiPageResourceUtil {
 	*
 	* @param wikiPageResource the wiki page resource
 	*/
-	public static void cacheResult(WikiPageResource wikiPageResource) {
+	public static void cacheResult(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		getPersistence().cacheResult(wikiPageResource);
 	}
 
@@ -386,7 +393,8 @@ public class WikiPageResourceUtil {
 	*
 	* @param wikiPageResources the wiki page resources
 	*/
-	public static void cacheResult(List<WikiPageResource> wikiPageResources) {
+	public static void cacheResult(
+		java.util.List<com.liferay.wiki.model.WikiPageResource> wikiPageResources) {
 		getPersistence().cacheResult(wikiPageResources);
 	}
 
@@ -396,7 +404,8 @@ public class WikiPageResourceUtil {
 	* @param resourcePrimKey the primary key for the new wiki page resource
 	* @return the new wiki page resource
 	*/
-	public static WikiPageResource create(long resourcePrimKey) {
+	public static com.liferay.wiki.model.WikiPageResource create(
+		long resourcePrimKey) {
 		return getPersistence().create(resourcePrimKey);
 	}
 
@@ -407,12 +416,14 @@ public class WikiPageResourceUtil {
 	* @return the wiki page resource that was removed
 	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
-	public static WikiPageResource remove(long resourcePrimKey)
+	public static com.liferay.wiki.model.WikiPageResource remove(
+		long resourcePrimKey)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().remove(resourcePrimKey);
 	}
 
-	public static WikiPageResource updateImpl(WikiPageResource wikiPageResource) {
+	public static com.liferay.wiki.model.WikiPageResource updateImpl(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		return getPersistence().updateImpl(wikiPageResource);
 	}
 
@@ -423,7 +434,8 @@ public class WikiPageResourceUtil {
 	* @return the wiki page resource
 	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
-	public static WikiPageResource findByPrimaryKey(long resourcePrimKey)
+	public static com.liferay.wiki.model.WikiPageResource findByPrimaryKey(
+		long resourcePrimKey)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
 		return getPersistence().findByPrimaryKey(resourcePrimKey);
 	}
@@ -434,11 +446,12 @@ public class WikiPageResourceUtil {
 	* @param resourcePrimKey the primary key of the wiki page resource
 	* @return the wiki page resource, or <code>null</code> if a wiki page resource with the primary key could not be found
 	*/
-	public static WikiPageResource fetchByPrimaryKey(long resourcePrimKey) {
+	public static com.liferay.wiki.model.WikiPageResource fetchByPrimaryKey(
+		long resourcePrimKey) {
 		return getPersistence().fetchByPrimaryKey(resourcePrimKey);
 	}
 
-	public static java.util.Map<java.io.Serializable, WikiPageResource> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.wiki.model.WikiPageResource> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -448,7 +461,7 @@ public class WikiPageResourceUtil {
 	*
 	* @return the wiki page resources
 	*/
-	public static List<WikiPageResource> findAll() {
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -456,14 +469,15 @@ public class WikiPageResourceUtil {
 	* Returns a range of all the wiki page resources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki page resources
 	* @param end the upper bound of the range of wiki page resources (not inclusive)
 	* @return the range of wiki page resources
 	*/
-	public static List<WikiPageResource> findAll(int start, int end) {
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -471,7 +485,7 @@ public class WikiPageResourceUtil {
 	* Returns an ordered range of all the wiki page resources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki page resources
@@ -479,8 +493,9 @@ public class WikiPageResourceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of wiki page resources
 	*/
-	public static List<WikiPageResource> findAll(int start, int end,
-		OrderByComparator<WikiPageResource> orderByComparator) {
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

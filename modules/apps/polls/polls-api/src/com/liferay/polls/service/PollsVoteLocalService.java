@@ -61,7 +61,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	public com.liferay.polls.model.PollsVote addVote(long userId,
 		long questionId, long choiceId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new polls vote with the primary key. Does not add the polls vote to the database.
@@ -77,7 +77,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the polls vote from the database. Also notifies the appropriate model listeners.
@@ -98,7 +98,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.polls.model.PollsVote deletePollsVote(long voteId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -203,7 +203,8 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the polls vote with the primary key.
@@ -214,7 +215,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsVote getPollsVote(long voteId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the polls vote matching the UUID and group.
@@ -226,7 +227,8 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsVote getPollsVoteByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the polls votes.
@@ -286,7 +288,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsVote getVote(long questionId,
-		long userId) throws PortalException;
+		long userId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

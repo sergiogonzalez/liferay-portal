@@ -28,7 +28,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalServiceU
  *
  * @author Brian Wing Shun Chan
  * @see SCProductVersionImpl
- * @see SCProductVersion
+ * @see com.liferay.portlet.softwarecatalog.model.SCProductVersion
  * @generated
  */
 @ProviderType

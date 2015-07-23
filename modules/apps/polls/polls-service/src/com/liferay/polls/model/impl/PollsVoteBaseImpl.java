@@ -28,7 +28,7 @@ import com.liferay.polls.service.PollsVoteLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PollsVoteImpl
- * @see PollsVote
+ * @see com.liferay.polls.model.PollsVote
  * @generated
  */
 @ProviderType

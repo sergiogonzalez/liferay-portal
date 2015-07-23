@@ -47,14 +47,14 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	 */
 	public void addCompanyScopePermission(long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addCompanyScopePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void addGroupScopePermission(long companyId, long groupId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addGroupScopePermissions(long companyId, long groupId,
 		java.lang.String name, long roleId, long actionIdsLong);
@@ -62,11 +62,13 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public void addIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
-		long roleId, java.lang.String actionId) throws PortalException;
+		long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
-		java.lang.String actionId) throws PortalException;
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name,
@@ -75,7 +77,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	public void addIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a resource block if necessary and associates the resource block
@@ -120,7 +122,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the resource block from the database. Also notifies the appropriate model listeners.
@@ -141,7 +143,8 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ResourceBlock deleteResourceBlock(
-		long resourceBlockId) throws PortalException;
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -214,11 +217,12 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getActionId(java.lang.String name, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getActionIds(java.lang.String name,
-		java.util.List<java.lang.String> actionIds) throws PortalException;
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.String> getActionIds(
@@ -244,7 +248,8 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PermissionedModel getPermissionedModel(
-		java.lang.String name, long primKey) throws PortalException;
+		java.lang.String name, long primKey)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.String> getPermissions(
@@ -253,11 +258,13 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourceBlock getResourceBlock(
-		java.lang.String name, long primKey) throws PortalException;
+		java.lang.String name, long primKey)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the resource block with the primary key.
@@ -268,13 +275,14 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourceBlock getResourceBlock(
-		long resourceBlockId) throws PortalException;
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getResourceBlockIds(
 		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag,
 		java.lang.String name, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.security.permission.ResourceBlockIdsBag getResourceBlockIdsBag(
@@ -306,28 +314,29 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getRoles(
 		java.lang.String name, long primKey, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPermission(java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		java.lang.String actionId,
 		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPermission(java.lang.String name, long primKey,
 		java.lang.String actionId,
 		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSupported(java.lang.String name);
 
 	public void releasePermissionedModelResourceBlock(java.lang.String name,
-		long primKey) throws PortalException;
+		long primKey)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public void releasePermissionedModelResourceBlock(
 		com.liferay.portal.model.PermissionedModel permissionedModel);
 
@@ -338,7 +347,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	*
 	* @param resourceBlock the resource block
 	*/
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public void releaseResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock);
 
@@ -349,26 +358,26 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	*
 	* @param resourceBlockId the primary key of the resource block
 	*/
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public void releaseResourceBlock(long resourceBlockId);
 
 	public void removeAllGroupScopePermissions(long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void removeAllGroupScopePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void removeCompanyScopePermission(long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void removeCompanyScopePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void removeGroupScopePermission(long companyId, long groupId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void removeGroupScopePermissions(long companyId, long groupId,
 		java.lang.String name, long roleId, long actionIdsLong);
@@ -376,11 +385,13 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public void removeIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
-		long roleId, java.lang.String actionId) throws PortalException;
+		long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void removeIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
-		java.lang.String actionId) throws PortalException;
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void removeIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name,
@@ -389,7 +400,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	public void removeIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -400,14 +411,16 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	public void setCompanyScopePermissions(long companyId,
 		java.lang.String name, long roleId,
-		java.util.List<java.lang.String> actionIds) throws PortalException;
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setCompanyScopePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong);
 
 	public void setGroupScopePermissions(long companyId, long groupId,
 		java.lang.String name, long roleId,
-		java.util.List<java.lang.String> actionIds) throws PortalException;
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setGroupScopePermissions(long companyId, long groupId,
 		java.lang.String name, long roleId, long actionIdsLong);
@@ -416,7 +429,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		long roleId, java.util.List<java.lang.String> actionIds)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name,
@@ -425,16 +438,17 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
-		java.util.List<java.lang.String> actionIds) throws PortalException;
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey,
 		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void updateCompanyScopePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong, int operator);
@@ -457,7 +471,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public com.liferay.portal.model.ResourceBlock updateResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock);
 
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.model.ResourceBlock updateResourceBlockId(
 		long companyId, long groupId, java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
@@ -465,5 +479,6 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
 
 	public void verifyResourceBlockId(long companyId, java.lang.String name,
-		long primKey) throws PortalException;
+		long primKey)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

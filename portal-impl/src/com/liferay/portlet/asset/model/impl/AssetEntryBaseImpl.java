@@ -28,7 +28,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AssetEntryImpl
- * @see AssetEntry
+ * @see com.liferay.portlet.asset.model.AssetEntry
  * @generated
  */
 @ProviderType

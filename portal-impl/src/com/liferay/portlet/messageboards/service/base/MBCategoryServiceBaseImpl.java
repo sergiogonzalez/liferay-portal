@@ -93,7 +93,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the message boards category remote service
 	 */
-	public MBCategoryService getMBCategoryService() {
+	public com.liferay.portlet.messageboards.service.MBCategoryService getMBCategoryService() {
 		return mbCategoryService;
 	}
 
@@ -102,7 +102,8 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param mbCategoryService the message boards category remote service
 	 */
-	public void setMBCategoryService(MBCategoryService mbCategoryService) {
+	public void setMBCategoryService(
+		com.liferay.portlet.messageboards.service.MBCategoryService mbCategoryService) {
 		this.mbCategoryService = mbCategoryService;
 	}
 
@@ -934,8 +935,8 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryLocalService.class)
 	protected com.liferay.portlet.messageboards.service.MBCategoryLocalService mbCategoryLocalService;
-	@BeanReference(type = MBCategoryService.class)
-	protected MBCategoryService mbCategoryService;
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryService.class)
+	protected com.liferay.portlet.messageboards.service.MBCategoryService mbCategoryService;
 	@BeanReference(type = MBCategoryPersistence.class)
 	protected MBCategoryPersistence mbCategoryPersistence;
 	@BeanReference(type = MBCategoryFinder.class)

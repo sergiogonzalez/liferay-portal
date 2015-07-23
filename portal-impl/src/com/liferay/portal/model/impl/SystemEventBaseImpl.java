@@ -28,7 +28,7 @@ import com.liferay.portal.service.SystemEventLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SystemEventImpl
- * @see SystemEvent
+ * @see com.liferay.portal.model.SystemEvent
  * @generated
  */
 @ProviderType

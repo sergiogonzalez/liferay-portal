@@ -180,7 +180,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @return the create date of this message boards ban
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _mbBan.getCreateDate();
 	}
 
@@ -205,7 +205,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @return the modified date of this message boards ban
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _mbBan.getModifiedDate();
 	}
 
@@ -340,7 +340,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @param createDate the create date of this message boards ban
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_mbBan.setCreateDate(createDate);
 	}
 
@@ -378,7 +378,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* @param modifiedDate the modified date of this message boards ban
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_mbBan.setModifiedDate(modifiedDate);
 	}
 

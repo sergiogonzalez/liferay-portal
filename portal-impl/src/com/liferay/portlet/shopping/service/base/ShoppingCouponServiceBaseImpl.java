@@ -80,7 +80,7 @@ public abstract class ShoppingCouponServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the shopping coupon remote service
 	 */
-	public ShoppingCouponService getShoppingCouponService() {
+	public com.liferay.portlet.shopping.service.ShoppingCouponService getShoppingCouponService() {
 		return shoppingCouponService;
 	}
 
@@ -90,7 +90,7 @@ public abstract class ShoppingCouponServiceBaseImpl extends BaseServiceImpl
 	 * @param shoppingCouponService the shopping coupon remote service
 	 */
 	public void setShoppingCouponService(
-		ShoppingCouponService shoppingCouponService) {
+		com.liferay.portlet.shopping.service.ShoppingCouponService shoppingCouponService) {
 		this.shoppingCouponService = shoppingCouponService;
 	}
 
@@ -417,8 +417,8 @@ public abstract class ShoppingCouponServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponLocalService.class)
 	protected com.liferay.portlet.shopping.service.ShoppingCouponLocalService shoppingCouponLocalService;
-	@BeanReference(type = ShoppingCouponService.class)
-	protected ShoppingCouponService shoppingCouponService;
+	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponService.class)
+	protected com.liferay.portlet.shopping.service.ShoppingCouponService shoppingCouponService;
 	@BeanReference(type = ShoppingCouponPersistence.class)
 	protected ShoppingCouponPersistence shoppingCouponPersistence;
 	@BeanReference(type = ShoppingCouponFinder.class)

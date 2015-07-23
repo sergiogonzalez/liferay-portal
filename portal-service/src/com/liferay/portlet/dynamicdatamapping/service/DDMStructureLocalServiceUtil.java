@@ -125,7 +125,7 @@ public class DDMStructureLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @param parentStructureId the primary key of the parent structure
 	(optionally {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
+	DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
 	* @param classNameId the primary key of the class name for the
 	structure's related model
 	* @param structureKey the unique string identifying the structure
@@ -135,10 +135,9 @@ public class DDMStructureLocalServiceUtil {
 	descriptions
 	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
@@ -198,10 +197,9 @@ public class DDMStructureLocalServiceUtil {
 	descriptions
 	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions and
 	group permissions for the structure.
@@ -249,16 +247,14 @@ public class DDMStructureLocalServiceUtil {
 	* Adds the model resources with the permissions to the structure.
 	*
 	* @param structure the structure to add resources to
-	* @param groupPermissions the group permissions to be added
-	* @param guestPermissions the guest permissions to be added
+	* @param modelPermissions the permissions to be added
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static void addStructureResources(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addStructureResources(structure, groupPermissions, guestPermissions);
+		getService().addStructureResources(structure, modelPermissions);
 	}
 
 	/**
@@ -621,8 +617,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -849,8 +844,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -876,8 +870,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -912,8 +905,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -962,8 +954,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1033,8 +1024,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1069,8 +1059,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1081,10 +1070,9 @@ public class DDMStructureLocalServiceUtil {
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @param start the lower bound of the range of structures to return
@@ -1133,10 +1121,9 @@ public class DDMStructureLocalServiceUtil {
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @return the number of matching structures

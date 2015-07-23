@@ -310,7 +310,7 @@ public abstract class CalendarResourceServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the calendar resource remote service
 	 */
-	public CalendarResourceService getCalendarResourceService() {
+	public com.liferay.calendar.service.CalendarResourceService getCalendarResourceService() {
 		return calendarResourceService;
 	}
 
@@ -320,7 +320,7 @@ public abstract class CalendarResourceServiceBaseImpl extends BaseServiceImpl
 	 * @param calendarResourceService the calendar resource remote service
 	 */
 	public void setCalendarResourceService(
-		CalendarResourceService calendarResourceService) {
+		com.liferay.calendar.service.CalendarResourceService calendarResourceService) {
 		this.calendarResourceService = calendarResourceService;
 	}
 
@@ -654,8 +654,8 @@ public abstract class CalendarResourceServiceBaseImpl extends BaseServiceImpl
 	protected CalendarNotificationTemplatePersistence calendarNotificationTemplatePersistence;
 	@BeanReference(type = com.liferay.calendar.service.CalendarResourceLocalService.class)
 	protected com.liferay.calendar.service.CalendarResourceLocalService calendarResourceLocalService;
-	@BeanReference(type = CalendarResourceService.class)
-	protected CalendarResourceService calendarResourceService;
+	@BeanReference(type = com.liferay.calendar.service.CalendarResourceService.class)
+	protected com.liferay.calendar.service.CalendarResourceService calendarResourceService;
 	@BeanReference(type = CalendarResourcePersistence.class)
 	protected CalendarResourcePersistence calendarResourcePersistence;
 	@BeanReference(type = CalendarResourceFinder.class)

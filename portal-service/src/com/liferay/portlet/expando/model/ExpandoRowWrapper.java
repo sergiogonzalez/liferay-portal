@@ -136,7 +136,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	* @return the modified date of this expando row
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _expandoRow.getModifiedDate();
 	}
 
@@ -248,7 +248,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	* @param modifiedDate the modified date of this expando row
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_expandoRow.setModifiedDate(modifiedDate);
 	}
 

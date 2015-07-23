@@ -371,8 +371,7 @@ public class CompanyServiceWrapper implements CompanyService,
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String, String,
-	String, java.util.List, java.util.List, java.util.List,
-	java.util.List, UnicodeProperties)}
+	String, List, List, List, List, UnicodeProperties)}
 	*/
 	@Deprecated
 	@Override
@@ -475,7 +474,7 @@ public class CompanyServiceWrapper implements CompanyService,
 	*
 	* @param companyId the primary key of the company
 	* @param properties the company's properties. See {@link
-	com.liferay.portal.kernel.util.UnicodeProperties}
+	UnicodeProperties}
 	* @throws PortalException if the user was not an administrator
 	*/
 	@Override

@@ -237,7 +237,7 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	* @return the create date of this layout set
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _layoutSet.getCreateDate();
 	}
 
@@ -354,7 +354,7 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	* @return the modified date of this layout set
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _layoutSet.getModifiedDate();
 	}
 
@@ -587,7 +587,7 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	* @param createDate the create date of this layout set
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_layoutSet.setCreateDate(createDate);
 	}
 
@@ -676,7 +676,7 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	* @param modifiedDate the modified date of this layout set
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_layoutSet.setModifiedDate(modifiedDate);
 	}
 

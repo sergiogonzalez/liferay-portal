@@ -46,13 +46,14 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param groupId the group ID
 	* @return the matching wall entries
 	*/
-	public java.util.List<WallEntry> findByGroupId(long groupId);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the wall entries where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -60,14 +61,14 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param end the upper bound of the range of wall entries (not inclusive)
 	* @return the range of matching wall entries
 	*/
-	public java.util.List<WallEntry> findByGroupId(long groupId, int start,
-		int end);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByGroupId(
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wall entries where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -76,9 +77,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wall entries
 	*/
-	public java.util.List<WallEntry> findByGroupId(long groupId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the first wall entry in the ordered set where groupId = &#63;.
@@ -88,8 +89,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the first matching wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a matching wall entry could not be found
 	*/
-	public WallEntry findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -99,8 +101,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wall entry, or <code>null</code> if a matching wall entry could not be found
 	*/
-	public WallEntry fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public com.liferay.social.networking.model.WallEntry fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the last wall entry in the ordered set where groupId = &#63;.
@@ -110,8 +113,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the last matching wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a matching wall entry could not be found
 	*/
-	public WallEntry findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -121,8 +125,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wall entry, or <code>null</code> if a matching wall entry could not be found
 	*/
-	public WallEntry fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public com.liferay.social.networking.model.WallEntry fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the wall entries before and after the current wall entry in the ordered set where groupId = &#63;.
@@ -133,9 +138,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the previous, current, and next wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a wall entry with the primary key could not be found
 	*/
-	public WallEntry[] findByGroupId_PrevAndNext(long wallEntryId,
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry[] findByGroupId_PrevAndNext(
+		long wallEntryId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -159,13 +164,14 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param userId the user ID
 	* @return the matching wall entries
 	*/
-	public java.util.List<WallEntry> findByUserId(long userId);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByUserId(
+		long userId);
 
 	/**
 	* Returns a range of all the wall entries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -173,14 +179,14 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param end the upper bound of the range of wall entries (not inclusive)
 	* @return the range of matching wall entries
 	*/
-	public java.util.List<WallEntry> findByUserId(long userId, int start,
-		int end);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByUserId(
+		long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wall entries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -189,9 +195,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wall entries
 	*/
-	public java.util.List<WallEntry> findByUserId(long userId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the first wall entry in the ordered set where userId = &#63;.
@@ -201,8 +207,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the first matching wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a matching wall entry could not be found
 	*/
-	public WallEntry findByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -212,8 +219,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wall entry, or <code>null</code> if a matching wall entry could not be found
 	*/
-	public WallEntry fetchByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public com.liferay.social.networking.model.WallEntry fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the last wall entry in the ordered set where userId = &#63;.
@@ -223,8 +231,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the last matching wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a matching wall entry could not be found
 	*/
-	public WallEntry findByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry findByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -234,8 +243,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wall entry, or <code>null</code> if a matching wall entry could not be found
 	*/
-	public WallEntry fetchByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public com.liferay.social.networking.model.WallEntry fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the wall entries before and after the current wall entry in the ordered set where userId = &#63;.
@@ -246,8 +256,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the previous, current, and next wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a wall entry with the primary key could not be found
 	*/
-	public WallEntry[] findByUserId_PrevAndNext(long wallEntryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry[] findByUserId_PrevAndNext(
+		long wallEntryId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -272,13 +283,14 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param userId the user ID
 	* @return the matching wall entries
 	*/
-	public java.util.List<WallEntry> findByG_U(long groupId, long userId);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByG_U(
+		long groupId, long userId);
 
 	/**
 	* Returns a range of all the wall entries where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -287,14 +299,14 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param end the upper bound of the range of wall entries (not inclusive)
 	* @return the range of matching wall entries
 	*/
-	public java.util.List<WallEntry> findByG_U(long groupId, long userId,
-		int start, int end);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByG_U(
+		long groupId, long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wall entries where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -304,9 +316,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wall entries
 	*/
-	public java.util.List<WallEntry> findByG_U(long groupId, long userId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByG_U(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the first wall entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -317,8 +329,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the first matching wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a matching wall entry could not be found
 	*/
-	public WallEntry findByG_U_First(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry findByG_U_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -329,8 +342,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wall entry, or <code>null</code> if a matching wall entry could not be found
 	*/
-	public WallEntry fetchByG_U_First(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public com.liferay.social.networking.model.WallEntry fetchByG_U_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the last wall entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -341,8 +355,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the last matching wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a matching wall entry could not be found
 	*/
-	public WallEntry findByG_U_Last(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry findByG_U_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -353,8 +368,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wall entry, or <code>null</code> if a matching wall entry could not be found
 	*/
-	public WallEntry fetchByG_U_Last(long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public com.liferay.social.networking.model.WallEntry fetchByG_U_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Returns the wall entries before and after the current wall entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -366,9 +382,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the previous, current, and next wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a wall entry with the primary key could not be found
 	*/
-	public WallEntry[] findByG_U_PrevAndNext(long wallEntryId, long groupId,
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
+	public com.liferay.social.networking.model.WallEntry[] findByG_U_PrevAndNext(
+		long wallEntryId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -393,14 +409,16 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*
 	* @param wallEntry the wall entry
 	*/
-	public void cacheResult(WallEntry wallEntry);
+	public void cacheResult(
+		com.liferay.social.networking.model.WallEntry wallEntry);
 
 	/**
 	* Caches the wall entries in the entity cache if it is enabled.
 	*
 	* @param wallEntries the wall entries
 	*/
-	public void cacheResult(java.util.List<WallEntry> wallEntries);
+	public void cacheResult(
+		java.util.List<com.liferay.social.networking.model.WallEntry> wallEntries);
 
 	/**
 	* Creates a new wall entry with the primary key. Does not add the wall entry to the database.
@@ -408,7 +426,8 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param wallEntryId the primary key for the new wall entry
 	* @return the new wall entry
 	*/
-	public WallEntry create(long wallEntryId);
+	public com.liferay.social.networking.model.WallEntry create(
+		long wallEntryId);
 
 	/**
 	* Removes the wall entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -417,10 +436,12 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the wall entry that was removed
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a wall entry with the primary key could not be found
 	*/
-	public WallEntry remove(long wallEntryId)
+	public com.liferay.social.networking.model.WallEntry remove(
+		long wallEntryId)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
-	public WallEntry updateImpl(WallEntry wallEntry);
+	public com.liferay.social.networking.model.WallEntry updateImpl(
+		com.liferay.social.networking.model.WallEntry wallEntry);
 
 	/**
 	* Returns the wall entry with the primary key or throws a {@link com.liferay.social.networking.NoSuchWallEntryException} if it could not be found.
@@ -429,7 +450,8 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the wall entry
 	* @throws com.liferay.social.networking.NoSuchWallEntryException if a wall entry with the primary key could not be found
 	*/
-	public WallEntry findByPrimaryKey(long wallEntryId)
+	public com.liferay.social.networking.model.WallEntry findByPrimaryKey(
+		long wallEntryId)
 		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
 
 	/**
@@ -438,10 +460,11 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param wallEntryId the primary key of the wall entry
 	* @return the wall entry, or <code>null</code> if a wall entry with the primary key could not be found
 	*/
-	public WallEntry fetchByPrimaryKey(long wallEntryId);
+	public com.liferay.social.networking.model.WallEntry fetchByPrimaryKey(
+		long wallEntryId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, WallEntry> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.social.networking.model.WallEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -449,26 +472,27 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*
 	* @return the wall entries
 	*/
-	public java.util.List<WallEntry> findAll();
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findAll();
 
 	/**
 	* Returns a range of all the wall entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wall entries
 	* @param end the upper bound of the range of wall entries (not inclusive)
 	* @return the range of wall entries
 	*/
-	public java.util.List<WallEntry> findAll(int start, int end);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wall entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wall entries
@@ -476,8 +500,9 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of wall entries
 	*/
-	public java.util.List<WallEntry> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator);
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.WallEntry> orderByComparator);
 
 	/**
 	* Removes all the wall entries from the database.

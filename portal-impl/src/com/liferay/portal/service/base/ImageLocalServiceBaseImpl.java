@@ -298,7 +298,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the image local service
 	 */
-	public ImageLocalService getImageLocalService() {
+	public com.liferay.portal.service.ImageLocalService getImageLocalService() {
 		return imageLocalService;
 	}
 
@@ -307,7 +307,8 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param imageLocalService the image local service
 	 */
-	public void setImageLocalService(ImageLocalService imageLocalService) {
+	public void setImageLocalService(
+		com.liferay.portal.service.ImageLocalService imageLocalService) {
 		this.imageLocalService = imageLocalService;
 	}
 
@@ -504,8 +505,8 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = ImageLocalService.class)
-	protected ImageLocalService imageLocalService;
+	@BeanReference(type = com.liferay.portal.service.ImageLocalService.class)
+	protected com.liferay.portal.service.ImageLocalService imageLocalService;
 	@BeanReference(type = com.liferay.portal.service.ImageService.class)
 	protected com.liferay.portal.service.ImageService imageService;
 	@BeanReference(type = ImagePersistence.class)

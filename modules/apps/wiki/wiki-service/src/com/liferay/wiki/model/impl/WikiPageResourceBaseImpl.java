@@ -28,7 +28,7 @@ import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageResourceImpl
- * @see WikiPageResource
+ * @see com.liferay.wiki.model.WikiPageResource
  * @generated
  */
 @ProviderType

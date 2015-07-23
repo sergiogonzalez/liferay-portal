@@ -296,7 +296,7 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the ticket local service
 	 */
-	public TicketLocalService getTicketLocalService() {
+	public com.liferay.portal.service.TicketLocalService getTicketLocalService() {
 		return ticketLocalService;
 	}
 
@@ -305,7 +305,8 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param ticketLocalService the ticket local service
 	 */
-	public void setTicketLocalService(TicketLocalService ticketLocalService) {
+	public void setTicketLocalService(
+		com.liferay.portal.service.TicketLocalService ticketLocalService) {
 		this.ticketLocalService = ticketLocalService;
 	}
 
@@ -465,8 +466,8 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = TicketLocalService.class)
-	protected TicketLocalService ticketLocalService;
+	@BeanReference(type = com.liferay.portal.service.TicketLocalService.class)
+	protected com.liferay.portal.service.TicketLocalService ticketLocalService;
 	@BeanReference(type = TicketPersistence.class)
 	protected TicketPersistence ticketPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

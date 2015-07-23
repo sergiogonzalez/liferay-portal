@@ -59,7 +59,8 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery);
 
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery addUserDelivery(
-		long userId, java.lang.String type) throws PortalException;
+		long userId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
@@ -89,14 +90,16 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery deleteAnnouncementsDelivery(
-		long deliveryId) throws PortalException;
+		long deliveryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteDeliveries(long userId);
 
 	public void deleteDelivery(
 		com.liferay.portlet.announcements.model.AnnouncementsDelivery delivery);
 
-	public void deleteDelivery(long deliveryId) throws PortalException;
+	public void deleteDelivery(long deliveryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteDelivery(long userId, java.lang.String type);
 
@@ -106,7 +109,7 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -212,7 +215,8 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery getAnnouncementsDelivery(
-		long deliveryId) throws PortalException;
+		long deliveryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -223,20 +227,23 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery getDelivery(
-		long deliveryId) throws PortalException;
+		long deliveryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> getUserDeliveries(
-		long userId) throws PortalException;
+		long userId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery getUserDelivery(
-		long userId, java.lang.String type) throws PortalException;
+		long userId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -257,5 +264,6 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery updateDelivery(
 		long userId, java.lang.String type, boolean email, boolean sms,
-		boolean website) throws PortalException;
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

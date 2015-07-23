@@ -262,7 +262,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the create date of this bookmarks folder
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _bookmarksFolder.getCreateDate();
 	}
 
@@ -307,7 +307,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the last publish date of this bookmarks folder
 	*/
 	@Override
-	public Date getLastPublishDate() {
+	public java.util.Date getLastPublishDate() {
 		return _bookmarksFolder.getLastPublishDate();
 	}
 
@@ -317,7 +317,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the modified date of this bookmarks folder
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _bookmarksFolder.getModifiedDate();
 	}
 
@@ -428,7 +428,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @return the status date of this bookmarks folder
 	*/
 	@Override
-	public Date getStatusDate() {
+	public java.util.Date getStatusDate() {
 		return _bookmarksFolder.getStatusDate();
 	}
 
@@ -684,7 +684,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param createDate the create date of this bookmarks folder
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_bookmarksFolder.setCreateDate(createDate);
 	}
 
@@ -742,7 +742,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param lastPublishDate the last publish date of this bookmarks folder
 	*/
 	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
+	public void setLastPublishDate(java.util.Date lastPublishDate) {
 		_bookmarksFolder.setLastPublishDate(lastPublishDate);
 	}
 
@@ -752,7 +752,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param modifiedDate the modified date of this bookmarks folder
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_bookmarksFolder.setModifiedDate(modifiedDate);
 	}
 
@@ -862,7 +862,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* @param statusDate the status date of this bookmarks folder
 	*/
 	@Override
-	public void setStatusDate(Date statusDate) {
+	public void setStatusDate(java.util.Date statusDate) {
 		_bookmarksFolder.setStatusDate(statusDate);
 	}
 

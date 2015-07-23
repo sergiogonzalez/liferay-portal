@@ -60,7 +60,7 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 		long userId, long groupId, long repositoryId,
 		java.lang.String mappedId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new repository entry with the primary key. Does not add the repository entry to the database.
@@ -77,11 +77,11 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteRepositoryEntries(long repositoryId,
 		java.lang.Iterable<java.lang.String> mappedIds)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
@@ -102,10 +102,12 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
-		long repositoryEntryId) throws PortalException;
+		long repositoryEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteRepositoryEntry(long repositoryId,
-		java.lang.String mappedId) throws PortalException;
+		java.lang.String mappedId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -204,7 +206,8 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntries(
@@ -268,16 +271,18 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
-		long repositoryEntryId) throws PortalException;
+		long repositoryEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
 		long userId, long groupId, long repositoryId, java.lang.String objectId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the repository entry matching the UUID and group.
@@ -289,7 +294,8 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.RepositoryEntry getRepositoryEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -310,5 +316,5 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 
 	public com.liferay.portal.model.RepositoryEntry updateRepositoryEntry(
 		long repositoryEntryId, java.lang.String mappedId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

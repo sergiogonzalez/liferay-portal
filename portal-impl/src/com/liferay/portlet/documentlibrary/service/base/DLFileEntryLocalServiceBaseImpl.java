@@ -459,7 +459,7 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 *
 	 * @return the document library file entry local service
 	 */
-	public DLFileEntryLocalService getDLFileEntryLocalService() {
+	public com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService getDLFileEntryLocalService() {
 		return dlFileEntryLocalService;
 	}
 
@@ -469,7 +469,7 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 * @param dlFileEntryLocalService the document library file entry local service
 	 */
 	public void setDLFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
+		com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService dlFileEntryLocalService) {
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
@@ -1701,8 +1701,8 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLFileEntryLocalService.class)
-	protected DLFileEntryLocalService dlFileEntryLocalService;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService dlFileEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryService dlFileEntryService;
 	@BeanReference(type = DLFileEntryPersistence.class)

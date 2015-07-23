@@ -83,7 +83,7 @@ public abstract class MicroblogsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the microblogs entry remote service
 	 */
-	public MicroblogsEntryService getMicroblogsEntryService() {
+	public com.liferay.microblogs.service.MicroblogsEntryService getMicroblogsEntryService() {
 		return microblogsEntryService;
 	}
 
@@ -93,7 +93,7 @@ public abstract class MicroblogsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param microblogsEntryService the microblogs entry remote service
 	 */
 	public void setMicroblogsEntryService(
-		MicroblogsEntryService microblogsEntryService) {
+		com.liferay.microblogs.service.MicroblogsEntryService microblogsEntryService) {
 		this.microblogsEntryService = microblogsEntryService;
 	}
 
@@ -592,8 +592,8 @@ public abstract class MicroblogsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.microblogs.service.MicroblogsEntryLocalService.class)
 	protected com.liferay.microblogs.service.MicroblogsEntryLocalService microblogsEntryLocalService;
-	@BeanReference(type = MicroblogsEntryService.class)
-	protected MicroblogsEntryService microblogsEntryService;
+	@BeanReference(type = com.liferay.microblogs.service.MicroblogsEntryService.class)
+	protected com.liferay.microblogs.service.MicroblogsEntryService microblogsEntryService;
 	@BeanReference(type = MicroblogsEntryPersistence.class)
 	protected MicroblogsEntryPersistence microblogsEntryPersistence;
 	@BeanReference(type = MicroblogsEntryFinder.class)

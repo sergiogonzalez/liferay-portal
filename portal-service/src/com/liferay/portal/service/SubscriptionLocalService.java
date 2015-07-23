@@ -80,7 +80,7 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portal.model.Subscription addSubscription(long userId,
 		long groupId, java.lang.String className, long classPK)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Subscribes the user to the entity, notifying him at the given frequency.
@@ -106,7 +106,8 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portal.model.Subscription addSubscription(long userId,
 		long groupId, java.lang.String className, long classPK,
-		java.lang.String frequency) throws PortalException;
+		java.lang.String frequency)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new subscription with the primary key. Does not add the subscription to the database.
@@ -123,7 +124,7 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
@@ -135,7 +136,7 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Subscription deleteSubscription(
 		com.liferay.portal.model.Subscription subscription)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
@@ -146,7 +147,8 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Subscription deleteSubscription(
-		long subscriptionId) throws PortalException;
+		long subscriptionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the user's subscription to the entity. A social activity with the
@@ -159,7 +161,8 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	found
 	*/
 	public void deleteSubscription(long userId, java.lang.String className,
-		long classPK) throws PortalException;
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes all the subscriptions to the entity.
@@ -170,7 +173,8 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteSubscriptions(long companyId, java.lang.String className,
-		long classPK) throws PortalException;
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes all the subscriptions of the user.
@@ -178,10 +182,11 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @throws PortalException if a portal exception occurred
 	*/
-	public void deleteSubscriptions(long userId) throws PortalException;
+	public void deleteSubscriptions(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteSubscriptions(long userId, long groupId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -269,7 +274,8 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the subscription of the user to the entity.
@@ -284,7 +290,7 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Subscription getSubscription(
 		long companyId, long userId, java.lang.String className, long classPK)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the subscription with the primary key.
@@ -295,7 +301,8 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Subscription getSubscription(
-		long subscriptionId) throws PortalException;
+		long subscriptionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the subscriptions to the entity.

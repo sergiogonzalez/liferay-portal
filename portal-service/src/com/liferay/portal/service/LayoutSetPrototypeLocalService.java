@@ -68,7 +68,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
 		long userId, long companyId,
@@ -76,7 +76,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new layout set prototype with the primary key. Does not add the layout set prototype to the database.
@@ -98,7 +98,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
 		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
@@ -109,12 +109,14 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
-		long layoutSetPrototypeId) throws PortalException;
+		long layoutSetPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteLayoutSetPrototypes() throws PortalException;
+	public void deleteLayoutSetPrototypes()
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteNondefaultLayoutSetPrototypes(long companyId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -122,7 +124,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -227,7 +229,8 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototype(
-		long layoutSetPrototypeId) throws PortalException;
+		long layoutSetPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
@@ -236,7 +239,8 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
-		java.lang.String uuid) throws PortalException;
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the layout set prototype with the matching UUID and company.
@@ -248,7 +252,8 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> getLayoutSetPrototypes(
@@ -280,7 +285,8 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> search(
@@ -319,7 +325,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId,
@@ -327,9 +333,9 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId, java.lang.String settings)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

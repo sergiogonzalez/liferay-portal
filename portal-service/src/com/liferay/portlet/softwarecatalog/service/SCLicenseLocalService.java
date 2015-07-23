@@ -49,7 +49,8 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	 */
 	public com.liferay.portlet.softwarecatalog.model.SCLicense addLicense(
 		java.lang.String name, java.lang.String url, boolean openSource,
-		boolean active, boolean recommended) throws PortalException;
+		boolean active, boolean recommended)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the s c license to the database. Also notifies the appropriate model listeners.
@@ -86,7 +87,8 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	public void deleteLicense(
 		com.liferay.portlet.softwarecatalog.model.SCLicense license);
 
-	public void deleteLicense(long licenseId) throws PortalException;
+	public void deleteLicense(long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -94,7 +96,7 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the s c license with the primary key from the database. Also notifies the appropriate model listeners.
@@ -105,7 +107,8 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.softwarecatalog.model.SCLicense deleteSCLicense(
-		long licenseId) throws PortalException;
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the s c license from the database. Also notifies the appropriate model listeners.
@@ -210,7 +213,8 @@ public interface SCLicenseLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCLicense getLicense(
-		long licenseId) throws PortalException;
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses();
@@ -236,7 +240,8 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getProductEntryLicenses(
@@ -251,7 +256,8 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCLicense getSCLicense(
-		long licenseId) throws PortalException;
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the s c licenses.
@@ -321,7 +327,7 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	public com.liferay.portlet.softwarecatalog.model.SCLicense updateLicense(
 		long licenseId, java.lang.String name, java.lang.String url,
 		boolean openSource, boolean active, boolean recommended)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the s c license in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -295,7 +295,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the release local service
 	 */
-	public ReleaseLocalService getReleaseLocalService() {
+	public com.liferay.portal.service.ReleaseLocalService getReleaseLocalService() {
 		return releaseLocalService;
 	}
 
@@ -304,7 +304,8 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param releaseLocalService the release local service
 	 */
-	public void setReleaseLocalService(ReleaseLocalService releaseLocalService) {
+	public void setReleaseLocalService(
+		com.liferay.portal.service.ReleaseLocalService releaseLocalService) {
 		this.releaseLocalService = releaseLocalService;
 	}
 
@@ -407,8 +408,8 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = ReleaseLocalService.class)
-	protected ReleaseLocalService releaseLocalService;
+	@BeanReference(type = com.liferay.portal.service.ReleaseLocalService.class)
+	protected com.liferay.portal.service.ReleaseLocalService releaseLocalService;
 	@BeanReference(type = ReleasePersistence.class)
 	protected ReleasePersistence releasePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

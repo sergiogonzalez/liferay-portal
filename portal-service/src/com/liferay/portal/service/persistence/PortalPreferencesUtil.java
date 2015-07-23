@@ -109,14 +109,15 @@ public class PortalPreferencesUtil {
 	}
 
 	/**
-	* Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or throws a {@link NoSuchPreferencesException} if it could not be found.
+	* Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or throws a {@link com.liferay.portal.NoSuchPreferencesException} if it could not be found.
 	*
 	* @param ownerId the owner ID
 	* @param ownerType the owner type
 	* @return the matching portal preferences
-	* @throws NoSuchPreferencesException if a matching portal preferences could not be found
+	* @throws com.liferay.portal.NoSuchPreferencesException if a matching portal preferences could not be found
 	*/
-	public static PortalPreferences findByO_O(long ownerId, int ownerType)
+	public static com.liferay.portal.model.PortalPreferences findByO_O(
+		long ownerId, int ownerType)
 		throws com.liferay.portal.NoSuchPreferencesException {
 		return getPersistence().findByO_O(ownerId, ownerType);
 	}
@@ -128,7 +129,8 @@ public class PortalPreferencesUtil {
 	* @param ownerType the owner type
 	* @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
 	*/
-	public static PortalPreferences fetchByO_O(long ownerId, int ownerType) {
+	public static com.liferay.portal.model.PortalPreferences fetchByO_O(
+		long ownerId, int ownerType) {
 		return getPersistence().fetchByO_O(ownerId, ownerType);
 	}
 
@@ -140,8 +142,8 @@ public class PortalPreferencesUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
 	*/
-	public static PortalPreferences fetchByO_O(long ownerId, int ownerType,
-		boolean retrieveFromCache) {
+	public static com.liferay.portal.model.PortalPreferences fetchByO_O(
+		long ownerId, int ownerType, boolean retrieveFromCache) {
 		return getPersistence().fetchByO_O(ownerId, ownerType, retrieveFromCache);
 	}
 
@@ -152,7 +154,8 @@ public class PortalPreferencesUtil {
 	* @param ownerType the owner type
 	* @return the portal preferences that was removed
 	*/
-	public static PortalPreferences removeByO_O(long ownerId, int ownerType)
+	public static com.liferay.portal.model.PortalPreferences removeByO_O(
+		long ownerId, int ownerType)
 		throws com.liferay.portal.NoSuchPreferencesException {
 		return getPersistence().removeByO_O(ownerId, ownerType);
 	}
@@ -173,7 +176,8 @@ public class PortalPreferencesUtil {
 	*
 	* @param portalPreferences the portal preferences
 	*/
-	public static void cacheResult(PortalPreferences portalPreferences) {
+	public static void cacheResult(
+		com.liferay.portal.model.PortalPreferences portalPreferences) {
 		getPersistence().cacheResult(portalPreferences);
 	}
 
@@ -182,7 +186,8 @@ public class PortalPreferencesUtil {
 	*
 	* @param portalPreferenceses the portal preferenceses
 	*/
-	public static void cacheResult(List<PortalPreferences> portalPreferenceses) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.PortalPreferences> portalPreferenceses) {
 		getPersistence().cacheResult(portalPreferenceses);
 	}
 
@@ -192,7 +197,8 @@ public class PortalPreferencesUtil {
 	* @param portalPreferencesId the primary key for the new portal preferences
 	* @return the new portal preferences
 	*/
-	public static PortalPreferences create(long portalPreferencesId) {
+	public static com.liferay.portal.model.PortalPreferences create(
+		long portalPreferencesId) {
 		return getPersistence().create(portalPreferencesId);
 	}
 
@@ -201,26 +207,28 @@ public class PortalPreferencesUtil {
 	*
 	* @param portalPreferencesId the primary key of the portal preferences
 	* @return the portal preferences that was removed
-	* @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchPreferencesException if a portal preferences with the primary key could not be found
 	*/
-	public static PortalPreferences remove(long portalPreferencesId)
+	public static com.liferay.portal.model.PortalPreferences remove(
+		long portalPreferencesId)
 		throws com.liferay.portal.NoSuchPreferencesException {
 		return getPersistence().remove(portalPreferencesId);
 	}
 
-	public static PortalPreferences updateImpl(
-		PortalPreferences portalPreferences) {
+	public static com.liferay.portal.model.PortalPreferences updateImpl(
+		com.liferay.portal.model.PortalPreferences portalPreferences) {
 		return getPersistence().updateImpl(portalPreferences);
 	}
 
 	/**
-	* Returns the portal preferences with the primary key or throws a {@link NoSuchPreferencesException} if it could not be found.
+	* Returns the portal preferences with the primary key or throws a {@link com.liferay.portal.NoSuchPreferencesException} if it could not be found.
 	*
 	* @param portalPreferencesId the primary key of the portal preferences
 	* @return the portal preferences
-	* @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchPreferencesException if a portal preferences with the primary key could not be found
 	*/
-	public static PortalPreferences findByPrimaryKey(long portalPreferencesId)
+	public static com.liferay.portal.model.PortalPreferences findByPrimaryKey(
+		long portalPreferencesId)
 		throws com.liferay.portal.NoSuchPreferencesException {
 		return getPersistence().findByPrimaryKey(portalPreferencesId);
 	}
@@ -231,11 +239,12 @@ public class PortalPreferencesUtil {
 	* @param portalPreferencesId the primary key of the portal preferences
 	* @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
 	*/
-	public static PortalPreferences fetchByPrimaryKey(long portalPreferencesId) {
+	public static com.liferay.portal.model.PortalPreferences fetchByPrimaryKey(
+		long portalPreferencesId) {
 		return getPersistence().fetchByPrimaryKey(portalPreferencesId);
 	}
 
-	public static java.util.Map<java.io.Serializable, PortalPreferences> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.PortalPreferences> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -245,7 +254,7 @@ public class PortalPreferencesUtil {
 	*
 	* @return the portal preferenceses
 	*/
-	public static List<PortalPreferences> findAll() {
+	public static java.util.List<com.liferay.portal.model.PortalPreferences> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -253,14 +262,15 @@ public class PortalPreferencesUtil {
 	* Returns a range of all the portal preferenceses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of portal preferenceses
 	* @param end the upper bound of the range of portal preferenceses (not inclusive)
 	* @return the range of portal preferenceses
 	*/
-	public static List<PortalPreferences> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portal.model.PortalPreferences> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -268,7 +278,7 @@ public class PortalPreferencesUtil {
 	* Returns an ordered range of all the portal preferenceses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of portal preferenceses
@@ -276,8 +286,9 @@ public class PortalPreferencesUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of portal preferenceses
 	*/
-	public static List<PortalPreferences> findAll(int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.PortalPreferences> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortalPreferences> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

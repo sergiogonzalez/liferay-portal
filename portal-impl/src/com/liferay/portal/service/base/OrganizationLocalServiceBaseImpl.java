@@ -677,7 +677,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 *
 	 * @return the organization local service
 	 */
-	public OrganizationLocalService getOrganizationLocalService() {
+	public com.liferay.portal.service.OrganizationLocalService getOrganizationLocalService() {
 		return organizationLocalService;
 	}
 
@@ -687,7 +687,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @param organizationLocalService the organization local service
 	 */
 	public void setOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
+		com.liferay.portal.service.OrganizationLocalService organizationLocalService) {
 		this.organizationLocalService = organizationLocalService;
 	}
 
@@ -1931,8 +1931,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = OrganizationLocalService.class)
-	protected OrganizationLocalService organizationLocalService;
+	@BeanReference(type = com.liferay.portal.service.OrganizationLocalService.class)
+	protected com.liferay.portal.service.OrganizationLocalService organizationLocalService;
 	@BeanReference(type = com.liferay.portal.service.OrganizationService.class)
 	protected com.liferay.portal.service.OrganizationService organizationService;
 	@BeanReference(type = OrganizationPersistence.class)

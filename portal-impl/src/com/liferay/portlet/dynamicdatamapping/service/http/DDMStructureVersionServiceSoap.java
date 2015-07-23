@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link DDMStructureVersionServiceUtil} service utility. The
+ * {@link com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see DDMStructureVersionServiceHttp
  * @see com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersionSoap
- * @see DDMStructureVersionServiceUtil
+ * @see com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionServiceUtil
  * @generated
  */
 @ProviderType

@@ -28,7 +28,7 @@ import com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AssetTagStatsImpl
- * @see AssetTagStats
+ * @see com.liferay.portlet.asset.model.AssetTagStats
  * @generated
  */
 @ProviderType

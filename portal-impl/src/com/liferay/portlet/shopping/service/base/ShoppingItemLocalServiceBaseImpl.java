@@ -307,7 +307,7 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	 *
 	 * @return the shopping item local service
 	 */
-	public ShoppingItemLocalService getShoppingItemLocalService() {
+	public com.liferay.portlet.shopping.service.ShoppingItemLocalService getShoppingItemLocalService() {
 		return shoppingItemLocalService;
 	}
 
@@ -317,7 +317,7 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	 * @param shoppingItemLocalService the shopping item local service
 	 */
 	public void setShoppingItemLocalService(
-		ShoppingItemLocalService shoppingItemLocalService) {
+		com.liferay.portlet.shopping.service.ShoppingItemLocalService shoppingItemLocalService) {
 		this.shoppingItemLocalService = shoppingItemLocalService;
 	}
 
@@ -740,8 +740,8 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ShoppingItemLocalService.class)
-	protected ShoppingItemLocalService shoppingItemLocalService;
+	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingItemLocalService.class)
+	protected com.liferay.portlet.shopping.service.ShoppingItemLocalService shoppingItemLocalService;
 	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingItemService.class)
 	protected com.liferay.portlet.shopping.service.ShoppingItemService shoppingItemService;
 	@BeanReference(type = ShoppingItemPersistence.class)

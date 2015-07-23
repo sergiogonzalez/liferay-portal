@@ -48,7 +48,8 @@ public interface CountryService extends BaseService {
 	 */
 	public com.liferay.portal.model.Country addCountry(java.lang.String name,
 		java.lang.String a2, java.lang.String a3, java.lang.String number,
-		java.lang.String idd, boolean active) throws PortalException;
+		java.lang.String idd, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Country fetchCountry(long countryId);
@@ -77,19 +78,20 @@ public interface CountryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Country getCountry(long countryId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Country getCountryByA2(java.lang.String a2)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Country getCountryByA3(java.lang.String a3)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Country getCountryByName(
-		java.lang.String name) throws PortalException;
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

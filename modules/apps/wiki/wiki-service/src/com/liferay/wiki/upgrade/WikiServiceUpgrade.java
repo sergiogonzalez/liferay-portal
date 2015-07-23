@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.wiki.service.configuration.configurator.WikiServiceConfigurator;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.wiki.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletSettings;
@@ -27,6 +27,8 @@ import com.liferay.wiki.upgrade.v1_0_0.UpgradeWikiPageResource;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -45,14 +47,13 @@ public class WikiServiceUpgrade {
 		_releaseLocalService = releaseLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Reference(unbind = "-")
-	protected void setWikiServiceConfigurator(
-		WikiServiceConfigurator wikiServiceConfigurator) {
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
 	}
 
 	@Activate
@@ -64,6 +65,7 @@ public class WikiServiceUpgrade {
 		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		upgradeProcesses.add(new UpgradeClassNames());
+		upgradeProcesses.add(new UpgradeLastPublishDate());
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 		upgradeProcesses.add(new UpgradeWikiPageResource());
 

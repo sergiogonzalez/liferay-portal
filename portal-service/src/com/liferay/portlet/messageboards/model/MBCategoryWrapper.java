@@ -272,7 +272,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the create date of this message boards category
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _mbCategory.getCreateDate();
 	}
 
@@ -317,7 +317,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the last post date of this message boards category
 	*/
 	@Override
-	public Date getLastPostDate() {
+	public java.util.Date getLastPostDate() {
 		return _mbCategory.getLastPostDate();
 	}
 
@@ -337,7 +337,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the modified date of this message boards category
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _mbCategory.getModifiedDate();
 	}
 
@@ -438,7 +438,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the status date of this message boards category
 	*/
 	@Override
-	public Date getStatusDate() {
+	public java.util.Date getStatusDate() {
 		return _mbCategory.getStatusDate();
 	}
 
@@ -704,7 +704,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param createDate the create date of this message boards category
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_mbCategory.setCreateDate(createDate);
 	}
 
@@ -762,7 +762,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param lastPostDate the last post date of this message boards category
 	*/
 	@Override
-	public void setLastPostDate(Date lastPostDate) {
+	public void setLastPostDate(java.util.Date lastPostDate) {
 		_mbCategory.setLastPostDate(lastPostDate);
 	}
 
@@ -782,7 +782,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param modifiedDate the modified date of this message boards category
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_mbCategory.setModifiedDate(modifiedDate);
 	}
 
@@ -882,7 +882,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @param statusDate the status date of this message boards category
 	*/
 	@Override
-	public void setStatusDate(Date statusDate) {
+	public void setStatusDate(java.util.Date statusDate) {
 		_mbCategory.setStatusDate(statusDate);
 	}
 

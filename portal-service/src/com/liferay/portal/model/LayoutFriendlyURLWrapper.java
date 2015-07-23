@@ -179,7 +179,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	* @return the create date of this layout friendly u r l
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _layoutFriendlyURL.getCreateDate();
 	}
 
@@ -234,7 +234,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	* @return the modified date of this layout friendly u r l
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _layoutFriendlyURL.getModifiedDate();
 	}
 
@@ -379,7 +379,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	* @param createDate the create date of this layout friendly u r l
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_layoutFriendlyURL.setCreateDate(createDate);
 	}
 
@@ -446,7 +446,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	* @param modifiedDate the modified date of this layout friendly u r l
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_layoutFriendlyURL.setModifiedDate(modifiedDate);
 	}
 

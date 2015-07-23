@@ -77,7 +77,7 @@ public abstract class WebsiteServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the website remote service
 	 */
-	public WebsiteService getWebsiteService() {
+	public com.liferay.portal.service.WebsiteService getWebsiteService() {
 		return websiteService;
 	}
 
@@ -86,7 +86,8 @@ public abstract class WebsiteServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param websiteService the website remote service
 	 */
-	public void setWebsiteService(WebsiteService websiteService) {
+	public void setWebsiteService(
+		com.liferay.portal.service.WebsiteService websiteService) {
 		this.websiteService = websiteService;
 	}
 
@@ -374,8 +375,8 @@ public abstract class WebsiteServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.WebsiteLocalService.class)
 	protected com.liferay.portal.service.WebsiteLocalService websiteLocalService;
-	@BeanReference(type = WebsiteService.class)
-	protected WebsiteService websiteService;
+	@BeanReference(type = com.liferay.portal.service.WebsiteService.class)
+	protected com.liferay.portal.service.WebsiteService websiteService;
 	@BeanReference(type = WebsitePersistence.class)
 	protected WebsitePersistence websitePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

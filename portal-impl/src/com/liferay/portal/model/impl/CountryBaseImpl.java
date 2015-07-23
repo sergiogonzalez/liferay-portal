@@ -27,7 +27,7 @@ import com.liferay.portal.model.Country;
  *
  * @author Brian Wing Shun Chan
  * @see CountryImpl
- * @see Country
+ * @see com.liferay.portal.model.Country
  * @generated
  */
 @ProviderType

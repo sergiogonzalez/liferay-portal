@@ -50,10 +50,10 @@ public interface DLFileShortcutService extends BaseService {
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
 		long groupId, long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteFileShortcut(long fileShortcutId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -64,7 +64,8 @@ public interface DLFileShortcutService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
-		long fileShortcutId) throws PortalException;
+		long fileShortcutId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -77,8 +78,8 @@ public interface DLFileShortcutService extends BaseService {
 		long fileShortcutId, long repositoryId, long folderId,
 		long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

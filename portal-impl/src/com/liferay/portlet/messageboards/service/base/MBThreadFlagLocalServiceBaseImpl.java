@@ -422,7 +422,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	 *
 	 * @return the message boards thread flag local service
 	 */
-	public MBThreadFlagLocalService getMBThreadFlagLocalService() {
+	public com.liferay.portlet.messageboards.service.MBThreadFlagLocalService getMBThreadFlagLocalService() {
 		return mbThreadFlagLocalService;
 	}
 
@@ -432,7 +432,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	 * @param mbThreadFlagLocalService the message boards thread flag local service
 	 */
 	public void setMBThreadFlagLocalService(
-		MBThreadFlagLocalService mbThreadFlagLocalService) {
+		com.liferay.portlet.messageboards.service.MBThreadFlagLocalService mbThreadFlagLocalService) {
 		this.mbThreadFlagLocalService = mbThreadFlagLocalService;
 	}
 
@@ -610,8 +610,8 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = MBThreadFlagLocalService.class)
-	protected MBThreadFlagLocalService mbThreadFlagLocalService;
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBThreadFlagLocalService.class)
+	protected com.liferay.portlet.messageboards.service.MBThreadFlagLocalService mbThreadFlagLocalService;
 	@BeanReference(type = MBThreadFlagPersistence.class)
 	protected MBThreadFlagPersistence mbThreadFlagPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -28,7 +28,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUti
  *
  * @author Brian Wing Shun Chan
  * @see SCProductEntryImpl
- * @see SCProductEntry
+ * @see com.liferay.portlet.softwarecatalog.model.SCProductEntry
  * @generated
  */
 @ProviderType

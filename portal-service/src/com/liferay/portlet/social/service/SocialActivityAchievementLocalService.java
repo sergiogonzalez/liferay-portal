@@ -49,7 +49,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	 */
 	public void addActivityAchievement(long userId, long groupId,
 		com.liferay.portlet.social.model.SocialAchievement achievement)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the social activity achievement to the database. Also notifies the appropriate model listeners.
@@ -76,7 +76,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity achievement with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,7 +87,8 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
-		long activityAchievementId) throws PortalException;
+		long activityAchievementId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity achievement from the database. Also notifies the appropriate model listeners.
@@ -206,7 +207,8 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the social activity achievement with the primary key.
@@ -217,7 +219,8 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivityAchievement getSocialActivityAchievement(
-		long activityAchievementId) throws PortalException;
+		long activityAchievementId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the social activity achievements.

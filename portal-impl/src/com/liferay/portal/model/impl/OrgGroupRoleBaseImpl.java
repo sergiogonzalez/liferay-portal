@@ -27,7 +27,7 @@ import com.liferay.portal.model.OrgGroupRole;
  *
  * @author Brian Wing Shun Chan
  * @see OrgGroupRoleImpl
- * @see OrgGroupRole
+ * @see com.liferay.portal.model.OrgGroupRole
  * @generated
  */
 @ProviderType

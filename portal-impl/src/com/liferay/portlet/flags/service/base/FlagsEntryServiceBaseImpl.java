@@ -70,7 +70,7 @@ public abstract class FlagsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the flags entry remote service
 	 */
-	public FlagsEntryService getFlagsEntryService() {
+	public com.liferay.portlet.flags.service.FlagsEntryService getFlagsEntryService() {
 		return flagsEntryService;
 	}
 
@@ -79,7 +79,8 @@ public abstract class FlagsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param flagsEntryService the flags entry remote service
 	 */
-	public void setFlagsEntryService(FlagsEntryService flagsEntryService) {
+	public void setFlagsEntryService(
+		com.liferay.portlet.flags.service.FlagsEntryService flagsEntryService) {
 		this.flagsEntryService = flagsEntryService;
 	}
 
@@ -823,8 +824,8 @@ public abstract class FlagsEntryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = FlagsEntryService.class)
-	protected FlagsEntryService flagsEntryService;
+	@BeanReference(type = com.liferay.portlet.flags.service.FlagsEntryService.class)
+	protected com.liferay.portlet.flags.service.FlagsEntryService flagsEntryService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.mail.service.MailService.class)

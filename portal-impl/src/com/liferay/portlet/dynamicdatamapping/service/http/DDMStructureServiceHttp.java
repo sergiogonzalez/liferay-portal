@@ -27,10 +27,10 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link DDMStructureServiceUtil} service utility. The
+ * {@link com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link HttpPrincipal} parameter.
+ * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -49,8 +49,8 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DDMStructureServiceSoap
- * @see HttpPrincipal
- * @see DDMStructureServiceUtil
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil
  * @generated
  */
 @ProviderType

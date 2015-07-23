@@ -80,7 +80,7 @@ public abstract class TeamServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the team remote service
 	 */
-	public TeamService getTeamService() {
+	public com.liferay.portal.service.TeamService getTeamService() {
 		return teamService;
 	}
 
@@ -89,7 +89,8 @@ public abstract class TeamServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param teamService the team remote service
 	 */
-	public void setTeamService(TeamService teamService) {
+	public void setTeamService(
+		com.liferay.portal.service.TeamService teamService) {
 		this.teamService = teamService;
 	}
 
@@ -450,8 +451,8 @@ public abstract class TeamServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.TeamLocalService.class)
 	protected com.liferay.portal.service.TeamLocalService teamLocalService;
-	@BeanReference(type = TeamService.class)
-	protected TeamService teamService;
+	@BeanReference(type = com.liferay.portal.service.TeamService.class)
+	protected com.liferay.portal.service.TeamService teamService;
 	@BeanReference(type = TeamPersistence.class)
 	protected TeamPersistence teamPersistence;
 	@BeanReference(type = TeamFinder.class)

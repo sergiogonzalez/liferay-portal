@@ -81,7 +81,7 @@ public abstract class LayoutPrototypeServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the layout prototype remote service
 	 */
-	public LayoutPrototypeService getLayoutPrototypeService() {
+	public com.liferay.portal.service.LayoutPrototypeService getLayoutPrototypeService() {
 		return layoutPrototypeService;
 	}
 
@@ -91,7 +91,7 @@ public abstract class LayoutPrototypeServiceBaseImpl extends BaseServiceImpl
 	 * @param layoutPrototypeService the layout prototype remote service
 	 */
 	public void setLayoutPrototypeService(
-		LayoutPrototypeService layoutPrototypeService) {
+		com.liferay.portal.service.LayoutPrototypeService layoutPrototypeService) {
 		this.layoutPrototypeService = layoutPrototypeService;
 	}
 
@@ -510,8 +510,8 @@ public abstract class LayoutPrototypeServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.LayoutPrototypeLocalService.class)
 	protected com.liferay.portal.service.LayoutPrototypeLocalService layoutPrototypeLocalService;
-	@BeanReference(type = LayoutPrototypeService.class)
-	protected LayoutPrototypeService layoutPrototypeService;
+	@BeanReference(type = com.liferay.portal.service.LayoutPrototypeService.class)
+	protected com.liferay.portal.service.LayoutPrototypeService layoutPrototypeService;
 	@BeanReference(type = LayoutPrototypePersistence.class)
 	protected LayoutPrototypePersistence layoutPrototypePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

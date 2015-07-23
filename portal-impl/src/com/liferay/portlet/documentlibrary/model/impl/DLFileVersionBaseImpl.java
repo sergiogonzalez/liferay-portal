@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
  *
  * @author Brian Wing Shun Chan
  * @see DLFileVersionImpl
- * @see DLFileVersion
+ * @see com.liferay.portlet.documentlibrary.model.DLFileVersion
  * @generated
  */
 @ProviderType

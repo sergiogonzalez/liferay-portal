@@ -63,7 +63,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 		long categoryId,
 		com.liferay.portlet.messageboards.model.MBMessage message,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new message boards thread with the primary key. Does not add the message boards thread to the database.
@@ -93,7 +93,8 @@ public interface MBThreadLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.messageboards.model.MBThread deleteMBThread(
-		long threadId) throws PortalException;
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -101,20 +102,22 @@ public interface MBThreadLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteThread(
 		com.liferay.portlet.messageboards.model.MBThread thread)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteThread(long threadId) throws PortalException;
+	public void deleteThread(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteThreads(long groupId, long categoryId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteThreads(long groupId, long categoryId,
-		boolean includeTrashedEntries) throws PortalException;
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -337,7 +340,8 @@ public interface MBThreadLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBThread getMBThread(
-		long threadId) throws PortalException;
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the message boards thread matching the UUID and group.
@@ -349,7 +353,8 @@ public interface MBThreadLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBThread getMBThreadByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the message boards threads.
@@ -406,20 +411,23 @@ public interface MBThreadLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getPriorityThreads(
-		long categoryId, double priority) throws PortalException;
+		long categoryId, double priority)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getPriorityThreads(
 		long categoryId, double priority, boolean inherit)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBThread getThread(
-		long threadId) throws PortalException;
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getThreads(
@@ -433,29 +441,33 @@ public interface MBThreadLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.increment.BufferedIncrement(configuration = "MBThread", incrementClass = com.liferay.portal.kernel.increment.NumberIncrement.class)
 	public void incrementViewCounter(long threadId, int increment)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void moveDependentsToTrash(long groupId, long threadId,
-		long trashEntryId) throws PortalException;
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThread(
-		long groupId, long categoryId, long threadId) throws PortalException;
+		long groupId, long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadFromTrash(
-		long userId, long categoryId, long threadId) throws PortalException;
+		long userId, long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
 		long userId, com.liferay.portlet.messageboards.model.MBThread thread)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
-		long userId, long threadId) throws PortalException;
+		long userId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void moveThreadsToTrash(long groupId, long userId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void restoreDependentsFromTrash(long groupId, long threadId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
@@ -463,20 +475,22 @@ public interface MBThreadLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(long groupId, long threadId,
-		long trashEntryId) throws PortalException;
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void restoreThreadFromTrash(long userId, long threadId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long userId, long creatorUserId, long startDate, long endDate,
-		int status, int start, int end) throws PortalException;
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long userId, long creatorUserId, int status, int start, int end)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -488,7 +502,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public com.liferay.portlet.messageboards.model.MBThread splitThread(
 		long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the message boards thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -504,10 +518,11 @@ public interface MBThreadLocalService extends BaseLocalService,
 		long threadId);
 
 	public void updateQuestion(long threadId, boolean question)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread updateStatus(
-		long userId, long threadId, int status) throws PortalException;
+		long userId, long threadId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
@@ -515,5 +530,6 @@ public interface MBThreadLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.messageboards.model.MBThread updateThread(
-		long threadId, int viewCount) throws PortalException;
+		long threadId, int viewCount)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

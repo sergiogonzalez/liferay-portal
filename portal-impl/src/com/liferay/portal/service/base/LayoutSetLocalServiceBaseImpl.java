@@ -306,7 +306,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the layout set local service
 	 */
-	public LayoutSetLocalService getLayoutSetLocalService() {
+	public com.liferay.portal.service.LayoutSetLocalService getLayoutSetLocalService() {
 		return layoutSetLocalService;
 	}
 
@@ -316,7 +316,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param layoutSetLocalService the layout set local service
 	 */
 	public void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
+		com.liferay.portal.service.LayoutSetLocalService layoutSetLocalService) {
 		this.layoutSetLocalService = layoutSetLocalService;
 	}
 
@@ -795,8 +795,8 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = LayoutSetLocalService.class)
-	protected LayoutSetLocalService layoutSetLocalService;
+	@BeanReference(type = com.liferay.portal.service.LayoutSetLocalService.class)
+	protected com.liferay.portal.service.LayoutSetLocalService layoutSetLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutSetService.class)
 	protected com.liferay.portal.service.LayoutSetService layoutSetService;
 	@BeanReference(type = LayoutSetPersistence.class)

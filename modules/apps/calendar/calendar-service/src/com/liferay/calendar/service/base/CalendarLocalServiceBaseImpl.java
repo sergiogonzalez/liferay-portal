@@ -425,7 +425,7 @@ public abstract class CalendarLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the calendar local service
 	 */
-	public CalendarLocalService getCalendarLocalService() {
+	public com.liferay.calendar.service.CalendarLocalService getCalendarLocalService() {
 		return calendarLocalService;
 	}
 
@@ -435,7 +435,7 @@ public abstract class CalendarLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param calendarLocalService the calendar local service
 	 */
 	public void setCalendarLocalService(
-		CalendarLocalService calendarLocalService) {
+		com.liferay.calendar.service.CalendarLocalService calendarLocalService) {
 		this.calendarLocalService = calendarLocalService;
 	}
 
@@ -935,8 +935,8 @@ public abstract class CalendarLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CalendarLocalService.class)
-	protected CalendarLocalService calendarLocalService;
+	@BeanReference(type = com.liferay.calendar.service.CalendarLocalService.class)
+	protected com.liferay.calendar.service.CalendarLocalService calendarLocalService;
 	@BeanReference(type = com.liferay.calendar.service.CalendarService.class)
 	protected com.liferay.calendar.service.CalendarService calendarService;
 	@BeanReference(type = CalendarPersistence.class)

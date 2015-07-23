@@ -28,7 +28,7 @@ import com.liferay.portal.service.PhoneLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PhoneImpl
- * @see Phone
+ * @see com.liferay.portal.model.Phone
  * @generated
  */
 @ProviderType

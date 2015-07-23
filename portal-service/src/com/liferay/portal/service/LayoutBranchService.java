@@ -49,10 +49,10 @@ public interface LayoutBranchService extends BaseService {
 		long layoutRevisionId, java.lang.String name,
 		java.lang.String description, boolean master,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteLayoutBranch(long layoutBranchId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -72,5 +72,5 @@ public interface LayoutBranchService extends BaseService {
 		long layoutBranchId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

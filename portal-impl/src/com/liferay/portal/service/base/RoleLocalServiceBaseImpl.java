@@ -672,7 +672,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the role local service
 	 */
-	public RoleLocalService getRoleLocalService() {
+	public com.liferay.portal.service.RoleLocalService getRoleLocalService() {
 		return roleLocalService;
 	}
 
@@ -681,7 +681,8 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param roleLocalService the role local service
 	 */
-	public void setRoleLocalService(RoleLocalService roleLocalService) {
+	public void setRoleLocalService(
+		com.liferay.portal.service.RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
 	}
 
@@ -1722,8 +1723,8 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = RoleLocalService.class)
-	protected RoleLocalService roleLocalService;
+	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
+	protected com.liferay.portal.service.RoleLocalService roleLocalService;
 	@BeanReference(type = com.liferay.portal.service.RoleService.class)
 	protected com.liferay.portal.service.RoleService roleService;
 	@BeanReference(type = RolePersistence.class)

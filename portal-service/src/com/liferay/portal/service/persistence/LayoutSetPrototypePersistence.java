@@ -44,13 +44,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param uuid the uuid
 	* @return the matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the layout set prototypes where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -58,14 +59,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByUuid(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByUuid(
 		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -74,9 +75,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByUuid(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the first layout set prototype in the ordered set where uuid = &#63;.
@@ -84,10 +85,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -97,8 +99,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the last layout set prototype in the ordered set where uuid = &#63;.
@@ -106,10 +109,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -119,8 +123,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set where uuid = &#63;.
@@ -129,11 +134,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] findByUuid_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] findByUuid_PrevAndNext(
 		long layoutSetPrototypeId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -142,14 +147,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param uuid the uuid
 	* @return the matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByUuid(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByUuid(
 		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the layout set prototypes that the user has permission to view where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -157,14 +162,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByUuid(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByUuid(
 		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes that the user has permissions to view where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -173,9 +178,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByUuid(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where uuid = &#63;.
@@ -184,11 +189,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] filterFindByUuid_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] filterFindByUuid_PrevAndNext(
 		long layoutSetPrototypeId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -221,14 +226,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @return the matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByUuid_C(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByUuid_C(
 		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the layout set prototypes where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -237,14 +242,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByUuid_C(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -254,9 +259,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByUuid_C(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the first layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -265,11 +270,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -280,9 +285,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the last layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -291,11 +296,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -306,9 +311,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -318,11 +323,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] findByUuid_C_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] findByUuid_C_PrevAndNext(
 		long layoutSetPrototypeId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -332,14 +337,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @return the matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByUuid_C(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByUuid_C(
 		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the layout set prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -348,14 +353,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByUuid_C(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -365,9 +370,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByUuid_C(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -377,11 +382,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] filterFindByUuid_C_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] filterFindByUuid_C_PrevAndNext(
 		long layoutSetPrototypeId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -416,13 +421,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @return the matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByCompanyId(long companyId);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByCompanyId(
+		long companyId);
 
 	/**
 	* Returns a range of all the layout set prototypes where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -430,14 +436,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByCompanyId(long companyId,
-		int start, int end);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByCompanyId(
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -446,9 +452,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the first layout set prototype in the ordered set where companyId = &#63;.
@@ -456,10 +462,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -469,8 +476,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the last layout set prototype in the ordered set where companyId = &#63;.
@@ -478,10 +486,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -491,8 +500,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set where companyId = &#63;.
@@ -501,11 +511,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] findByCompanyId_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] findByCompanyId_PrevAndNext(
 		long layoutSetPrototypeId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -514,14 +524,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @return the matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByCompanyId(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByCompanyId(
 		long companyId);
 
 	/**
 	* Returns a range of all the layout set prototypes that the user has permission to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -529,14 +539,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByCompanyId(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByCompanyId(
 		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes that the user has permissions to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -545,9 +555,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByCompanyId(
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where companyId = &#63;.
@@ -556,11 +566,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] filterFindByCompanyId_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] filterFindByCompanyId_PrevAndNext(
 		long layoutSetPrototypeId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -593,14 +603,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param active the active
 	* @return the matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByC_A(long companyId,
-		boolean active);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByC_A(
+		long companyId, boolean active);
 
 	/**
 	* Returns a range of all the layout set prototypes where companyId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -609,14 +619,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByC_A(long companyId,
-		boolean active, int start, int end);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByC_A(
+		long companyId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes where companyId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -626,9 +636,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findByC_A(long companyId,
-		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findByC_A(
+		long companyId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the first layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -637,10 +647,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByC_A_First(long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByC_A_First(
+		long companyId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -651,8 +662,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByC_A_First(long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByC_A_First(
+		long companyId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the last layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -661,10 +673,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype findByC_A_Last(long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+	public com.liferay.portal.model.LayoutSetPrototype findByC_A_Last(
+		long companyId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -675,8 +688,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
 	*/
-	public LayoutSetPrototype fetchByC_A_Last(long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByC_A_Last(
+		long companyId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -686,11 +700,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] findByC_A_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] findByC_A_PrevAndNext(
 		long layoutSetPrototypeId, long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -700,14 +714,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param active the active
 	* @return the matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByC_A(long companyId,
-		boolean active);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByC_A(
+		long companyId, boolean active);
 
 	/**
 	* Returns a range of all the layout set prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -716,14 +730,14 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByC_A(long companyId,
-		boolean active, int start, int end);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByC_A(
+		long companyId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes that the user has permissions to view where companyId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -733,9 +747,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout set prototypes that the user has permission to view
 	*/
-	public java.util.List<LayoutSetPrototype> filterFindByC_A(long companyId,
-		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> filterFindByC_A(
+		long companyId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
@@ -745,11 +759,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype[] filterFindByC_A_PrevAndNext(
+	public com.liferay.portal.model.LayoutSetPrototype[] filterFindByC_A_PrevAndNext(
 		long layoutSetPrototypeId, long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -783,7 +797,8 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	*
 	* @param layoutSetPrototype the layout set prototype
 	*/
-	public void cacheResult(LayoutSetPrototype layoutSetPrototype);
+	public void cacheResult(
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype);
 
 	/**
 	* Caches the layout set prototypes in the entity cache if it is enabled.
@@ -791,7 +806,7 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param layoutSetPrototypes the layout set prototypes
 	*/
 	public void cacheResult(
-		java.util.List<LayoutSetPrototype> layoutSetPrototypes);
+		java.util.List<com.liferay.portal.model.LayoutSetPrototype> layoutSetPrototypes);
 
 	/**
 	* Creates a new layout set prototype with the primary key. Does not add the layout set prototype to the database.
@@ -799,28 +814,32 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param layoutSetPrototypeId the primary key for the new layout set prototype
 	* @return the new layout set prototype
 	*/
-	public LayoutSetPrototype create(long layoutSetPrototypeId);
+	public com.liferay.portal.model.LayoutSetPrototype create(
+		long layoutSetPrototypeId);
 
 	/**
 	* Removes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the layout set prototype that was removed
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype remove(long layoutSetPrototypeId)
+	public com.liferay.portal.model.LayoutSetPrototype remove(
+		long layoutSetPrototypeId)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
-	public LayoutSetPrototype updateImpl(LayoutSetPrototype layoutSetPrototype);
+	public com.liferay.portal.model.LayoutSetPrototype updateImpl(
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype);
 
 	/**
-	* Returns the layout set prototype with the primary key or throws a {@link NoSuchLayoutSetPrototypeException} if it could not be found.
+	* Returns the layout set prototype with the primary key or throws a {@link com.liferay.portal.NoSuchLayoutSetPrototypeException} if it could not be found.
 	*
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the layout set prototype
-	* @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype findByPrimaryKey(long layoutSetPrototypeId)
+	public com.liferay.portal.model.LayoutSetPrototype findByPrimaryKey(
+		long layoutSetPrototypeId)
 		throws com.liferay.portal.NoSuchLayoutSetPrototypeException;
 
 	/**
@@ -829,10 +848,11 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the layout set prototype, or <code>null</code> if a layout set prototype with the primary key could not be found
 	*/
-	public LayoutSetPrototype fetchByPrimaryKey(long layoutSetPrototypeId);
+	public com.liferay.portal.model.LayoutSetPrototype fetchByPrimaryKey(
+		long layoutSetPrototypeId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, LayoutSetPrototype> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSetPrototype> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -840,26 +860,27 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	*
 	* @return the layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findAll();
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findAll();
 
 	/**
 	* Returns a range of all the layout set prototypes.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of layout set prototypes
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findAll(int start, int end);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout set prototypes.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of layout set prototypes
@@ -867,8 +888,9 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of layout set prototypes
 	*/
-	public java.util.List<LayoutSetPrototype> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype> orderByComparator);
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> orderByComparator);
 
 	/**
 	* Removes all the layout set prototypes from the database.

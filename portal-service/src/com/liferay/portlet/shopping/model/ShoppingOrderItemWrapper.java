@@ -247,7 +247,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @return the shipped date of this shopping order item
 	*/
 	@Override
-	public Date getShippedDate() {
+	public java.util.Date getShippedDate() {
 		return _shoppingOrderItem.getShippedDate();
 	}
 
@@ -415,7 +415,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	* @param shippedDate the shipped date of this shopping order item
 	*/
 	@Override
-	public void setShippedDate(Date shippedDate) {
+	public void setShippedDate(java.util.Date shippedDate) {
 		_shoppingOrderItem.setShippedDate(shippedDate);
 	}
 

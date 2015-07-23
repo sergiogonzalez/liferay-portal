@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see BookmarksFolderImpl
- * @see BookmarksFolder
+ * @see com.liferay.bookmarks.model.BookmarksFolder
  * @generated
  */
 @ProviderType

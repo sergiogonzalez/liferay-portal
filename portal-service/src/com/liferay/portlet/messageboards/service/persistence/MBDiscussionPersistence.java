@@ -46,13 +46,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param uuid the uuid
 	* @return the matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the message boards discussions where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -60,14 +61,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards discussions where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -76,9 +77,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the first message boards discussion in the ordered set where uuid = &#63;.
@@ -86,10 +87,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -99,8 +101,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the last message boards discussion in the ordered set where uuid = &#63;.
@@ -108,10 +111,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -121,8 +125,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63;.
@@ -131,11 +136,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards discussion
-	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
-	public MBDiscussion[] findByUuid_PrevAndNext(long discussionId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion[] findByUuid_PrevAndNext(
+		long discussionId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -154,14 +159,15 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the message boards discussion where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchDiscussionException} if it could not be found.
+	* Returns the message boards discussion where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.messageboards.NoSuchDiscussionException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -171,7 +177,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param groupId the group ID
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByUUID_G(java.lang.String uuid, long groupId);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUUID_G(
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the message boards discussion where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -181,8 +188,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the message boards discussion where uuid = &#63; and groupId = &#63; from the database.
@@ -191,7 +198,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param groupId the group ID
 	* @return the message boards discussion that was removed
 	*/
-	public MBDiscussion removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -210,14 +218,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param companyId the company ID
 	* @return the matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid_C(
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the message boards discussions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,14 +234,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards discussions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -243,9 +251,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the first message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -254,11 +262,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -269,9 +277,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -280,11 +288,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -295,9 +303,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -307,11 +315,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards discussion
-	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
-	public MBDiscussion[] findByUuid_C_PrevAndNext(long discussionId,
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion[] findByUuid_C_PrevAndNext(
+		long discussionId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -337,13 +345,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param classNameId the class name ID
 	* @return the matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByClassNameId(long classNameId);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByClassNameId(
+		long classNameId);
 
 	/**
 	* Returns a range of all the message boards discussions where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -351,14 +360,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByClassNameId(long classNameId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByClassNameId(
+		long classNameId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards discussions where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -367,9 +376,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findByClassNameId(long classNameId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByClassNameId(
+		long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the first message boards discussion in the ordered set where classNameId = &#63;.
@@ -377,10 +386,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByClassNameId_First(long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByClassNameId_First(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -390,8 +400,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByClassNameId_First(long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByClassNameId_First(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the last message boards discussion in the ordered set where classNameId = &#63;.
@@ -399,10 +410,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByClassNameId_Last(long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByClassNameId_Last(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -412,8 +424,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByClassNameId_Last(long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByClassNameId_Last(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the message boards discussions before and after the current message boards discussion in the ordered set where classNameId = &#63;.
@@ -422,11 +435,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards discussion
-	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
-	public MBDiscussion[] findByClassNameId_PrevAndNext(long discussionId,
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
+	public com.liferay.portlet.messageboards.model.MBDiscussion[] findByClassNameId_PrevAndNext(
+		long discussionId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -445,13 +458,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public int countByClassNameId(long classNameId);
 
 	/**
-	* Returns the message boards discussion where threadId = &#63; or throws a {@link NoSuchDiscussionException} if it could not be found.
+	* Returns the message boards discussion where threadId = &#63; or throws a {@link com.liferay.portlet.messageboards.NoSuchDiscussionException} if it could not be found.
 	*
 	* @param threadId the thread ID
 	* @return the matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByThreadId(long threadId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByThreadId(
+		long threadId)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -460,7 +474,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param threadId the thread ID
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByThreadId(long threadId);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByThreadId(
+		long threadId);
 
 	/**
 	* Returns the message boards discussion where threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -469,7 +484,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByThreadId(long threadId, boolean retrieveFromCache);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByThreadId(
+		long threadId, boolean retrieveFromCache);
 
 	/**
 	* Removes the message boards discussion where threadId = &#63; from the database.
@@ -477,7 +493,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param threadId the thread ID
 	* @return the message boards discussion that was removed
 	*/
-	public MBDiscussion removeByThreadId(long threadId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion removeByThreadId(
+		long threadId)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -489,14 +506,15 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public int countByThreadId(long threadId);
 
 	/**
-	* Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchDiscussionException} if it could not be found.
+	* Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portlet.messageboards.NoSuchDiscussionException} if it could not be found.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching message boards discussion
-	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion findByC_C(long classNameId, long classPK)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByC_C(
+		long classNameId, long classPK)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -506,7 +524,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param classPK the class p k
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByC_C(long classNameId, long classPK);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByC_C(
+		long classNameId, long classPK);
 
 	/**
 	* Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -516,8 +535,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
-	public MBDiscussion fetchByC_C(long classNameId, long classPK,
-		boolean retrieveFromCache);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByC_C(
+		long classNameId, long classPK, boolean retrieveFromCache);
 
 	/**
 	* Removes the message boards discussion where classNameId = &#63; and classPK = &#63; from the database.
@@ -526,7 +545,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param classPK the class p k
 	* @return the message boards discussion that was removed
 	*/
-	public MBDiscussion removeByC_C(long classNameId, long classPK)
+	public com.liferay.portlet.messageboards.model.MBDiscussion removeByC_C(
+		long classNameId, long classPK)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -543,14 +563,16 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*
 	* @param mbDiscussion the message boards discussion
 	*/
-	public void cacheResult(MBDiscussion mbDiscussion);
+	public void cacheResult(
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion);
 
 	/**
 	* Caches the message boards discussions in the entity cache if it is enabled.
 	*
 	* @param mbDiscussions the message boards discussions
 	*/
-	public void cacheResult(java.util.List<MBDiscussion> mbDiscussions);
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> mbDiscussions);
 
 	/**
 	* Creates a new message boards discussion with the primary key. Does not add the message boards discussion to the database.
@@ -558,28 +580,32 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param discussionId the primary key for the new message boards discussion
 	* @return the new message boards discussion
 	*/
-	public MBDiscussion create(long discussionId);
+	public com.liferay.portlet.messageboards.model.MBDiscussion create(
+		long discussionId);
 
 	/**
 	* Removes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param discussionId the primary key of the message boards discussion
 	* @return the message boards discussion that was removed
-	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
-	public MBDiscussion remove(long discussionId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion remove(
+		long discussionId)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
-	public MBDiscussion updateImpl(MBDiscussion mbDiscussion);
+	public com.liferay.portlet.messageboards.model.MBDiscussion updateImpl(
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion);
 
 	/**
-	* Returns the message boards discussion with the primary key or throws a {@link NoSuchDiscussionException} if it could not be found.
+	* Returns the message boards discussion with the primary key or throws a {@link com.liferay.portlet.messageboards.NoSuchDiscussionException} if it could not be found.
 	*
 	* @param discussionId the primary key of the message boards discussion
 	* @return the message boards discussion
-	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
-	public MBDiscussion findByPrimaryKey(long discussionId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByPrimaryKey(
+		long discussionId)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -588,10 +614,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param discussionId the primary key of the message boards discussion
 	* @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
 	*/
-	public MBDiscussion fetchByPrimaryKey(long discussionId);
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByPrimaryKey(
+		long discussionId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, MBDiscussion> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBDiscussion> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -599,26 +626,27 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*
 	* @return the message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findAll();
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll();
 
 	/**
 	* Returns a range of all the message boards discussions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards discussions
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards discussions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards discussions
@@ -626,8 +654,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of message boards discussions
 	*/
-	public java.util.List<MBDiscussion> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator);
+	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Removes all the message boards discussions from the database.

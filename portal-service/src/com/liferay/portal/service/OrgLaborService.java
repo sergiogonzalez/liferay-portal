@@ -50,9 +50,10 @@ public interface OrgLaborService extends BaseService {
 		long typeId, int sunOpen, int sunClose, int monOpen, int monClose,
 		int tueOpen, int tueClose, int wedOpen, int wedClose, int thuOpen,
 		int thuClose, int friOpen, int friClose, int satOpen, int satClose)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteOrgLabor(long orgLaborId) throws PortalException;
+	public void deleteOrgLabor(long orgLaborId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -63,11 +64,12 @@ public interface OrgLaborService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.OrgLabor getOrgLabor(long orgLaborId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.OrgLabor> getOrgLabors(
-		long organizationId) throws PortalException;
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -80,5 +82,5 @@ public interface OrgLaborService extends BaseService {
 		long typeId, int sunOpen, int sunClose, int monOpen, int monClose,
 		int tueOpen, int tueClose, int wedOpen, int wedClose, int thuOpen,
 		int thuClose, int friOpen, int friClose, int satOpen, int satClose)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

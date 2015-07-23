@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
@@ -37,6 +38,8 @@ import com.liferay.portal.service.BaseService;
  */
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=marketplace", "json.web.service.context.path=App"}, service = AppService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
@@ -47,7 +50,7 @@ public interface AppService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AppServiceUtil} to access the app remote service. Add custom service methods to {@link com.liferay.marketplace.service.impl.AppServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.marketplace.model.App deleteApp(long appId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -56,7 +59,8 @@ public interface AppService extends BaseService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	public void installApp(long remoteAppId) throws PortalException;
+	public void installApp(long remoteAppId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -65,8 +69,10 @@ public interface AppService extends BaseService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void uninstallApp(long remoteAppId) throws PortalException;
+	public void uninstallApp(long remoteAppId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.marketplace.model.App updateApp(long remoteAppId,
-		java.lang.String version, java.io.File file) throws PortalException;
+		java.lang.String version, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -205,7 +205,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @return the create date of this shopping cart
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _shoppingCart.getCreateDate();
 	}
 
@@ -245,7 +245,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	}
 
 	@Override
-	public Map<com.liferay.portlet.shopping.model.ShoppingCartItem, java.lang.Integer> getItems() {
+	public java.util.Map<com.liferay.portlet.shopping.model.ShoppingCartItem, java.lang.Integer> getItems() {
 		return _shoppingCart.getItems();
 	}
 
@@ -260,7 +260,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @return the modified date of this shopping cart
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _shoppingCart.getModifiedDate();
 	}
 
@@ -395,7 +395,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @param createDate the create date of this shopping cart
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_shoppingCart.setCreateDate(createDate);
 	}
 
@@ -453,7 +453,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	* @param modifiedDate the modified date of this shopping cart
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_shoppingCart.setModifiedDate(modifiedDate);
 	}
 

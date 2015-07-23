@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBDiscussionImpl
- * @see MBDiscussion
+ * @see com.liferay.portlet.messageboards.model.MBDiscussion
  * @generated
  */
 @ProviderType

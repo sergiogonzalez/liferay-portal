@@ -28,7 +28,7 @@ import com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ShoppingCartImpl
- * @see ShoppingCart
+ * @see com.liferay.portlet.shopping.model.ShoppingCart
  * @generated
  */
 @ProviderType

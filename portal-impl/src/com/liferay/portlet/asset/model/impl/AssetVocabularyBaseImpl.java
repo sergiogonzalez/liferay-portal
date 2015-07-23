@@ -28,7 +28,7 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AssetVocabularyImpl
- * @see AssetVocabulary
+ * @see com.liferay.portlet.asset.model.AssetVocabulary
  * @generated
  */
 @ProviderType

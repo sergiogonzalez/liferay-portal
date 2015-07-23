@@ -116,7 +116,8 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByUuid(java.lang.String uuid) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -124,7 +125,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -132,8 +133,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -141,7 +142,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -150,8 +151,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -161,10 +163,11 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByUuid_First(java.lang.String uuid,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -176,8 +179,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByUuid_First(java.lang.String uuid,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -187,10 +191,11 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByUuid_Last(java.lang.String uuid,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -202,8 +207,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByUuid_Last(java.lang.String uuid,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -214,10 +220,11 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByUuid_PrevAndNext(long eventId,
-		java.lang.String uuid, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByUuid_PrevAndNext(
+		long eventId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(eventId, uuid, orderByComparator);
@@ -243,14 +250,15 @@ public class CalEventUtil {
 	}
 
 	/**
-	* Returns the cal event where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchEventException} if it could not be found.
+	* Returns the cal event where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.calendar.NoSuchEventException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.calendar.model.CalEvent findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -262,7 +270,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByUUID_G(
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -274,8 +283,8 @@ public class CalEventUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -286,7 +295,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @return the cal event that was removed
 	*/
-	public static CalEvent removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.calendar.model.CalEvent removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -309,8 +319,8 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -318,7 +328,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -327,8 +337,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -336,7 +346,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -346,9 +356,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -360,10 +370,11 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -377,8 +388,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -390,10 +402,11 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -407,8 +420,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -421,11 +435,11 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByUuid_C_PrevAndNext(long eventId,
-		java.lang.String uuid, long companyId,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByUuid_C_PrevAndNext(
+		long eventId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(eventId, uuid, companyId,
@@ -459,7 +473,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByGroupId(long groupId) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -467,7 +482,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -475,7 +490,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByGroupId(long groupId, int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -483,7 +499,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -492,8 +508,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByGroupId(long groupId, int start,
-		int end, OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -504,10 +521,11 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByGroupId_First(long groupId,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -519,8 +537,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByGroupId_First(long groupId,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -530,10 +549,11 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByGroupId_Last(long groupId,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -545,8 +565,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByGroupId_Last(long groupId,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -557,10 +578,11 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByGroupId_PrevAndNext(long eventId,
-		long groupId, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByGroupId_PrevAndNext(
+		long eventId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(eventId, groupId,
@@ -592,7 +614,8 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByCompanyId(long companyId) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -600,7 +623,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -608,8 +631,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByCompanyId(long companyId, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -617,7 +640,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -626,8 +649,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -638,10 +662,11 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByCompanyId_First(long companyId,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -654,8 +679,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByCompanyId_First(long companyId,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -666,10 +692,11 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByCompanyId_Last(long companyId,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -682,8 +709,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByCompanyId_Last(long companyId,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -695,10 +723,11 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByCompanyId_PrevAndNext(long eventId,
-		long companyId, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByCompanyId_PrevAndNext(
+		long eventId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(eventId, companyId,
@@ -730,7 +759,8 @@ public class CalEventUtil {
 	* @param remindBy the remind by
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByNotRemindBy(int remindBy) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
+		int remindBy) {
 		return getPersistence().findByNotRemindBy(remindBy);
 	}
 
@@ -738,7 +768,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where remindBy &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param remindBy the remind by
@@ -746,8 +776,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByNotRemindBy(int remindBy, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
+		int remindBy, int start, int end) {
 		return getPersistence().findByNotRemindBy(remindBy, start, end);
 	}
 
@@ -755,7 +785,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where remindBy &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param remindBy the remind by
@@ -764,8 +794,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByNotRemindBy(int remindBy, int start,
-		int end, OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
+		int remindBy, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByNotRemindBy(remindBy, start, end, orderByComparator);
 	}
@@ -776,10 +807,11 @@ public class CalEventUtil {
 	* @param remindBy the remind by
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByNotRemindBy_First(int remindBy,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_First(
+		int remindBy,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_First(remindBy, orderByComparator);
@@ -792,8 +824,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByNotRemindBy_First(int remindBy,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_First(
+		int remindBy,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotRemindBy_First(remindBy, orderByComparator);
 	}
@@ -804,10 +837,11 @@ public class CalEventUtil {
 	* @param remindBy the remind by
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByNotRemindBy_Last(int remindBy,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_Last(
+		int remindBy,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_Last(remindBy, orderByComparator);
@@ -820,8 +854,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByNotRemindBy_Last(int remindBy,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_Last(
+		int remindBy,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotRemindBy_Last(remindBy, orderByComparator);
 	}
@@ -833,10 +868,11 @@ public class CalEventUtil {
 	* @param remindBy the remind by
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByNotRemindBy_PrevAndNext(long eventId,
-		int remindBy, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByNotRemindBy_PrevAndNext(
+		long eventId, int remindBy,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_PrevAndNext(eventId, remindBy,
@@ -869,7 +905,8 @@ public class CalEventUtil {
 	* @param type the type
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByG_T(long groupId, java.lang.String type) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String type) {
 		return getPersistence().findByG_T(groupId, type);
 	}
 
@@ -877,7 +914,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -886,8 +923,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T(long groupId, java.lang.String type,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String type, int start, int end) {
 		return getPersistence().findByG_T(groupId, type, start, end);
 	}
 
@@ -895,7 +932,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -905,8 +942,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T(long groupId, java.lang.String type,
-		int start, int end, OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, type, start, end, orderByComparator);
 	}
@@ -918,10 +956,11 @@ public class CalEventUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByG_T_First(long groupId, java.lang.String type,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_First(
+		long groupId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByG_T_First(groupId, type, orderByComparator);
 	}
@@ -934,8 +973,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByG_T_First(long groupId,
-		java.lang.String type, OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_First(
+		long groupId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_First(groupId, type, orderByComparator);
 	}
@@ -947,10 +987,11 @@ public class CalEventUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByG_T_Last(long groupId, java.lang.String type,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_Last(
+		long groupId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByG_T_Last(groupId, type, orderByComparator);
 	}
@@ -963,8 +1004,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByG_T_Last(long groupId, java.lang.String type,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_Last(
+		long groupId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByG_T_Last(groupId, type, orderByComparator);
 	}
 
@@ -976,10 +1018,11 @@ public class CalEventUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByG_T_PrevAndNext(long eventId, long groupId,
-		java.lang.String type, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_T_PrevAndNext(
+		long eventId, long groupId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_PrevAndNext(eventId, groupId, type,
@@ -990,15 +1033,15 @@ public class CalEventUtil {
 	* Returns all the cal events where groupId = &#63; and type = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param types the types
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByG_T(long groupId,
-		java.lang.String[] types) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String[] types) {
 		return getPersistence().findByG_T(groupId, types);
 	}
 
@@ -1006,7 +1049,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where groupId = &#63; and type = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1015,8 +1058,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T(long groupId,
-		java.lang.String[] types, int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String[] types, int start, int end) {
 		return getPersistence().findByG_T(groupId, types, start, end);
 	}
 
@@ -1024,7 +1067,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where groupId = &#63; and type = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1034,9 +1077,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T(long groupId,
-		java.lang.String[] types, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String[] types, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, types, start, end, orderByComparator);
 	}
@@ -1080,7 +1123,8 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByG_R(long groupId, boolean repeating) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
+		long groupId, boolean repeating) {
 		return getPersistence().findByG_R(groupId, repeating);
 	}
 
@@ -1088,7 +1132,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where groupId = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1097,8 +1141,8 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByG_R(long groupId, boolean repeating,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
+		long groupId, boolean repeating, int start, int end) {
 		return getPersistence().findByG_R(groupId, repeating, start, end);
 	}
 
@@ -1106,7 +1150,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where groupId = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1116,8 +1160,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByG_R(long groupId, boolean repeating,
-		int start, int end, OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
+		long groupId, boolean repeating, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_R(groupId, repeating, start, end, orderByComparator);
 	}
@@ -1129,10 +1174,11 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByG_R_First(long groupId, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByG_R_First(
+		long groupId, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_First(groupId, repeating, orderByComparator);
@@ -1146,8 +1192,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByG_R_First(long groupId, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_R_First(
+		long groupId, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_R_First(groupId, repeating, orderByComparator);
 	}
@@ -1159,10 +1206,11 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByG_R_Last(long groupId, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByG_R_Last(
+		long groupId, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_Last(groupId, repeating, orderByComparator);
@@ -1176,8 +1224,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByG_R_Last(long groupId, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_R_Last(
+		long groupId, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_R_Last(groupId, repeating, orderByComparator);
 	}
@@ -1190,10 +1239,11 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByG_R_PrevAndNext(long eventId, long groupId,
-		boolean repeating, OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_R_PrevAndNext(
+		long eventId, long groupId, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_PrevAndNext(eventId, groupId, repeating,
@@ -1229,8 +1279,8 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByG_T_R(long groupId,
-		java.lang.String type, boolean repeating) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String type, boolean repeating) {
 		return getPersistence().findByG_T_R(groupId, type, repeating);
 	}
 
@@ -1238,7 +1288,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1248,8 +1298,9 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T_R(long groupId,
-		java.lang.String type, boolean repeating, int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String type, boolean repeating, int start,
+		int end) {
 		return getPersistence().findByG_T_R(groupId, type, repeating, start, end);
 	}
 
@@ -1257,7 +1308,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1268,9 +1319,10 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T_R(long groupId,
-		java.lang.String type, boolean repeating, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String type, boolean repeating, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T_R(groupId, type, repeating, start, end,
 			orderByComparator);
@@ -1284,11 +1336,11 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByG_T_R_First(long groupId,
-		java.lang.String type, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_R_First(
+		long groupId, java.lang.String type, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_First(groupId, type, repeating,
@@ -1304,9 +1356,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByG_T_R_First(long groupId,
-		java.lang.String type, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_First(
+		long groupId, java.lang.String type, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_R_First(groupId, type, repeating,
 			orderByComparator);
@@ -1320,11 +1372,11 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
-	* @throws NoSuchEventException if a matching cal event could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
 	*/
-	public static CalEvent findByG_T_R_Last(long groupId,
-		java.lang.String type, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_R_Last(
+		long groupId, java.lang.String type, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_Last(groupId, type, repeating, orderByComparator);
@@ -1339,9 +1391,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
-	public static CalEvent fetchByG_T_R_Last(long groupId,
-		java.lang.String type, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_Last(
+		long groupId, java.lang.String type, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_R_Last(groupId, type, repeating,
 			orderByComparator);
@@ -1356,11 +1408,11 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent[] findByG_T_R_PrevAndNext(long eventId,
-		long groupId, java.lang.String type, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator)
+	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_T_R_PrevAndNext(
+		long eventId, long groupId, java.lang.String type, boolean repeating,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_PrevAndNext(eventId, groupId, type, repeating,
@@ -1371,7 +1423,7 @@ public class CalEventUtil {
 	* Returns all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1379,8 +1431,8 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @return the matching cal events
 	*/
-	public static List<CalEvent> findByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String[] types, boolean repeating) {
 		return getPersistence().findByG_T_R(groupId, types, repeating);
 	}
 
@@ -1388,7 +1440,7 @@ public class CalEventUtil {
 	* Returns a range of all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1398,8 +1450,9 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating, int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String[] types, boolean repeating, int start,
+		int end) {
 		return getPersistence()
 				   .findByG_T_R(groupId, types, repeating, start, end);
 	}
@@ -1408,7 +1461,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1419,9 +1472,10 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
 	*/
-	public static List<CalEvent> findByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String[] types, boolean repeating, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T_R(groupId, types, repeating, start, end,
 			orderByComparator);
@@ -1470,7 +1524,8 @@ public class CalEventUtil {
 	*
 	* @param calEvent the cal event
 	*/
-	public static void cacheResult(CalEvent calEvent) {
+	public static void cacheResult(
+		com.liferay.portlet.calendar.model.CalEvent calEvent) {
 		getPersistence().cacheResult(calEvent);
 	}
 
@@ -1479,7 +1534,8 @@ public class CalEventUtil {
 	*
 	* @param calEvents the cal events
 	*/
-	public static void cacheResult(List<CalEvent> calEvents) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.calendar.model.CalEvent> calEvents) {
 		getPersistence().cacheResult(calEvents);
 	}
 
@@ -1489,7 +1545,8 @@ public class CalEventUtil {
 	* @param eventId the primary key for the new cal event
 	* @return the new cal event
 	*/
-	public static CalEvent create(long eventId) {
+	public static com.liferay.portlet.calendar.model.CalEvent create(
+		long eventId) {
 		return getPersistence().create(eventId);
 	}
 
@@ -1498,26 +1555,27 @@ public class CalEventUtil {
 	*
 	* @param eventId the primary key of the cal event
 	* @return the cal event that was removed
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent remove(long eventId)
-		throws com.liferay.portlet.calendar.NoSuchEventException {
+	public static com.liferay.portlet.calendar.model.CalEvent remove(
+		long eventId) throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().remove(eventId);
 	}
 
-	public static CalEvent updateImpl(CalEvent calEvent) {
+	public static com.liferay.portlet.calendar.model.CalEvent updateImpl(
+		com.liferay.portlet.calendar.model.CalEvent calEvent) {
 		return getPersistence().updateImpl(calEvent);
 	}
 
 	/**
-	* Returns the cal event with the primary key or throws a {@link NoSuchEventException} if it could not be found.
+	* Returns the cal event with the primary key or throws a {@link com.liferay.portlet.calendar.NoSuchEventException} if it could not be found.
 	*
 	* @param eventId the primary key of the cal event
 	* @return the cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	*/
-	public static CalEvent findByPrimaryKey(long eventId)
-		throws com.liferay.portlet.calendar.NoSuchEventException {
+	public static com.liferay.portlet.calendar.model.CalEvent findByPrimaryKey(
+		long eventId) throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByPrimaryKey(eventId);
 	}
 
@@ -1527,11 +1585,12 @@ public class CalEventUtil {
 	* @param eventId the primary key of the cal event
 	* @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
 	*/
-	public static CalEvent fetchByPrimaryKey(long eventId) {
+	public static com.liferay.portlet.calendar.model.CalEvent fetchByPrimaryKey(
+		long eventId) {
 		return getPersistence().fetchByPrimaryKey(eventId);
 	}
 
-	public static java.util.Map<java.io.Serializable, CalEvent> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.calendar.model.CalEvent> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -1541,7 +1600,7 @@ public class CalEventUtil {
 	*
 	* @return the cal events
 	*/
-	public static List<CalEvent> findAll() {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1549,14 +1608,15 @@ public class CalEventUtil {
 	* Returns a range of all the cal events.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of cal events
 	*/
-	public static List<CalEvent> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1564,7 +1624,7 @@ public class CalEventUtil {
 	* Returns an ordered range of all the cal events.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.calendar.model.impl.CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of cal events
@@ -1572,8 +1632,9 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of cal events
 	*/
-	public static List<CalEvent> findAll(int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

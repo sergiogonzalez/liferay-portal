@@ -115,7 +115,8 @@ public class DLFileVersionUtil {
 	* @param uuid the uuid
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid(java.lang.String uuid) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid(
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -123,7 +124,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -131,8 +132,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid(
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -140,7 +141,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -149,8 +150,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -160,10 +162,11 @@ public class DLFileVersionUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_First(java.lang.String uuid,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -175,8 +178,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_First(java.lang.String uuid,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -186,10 +190,11 @@ public class DLFileVersionUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_Last(java.lang.String uuid,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -201,8 +206,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_Last(java.lang.String uuid,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -213,11 +219,11 @@ public class DLFileVersionUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByUuid_PrevAndNext(long fileVersionId,
-		java.lang.String uuid,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByUuid_PrevAndNext(
+		long fileVersionId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(fileVersionId, uuid,
@@ -244,14 +250,15 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the document library file version where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFileVersionException} if it could not be found.
+	* Returns the document library file version where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -263,8 +270,8 @@ public class DLFileVersionUtil {
 	* @param groupId the group ID
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUUID_G(
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -276,8 +283,8 @@ public class DLFileVersionUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -288,8 +295,8 @@ public class DLFileVersionUtil {
 	* @param groupId the group ID
 	* @return the document library file version that was removed
 	*/
-	public static DLFileVersion removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -312,8 +319,8 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid_C(
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -321,7 +328,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -330,8 +337,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -339,7 +346,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -349,9 +356,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -363,10 +370,11 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -380,8 +388,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -393,10 +402,11 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -410,8 +420,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -424,11 +435,11 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByUuid_C_PrevAndNext(long fileVersionId,
-		java.lang.String uuid, long companyId,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByUuid_C_PrevAndNext(
+		long fileVersionId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(fileVersionId, uuid, companyId,
@@ -462,7 +473,8 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByCompanyId(long companyId) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByCompanyId(
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -470,7 +482,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -478,8 +490,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByCompanyId(long companyId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByCompanyId(
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -487,7 +499,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -496,8 +508,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -508,10 +521,11 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByCompanyId_First(long companyId,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -524,8 +538,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByCompanyId_First(long companyId,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -536,10 +551,11 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByCompanyId_Last(long companyId,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -552,8 +568,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByCompanyId_Last(long companyId,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -565,11 +582,11 @@ public class DLFileVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByCompanyId_PrevAndNext(
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByCompanyId_PrevAndNext(
 		long fileVersionId, long companyId,
-		OrderByComparator<DLFileVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(fileVersionId, companyId,
@@ -601,7 +618,8 @@ public class DLFileVersionUtil {
 	* @param fileEntryId the file entry ID
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByFileEntryId(long fileEntryId) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByFileEntryId(
+		long fileEntryId) {
 		return getPersistence().findByFileEntryId(fileEntryId);
 	}
 
@@ -609,7 +627,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where fileEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
@@ -617,8 +635,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByFileEntryId(long fileEntryId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByFileEntryId(
+		long fileEntryId, int start, int end) {
 		return getPersistence().findByFileEntryId(fileEntryId, start, end);
 	}
 
@@ -626,7 +644,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where fileEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
@@ -635,8 +653,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByFileEntryId(long fileEntryId,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByFileEntryId(
+		long fileEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByFileEntryId(fileEntryId, start, end, orderByComparator);
 	}
@@ -647,10 +666,11 @@ public class DLFileVersionUtil {
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByFileEntryId_First(long fileEntryId,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByFileEntryId_First(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByFileEntryId_First(fileEntryId, orderByComparator);
@@ -663,8 +683,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByFileEntryId_First(long fileEntryId,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByFileEntryId_First(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByFileEntryId_First(fileEntryId, orderByComparator);
 	}
@@ -675,10 +696,11 @@ public class DLFileVersionUtil {
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByFileEntryId_Last(long fileEntryId,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByFileEntryId_Last(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByFileEntryId_Last(fileEntryId, orderByComparator);
@@ -691,8 +713,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByFileEntryId_Last(long fileEntryId,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByFileEntryId_Last(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByFileEntryId_Last(fileEntryId, orderByComparator);
 	}
@@ -704,11 +727,11 @@ public class DLFileVersionUtil {
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByFileEntryId_PrevAndNext(
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByFileEntryId_PrevAndNext(
 		long fileVersionId, long fileEntryId,
-		OrderByComparator<DLFileVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByFileEntryId_PrevAndNext(fileVersionId, fileEntryId,
@@ -740,7 +763,8 @@ public class DLFileVersionUtil {
 	* @param mimeType the mime type
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByMimeType(java.lang.String mimeType) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByMimeType(
+		java.lang.String mimeType) {
 		return getPersistence().findByMimeType(mimeType);
 	}
 
@@ -748,7 +772,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where mimeType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param mimeType the mime type
@@ -756,7 +780,7 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByMimeType(
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByMimeType(
 		java.lang.String mimeType, int start, int end) {
 		return getPersistence().findByMimeType(mimeType, start, end);
 	}
@@ -765,7 +789,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where mimeType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param mimeType the mime type
@@ -774,9 +798,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByMimeType(
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByMimeType(
 		java.lang.String mimeType, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByMimeType(mimeType, start, end, orderByComparator);
 	}
@@ -787,11 +811,11 @@ public class DLFileVersionUtil {
 	* @param mimeType the mime type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByMimeType_First(
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByMimeType_First(
 		java.lang.String mimeType,
-		OrderByComparator<DLFileVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByMimeType_First(mimeType, orderByComparator);
 	}
@@ -803,9 +827,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByMimeType_First(
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByMimeType_First(
 		java.lang.String mimeType,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByMimeType_First(mimeType, orderByComparator);
 	}
@@ -816,10 +840,11 @@ public class DLFileVersionUtil {
 	* @param mimeType the mime type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByMimeType_Last(java.lang.String mimeType,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByMimeType_Last(
+		java.lang.String mimeType,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByMimeType_Last(mimeType, orderByComparator);
 	}
@@ -831,9 +856,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByMimeType_Last(
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByMimeType_Last(
 		java.lang.String mimeType,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByMimeType_Last(mimeType, orderByComparator);
 	}
 
@@ -844,11 +869,11 @@ public class DLFileVersionUtil {
 	* @param mimeType the mime type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByMimeType_PrevAndNext(
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByMimeType_PrevAndNext(
 		long fileVersionId, java.lang.String mimeType,
-		OrderByComparator<DLFileVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByMimeType_PrevAndNext(fileVersionId, mimeType,
@@ -881,7 +906,8 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByC_NotS(long companyId, int status) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByC_NotS(
+		long companyId, int status) {
 		return getPersistence().findByC_NotS(companyId, status);
 	}
 
@@ -889,7 +915,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -898,8 +924,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByC_NotS(long companyId, int status,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByC_NotS(
+		long companyId, int status, int start, int end) {
 		return getPersistence().findByC_NotS(companyId, status, start, end);
 	}
 
@@ -907,7 +933,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -917,8 +943,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByC_NotS(long companyId, int status,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByC_NotS(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByC_NotS(companyId, status, start, end,
 			orderByComparator);
@@ -931,10 +958,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByC_NotS_First(long companyId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
@@ -948,8 +976,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByC_NotS_First(long companyId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -961,10 +990,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByC_NotS_Last(long companyId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
@@ -978,8 +1008,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByC_NotS_Last(long companyId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -992,11 +1023,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByC_NotS_PrevAndNext(long fileVersionId,
-		long companyId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByC_NotS_PrevAndNext(
+		long fileVersionId, long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(fileVersionId, companyId, status,
@@ -1025,15 +1056,15 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the document library file version where fileEntryId = &#63; and version = &#63; or throws a {@link NoSuchFileVersionException} if it could not be found.
+	* Returns the document library file version where fileEntryId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
 	*
 	* @param fileEntryId the file entry ID
 	* @param version the version
 	* @return the matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByF_V(long fileEntryId,
-		java.lang.String version)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_V(
+		long fileEntryId, java.lang.String version)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByF_V(fileEntryId, version);
 	}
@@ -1045,8 +1076,8 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByF_V(long fileEntryId,
-		java.lang.String version) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_V(
+		long fileEntryId, java.lang.String version) {
 		return getPersistence().fetchByF_V(fileEntryId, version);
 	}
 
@@ -1058,8 +1089,8 @@ public class DLFileVersionUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByF_V(long fileEntryId,
-		java.lang.String version, boolean retrieveFromCache) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_V(
+		long fileEntryId, java.lang.String version, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByF_V(fileEntryId, version, retrieveFromCache);
 	}
@@ -1071,8 +1102,8 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @return the document library file version that was removed
 	*/
-	public static DLFileVersion removeByF_V(long fileEntryId,
-		java.lang.String version)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion removeByF_V(
+		long fileEntryId, java.lang.String version)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().removeByF_V(fileEntryId, version);
 	}
@@ -1095,7 +1126,8 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByF_S(long fileEntryId, int status) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByF_S(
+		long fileEntryId, int status) {
 		return getPersistence().findByF_S(fileEntryId, status);
 	}
 
@@ -1103,7 +1135,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
@@ -1112,8 +1144,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByF_S(long fileEntryId, int status,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByF_S(
+		long fileEntryId, int status, int start, int end) {
 		return getPersistence().findByF_S(fileEntryId, status, start, end);
 	}
 
@@ -1121,7 +1153,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
@@ -1131,8 +1163,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByF_S(long fileEntryId, int status,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByF_S(
+		long fileEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByF_S(fileEntryId, status, start, end, orderByComparator);
 	}
@@ -1144,10 +1177,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByF_S_First(long fileEntryId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_S_First(
+		long fileEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByF_S_First(fileEntryId, status, orderByComparator);
@@ -1161,8 +1195,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByF_S_First(long fileEntryId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_S_First(
+		long fileEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_S_First(fileEntryId, status, orderByComparator);
 	}
@@ -1174,10 +1209,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByF_S_Last(long fileEntryId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_S_Last(
+		long fileEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByF_S_Last(fileEntryId, status, orderByComparator);
@@ -1191,8 +1227,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByF_S_Last(long fileEntryId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_S_Last(
+		long fileEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_S_Last(fileEntryId, status, orderByComparator);
 	}
@@ -1205,11 +1242,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByF_S_PrevAndNext(long fileVersionId,
-		long fileEntryId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByF_S_PrevAndNext(
+		long fileVersionId, long fileEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByF_S_PrevAndNext(fileVersionId, fileEntryId, status,
@@ -1245,8 +1282,8 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByG_F_S(long groupId, long folderId,
-		int status) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_S(
+		long groupId, long folderId, int status) {
 		return getPersistence().findByG_F_S(groupId, folderId, status);
 	}
 
@@ -1254,7 +1291,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1264,8 +1301,8 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByG_F_S(long groupId, long folderId,
-		int status, int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_S(
+		long groupId, long folderId, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderId, status, start, end);
 	}
@@ -1274,7 +1311,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1285,9 +1322,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByG_F_S(long groupId, long folderId,
-		int status, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_S(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -1301,10 +1338,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByG_F_S_First(long groupId, long folderId,
-		int status, OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_S_First(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_S_First(groupId, folderId, status,
@@ -1320,8 +1358,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByG_F_S_First(long groupId, long folderId,
-		int status, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_S_First(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_First(groupId, folderId, status,
 			orderByComparator);
@@ -1335,10 +1374,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByG_F_S_Last(long groupId, long folderId,
-		int status, OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_S_Last(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_S_Last(groupId, folderId, status,
@@ -1354,8 +1394,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByG_F_S_Last(long groupId, long folderId,
-		int status, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_S_Last(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_Last(groupId, folderId, status,
 			orderByComparator);
@@ -1370,11 +1411,11 @@ public class DLFileVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByG_F_S_PrevAndNext(long fileVersionId,
-		long groupId, long folderId, int status,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByG_F_S_PrevAndNext(
+		long fileVersionId, long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_S_PrevAndNext(fileVersionId, groupId, folderId,
@@ -1413,8 +1454,9 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @return the matching document library file versions
 	*/
-	public static List<DLFileVersion> findByG_F_T_V(long groupId,
-		long folderId, java.lang.String title, java.lang.String version) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_T_V(
+		long groupId, long folderId, java.lang.String title,
+		java.lang.String version) {
 		return getPersistence().findByG_F_T_V(groupId, folderId, title, version);
 	}
 
@@ -1422,7 +1464,7 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1433,9 +1475,9 @@ public class DLFileVersionUtil {
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByG_F_T_V(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_T_V(
+		long groupId, long folderId, java.lang.String title,
+		java.lang.String version, int start, int end) {
 		return getPersistence()
 				   .findByG_F_T_V(groupId, folderId, title, version, start, end);
 	}
@@ -1444,7 +1486,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1456,9 +1498,10 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file versions
 	*/
-	public static List<DLFileVersion> findByG_F_T_V(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_T_V(
+		long groupId, long folderId, java.lang.String title,
+		java.lang.String version, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_T_V(groupId, folderId, title, version, start,
 			end, orderByComparator);
@@ -1473,11 +1516,12 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByG_F_T_V_First(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_T_V_First(
+		long groupId, long folderId, java.lang.String title,
+		java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_T_V_First(groupId, folderId, title, version,
@@ -1494,9 +1538,10 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByG_F_T_V_First(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_T_V_First(
+		long groupId, long folderId, java.lang.String title,
+		java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_T_V_First(groupId, folderId, title, version,
 			orderByComparator);
@@ -1511,11 +1556,12 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version
-	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	*/
-	public static DLFileVersion findByG_F_T_V_Last(long groupId, long folderId,
-		java.lang.String title, java.lang.String version,
-		OrderByComparator<DLFileVersion> orderByComparator)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_T_V_Last(
+		long groupId, long folderId, java.lang.String title,
+		java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_T_V_Last(groupId, folderId, title, version,
@@ -1532,9 +1578,10 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
-	public static DLFileVersion fetchByG_F_T_V_Last(long groupId,
-		long folderId, java.lang.String title, java.lang.String version,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_T_V_Last(
+		long groupId, long folderId, java.lang.String title,
+		java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_T_V_Last(groupId, folderId, title, version,
 			orderByComparator);
@@ -1550,12 +1597,12 @@ public class DLFileVersionUtil {
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion[] findByG_F_T_V_PrevAndNext(
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByG_F_T_V_PrevAndNext(
 		long fileVersionId, long groupId, long folderId,
 		java.lang.String title, java.lang.String version,
-		OrderByComparator<DLFileVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_T_V_PrevAndNext(fileVersionId, groupId, folderId,
@@ -1594,7 +1641,8 @@ public class DLFileVersionUtil {
 	*
 	* @param dlFileVersion the document library file version
 	*/
-	public static void cacheResult(DLFileVersion dlFileVersion) {
+	public static void cacheResult(
+		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
 		getPersistence().cacheResult(dlFileVersion);
 	}
 
@@ -1603,7 +1651,8 @@ public class DLFileVersionUtil {
 	*
 	* @param dlFileVersions the document library file versions
 	*/
-	public static void cacheResult(List<DLFileVersion> dlFileVersions) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> dlFileVersions) {
 		getPersistence().cacheResult(dlFileVersions);
 	}
 
@@ -1613,7 +1662,8 @@ public class DLFileVersionUtil {
 	* @param fileVersionId the primary key for the new document library file version
 	* @return the new document library file version
 	*/
-	public static DLFileVersion create(long fileVersionId) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion create(
+		long fileVersionId) {
 		return getPersistence().create(fileVersionId);
 	}
 
@@ -1622,25 +1672,28 @@ public class DLFileVersionUtil {
 	*
 	* @param fileVersionId the primary key of the document library file version
 	* @return the document library file version that was removed
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion remove(long fileVersionId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion remove(
+		long fileVersionId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().remove(fileVersionId);
 	}
 
-	public static DLFileVersion updateImpl(DLFileVersion dlFileVersion) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion updateImpl(
+		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
 		return getPersistence().updateImpl(dlFileVersion);
 	}
 
 	/**
-	* Returns the document library file version with the primary key or throws a {@link NoSuchFileVersionException} if it could not be found.
+	* Returns the document library file version with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
 	*
 	* @param fileVersionId the primary key of the document library file version
 	* @return the document library file version
-	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion findByPrimaryKey(long fileVersionId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByPrimaryKey(
+		long fileVersionId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByPrimaryKey(fileVersionId);
 	}
@@ -1651,11 +1704,12 @@ public class DLFileVersionUtil {
 	* @param fileVersionId the primary key of the document library file version
 	* @return the document library file version, or <code>null</code> if a document library file version with the primary key could not be found
 	*/
-	public static DLFileVersion fetchByPrimaryKey(long fileVersionId) {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByPrimaryKey(
+		long fileVersionId) {
 		return getPersistence().fetchByPrimaryKey(fileVersionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, DLFileVersion> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFileVersion> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -1665,7 +1719,7 @@ public class DLFileVersionUtil {
 	*
 	* @return the document library file versions
 	*/
-	public static List<DLFileVersion> findAll() {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1673,14 +1727,15 @@ public class DLFileVersionUtil {
 	* Returns a range of all the document library file versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file versions
 	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @return the range of document library file versions
 	*/
-	public static List<DLFileVersion> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1688,7 +1743,7 @@ public class DLFileVersionUtil {
 	* Returns an ordered range of all the document library file versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file versions
@@ -1696,8 +1751,9 @@ public class DLFileVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of document library file versions
 	*/
-	public static List<DLFileVersion> findAll(int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

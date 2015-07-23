@@ -353,7 +353,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @return the export import configuration local service
 	 */
-	public ExportImportConfigurationLocalService getExportImportConfigurationLocalService() {
+	public com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService getExportImportConfigurationLocalService() {
 		return exportImportConfigurationLocalService;
 	}
 
@@ -363,7 +363,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param exportImportConfigurationLocalService the export import configuration local service
 	 */
 	public void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
+		com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
 		this.exportImportConfigurationLocalService = exportImportConfigurationLocalService;
 	}
 
@@ -735,8 +735,8 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	protected com.liferay.portlet.exportimport.service.ExportImportLocalService exportImportLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportService exportImportService;
-	@BeanReference(type = ExportImportConfigurationLocalService.class)
-	protected ExportImportConfigurationLocalService exportImportConfigurationLocalService;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService.class)
+	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)

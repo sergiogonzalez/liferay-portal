@@ -28,7 +28,7 @@ import com.liferay.portal.service.BrowserTrackerLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see BrowserTrackerImpl
- * @see BrowserTracker
+ * @see com.liferay.portal.model.BrowserTracker
  * @generated
  */
 @ProviderType

@@ -51,18 +51,18 @@ public interface ExpandoValueService extends BaseService {
 	public com.liferay.portlet.expando.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, java.lang.String data)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portlet.expando.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, java.lang.Object data)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addValues(long companyId, java.lang.String className,
 		java.lang.String tableName, long classPK,
 		java.util.Map<java.lang.String, java.io.Serializable> attributeValues)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -74,18 +74,20 @@ public interface ExpandoValueService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.io.Serializable getData(long companyId,
 		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK) throws PortalException;
+		java.lang.String columnName, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.String, java.io.Serializable> getData(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.util.Collection<java.lang.String> columnNames, long classPK)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONObject getJSONData(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK) throws PortalException;
+		java.lang.String columnName, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

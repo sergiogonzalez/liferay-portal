@@ -341,7 +341,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the create date of this document library file entry
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _dlFileEntry.getCreateDate();
 	}
 
@@ -366,7 +366,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> getDDMFormValuesMap(
+	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> getDDMFormValuesMap(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getDDMFormValuesMap(fileVersionId);
@@ -571,7 +571,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @return the modified date of this document library file entry
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _dlFileEntry.getModifiedDate();
 	}
 
@@ -904,7 +904,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param createDate the create date of this document library file entry
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_dlFileEntry.setCreateDate(createDate);
 	}
 
@@ -1068,7 +1068,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @param modifiedDate the modified date of this document library file entry
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_dlFileEntry.setModifiedDate(modifiedDate);
 	}
 

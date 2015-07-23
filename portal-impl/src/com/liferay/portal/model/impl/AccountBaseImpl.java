@@ -28,7 +28,7 @@ import com.liferay.portal.service.AccountLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AccountImpl
- * @see Account
+ * @see com.liferay.portal.model.Account
  * @generated
  */
 @ProviderType

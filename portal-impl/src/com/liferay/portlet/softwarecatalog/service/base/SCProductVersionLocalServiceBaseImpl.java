@@ -460,7 +460,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 *
 	 * @return the s c product version local service
 	 */
-	public SCProductVersionLocalService getSCProductVersionLocalService() {
+	public com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService getSCProductVersionLocalService() {
 		return scProductVersionLocalService;
 	}
 
@@ -470,7 +470,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * @param scProductVersionLocalService the s c product version local service
 	 */
 	public void setSCProductVersionLocalService(
-		SCProductVersionLocalService scProductVersionLocalService) {
+		com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService scProductVersionLocalService) {
 		this.scProductVersionLocalService = scProductVersionLocalService;
 	}
 
@@ -781,8 +781,8 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SCProductVersionLocalService.class)
-	protected SCProductVersionLocalService scProductVersionLocalService;
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService.class)
+	protected com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService scProductVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCProductVersionService scProductVersionService;
 	@BeanReference(type = SCProductVersionPersistence.class)

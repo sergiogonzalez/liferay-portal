@@ -83,7 +83,7 @@ public abstract class DDLRecordServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the d d l record remote service
 	 */
-	public DDLRecordService getDDLRecordService() {
+	public com.liferay.dynamic.data.lists.service.DDLRecordService getDDLRecordService() {
 		return ddlRecordService;
 	}
 
@@ -92,7 +92,8 @@ public abstract class DDLRecordServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param ddlRecordService the d d l record remote service
 	 */
-	public void setDDLRecordService(DDLRecordService ddlRecordService) {
+	public void setDDLRecordService(
+		com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService) {
 		this.ddlRecordService = ddlRecordService;
 	}
 
@@ -552,8 +553,8 @@ public abstract class DDLRecordServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class)
 	protected com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService;
-	@BeanReference(type = DDLRecordService.class)
-	protected DDLRecordService ddlRecordService;
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService;
 	@BeanReference(type = DDLRecordPersistence.class)
 	protected DDLRecordPersistence ddlRecordPersistence;
 	@BeanReference(type = DDLRecordFinder.class)

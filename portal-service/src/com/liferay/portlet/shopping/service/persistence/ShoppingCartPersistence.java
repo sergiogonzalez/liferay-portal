@@ -46,13 +46,14 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param groupId the group ID
 	* @return the matching shopping carts
 	*/
-	public java.util.List<ShoppingCart> findByGroupId(long groupId);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the shopping carts where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -60,14 +61,14 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param end the upper bound of the range of shopping carts (not inclusive)
 	* @return the range of matching shopping carts
 	*/
-	public java.util.List<ShoppingCart> findByGroupId(long groupId, int start,
-		int end);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByGroupId(
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping carts where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -76,9 +77,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping carts
 	*/
-	public java.util.List<ShoppingCart> findByGroupId(long groupId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the first shopping cart in the ordered set where groupId = &#63;.
@@ -86,10 +87,11 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping cart
-	* @throws NoSuchCartException if a matching shopping cart could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a matching shopping cart could not be found
 	*/
-	public ShoppingCart findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
+	public com.liferay.portlet.shopping.model.ShoppingCart findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -99,8 +101,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping cart, or <code>null</code> if a matching shopping cart could not be found
 	*/
-	public ShoppingCart fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator);
+	public com.liferay.portlet.shopping.model.ShoppingCart fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the last shopping cart in the ordered set where groupId = &#63;.
@@ -108,10 +111,11 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping cart
-	* @throws NoSuchCartException if a matching shopping cart could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a matching shopping cart could not be found
 	*/
-	public ShoppingCart findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
+	public com.liferay.portlet.shopping.model.ShoppingCart findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -121,8 +125,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping cart, or <code>null</code> if a matching shopping cart could not be found
 	*/
-	public ShoppingCart fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator);
+	public com.liferay.portlet.shopping.model.ShoppingCart fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the shopping carts before and after the current shopping cart in the ordered set where groupId = &#63;.
@@ -131,10 +136,11 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping cart
-	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
-	public ShoppingCart[] findByGroupId_PrevAndNext(long cartId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
+	public com.liferay.portlet.shopping.model.ShoppingCart[] findByGroupId_PrevAndNext(
+		long cartId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -158,13 +164,14 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param userId the user ID
 	* @return the matching shopping carts
 	*/
-	public java.util.List<ShoppingCart> findByUserId(long userId);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByUserId(
+		long userId);
 
 	/**
 	* Returns a range of all the shopping carts where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -172,14 +179,14 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param end the upper bound of the range of shopping carts (not inclusive)
 	* @return the range of matching shopping carts
 	*/
-	public java.util.List<ShoppingCart> findByUserId(long userId, int start,
-		int end);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByUserId(
+		long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping carts where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -188,9 +195,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping carts
 	*/
-	public java.util.List<ShoppingCart> findByUserId(long userId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the first shopping cart in the ordered set where userId = &#63;.
@@ -198,10 +205,11 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping cart
-	* @throws NoSuchCartException if a matching shopping cart could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a matching shopping cart could not be found
 	*/
-	public ShoppingCart findByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
+	public com.liferay.portlet.shopping.model.ShoppingCart findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -211,8 +219,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping cart, or <code>null</code> if a matching shopping cart could not be found
 	*/
-	public ShoppingCart fetchByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator);
+	public com.liferay.portlet.shopping.model.ShoppingCart fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the last shopping cart in the ordered set where userId = &#63;.
@@ -220,10 +229,11 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping cart
-	* @throws NoSuchCartException if a matching shopping cart could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a matching shopping cart could not be found
 	*/
-	public ShoppingCart findByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
+	public com.liferay.portlet.shopping.model.ShoppingCart findByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -233,8 +243,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping cart, or <code>null</code> if a matching shopping cart could not be found
 	*/
-	public ShoppingCart fetchByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator);
+	public com.liferay.portlet.shopping.model.ShoppingCart fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the shopping carts before and after the current shopping cart in the ordered set where userId = &#63;.
@@ -243,10 +254,11 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping cart
-	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
-	public ShoppingCart[] findByUserId_PrevAndNext(long cartId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
+	public com.liferay.portlet.shopping.model.ShoppingCart[] findByUserId_PrevAndNext(
+		long cartId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -265,14 +277,15 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	public int countByUserId(long userId);
 
 	/**
-	* Returns the shopping cart where groupId = &#63; and userId = &#63; or throws a {@link NoSuchCartException} if it could not be found.
+	* Returns the shopping cart where groupId = &#63; and userId = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchCartException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the matching shopping cart
-	* @throws NoSuchCartException if a matching shopping cart could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a matching shopping cart could not be found
 	*/
-	public ShoppingCart findByG_U(long groupId, long userId)
+	public com.liferay.portlet.shopping.model.ShoppingCart findByG_U(
+		long groupId, long userId)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -282,7 +295,8 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param userId the user ID
 	* @return the matching shopping cart, or <code>null</code> if a matching shopping cart could not be found
 	*/
-	public ShoppingCart fetchByG_U(long groupId, long userId);
+	public com.liferay.portlet.shopping.model.ShoppingCart fetchByG_U(
+		long groupId, long userId);
 
 	/**
 	* Returns the shopping cart where groupId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -292,8 +306,8 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping cart, or <code>null</code> if a matching shopping cart could not be found
 	*/
-	public ShoppingCart fetchByG_U(long groupId, long userId,
-		boolean retrieveFromCache);
+	public com.liferay.portlet.shopping.model.ShoppingCart fetchByG_U(
+		long groupId, long userId, boolean retrieveFromCache);
 
 	/**
 	* Removes the shopping cart where groupId = &#63; and userId = &#63; from the database.
@@ -302,7 +316,8 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param userId the user ID
 	* @return the shopping cart that was removed
 	*/
-	public ShoppingCart removeByG_U(long groupId, long userId)
+	public com.liferay.portlet.shopping.model.ShoppingCart removeByG_U(
+		long groupId, long userId)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -319,14 +334,16 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*
 	* @param shoppingCart the shopping cart
 	*/
-	public void cacheResult(ShoppingCart shoppingCart);
+	public void cacheResult(
+		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart);
 
 	/**
 	* Caches the shopping carts in the entity cache if it is enabled.
 	*
 	* @param shoppingCarts the shopping carts
 	*/
-	public void cacheResult(java.util.List<ShoppingCart> shoppingCarts);
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> shoppingCarts);
 
 	/**
 	* Creates a new shopping cart with the primary key. Does not add the shopping cart to the database.
@@ -334,29 +351,30 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param cartId the primary key for the new shopping cart
 	* @return the new shopping cart
 	*/
-	public ShoppingCart create(long cartId);
+	public com.liferay.portlet.shopping.model.ShoppingCart create(long cartId);
 
 	/**
 	* Removes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param cartId the primary key of the shopping cart
 	* @return the shopping cart that was removed
-	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
-	public ShoppingCart remove(long cartId)
+	public com.liferay.portlet.shopping.model.ShoppingCart remove(long cartId)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
-	public ShoppingCart updateImpl(ShoppingCart shoppingCart);
+	public com.liferay.portlet.shopping.model.ShoppingCart updateImpl(
+		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart);
 
 	/**
-	* Returns the shopping cart with the primary key or throws a {@link NoSuchCartException} if it could not be found.
+	* Returns the shopping cart with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchCartException} if it could not be found.
 	*
 	* @param cartId the primary key of the shopping cart
 	* @return the shopping cart
-	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
-	public ShoppingCart findByPrimaryKey(long cartId)
-		throws com.liferay.portlet.shopping.NoSuchCartException;
+	public com.liferay.portlet.shopping.model.ShoppingCart findByPrimaryKey(
+		long cartId) throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
 	* Returns the shopping cart with the primary key or returns <code>null</code> if it could not be found.
@@ -364,10 +382,11 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param cartId the primary key of the shopping cart
 	* @return the shopping cart, or <code>null</code> if a shopping cart with the primary key could not be found
 	*/
-	public ShoppingCart fetchByPrimaryKey(long cartId);
+	public com.liferay.portlet.shopping.model.ShoppingCart fetchByPrimaryKey(
+		long cartId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, ShoppingCart> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingCart> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -375,26 +394,27 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*
 	* @return the shopping carts
 	*/
-	public java.util.List<ShoppingCart> findAll();
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findAll();
 
 	/**
 	* Returns a range of all the shopping carts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping carts
 	* @param end the upper bound of the range of shopping carts (not inclusive)
 	* @return the range of shopping carts
 	*/
-	public java.util.List<ShoppingCart> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping carts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping carts
@@ -402,8 +422,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of shopping carts
 	*/
-	public java.util.List<ShoppingCart> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator);
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Removes all the shopping carts from the database.

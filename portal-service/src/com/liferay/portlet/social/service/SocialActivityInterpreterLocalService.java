@@ -118,5 +118,6 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void updateActivitySet(long activityId) throws PortalException;
+	public void updateActivitySet(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -28,7 +28,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see BlogsEntryImpl
- * @see BlogsEntry
+ * @see com.liferay.portlet.blogs.model.BlogsEntry
  * @generated
  */
 @ProviderType

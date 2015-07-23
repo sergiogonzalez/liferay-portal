@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link SCLicenseServiceUtil} service utility. The
+ * {@link com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see SCLicenseServiceHttp
  * @see com.liferay.portlet.softwarecatalog.model.SCLicenseSoap
- * @see SCLicenseServiceUtil
+ * @see com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil
  * @generated
  */
 @ProviderType

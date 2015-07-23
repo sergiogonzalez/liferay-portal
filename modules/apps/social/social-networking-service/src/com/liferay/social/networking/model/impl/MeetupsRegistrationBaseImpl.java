@@ -28,7 +28,7 @@ import com.liferay.social.networking.service.MeetupsRegistrationLocalServiceUtil
  *
  * @author Brian Wing Shun Chan
  * @see MeetupsRegistrationImpl
- * @see MeetupsRegistration
+ * @see com.liferay.social.networking.model.MeetupsRegistration
  * @generated
  */
 @ProviderType

@@ -300,7 +300,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 *
 	 * @return the browser tracker local service
 	 */
-	public BrowserTrackerLocalService getBrowserTrackerLocalService() {
+	public com.liferay.portal.service.BrowserTrackerLocalService getBrowserTrackerLocalService() {
 		return browserTrackerLocalService;
 	}
 
@@ -310,7 +310,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 * @param browserTrackerLocalService the browser tracker local service
 	 */
 	public void setBrowserTrackerLocalService(
-		BrowserTrackerLocalService browserTrackerLocalService) {
+		com.liferay.portal.service.BrowserTrackerLocalService browserTrackerLocalService) {
 		this.browserTrackerLocalService = browserTrackerLocalService;
 	}
 
@@ -414,8 +414,8 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = BrowserTrackerLocalService.class)
-	protected BrowserTrackerLocalService browserTrackerLocalService;
+	@BeanReference(type = com.liferay.portal.service.BrowserTrackerLocalService.class)
+	protected com.liferay.portal.service.BrowserTrackerLocalService browserTrackerLocalService;
 	@BeanReference(type = BrowserTrackerPersistence.class)
 	protected BrowserTrackerPersistence browserTrackerPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

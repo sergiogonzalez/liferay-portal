@@ -78,7 +78,7 @@ public abstract class ShoppingCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the shopping category remote service
 	 */
-	public ShoppingCategoryService getShoppingCategoryService() {
+	public com.liferay.portlet.shopping.service.ShoppingCategoryService getShoppingCategoryService() {
 		return shoppingCategoryService;
 	}
 
@@ -88,7 +88,7 @@ public abstract class ShoppingCategoryServiceBaseImpl extends BaseServiceImpl
 	 * @param shoppingCategoryService the shopping category remote service
 	 */
 	public void setShoppingCategoryService(
-		ShoppingCategoryService shoppingCategoryService) {
+		com.liferay.portlet.shopping.service.ShoppingCategoryService shoppingCategoryService) {
 		this.shoppingCategoryService = shoppingCategoryService;
 	}
 
@@ -358,8 +358,8 @@ public abstract class ShoppingCategoryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCategoryLocalService.class)
 	protected com.liferay.portlet.shopping.service.ShoppingCategoryLocalService shoppingCategoryLocalService;
-	@BeanReference(type = ShoppingCategoryService.class)
-	protected ShoppingCategoryService shoppingCategoryService;
+	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCategoryService.class)
+	protected com.liferay.portlet.shopping.service.ShoppingCategoryService shoppingCategoryService;
 	@BeanReference(type = ShoppingCategoryPersistence.class)
 	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

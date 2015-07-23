@@ -28,7 +28,7 @@ import com.liferay.portal.service.ContactLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ContactImpl
- * @see Contact
+ * @see com.liferay.portal.model.Contact
  * @generated
  */
 @ProviderType

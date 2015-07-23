@@ -48,7 +48,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	public com.liferay.portal.model.SystemEvent addSystemEvent(long companyId,
 		java.lang.String className, long classPK, java.lang.String classUuid,
 		java.lang.String referrerClassName, int type, java.lang.String extraData)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the system event to the database. Also notifies the appropriate model listeners.
@@ -63,7 +63,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 	public com.liferay.portal.model.SystemEvent addSystemEvent(long userId,
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData) throws PortalException;
+		int type, java.lang.String extraData)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new system event with the primary key. Does not add the system event to the database.
@@ -80,7 +81,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the system event from the database. Also notifies the appropriate model listeners.
@@ -101,7 +102,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.SystemEvent deleteSystemEvent(
-		long systemEventId) throws PortalException;
+		long systemEventId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteSystemEvents(long groupId);
 
@@ -193,7 +195,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the system event with the primary key.
@@ -204,7 +207,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.SystemEvent getSystemEvent(
-		long systemEventId) throws PortalException;
+		long systemEventId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(

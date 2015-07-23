@@ -118,7 +118,7 @@ public class BookmarksEntryUtil {
 	* @param resourceBlockId the resource block ID
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByResourceBlockId(
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByResourceBlockId(
 		long resourceBlockId) {
 		return getPersistence().findByResourceBlockId(resourceBlockId);
 	}
@@ -127,7 +127,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where resourceBlockId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourceBlockId the resource block ID
@@ -135,7 +135,7 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByResourceBlockId(
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByResourceBlockId(
 		long resourceBlockId, int start, int end) {
 		return getPersistence()
 				   .findByResourceBlockId(resourceBlockId, start, end);
@@ -145,7 +145,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where resourceBlockId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourceBlockId the resource block ID
@@ -154,9 +154,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByResourceBlockId(
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByResourceBlockId(
 		long resourceBlockId, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByResourceBlockId(resourceBlockId, start, end,
 			orderByComparator);
@@ -170,9 +170,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByResourceBlockId_First(
+	public static com.liferay.bookmarks.model.BookmarksEntry findByResourceBlockId_First(
 		long resourceBlockId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByResourceBlockId_First(resourceBlockId,
@@ -186,9 +186,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByResourceBlockId_First(
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByResourceBlockId_First(
 		long resourceBlockId,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByResourceBlockId_First(resourceBlockId,
 			orderByComparator);
@@ -202,9 +202,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByResourceBlockId_Last(
+	public static com.liferay.bookmarks.model.BookmarksEntry findByResourceBlockId_Last(
 		long resourceBlockId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByResourceBlockId_Last(resourceBlockId,
@@ -218,9 +218,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByResourceBlockId_Last(
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByResourceBlockId_Last(
 		long resourceBlockId,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByResourceBlockId_Last(resourceBlockId,
 			orderByComparator);
@@ -235,9 +235,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByResourceBlockId_PrevAndNext(
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByResourceBlockId_PrevAndNext(
 		long entryId, long resourceBlockId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByResourceBlockId_PrevAndNext(entryId, resourceBlockId,
@@ -269,7 +269,8 @@ public class BookmarksEntryUtil {
 	* @param uuid the uuid
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByUuid(java.lang.String uuid) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByUuid(
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -277,7 +278,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -285,8 +286,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByUuid(
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -294,7 +295,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -303,8 +304,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -316,8 +318,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByUuid_First(java.lang.String uuid,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -329,8 +332,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByUuid_First(java.lang.String uuid,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -342,8 +346,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByUuid_Last(java.lang.String uuid,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -355,8 +360,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByUuid_Last(java.lang.String uuid,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -369,9 +375,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByUuid_PrevAndNext(long entryId,
-		java.lang.String uuid,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByUuid_PrevAndNext(
+		long entryId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
@@ -404,8 +410,8 @@ public class BookmarksEntryUtil {
 	* @return the matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -417,8 +423,8 @@ public class BookmarksEntryUtil {
 	* @param groupId the group ID
 	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByUUID_G(
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -430,8 +436,8 @@ public class BookmarksEntryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -442,8 +448,8 @@ public class BookmarksEntryUtil {
 	* @param groupId the group ID
 	* @return the bookmarks entry that was removed
 	*/
-	public static BookmarksEntry removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static com.liferay.bookmarks.model.BookmarksEntry removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -466,8 +472,8 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByUuid_C(
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -475,7 +481,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -484,8 +490,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -493,7 +499,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -503,9 +509,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -519,8 +525,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -534,8 +541,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -549,8 +557,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -564,8 +573,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -580,9 +590,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByUuid_C_PrevAndNext(long entryId,
-		java.lang.String uuid, long companyId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByUuid_C_PrevAndNext(
+		long entryId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(entryId, uuid, companyId,
@@ -616,7 +626,8 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByCompanyId(long companyId) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByCompanyId(
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -624,7 +635,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -632,8 +643,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByCompanyId(long companyId,
-		int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByCompanyId(
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -641,7 +652,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -650,8 +661,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -664,8 +676,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByCompanyId_First(long companyId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -678,8 +691,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByCompanyId_First(long companyId,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -692,8 +706,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByCompanyId_Last(long companyId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -706,8 +721,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByCompanyId_Last(long companyId,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -721,8 +737,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByCompanyId_PrevAndNext(long entryId,
-		long companyId, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByCompanyId_PrevAndNext(
+		long entryId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(entryId, companyId,
@@ -755,7 +772,8 @@ public class BookmarksEntryUtil {
 	* @param folderId the folder ID
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F(long groupId, long folderId) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F(
+		long groupId, long folderId) {
 		return getPersistence().findByG_F(groupId, folderId);
 	}
 
@@ -763,7 +781,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -772,8 +790,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F(long groupId, long folderId,
-		int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F(
+		long groupId, long folderId, int start, int end) {
 		return getPersistence().findByG_F(groupId, folderId, start, end);
 	}
 
@@ -781,7 +799,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -791,8 +809,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F(long groupId, long folderId,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F(groupId, folderId, start, end, orderByComparator);
 	}
@@ -806,8 +825,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_F_First(long groupId, long folderId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_F_First(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_First(groupId, folderId, orderByComparator);
@@ -821,8 +841,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_F_First(long groupId, long folderId,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_F_First(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_First(groupId, folderId, orderByComparator);
 	}
@@ -836,8 +857,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_F_Last(long groupId, long folderId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_F_Last(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_Last(groupId, folderId, orderByComparator);
@@ -851,8 +873,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_F_Last(long groupId, long folderId,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_F_Last(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_Last(groupId, folderId, orderByComparator);
 	}
@@ -867,9 +890,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_F_PrevAndNext(long entryId,
-		long groupId, long folderId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_F_PrevAndNext(
+		long entryId, long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_PrevAndNext(entryId, groupId, folderId,
@@ -883,8 +906,8 @@ public class BookmarksEntryUtil {
 	* @param folderId the folder ID
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F(long groupId,
-		long folderId) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F(
+		long groupId, long folderId) {
 		return getPersistence().filterFindByG_F(groupId, folderId);
 	}
 
@@ -892,7 +915,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -901,8 +924,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F(long groupId,
-		long folderId, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F(
+		long groupId, long folderId, int start, int end) {
 		return getPersistence().filterFindByG_F(groupId, folderId, start, end);
 	}
 
@@ -910,7 +933,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -920,9 +943,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F(long groupId,
-		long folderId, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F(groupId, folderId, start, end,
 			orderByComparator);
@@ -938,9 +961,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_F_PrevAndNext(long entryId,
-		long groupId, long folderId,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_F_PrevAndNext(
+		long entryId, long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_F_PrevAndNext(entryId, groupId, folderId,
@@ -954,8 +977,8 @@ public class BookmarksEntryUtil {
 	* @param folderIds the folder IDs
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F(long groupId,
-		long[] folderIds) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F(
+		long groupId, long[] folderIds) {
 		return getPersistence().filterFindByG_F(groupId, folderIds);
 	}
 
@@ -963,7 +986,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -972,8 +995,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F(long groupId,
-		long[] folderIds, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F(
+		long groupId, long[] folderIds, int start, int end) {
 		return getPersistence().filterFindByG_F(groupId, folderIds, start, end);
 	}
 
@@ -981,7 +1004,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -991,9 +1014,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F(long groupId,
-		long[] folderIds, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F(
+		long groupId, long[] folderIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F(groupId, folderIds, start, end,
 			orderByComparator);
@@ -1003,14 +1026,15 @@ public class BookmarksEntryUtil {
 	* Returns all the bookmarks entries where groupId = &#63; and folderId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param folderIds the folder IDs
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F(long groupId, long[] folderIds) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F(
+		long groupId, long[] folderIds) {
 		return getPersistence().findByG_F(groupId, folderIds);
 	}
 
@@ -1018,7 +1042,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and folderId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1027,8 +1051,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F(long groupId,
-		long[] folderIds, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F(
+		long groupId, long[] folderIds, int start, int end) {
 		return getPersistence().findByG_F(groupId, folderIds, start, end);
 	}
 
@@ -1036,7 +1060,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and folderId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1046,9 +1070,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F(long groupId,
-		long[] folderIds, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F(
+		long groupId, long[] folderIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F(groupId, folderIds, start, end, orderByComparator);
 	}
@@ -1114,7 +1138,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_S(long groupId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_S(
+		long groupId, int status) {
 		return getPersistence().findByG_S(groupId, status);
 	}
 
@@ -1122,7 +1147,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1131,8 +1156,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_S(long groupId, int status,
-		int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_S(
+		long groupId, int status, int start, int end) {
 		return getPersistence().findByG_S(groupId, status, start, end);
 	}
 
@@ -1140,7 +1165,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1150,8 +1175,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_S(long groupId, int status,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_S(groupId, status, start, end, orderByComparator);
 	}
@@ -1165,8 +1191,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_S_First(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_S_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
@@ -1180,8 +1207,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_S_First(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_S_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_First(groupId, status, orderByComparator);
 	}
@@ -1195,8 +1223,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_S_Last(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_S_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
@@ -1210,8 +1239,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_S_Last(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_S_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -1226,9 +1256,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_S_PrevAndNext(long entryId,
-		long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_S_PrevAndNext(
+		long entryId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(entryId, groupId, status,
@@ -1242,7 +1272,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_S(long groupId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_S(
+		long groupId, int status) {
 		return getPersistence().filterFindByG_S(groupId, status);
 	}
 
@@ -1250,7 +1281,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1259,8 +1290,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_S(long groupId,
-		int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_S(
+		long groupId, int status, int start, int end) {
 		return getPersistence().filterFindByG_S(groupId, status, start, end);
 	}
 
@@ -1268,7 +1299,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1278,9 +1309,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_S(long groupId,
-		int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_S(groupId, status, start, end,
 			orderByComparator);
@@ -1296,9 +1327,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_S_PrevAndNext(long entryId,
-		long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_S_PrevAndNext(
+		long entryId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_S_PrevAndNext(entryId, groupId, status,
@@ -1344,7 +1375,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_NotS(long groupId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_NotS(
+		long groupId, int status) {
 		return getPersistence().findByG_NotS(groupId, status);
 	}
 
@@ -1352,7 +1384,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1361,8 +1393,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_NotS(long groupId, int status,
-		int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_NotS(
+		long groupId, int status, int start, int end) {
 		return getPersistence().findByG_NotS(groupId, status, start, end);
 	}
 
@@ -1370,7 +1402,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1380,8 +1412,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_NotS(long groupId, int status,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_NotS(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_NotS(groupId, status, start, end, orderByComparator);
 	}
@@ -1395,8 +1428,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_NotS_First(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_NotS_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_NotS_First(groupId, status, orderByComparator);
@@ -1410,8 +1444,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_NotS_First(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_NotS_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotS_First(groupId, status, orderByComparator);
 	}
@@ -1425,8 +1460,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_NotS_Last(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_NotS_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_NotS_Last(groupId, status, orderByComparator);
@@ -1440,8 +1476,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_NotS_Last(long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_NotS_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotS_Last(groupId, status, orderByComparator);
 	}
@@ -1456,9 +1493,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_NotS_PrevAndNext(long entryId,
-		long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_NotS_PrevAndNext(
+		long entryId, long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_NotS_PrevAndNext(entryId, groupId, status,
@@ -1472,8 +1509,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_NotS(long groupId,
-		int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_NotS(
+		long groupId, int status) {
 		return getPersistence().filterFindByG_NotS(groupId, status);
 	}
 
@@ -1481,7 +1518,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1490,8 +1527,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_NotS(long groupId,
-		int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_NotS(
+		long groupId, int status, int start, int end) {
 		return getPersistence().filterFindByG_NotS(groupId, status, start, end);
 	}
 
@@ -1499,7 +1536,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1509,9 +1546,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_NotS(long groupId,
-		int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_NotS(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_NotS(groupId, status, start, end,
 			orderByComparator);
@@ -1527,9 +1564,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_NotS_PrevAndNext(
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_NotS_PrevAndNext(
 		long entryId, long groupId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_NotS_PrevAndNext(entryId, groupId, status,
@@ -1575,7 +1612,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByC_NotS(long companyId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByC_NotS(
+		long companyId, int status) {
 		return getPersistence().findByC_NotS(companyId, status);
 	}
 
@@ -1583,7 +1621,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -1592,8 +1630,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByC_NotS(long companyId, int status,
-		int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByC_NotS(
+		long companyId, int status, int start, int end) {
 		return getPersistence().findByC_NotS(companyId, status, start, end);
 	}
 
@@ -1601,7 +1639,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -1611,8 +1649,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByC_NotS(long companyId, int status,
-		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByC_NotS(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_NotS(companyId, status, start, end,
 			orderByComparator);
@@ -1627,8 +1666,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByC_NotS_First(long companyId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
@@ -1642,8 +1682,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByC_NotS_First(long companyId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -1657,8 +1698,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByC_NotS_Last(long companyId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
@@ -1672,8 +1714,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByC_NotS_Last(long companyId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -1688,9 +1731,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByC_NotS_PrevAndNext(long entryId,
-		long companyId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByC_NotS_PrevAndNext(
+		long entryId, long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(entryId, companyId, status,
@@ -1726,8 +1769,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_S(long groupId, long userId,
-		int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_S(
+		long groupId, long userId, int status) {
 		return getPersistence().findByG_U_S(groupId, userId, status);
 	}
 
@@ -1735,7 +1778,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1745,8 +1788,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_S(long groupId, long userId,
-		int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_S(
+		long groupId, long userId, int status, int start, int end) {
 		return getPersistence().findByG_U_S(groupId, userId, status, start, end);
 	}
 
@@ -1754,7 +1797,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1765,9 +1808,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_S(long groupId, long userId,
-		int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_S(
+		long groupId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_S(groupId, userId, status, start, end,
 			orderByComparator);
@@ -1783,8 +1826,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_U_S_First(long groupId, long userId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_U_S_First(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_S_First(groupId, userId, status, orderByComparator);
@@ -1799,8 +1843,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_U_S_First(long groupId, long userId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_U_S_First(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_S_First(groupId, userId, status,
 			orderByComparator);
@@ -1816,8 +1861,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_U_S_Last(long groupId, long userId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_U_S_Last(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_S_Last(groupId, userId, status, orderByComparator);
@@ -1832,8 +1878,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_U_S_Last(long groupId, long userId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_U_S_Last(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_S_Last(groupId, userId, status, orderByComparator);
 	}
@@ -1849,9 +1896,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_U_S_PrevAndNext(long entryId,
-		long groupId, long userId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_U_S_PrevAndNext(
+		long entryId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_S_PrevAndNext(entryId, groupId, userId, status,
@@ -1866,8 +1913,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_S(long groupId,
-		long userId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_S(
+		long groupId, long userId, int status) {
 		return getPersistence().filterFindByG_U_S(groupId, userId, status);
 	}
 
@@ -1875,7 +1922,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1885,8 +1932,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_S(long groupId,
-		long userId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_S(
+		long groupId, long userId, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_U_S(groupId, userId, status, start, end);
 	}
@@ -1895,7 +1942,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1906,9 +1953,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_S(long groupId,
-		long userId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_S(
+		long groupId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_S(groupId, userId, status, start, end,
 			orderByComparator);
@@ -1925,9 +1972,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_U_S_PrevAndNext(long entryId,
-		long groupId, long userId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_U_S_PrevAndNext(
+		long entryId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_U_S_PrevAndNext(entryId, groupId, userId,
@@ -1977,8 +2024,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_NotS(long groupId,
-		long userId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_NotS(
+		long groupId, long userId, int status) {
 		return getPersistence().findByG_U_NotS(groupId, userId, status);
 	}
 
@@ -1986,7 +2033,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1996,8 +2043,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_NotS(long groupId,
-		long userId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_NotS(
+		long groupId, long userId, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_U_NotS(groupId, userId, status, start, end);
 	}
@@ -2006,7 +2053,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2017,9 +2064,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_NotS(long groupId,
-		long userId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_NotS(
+		long groupId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_NotS(groupId, userId, status, start, end,
 			orderByComparator);
@@ -2035,9 +2082,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_U_NotS_First(long groupId,
-		long userId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_U_NotS_First(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_NotS_First(groupId, userId, status,
@@ -2053,9 +2100,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_U_NotS_First(long groupId,
-		long userId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_U_NotS_First(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_NotS_First(groupId, userId, status,
 			orderByComparator);
@@ -2071,8 +2118,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_U_NotS_Last(long groupId, long userId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_U_NotS_Last(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_NotS_Last(groupId, userId, status,
@@ -2088,9 +2136,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_U_NotS_Last(long groupId,
-		long userId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_U_NotS_Last(
+		long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_NotS_Last(groupId, userId, status,
 			orderByComparator);
@@ -2107,9 +2155,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_U_NotS_PrevAndNext(long entryId,
-		long groupId, long userId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_U_NotS_PrevAndNext(
+		long entryId, long groupId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_NotS_PrevAndNext(entryId, groupId, userId,
@@ -2124,8 +2172,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_NotS(long groupId,
-		long userId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_NotS(
+		long groupId, long userId, int status) {
 		return getPersistence().filterFindByG_U_NotS(groupId, userId, status);
 	}
 
@@ -2133,7 +2181,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2143,8 +2191,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_NotS(long groupId,
-		long userId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_NotS(
+		long groupId, long userId, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_U_NotS(groupId, userId, status, start, end);
 	}
@@ -2153,7 +2201,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2164,9 +2212,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_NotS(long groupId,
-		long userId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_NotS(
+		long groupId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_NotS(groupId, userId, status, start, end,
 			orderByComparator);
@@ -2183,9 +2231,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_U_NotS_PrevAndNext(
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_U_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_U_NotS_PrevAndNext(entryId, groupId, userId,
@@ -2236,8 +2284,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_S(long groupId, long folderId,
-		int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_S(
+		long groupId, long folderId, int status) {
 		return getPersistence().findByG_F_S(groupId, folderId, status);
 	}
 
@@ -2245,7 +2293,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2255,8 +2303,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_S(long groupId, long folderId,
-		int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_S(
+		long groupId, long folderId, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderId, status, start, end);
 	}
@@ -2265,7 +2313,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2276,9 +2324,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_S(long groupId, long folderId,
-		int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_S(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2294,8 +2342,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_F_S_First(long groupId, long folderId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_F_S_First(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_S_First(groupId, folderId, status,
@@ -2311,9 +2360,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_F_S_First(long groupId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_F_S_First(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_First(groupId, folderId, status,
 			orderByComparator);
@@ -2329,8 +2378,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_F_S_Last(long groupId, long folderId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_F_S_Last(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_S_Last(groupId, folderId, status,
@@ -2346,8 +2396,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_F_S_Last(long groupId, long folderId,
-		int status, OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_F_S_Last(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_Last(groupId, folderId, status,
 			orderByComparator);
@@ -2364,9 +2415,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_F_S_PrevAndNext(long entryId,
-		long groupId, long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_F_S_PrevAndNext(
+		long entryId, long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_S_PrevAndNext(entryId, groupId, folderId, status,
@@ -2381,8 +2432,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_S(long groupId,
-		long folderId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
+		long groupId, long folderId, int status) {
 		return getPersistence().filterFindByG_F_S(groupId, folderId, status);
 	}
 
@@ -2390,7 +2441,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2400,8 +2451,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_S(long groupId,
-		long folderId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
+		long groupId, long folderId, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_F_S(groupId, folderId, status, start, end);
 	}
@@ -2410,7 +2461,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2421,9 +2472,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_S(long groupId,
-		long folderId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_S(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2440,9 +2491,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_F_S_PrevAndNext(long entryId,
-		long groupId, long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_F_S_PrevAndNext(
+		long entryId, long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_F_S_PrevAndNext(entryId, groupId, folderId,
@@ -2457,8 +2508,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_S(long groupId,
-		long[] folderIds, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
+		long groupId, long[] folderIds, int status) {
 		return getPersistence().filterFindByG_F_S(groupId, folderIds, status);
 	}
 
@@ -2466,7 +2517,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2476,8 +2527,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_S(long groupId,
-		long[] folderIds, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
+		long groupId, long[] folderIds, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_F_S(groupId, folderIds, status, start, end);
 	}
@@ -2486,7 +2537,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2497,9 +2548,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_S(long groupId,
-		long[] folderIds, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
+		long groupId, long[] folderIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_S(groupId, folderIds, status, start, end,
 			orderByComparator);
@@ -2509,7 +2560,7 @@ public class BookmarksEntryUtil {
 	* Returns all the bookmarks entries where groupId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2517,8 +2568,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_S(long groupId,
-		long[] folderIds, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_S(
+		long groupId, long[] folderIds, int status) {
 		return getPersistence().findByG_F_S(groupId, folderIds, status);
 	}
 
@@ -2526,7 +2577,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2536,8 +2587,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_S(long groupId,
-		long[] folderIds, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_S(
+		long groupId, long[] folderIds, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderIds, status, start, end);
 	}
@@ -2546,7 +2597,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2557,9 +2608,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_S(long groupId,
-		long[] folderIds, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_S(
+		long groupId, long[] folderIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderIds, status, start, end,
 			orderByComparator);
@@ -2633,8 +2684,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_NotS(long groupId,
-		long folderId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_NotS(
+		long groupId, long folderId, int status) {
 		return getPersistence().findByG_F_NotS(groupId, folderId, status);
 	}
 
@@ -2642,7 +2693,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2652,8 +2703,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_NotS(long groupId,
-		long folderId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_NotS(
+		long groupId, long folderId, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_F_NotS(groupId, folderId, status, start, end);
 	}
@@ -2662,7 +2713,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2673,9 +2724,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_NotS(long groupId,
-		long folderId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_NotS(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_NotS(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2691,9 +2742,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_F_NotS_First(long groupId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_F_NotS_First(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_NotS_First(groupId, folderId, status,
@@ -2709,9 +2760,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_F_NotS_First(long groupId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_F_NotS_First(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_NotS_First(groupId, folderId, status,
 			orderByComparator);
@@ -2727,9 +2778,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_F_NotS_Last(long groupId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_F_NotS_Last(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_NotS_Last(groupId, folderId, status,
@@ -2745,9 +2796,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_F_NotS_Last(long groupId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_F_NotS_Last(
+		long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_NotS_Last(groupId, folderId, status,
 			orderByComparator);
@@ -2764,9 +2815,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_F_NotS_PrevAndNext(long entryId,
-		long groupId, long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_F_NotS_PrevAndNext(
+		long entryId, long groupId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_NotS_PrevAndNext(entryId, groupId, folderId,
@@ -2781,8 +2832,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_NotS(long groupId,
-		long folderId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
+		long groupId, long folderId, int status) {
 		return getPersistence().filterFindByG_F_NotS(groupId, folderId, status);
 	}
 
@@ -2790,7 +2841,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2800,8 +2851,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_NotS(long groupId,
-		long folderId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
+		long groupId, long folderId, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_F_NotS(groupId, folderId, status, start, end);
 	}
@@ -2810,7 +2861,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2821,9 +2872,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_NotS(long groupId,
-		long folderId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_NotS(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2840,9 +2891,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_F_NotS_PrevAndNext(
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_F_NotS_PrevAndNext(
 		long entryId, long groupId, long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_F_NotS_PrevAndNext(entryId, groupId,
@@ -2857,8 +2908,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_NotS(long groupId,
-		long[] folderIds, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
+		long groupId, long[] folderIds, int status) {
 		return getPersistence().filterFindByG_F_NotS(groupId, folderIds, status);
 	}
 
@@ -2866,7 +2917,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2876,8 +2927,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_NotS(long groupId,
-		long[] folderIds, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
+		long groupId, long[] folderIds, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_F_NotS(groupId, folderIds, status, start, end);
 	}
@@ -2886,7 +2937,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2897,9 +2948,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_F_NotS(long groupId,
-		long[] folderIds, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
+		long groupId, long[] folderIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_NotS(groupId, folderIds, status, start,
 			end, orderByComparator);
@@ -2909,7 +2960,7 @@ public class BookmarksEntryUtil {
 	* Returns all the bookmarks entries where groupId = &#63; and folderId = any &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2917,8 +2968,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_NotS(long groupId,
-		long[] folderIds, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_NotS(
+		long groupId, long[] folderIds, int status) {
 		return getPersistence().findByG_F_NotS(groupId, folderIds, status);
 	}
 
@@ -2926,7 +2977,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and folderId = any &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2936,8 +2987,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_NotS(long groupId,
-		long[] folderIds, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_NotS(
+		long groupId, long[] folderIds, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_F_NotS(groupId, folderIds, status, start, end);
 	}
@@ -2946,7 +2997,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and folderId = any &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2957,9 +3008,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_F_NotS(long groupId,
-		long[] folderIds, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_F_NotS(
+		long groupId, long[] folderIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_NotS(groupId, folderIds, status, start, end,
 			orderByComparator);
@@ -3035,8 +3086,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_F_S(long groupId, long userId,
-		long folderId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_F_S(
+		long groupId, long userId, long folderId, int status) {
 		return getPersistence().findByG_U_F_S(groupId, userId, folderId, status);
 	}
 
@@ -3044,7 +3095,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3055,8 +3106,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_F_S(long groupId, long userId,
-		long folderId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_F_S(
+		long groupId, long userId, long folderId, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_U_F_S(groupId, userId, folderId, status, start, end);
 	}
@@ -3065,7 +3116,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3077,9 +3128,10 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_F_S(long groupId, long userId,
-		long folderId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_F_S(
+		long groupId, long userId, long folderId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_F_S(groupId, userId, folderId, status, start,
 			end, orderByComparator);
@@ -3096,9 +3148,9 @@ public class BookmarksEntryUtil {
 	* @return the first matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_U_F_S_First(long groupId, long userId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_U_F_S_First(
+		long groupId, long userId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_F_S_First(groupId, userId, folderId, status,
@@ -3115,9 +3167,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_U_F_S_First(long groupId,
-		long userId, long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_U_F_S_First(
+		long groupId, long userId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_F_S_First(groupId, userId, folderId, status,
 			orderByComparator);
@@ -3134,9 +3186,9 @@ public class BookmarksEntryUtil {
 	* @return the last matching bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry findByG_U_F_S_Last(long groupId, long userId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByG_U_F_S_Last(
+		long groupId, long userId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_F_S_Last(groupId, userId, folderId, status,
@@ -3153,9 +3205,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
 	*/
-	public static BookmarksEntry fetchByG_U_F_S_Last(long groupId, long userId,
-		long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByG_U_F_S_Last(
+		long groupId, long userId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_F_S_Last(groupId, userId, folderId, status,
 			orderByComparator);
@@ -3173,9 +3225,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] findByG_U_F_S_PrevAndNext(long entryId,
-		long groupId, long userId, long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+	public static com.liferay.bookmarks.model.BookmarksEntry[] findByG_U_F_S_PrevAndNext(
+		long entryId, long groupId, long userId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_F_S_PrevAndNext(entryId, groupId, userId,
@@ -3191,8 +3243,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_F_S(long groupId,
-		long userId, long folderId, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
+		long groupId, long userId, long folderId, int status) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderId, status);
 	}
@@ -3201,7 +3253,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3212,8 +3264,8 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_F_S(long groupId,
-		long userId, long folderId, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
+		long groupId, long userId, long folderId, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderId, status,
 			start, end);
@@ -3223,7 +3275,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permissions to view where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3235,9 +3287,10 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_F_S(long groupId,
-		long userId, long folderId, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
+		long groupId, long userId, long folderId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderId, status,
 			start, end, orderByComparator);
@@ -3255,9 +3308,9 @@ public class BookmarksEntryUtil {
 	* @return the previous, current, and next bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry[] filterFindByG_U_F_S_PrevAndNext(
+	public static com.liferay.bookmarks.model.BookmarksEntry[] filterFindByG_U_F_S_PrevAndNext(
 		long entryId, long groupId, long userId, long folderId, int status,
-		OrderByComparator<BookmarksEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_U_F_S_PrevAndNext(entryId, groupId, userId,
@@ -3273,8 +3326,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_F_S(long groupId,
-		long userId, long[] folderIds, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
+		long groupId, long userId, long[] folderIds, int status) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderIds, status);
 	}
@@ -3283,7 +3336,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3294,8 +3347,9 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_F_S(long groupId,
-		long userId, long[] folderIds, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
+		long groupId, long userId, long[] folderIds, int status, int start,
+		int end) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderIds, status,
 			start, end);
@@ -3305,7 +3359,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3317,9 +3371,10 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries that the user has permission to view
 	*/
-	public static List<BookmarksEntry> filterFindByG_U_F_S(long groupId,
-		long userId, long[] folderIds, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
+		long groupId, long userId, long[] folderIds, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderIds, status,
 			start, end, orderByComparator);
@@ -3329,7 +3384,7 @@ public class BookmarksEntryUtil {
 	* Returns all the bookmarks entries where groupId = &#63; and userId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3338,8 +3393,8 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @return the matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_F_S(long groupId, long userId,
-		long[] folderIds, int status) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_F_S(
+		long groupId, long userId, long[] folderIds, int status) {
 		return getPersistence().findByG_U_F_S(groupId, userId, folderIds, status);
 	}
 
@@ -3347,7 +3402,7 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries where groupId = &#63; and userId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3358,8 +3413,9 @@ public class BookmarksEntryUtil {
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_F_S(long groupId, long userId,
-		long[] folderIds, int status, int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_F_S(
+		long groupId, long userId, long[] folderIds, int status, int start,
+		int end) {
 		return getPersistence()
 				   .findByG_U_F_S(groupId, userId, folderIds, status, start, end);
 	}
@@ -3368,7 +3424,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries where groupId = &#63; and userId = &#63; and folderId = any &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3380,9 +3436,10 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks entries
 	*/
-	public static List<BookmarksEntry> findByG_U_F_S(long groupId, long userId,
-		long[] folderIds, int status, int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByG_U_F_S(
+		long groupId, long userId, long[] folderIds, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_F_S(groupId, userId, folderIds, status, start,
 			end, orderByComparator);
@@ -3465,7 +3522,8 @@ public class BookmarksEntryUtil {
 	*
 	* @param bookmarksEntry the bookmarks entry
 	*/
-	public static void cacheResult(BookmarksEntry bookmarksEntry) {
+	public static void cacheResult(
+		com.liferay.bookmarks.model.BookmarksEntry bookmarksEntry) {
 		getPersistence().cacheResult(bookmarksEntry);
 	}
 
@@ -3474,7 +3532,8 @@ public class BookmarksEntryUtil {
 	*
 	* @param bookmarksEntries the bookmarks entries
 	*/
-	public static void cacheResult(List<BookmarksEntry> bookmarksEntries) {
+	public static void cacheResult(
+		java.util.List<com.liferay.bookmarks.model.BookmarksEntry> bookmarksEntries) {
 		getPersistence().cacheResult(bookmarksEntries);
 	}
 
@@ -3484,7 +3543,8 @@ public class BookmarksEntryUtil {
 	* @param entryId the primary key for the new bookmarks entry
 	* @return the new bookmarks entry
 	*/
-	public static BookmarksEntry create(long entryId) {
+	public static com.liferay.bookmarks.model.BookmarksEntry create(
+		long entryId) {
 		return getPersistence().create(entryId);
 	}
 
@@ -3495,12 +3555,14 @@ public class BookmarksEntryUtil {
 	* @return the bookmarks entry that was removed
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry remove(long entryId)
+	public static com.liferay.bookmarks.model.BookmarksEntry remove(
+		long entryId)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence().remove(entryId);
 	}
 
-	public static BookmarksEntry updateImpl(BookmarksEntry bookmarksEntry) {
+	public static com.liferay.bookmarks.model.BookmarksEntry updateImpl(
+		com.liferay.bookmarks.model.BookmarksEntry bookmarksEntry) {
 		return getPersistence().updateImpl(bookmarksEntry);
 	}
 
@@ -3511,7 +3573,8 @@ public class BookmarksEntryUtil {
 	* @return the bookmarks entry
 	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry findByPrimaryKey(long entryId)
+	public static com.liferay.bookmarks.model.BookmarksEntry findByPrimaryKey(
+		long entryId)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(entryId);
 	}
@@ -3522,11 +3585,12 @@ public class BookmarksEntryUtil {
 	* @param entryId the primary key of the bookmarks entry
 	* @return the bookmarks entry, or <code>null</code> if a bookmarks entry with the primary key could not be found
 	*/
-	public static BookmarksEntry fetchByPrimaryKey(long entryId) {
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchByPrimaryKey(
+		long entryId) {
 		return getPersistence().fetchByPrimaryKey(entryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, BookmarksEntry> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.bookmarks.model.BookmarksEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -3536,7 +3600,7 @@ public class BookmarksEntryUtil {
 	*
 	* @return the bookmarks entries
 	*/
-	public static List<BookmarksEntry> findAll() {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -3544,14 +3608,15 @@ public class BookmarksEntryUtil {
 	* Returns a range of all the bookmarks entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of bookmarks entries
 	* @param end the upper bound of the range of bookmarks entries (not inclusive)
 	* @return the range of bookmarks entries
 	*/
-	public static List<BookmarksEntry> findAll(int start, int end) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -3559,7 +3624,7 @@ public class BookmarksEntryUtil {
 	* Returns an ordered range of all the bookmarks entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of bookmarks entries
@@ -3567,8 +3632,9 @@ public class BookmarksEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of bookmarks entries
 	*/
-	public static List<BookmarksEntry> findAll(int start, int end,
-		OrderByComparator<BookmarksEntry> orderByComparator) {
+	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

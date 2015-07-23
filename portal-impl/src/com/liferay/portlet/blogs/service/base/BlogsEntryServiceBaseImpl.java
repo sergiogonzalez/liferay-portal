@@ -96,7 +96,7 @@ public abstract class BlogsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the blogs entry remote service
 	 */
-	public BlogsEntryService getBlogsEntryService() {
+	public com.liferay.portlet.blogs.service.BlogsEntryService getBlogsEntryService() {
 		return blogsEntryService;
 	}
 
@@ -105,7 +105,8 @@ public abstract class BlogsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param blogsEntryService the blogs entry remote service
 	 */
-	public void setBlogsEntryService(BlogsEntryService blogsEntryService) {
+	public void setBlogsEntryService(
+		com.liferay.portlet.blogs.service.BlogsEntryService blogsEntryService) {
 		this.blogsEntryService = blogsEntryService;
 	}
 
@@ -1052,8 +1053,8 @@ public abstract class BlogsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryLocalService.class)
 	protected com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService;
-	@BeanReference(type = BlogsEntryService.class)
-	protected BlogsEntryService blogsEntryService;
+	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryService.class)
+	protected com.liferay.portlet.blogs.service.BlogsEntryService blogsEntryService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	@BeanReference(type = BlogsEntryFinder.class)

@@ -66,25 +66,25 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addQuestionResources(long questionId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addQuestionResources(long questionId,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new polls question with the primary key. Does not add the polls question to the database.
@@ -101,7 +101,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
@@ -122,15 +122,18 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.polls.model.PollsQuestion deletePollsQuestion(
-		long questionId) throws PortalException;
+		long questionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteQuestion(long questionId) throws PortalException;
+	public void deleteQuestion(long questionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteQuestions(long groupId) throws PortalException;
+	public void deleteQuestions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -229,7 +232,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the polls question with the primary key.
@@ -240,7 +244,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsQuestion getPollsQuestion(
-		long questionId) throws PortalException;
+		long questionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the polls question matching the UUID and group.
@@ -252,7 +257,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsQuestion getPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the polls questions.
@@ -305,7 +311,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.polls.model.PollsQuestion> getQuestions(
@@ -343,5 +349,5 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -28,7 +28,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AssetTagImpl
- * @see AssetTag
+ * @see com.liferay.portlet.asset.model.AssetTag
  * @generated
  */
 @ProviderType

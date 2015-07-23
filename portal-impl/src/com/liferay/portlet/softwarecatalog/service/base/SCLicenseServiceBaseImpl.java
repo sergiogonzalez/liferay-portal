@@ -75,7 +75,7 @@ public abstract class SCLicenseServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the s c license remote service
 	 */
-	public SCLicenseService getSCLicenseService() {
+	public com.liferay.portlet.softwarecatalog.service.SCLicenseService getSCLicenseService() {
 		return scLicenseService;
 	}
 
@@ -84,7 +84,8 @@ public abstract class SCLicenseServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param scLicenseService the s c license remote service
 	 */
-	public void setSCLicenseService(SCLicenseService scLicenseService) {
+	public void setSCLicenseService(
+		com.liferay.portlet.softwarecatalog.service.SCLicenseService scLicenseService) {
 		this.scLicenseService = scLicenseService;
 	}
 
@@ -243,8 +244,8 @@ public abstract class SCLicenseServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCLicenseLocalService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCLicenseLocalService scLicenseLocalService;
-	@BeanReference(type = SCLicenseService.class)
-	protected SCLicenseService scLicenseService;
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCLicenseService.class)
+	protected com.liferay.portlet.softwarecatalog.service.SCLicenseService scLicenseService;
 	@BeanReference(type = SCLicensePersistence.class)
 	protected SCLicensePersistence scLicensePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -28,7 +28,7 @@ import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
  *
  * @author Eduardo Lundgren
  * @see CalendarResourceImpl
- * @see CalendarResource
+ * @see com.liferay.calendar.model.CalendarResource
  * @generated
  */
 @ProviderType

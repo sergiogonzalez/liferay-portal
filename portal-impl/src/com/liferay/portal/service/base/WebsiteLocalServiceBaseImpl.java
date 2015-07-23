@@ -397,7 +397,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the website local service
 	 */
-	public WebsiteLocalService getWebsiteLocalService() {
+	public com.liferay.portal.service.WebsiteLocalService getWebsiteLocalService() {
 		return websiteLocalService;
 	}
 
@@ -406,7 +406,8 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param websiteLocalService the website local service
 	 */
-	public void setWebsiteLocalService(WebsiteLocalService websiteLocalService) {
+	public void setWebsiteLocalService(
+		com.liferay.portal.service.WebsiteLocalService websiteLocalService) {
 		this.websiteLocalService = websiteLocalService;
 	}
 
@@ -715,8 +716,8 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = WebsiteLocalService.class)
-	protected WebsiteLocalService websiteLocalService;
+	@BeanReference(type = com.liferay.portal.service.WebsiteLocalService.class)
+	protected com.liferay.portal.service.WebsiteLocalService websiteLocalService;
 	@BeanReference(type = com.liferay.portal.service.WebsiteService.class)
 	protected com.liferay.portal.service.WebsiteService websiteService;
 	@BeanReference(type = WebsitePersistence.class)

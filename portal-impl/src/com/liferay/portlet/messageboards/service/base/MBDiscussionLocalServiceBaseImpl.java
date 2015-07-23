@@ -441,7 +441,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 *
 	 * @return the message boards discussion local service
 	 */
-	public MBDiscussionLocalService getMBDiscussionLocalService() {
+	public com.liferay.portlet.messageboards.service.MBDiscussionLocalService getMBDiscussionLocalService() {
 		return mbDiscussionLocalService;
 	}
 
@@ -451,7 +451,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param mbDiscussionLocalService the message boards discussion local service
 	 */
 	public void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
+		com.liferay.portlet.messageboards.service.MBDiscussionLocalService mbDiscussionLocalService) {
 		this.mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
@@ -911,8 +911,8 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = MBDiscussionLocalService.class)
-	protected MBDiscussionLocalService mbDiscussionLocalService;
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBDiscussionLocalService.class)
+	protected com.liferay.portlet.messageboards.service.MBDiscussionLocalService mbDiscussionLocalService;
 	@BeanReference(type = MBDiscussionPersistence.class)
 	protected MBDiscussionPersistence mbDiscussionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

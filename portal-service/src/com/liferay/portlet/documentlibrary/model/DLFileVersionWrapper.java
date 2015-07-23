@@ -319,7 +319,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the create date of this document library file version
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _dlFileVersion.getCreateDate();
 	}
 
@@ -468,7 +468,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the modified date of this document library file version
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _dlFileVersion.getModifiedDate();
 	}
 
@@ -553,7 +553,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @return the status date of this document library file version
 	*/
 	@Override
-	public Date getStatusDate() {
+	public java.util.Date getStatusDate() {
 		return _dlFileVersion.getStatusDate();
 	}
 
@@ -773,7 +773,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param createDate the create date of this document library file version
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_dlFileVersion.setCreateDate(createDate);
 	}
 
@@ -907,7 +907,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param modifiedDate the modified date of this document library file version
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_dlFileVersion.setModifiedDate(modifiedDate);
 	}
 
@@ -997,7 +997,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* @param statusDate the status date of this document library file version
 	*/
 	@Override
-	public void setStatusDate(Date statusDate) {
+	public void setStatusDate(java.util.Date statusDate) {
 		_dlFileVersion.setStatusDate(statusDate);
 	}
 

@@ -28,7 +28,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUt
  *
  * @author Brian Wing Shun Chan
  * @see AnnouncementsFlagImpl
- * @see AnnouncementsFlag
+ * @see com.liferay.portlet.announcements.model.AnnouncementsFlag
  * @generated
  */
 @ProviderType

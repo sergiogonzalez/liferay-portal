@@ -28,7 +28,7 @@ import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SocialActivityLimitImpl
- * @see SocialActivityLimit
+ * @see com.liferay.portlet.social.model.SocialActivityLimit
  * @generated
  */
 @ProviderType

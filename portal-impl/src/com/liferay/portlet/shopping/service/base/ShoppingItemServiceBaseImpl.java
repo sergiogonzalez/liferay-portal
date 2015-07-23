@@ -81,7 +81,7 @@ public abstract class ShoppingItemServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the shopping item remote service
 	 */
-	public ShoppingItemService getShoppingItemService() {
+	public com.liferay.portlet.shopping.service.ShoppingItemService getShoppingItemService() {
 		return shoppingItemService;
 	}
 
@@ -90,7 +90,8 @@ public abstract class ShoppingItemServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param shoppingItemService the shopping item remote service
 	 */
-	public void setShoppingItemService(ShoppingItemService shoppingItemService) {
+	public void setShoppingItemService(
+		com.liferay.portlet.shopping.service.ShoppingItemService shoppingItemService) {
 		this.shoppingItemService = shoppingItemService;
 	}
 
@@ -492,8 +493,8 @@ public abstract class ShoppingItemServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingItemLocalService.class)
 	protected com.liferay.portlet.shopping.service.ShoppingItemLocalService shoppingItemLocalService;
-	@BeanReference(type = ShoppingItemService.class)
-	protected ShoppingItemService shoppingItemService;
+	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingItemService.class)
+	protected com.liferay.portlet.shopping.service.ShoppingItemService shoppingItemService;
 	@BeanReference(type = ShoppingItemPersistence.class)
 	protected ShoppingItemPersistence shoppingItemPersistence;
 	@BeanReference(type = ShoppingItemFinder.class)

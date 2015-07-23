@@ -57,7 +57,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 		com.liferay.portal.model.PluginSetting pluginSetting);
 
 	public void checkPermission(long userId, java.lang.String pluginId,
-		java.lang.String pluginType) throws PortalException;
+		java.lang.String pluginType)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
@@ -74,7 +75,7 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
@@ -95,7 +96,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.PluginSetting deletePluginSetting(
-		long pluginSettingId) throws PortalException;
+		long pluginSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -182,7 +184,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PluginSetting getPluginSetting(
@@ -197,7 +200,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PluginSetting getPluginSetting(
-		long pluginSettingId) throws PortalException;
+		long pluginSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the plugin settings.

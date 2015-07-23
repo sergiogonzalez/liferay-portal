@@ -304,7 +304,7 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	 *
 	 * @return the d d m template version local service
 	 */
-	public DDMTemplateVersionLocalService getDDMTemplateVersionLocalService() {
+	public com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionLocalService getDDMTemplateVersionLocalService() {
 		return ddmTemplateVersionLocalService;
 	}
 
@@ -314,7 +314,7 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	 * @param ddmTemplateVersionLocalService the d d m template version local service
 	 */
 	public void setDDMTemplateVersionLocalService(
-		DDMTemplateVersionLocalService ddmTemplateVersionLocalService) {
+		com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionLocalService ddmTemplateVersionLocalService) {
 		this.ddmTemplateVersionLocalService = ddmTemplateVersionLocalService;
 	}
 
@@ -437,8 +437,8 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDMTemplateVersionLocalService.class)
-	protected DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
+	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionLocalService.class)
+	protected com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionService ddmTemplateVersionService;
 	@BeanReference(type = DDMTemplateVersionPersistence.class)

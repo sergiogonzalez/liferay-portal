@@ -317,7 +317,7 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	 *
 	 * @return the social activity counter local service
 	 */
-	public SocialActivityCounterLocalService getSocialActivityCounterLocalService() {
+	public com.liferay.portlet.social.service.SocialActivityCounterLocalService getSocialActivityCounterLocalService() {
 		return socialActivityCounterLocalService;
 	}
 
@@ -327,7 +327,7 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	 * @param socialActivityCounterLocalService the social activity counter local service
 	 */
 	public void setSocialActivityCounterLocalService(
-		SocialActivityCounterLocalService socialActivityCounterLocalService) {
+		com.liferay.portlet.social.service.SocialActivityCounterLocalService socialActivityCounterLocalService) {
 		this.socialActivityCounterLocalService = socialActivityCounterLocalService;
 	}
 
@@ -825,8 +825,8 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SocialActivityCounterLocalService.class)
-	protected SocialActivityCounterLocalService socialActivityCounterLocalService;
+	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityCounterLocalService.class)
+	protected com.liferay.portlet.social.service.SocialActivityCounterLocalService socialActivityCounterLocalService;
 	@BeanReference(type = SocialActivityCounterPersistence.class)
 	protected SocialActivityCounterPersistence socialActivityCounterPersistence;
 	@BeanReference(type = SocialActivityCounterFinder.class)

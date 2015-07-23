@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link AppServiceUtil} service utility. The
+ * {@link com.liferay.marketplace.service.AppServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Ryan Park
  * @see AppServiceHttp
  * @see com.liferay.marketplace.model.AppSoap
- * @see AppServiceUtil
+ * @see com.liferay.marketplace.service.AppServiceUtil
  * @generated
  */
 @ProviderType

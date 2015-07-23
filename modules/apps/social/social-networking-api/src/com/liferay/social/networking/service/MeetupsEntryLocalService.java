@@ -64,7 +64,7 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 		int startDateHour, int startDateMinute, int endDateMonth,
 		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
 		int totalAttendees, int maxAttendees, double price, byte[] thumbnail)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new meetups entry with the primary key. Does not add the meetups entry to the database.
@@ -94,7 +94,8 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.social.networking.model.MeetupsEntry deleteMeetupsEntry(
-		long meetupsEntryId) throws PortalException;
+		long meetupsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -102,7 +103,7 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -223,12 +224,14 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.social.networking.model.MeetupsEntry getMeetupsEntry(
-		long meetupsEntryId) throws PortalException;
+		long meetupsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -253,5 +256,6 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 		int startDateYear, int startDateHour, int startDateMinute,
 		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
 		int endDateMinute, int totalAttendees, int maxAttendees, double price,
-		byte[] thumbnail) throws PortalException;
+		byte[] thumbnail)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

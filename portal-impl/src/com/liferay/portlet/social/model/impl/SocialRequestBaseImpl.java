@@ -28,7 +28,7 @@ import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SocialRequestImpl
- * @see SocialRequest
+ * @see com.liferay.portlet.social.model.SocialRequest
  * @generated
  */
 @ProviderType

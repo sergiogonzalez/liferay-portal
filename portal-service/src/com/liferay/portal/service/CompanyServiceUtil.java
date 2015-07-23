@@ -373,8 +373,7 @@ public class CompanyServiceUtil {
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String, String,
-	String, java.util.List, java.util.List, java.util.List,
-	java.util.List, UnicodeProperties)}
+	String, List, List, List, List, UnicodeProperties)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.Company updateCompany(
@@ -473,7 +472,7 @@ public class CompanyServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @param properties the company's properties. See {@link
-	com.liferay.portal.kernel.util.UnicodeProperties}
+	UnicodeProperties}
 	* @throws PortalException if the user was not an administrator
 	*/
 	public static void updatePreferences(long companyId,

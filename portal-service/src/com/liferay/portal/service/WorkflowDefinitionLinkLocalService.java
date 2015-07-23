@@ -48,7 +48,8 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	public com.liferay.portal.model.WorkflowDefinitionLink addWorkflowDefinitionLink(
 		long userId, long companyId, long groupId, java.lang.String className,
 		long classPK, long typePK, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion) throws PortalException;
+		int workflowDefinitionVersion)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the workflow definition link to the database. Also notifies the appropriate model listeners.
@@ -75,7 +76,7 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteWorkflowDefinitionLink(long companyId, long groupId,
 		java.lang.String className, long classPK, long typePK);
@@ -99,7 +100,8 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
-		long workflowDefinitionLinkId) throws PortalException;
+		long workflowDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -197,22 +199,24 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 		long companyId, java.lang.String className, long classPK, long typePK)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
 		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK) throws PortalException;
+		long typePK) throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
 		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK, boolean strict) throws PortalException;
+		long typePK, boolean strict)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the workflow definition link with the primary key.
@@ -223,7 +227,8 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
-		long workflowDefinitionLinkId) throws PortalException;
+		long workflowDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the workflow definition links.
@@ -280,12 +285,14 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 
 	public void updateWorkflowDefinitionLink(long userId, long companyId,
 		long groupId, java.lang.String className, long classPK, long typePK,
-		java.lang.String workflowDefinition) throws PortalException;
+		java.lang.String workflowDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.WorkflowDefinitionLink updateWorkflowDefinitionLink(
 		long userId, long companyId, long groupId, java.lang.String className,
 		long classPK, long typePK, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion) throws PortalException;
+		int workflowDefinitionVersion)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the workflow definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -300,5 +307,5 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	public void updateWorkflowDefinitionLinks(long userId, long companyId,
 		long groupId, java.lang.String className, long classPK,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.String>> workflowDefinitionOVPs)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -28,7 +28,7 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see UserGroupRoleImpl
- * @see UserGroupRole
+ * @see com.liferay.portal.model.UserGroupRole
  * @generated
  */
 @ProviderType

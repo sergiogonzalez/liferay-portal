@@ -212,7 +212,7 @@ public class ExportImportConfigurationWrapper
 	* @return the create date of this export import configuration
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _exportImportConfiguration.getCreateDate();
 	}
 
@@ -257,7 +257,7 @@ public class ExportImportConfigurationWrapper
 	* @return the modified date of this export import configuration
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _exportImportConfiguration.getModifiedDate();
 	}
 
@@ -307,7 +307,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public Map<java.lang.String, java.io.Serializable> getSettingsMap() {
+	public java.util.Map<java.lang.String, java.io.Serializable> getSettingsMap() {
 		return _exportImportConfiguration.getSettingsMap();
 	}
 
@@ -357,7 +357,7 @@ public class ExportImportConfigurationWrapper
 	* @return the status date of this export import configuration
 	*/
 	@Override
-	public Date getStatusDate() {
+	public java.util.Date getStatusDate() {
 		return _exportImportConfiguration.getStatusDate();
 	}
 
@@ -588,7 +588,7 @@ public class ExportImportConfigurationWrapper
 	* @param createDate the create date of this export import configuration
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_exportImportConfiguration.setCreateDate(createDate);
 	}
 
@@ -646,7 +646,7 @@ public class ExportImportConfigurationWrapper
 	* @param modifiedDate the modified date of this export import configuration
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_exportImportConfiguration.setModifiedDate(modifiedDate);
 	}
 
@@ -746,7 +746,7 @@ public class ExportImportConfigurationWrapper
 	* @param statusDate the status date of this export import configuration
 	*/
 	@Override
-	public void setStatusDate(Date statusDate) {
+	public void setStatusDate(java.util.Date statusDate) {
 		_exportImportConfiguration.setStatusDate(statusDate);
 	}
 

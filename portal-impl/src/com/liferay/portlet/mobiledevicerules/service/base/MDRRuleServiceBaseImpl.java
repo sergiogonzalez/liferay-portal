@@ -79,7 +79,7 @@ public abstract class MDRRuleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the m d r rule remote service
 	 */
-	public MDRRuleService getMDRRuleService() {
+	public com.liferay.portlet.mobiledevicerules.service.MDRRuleService getMDRRuleService() {
 		return mdrRuleService;
 	}
 
@@ -88,7 +88,8 @@ public abstract class MDRRuleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param mdrRuleService the m d r rule remote service
 	 */
-	public void setMDRRuleService(MDRRuleService mdrRuleService) {
+	public void setMDRRuleService(
+		com.liferay.portlet.mobiledevicerules.service.MDRRuleService mdrRuleService) {
 		this.mdrRuleService = mdrRuleService;
 	}
 
@@ -376,8 +377,8 @@ public abstract class MDRRuleServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService.class)
 	protected com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService mdrRuleLocalService;
-	@BeanReference(type = MDRRuleService.class)
-	protected MDRRuleService mdrRuleService;
+	@BeanReference(type = com.liferay.portlet.mobiledevicerules.service.MDRRuleService.class)
+	protected com.liferay.portlet.mobiledevicerules.service.MDRRuleService mdrRuleService;
 	@BeanReference(type = MDRRulePersistence.class)
 	protected MDRRulePersistence mdrRulePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

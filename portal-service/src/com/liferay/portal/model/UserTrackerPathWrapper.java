@@ -136,7 +136,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	* @return the path date of this user tracker path
 	*/
 	@Override
-	public Date getPathDate() {
+	public java.util.Date getPathDate() {
 		return _userTrackerPath.getPathDate();
 	}
 
@@ -253,7 +253,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	* @param pathDate the path date of this user tracker path
 	*/
 	@Override
-	public void setPathDate(Date pathDate) {
+	public void setPathDate(java.util.Date pathDate) {
 		_userTrackerPath.setPathDate(pathDate);
 	}
 

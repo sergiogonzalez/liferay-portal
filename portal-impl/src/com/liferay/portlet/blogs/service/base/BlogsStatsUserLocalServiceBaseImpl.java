@@ -306,7 +306,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 *
 	 * @return the blogs stats user local service
 	 */
-	public BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
+	public com.liferay.portlet.blogs.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
 		return blogsStatsUserLocalService;
 	}
 
@@ -316,7 +316,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @param blogsStatsUserLocalService the blogs stats user local service
 	 */
 	public void setBlogsStatsUserLocalService(
-		BlogsStatsUserLocalService blogsStatsUserLocalService) {
+		com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		this.blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
@@ -588,8 +588,8 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = BlogsStatsUserLocalService.class)
-	protected BlogsStatsUserLocalService blogsStatsUserLocalService;
+	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsStatsUserLocalService.class)
+	protected com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
 	@BeanReference(type = BlogsStatsUserPersistence.class)
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = BlogsStatsUserFinder.class)

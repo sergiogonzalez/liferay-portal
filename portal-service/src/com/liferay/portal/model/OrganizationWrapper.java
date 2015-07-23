@@ -266,7 +266,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the create date of this organization
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _organization.getCreateDate();
 	}
 
@@ -306,7 +306,7 @@ public class OrganizationWrapper implements Organization,
 	* @return the modified date of this organization
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _organization.getModifiedDate();
 	}
 
@@ -609,7 +609,7 @@ public class OrganizationWrapper implements Organization,
 	* @param createDate the create date of this organization
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_organization.setCreateDate(createDate);
 	}
 
@@ -646,7 +646,7 @@ public class OrganizationWrapper implements Organization,
 	* @param modifiedDate the modified date of this organization
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_organization.setModifiedDate(modifiedDate);
 	}
 

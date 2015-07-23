@@ -430,7 +430,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	 *
 	 * @return the asset vocabulary local service
 	 */
-	public AssetVocabularyLocalService getAssetVocabularyLocalService() {
+	public com.liferay.portlet.asset.service.AssetVocabularyLocalService getAssetVocabularyLocalService() {
 		return assetVocabularyLocalService;
 	}
 
@@ -440,7 +440,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	 * @param assetVocabularyLocalService the asset vocabulary local service
 	 */
 	public void setAssetVocabularyLocalService(
-		AssetVocabularyLocalService assetVocabularyLocalService) {
+		com.liferay.portlet.asset.service.AssetVocabularyLocalService assetVocabularyLocalService) {
 		this.assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
@@ -881,8 +881,8 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = AssetVocabularyLocalService.class)
-	protected AssetVocabularyLocalService assetVocabularyLocalService;
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetVocabularyLocalService.class)
+	protected com.liferay.portlet.asset.service.AssetVocabularyLocalService assetVocabularyLocalService;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetVocabularyService.class)
 	protected com.liferay.portlet.asset.service.AssetVocabularyService assetVocabularyService;
 	@BeanReference(type = AssetVocabularyPersistence.class)

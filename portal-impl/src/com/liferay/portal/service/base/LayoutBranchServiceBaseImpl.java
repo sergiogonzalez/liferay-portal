@@ -77,7 +77,7 @@ public abstract class LayoutBranchServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the layout branch remote service
 	 */
-	public LayoutBranchService getLayoutBranchService() {
+	public com.liferay.portal.service.LayoutBranchService getLayoutBranchService() {
 		return layoutBranchService;
 	}
 
@@ -86,7 +86,8 @@ public abstract class LayoutBranchServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param layoutBranchService the layout branch remote service
 	 */
-	public void setLayoutBranchService(LayoutBranchService layoutBranchService) {
+	public void setLayoutBranchService(
+		com.liferay.portal.service.LayoutBranchService layoutBranchService) {
 		this.layoutBranchService = layoutBranchService;
 	}
 
@@ -376,8 +377,8 @@ public abstract class LayoutBranchServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.LayoutBranchLocalService.class)
 	protected com.liferay.portal.service.LayoutBranchLocalService layoutBranchLocalService;
-	@BeanReference(type = LayoutBranchService.class)
-	protected LayoutBranchService layoutBranchService;
+	@BeanReference(type = com.liferay.portal.service.LayoutBranchService.class)
+	protected com.liferay.portal.service.LayoutBranchService layoutBranchService;
 	@BeanReference(type = LayoutBranchPersistence.class)
 	protected LayoutBranchPersistence layoutBranchPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

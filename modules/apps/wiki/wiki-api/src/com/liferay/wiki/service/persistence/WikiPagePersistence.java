@@ -46,13 +46,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the wiki pages where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -60,14 +61,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -76,9 +77,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where uuid = &#63;.
@@ -88,8 +89,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -99,8 +101,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where uuid = &#63;.
@@ -110,8 +113,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -121,8 +125,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63;.
@@ -133,9 +138,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByUuid_PrevAndNext(long pageId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByUuid_PrevAndNext(
+		long pageId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -161,8 +166,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.wiki.exception.NoSuchPageException;
+	public com.liferay.wiki.model.WikiPage findByUUID_G(java.lang.String uuid,
+		long groupId) throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
 	* Returns the wiki page where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -171,7 +176,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param groupId the group ID
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByUUID_G(java.lang.String uuid, long groupId);
+	public com.liferay.wiki.model.WikiPage fetchByUUID_G(
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the wiki page where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -181,8 +187,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public com.liferay.wiki.model.WikiPage fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the wiki page where uuid = &#63; and groupId = &#63; from the database.
@@ -191,7 +197,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param groupId the group ID
 	* @return the wiki page that was removed
 	*/
-	public WikiPage removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.wiki.model.WikiPage removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -210,14 +217,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param companyId the company ID
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByUuid_C(
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the wiki pages where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,14 +233,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -243,9 +250,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -256,8 +263,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByUuid_C_First(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -268,8 +276,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByUuid_C_First(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -280,8 +289,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByUuid_C_Last(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -292,8 +302,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByUuid_C_Last(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -305,9 +316,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByUuid_C_PrevAndNext(long pageId,
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByUuid_C_PrevAndNext(
+		long pageId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -333,13 +344,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByResourcePrimKey(long resourcePrimKey);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByResourcePrimKey(
+		long resourcePrimKey);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -347,14 +359,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByResourcePrimKey(
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByResourcePrimKey(
 		long resourcePrimKey, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -363,9 +375,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByResourcePrimKey(
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByResourcePrimKey(
 		long resourcePrimKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -375,8 +387,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByResourcePrimKey_First(long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByResourcePrimKey_First(
+		long resourcePrimKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -386,8 +399,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByResourcePrimKey_First(long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByResourcePrimKey_First(
+		long resourcePrimKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -397,8 +411,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByResourcePrimKey_Last(long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByResourcePrimKey_Last(
+		long resourcePrimKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -408,8 +423,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByResourcePrimKey_Last(long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByResourcePrimKey_Last(
+		long resourcePrimKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -420,9 +436,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByResourcePrimKey_PrevAndNext(long pageId,
-		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByResourcePrimKey_PrevAndNext(
+		long pageId, long resourcePrimKey,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -446,13 +462,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByNodeId(long nodeId);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByNodeId(
+		long nodeId);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -460,13 +477,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByNodeId(long nodeId, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByNodeId(
+		long nodeId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -475,9 +493,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByNodeId(long nodeId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByNodeId(
+		long nodeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63;.
@@ -487,8 +505,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByNodeId_First(long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByNodeId_First(long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -498,8 +516,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByNodeId_First(long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByNodeId_First(long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63;.
@@ -509,8 +527,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByNodeId_Last(long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByNodeId_Last(long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -520,8 +538,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByNodeId_Last(long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByNodeId_Last(long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63;.
@@ -532,8 +550,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByNodeId_PrevAndNext(long pageId, long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByNodeId_PrevAndNext(
+		long pageId, long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -557,13 +576,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param format the format
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByFormat(java.lang.String format);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByFormat(
+		java.lang.String format);
 
 	/**
 	* Returns a range of all the wiki pages where format = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param format the format
@@ -571,14 +591,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByFormat(java.lang.String format,
-		int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByFormat(
+		java.lang.String format, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where format = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param format the format
@@ -587,9 +607,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByFormat(java.lang.String format,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByFormat(
+		java.lang.String format, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where format = &#63;.
@@ -599,8 +619,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByFormat_First(java.lang.String format,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByFormat_First(
+		java.lang.String format,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -610,8 +631,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByFormat_First(java.lang.String format,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByFormat_First(
+		java.lang.String format,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where format = &#63;.
@@ -621,8 +643,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByFormat_Last(java.lang.String format,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByFormat_Last(
+		java.lang.String format,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -632,8 +655,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByFormat_Last(java.lang.String format,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByFormat_Last(
+		java.lang.String format,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where format = &#63;.
@@ -644,9 +668,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByFormat_PrevAndNext(long pageId,
-		java.lang.String format,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByFormat_PrevAndNext(
+		long pageId, java.lang.String format,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -671,13 +695,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N(long resourcePrimKey, long nodeId);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N(
+		long resourcePrimKey, long nodeId);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -686,14 +711,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N(long resourcePrimKey,
-		long nodeId, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N(
+		long resourcePrimKey, long nodeId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -703,9 +728,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N(long resourcePrimKey,
-		long nodeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N(
+		long resourcePrimKey, long nodeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -716,8 +741,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_N_First(long resourcePrimKey, long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_N_First(
+		long resourcePrimKey, long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -728,8 +754,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_First(long resourcePrimKey, long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_First(
+		long resourcePrimKey, long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -740,8 +767,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_N_Last(long resourcePrimKey, long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_N_Last(
+		long resourcePrimKey, long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -752,8 +780,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_Last(long resourcePrimKey, long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_Last(
+		long resourcePrimKey, long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -765,9 +794,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByR_N_PrevAndNext(long pageId, long resourcePrimKey,
-		long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByR_N_PrevAndNext(
+		long pageId, long resourcePrimKey, long nodeId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -794,13 +823,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_S(long resourcePrimKey, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_S(
+		long resourcePrimKey, int status);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -809,14 +839,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_S(long resourcePrimKey, int status,
-		int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_S(
+		long resourcePrimKey, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -826,9 +856,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_S(long resourcePrimKey, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_S(
+		long resourcePrimKey, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -839,8 +869,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_S_First(long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_S_First(
+		long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -851,8 +882,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_S_First(long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_S_First(
+		long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -863,8 +895,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_S_Last(long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_S_Last(
+		long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -875,8 +908,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_S_Last(long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_S_Last(
+		long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -888,9 +922,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByR_S_PrevAndNext(long pageId, long resourcePrimKey,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByR_S_PrevAndNext(
+		long pageId, long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -917,14 +951,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T(long nodeId,
-		java.lang.String title);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T(
+		long nodeId, java.lang.String title);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and title = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -933,14 +967,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T(long nodeId,
-		java.lang.String title, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T(
+		long nodeId, java.lang.String title, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and title = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -950,9 +984,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T(long nodeId,
-		java.lang.String title, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T(
+		long nodeId, java.lang.String title, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -963,8 +997,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_T_First(long nodeId, java.lang.String title,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_T_First(long nodeId,
+		java.lang.String title,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -975,8 +1010,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_First(long nodeId, java.lang.String title,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_First(long nodeId,
+		java.lang.String title,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -987,8 +1023,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_T_Last(long nodeId, java.lang.String title,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_T_Last(long nodeId,
+		java.lang.String title,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -999,8 +1036,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_Last(long nodeId, java.lang.String title,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_Last(long nodeId,
+		java.lang.String title,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -1012,9 +1050,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_T_PrevAndNext(long pageId, long nodeId,
-		java.lang.String title,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_T_PrevAndNext(
+		long pageId, long nodeId, java.lang.String title,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1041,13 +1079,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H(long nodeId, boolean head);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H(
+		long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1056,14 +1095,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H(long nodeId, boolean head,
-		int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H(
+		long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1073,9 +1112,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H(long nodeId, boolean head,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H(
+		long nodeId, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1086,8 +1125,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_First(long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_First(long nodeId,
+		boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1098,8 +1138,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_First(long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_First(long nodeId,
+		boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1110,8 +1151,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_Last(long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_Last(long nodeId,
+		boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1122,8 +1164,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_Last(long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_Last(long nodeId,
+		boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1135,9 +1178,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_PrevAndNext(long pageId, long nodeId,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_PrevAndNext(
+		long pageId, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1164,14 +1207,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_P(long nodeId,
-		java.lang.String parentTitle);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_P(
+		long nodeId, java.lang.String parentTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1180,14 +1223,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_P(long nodeId,
-		java.lang.String parentTitle, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_P(
+		long nodeId, java.lang.String parentTitle, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1197,9 +1240,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_P(long nodeId,
-		java.lang.String parentTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_P(
+		long nodeId, java.lang.String parentTitle, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1210,8 +1253,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_P_First(long nodeId, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_P_First(long nodeId,
+		java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1222,8 +1266,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_P_First(long nodeId, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_P_First(long nodeId,
+		java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1234,8 +1279,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_P_Last(long nodeId, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_P_Last(long nodeId,
+		java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1246,8 +1292,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_P_Last(long nodeId, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_P_Last(long nodeId,
+		java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1259,9 +1306,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_P_PrevAndNext(long pageId, long nodeId,
-		java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_P_PrevAndNext(
+		long pageId, long nodeId, java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1288,14 +1335,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_R(long nodeId,
-		java.lang.String redirectTitle);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_R(
+		long nodeId, java.lang.String redirectTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and redirectTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1304,14 +1351,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_R(long nodeId,
-		java.lang.String redirectTitle, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_R(
+		long nodeId, java.lang.String redirectTitle, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and redirectTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1321,9 +1368,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_R(long nodeId,
-		java.lang.String redirectTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_R(
+		long nodeId, java.lang.String redirectTitle, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1334,9 +1381,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_R_First(long nodeId,
+	public com.liferay.wiki.model.WikiPage findByN_R_First(long nodeId,
 		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1347,9 +1394,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_R_First(long nodeId,
+	public com.liferay.wiki.model.WikiPage fetchByN_R_First(long nodeId,
 		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1360,8 +1407,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_R_Last(long nodeId, java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_R_Last(long nodeId,
+		java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1372,9 +1420,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_R_Last(long nodeId,
+	public com.liferay.wiki.model.WikiPage fetchByN_R_Last(long nodeId,
 		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1386,9 +1434,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_R_PrevAndNext(long pageId, long nodeId,
-		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_R_PrevAndNext(
+		long pageId, long nodeId, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1415,13 +1463,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_S(long nodeId, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_S(
+		long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1430,14 +1479,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_S(long nodeId, int status,
-		int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_S(
+		long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -1447,9 +1496,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_S(long nodeId, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_S(
+		long nodeId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1460,8 +1509,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_S_First(long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_S_First(long nodeId,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1472,8 +1522,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_S_First(long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_S_First(long nodeId,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1484,8 +1535,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_S_Last(long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_S_Last(long nodeId,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1496,8 +1548,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_S_Last(long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_S_Last(long nodeId,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1509,9 +1562,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_S_PrevAndNext(long pageId, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_S_PrevAndNext(
+		long pageId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1540,8 +1593,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_N_V(long resourcePrimKey, long nodeId,
-		double version) throws com.liferay.wiki.exception.NoSuchPageException;
+	public com.liferay.wiki.model.WikiPage findByR_N_V(long resourcePrimKey,
+		long nodeId, double version)
+		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
 	* Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1551,8 +1605,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_V(long resourcePrimKey, long nodeId,
-		double version);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_V(long resourcePrimKey,
+		long nodeId, double version);
 
 	/**
 	* Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1563,8 +1617,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_V(long resourcePrimKey, long nodeId,
-		double version, boolean retrieveFromCache);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_V(long resourcePrimKey,
+		long nodeId, double version, boolean retrieveFromCache);
 
 	/**
 	* Removes the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; from the database.
@@ -1574,8 +1628,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @return the wiki page that was removed
 	*/
-	public WikiPage removeByR_N_V(long resourcePrimKey, long nodeId,
-		double version) throws com.liferay.wiki.exception.NoSuchPageException;
+	public com.liferay.wiki.model.WikiPage removeByR_N_V(long resourcePrimKey,
+		long nodeId, double version)
+		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
 	* Returns the number of wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63;.
@@ -1595,14 +1650,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N_H(long resourcePrimKey,
-		long nodeId, boolean head);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N_H(
+		long resourcePrimKey, long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -1612,14 +1667,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N_H(long resourcePrimKey,
-		long nodeId, boolean head, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N_H(
+		long resourcePrimKey, long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -1630,9 +1685,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N_H(long resourcePrimKey,
-		long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N_H(
+		long resourcePrimKey, long nodeId, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1644,9 +1699,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_N_H_First(long resourcePrimKey, long nodeId,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_N_H_First(
+		long resourcePrimKey, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1658,9 +1713,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_H_First(long resourcePrimKey, long nodeId,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_H_First(
+		long resourcePrimKey, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1672,9 +1727,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_N_H_Last(long resourcePrimKey, long nodeId,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_N_H_Last(
+		long resourcePrimKey, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1686,9 +1741,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_H_Last(long resourcePrimKey, long nodeId,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_H_Last(
+		long resourcePrimKey, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1701,9 +1756,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByR_N_H_PrevAndNext(long pageId,
-		long resourcePrimKey, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByR_N_H_PrevAndNext(
+		long pageId, long resourcePrimKey, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1733,14 +1788,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N_S(long resourcePrimKey,
-		long nodeId, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N_S(
+		long resourcePrimKey, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -1750,14 +1805,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N_S(long resourcePrimKey,
-		long nodeId, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N_S(
+		long resourcePrimKey, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param resourcePrimKey the resource prim key
@@ -1768,9 +1823,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByR_N_S(long resourcePrimKey,
-		long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByR_N_S(
+		long resourcePrimKey, long nodeId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -1782,9 +1837,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_N_S_First(long resourcePrimKey, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_N_S_First(
+		long resourcePrimKey, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1796,9 +1851,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_S_First(long resourcePrimKey, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_S_First(
+		long resourcePrimKey, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -1810,9 +1865,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByR_N_S_Last(long resourcePrimKey, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByR_N_S_Last(
+		long resourcePrimKey, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1824,9 +1879,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByR_N_S_Last(long resourcePrimKey, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByR_N_S_Last(
+		long resourcePrimKey, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -1839,9 +1894,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByR_N_S_PrevAndNext(long pageId,
-		long resourcePrimKey, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByR_N_S_PrevAndNext(
+		long pageId, long resourcePrimKey, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1871,14 +1926,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H(long groupId, long nodeId,
-		boolean head);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H(
+		long groupId, long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1888,14 +1943,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H(long groupId, long nodeId,
-		boolean head, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H(
+		long groupId, long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1906,9 +1961,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H(long groupId, long nodeId,
-		boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H(
+		long groupId, long nodeId, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -1920,8 +1975,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_H_First(long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_H_First(long groupId,
+		long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1933,8 +1989,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_H_First(long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_H_First(long groupId,
+		long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -1946,8 +2003,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_H_Last(long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_H_Last(long groupId,
+		long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1959,8 +2017,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_H_Last(long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_H_Last(long groupId,
+		long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -1973,9 +2032,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByG_N_H_PrevAndNext(long pageId, long groupId,
-		long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByG_N_H_PrevAndNext(
+		long pageId, long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -1986,14 +2045,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @return the matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H(long groupId,
-		long nodeId, boolean head);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H(
+		long groupId, long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2003,14 +2062,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H(long groupId,
-		long nodeId, boolean head, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H(
+		long groupId, long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2021,9 +2080,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H(long groupId,
-		long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H(
+		long groupId, long nodeId, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2036,9 +2095,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] filterFindByG_N_H_PrevAndNext(long pageId, long groupId,
-		long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] filterFindByG_N_H_PrevAndNext(
+		long pageId, long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2078,14 +2137,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_S(long groupId, long nodeId,
-		int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_S(
+		long groupId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2095,14 +2154,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_S(long groupId, long nodeId,
-		int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_S(
+		long groupId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2113,9 +2172,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_S(long groupId, long nodeId,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_S(
+		long groupId, long nodeId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2127,8 +2186,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_S_First(long groupId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_S_First(long groupId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2140,8 +2200,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_S_First(long groupId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_S_First(long groupId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2153,8 +2214,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_S_Last(long groupId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_S_Last(long groupId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2166,8 +2228,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_S_Last(long groupId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_S_Last(long groupId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2180,9 +2243,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByG_N_S_PrevAndNext(long pageId, long groupId,
-		long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByG_N_S_PrevAndNext(
+		long pageId, long groupId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2193,14 +2256,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_S(long groupId,
-		long nodeId, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_S(
+		long groupId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2210,14 +2273,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_S(long groupId,
-		long nodeId, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_S(
+		long groupId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -2228,9 +2291,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_S(long groupId,
-		long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_S(
+		long groupId, long nodeId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2243,9 +2306,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] filterFindByG_N_S_PrevAndNext(long pageId, long groupId,
-		long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] filterFindByG_N_S_PrevAndNext(
+		long pageId, long groupId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2285,14 +2348,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByU_N_S(long userId, long nodeId,
-		int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByU_N_S(
+		long userId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -2302,14 +2365,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByU_N_S(long userId, long nodeId,
-		int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByU_N_S(
+		long userId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -2320,9 +2383,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByU_N_S(long userId, long nodeId,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByU_N_S(
+		long userId, long nodeId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2334,8 +2397,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByU_N_S_First(long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByU_N_S_First(long userId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2347,8 +2411,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByU_N_S_First(long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByU_N_S_First(long userId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2360,8 +2425,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByU_N_S_Last(long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByU_N_S_Last(long userId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2373,8 +2439,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByU_N_S_Last(long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByU_N_S_Last(long userId,
+		long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2387,9 +2454,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByU_N_S_PrevAndNext(long pageId, long userId,
-		long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByU_N_S_PrevAndNext(
+		long pageId, long userId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2420,8 +2487,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_T_V(long nodeId, java.lang.String title,
-		double version) throws com.liferay.wiki.exception.NoSuchPageException;
+	public com.liferay.wiki.model.WikiPage findByN_T_V(long nodeId,
+		java.lang.String title, double version)
+		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
 	* Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -2431,8 +2499,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_V(long nodeId, java.lang.String title,
-		double version);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_V(long nodeId,
+		java.lang.String title, double version);
 
 	/**
 	* Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -2443,8 +2511,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_V(long nodeId, java.lang.String title,
-		double version, boolean retrieveFromCache);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_V(long nodeId,
+		java.lang.String title, double version, boolean retrieveFromCache);
 
 	/**
 	* Removes the wiki page where nodeId = &#63; and title = &#63; and version = &#63; from the database.
@@ -2454,8 +2522,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @return the wiki page that was removed
 	*/
-	public WikiPage removeByN_T_V(long nodeId, java.lang.String title,
-		double version) throws com.liferay.wiki.exception.NoSuchPageException;
+	public com.liferay.wiki.model.WikiPage removeByN_T_V(long nodeId,
+		java.lang.String title, double version)
+		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and title = &#63; and version = &#63;.
@@ -2475,14 +2544,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T_H(long nodeId,
-		java.lang.String title, boolean head);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T_H(
+		long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2492,14 +2561,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T_H(long nodeId,
-		java.lang.String title, boolean head, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T_H(
+		long nodeId, java.lang.String title, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2510,9 +2579,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T_H(long nodeId,
-		java.lang.String title, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T_H(
+		long nodeId, java.lang.String title, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -2524,9 +2593,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_T_H_First(long nodeId, java.lang.String title,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_T_H_First(long nodeId,
+		java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2538,9 +2607,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_H_First(long nodeId, java.lang.String title,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_H_First(long nodeId,
+		java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -2552,9 +2621,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_T_H_Last(long nodeId, java.lang.String title,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_T_H_Last(long nodeId,
+		java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2566,9 +2635,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_H_Last(long nodeId, java.lang.String title,
-		boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_H_Last(long nodeId,
+		java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -2581,9 +2650,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_T_H_PrevAndNext(long pageId, long nodeId,
-		java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_T_H_PrevAndNext(
+		long pageId, long nodeId, java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2613,14 +2682,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T_S(long nodeId,
-		java.lang.String title, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T_S(
+		long nodeId, java.lang.String title, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2630,14 +2699,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T_S(long nodeId,
-		java.lang.String title, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T_S(
+		long nodeId, java.lang.String title, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2648,9 +2717,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_T_S(long nodeId,
-		java.lang.String title, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_T_S(
+		long nodeId, java.lang.String title, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -2662,9 +2731,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_T_S_First(long nodeId, java.lang.String title,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_T_S_First(long nodeId,
+		java.lang.String title, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2676,9 +2745,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_S_First(long nodeId, java.lang.String title,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_S_First(long nodeId,
+		java.lang.String title, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -2690,9 +2759,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_T_S_Last(long nodeId, java.lang.String title,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_T_S_Last(long nodeId,
+		java.lang.String title, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2704,9 +2773,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_T_S_Last(long nodeId, java.lang.String title,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_T_S_Last(long nodeId,
+		java.lang.String title, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -2719,9 +2788,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_T_S_PrevAndNext(long pageId, long nodeId,
-		java.lang.String title, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_T_S_PrevAndNext(
+		long pageId, long nodeId, java.lang.String title, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2751,14 +2820,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P(long nodeId, boolean head,
-		java.lang.String parentTitle);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P(
+		long nodeId, boolean head, java.lang.String parentTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2768,14 +2837,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P(long nodeId, boolean head,
-		java.lang.String parentTitle, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P(
+		long nodeId, boolean head, java.lang.String parentTitle, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2786,9 +2856,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P(long nodeId, boolean head,
-		java.lang.String parentTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P(
+		long nodeId, boolean head, java.lang.String parentTitle, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -2800,9 +2871,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_P_First(long nodeId, boolean head,
-		java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_P_First(long nodeId,
+		boolean head, java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2814,9 +2885,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_P_First(long nodeId, boolean head,
-		java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_P_First(long nodeId,
+		boolean head, java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -2828,9 +2899,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_P_Last(long nodeId, boolean head,
-		java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_P_Last(long nodeId,
+		boolean head, java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2842,9 +2913,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_P_Last(long nodeId, boolean head,
-		java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_P_Last(long nodeId,
+		boolean head, java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -2857,9 +2928,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_P_PrevAndNext(long pageId, long nodeId,
-		boolean head, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_P_PrevAndNext(
+		long pageId, long nodeId, boolean head, java.lang.String parentTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2891,14 +2962,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R(long nodeId, boolean head,
-		java.lang.String redirectTitle);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R(
+		long nodeId, boolean head, java.lang.String redirectTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2908,14 +2979,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R(long nodeId, boolean head,
-		java.lang.String redirectTitle, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R(
+		long nodeId, boolean head, java.lang.String redirectTitle, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -2926,9 +2998,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R(long nodeId, boolean head,
-		java.lang.String redirectTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R(
+		long nodeId, boolean head, java.lang.String redirectTitle, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -2940,9 +3013,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_R_First(long nodeId, boolean head,
-		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_R_First(long nodeId,
+		boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2954,9 +3027,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_R_First(long nodeId, boolean head,
-		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_R_First(long nodeId,
+		boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -2968,9 +3041,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_R_Last(long nodeId, boolean head,
-		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_R_Last(long nodeId,
+		boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -2982,9 +3055,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_R_Last(long nodeId, boolean head,
-		java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_R_Last(long nodeId,
+		boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -2997,9 +3070,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_R_PrevAndNext(long pageId, long nodeId,
-		boolean head, java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_R_PrevAndNext(
+		long pageId, long nodeId, boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3031,14 +3104,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_S(long nodeId, boolean head,
-		int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_S(
+		long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -3048,14 +3121,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_S(long nodeId, boolean head,
-		int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_S(
+		long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -3066,9 +3139,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_S(long nodeId, boolean head,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_S(
+		long nodeId, boolean head, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3080,8 +3153,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_S_First(long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_S_First(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3093,8 +3167,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_S_First(long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_S_First(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3106,8 +3181,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_S_Last(long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_S_Last(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3119,8 +3195,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_S_Last(long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_S_Last(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3133,9 +3210,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_S_PrevAndNext(long pageId, long nodeId,
-		boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_S_PrevAndNext(
+		long pageId, long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3165,14 +3242,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_NotS(long nodeId, boolean head,
-		int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_NotS(
+		long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -3182,14 +3259,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_NotS(long nodeId, boolean head,
-		int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_NotS(
+		long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -3200,9 +3277,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_NotS(long nodeId, boolean head,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_NotS(
+		long nodeId, boolean head, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3214,8 +3291,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_NotS_First(long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_NotS_First(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3227,9 +3305,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_NotS_First(long nodeId, boolean head,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_NotS_First(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3241,8 +3319,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_NotS_Last(long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_NotS_Last(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3254,8 +3333,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_NotS_Last(long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_NotS_Last(long nodeId,
+		boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3268,9 +3348,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_NotS_PrevAndNext(long pageId, long nodeId,
-		boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_NotS_PrevAndNext(
+		long pageId, long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3301,14 +3381,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_U_N_S(long groupId, long userId,
-		long nodeId, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_U_N_S(
+		long groupId, long userId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3319,14 +3399,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_U_N_S(long groupId, long userId,
-		long nodeId, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_U_N_S(
+		long groupId, long userId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3338,9 +3418,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_U_N_S(long groupId, long userId,
-		long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_U_N_S(
+		long groupId, long userId, long nodeId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3353,9 +3433,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_U_N_S_First(long groupId, long userId, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_U_N_S_First(long groupId,
+		long userId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3368,9 +3448,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_U_N_S_First(long groupId, long userId,
-		long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_U_N_S_First(long groupId,
+		long userId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3383,9 +3463,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_U_N_S_Last(long groupId, long userId, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_U_N_S_Last(long groupId,
+		long userId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3398,9 +3478,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_U_N_S_Last(long groupId, long userId, long nodeId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_U_N_S_Last(long groupId,
+		long userId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3414,9 +3494,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByG_U_N_S_PrevAndNext(long pageId, long groupId,
-		long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByG_U_N_S_PrevAndNext(
+		long pageId, long groupId, long userId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3428,14 +3508,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_U_N_S(long groupId,
-		long userId, long nodeId, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_U_N_S(
+		long groupId, long userId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3446,14 +3526,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_U_N_S(long groupId,
-		long userId, long nodeId, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_U_N_S(
+		long groupId, long userId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3465,9 +3545,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_U_N_S(long groupId,
-		long userId, long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_U_N_S(
+		long groupId, long userId, long nodeId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3481,9 +3561,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] filterFindByG_U_N_S_PrevAndNext(long pageId,
-		long groupId, long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] filterFindByG_U_N_S_PrevAndNext(
+		long pageId, long groupId, long userId, long nodeId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3529,14 +3609,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_T_H(long groupId, long nodeId,
-		java.lang.String title, boolean head);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_T_H(
+		long groupId, long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3547,14 +3627,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_T_H(long groupId, long nodeId,
-		java.lang.String title, boolean head, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_T_H(
+		long groupId, long nodeId, java.lang.String title, boolean head,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3566,9 +3647,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_T_H(long groupId, long nodeId,
-		java.lang.String title, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_T_H(
+		long groupId, long nodeId, java.lang.String title, boolean head,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3581,9 +3663,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_T_H_First(long groupId, long nodeId,
-		java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_T_H_First(long groupId,
+		long nodeId, java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3596,9 +3678,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_T_H_First(long groupId, long nodeId,
-		java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_T_H_First(long groupId,
+		long nodeId, java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3611,9 +3693,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_T_H_Last(long groupId, long nodeId,
-		java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_T_H_Last(long groupId,
+		long nodeId, java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3626,9 +3708,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_T_H_Last(long groupId, long nodeId,
-		java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_T_H_Last(long groupId,
+		long nodeId, java.lang.String title, boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3642,9 +3724,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByG_N_T_H_PrevAndNext(long pageId, long groupId,
-		long nodeId, java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByG_N_T_H_PrevAndNext(
+		long pageId, long groupId, long nodeId, java.lang.String title,
+		boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3656,14 +3739,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @return the matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_T_H(long groupId,
-		long nodeId, java.lang.String title, boolean head);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_T_H(
+		long groupId, long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3674,14 +3757,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_T_H(long groupId,
-		long nodeId, java.lang.String title, boolean head, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_T_H(
+		long groupId, long nodeId, java.lang.String title, boolean head,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3693,9 +3777,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_T_H(long groupId,
-		long nodeId, java.lang.String title, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_T_H(
+		long groupId, long nodeId, java.lang.String title, boolean head,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3709,9 +3794,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] filterFindByG_N_T_H_PrevAndNext(long pageId,
-		long groupId, long nodeId, java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] filterFindByG_N_T_H_PrevAndNext(
+		long pageId, long groupId, long nodeId, java.lang.String title,
+		boolean head,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3758,14 +3844,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H_S(long groupId, long nodeId,
-		boolean head, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_S(
+		long groupId, long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3776,14 +3862,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H_S(long groupId, long nodeId,
-		boolean head, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_S(
+		long groupId, long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3795,9 +3881,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H_S(long groupId, long nodeId,
-		boolean head, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_S(
+		long groupId, long nodeId, boolean head, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3810,9 +3897,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_H_S_First(long groupId, long nodeId,
-		boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_H_S_First(long groupId,
+		long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3825,9 +3912,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_H_S_First(long groupId, long nodeId,
-		boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_H_S_First(long groupId,
+		long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3840,9 +3927,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_H_S_Last(long groupId, long nodeId, boolean head,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_H_S_Last(long groupId,
+		long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3855,9 +3942,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_H_S_Last(long groupId, long nodeId,
-		boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_H_S_Last(long groupId,
+		long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3871,9 +3958,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByG_N_H_S_PrevAndNext(long pageId, long groupId,
-		long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByG_N_H_S_PrevAndNext(
+		long pageId, long groupId, long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3885,14 +3972,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H_S(long groupId,
-		long nodeId, boolean head, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_S(
+		long groupId, long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3903,14 +3990,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H_S(long groupId,
-		long nodeId, boolean head, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_S(
+		long groupId, long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -3922,9 +4009,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H_S(long groupId,
-		long nodeId, boolean head, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_S(
+		long groupId, long nodeId, boolean head, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3938,9 +4026,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] filterFindByG_N_H_S_PrevAndNext(long pageId,
-		long groupId, long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] filterFindByG_N_H_S_PrevAndNext(
+		long pageId, long groupId, long nodeId, boolean head, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -3987,14 +4075,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P_S(long nodeId, boolean head,
-		java.lang.String parentTitle, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P_S(
+		long nodeId, boolean head, java.lang.String parentTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4005,14 +4093,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P_S(long nodeId, boolean head,
-		java.lang.String parentTitle, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P_S(
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4024,9 +4113,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P_S(long nodeId, boolean head,
-		java.lang.String parentTitle, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P_S(
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4039,9 +4129,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_P_S_First(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_P_S_First(long nodeId,
+		boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4054,9 +4144,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_P_S_First(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_P_S_First(long nodeId,
+		boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4069,9 +4159,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_P_S_Last(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_P_S_Last(long nodeId,
+		boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4084,9 +4174,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_P_S_Last(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_P_S_Last(long nodeId,
+		boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4100,9 +4190,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_P_S_PrevAndNext(long pageId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_P_S_PrevAndNext(
+		long pageId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4137,14 +4228,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P_NotS(long nodeId, boolean head,
-		java.lang.String parentTitle, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P_NotS(
+		long nodeId, boolean head, java.lang.String parentTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4155,14 +4246,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P_NotS(long nodeId, boolean head,
-		java.lang.String parentTitle, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P_NotS(
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4174,9 +4266,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_P_NotS(long nodeId, boolean head,
-		java.lang.String parentTitle, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_P_NotS(
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4189,9 +4282,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_P_NotS_First(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_P_NotS_First(long nodeId,
+		boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4204,9 +4297,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_P_NotS_First(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_P_NotS_First(
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4219,9 +4312,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_P_NotS_Last(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_P_NotS_Last(long nodeId,
+		boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4234,9 +4327,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_P_NotS_Last(long nodeId, boolean head,
-		java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_P_NotS_Last(long nodeId,
+		boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4250,9 +4343,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_P_NotS_PrevAndNext(long pageId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_P_NotS_PrevAndNext(
+		long pageId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4287,14 +4381,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R_S(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R_S(
+		long nodeId, boolean head, java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4305,14 +4399,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R_S(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R_S(
+		long nodeId, boolean head, java.lang.String redirectTitle, int status,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4324,9 +4419,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R_S(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R_S(
+		long nodeId, boolean head, java.lang.String redirectTitle, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -4339,9 +4435,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_R_S_First(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_R_S_First(long nodeId,
+		boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4354,9 +4450,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_R_S_First(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_R_S_First(long nodeId,
+		boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -4369,9 +4465,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_R_S_Last(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_R_S_Last(long nodeId,
+		boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4384,9 +4480,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_R_S_Last(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_R_S_Last(long nodeId,
+		boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -4400,9 +4496,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_R_S_PrevAndNext(long pageId, long nodeId,
-		boolean head, java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_R_S_PrevAndNext(
+		long pageId, long nodeId, boolean head, java.lang.String redirectTitle,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4437,14 +4534,14 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R_NotS(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R_NotS(
+		long nodeId, boolean head, java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4455,14 +4552,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R_NotS(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status, int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R_NotS(
+		long nodeId, boolean head, java.lang.String redirectTitle, int status,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param nodeId the node ID
@@ -4474,9 +4572,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByN_H_R_NotS(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByN_H_R_NotS(
+		long nodeId, boolean head, java.lang.String redirectTitle, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -4489,9 +4588,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_R_NotS_First(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_R_NotS_First(long nodeId,
+		boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4504,9 +4603,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_R_NotS_First(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_R_NotS_First(
+		long nodeId, boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -4519,9 +4618,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByN_H_R_NotS_Last(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByN_H_R_NotS_Last(long nodeId,
+		boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4534,9 +4633,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByN_H_R_NotS_Last(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByN_H_R_NotS_Last(long nodeId,
+		boolean head, java.lang.String redirectTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -4550,9 +4649,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByN_H_R_NotS_PrevAndNext(long pageId, long nodeId,
-		boolean head, java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByN_H_R_NotS_PrevAndNext(
+		long pageId, long nodeId, boolean head, java.lang.String redirectTitle,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4588,14 +4688,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H_P_S(long groupId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_P_S(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -4607,15 +4708,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H_P_S(long groupId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status, int start,
-		int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_P_S(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -4628,10 +4729,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
 	*/
-	public java.util.List<WikiPage> findByG_N_H_P_S(long groupId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_P_S(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4645,9 +4746,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the first matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_H_P_S_First(long groupId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_H_P_S_First(long groupId,
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4661,9 +4762,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_H_P_S_First(long groupId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_H_P_S_First(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4677,9 +4779,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the last matching wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a matching wiki page could not be found
 	*/
-	public WikiPage findByG_N_H_P_S_Last(long groupId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage findByG_N_H_P_S_Last(long groupId,
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4693,9 +4795,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	*/
-	public WikiPage fetchByG_N_H_P_S_Last(long groupId, long nodeId,
-		boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public com.liferay.wiki.model.WikiPage fetchByG_N_H_P_S_Last(long groupId,
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4710,9 +4812,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] findByG_N_H_P_S_PrevAndNext(long pageId, long groupId,
-		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] findByG_N_H_P_S_PrevAndNext(
+		long pageId, long groupId, long nodeId, boolean head,
+		java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4725,14 +4828,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H_P_S(long groupId,
-		long nodeId, boolean head, java.lang.String parentTitle, int status);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_P_S(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -4744,15 +4848,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H_P_S(long groupId,
-		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_P_S(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -4765,10 +4869,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
 	*/
-	public java.util.List<WikiPage> filterFindByG_N_H_P_S(long groupId,
-		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_P_S(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4783,10 +4887,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage[] filterFindByG_N_H_P_S_PrevAndNext(long pageId,
-		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator)
+	public com.liferay.wiki.model.WikiPage[] filterFindByG_N_H_P_S_PrevAndNext(
+		long pageId, long groupId, long nodeId, boolean head,
+		java.lang.String parentTitle, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4832,14 +4936,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	*
 	* @param wikiPage the wiki page
 	*/
-	public void cacheResult(WikiPage wikiPage);
+	public void cacheResult(com.liferay.wiki.model.WikiPage wikiPage);
 
 	/**
 	* Caches the wiki pages in the entity cache if it is enabled.
 	*
 	* @param wikiPages the wiki pages
 	*/
-	public void cacheResult(java.util.List<WikiPage> wikiPages);
+	public void cacheResult(
+		java.util.List<com.liferay.wiki.model.WikiPage> wikiPages);
 
 	/**
 	* Creates a new wiki page with the primary key. Does not add the wiki page to the database.
@@ -4847,7 +4952,7 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param pageId the primary key for the new wiki page
 	* @return the new wiki page
 	*/
-	public WikiPage create(long pageId);
+	public com.liferay.wiki.model.WikiPage create(long pageId);
 
 	/**
 	* Removes the wiki page with the primary key from the database. Also notifies the appropriate model listeners.
@@ -4856,10 +4961,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the wiki page that was removed
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage remove(long pageId)
+	public com.liferay.wiki.model.WikiPage remove(long pageId)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
-	public WikiPage updateImpl(WikiPage wikiPage);
+	public com.liferay.wiki.model.WikiPage updateImpl(
+		com.liferay.wiki.model.WikiPage wikiPage);
 
 	/**
 	* Returns the wiki page with the primary key or throws a {@link com.liferay.wiki.NoSuchPageException} if it could not be found.
@@ -4868,7 +4974,7 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @return the wiki page
 	* @throws com.liferay.wiki.NoSuchPageException if a wiki page with the primary key could not be found
 	*/
-	public WikiPage findByPrimaryKey(long pageId)
+	public com.liferay.wiki.model.WikiPage findByPrimaryKey(long pageId)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	/**
@@ -4877,10 +4983,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param pageId the primary key of the wiki page
 	* @return the wiki page, or <code>null</code> if a wiki page with the primary key could not be found
 	*/
-	public WikiPage fetchByPrimaryKey(long pageId);
+	public com.liferay.wiki.model.WikiPage fetchByPrimaryKey(long pageId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, WikiPage> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.wiki.model.WikiPage> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -4888,26 +4994,27 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	*
 	* @return the wiki pages
 	*/
-	public java.util.List<WikiPage> findAll();
+	public java.util.List<com.liferay.wiki.model.WikiPage> findAll();
 
 	/**
 	* Returns a range of all the wiki pages.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of wiki pages
 	*/
-	public java.util.List<WikiPage> findAll(int start, int end);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findAll(int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wiki pages
@@ -4915,8 +5022,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of wiki pages
 	*/
-	public java.util.List<WikiPage> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPage> orderByComparator);
+	public java.util.List<com.liferay.wiki.model.WikiPage> findAll(int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> orderByComparator);
 
 	/**
 	* Removes all the wiki pages from the database.

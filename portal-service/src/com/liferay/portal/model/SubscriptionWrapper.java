@@ -192,7 +192,7 @@ public class SubscriptionWrapper implements Subscription,
 	* @return the create date of this subscription
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _subscription.getCreateDate();
 	}
 
@@ -227,7 +227,7 @@ public class SubscriptionWrapper implements Subscription,
 	* @return the modified date of this subscription
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _subscription.getModifiedDate();
 	}
 
@@ -367,7 +367,7 @@ public class SubscriptionWrapper implements Subscription,
 	* @param createDate the create date of this subscription
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_subscription.setCreateDate(createDate);
 	}
 
@@ -414,7 +414,7 @@ public class SubscriptionWrapper implements Subscription,
 	* @param modifiedDate the modified date of this subscription
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_subscription.setModifiedDate(modifiedDate);
 	}
 

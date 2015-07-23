@@ -46,13 +46,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param groupId the group ID
 	* @return the matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByGroupId(long groupId);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the export import configurations where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -60,14 +61,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param end the upper bound of the range of export import configurations (not inclusive)
 	* @return the range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByGroupId(
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByGroupId(
 		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the export import configurations where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -76,9 +77,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByGroupId(
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63;.
@@ -86,10 +87,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -99,8 +101,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63;.
@@ -108,10 +111,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -121,8 +125,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63;.
@@ -131,11 +136,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next export import configuration
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration[] findByGroupId_PrevAndNext(
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration[] findByGroupId_PrevAndNext(
 		long exportImportConfigurationId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -159,14 +164,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param companyId the company ID
 	* @return the matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByCompanyId(
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByCompanyId(
 		long companyId);
 
 	/**
 	* Returns a range of all the export import configurations where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -174,14 +179,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param end the upper bound of the range of export import configurations (not inclusive)
 	* @return the range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByCompanyId(
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByCompanyId(
 		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the export import configurations where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -190,9 +195,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByCompanyId(
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the first export import configuration in the ordered set where companyId = &#63;.
@@ -200,10 +205,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -213,8 +219,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the last export import configuration in the ordered set where companyId = &#63;.
@@ -222,10 +229,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -235,8 +243,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the export import configurations before and after the current export import configuration in the ordered set where companyId = &#63;.
@@ -245,11 +254,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next export import configuration
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration[] findByCompanyId_PrevAndNext(
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration[] findByCompanyId_PrevAndNext(
 		long exportImportConfigurationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -274,14 +283,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param type the type
 	* @return the matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_T(long groupId,
-		int type);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_T(
+		long groupId, int type);
 
 	/**
 	* Returns a range of all the export import configurations where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -290,14 +299,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param end the upper bound of the range of export import configurations (not inclusive)
 	* @return the range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_T(long groupId,
-		int type, int start, int end);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_T(
+		long groupId, int type, int start, int end);
 
 	/**
 	* Returns an ordered range of all the export import configurations where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -307,9 +316,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_T(long groupId,
-		int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_T(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63; and type = &#63;.
@@ -318,10 +327,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByG_T_First(long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByG_T_First(
+		long groupId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -332,8 +342,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByG_T_First(long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByG_T_First(
+		long groupId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63;.
@@ -342,10 +353,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByG_T_Last(long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByG_T_Last(
+		long groupId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -356,8 +368,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByG_T_Last(long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByG_T_Last(
+		long groupId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63; and type = &#63;.
@@ -367,11 +380,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next export import configuration
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration[] findByG_T_PrevAndNext(
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration[] findByG_T_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -398,14 +411,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @return the matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_S(long groupId,
-		int status);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_S(
+		long groupId, int status);
 
 	/**
 	* Returns a range of all the export import configurations where groupId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -414,14 +427,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param end the upper bound of the range of export import configurations (not inclusive)
 	* @return the range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_S(long groupId,
-		int status, int start, int end);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_S(
+		long groupId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the export import configurations where groupId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -431,9 +444,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_S(long groupId,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63; and status = &#63;.
@@ -442,10 +455,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByG_S_First(long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByG_S_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -456,8 +470,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByG_S_First(long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByG_S_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63; and status = &#63;.
@@ -466,10 +481,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByG_S_Last(long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByG_S_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -480,8 +496,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByG_S_Last(long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByG_S_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63; and status = &#63;.
@@ -491,11 +508,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next export import configuration
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration[] findByG_S_PrevAndNext(
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration[] findByG_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -523,14 +540,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @return the matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_T_S(long groupId,
-		int type, int status);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_T_S(
+		long groupId, int type, int status);
 
 	/**
 	* Returns a range of all the export import configurations where groupId = &#63; and type = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -540,14 +557,14 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param end the upper bound of the range of export import configurations (not inclusive)
 	* @return the range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_T_S(long groupId,
-		int type, int status, int start, int end);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_T_S(
+		long groupId, int type, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the export import configurations where groupId = &#63; and type = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -558,9 +575,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findByG_T_S(long groupId,
-		int type, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findByG_T_S(
+		long groupId, int type, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -570,11 +587,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByG_T_S_First(long groupId, int type,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByG_T_S_First(
+		long groupId, int type, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -586,9 +603,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByG_T_S_First(long groupId, int type,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByG_T_S_First(
+		long groupId, int type, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -598,11 +615,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration findByG_T_S_Last(long groupId, int type,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByG_T_S_Last(
+		long groupId, int type, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -614,9 +631,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
 	*/
-	public ExportImportConfiguration fetchByG_T_S_Last(long groupId, int type,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByG_T_S_Last(
+		long groupId, int type, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -627,11 +644,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next export import configuration
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration[] findByG_T_S_PrevAndNext(
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration[] findByG_T_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
 	/**
@@ -658,7 +675,8 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*
 	* @param exportImportConfiguration the export import configuration
 	*/
-	public void cacheResult(ExportImportConfiguration exportImportConfiguration);
+	public void cacheResult(
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration);
 
 	/**
 	* Caches the export import configurations in the entity cache if it is enabled.
@@ -666,7 +684,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param exportImportConfigurations the export import configurations
 	*/
 	public void cacheResult(
-		java.util.List<ExportImportConfiguration> exportImportConfigurations);
+		java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> exportImportConfigurations);
 
 	/**
 	* Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
@@ -674,29 +692,31 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param exportImportConfigurationId the primary key for the new export import configuration
 	* @return the new export import configuration
 	*/
-	public ExportImportConfiguration create(long exportImportConfigurationId);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration create(
+		long exportImportConfigurationId);
 
 	/**
 	* Removes the export import configuration with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param exportImportConfigurationId the primary key of the export import configuration
 	* @return the export import configuration that was removed
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration remove(long exportImportConfigurationId)
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration remove(
+		long exportImportConfigurationId)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
-	public ExportImportConfiguration updateImpl(
-		ExportImportConfiguration exportImportConfiguration);
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration updateImpl(
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration);
 
 	/**
-	* Returns the export import configuration with the primary key or throws a {@link NoSuchConfigurationException} if it could not be found.
+	* Returns the export import configuration with the primary key or throws a {@link com.liferay.portlet.exportimport.NoSuchConfigurationException} if it could not be found.
 	*
 	* @param exportImportConfigurationId the primary key of the export import configuration
 	* @return the export import configuration
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	* @throws com.liferay.portlet.exportimport.NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration findByPrimaryKey(
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration findByPrimaryKey(
 		long exportImportConfigurationId)
 		throws com.liferay.portlet.exportimport.NoSuchConfigurationException;
 
@@ -706,11 +726,11 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param exportImportConfigurationId the primary key of the export import configuration
 	* @return the export import configuration, or <code>null</code> if a export import configuration with the primary key could not be found
 	*/
-	public ExportImportConfiguration fetchByPrimaryKey(
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration fetchByPrimaryKey(
 		long exportImportConfigurationId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, ExportImportConfiguration> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.exportimport.model.ExportImportConfiguration> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -718,26 +738,27 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*
 	* @return the export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findAll();
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findAll();
 
 	/**
 	* Returns a range of all the export import configurations.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of export import configurations
 	* @param end the upper bound of the range of export import configurations (not inclusive)
 	* @return the range of export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the export import configurations.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of export import configurations
@@ -745,9 +766,9 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of export import configurations
 	*/
-	public java.util.List<ExportImportConfiguration> findAll(int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator);
+	public java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator);
 
 	/**
 	* Removes all the export import configurations from the database.

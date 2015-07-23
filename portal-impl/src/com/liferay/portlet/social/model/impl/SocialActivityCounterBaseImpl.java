@@ -28,7 +28,7 @@ import com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SocialActivityCounterImpl
- * @see SocialActivityCounter
+ * @see com.liferay.portlet.social.model.SocialActivityCounter
  * @generated
  */
 @ProviderType

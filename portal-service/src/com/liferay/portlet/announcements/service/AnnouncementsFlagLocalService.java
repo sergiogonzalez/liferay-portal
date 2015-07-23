@@ -89,12 +89,13 @@ public interface AnnouncementsFlagLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
-		long flagId) throws PortalException;
+		long flagId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteFlag(
 		com.liferay.portlet.announcements.model.AnnouncementsFlag flag);
 
-	public void deleteFlag(long flagId) throws PortalException;
+	public void deleteFlag(long flagId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteFlags(long entryId);
 
@@ -104,7 +105,7 @@ public interface AnnouncementsFlagLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -187,7 +188,7 @@ public interface AnnouncementsFlagLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag getAnnouncementsFlag(
-		long flagId) throws PortalException;
+		long flagId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the announcements flags.
@@ -221,12 +222,14 @@ public interface AnnouncementsFlagLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag getFlag(
-		long userId, long entryId, int value) throws PortalException;
+		long userId, long entryId, int value)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

@@ -185,7 +185,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the create date of this meetups entry
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _meetupsEntry.getCreateDate();
 	}
 
@@ -205,7 +205,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the end date of this meetups entry
 	*/
 	@Override
-	public Date getEndDate() {
+	public java.util.Date getEndDate() {
 		return _meetupsEntry.getEndDate();
 	}
 
@@ -240,7 +240,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the modified date of this meetups entry
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _meetupsEntry.getModifiedDate();
 	}
 
@@ -275,7 +275,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @return the start date of this meetups entry
 	*/
 	@Override
-	public Date getStartDate() {
+	public java.util.Date getStartDate() {
 		return _meetupsEntry.getStartDate();
 	}
 
@@ -385,7 +385,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param createDate the create date of this meetups entry
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_meetupsEntry.setCreateDate(createDate);
 	}
 
@@ -405,7 +405,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param endDate the end date of this meetups entry
 	*/
 	@Override
-	public void setEndDate(Date endDate) {
+	public void setEndDate(java.util.Date endDate) {
 		_meetupsEntry.setEndDate(endDate);
 	}
 
@@ -453,7 +453,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param modifiedDate the modified date of this meetups entry
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_meetupsEntry.setModifiedDate(modifiedDate);
 	}
 
@@ -493,7 +493,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	* @param startDate the start date of this meetups entry
 	*/
 	@Override
-	public void setStartDate(Date startDate) {
+	public void setStartDate(java.util.Date startDate) {
 		_meetupsEntry.setStartDate(startDate);
 	}
 

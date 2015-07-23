@@ -63,9 +63,10 @@ public interface SACPEntryLocalService extends BaseLocalService,
 		boolean defaultSACPEntry, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void checkDefaultSACPEntry(long companyId) throws PortalException;
+	public void checkDefaultSACPEntry(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new s a c p entry with the primary key. Does not add the s a c p entry to the database.
@@ -82,7 +83,7 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the s a c p entry from the database. Also notifies the appropriate model listeners.
@@ -94,7 +95,7 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.service.access.control.profile.model.SACPEntry deleteSACPEntry(
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the s a c p entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -105,7 +106,8 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.service.access.control.profile.model.SACPEntry deleteSACPEntry(
-		long sacpEntryId) throws PortalException;
+		long sacpEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -216,7 +218,8 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the s a c p entries.
@@ -243,7 +246,8 @@ public interface SACPEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.control.profile.model.SACPEntry getSACPEntry(
-		long companyId, java.lang.String name) throws PortalException;
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the s a c p entry with the primary key.
@@ -254,7 +258,8 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.control.profile.model.SACPEntry getSACPEntry(
-		long sacpEntryId) throws PortalException;
+		long sacpEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the s a c p entry with the matching UUID and company.
@@ -266,7 +271,8 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.control.profile.model.SACPEntry getSACPEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -290,5 +296,5 @@ public interface SACPEntryLocalService extends BaseLocalService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

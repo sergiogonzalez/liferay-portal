@@ -86,7 +86,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the ratings entry remote service
 	 */
-	public RatingsEntryService getRatingsEntryService() {
+	public com.liferay.portlet.ratings.service.RatingsEntryService getRatingsEntryService() {
 		return ratingsEntryService;
 	}
 
@@ -95,7 +95,8 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param ratingsEntryService the ratings entry remote service
 	 */
-	public void setRatingsEntryService(RatingsEntryService ratingsEntryService) {
+	public void setRatingsEntryService(
+		com.liferay.portlet.ratings.service.RatingsEntryService ratingsEntryService) {
 		this.ratingsEntryService = ratingsEntryService;
 	}
 
@@ -628,8 +629,8 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryLocalService.class)
 	protected com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService;
-	@BeanReference(type = RatingsEntryService.class)
-	protected RatingsEntryService ratingsEntryService;
+	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryService.class)
+	protected com.liferay.portlet.ratings.service.RatingsEntryService ratingsEntryService;
 	@BeanReference(type = RatingsEntryPersistence.class)
 	protected RatingsEntryPersistence ratingsEntryPersistence;
 	@BeanReference(type = RatingsEntryFinder.class)

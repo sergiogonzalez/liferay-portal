@@ -28,7 +28,7 @@ import com.liferay.portlet.shopping.service.ShoppingItemFieldLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ShoppingItemFieldImpl
- * @see ShoppingItemField
+ * @see com.liferay.portlet.shopping.model.ShoppingItemField
  * @generated
  */
 @ProviderType

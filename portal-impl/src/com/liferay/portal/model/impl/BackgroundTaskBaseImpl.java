@@ -28,7 +28,7 @@ import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see BackgroundTaskImpl
- * @see BackgroundTask
+ * @see com.liferay.portal.model.BackgroundTask
  * @generated
  */
 @ProviderType

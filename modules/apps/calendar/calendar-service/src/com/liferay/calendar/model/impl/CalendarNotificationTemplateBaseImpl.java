@@ -28,7 +28,7 @@ import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil
  *
  * @author Eduardo Lundgren
  * @see CalendarNotificationTemplateImpl
- * @see CalendarNotificationTemplate
+ * @see com.liferay.calendar.model.CalendarNotificationTemplate
  * @generated
  */
 @ProviderType

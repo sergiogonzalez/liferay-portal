@@ -46,13 +46,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param uuid the uuid
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the document library file shortcuts where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -60,14 +61,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -76,9 +77,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where uuid = &#63;.
@@ -86,10 +87,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -99,8 +101,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where uuid = &#63;.
@@ -108,10 +111,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -121,8 +125,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63;.
@@ -131,11 +136,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByUuid_PrevAndNext(long fileShortcutId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByUuid_PrevAndNext(
+		long fileShortcutId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -154,14 +159,15 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFileShortcutException} if it could not be found.
+	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileShortcutException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -171,7 +177,8 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param groupId the group ID
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUUID_G(java.lang.String uuid, long groupId);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUUID_G(
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -181,8 +188,8 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the document library file shortcut where uuid = &#63; and groupId = &#63; from the database.
@@ -191,7 +198,8 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param groupId the group ID
 	* @return the document library file shortcut that was removed
 	*/
-	public DLFileShortcut removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -210,14 +218,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid_C(
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the document library file shortcuts where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,14 +234,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -243,9 +251,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -254,11 +262,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -269,9 +277,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -280,11 +288,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -295,9 +303,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -307,11 +315,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByUuid_C_PrevAndNext(long fileShortcutId,
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByUuid_C_PrevAndNext(
+		long fileShortcutId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -337,13 +345,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByCompanyId(long companyId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByCompanyId(
+		long companyId);
 
 	/**
 	* Returns a range of all the document library file shortcuts where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -351,14 +360,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByCompanyId(long companyId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByCompanyId(
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -367,9 +376,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where companyId = &#63;.
@@ -377,10 +386,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -390,8 +400,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where companyId = &#63;.
@@ -399,10 +410,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -412,8 +424,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63;.
@@ -422,11 +435,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByCompanyId_PrevAndNext(long fileShortcutId,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByCompanyId_PrevAndNext(
+		long fileShortcutId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -450,14 +463,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param toFileEntryId the to file entry ID
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByToFileEntryId(
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByToFileEntryId(
 		long toFileEntryId);
 
 	/**
 	* Returns a range of all the document library file shortcuts where toFileEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param toFileEntryId the to file entry ID
@@ -465,14 +478,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByToFileEntryId(
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByToFileEntryId(
 		long toFileEntryId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where toFileEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param toFileEntryId the to file entry ID
@@ -481,9 +494,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByToFileEntryId(
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByToFileEntryId(
 		long toFileEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where toFileEntryId = &#63;.
@@ -491,10 +504,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param toFileEntryId the to file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByToFileEntryId_First(long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByToFileEntryId_First(
+		long toFileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -504,8 +518,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByToFileEntryId_First(long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByToFileEntryId_First(
+		long toFileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where toFileEntryId = &#63;.
@@ -513,10 +528,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param toFileEntryId the to file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByToFileEntryId_Last(long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByToFileEntryId_Last(
+		long toFileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -526,8 +542,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByToFileEntryId_Last(long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByToFileEntryId_Last(
+		long toFileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where toFileEntryId = &#63;.
@@ -536,11 +553,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param toFileEntryId the to file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByToFileEntryId_PrevAndNext(
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByToFileEntryId_PrevAndNext(
 		long fileShortcutId, long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -565,13 +582,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param folderId the folder ID
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F(long groupId, long folderId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F(
+		long groupId, long folderId);
 
 	/**
 	* Returns a range of all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -580,14 +598,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F(long groupId,
-		long folderId, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F(
+		long groupId, long folderId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -597,9 +615,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F(long groupId,
-		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
@@ -608,10 +626,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByG_F_First(long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_First(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -622,8 +641,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByG_F_First(long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_First(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
@@ -632,10 +652,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByG_F_Last(long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_Last(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -646,8 +667,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByG_F_Last(long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_Last(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
@@ -657,11 +679,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByG_F_PrevAndNext(long fileShortcutId,
-		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_PrevAndNext(
+		long fileShortcutId, long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -671,14 +693,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param folderId the folder ID
 	* @return the matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F(long groupId,
-		long folderId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F(
+		long groupId, long folderId);
 
 	/**
 	* Returns a range of all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -687,14 +709,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F(long groupId,
-		long folderId, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F(
+		long groupId, long folderId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts that the user has permissions to view where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -704,9 +726,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F(long groupId,
-		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
@@ -716,11 +738,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] filterFindByG_F_PrevAndNext(long fileShortcutId,
-		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_PrevAndNext(
+		long fileShortcutId, long groupId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -756,14 +778,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByC_NotS(long companyId,
-		int status);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByC_NotS(
+		long companyId, int status);
 
 	/**
 	* Returns a range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -772,14 +794,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByC_NotS(long companyId,
-		int status, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByC_NotS(
+		long companyId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -789,9 +811,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByC_NotS(long companyId,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByC_NotS(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -800,10 +822,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByC_NotS_First(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -814,8 +837,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByC_NotS_First(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -824,10 +848,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByC_NotS_Last(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -838,8 +863,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByC_NotS_Last(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -849,11 +875,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByC_NotS_PrevAndNext(long fileShortcutId,
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByC_NotS_PrevAndNext(
+		long fileShortcutId, long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -881,14 +907,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param active the active
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F_A(long groupId,
-		long folderId, boolean active);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A(
+		long groupId, long folderId, boolean active);
 
 	/**
 	* Returns a range of all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -898,14 +924,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F_A(long groupId,
-		long folderId, boolean active, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A(
+		long groupId, long folderId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -916,9 +942,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F_A(long groupId,
-		long folderId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A(
+		long groupId, long folderId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -928,11 +954,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByG_F_A_First(long groupId, long folderId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_First(
+		long groupId, long folderId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -944,9 +970,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByG_F_A_First(long groupId, long folderId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_First(
+		long groupId, long folderId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -956,11 +982,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByG_F_A_Last(long groupId, long folderId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_Last(
+		long groupId, long folderId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -972,9 +998,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByG_F_A_Last(long groupId, long folderId,
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_Last(
+		long groupId, long folderId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -985,11 +1011,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByG_F_A_PrevAndNext(long fileShortcutId,
-		long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_A_PrevAndNext(
+		long fileShortcutId, long groupId, long folderId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1000,14 +1026,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param active the active
 	* @return the matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F_A(long groupId,
-		long folderId, boolean active);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A(
+		long groupId, long folderId, boolean active);
 
 	/**
 	* Returns a range of all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1017,14 +1043,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F_A(long groupId,
-		long folderId, boolean active, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A(
+		long groupId, long folderId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts that the user has permissions to view where groupId = &#63; and folderId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1035,9 +1061,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F_A(long groupId,
-		long folderId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A(
+		long groupId, long folderId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -1048,11 +1074,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] filterFindByG_F_A_PrevAndNext(long fileShortcutId,
-		long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_A_PrevAndNext(
+		long fileShortcutId, long groupId, long folderId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1093,14 +1119,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @return the matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F_A_S(long groupId,
-		long folderId, boolean active, int status);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A_S(
+		long groupId, long folderId, boolean active, int status);
 
 	/**
 	* Returns a range of all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1111,14 +1137,15 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F_A_S(long groupId,
-		long folderId, boolean active, int status, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A_S(
+		long groupId, long folderId, boolean active, int status, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1130,9 +1157,10 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findByG_F_A_S(long groupId,
-		long folderId, boolean active, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A_S(
+		long groupId, long folderId, boolean active, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1143,11 +1171,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByG_F_A_S_First(long groupId, long folderId,
-		boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_S_First(
+		long groupId, long folderId, boolean active, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1160,9 +1188,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByG_F_A_S_First(long groupId, long folderId,
-		boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_S_First(
+		long groupId, long folderId, boolean active, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1173,11 +1201,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut findByG_F_A_S_Last(long groupId, long folderId,
-		boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_S_Last(
+		long groupId, long folderId, boolean active, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1190,9 +1218,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	*/
-	public DLFileShortcut fetchByG_F_A_S_Last(long groupId, long folderId,
-		boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_S_Last(
+		long groupId, long folderId, boolean active, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1204,11 +1232,12 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] findByG_F_A_S_PrevAndNext(long fileShortcutId,
-		long groupId, long folderId, boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_A_S_PrevAndNext(
+		long fileShortcutId, long groupId, long folderId, boolean active,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1220,14 +1249,14 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @return the matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F_A_S(long groupId,
-		long folderId, boolean active, int status);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A_S(
+		long groupId, long folderId, boolean active, int status);
 
 	/**
 	* Returns a range of all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1238,14 +1267,15 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F_A_S(long groupId,
-		long folderId, boolean active, int status, int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A_S(
+		long groupId, long folderId, boolean active, int status, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts that the user has permissions to view where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1257,9 +1287,10 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching document library file shortcuts that the user has permission to view
 	*/
-	public java.util.List<DLFileShortcut> filterFindByG_F_A_S(long groupId,
-		long folderId, boolean active, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A_S(
+		long groupId, long folderId, boolean active, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1271,12 +1302,12 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut[] filterFindByG_F_A_S_PrevAndNext(
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_A_S_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1319,14 +1350,16 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*
 	* @param dlFileShortcut the document library file shortcut
 	*/
-	public void cacheResult(DLFileShortcut dlFileShortcut);
+	public void cacheResult(
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut);
 
 	/**
 	* Caches the document library file shortcuts in the entity cache if it is enabled.
 	*
 	* @param dlFileShortcuts the document library file shortcuts
 	*/
-	public void cacheResult(java.util.List<DLFileShortcut> dlFileShortcuts);
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> dlFileShortcuts);
 
 	/**
 	* Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
@@ -1334,28 +1367,32 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param fileShortcutId the primary key for the new document library file shortcut
 	* @return the new document library file shortcut
 	*/
-	public DLFileShortcut create(long fileShortcutId);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut create(
+		long fileShortcutId);
 
 	/**
 	* Removes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileShortcutId the primary key of the document library file shortcut
 	* @return the document library file shortcut that was removed
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut remove(long fileShortcutId)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut remove(
+		long fileShortcutId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
-	public DLFileShortcut updateImpl(DLFileShortcut dlFileShortcut);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateImpl(
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut);
 
 	/**
-	* Returns the document library file shortcut with the primary key or throws a {@link NoSuchFileShortcutException} if it could not be found.
+	* Returns the document library file shortcut with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileShortcutException} if it could not be found.
 	*
 	* @param fileShortcutId the primary key of the document library file shortcut
 	* @return the document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut findByPrimaryKey(long fileShortcutId)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByPrimaryKey(
+		long fileShortcutId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1364,10 +1401,11 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param fileShortcutId the primary key of the document library file shortcut
 	* @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
 	*/
-	public DLFileShortcut fetchByPrimaryKey(long fileShortcutId);
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByPrimaryKey(
+		long fileShortcutId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, DLFileShortcut> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFileShortcut> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -1375,26 +1413,27 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*
 	* @return the document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findAll();
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findAll();
 
 	/**
 	* Returns a range of all the document library file shortcuts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file shortcuts
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the document library file shortcuts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of document library file shortcuts
@@ -1402,8 +1441,9 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of document library file shortcuts
 	*/
-	public java.util.List<DLFileShortcut> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Removes all the document library file shortcuts from the database.

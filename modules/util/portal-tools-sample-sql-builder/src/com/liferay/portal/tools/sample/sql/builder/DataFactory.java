@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleModel;
@@ -37,7 +38,6 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
-import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -1574,6 +1574,7 @@ public class DataFactory {
 		journalArticleModel.setExpirationDate(nextFutureDate());
 		journalArticleModel.setReviewDate(new Date());
 		journalArticleModel.setIndexable(true);
+		journalArticleModel.setLastPublishDate(new Date());
 		journalArticleModel.setStatusDate(new Date());
 
 		return journalArticleModel;
@@ -2962,6 +2963,7 @@ public class DataFactory {
 		wikiNodeModel.setModifiedDate(new Date());
 		wikiNodeModel.setName("Test Node " + index);
 		wikiNodeModel.setLastPostDate(new Date());
+		wikiNodeModel.setLastPublishDate(new Date());
 		wikiNodeModel.setStatusDate(new Date());
 
 		return wikiNodeModel;
@@ -2987,6 +2989,7 @@ public class DataFactory {
 		wikiPageModel.setContent("This is test page " + index + ".");
 		wikiPageModel.setFormat("creole");
 		wikiPageModel.setHead(true);
+		wikiPageModel.setLastPublishDate(new Date());
 
 		return wikiPageModel;
 	}

@@ -64,5 +64,5 @@ public interface SocialRequestService extends BaseService {
 	public com.liferay.portlet.social.model.SocialRequest updateRequest(
 		long requestId, int status,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

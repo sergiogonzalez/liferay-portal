@@ -28,7 +28,7 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlockImpl
- * @see ResourceBlock
+ * @see com.liferay.portal.model.ResourceBlock
  * @generated
  */
 @ProviderType

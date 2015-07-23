@@ -148,7 +148,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	* @return the modified date of this image
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _image.getModifiedDate();
 	}
 
@@ -285,7 +285,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	* @param modifiedDate the modified date of this image
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_image.setModifiedDate(modifiedDate);
 	}
 

@@ -71,7 +71,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteWebDAVProps(java.lang.String className, long classPK);
 
@@ -94,7 +94,8 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.WebDAVProps deleteWebDAVProps(
-		long webDavPropsId) throws PortalException;
+		long webDavPropsId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -178,7 +179,8 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WebDAVProps getWebDAVProps(long companyId,
@@ -193,7 +195,8 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WebDAVProps getWebDAVProps(
-		long webDavPropsId) throws PortalException;
+		long webDavPropsId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the web d a v propses.
@@ -227,7 +230,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 
 	public void storeWebDAVProps(
 		com.liferay.portal.model.WebDAVProps webDavProps)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the web d a v props in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

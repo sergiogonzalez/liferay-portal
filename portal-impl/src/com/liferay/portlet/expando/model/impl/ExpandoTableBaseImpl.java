@@ -28,7 +28,7 @@ import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoTableImpl
- * @see ExpandoTable
+ * @see com.liferay.portlet.expando.model.ExpandoTable
  * @generated
  */
 @ProviderType

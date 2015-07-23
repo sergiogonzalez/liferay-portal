@@ -54,13 +54,14 @@ public interface WebsiteLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,
-		long typeId, boolean primary) throws PortalException;
+		long typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,
 		long typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the website to the database. Also notifies the appropriate model listeners.
@@ -86,7 +87,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the website from the database. Also notifies the appropriate model listeners.
@@ -108,7 +109,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Website deleteWebsite(long websiteId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteWebsites(long companyId, java.lang.String className,
 		long classPK);
@@ -209,7 +210,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the website with the primary key.
@@ -220,7 +222,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Website getWebsite(long websiteId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the website with the matching UUID and company.
@@ -232,7 +234,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Website getWebsiteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Website> getWebsites();
@@ -283,5 +286,5 @@ public interface WebsiteLocalService extends BaseLocalService,
 
 	public com.liferay.portal.model.Website updateWebsite(long websiteId,
 		java.lang.String url, long typeId, boolean primary)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -86,7 +86,8 @@ public interface CounterLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.counter.model.Counter deleteCounter(
-		java.lang.String name) throws PortalException;
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -94,7 +95,7 @@ public interface CounterLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -180,7 +181,7 @@ public interface CounterLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.counter.model.Counter getCounter(java.lang.String name)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the counters.
@@ -211,24 +212,25 @@ public interface CounterLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment();
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment(java.lang.String name);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment(java.lang.String name, int size);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void rename(java.lang.String oldName, java.lang.String newName);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void reset(java.lang.String name);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void reset(java.lang.String name, long size);
 
 	/**

@@ -28,7 +28,7 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see LayoutBranchImpl
- * @see LayoutBranch
+ * @see com.liferay.portal.model.LayoutBranch
  * @generated
  */
 @ProviderType

@@ -44,13 +44,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param uuid the uuid
 	* @return the matching teams
 	*/
-	public java.util.List<Team> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.portal.model.Team> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the teams where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -58,14 +59,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param end the upper bound of the range of teams (not inclusive)
 	* @return the range of matching teams
 	*/
-	public java.util.List<Team> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<com.liferay.portal.model.Team> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the teams where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -74,9 +75,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching teams
 	*/
-	public java.util.List<Team> findByUuid(java.lang.String uuid, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public java.util.List<com.liferay.portal.model.Team> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the first team in the ordered set where uuid = &#63;.
@@ -84,10 +85,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -97,8 +99,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public com.liferay.portal.model.Team fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the last team in the ordered set where uuid = &#63;.
@@ -106,10 +109,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -119,8 +123,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public com.liferay.portal.model.Team fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the teams before and after the current team in the ordered set where uuid = &#63;.
@@ -129,10 +134,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next team
-	* @throws NoSuchTeamException if a team with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team[] findByUuid_PrevAndNext(long teamId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team[] findByUuid_PrevAndNext(long teamId,
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -151,15 +157,15 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the team where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTeamException} if it could not be found.
+	* Returns the team where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portal.NoSuchTeamException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchTeamException;
+	public com.liferay.portal.model.Team findByUUID_G(java.lang.String uuid,
+		long groupId) throws com.liferay.portal.NoSuchTeamException;
 
 	/**
 	* Returns the team where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -168,7 +174,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @return the matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByUUID_G(java.lang.String uuid, long groupId);
+	public com.liferay.portal.model.Team fetchByUUID_G(java.lang.String uuid,
+		long groupId);
 
 	/**
 	* Returns the team where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -178,8 +185,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public com.liferay.portal.model.Team fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the team where uuid = &#63; and groupId = &#63; from the database.
@@ -188,8 +195,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @return the team that was removed
 	*/
-	public Team removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchTeamException;
+	public com.liferay.portal.model.Team removeByUUID_G(java.lang.String uuid,
+		long groupId) throws com.liferay.portal.NoSuchTeamException;
 
 	/**
 	* Returns the number of teams where uuid = &#63; and groupId = &#63;.
@@ -207,14 +214,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param companyId the company ID
 	* @return the matching teams
 	*/
-	public java.util.List<Team> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<com.liferay.portal.model.Team> findByUuid_C(
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the teams where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -223,14 +230,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param end the upper bound of the range of teams (not inclusive)
 	* @return the range of matching teams
 	*/
-	public java.util.List<Team> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<com.liferay.portal.model.Team> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the teams where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -240,9 +247,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching teams
 	*/
-	public java.util.List<Team> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public java.util.List<com.liferay.portal.model.Team> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the first team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -251,10 +258,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByUuid_C_First(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -265,8 +273,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByUuid_C_First(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public com.liferay.portal.model.Team fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the last team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -275,10 +284,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByUuid_C_Last(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -289,8 +299,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByUuid_C_Last(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public com.liferay.portal.model.Team fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the teams before and after the current team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -300,11 +311,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next team
-	* @throws NoSuchTeamException if a team with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team[] findByUuid_C_PrevAndNext(long teamId, java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team[] findByUuid_C_PrevAndNext(
+		long teamId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -330,13 +341,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @return the matching teams
 	*/
-	public java.util.List<Team> findByGroupId(long groupId);
+	public java.util.List<com.liferay.portal.model.Team> findByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the teams where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -344,13 +356,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param end the upper bound of the range of teams (not inclusive)
 	* @return the range of matching teams
 	*/
-	public java.util.List<Team> findByGroupId(long groupId, int start, int end);
+	public java.util.List<com.liferay.portal.model.Team> findByGroupId(
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the teams where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -359,8 +372,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching teams
 	*/
-	public java.util.List<Team> findByGroupId(long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public java.util.List<com.liferay.portal.model.Team> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the first team in the ordered set where groupId = &#63;.
@@ -368,10 +382,10 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team findByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -381,8 +395,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public com.liferay.portal.model.Team fetchByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the last team in the ordered set where groupId = &#63;.
@@ -390,10 +404,10 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team findByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -403,8 +417,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public com.liferay.portal.model.Team fetchByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the teams before and after the current team in the ordered set where groupId = &#63;.
@@ -413,10 +427,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next team
-	* @throws NoSuchTeamException if a team with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team[] findByGroupId_PrevAndNext(long teamId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team[] findByGroupId_PrevAndNext(
+		long teamId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -425,13 +440,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @return the matching teams that the user has permission to view
 	*/
-	public java.util.List<Team> filterFindByGroupId(long groupId);
+	public java.util.List<com.liferay.portal.model.Team> filterFindByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the teams that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -439,14 +455,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param end the upper bound of the range of teams (not inclusive)
 	* @return the range of matching teams that the user has permission to view
 	*/
-	public java.util.List<Team> filterFindByGroupId(long groupId, int start,
-		int end);
+	public java.util.List<com.liferay.portal.model.Team> filterFindByGroupId(
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the teams that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -455,9 +471,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching teams that the user has permission to view
 	*/
-	public java.util.List<Team> filterFindByGroupId(long groupId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public java.util.List<com.liferay.portal.model.Team> filterFindByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Returns the teams before and after the current team in the ordered set of teams that the user has permission to view where groupId = &#63;.
@@ -466,10 +482,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next team
-	* @throws NoSuchTeamException if a team with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team[] filterFindByGroupId_PrevAndNext(long teamId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
+	public com.liferay.portal.model.Team[] filterFindByGroupId_PrevAndNext(
+		long teamId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -496,15 +513,15 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public int filterCountByGroupId(long groupId);
 
 	/**
-	* Returns the team where groupId = &#63; and name = &#63; or throws a {@link NoSuchTeamException} if it could not be found.
+	* Returns the team where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchTeamException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param name the name
 	* @return the matching team
-	* @throws NoSuchTeamException if a matching team could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
-	public Team findByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.NoSuchTeamException;
+	public com.liferay.portal.model.Team findByG_N(long groupId,
+		java.lang.String name) throws com.liferay.portal.NoSuchTeamException;
 
 	/**
 	* Returns the team where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -513,7 +530,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param name the name
 	* @return the matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByG_N(long groupId, java.lang.String name);
+	public com.liferay.portal.model.Team fetchByG_N(long groupId,
+		java.lang.String name);
 
 	/**
 	* Returns the team where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -523,8 +541,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching team, or <code>null</code> if a matching team could not be found
 	*/
-	public Team fetchByG_N(long groupId, java.lang.String name,
-		boolean retrieveFromCache);
+	public com.liferay.portal.model.Team fetchByG_N(long groupId,
+		java.lang.String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the team where groupId = &#63; and name = &#63; from the database.
@@ -533,8 +551,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param name the name
 	* @return the team that was removed
 	*/
-	public Team removeByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.NoSuchTeamException;
+	public com.liferay.portal.model.Team removeByG_N(long groupId,
+		java.lang.String name) throws com.liferay.portal.NoSuchTeamException;
 
 	/**
 	* Returns the number of teams where groupId = &#63; and name = &#63;.
@@ -550,14 +568,14 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*
 	* @param team the team
 	*/
-	public void cacheResult(Team team);
+	public void cacheResult(com.liferay.portal.model.Team team);
 
 	/**
 	* Caches the teams in the entity cache if it is enabled.
 	*
 	* @param teams the teams
 	*/
-	public void cacheResult(java.util.List<Team> teams);
+	public void cacheResult(java.util.List<com.liferay.portal.model.Team> teams);
 
 	/**
 	* Creates a new team with the primary key. Does not add the team to the database.
@@ -565,28 +583,29 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param teamId the primary key for the new team
 	* @return the new team
 	*/
-	public Team create(long teamId);
+	public com.liferay.portal.model.Team create(long teamId);
 
 	/**
 	* Removes the team with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param teamId the primary key of the team
 	* @return the team that was removed
-	* @throws NoSuchTeamException if a team with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team remove(long teamId)
+	public com.liferay.portal.model.Team remove(long teamId)
 		throws com.liferay.portal.NoSuchTeamException;
 
-	public Team updateImpl(Team team);
+	public com.liferay.portal.model.Team updateImpl(
+		com.liferay.portal.model.Team team);
 
 	/**
-	* Returns the team with the primary key or throws a {@link NoSuchTeamException} if it could not be found.
+	* Returns the team with the primary key or throws a {@link com.liferay.portal.NoSuchTeamException} if it could not be found.
 	*
 	* @param teamId the primary key of the team
 	* @return the team
-	* @throws NoSuchTeamException if a team with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team findByPrimaryKey(long teamId)
+	public com.liferay.portal.model.Team findByPrimaryKey(long teamId)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -595,10 +614,10 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param teamId the primary key of the team
 	* @return the team, or <code>null</code> if a team with the primary key could not be found
 	*/
-	public Team fetchByPrimaryKey(long teamId);
+	public com.liferay.portal.model.Team fetchByPrimaryKey(long teamId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, Team> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Team> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -606,26 +625,27 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*
 	* @return the teams
 	*/
-	public java.util.List<Team> findAll();
+	public java.util.List<com.liferay.portal.model.Team> findAll();
 
 	/**
 	* Returns a range of all the teams.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of teams
 	* @param end the upper bound of the range of teams (not inclusive)
 	* @return the range of teams
 	*/
-	public java.util.List<Team> findAll(int start, int end);
+	public java.util.List<com.liferay.portal.model.Team> findAll(int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the teams.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of teams
@@ -633,8 +653,9 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of teams
 	*/
-	public java.util.List<Team> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator);
+	public java.util.List<com.liferay.portal.model.Team> findAll(int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
 
 	/**
 	* Removes all the teams from the database.
@@ -668,7 +689,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* Returns a range of all the users associated with the team.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the team
@@ -683,7 +704,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* Returns an ordered range of all the users associated with the team.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the team
@@ -832,7 +853,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* Returns a range of all the user groups associated with the team.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the team
@@ -847,7 +868,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* Returns an ordered range of all the user groups associated with the team.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TeamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the team

@@ -115,7 +115,8 @@ public class ShoppingCategoryUtil {
 	* @param groupId the group ID
 	* @return the matching shopping categories
 	*/
-	public static List<ShoppingCategory> findByGroupId(long groupId) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByGroupId(
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -123,7 +124,7 @@ public class ShoppingCategoryUtil {
 	* Returns a range of all the shopping categories where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -131,8 +132,8 @@ public class ShoppingCategoryUtil {
 	* @param end the upper bound of the range of shopping categories (not inclusive)
 	* @return the range of matching shopping categories
 	*/
-	public static List<ShoppingCategory> findByGroupId(long groupId, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByGroupId(
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -140,7 +141,7 @@ public class ShoppingCategoryUtil {
 	* Returns an ordered range of all the shopping categories where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -149,8 +150,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping categories
 	*/
-	public static List<ShoppingCategory> findByGroupId(long groupId, int start,
-		int end, OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -161,10 +163,11 @@ public class ShoppingCategoryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping category
-	* @throws NoSuchCategoryException if a matching shopping category could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory findByGroupId_First(long groupId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -176,8 +179,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByGroupId_First(long groupId,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -187,10 +191,11 @@ public class ShoppingCategoryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping category
-	* @throws NoSuchCategoryException if a matching shopping category could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory findByGroupId_Last(long groupId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -202,8 +207,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByGroupId_Last(long groupId,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -214,11 +220,11 @@ public class ShoppingCategoryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping category
-	* @throws NoSuchCategoryException if a shopping category with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	*/
-	public static ShoppingCategory[] findByGroupId_PrevAndNext(
+	public static com.liferay.portlet.shopping.model.ShoppingCategory[] findByGroupId_PrevAndNext(
 		long categoryId, long groupId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(categoryId, groupId,
@@ -231,7 +237,8 @@ public class ShoppingCategoryUtil {
 	* @param groupId the group ID
 	* @return the matching shopping categories that the user has permission to view
 	*/
-	public static List<ShoppingCategory> filterFindByGroupId(long groupId) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByGroupId(
+		long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -239,7 +246,7 @@ public class ShoppingCategoryUtil {
 	* Returns a range of all the shopping categories that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -247,8 +254,8 @@ public class ShoppingCategoryUtil {
 	* @param end the upper bound of the range of shopping categories (not inclusive)
 	* @return the range of matching shopping categories that the user has permission to view
 	*/
-	public static List<ShoppingCategory> filterFindByGroupId(long groupId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByGroupId(
+		long groupId, int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -256,7 +263,7 @@ public class ShoppingCategoryUtil {
 	* Returns an ordered range of all the shopping categories that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -265,9 +272,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping categories that the user has permission to view
 	*/
-	public static List<ShoppingCategory> filterFindByGroupId(long groupId,
-		int start, int end,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -279,11 +286,11 @@ public class ShoppingCategoryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping category
-	* @throws NoSuchCategoryException if a shopping category with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	*/
-	public static ShoppingCategory[] filterFindByGroupId_PrevAndNext(
+	public static com.liferay.portlet.shopping.model.ShoppingCategory[] filterFindByGroupId_PrevAndNext(
 		long categoryId, long groupId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(categoryId, groupId,
@@ -326,8 +333,8 @@ public class ShoppingCategoryUtil {
 	* @param parentCategoryId the parent category ID
 	* @return the matching shopping categories
 	*/
-	public static List<ShoppingCategory> findByG_P(long groupId,
-		long parentCategoryId) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByG_P(
+		long groupId, long parentCategoryId) {
 		return getPersistence().findByG_P(groupId, parentCategoryId);
 	}
 
@@ -335,7 +342,7 @@ public class ShoppingCategoryUtil {
 	* Returns a range of all the shopping categories where groupId = &#63; and parentCategoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -344,8 +351,8 @@ public class ShoppingCategoryUtil {
 	* @param end the upper bound of the range of shopping categories (not inclusive)
 	* @return the range of matching shopping categories
 	*/
-	public static List<ShoppingCategory> findByG_P(long groupId,
-		long parentCategoryId, int start, int end) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByG_P(
+		long groupId, long parentCategoryId, int start, int end) {
 		return getPersistence().findByG_P(groupId, parentCategoryId, start, end);
 	}
 
@@ -353,7 +360,7 @@ public class ShoppingCategoryUtil {
 	* Returns an ordered range of all the shopping categories where groupId = &#63; and parentCategoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -363,9 +370,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping categories
 	*/
-	public static List<ShoppingCategory> findByG_P(long groupId,
-		long parentCategoryId, int start, int end,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByG_P(
+		long groupId, long parentCategoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence()
 				   .findByG_P(groupId, parentCategoryId, start, end,
 			orderByComparator);
@@ -378,11 +385,11 @@ public class ShoppingCategoryUtil {
 	* @param parentCategoryId the parent category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping category
-	* @throws NoSuchCategoryException if a matching shopping category could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory findByG_P_First(long groupId,
-		long parentCategoryId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory findByG_P_First(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_First(groupId, parentCategoryId, orderByComparator);
@@ -396,9 +403,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByG_P_First(long groupId,
-		long parentCategoryId,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_P_First(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_First(groupId, parentCategoryId,
 			orderByComparator);
@@ -411,11 +418,11 @@ public class ShoppingCategoryUtil {
 	* @param parentCategoryId the parent category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping category
-	* @throws NoSuchCategoryException if a matching shopping category could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory findByG_P_Last(long groupId,
-		long parentCategoryId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory findByG_P_Last(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_Last(groupId, parentCategoryId, orderByComparator);
@@ -429,9 +436,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByG_P_Last(long groupId,
-		long parentCategoryId,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_P_Last(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_Last(groupId, parentCategoryId, orderByComparator);
 	}
@@ -444,11 +451,11 @@ public class ShoppingCategoryUtil {
 	* @param parentCategoryId the parent category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping category
-	* @throws NoSuchCategoryException if a shopping category with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	*/
-	public static ShoppingCategory[] findByG_P_PrevAndNext(long categoryId,
-		long groupId, long parentCategoryId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory[] findByG_P_PrevAndNext(
+		long categoryId, long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_PrevAndNext(categoryId, groupId,
@@ -462,8 +469,8 @@ public class ShoppingCategoryUtil {
 	* @param parentCategoryId the parent category ID
 	* @return the matching shopping categories that the user has permission to view
 	*/
-	public static List<ShoppingCategory> filterFindByG_P(long groupId,
-		long parentCategoryId) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByG_P(
+		long groupId, long parentCategoryId) {
 		return getPersistence().filterFindByG_P(groupId, parentCategoryId);
 	}
 
@@ -471,7 +478,7 @@ public class ShoppingCategoryUtil {
 	* Returns a range of all the shopping categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -480,8 +487,8 @@ public class ShoppingCategoryUtil {
 	* @param end the upper bound of the range of shopping categories (not inclusive)
 	* @return the range of matching shopping categories that the user has permission to view
 	*/
-	public static List<ShoppingCategory> filterFindByG_P(long groupId,
-		long parentCategoryId, int start, int end) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByG_P(
+		long groupId, long parentCategoryId, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_P(groupId, parentCategoryId, start, end);
 	}
@@ -490,7 +497,7 @@ public class ShoppingCategoryUtil {
 	* Returns an ordered range of all the shopping categories that the user has permissions to view where groupId = &#63; and parentCategoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -500,9 +507,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping categories that the user has permission to view
 	*/
-	public static List<ShoppingCategory> filterFindByG_P(long groupId,
-		long parentCategoryId, int start, int end,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByG_P(
+		long groupId, long parentCategoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_P(groupId, parentCategoryId, start, end,
 			orderByComparator);
@@ -516,11 +523,11 @@ public class ShoppingCategoryUtil {
 	* @param parentCategoryId the parent category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping category
-	* @throws NoSuchCategoryException if a shopping category with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	*/
-	public static ShoppingCategory[] filterFindByG_P_PrevAndNext(
+	public static com.liferay.portlet.shopping.model.ShoppingCategory[] filterFindByG_P_PrevAndNext(
 		long categoryId, long groupId, long parentCategoryId,
-		OrderByComparator<ShoppingCategory> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_P_PrevAndNext(categoryId, groupId,
@@ -560,14 +567,15 @@ public class ShoppingCategoryUtil {
 	}
 
 	/**
-	* Returns the shopping category where groupId = &#63; and name = &#63; or throws a {@link NoSuchCategoryException} if it could not be found.
+	* Returns the shopping category where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchCategoryException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param name the name
 	* @return the matching shopping category
-	* @throws NoSuchCategoryException if a matching shopping category could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory findByG_N(long groupId, java.lang.String name)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory findByG_N(
+		long groupId, java.lang.String name)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence().findByG_N(groupId, name);
 	}
@@ -579,8 +587,8 @@ public class ShoppingCategoryUtil {
 	* @param name the name
 	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByG_N(long groupId,
-		java.lang.String name) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_N(
+		long groupId, java.lang.String name) {
 		return getPersistence().fetchByG_N(groupId, name);
 	}
 
@@ -592,8 +600,8 @@ public class ShoppingCategoryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	*/
-	public static ShoppingCategory fetchByG_N(long groupId,
-		java.lang.String name, boolean retrieveFromCache) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_N(
+		long groupId, java.lang.String name, boolean retrieveFromCache) {
 		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
 	}
 
@@ -604,8 +612,8 @@ public class ShoppingCategoryUtil {
 	* @param name the name
 	* @return the shopping category that was removed
 	*/
-	public static ShoppingCategory removeByG_N(long groupId,
-		java.lang.String name)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory removeByG_N(
+		long groupId, java.lang.String name)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
@@ -626,7 +634,8 @@ public class ShoppingCategoryUtil {
 	*
 	* @param shoppingCategory the shopping category
 	*/
-	public static void cacheResult(ShoppingCategory shoppingCategory) {
+	public static void cacheResult(
+		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory) {
 		getPersistence().cacheResult(shoppingCategory);
 	}
 
@@ -635,7 +644,8 @@ public class ShoppingCategoryUtil {
 	*
 	* @param shoppingCategories the shopping categories
 	*/
-	public static void cacheResult(List<ShoppingCategory> shoppingCategories) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> shoppingCategories) {
 		getPersistence().cacheResult(shoppingCategories);
 	}
 
@@ -645,7 +655,8 @@ public class ShoppingCategoryUtil {
 	* @param categoryId the primary key for the new shopping category
 	* @return the new shopping category
 	*/
-	public static ShoppingCategory create(long categoryId) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory create(
+		long categoryId) {
 		return getPersistence().create(categoryId);
 	}
 
@@ -654,25 +665,28 @@ public class ShoppingCategoryUtil {
 	*
 	* @param categoryId the primary key of the shopping category
 	* @return the shopping category that was removed
-	* @throws NoSuchCategoryException if a shopping category with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	*/
-	public static ShoppingCategory remove(long categoryId)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory remove(
+		long categoryId)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence().remove(categoryId);
 	}
 
-	public static ShoppingCategory updateImpl(ShoppingCategory shoppingCategory) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory updateImpl(
+		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory) {
 		return getPersistence().updateImpl(shoppingCategory);
 	}
 
 	/**
-	* Returns the shopping category with the primary key or throws a {@link NoSuchCategoryException} if it could not be found.
+	* Returns the shopping category with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchCategoryException} if it could not be found.
 	*
 	* @param categoryId the primary key of the shopping category
 	* @return the shopping category
-	* @throws NoSuchCategoryException if a shopping category with the primary key could not be found
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	*/
-	public static ShoppingCategory findByPrimaryKey(long categoryId)
+	public static com.liferay.portlet.shopping.model.ShoppingCategory findByPrimaryKey(
+		long categoryId)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException {
 		return getPersistence().findByPrimaryKey(categoryId);
 	}
@@ -683,11 +697,12 @@ public class ShoppingCategoryUtil {
 	* @param categoryId the primary key of the shopping category
 	* @return the shopping category, or <code>null</code> if a shopping category with the primary key could not be found
 	*/
-	public static ShoppingCategory fetchByPrimaryKey(long categoryId) {
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByPrimaryKey(
+		long categoryId) {
 		return getPersistence().fetchByPrimaryKey(categoryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, ShoppingCategory> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingCategory> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -697,7 +712,7 @@ public class ShoppingCategoryUtil {
 	*
 	* @return the shopping categories
 	*/
-	public static List<ShoppingCategory> findAll() {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -705,14 +720,15 @@ public class ShoppingCategoryUtil {
 	* Returns a range of all the shopping categories.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping categories
 	* @param end the upper bound of the range of shopping categories (not inclusive)
 	* @return the range of shopping categories
 	*/
-	public static List<ShoppingCategory> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -720,7 +736,7 @@ public class ShoppingCategoryUtil {
 	* Returns an ordered range of all the shopping categories.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping categories
@@ -728,8 +744,9 @@ public class ShoppingCategoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of shopping categories
 	*/
-	public static List<ShoppingCategory> findAll(int start, int end,
-		OrderByComparator<ShoppingCategory> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

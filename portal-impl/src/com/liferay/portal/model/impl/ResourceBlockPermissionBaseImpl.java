@@ -28,7 +28,7 @@ import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlockPermissionImpl
- * @see ResourceBlockPermission
+ * @see com.liferay.portal.model.ResourceBlockPermission
  * @generated
  */
 @ProviderType

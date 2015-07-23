@@ -111,7 +111,7 @@ public class AccountUtil {
 	*
 	* @param account the account
 	*/
-	public static void cacheResult(Account account) {
+	public static void cacheResult(com.liferay.portal.model.Account account) {
 		getPersistence().cacheResult(account);
 	}
 
@@ -120,7 +120,8 @@ public class AccountUtil {
 	*
 	* @param accounts the accounts
 	*/
-	public static void cacheResult(List<Account> accounts) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.Account> accounts) {
 		getPersistence().cacheResult(accounts);
 	}
 
@@ -130,7 +131,7 @@ public class AccountUtil {
 	* @param accountId the primary key for the new account
 	* @return the new account
 	*/
-	public static Account create(long accountId) {
+	public static com.liferay.portal.model.Account create(long accountId) {
 		return getPersistence().create(accountId);
 	}
 
@@ -139,26 +140,27 @@ public class AccountUtil {
 	*
 	* @param accountId the primary key of the account
 	* @return the account that was removed
-	* @throws NoSuchAccountException if a account with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchAccountException if a account with the primary key could not be found
 	*/
-	public static Account remove(long accountId)
+	public static com.liferay.portal.model.Account remove(long accountId)
 		throws com.liferay.portal.NoSuchAccountException {
 		return getPersistence().remove(accountId);
 	}
 
-	public static Account updateImpl(Account account) {
+	public static com.liferay.portal.model.Account updateImpl(
+		com.liferay.portal.model.Account account) {
 		return getPersistence().updateImpl(account);
 	}
 
 	/**
-	* Returns the account with the primary key or throws a {@link NoSuchAccountException} if it could not be found.
+	* Returns the account with the primary key or throws a {@link com.liferay.portal.NoSuchAccountException} if it could not be found.
 	*
 	* @param accountId the primary key of the account
 	* @return the account
-	* @throws NoSuchAccountException if a account with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchAccountException if a account with the primary key could not be found
 	*/
-	public static Account findByPrimaryKey(long accountId)
-		throws com.liferay.portal.NoSuchAccountException {
+	public static com.liferay.portal.model.Account findByPrimaryKey(
+		long accountId) throws com.liferay.portal.NoSuchAccountException {
 		return getPersistence().findByPrimaryKey(accountId);
 	}
 
@@ -168,11 +170,12 @@ public class AccountUtil {
 	* @param accountId the primary key of the account
 	* @return the account, or <code>null</code> if a account with the primary key could not be found
 	*/
-	public static Account fetchByPrimaryKey(long accountId) {
+	public static com.liferay.portal.model.Account fetchByPrimaryKey(
+		long accountId) {
 		return getPersistence().fetchByPrimaryKey(accountId);
 	}
 
-	public static java.util.Map<java.io.Serializable, Account> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Account> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -182,7 +185,7 @@ public class AccountUtil {
 	*
 	* @return the accounts
 	*/
-	public static List<Account> findAll() {
+	public static java.util.List<com.liferay.portal.model.Account> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -190,14 +193,15 @@ public class AccountUtil {
 	* Returns a range of all the accounts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AccountModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.AccountModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of accounts
 	* @param end the upper bound of the range of accounts (not inclusive)
 	* @return the range of accounts
 	*/
-	public static List<Account> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portal.model.Account> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -205,7 +209,7 @@ public class AccountUtil {
 	* Returns an ordered range of all the accounts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AccountModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.AccountModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of accounts
@@ -213,8 +217,9 @@ public class AccountUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of accounts
 	*/
-	public static List<Account> findAll(int start, int end,
-		OrderByComparator<Account> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.Account> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Account> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -4,7 +4,7 @@
 		module="com.liferay.dynamic.data.mapping.test.util"
 		revision="1.0.0-SNAPSHOT"
 		status="integration"
-		publication="20150705143137"
+		publication="20150720153706"
 	>
 		<license name="LGPL 2.1" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt" />
 		<description homepage="">

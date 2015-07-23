@@ -28,7 +28,7 @@ import com.liferay.portal.service.PortletItemLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PortletItemImpl
- * @see PortletItem
+ * @see com.liferay.portal.model.PortletItem
  * @generated
  */
 @ProviderType

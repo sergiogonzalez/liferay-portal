@@ -25,10 +25,10 @@ import com.liferay.portal.service.ClassNameServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link ClassNameServiceUtil} service utility. The
+ * {@link com.liferay.portal.service.ClassNameServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link HttpPrincipal} parameter.
+ * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -47,8 +47,8 @@ import com.liferay.portal.service.ClassNameServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ClassNameServiceSoap
- * @see HttpPrincipal
- * @see ClassNameServiceUtil
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.ClassNameServiceUtil
  * @generated
  */
 @ProviderType

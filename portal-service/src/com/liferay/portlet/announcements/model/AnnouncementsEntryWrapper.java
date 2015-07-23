@@ -258,7 +258,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @return the create date of this announcements entry
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _announcementsEntry.getCreateDate();
 	}
 
@@ -268,7 +268,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @return the display date of this announcements entry
 	*/
 	@Override
-	public Date getDisplayDate() {
+	public java.util.Date getDisplayDate() {
 		return _announcementsEntry.getDisplayDate();
 	}
 
@@ -293,7 +293,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @return the expiration date of this announcements entry
 	*/
 	@Override
-	public Date getExpirationDate() {
+	public java.util.Date getExpirationDate() {
 		return _announcementsEntry.getExpirationDate();
 	}
 
@@ -309,7 +309,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @return the modified date of this announcements entry
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _announcementsEntry.getModifiedDate();
 	}
 
@@ -509,7 +509,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @param createDate the create date of this announcements entry
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_announcementsEntry.setCreateDate(createDate);
 	}
 
@@ -519,7 +519,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @param displayDate the display date of this announcements entry
 	*/
 	@Override
-	public void setDisplayDate(Date displayDate) {
+	public void setDisplayDate(java.util.Date displayDate) {
 		_announcementsEntry.setDisplayDate(displayDate);
 	}
 
@@ -557,7 +557,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @param expirationDate the expiration date of this announcements entry
 	*/
 	@Override
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(java.util.Date expirationDate) {
 		_announcementsEntry.setExpirationDate(expirationDate);
 	}
 
@@ -567,7 +567,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	* @param modifiedDate the modified date of this announcements entry
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_announcementsEntry.setModifiedDate(modifiedDate);
 	}
 

@@ -304,7 +304,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @return the service component local service
 	 */
-	public ServiceComponentLocalService getServiceComponentLocalService() {
+	public com.liferay.portal.service.ServiceComponentLocalService getServiceComponentLocalService() {
 		return serviceComponentLocalService;
 	}
 
@@ -314,7 +314,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param serviceComponentLocalService the service component local service
 	 */
 	public void setServiceComponentLocalService(
-		ServiceComponentLocalService serviceComponentLocalService) {
+		com.liferay.portal.service.ServiceComponentLocalService serviceComponentLocalService) {
 		this.serviceComponentLocalService = serviceComponentLocalService;
 	}
 
@@ -437,8 +437,8 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ServiceComponentLocalService.class)
-	protected ServiceComponentLocalService serviceComponentLocalService;
+	@BeanReference(type = com.liferay.portal.service.ServiceComponentLocalService.class)
+	protected com.liferay.portal.service.ServiceComponentLocalService serviceComponentLocalService;
 	@BeanReference(type = ServiceComponentPersistence.class)
 	protected ServiceComponentPersistence serviceComponentPersistence;
 	@BeanReference(type = ServiceComponentFinder.class)

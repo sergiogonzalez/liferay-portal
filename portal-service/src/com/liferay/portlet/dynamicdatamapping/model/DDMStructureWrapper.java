@@ -260,7 +260,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @return the create date of this d d m structure
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _ddmStructure.getCreateDate();
 	}
 
@@ -377,7 +377,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @return the locales and localized descriptions of this d d m structure
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _ddmStructure.getDescriptionMap();
 	}
 
@@ -456,7 +456,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.model.DDMFormField> getFullHierarchyDDMFormFieldsMap(
+	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.model.DDMFormField> getFullHierarchyDDMFormFieldsMap(
 		boolean includeNestedDDMFormFields) {
 		return _ddmStructure.getFullHierarchyDDMFormFieldsMap(includeNestedDDMFormFields);
 	}
@@ -477,7 +477,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @return the modified date of this d d m structure
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _ddmStructure.getModifiedDate();
 	}
 
@@ -554,7 +554,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @return the locales and localized names of this d d m structure
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _ddmStructure.getNameMap();
 	}
 
@@ -834,7 +834,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @param createDate the create date of this d d m structure
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_ddmStructure.setCreateDate(createDate);
 	}
 
@@ -901,7 +901,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_ddmStructure.setDescriptionMap(descriptionMap);
 	}
 
@@ -913,7 +913,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddmStructure.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -958,7 +958,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @param modifiedDate the modified date of this d d m structure
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_ddmStructure.setModifiedDate(modifiedDate);
 	}
 
@@ -1007,7 +1007,8 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @param nameMap the locales and localized names of this d d m structure
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
 		_ddmStructure.setNameMap(nameMap);
 	}
 
@@ -1018,7 +1019,8 @@ public class DDMStructureWrapper implements DDMStructure,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddmStructure.setNameMap(nameMap, defaultLocale);
 	}

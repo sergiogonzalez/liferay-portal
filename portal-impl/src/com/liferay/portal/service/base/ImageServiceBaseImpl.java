@@ -76,7 +76,7 @@ public abstract class ImageServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the image remote service
 	 */
-	public ImageService getImageService() {
+	public com.liferay.portal.service.ImageService getImageService() {
 		return imageService;
 	}
 
@@ -85,7 +85,8 @@ public abstract class ImageServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param imageService the image remote service
 	 */
-	public void setImageService(ImageService imageService) {
+	public void setImageService(
+		com.liferay.portal.service.ImageService imageService) {
 		this.imageService = imageService;
 	}
 
@@ -261,8 +262,8 @@ public abstract class ImageServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ImageLocalService.class)
 	protected com.liferay.portal.service.ImageLocalService imageLocalService;
-	@BeanReference(type = ImageService.class)
-	protected ImageService imageService;
+	@BeanReference(type = com.liferay.portal.service.ImageService.class)
+	protected com.liferay.portal.service.ImageService imageService;
 	@BeanReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -66,7 +66,7 @@ public interface CalendarNotificationTemplateLocalService
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
 		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new calendar notification template with the primary key. Does not add the calendar notification template to the database.
@@ -97,7 +97,8 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.calendar.model.CalendarNotificationTemplate deleteCalendarNotificationTemplate(
-		long calendarNotificationTemplateId) throws PortalException;
+		long calendarNotificationTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteCalendarNotificationTemplates(long calendarId);
 
@@ -107,7 +108,7 @@ public interface CalendarNotificationTemplateLocalService
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -214,7 +215,8 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarNotificationTemplate getCalendarNotificationTemplate(
-		long calendarNotificationTemplateId) throws PortalException;
+		long calendarNotificationTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the calendar notification template matching the UUID and group.
@@ -226,7 +228,8 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarNotificationTemplate getCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the calendar notification templates.
@@ -284,7 +287,8 @@ public interface CalendarNotificationTemplateLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -308,5 +312,5 @@ public interface CalendarNotificationTemplateLocalService
 		java.lang.String notificationTypeSettings, java.lang.String subject,
 		java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

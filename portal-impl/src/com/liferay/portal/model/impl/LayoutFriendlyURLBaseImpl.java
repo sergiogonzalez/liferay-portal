@@ -28,7 +28,7 @@ import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see LayoutFriendlyURLImpl
- * @see LayoutFriendlyURL
+ * @see com.liferay.portal.model.LayoutFriendlyURL
  * @generated
  */
 @ProviderType

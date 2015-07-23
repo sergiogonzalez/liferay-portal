@@ -28,7 +28,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see CompanyImpl
- * @see Company
+ * @see com.liferay.portal.model.Company
  * @generated
  */
 @ProviderType

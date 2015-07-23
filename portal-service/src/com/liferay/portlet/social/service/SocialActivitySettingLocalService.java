@@ -78,7 +78,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
@@ -89,7 +89,8 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.social.model.SocialActivitySetting deleteSocialActivitySetting(
-		long activitySettingId) throws PortalException;
+		long activitySettingId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
@@ -195,7 +196,8 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the social activity setting with the primary key.
@@ -206,7 +208,8 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivitySetting getSocialActivitySetting(
-		long activitySettingId) throws PortalException;
+		long activitySettingId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the social activity settings.
@@ -247,18 +250,20 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	public void updateActivitySetting(long groupId, java.lang.String className,
 		int activityType,
 		com.liferay.portlet.social.model.SocialActivityCounterDefinition activityCounterDefinition)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void updateActivitySetting(long groupId, java.lang.String className,
-		long classPK, boolean enabled) throws PortalException;
+		long classPK, boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void updateActivitySetting(long groupId, java.lang.String className,
-		boolean enabled) throws PortalException;
+		boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void updateActivitySettings(long groupId,
 		java.lang.String className, int activityType,
 		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> activityCounterDefinitions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the social activity setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

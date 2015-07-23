@@ -47,11 +47,11 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityLimitLocalServiceUtil} to access the social activity limit local service. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portlet.social.model.SocialActivityLimit addActivityLimit(
 		long userId, long groupId, long classNameId, long classPK,
 		int activityType, java.lang.String activityCounterName, int limitPeriod)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the social activity limit to the database. Also notifies the appropriate model listeners.
@@ -78,7 +78,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
@@ -89,7 +89,8 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.social.model.SocialActivityLimit deleteSocialActivityLimit(
-		long activityLimitId) throws PortalException;
+		long activityLimitId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
@@ -188,7 +189,8 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the social activity limit with the primary key.
@@ -199,7 +201,8 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivityLimit getSocialActivityLimit(
-		long activityLimitId) throws PortalException;
+		long activityLimitId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the social activity limits.

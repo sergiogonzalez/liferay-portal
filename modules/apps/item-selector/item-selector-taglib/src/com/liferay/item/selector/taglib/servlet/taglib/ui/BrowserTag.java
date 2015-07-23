@@ -18,10 +18,15 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
+import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -36,6 +41,9 @@ import javax.servlet.jsp.PageContext;
  */
 public class BrowserTag extends IncludeTag {
 
+	public static final String[] DISPLAY_STYLES =
+		new String[] {"icon", "descriptive", "list"};
+
 	public void setDesiredItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
@@ -44,10 +52,6 @@ public class BrowserTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
-	}
-
-	public void setDisplayStyleURL(PortletURL displayStyleURL) {
-		_displayStyleURL = displayStyleURL;
 	}
 
 	public void setItemSelectedEventName(String itemSelectedEventName) {
@@ -61,12 +65,12 @@ public class BrowserTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setSearchContainer(SearchContainer<?> searchContainer) {
-		_searchContainer = searchContainer;
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
 	}
 
-	public void setSearchURL(PortletURL searchURL) {
-		_searchURL = searchURL;
+	public void setSearchContainer(SearchContainer<?> searchContainer) {
+		_searchContainer = searchContainer;
 	}
 
 	public void setShowBreadcrumb(boolean showBreadcrumb) {
@@ -91,10 +95,9 @@ public class BrowserTag extends IncludeTag {
 
 		_desiredItemSelectorReturnTypes = null;
 		_displayStyle = null;
-		_displayStyleURL = null;
 		_itemSelectedEventName = null;
+		_portletURL = null;
 		_searchContainer = null;
-		_searchURL = null;
 		_showBreadcrumb = false;
 		_tabName = null;
 		_uploadMessage = null;
@@ -102,11 +105,28 @@ public class BrowserTag extends IncludeTag {
 	}
 
 	protected String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+		if (Validator.isNotNull(displayStyle)) {
+			displayStyle = getSafeDisplayStyle(displayStyle);
+
+			portalPreferences.setValue(
+				ItemSelectorPortletKeys.ITEM_SELECTOR, "display-style",
+				displayStyle);
+
+			return displayStyle;
 		}
 
-		return _DEFAULT_DISPLAY_STYLE;
+		if (Validator.isNotNull(_displayStyle)) {
+			return getSafeDisplayStyle(_displayStyle);
+		}
+
+		return portalPreferences.getValue(
+			ItemSelectorPortletKeys.ITEM_SELECTOR, "display-style",
+			DISPLAY_STYLES[0]);
 	}
 
 	protected ItemSelectorReturnType getDraggableFileReturnType() {
@@ -131,6 +151,14 @@ public class BrowserTag extends IncludeTag {
 		return _PAGE;
 	}
 
+	protected String getSafeDisplayStyle(String displayStyle) {
+		if (ArrayUtil.contains(DISPLAY_STYLES, displayStyle)) {
+			return displayStyle;
+		}
+
+		return DISPLAY_STYLES[0];
+	}
+
 	protected String getUploadMessage() {
 		if (Validator.isNotNull(_uploadMessage)) {
 			return _uploadMessage;
@@ -147,9 +175,6 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:displayStyle", getDisplayStyle());
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:displayStyleURL",
-			_displayStyleURL);
-		request.setAttribute(
 			"liferay-ui:item-selector-browser:draggableFileReturnType",
 			getDraggableFileReturnType());
 		request.setAttribute(
@@ -161,10 +186,10 @@ public class BrowserTag extends IncludeTag {
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
 		request.setAttribute(
+			"liferay-ui:item-selector-browser:portletURL", _portletURL);
+		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
-		request.setAttribute(
-			"liferay-ui:item-selector-browser:searchURL", _searchURL);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:showBreadcrumb", _showBreadcrumb);
 		request.setAttribute(
@@ -176,16 +201,13 @@ public class BrowserTag extends IncludeTag {
 			"liferay-ui:item-selector-browser:uploadURL", _uploadURL);
 	}
 
-	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
-
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
-	private PortletURL _displayStyleURL;
 	private String _itemSelectedEventName;
+	private PortletURL _portletURL;
 	private SearchContainer<?> _searchContainer;
-	private PortletURL _searchURL;
 	private boolean _showBreadcrumb;
 	private String _tabName;
 	private String _uploadMessage;

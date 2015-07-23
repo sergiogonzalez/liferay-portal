@@ -56,7 +56,7 @@ public interface UserGroupService extends BaseService {
 	group members
 	*/
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the user groups to the team
@@ -67,7 +67,7 @@ public interface UserGroupService extends BaseService {
 	team members
 	*/
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a user group.
@@ -88,7 +88,7 @@ public interface UserGroupService extends BaseService {
 	@java.lang.Deprecated
 	public com.liferay.portal.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a user group.
@@ -110,7 +110,7 @@ public interface UserGroupService extends BaseService {
 	public com.liferay.portal.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the user group.
@@ -120,7 +120,8 @@ public interface UserGroupService extends BaseService {
 	found, if the user did not have permission to delete the user
 	group, or if the user group had a workflow in approved status
 	*/
-	public void deleteUserGroup(long userGroupId) throws PortalException;
+	public void deleteUserGroup(long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Fetches the user group with the primary key.
@@ -132,7 +133,7 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup fetchUserGroup(long userGroupId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -151,7 +152,8 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(
-		java.lang.String name) throws PortalException;
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the user group with the primary key.
@@ -164,11 +166,12 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
-		long companyId) throws PortalException;
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the user groups to which the user belongs.
@@ -180,7 +183,7 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
-		long userId) throws PortalException;
+		long userId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -198,7 +201,7 @@ public interface UserGroupService extends BaseService {
 	group members
 	*/
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes the user groups from the team.
@@ -209,7 +212,7 @@ public interface UserGroupService extends BaseService {
 	team members
 	*/
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the user group.
@@ -227,7 +230,7 @@ public interface UserGroupService extends BaseService {
 	@java.lang.Deprecated
 	public com.liferay.portal.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the user group.
@@ -246,5 +249,5 @@ public interface UserGroupService extends BaseService {
 	public com.liferay.portal.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

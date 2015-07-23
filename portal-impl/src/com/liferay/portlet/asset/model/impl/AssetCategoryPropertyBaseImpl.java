@@ -28,7 +28,7 @@ import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AssetCategoryPropertyImpl
- * @see AssetCategoryProperty
+ * @see com.liferay.portlet.asset.model.AssetCategoryProperty
  * @generated
  */
 @ProviderType

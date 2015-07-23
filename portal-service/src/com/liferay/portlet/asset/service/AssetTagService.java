@@ -50,11 +50,13 @@ public interface AssetTagService extends BaseService {
 	public com.liferay.portlet.asset.model.AssetTag addTag(long groupId,
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteTag(long tagId) throws PortalException;
+	public void deleteTag(long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteTags(long[] tagIds) throws PortalException;
+	public void deleteTags(long[] tagIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -91,15 +93,16 @@ public interface AssetTagService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
 		long groupId, java.lang.String name, int start, int end)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetTag getTag(long tagId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		java.lang.String className, long classPK) throws PortalException;
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
@@ -130,10 +133,10 @@ public interface AssetTagService extends BaseService {
 	public int getVisibleAssetsTagsCount(long groupId, java.lang.String name);
 
 	public void mergeTags(long fromTagId, long toTagId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void mergeTags(long[] fromTagIds, long toTagId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONArray search(long groupId,
@@ -153,5 +156,5 @@ public interface AssetTagService extends BaseService {
 	public com.liferay.portlet.asset.model.AssetTag updateTag(long tagId,
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

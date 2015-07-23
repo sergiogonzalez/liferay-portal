@@ -46,13 +46,14 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param uuid the uuid
 	* @return the matching d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the d d m storage links where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -60,14 +61,14 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param end the upper bound of the range of d d m storage links (not inclusive)
 	* @return the range of matching d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m storage links where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -76,9 +77,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator);
 
 	/**
 	* Returns the first d d m storage link in the ordered set where uuid = &#63;.
@@ -86,10 +87,11 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m storage link
-	* @throws NoSuchStorageLinkException if a matching d d m storage link could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -99,8 +101,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator);
 
 	/**
 	* Returns the last d d m storage link in the ordered set where uuid = &#63;.
@@ -108,10 +111,11 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m storage link
-	* @throws NoSuchStorageLinkException if a matching d d m storage link could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -121,8 +125,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator);
 
 	/**
 	* Returns the d d m storage links before and after the current d d m storage link in the ordered set where uuid = &#63;.
@@ -131,11 +136,11 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m storage link
-	* @throws NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
 	*/
-	public DDMStorageLink[] findByUuid_PrevAndNext(long storageLinkId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink[] findByUuid_PrevAndNext(
+		long storageLinkId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -154,13 +159,14 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the d d m storage link where classPK = &#63; or throws a {@link NoSuchStorageLinkException} if it could not be found.
+	* Returns the d d m storage link where classPK = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException} if it could not be found.
 	*
 	* @param classPK the class p k
 	* @return the matching d d m storage link
-	* @throws NoSuchStorageLinkException if a matching d d m storage link could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink findByClassPK(long classPK)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByClassPK(
+		long classPK)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -169,7 +175,8 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param classPK the class p k
 	* @return the matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink fetchByClassPK(long classPK);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByClassPK(
+		long classPK);
 
 	/**
 	* Returns the d d m storage link where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -178,7 +185,8 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink fetchByClassPK(long classPK, boolean retrieveFromCache);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByClassPK(
+		long classPK, boolean retrieveFromCache);
 
 	/**
 	* Removes the d d m storage link where classPK = &#63; from the database.
@@ -186,7 +194,8 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param classPK the class p k
 	* @return the d d m storage link that was removed
 	*/
-	public DDMStorageLink removeByClassPK(long classPK)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink removeByClassPK(
+		long classPK)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -203,13 +212,14 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param structureId the structure ID
 	* @return the matching d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findByStructureId(long structureId);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByStructureId(
+		long structureId);
 
 	/**
 	* Returns a range of all the d d m storage links where structureId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param structureId the structure ID
@@ -217,14 +227,14 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param end the upper bound of the range of d d m storage links (not inclusive)
 	* @return the range of matching d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findByStructureId(long structureId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByStructureId(
+		long structureId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m storage links where structureId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param structureId the structure ID
@@ -233,9 +243,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findByStructureId(long structureId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByStructureId(
+		long structureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator);
 
 	/**
 	* Returns the first d d m storage link in the ordered set where structureId = &#63;.
@@ -243,10 +253,11 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m storage link
-	* @throws NoSuchStorageLinkException if a matching d d m storage link could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink findByStructureId_First(long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByStructureId_First(
+		long structureId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -256,8 +267,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink fetchByStructureId_First(long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByStructureId_First(
+		long structureId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator);
 
 	/**
 	* Returns the last d d m storage link in the ordered set where structureId = &#63;.
@@ -265,10 +277,11 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m storage link
-	* @throws NoSuchStorageLinkException if a matching d d m storage link could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink findByStructureId_Last(long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByStructureId_Last(
+		long structureId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -278,8 +291,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
 	*/
-	public DDMStorageLink fetchByStructureId_Last(long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByStructureId_Last(
+		long structureId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator);
 
 	/**
 	* Returns the d d m storage links before and after the current d d m storage link in the ordered set where structureId = &#63;.
@@ -288,11 +302,11 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m storage link
-	* @throws NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
 	*/
-	public DDMStorageLink[] findByStructureId_PrevAndNext(long storageLinkId,
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink[] findByStructureId_PrevAndNext(
+		long storageLinkId, long structureId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -315,14 +329,16 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	*
 	* @param ddmStorageLink the d d m storage link
 	*/
-	public void cacheResult(DDMStorageLink ddmStorageLink);
+	public void cacheResult(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink);
 
 	/**
 	* Caches the d d m storage links in the entity cache if it is enabled.
 	*
 	* @param ddmStorageLinks the d d m storage links
 	*/
-	public void cacheResult(java.util.List<DDMStorageLink> ddmStorageLinks);
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> ddmStorageLinks);
 
 	/**
 	* Creates a new d d m storage link with the primary key. Does not add the d d m storage link to the database.
@@ -330,28 +346,32 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param storageLinkId the primary key for the new d d m storage link
 	* @return the new d d m storage link
 	*/
-	public DDMStorageLink create(long storageLinkId);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink create(
+		long storageLinkId);
 
 	/**
 	* Removes the d d m storage link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param storageLinkId the primary key of the d d m storage link
 	* @return the d d m storage link that was removed
-	* @throws NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
 	*/
-	public DDMStorageLink remove(long storageLinkId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink remove(
+		long storageLinkId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
-	public DDMStorageLink updateImpl(DDMStorageLink ddmStorageLink);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink);
 
 	/**
-	* Returns the d d m storage link with the primary key or throws a {@link NoSuchStorageLinkException} if it could not be found.
+	* Returns the d d m storage link with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException} if it could not be found.
 	*
 	* @param storageLinkId the primary key of the d d m storage link
 	* @return the d d m storage link
-	* @throws NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
 	*/
-	public DDMStorageLink findByPrimaryKey(long storageLinkId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByPrimaryKey(
+		long storageLinkId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
@@ -360,10 +380,11 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param storageLinkId the primary key of the d d m storage link
 	* @return the d d m storage link, or <code>null</code> if a d d m storage link with the primary key could not be found
 	*/
-	public DDMStorageLink fetchByPrimaryKey(long storageLinkId);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByPrimaryKey(
+		long storageLinkId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, DDMStorageLink> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -371,26 +392,27 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	*
 	* @return the d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findAll();
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findAll();
 
 	/**
 	* Returns a range of all the d d m storage links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m storage links
 	* @param end the upper bound of the range of d d m storage links (not inclusive)
 	* @return the range of d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m storage links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m storage links
@@ -398,8 +420,9 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m storage links
 	*/
-	public java.util.List<DDMStorageLink> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator);
 
 	/**
 	* Removes all the d d m storage links from the database.

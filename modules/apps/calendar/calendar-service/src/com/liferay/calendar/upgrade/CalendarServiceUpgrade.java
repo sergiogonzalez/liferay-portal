@@ -16,6 +16,7 @@ package com.liferay.calendar.upgrade;
 
 import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendar;
 import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendarBooking;
+import com.liferay.calendar.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -23,25 +24,17 @@ import com.liferay.portal.service.ReleaseLocalService;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Iván Zaera
  */
 @Component(immediate = true, service = CalendarServiceUpgrade.class)
 public class CalendarServiceUpgrade {
-
-	@Reference(
-		target = "(org.springframework.context.service.name=com.liferay.calendar.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
-	}
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
@@ -50,12 +43,17 @@ public class CalendarServiceUpgrade {
 		_releaseLocalService = releaseLocalService;
 	}
 
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
+	}
+
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradeCalendar());
 		upgradeProcesses.add(new UpgradeCalendarBooking());
+		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.calendar.service", upgradeProcesses, 1, 1, false);

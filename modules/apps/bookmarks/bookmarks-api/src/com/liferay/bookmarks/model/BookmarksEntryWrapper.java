@@ -251,7 +251,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the create date of this bookmarks entry
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _bookmarksEntry.getCreateDate();
 	}
 
@@ -312,7 +312,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the last publish date of this bookmarks entry
 	*/
 	@Override
-	public Date getLastPublishDate() {
+	public java.util.Date getLastPublishDate() {
 		return _bookmarksEntry.getLastPublishDate();
 	}
 
@@ -322,7 +322,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the modified date of this bookmarks entry
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _bookmarksEntry.getModifiedDate();
 	}
 
@@ -417,7 +417,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @return the status date of this bookmarks entry
 	*/
 	@Override
-	public Date getStatusDate() {
+	public java.util.Date getStatusDate() {
 		return _bookmarksEntry.getStatusDate();
 	}
 
@@ -678,7 +678,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param createDate the create date of this bookmarks entry
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_bookmarksEntry.setCreateDate(createDate);
 	}
 
@@ -746,7 +746,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param lastPublishDate the last publish date of this bookmarks entry
 	*/
 	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
+	public void setLastPublishDate(java.util.Date lastPublishDate) {
 		_bookmarksEntry.setLastPublishDate(lastPublishDate);
 	}
 
@@ -756,7 +756,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param modifiedDate the modified date of this bookmarks entry
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_bookmarksEntry.setModifiedDate(modifiedDate);
 	}
 
@@ -856,7 +856,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	* @param statusDate the status date of this bookmarks entry
 	*/
 	@Override
-	public void setStatusDate(Date statusDate) {
+	public void setStatusDate(java.util.Date statusDate) {
 		_bookmarksEntry.setStatusDate(statusDate);
 	}
 

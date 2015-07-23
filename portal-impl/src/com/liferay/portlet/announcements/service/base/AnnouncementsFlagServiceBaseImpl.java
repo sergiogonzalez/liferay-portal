@@ -74,7 +74,7 @@ public abstract class AnnouncementsFlagServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the announcements flag remote service
 	 */
-	public AnnouncementsFlagService getAnnouncementsFlagService() {
+	public com.liferay.portlet.announcements.service.AnnouncementsFlagService getAnnouncementsFlagService() {
 		return announcementsFlagService;
 	}
 
@@ -84,7 +84,7 @@ public abstract class AnnouncementsFlagServiceBaseImpl extends BaseServiceImpl
 	 * @param announcementsFlagService the announcements flag remote service
 	 */
 	public void setAnnouncementsFlagService(
-		AnnouncementsFlagService announcementsFlagService) {
+		com.liferay.portlet.announcements.service.AnnouncementsFlagService announcementsFlagService) {
 		this.announcementsFlagService = announcementsFlagService;
 	}
 
@@ -186,8 +186,8 @@ public abstract class AnnouncementsFlagServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService.class)
 	protected com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService announcementsFlagLocalService;
-	@BeanReference(type = AnnouncementsFlagService.class)
-	protected AnnouncementsFlagService announcementsFlagService;
+	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagService.class)
+	protected com.liferay.portlet.announcements.service.AnnouncementsFlagService announcementsFlagService;
 	@BeanReference(type = AnnouncementsFlagPersistence.class)
 	protected AnnouncementsFlagPersistence announcementsFlagPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -28,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServi
  *
  * @author Brian Wing Shun Chan
  * @see DDMStructureLinkImpl
- * @see DDMStructureLink
+ * @see com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
  * @generated
  */
 @ProviderType

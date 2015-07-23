@@ -71,7 +71,7 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
@@ -92,7 +92,8 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.VirtualHost deleteVirtualHost(
-		long virtualHostId) throws PortalException;
+		long virtualHostId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -184,15 +185,18 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost getVirtualHost(long companyId,
-		long layoutSetId) throws PortalException;
+		long layoutSetId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost getVirtualHost(
-		java.lang.String hostname) throws PortalException;
+		java.lang.String hostname)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the virtual host with the primary key.
@@ -203,7 +207,8 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost getVirtualHost(
-		long virtualHostId) throws PortalException;
+		long virtualHostId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the virtual hosts.

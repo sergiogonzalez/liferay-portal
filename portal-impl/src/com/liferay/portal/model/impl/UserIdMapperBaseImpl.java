@@ -28,7 +28,7 @@ import com.liferay.portal.service.UserIdMapperLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see UserIdMapperImpl
- * @see UserIdMapper
+ * @see com.liferay.portal.model.UserIdMapper
  * @generated
  */
 @ProviderType

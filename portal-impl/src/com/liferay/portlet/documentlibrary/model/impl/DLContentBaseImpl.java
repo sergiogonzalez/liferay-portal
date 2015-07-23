@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DLContentImpl
- * @see DLContent
+ * @see com.liferay.portlet.documentlibrary.model.DLContent
  * @generated
  */
 @ProviderType

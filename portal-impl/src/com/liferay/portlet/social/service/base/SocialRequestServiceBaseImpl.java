@@ -77,7 +77,7 @@ public abstract class SocialRequestServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the social request remote service
 	 */
-	public SocialRequestService getSocialRequestService() {
+	public com.liferay.portlet.social.service.SocialRequestService getSocialRequestService() {
 		return socialRequestService;
 	}
 
@@ -87,7 +87,7 @@ public abstract class SocialRequestServiceBaseImpl extends BaseServiceImpl
 	 * @param socialRequestService the social request remote service
 	 */
 	public void setSocialRequestService(
-		SocialRequestService socialRequestService) {
+		com.liferay.portlet.social.service.SocialRequestService socialRequestService) {
 		this.socialRequestService = socialRequestService;
 	}
 
@@ -339,8 +339,8 @@ public abstract class SocialRequestServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestLocalService.class)
 	protected com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService;
-	@BeanReference(type = SocialRequestService.class)
-	protected SocialRequestService socialRequestService;
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestService.class)
+	protected com.liferay.portlet.social.service.SocialRequestService socialRequestService;
 	@BeanReference(type = SocialRequestPersistence.class)
 	protected SocialRequestPersistence socialRequestPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

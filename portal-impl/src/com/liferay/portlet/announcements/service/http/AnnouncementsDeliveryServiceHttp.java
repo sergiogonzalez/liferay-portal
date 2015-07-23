@@ -27,10 +27,10 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUti
 
 /**
  * Provides the HTTP utility for the
- * {@link AnnouncementsDeliveryServiceUtil} service utility. The
+ * {@link com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link HttpPrincipal} parameter.
+ * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -49,8 +49,8 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUti
  *
  * @author Brian Wing Shun Chan
  * @see AnnouncementsDeliveryServiceSoap
- * @see HttpPrincipal
- * @see AnnouncementsDeliveryServiceUtil
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil
  * @generated
  */
 @ProviderType

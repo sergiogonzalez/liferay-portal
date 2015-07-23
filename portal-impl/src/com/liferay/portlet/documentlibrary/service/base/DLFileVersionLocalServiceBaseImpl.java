@@ -458,7 +458,7 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 *
 	 * @return the document library file version local service
 	 */
-	public DLFileVersionLocalService getDLFileVersionLocalService() {
+	public com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService getDLFileVersionLocalService() {
 		return dlFileVersionLocalService;
 	}
 
@@ -468,7 +468,7 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param dlFileVersionLocalService the document library file version local service
 	 */
 	public void setDLFileVersionLocalService(
-		DLFileVersionLocalService dlFileVersionLocalService) {
+		com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService dlFileVersionLocalService) {
 		this.dlFileVersionLocalService = dlFileVersionLocalService;
 	}
 
@@ -740,8 +740,8 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLFileVersionLocalService.class)
-	protected DLFileVersionLocalService dlFileVersionLocalService;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService dlFileVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileVersionService dlFileVersionService;
 	@BeanReference(type = DLFileVersionPersistence.class)

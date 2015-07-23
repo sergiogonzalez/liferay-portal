@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -38,6 +39,8 @@ import com.liferay.portal.service.BaseService;
  */
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=bookmarks", "json.web.service.context.path=BookmarksFolder"}, service = BookmarksFolderService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
@@ -51,12 +54,13 @@ public interface BookmarksFolderService extends BaseService {
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteFolder(long folderId) throws PortalException;
+	public void deleteFolder(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -67,11 +71,12 @@ public interface BookmarksFolderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksFolder getFolder(long folderId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getFolderIds(long groupId,
-		long folderId) throws PortalException;
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder> getFolders(
@@ -131,15 +136,19 @@ public interface BookmarksFolderService extends BaseService {
 		long folderId, boolean recurse);
 
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolder(
-		long folderId, long parentFolderId) throws PortalException;
+		long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolderFromTrash(
-		long folderId, long parentFolderId) throws PortalException;
+		long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolderToTrash(
-		long folderId) throws PortalException;
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void restoreFolderFromTrash(long folderId) throws PortalException;
+	public void restoreFolderFromTrash(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -149,14 +158,14 @@ public interface BookmarksFolderService extends BaseService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeFolder(long groupId, long folderId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void unsubscribeFolder(long groupId, long folderId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

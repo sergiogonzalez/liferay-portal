@@ -85,7 +85,7 @@ public abstract class MDRRuleGroupInstanceServiceBaseImpl
 	 *
 	 * @return the m d r rule group instance remote service
 	 */
-	public MDRRuleGroupInstanceService getMDRRuleGroupInstanceService() {
+	public com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService getMDRRuleGroupInstanceService() {
 		return mdrRuleGroupInstanceService;
 	}
 
@@ -95,7 +95,7 @@ public abstract class MDRRuleGroupInstanceServiceBaseImpl
 	 * @param mdrRuleGroupInstanceService the m d r rule group instance remote service
 	 */
 	public void setMDRRuleGroupInstanceService(
-		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
+		com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
 		this.mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
@@ -629,8 +629,8 @@ public abstract class MDRRuleGroupInstanceServiceBaseImpl
 
 	@BeanReference(type = com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService.class)
 	protected com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
-	@BeanReference(type = MDRRuleGroupInstanceService.class)
-	protected MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
+	@BeanReference(type = com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService.class)
+	protected com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
 	@BeanReference(type = MDRRuleGroupInstancePersistence.class)
 	protected MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

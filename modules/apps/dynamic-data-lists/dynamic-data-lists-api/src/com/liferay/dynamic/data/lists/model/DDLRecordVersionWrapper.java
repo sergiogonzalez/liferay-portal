@@ -201,7 +201,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the create date of this d d l record version
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _ddlRecordVersion.getCreateDate();
 	}
 
@@ -343,7 +343,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @return the status date of this d d l record version
 	*/
 	@Override
-	public Date getStatusDate() {
+	public java.util.Date getStatusDate() {
 		return _ddlRecordVersion.getStatusDate();
 	}
 
@@ -513,7 +513,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param createDate the create date of this d d l record version
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_ddlRecordVersion.setCreateDate(createDate);
 	}
 
@@ -661,7 +661,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* @param statusDate the status date of this d d l record version
 	*/
 	@Override
-	public void setStatusDate(Date statusDate) {
+	public void setStatusDate(java.util.Date statusDate) {
 		_ddlRecordVersion.setStatusDate(statusDate);
 	}
 

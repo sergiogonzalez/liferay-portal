@@ -71,6 +71,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -171,6 +172,12 @@ public class CalendarResourceWrapper implements CalendarResource,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -281,7 +288,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 	* @return the create date of this calendar resource
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _calendarResource.getCreateDate();
 	}
 
@@ -374,7 +381,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 	* @return the locales and localized descriptions of this calendar resource
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _calendarResource.getDescriptionMap();
 	}
 
@@ -394,12 +401,22 @@ public class CalendarResourceWrapper implements CalendarResource,
 	}
 
 	/**
+	* Returns the last publish date of this calendar resource.
+	*
+	* @return the last publish date of this calendar resource
+	*/
+	@Override
+	public java.util.Date getLastPublishDate() {
+		return _calendarResource.getLastPublishDate();
+	}
+
+	/**
 	* Returns the modified date of this calendar resource.
 	*
 	* @return the modified date of this calendar resource
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _calendarResource.getModifiedDate();
 	}
 
@@ -476,7 +493,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 	* @return the locales and localized names of this calendar resource
 	*/
 	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
+	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _calendarResource.getNameMap();
 	}
 
@@ -701,7 +718,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 	* @param createDate the create date of this calendar resource
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_calendarResource.setCreateDate(createDate);
 	}
 
@@ -752,7 +769,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap) {
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_calendarResource.setDescriptionMap(descriptionMap);
 	}
 
@@ -764,7 +781,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 	*/
 	@Override
 	public void setDescriptionMap(
-		Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_calendarResource.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -798,12 +815,22 @@ public class CalendarResourceWrapper implements CalendarResource,
 	}
 
 	/**
+	* Sets the last publish date of this calendar resource.
+	*
+	* @param lastPublishDate the last publish date of this calendar resource
+	*/
+	@Override
+	public void setLastPublishDate(java.util.Date lastPublishDate) {
+		_calendarResource.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	* Sets the modified date of this calendar resource.
 	*
 	* @param modifiedDate the modified date of this calendar resource
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_calendarResource.setModifiedDate(modifiedDate);
 	}
 
@@ -852,7 +879,8 @@ public class CalendarResourceWrapper implements CalendarResource,
 	* @param nameMap the locales and localized names of this calendar resource
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
 		_calendarResource.setNameMap(nameMap);
 	}
 
@@ -863,7 +891,8 @@ public class CalendarResourceWrapper implements CalendarResource,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_calendarResource.setNameMap(nameMap, defaultLocale);
 	}

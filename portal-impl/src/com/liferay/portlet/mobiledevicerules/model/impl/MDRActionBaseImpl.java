@@ -28,7 +28,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
  *
  * @author Edward C. Han
  * @see MDRActionImpl
- * @see MDRAction
+ * @see com.liferay.portlet.mobiledevicerules.model.MDRAction
  * @generated
  */
 @ProviderType

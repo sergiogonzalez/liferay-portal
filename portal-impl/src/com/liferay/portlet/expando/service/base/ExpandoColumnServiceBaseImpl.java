@@ -80,7 +80,7 @@ public abstract class ExpandoColumnServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the expando column remote service
 	 */
-	public ExpandoColumnService getExpandoColumnService() {
+	public com.liferay.portlet.expando.service.ExpandoColumnService getExpandoColumnService() {
 		return expandoColumnService;
 	}
 
@@ -90,7 +90,7 @@ public abstract class ExpandoColumnServiceBaseImpl extends BaseServiceImpl
 	 * @param expandoColumnService the expando column remote service
 	 */
 	public void setExpandoColumnService(
-		ExpandoColumnService expandoColumnService) {
+		com.liferay.portlet.expando.service.ExpandoColumnService expandoColumnService) {
 		this.expandoColumnService = expandoColumnService;
 	}
 
@@ -475,8 +475,8 @@ public abstract class ExpandoColumnServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoColumnLocalService.class)
 	protected com.liferay.portlet.expando.service.ExpandoColumnLocalService expandoColumnLocalService;
-	@BeanReference(type = ExpandoColumnService.class)
-	protected ExpandoColumnService expandoColumnService;
+	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoColumnService.class)
+	protected com.liferay.portlet.expando.service.ExpandoColumnService expandoColumnService;
 	@BeanReference(type = ExpandoColumnPersistence.class)
 	protected ExpandoColumnPersistence expandoColumnPersistence;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoRowLocalService.class)

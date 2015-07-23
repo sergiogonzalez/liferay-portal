@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link MBMessageServiceUtil} service utility. The
+ * {@link com.liferay.portlet.messageboards.service.MBMessageServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see MBMessageServiceHttp
  * @see com.liferay.portlet.messageboards.model.MBMessageSoap
- * @see MBMessageServiceUtil
+ * @see com.liferay.portlet.messageboards.service.MBMessageServiceUtil
  * @generated
  */
 @ProviderType
@@ -86,8 +86,8 @@ public class MBMessageServiceSoap {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
-	String, String, java.util.List, boolean, double, boolean,
-	com.liferay.portal.service.ServiceContext)}
+	String, String, List, boolean, double, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageSoap addMessage(

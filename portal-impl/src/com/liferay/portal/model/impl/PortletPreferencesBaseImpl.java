@@ -28,7 +28,7 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PortletPreferencesImpl
- * @see PortletPreferences
+ * @see com.liferay.portal.model.PortletPreferences
  * @generated
  */
 @ProviderType

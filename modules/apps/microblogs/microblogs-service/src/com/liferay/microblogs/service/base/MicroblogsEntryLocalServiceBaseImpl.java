@@ -313,7 +313,7 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 	 *
 	 * @return the microblogs entry local service
 	 */
-	public MicroblogsEntryLocalService getMicroblogsEntryLocalService() {
+	public com.liferay.microblogs.service.MicroblogsEntryLocalService getMicroblogsEntryLocalService() {
 		return microblogsEntryLocalService;
 	}
 
@@ -323,7 +323,7 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 	 * @param microblogsEntryLocalService the microblogs entry local service
 	 */
 	public void setMicroblogsEntryLocalService(
-		MicroblogsEntryLocalService microblogsEntryLocalService) {
+		com.liferay.microblogs.service.MicroblogsEntryLocalService microblogsEntryLocalService) {
 		this.microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
@@ -843,8 +843,8 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = MicroblogsEntryLocalService.class)
-	protected MicroblogsEntryLocalService microblogsEntryLocalService;
+	@BeanReference(type = com.liferay.microblogs.service.MicroblogsEntryLocalService.class)
+	protected com.liferay.microblogs.service.MicroblogsEntryLocalService microblogsEntryLocalService;
 	@BeanReference(type = com.liferay.microblogs.service.MicroblogsEntryService.class)
 	protected com.liferay.microblogs.service.MicroblogsEntryService microblogsEntryService;
 	@BeanReference(type = MicroblogsEntryPersistence.class)

@@ -54,7 +54,7 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the country remote service
 	 */
-	public CountryService getCountryService() {
+	public com.liferay.portal.service.CountryService getCountryService() {
 		return countryService;
 	}
 
@@ -63,7 +63,8 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param countryService the country remote service
 	 */
-	public void setCountryService(CountryService countryService) {
+	public void setCountryService(
+		com.liferay.portal.service.CountryService countryService) {
 		this.countryService = countryService;
 	}
 
@@ -162,8 +163,8 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = CountryService.class)
-	protected CountryService countryService;
+	@BeanReference(type = com.liferay.portal.service.CountryService.class)
+	protected com.liferay.portal.service.CountryService countryService;
 	@BeanReference(type = CountryPersistence.class)
 	protected CountryPersistence countryPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

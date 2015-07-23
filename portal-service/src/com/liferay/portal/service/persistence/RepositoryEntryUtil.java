@@ -114,7 +114,8 @@ public class RepositoryEntryUtil {
 	* @param uuid the uuid
 	* @return the matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid(java.lang.String uuid) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid(
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -122,7 +123,7 @@ public class RepositoryEntryUtil {
 	* Returns a range of all the repository entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -130,8 +131,8 @@ public class RepositoryEntryUtil {
 	* @param end the upper bound of the range of repository entries (not inclusive)
 	* @return the range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid(
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -139,7 +140,7 @@ public class RepositoryEntryUtil {
 	* Returns an ordered range of all the repository entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -148,8 +149,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -159,10 +161,11 @@ public class RepositoryEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_First(java.lang.String uuid,
-		OrderByComparator<RepositoryEntry> orderByComparator)
+	public static com.liferay.portal.model.RepositoryEntry findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -174,8 +177,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_First(java.lang.String uuid,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -185,10 +189,11 @@ public class RepositoryEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_Last(java.lang.String uuid,
-		OrderByComparator<RepositoryEntry> orderByComparator)
+	public static com.liferay.portal.model.RepositoryEntry findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -200,8 +205,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_Last(java.lang.String uuid,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -212,11 +218,11 @@ public class RepositoryEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next repository entry
-	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
-	public static RepositoryEntry[] findByUuid_PrevAndNext(
+	public static com.liferay.portal.model.RepositoryEntry[] findByUuid_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid,
-		OrderByComparator<RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(repositoryEntryId, uuid,
@@ -243,15 +249,16 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	* Returns the repository entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRepositoryEntryException} if it could not be found.
+	* Returns the repository entry where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portal.NoSuchRepositoryEntryException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.portal.NoSuchRepositoryEntryException {
+	public static com.liferay.portal.model.RepositoryEntry findByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -262,8 +269,8 @@ public class RepositoryEntryUtil {
 	* @param groupId the group ID
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByUUID_G(
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -275,8 +282,8 @@ public class RepositoryEntryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -287,8 +294,9 @@ public class RepositoryEntryUtil {
 	* @param groupId the group ID
 	* @return the repository entry that was removed
 	*/
-	public static RepositoryEntry removeByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.portal.NoSuchRepositoryEntryException {
+	public static com.liferay.portal.model.RepositoryEntry removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -310,8 +318,8 @@ public class RepositoryEntryUtil {
 	* @param companyId the company ID
 	* @return the matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid_C(
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -319,7 +327,7 @@ public class RepositoryEntryUtil {
 	* Returns a range of all the repository entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -328,8 +336,8 @@ public class RepositoryEntryUtil {
 	* @param end the upper bound of the range of repository entries (not inclusive)
 	* @return the range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -337,7 +345,7 @@ public class RepositoryEntryUtil {
 	* Returns an ordered range of all the repository entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -347,9 +355,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -361,10 +369,11 @@ public class RepositoryEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<RepositoryEntry> orderByComparator)
+	public static com.liferay.portal.model.RepositoryEntry findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -378,8 +387,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -391,10 +401,11 @@ public class RepositoryEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<RepositoryEntry> orderByComparator)
+	public static com.liferay.portal.model.RepositoryEntry findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -408,8 +419,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -422,11 +434,11 @@ public class RepositoryEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next repository entry
-	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
-	public static RepositoryEntry[] findByUuid_C_PrevAndNext(
+	public static com.liferay.portal.model.RepositoryEntry[] findByUuid_C_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid, long companyId,
-		OrderByComparator<RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(repositoryEntryId, uuid,
@@ -460,7 +472,8 @@ public class RepositoryEntryUtil {
 	* @param repositoryId the repository ID
 	* @return the matching repository entries
 	*/
-	public static List<RepositoryEntry> findByRepositoryId(long repositoryId) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByRepositoryId(
+		long repositoryId) {
 		return getPersistence().findByRepositoryId(repositoryId);
 	}
 
@@ -468,7 +481,7 @@ public class RepositoryEntryUtil {
 	* Returns a range of all the repository entries where repositoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param repositoryId the repository ID
@@ -476,8 +489,8 @@ public class RepositoryEntryUtil {
 	* @param end the upper bound of the range of repository entries (not inclusive)
 	* @return the range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByRepositoryId(long repositoryId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByRepositoryId(
+		long repositoryId, int start, int end) {
 		return getPersistence().findByRepositoryId(repositoryId, start, end);
 	}
 
@@ -485,7 +498,7 @@ public class RepositoryEntryUtil {
 	* Returns an ordered range of all the repository entries where repositoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param repositoryId the repository ID
@@ -494,8 +507,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching repository entries
 	*/
-	public static List<RepositoryEntry> findByRepositoryId(long repositoryId,
-		int start, int end, OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByRepositoryId(
+		long repositoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .findByRepositoryId(repositoryId, start, end,
 			orderByComparator);
@@ -507,10 +521,11 @@ public class RepositoryEntryUtil {
 	* @param repositoryId the repository ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByRepositoryId_First(long repositoryId,
-		OrderByComparator<RepositoryEntry> orderByComparator)
+	public static com.liferay.portal.model.RepositoryEntry findByRepositoryId_First(
+		long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_First(repositoryId, orderByComparator);
@@ -523,8 +538,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByRepositoryId_First(long repositoryId,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByRepositoryId_First(
+		long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByRepositoryId_First(repositoryId, orderByComparator);
 	}
@@ -535,10 +551,11 @@ public class RepositoryEntryUtil {
 	* @param repositoryId the repository ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByRepositoryId_Last(long repositoryId,
-		OrderByComparator<RepositoryEntry> orderByComparator)
+	public static com.liferay.portal.model.RepositoryEntry findByRepositoryId_Last(
+		long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_Last(repositoryId, orderByComparator);
@@ -551,8 +568,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByRepositoryId_Last(long repositoryId,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByRepositoryId_Last(
+		long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByRepositoryId_Last(repositoryId, orderByComparator);
 	}
@@ -564,11 +582,11 @@ public class RepositoryEntryUtil {
 	* @param repositoryId the repository ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next repository entry
-	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
-	public static RepositoryEntry[] findByRepositoryId_PrevAndNext(
+	public static com.liferay.portal.model.RepositoryEntry[] findByRepositoryId_PrevAndNext(
 		long repositoryEntryId, long repositoryId,
-		OrderByComparator<RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_PrevAndNext(repositoryEntryId,
@@ -595,15 +613,15 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	* Returns the repository entry where repositoryId = &#63; and mappedId = &#63; or throws a {@link NoSuchRepositoryEntryException} if it could not be found.
+	* Returns the repository entry where repositoryId = &#63; and mappedId = &#63; or throws a {@link com.liferay.portal.NoSuchRepositoryEntryException} if it could not be found.
 	*
 	* @param repositoryId the repository ID
 	* @param mappedId the mapped ID
 	* @return the matching repository entry
-	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry findByR_M(long repositoryId,
-		java.lang.String mappedId)
+	public static com.liferay.portal.model.RepositoryEntry findByR_M(
+		long repositoryId, java.lang.String mappedId)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().findByR_M(repositoryId, mappedId);
 	}
@@ -615,8 +633,8 @@ public class RepositoryEntryUtil {
 	* @param mappedId the mapped ID
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByR_M(long repositoryId,
-		java.lang.String mappedId) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByR_M(
+		long repositoryId, java.lang.String mappedId) {
 		return getPersistence().fetchByR_M(repositoryId, mappedId);
 	}
 
@@ -628,8 +646,8 @@ public class RepositoryEntryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	*/
-	public static RepositoryEntry fetchByR_M(long repositoryId,
-		java.lang.String mappedId, boolean retrieveFromCache) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByR_M(
+		long repositoryId, java.lang.String mappedId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByR_M(repositoryId, mappedId, retrieveFromCache);
 	}
@@ -641,8 +659,8 @@ public class RepositoryEntryUtil {
 	* @param mappedId the mapped ID
 	* @return the repository entry that was removed
 	*/
-	public static RepositoryEntry removeByR_M(long repositoryId,
-		java.lang.String mappedId)
+	public static com.liferay.portal.model.RepositoryEntry removeByR_M(
+		long repositoryId, java.lang.String mappedId)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().removeByR_M(repositoryId, mappedId);
 	}
@@ -663,7 +681,8 @@ public class RepositoryEntryUtil {
 	*
 	* @param repositoryEntry the repository entry
 	*/
-	public static void cacheResult(RepositoryEntry repositoryEntry) {
+	public static void cacheResult(
+		com.liferay.portal.model.RepositoryEntry repositoryEntry) {
 		getPersistence().cacheResult(repositoryEntry);
 	}
 
@@ -672,7 +691,8 @@ public class RepositoryEntryUtil {
 	*
 	* @param repositoryEntries the repository entries
 	*/
-	public static void cacheResult(List<RepositoryEntry> repositoryEntries) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.RepositoryEntry> repositoryEntries) {
 		getPersistence().cacheResult(repositoryEntries);
 	}
 
@@ -682,7 +702,8 @@ public class RepositoryEntryUtil {
 	* @param repositoryEntryId the primary key for the new repository entry
 	* @return the new repository entry
 	*/
-	public static RepositoryEntry create(long repositoryEntryId) {
+	public static com.liferay.portal.model.RepositoryEntry create(
+		long repositoryEntryId) {
 		return getPersistence().create(repositoryEntryId);
 	}
 
@@ -691,25 +712,28 @@ public class RepositoryEntryUtil {
 	*
 	* @param repositoryEntryId the primary key of the repository entry
 	* @return the repository entry that was removed
-	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
-	public static RepositoryEntry remove(long repositoryEntryId)
+	public static com.liferay.portal.model.RepositoryEntry remove(
+		long repositoryEntryId)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().remove(repositoryEntryId);
 	}
 
-	public static RepositoryEntry updateImpl(RepositoryEntry repositoryEntry) {
+	public static com.liferay.portal.model.RepositoryEntry updateImpl(
+		com.liferay.portal.model.RepositoryEntry repositoryEntry) {
 		return getPersistence().updateImpl(repositoryEntry);
 	}
 
 	/**
-	* Returns the repository entry with the primary key or throws a {@link NoSuchRepositoryEntryException} if it could not be found.
+	* Returns the repository entry with the primary key or throws a {@link com.liferay.portal.NoSuchRepositoryEntryException} if it could not be found.
 	*
 	* @param repositoryEntryId the primary key of the repository entry
 	* @return the repository entry
-	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
+	* @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
-	public static RepositoryEntry findByPrimaryKey(long repositoryEntryId)
+	public static com.liferay.portal.model.RepositoryEntry findByPrimaryKey(
+		long repositoryEntryId)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().findByPrimaryKey(repositoryEntryId);
 	}
@@ -720,11 +744,12 @@ public class RepositoryEntryUtil {
 	* @param repositoryEntryId the primary key of the repository entry
 	* @return the repository entry, or <code>null</code> if a repository entry with the primary key could not be found
 	*/
-	public static RepositoryEntry fetchByPrimaryKey(long repositoryEntryId) {
+	public static com.liferay.portal.model.RepositoryEntry fetchByPrimaryKey(
+		long repositoryEntryId) {
 		return getPersistence().fetchByPrimaryKey(repositoryEntryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, RepositoryEntry> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.RepositoryEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -734,7 +759,7 @@ public class RepositoryEntryUtil {
 	*
 	* @return the repository entries
 	*/
-	public static List<RepositoryEntry> findAll() {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -742,14 +767,15 @@ public class RepositoryEntryUtil {
 	* Returns a range of all the repository entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of repository entries
 	* @param end the upper bound of the range of repository entries (not inclusive)
 	* @return the range of repository entries
 	*/
-	public static List<RepositoryEntry> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -757,7 +783,7 @@ public class RepositoryEntryUtil {
 	* Returns an ordered range of all the repository entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of repository entries
@@ -765,8 +791,9 @@ public class RepositoryEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of repository entries
 	*/
-	public static List<RepositoryEntry> findAll(int start, int end,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

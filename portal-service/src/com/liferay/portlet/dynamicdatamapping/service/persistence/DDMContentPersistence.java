@@ -46,13 +46,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param uuid the uuid
 	* @return the matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByUuid(java.lang.String uuid);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByUuid(
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the d d m contents where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -60,14 +61,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param end the upper bound of the range of d d m contents (not inclusive)
 	* @return the range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByUuid(
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m contents where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -76,9 +77,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the first d d m content in the ordered set where uuid = &#63;.
@@ -86,10 +87,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -99,8 +101,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the last d d m content in the ordered set where uuid = &#63;.
@@ -108,10 +111,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -121,8 +125,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the d d m contents before and after the current d d m content in the ordered set where uuid = &#63;.
@@ -131,11 +136,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	*/
-	public DDMContent[] findByUuid_PrevAndNext(long contentId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent[] findByUuid_PrevAndNext(
+		long contentId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -154,14 +159,15 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the d d m content where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchContentException} if it could not be found.
+	* Returns the d d m content where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchContentException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -171,7 +177,8 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByUUID_G(java.lang.String uuid, long groupId);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByUUID_G(
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the d d m content where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -181,8 +188,8 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByUUID_G(
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the d d m content where uuid = &#63; and groupId = &#63; from the database.
@@ -191,7 +198,8 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @return the d d m content that was removed
 	*/
-	public DDMContent removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -210,14 +218,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @return the matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByUuid_C(
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the d d m contents where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,14 +234,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param end the upper bound of the range of d d m contents (not inclusive)
 	* @return the range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m contents where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -243,9 +251,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the first d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -254,10 +262,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByUuid_C_First(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -268,9 +277,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the last d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -279,10 +288,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByUuid_C_Last(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -293,8 +303,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByUuid_C_Last(java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the d d m contents before and after the current d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -304,11 +315,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	*/
-	public DDMContent[] findByUuid_C_PrevAndNext(long contentId,
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent[] findByUuid_C_PrevAndNext(
+		long contentId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -334,13 +345,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @return the matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByGroupId(long groupId);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByGroupId(
+		long groupId);
 
 	/**
 	* Returns a range of all the d d m contents where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -348,14 +360,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param end the upper bound of the range of d d m contents (not inclusive)
 	* @return the range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByGroupId(long groupId, int start,
-		int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByGroupId(
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m contents where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -364,9 +376,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByGroupId(long groupId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the first d d m content in the ordered set where groupId = &#63;.
@@ -374,10 +386,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -387,8 +400,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the last d d m content in the ordered set where groupId = &#63;.
@@ -396,10 +410,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -409,8 +424,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the d d m contents before and after the current d d m content in the ordered set where groupId = &#63;.
@@ -419,10 +435,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	*/
-	public DDMContent[] findByGroupId_PrevAndNext(long contentId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent[] findByGroupId_PrevAndNext(
+		long contentId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -446,13 +463,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @return the matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByCompanyId(long companyId);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByCompanyId(
+		long companyId);
 
 	/**
 	* Returns a range of all the d d m contents where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -460,14 +478,14 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param end the upper bound of the range of d d m contents (not inclusive)
 	* @return the range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByCompanyId(long companyId,
-		int start, int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByCompanyId(
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m contents where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -476,9 +494,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m contents
 	*/
-	public java.util.List<DDMContent> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the first d d m content in the ordered set where companyId = &#63;.
@@ -486,10 +504,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -499,8 +518,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the last d d m content in the ordered set where companyId = &#63;.
@@ -508,10 +528,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a matching d d m content could not be found
 	*/
-	public DDMContent findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -521,8 +542,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
-	public DDMContent fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the d d m contents before and after the current d d m content in the ordered set where companyId = &#63;.
@@ -531,11 +553,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	*/
-	public DDMContent[] findByCompanyId_PrevAndNext(long contentId,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent[] findByCompanyId_PrevAndNext(
+		long contentId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -558,14 +580,16 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	*
 	* @param ddmContent the d d m content
 	*/
-	public void cacheResult(DDMContent ddmContent);
+	public void cacheResult(
+		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent);
 
 	/**
 	* Caches the d d m contents in the entity cache if it is enabled.
 	*
 	* @param ddmContents the d d m contents
 	*/
-	public void cacheResult(java.util.List<DDMContent> ddmContents);
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> ddmContents);
 
 	/**
 	* Creates a new d d m content with the primary key. Does not add the d d m content to the database.
@@ -573,28 +597,32 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param contentId the primary key for the new d d m content
 	* @return the new d d m content
 	*/
-	public DDMContent create(long contentId);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent create(
+		long contentId);
 
 	/**
 	* Removes the d d m content with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contentId the primary key of the d d m content
 	* @return the d d m content that was removed
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	*/
-	public DDMContent remove(long contentId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent remove(
+		long contentId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
-	public DDMContent updateImpl(DDMContent ddmContent);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent updateImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent);
 
 	/**
-	* Returns the d d m content with the primary key or throws a {@link NoSuchContentException} if it could not be found.
+	* Returns the d d m content with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchContentException} if it could not be found.
 	*
 	* @param contentId the primary key of the d d m content
 	* @return the d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	*/
-	public DDMContent findByPrimaryKey(long contentId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent findByPrimaryKey(
+		long contentId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
@@ -603,10 +631,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param contentId the primary key of the d d m content
 	* @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
 	*/
-	public DDMContent fetchByPrimaryKey(long contentId);
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByPrimaryKey(
+		long contentId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, DDMContent> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMContent> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -614,26 +643,27 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	*
 	* @return the d d m contents
 	*/
-	public java.util.List<DDMContent> findAll();
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findAll();
 
 	/**
 	* Returns a range of all the d d m contents.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m contents
 	* @param end the upper bound of the range of d d m contents (not inclusive)
 	* @return the range of d d m contents
 	*/
-	public java.util.List<DDMContent> findAll(int start, int end);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findAll(
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m contents.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m contents
@@ -641,8 +671,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m contents
 	*/
-	public java.util.List<DDMContent> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator);
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Removes all the d d m contents from the database.

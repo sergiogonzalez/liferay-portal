@@ -192,7 +192,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @return the create date of this trash entry
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _trashEntry.getCreateDate();
 	}
 
@@ -398,7 +398,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	* @param createDate the create date of this trash entry
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_trashEntry.setCreateDate(createDate);
 	}
 

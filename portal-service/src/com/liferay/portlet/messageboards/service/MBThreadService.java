@@ -47,7 +47,8 @@ public interface MBThreadService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBThreadServiceUtil} to access the message boards thread remote service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBThreadServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void deleteThread(long threadId) throws PortalException;
+	public void deleteThread(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -59,22 +60,24 @@ public interface MBThreadService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, java.util.Date modifiedDate, int status,
-		int start, int end) throws PortalException;
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, int start, int end)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
-		boolean includeAnonymous, int start, int end) throws PortalException;
+		boolean includeAnonymous, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed, int start,
-		int end) throws PortalException;
+		int end) throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId, long userId,
@@ -99,28 +102,33 @@ public interface MBThreadService extends BaseService {
 	public int getThreadsCount(long groupId, long categoryId, int status);
 
 	public com.liferay.portal.kernel.lock.Lock lockThread(long threadId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThread(
-		long categoryId, long threadId) throws PortalException;
+		long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadFromTrash(
-		long categoryId, long threadId) throws PortalException;
+		long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
-		long threadId) throws PortalException;
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void restoreThreadFromTrash(long threadId) throws PortalException;
+	public void restoreThreadFromTrash(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long creatorUserId, long startDate, long endDate, int status,
-		int start, int end) throws PortalException;
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long creatorUserId, int status, int start, int end)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -132,7 +140,8 @@ public interface MBThreadService extends BaseService {
 	public com.liferay.portlet.messageboards.model.MBThread splitThread(
 		long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void unlockThread(long threadId) throws PortalException;
+	public void unlockThread(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

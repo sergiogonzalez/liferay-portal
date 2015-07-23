@@ -183,7 +183,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	* @return the create date of this web d a v props
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _webDAVProps.getCreateDate();
 	}
 
@@ -198,7 +198,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	* @return the modified date of this web d a v props
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _webDAVProps.getModifiedDate();
 	}
 
@@ -337,7 +337,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	* @param createDate the create date of this web d a v props
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_webDAVProps.setCreateDate(createDate);
 	}
 
@@ -364,7 +364,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	* @param modifiedDate the modified date of this web d a v props
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_webDAVProps.setModifiedDate(modifiedDate);
 	}
 

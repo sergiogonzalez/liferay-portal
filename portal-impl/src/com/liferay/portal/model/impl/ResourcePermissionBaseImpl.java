@@ -28,7 +28,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ResourcePermissionImpl
- * @see ResourcePermission
+ * @see com.liferay.portal.model.ResourcePermission
  * @generated
  */
 @ProviderType

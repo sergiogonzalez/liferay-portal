@@ -339,7 +339,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 *
 	 * @return the user notification event local service
 	 */
-	public UserNotificationEventLocalService getUserNotificationEventLocalService() {
+	public com.liferay.portal.service.UserNotificationEventLocalService getUserNotificationEventLocalService() {
 		return userNotificationEventLocalService;
 	}
 
@@ -349,7 +349,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param userNotificationEventLocalService the user notification event local service
 	 */
 	public void setUserNotificationEventLocalService(
-		UserNotificationEventLocalService userNotificationEventLocalService) {
+		com.liferay.portal.service.UserNotificationEventLocalService userNotificationEventLocalService) {
 		this.userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
@@ -527,8 +527,8 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = UserNotificationEventLocalService.class)
-	protected UserNotificationEventLocalService userNotificationEventLocalService;
+	@BeanReference(type = com.liferay.portal.service.UserNotificationEventLocalService.class)
+	protected com.liferay.portal.service.UserNotificationEventLocalService userNotificationEventLocalService;
 	@BeanReference(type = UserNotificationEventPersistence.class)
 	protected UserNotificationEventPersistence userNotificationEventPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

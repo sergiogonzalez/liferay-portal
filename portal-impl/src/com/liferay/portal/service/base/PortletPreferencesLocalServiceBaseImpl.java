@@ -307,7 +307,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	 *
 	 * @return the portlet preferences local service
 	 */
-	public PortletPreferencesLocalService getPortletPreferencesLocalService() {
+	public com.liferay.portal.service.PortletPreferencesLocalService getPortletPreferencesLocalService() {
 		return portletPreferencesLocalService;
 	}
 
@@ -317,7 +317,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	 * @param portletPreferencesLocalService the portlet preferences local service
 	 */
 	public void setPortletPreferencesLocalService(
-		PortletPreferencesLocalService portletPreferencesLocalService) {
+		com.liferay.portal.service.PortletPreferencesLocalService portletPreferencesLocalService) {
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
@@ -553,8 +553,8 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = PortletPreferencesLocalService.class)
-	protected PortletPreferencesLocalService portletPreferencesLocalService;
+	@BeanReference(type = com.liferay.portal.service.PortletPreferencesLocalService.class)
+	protected com.liferay.portal.service.PortletPreferencesLocalService portletPreferencesLocalService;
 	@BeanReference(type = com.liferay.portal.service.PortletPreferencesService.class)
 	protected com.liferay.portal.service.PortletPreferencesService portletPreferencesService;
 	@BeanReference(type = PortletPreferencesPersistence.class)

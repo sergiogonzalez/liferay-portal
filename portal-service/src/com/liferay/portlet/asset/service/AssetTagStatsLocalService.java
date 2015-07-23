@@ -96,7 +96,8 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.asset.model.AssetTagStats deleteAssetTagStats(
-		long tagStatsId) throws PortalException;
+		long tagStatsId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -104,7 +105,7 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the asset tag statistics instance.
@@ -121,7 +122,8 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	* @throws PortalException if the assetTagStats with the primary key could
 	not be found
 	*/
-	public void deleteTagStats(long tagStatsId) throws PortalException;
+	public void deleteTagStats(long tagStatsId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes all asset tag statistics instances associated with the asset
@@ -219,7 +221,8 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetTagStats getAssetTagStats(
-		long tagStatsId) throws PortalException;
+		long tagStatsId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the asset tag statses.
@@ -254,7 +257,8 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the asset tag statistics instances associated with
@@ -320,5 +324,6 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	found
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats updateTagStats(
-		long tagId, long classNameId) throws PortalException;
+		long tagId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

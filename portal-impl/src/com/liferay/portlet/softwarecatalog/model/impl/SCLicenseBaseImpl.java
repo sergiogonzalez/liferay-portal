@@ -28,7 +28,7 @@ import com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SCLicenseImpl
- * @see SCLicense
+ * @see com.liferay.portlet.softwarecatalog.model.SCLicense
  * @generated
  */
 @ProviderType

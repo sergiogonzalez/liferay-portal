@@ -60,7 +60,8 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.asset.model.AssetCategoryProperty addCategoryProperty(
 		long userId, long categoryId, java.lang.String key,
-		java.lang.String value) throws PortalException;
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new asset category property with the primary key. Does not add the asset category property to the database.
@@ -90,7 +91,8 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.asset.model.AssetCategoryProperty deleteAssetCategoryProperty(
-		long categoryPropertyId) throws PortalException;
+		long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteCategoryProperties(long entryId);
 
@@ -98,7 +100,7 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 		com.liferay.portlet.asset.model.AssetCategoryProperty categoryProperty);
 
 	public void deleteCategoryProperty(long categoryPropertyId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
@@ -106,7 +108,7 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -212,7 +214,8 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategoryProperty getAssetCategoryProperty(
-		long categoryPropertyId) throws PortalException;
+		long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -230,11 +233,13 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategoryProperty getCategoryProperty(
-		long categoryId, java.lang.String key) throws PortalException;
+		long categoryId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategoryProperty getCategoryProperty(
-		long categoryPropertyId) throws PortalException;
+		long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategoryProperty> getCategoryPropertyValues(
@@ -243,7 +248,8 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -264,9 +270,10 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
 		long categoryPropertyId, java.lang.String key, java.lang.String value)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
 		long userId, long categoryPropertyId, java.lang.String key,
-		java.lang.String value) throws PortalException;
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

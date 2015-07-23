@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link EmailAddressServiceUtil} service utility. The
+ * {@link com.liferay.portal.service.EmailAddressServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -59,7 +59,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see EmailAddressServiceHttp
  * @see com.liferay.portal.model.EmailAddressSoap
- * @see EmailAddressServiceUtil
+ * @see com.liferay.portal.service.EmailAddressServiceUtil
  * @generated
  */
 @ProviderType

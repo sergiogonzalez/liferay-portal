@@ -85,7 +85,7 @@ public abstract class DLFileEntryTypeServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the document library file entry type remote service
 	 */
-	public DLFileEntryTypeService getDLFileEntryTypeService() {
+	public com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService getDLFileEntryTypeService() {
 		return dlFileEntryTypeService;
 	}
 
@@ -95,7 +95,7 @@ public abstract class DLFileEntryTypeServiceBaseImpl extends BaseServiceImpl
 	 * @param dlFileEntryTypeService the document library file entry type remote service
 	 */
 	public void setDLFileEntryTypeService(
-		DLFileEntryTypeService dlFileEntryTypeService) {
+		com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService dlFileEntryTypeService) {
 		this.dlFileEntryTypeService = dlFileEntryTypeService;
 	}
 
@@ -667,8 +667,8 @@ public abstract class DLFileEntryTypeServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
-	@BeanReference(type = DLFileEntryTypeService.class)
-	protected DLFileEntryTypeService dlFileEntryTypeService;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService dlFileEntryTypeService;
 	@BeanReference(type = DLFileEntryTypePersistence.class)
 	protected DLFileEntryTypePersistence dlFileEntryTypePersistence;
 	@BeanReference(type = DLFileEntryTypeFinder.class)

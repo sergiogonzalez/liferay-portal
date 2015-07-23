@@ -118,7 +118,8 @@ public class MicroblogsEntryUtil {
 	* @param companyId the company ID
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCompanyId(long companyId) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCompanyId(
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -126,7 +127,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -134,8 +135,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCompanyId(long companyId,
-		int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCompanyId(
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -143,7 +144,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -152,8 +153,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -166,8 +168,9 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCompanyId_First(long companyId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -180,8 +183,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCompanyId_First(long companyId,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -194,8 +198,9 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCompanyId_Last(long companyId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -208,8 +213,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCompanyId_Last(long companyId,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -223,9 +229,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByCompanyId_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByCompanyId_PrevAndNext(
 		long microblogsEntryId, long companyId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(microblogsEntryId, companyId,
@@ -238,7 +244,8 @@ public class MicroblogsEntryUtil {
 	* @param companyId the company ID
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCompanyId(long companyId) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCompanyId(
+		long companyId) {
 		return getPersistence().filterFindByCompanyId(companyId);
 	}
 
@@ -246,7 +253,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -254,8 +261,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCompanyId(long companyId,
-		int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCompanyId(
+		long companyId, int start, int end) {
 		return getPersistence().filterFindByCompanyId(companyId, start, end);
 	}
 
@@ -263,7 +270,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -272,8 +279,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCompanyId(long companyId,
-		int start, int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByCompanyId(companyId, start, end,
 			orderByComparator);
@@ -288,9 +296,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByCompanyId_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByCompanyId_PrevAndNext(
 		long microblogsEntryId, long companyId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByCompanyId_PrevAndNext(microblogsEntryId,
@@ -332,7 +340,8 @@ public class MicroblogsEntryUtil {
 	* @param userId the user ID
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByUserId(long userId) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByUserId(
+		long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -340,7 +349,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -348,8 +357,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByUserId(long userId, int start,
-		int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByUserId(
+		long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -357,7 +366,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -366,8 +375,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByUserId(long userId, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -380,8 +390,9 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByUserId_First(long userId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -393,8 +404,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByUserId_First(long userId,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -406,8 +418,9 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByUserId_Last(long userId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -419,8 +432,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByUserId_Last(long userId,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -433,9 +447,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByUserId_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByUserId_PrevAndNext(
 		long microblogsEntryId, long userId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(microblogsEntryId, userId,
@@ -448,7 +462,8 @@ public class MicroblogsEntryUtil {
 	* @param userId the user ID
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByUserId(long userId) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByUserId(
+		long userId) {
 		return getPersistence().filterFindByUserId(userId);
 	}
 
@@ -456,7 +471,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -464,8 +479,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByUserId(long userId,
-		int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByUserId(
+		long userId, int start, int end) {
 		return getPersistence().filterFindByUserId(userId, start, end);
 	}
 
@@ -473,7 +488,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -482,8 +497,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByUserId(long userId,
-		int start, int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUserId(userId, start, end, orderByComparator);
 	}
@@ -497,9 +513,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByUserId_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByUserId_PrevAndNext(
 		long microblogsEntryId, long userId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByUserId_PrevAndNext(microblogsEntryId, userId,
@@ -542,7 +558,8 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByU_T(long userId, int type) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_T(
+		long userId, int type) {
 		return getPersistence().findByU_T(userId, type);
 	}
 
@@ -550,7 +567,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where userId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -559,8 +576,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByU_T(long userId, int type,
-		int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_T(
+		long userId, int type, int start, int end) {
 		return getPersistence().findByU_T(userId, type, start, end);
 	}
 
@@ -568,7 +585,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where userId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -578,8 +595,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByU_T(long userId, int type,
-		int start, int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_T(
+		long userId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByU_T(userId, type, start, end, orderByComparator);
 	}
@@ -593,8 +611,9 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByU_T_First(long userId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByU_T_First(
+		long userId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence().findByU_T_First(userId, type, orderByComparator);
 	}
@@ -607,8 +626,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByU_T_First(long userId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByU_T_First(
+		long userId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence().fetchByU_T_First(userId, type, orderByComparator);
 	}
 
@@ -621,8 +641,9 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByU_T_Last(long userId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByU_T_Last(
+		long userId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence().findByU_T_Last(userId, type, orderByComparator);
 	}
@@ -635,8 +656,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByU_T_Last(long userId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByU_T_Last(
+		long userId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence().fetchByU_T_Last(userId, type, orderByComparator);
 	}
 
@@ -650,9 +672,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByU_T_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByU_T_PrevAndNext(
 		long microblogsEntryId, long userId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByU_T_PrevAndNext(microblogsEntryId, userId, type,
@@ -666,7 +688,8 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByU_T(long userId, int type) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByU_T(
+		long userId, int type) {
 		return getPersistence().filterFindByU_T(userId, type);
 	}
 
@@ -674,7 +697,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where userId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -683,8 +706,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByU_T(long userId, int type,
-		int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByU_T(
+		long userId, int type, int start, int end) {
 		return getPersistence().filterFindByU_T(userId, type, start, end);
 	}
 
@@ -692,7 +715,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where userId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -702,8 +725,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByU_T(long userId, int type,
-		int start, int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByU_T(
+		long userId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByU_T(userId, type, start, end, orderByComparator);
 	}
@@ -718,9 +742,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByU_T_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByU_T_PrevAndNext(
 		long microblogsEntryId, long userId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByU_T_PrevAndNext(microblogsEntryId, userId,
@@ -766,7 +790,7 @@ public class MicroblogsEntryUtil {
 	* @param creatorClassPK the creator class p k
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK) {
 		return getPersistence()
 				   .findByCCNI_CCPK(creatorClassNameId, creatorClassPK);
@@ -776,7 +800,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -785,7 +809,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end) {
 		return getPersistence()
 				   .findByCCNI_CCPK(creatorClassNameId, creatorClassPK, start,
@@ -796,7 +820,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -806,9 +830,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCCNI_CCPK(creatorClassNameId, creatorClassPK, start,
 			end, orderByComparator);
@@ -823,9 +847,9 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCCNI_CCPK_First(
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCCNI_CCPK_First(
 		long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_CCPK_First(creatorClassNameId, creatorClassPK,
@@ -840,9 +864,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCCNI_CCPK_First(
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCCNI_CCPK_First(
 		long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCCNI_CCPK_First(creatorClassNameId, creatorClassPK,
 			orderByComparator);
@@ -857,9 +881,9 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCCNI_CCPK_Last(
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCCNI_CCPK_Last(
 		long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_CCPK_Last(creatorClassNameId, creatorClassPK,
@@ -874,9 +898,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCCNI_CCPK_Last(
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCCNI_CCPK_Last(
 		long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCCNI_CCPK_Last(creatorClassNameId, creatorClassPK,
 			orderByComparator);
@@ -892,9 +916,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByCCNI_CCPK_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByCCNI_CCPK_PrevAndNext(
 		long microblogsEntryId, long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_CCPK_PrevAndNext(microblogsEntryId,
@@ -908,7 +932,7 @@ public class MicroblogsEntryUtil {
 	* @param creatorClassPK the creator class p k
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK(creatorClassNameId, creatorClassPK);
@@ -918,7 +942,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -927,7 +951,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK(creatorClassNameId, creatorClassPK,
@@ -938,7 +962,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -948,9 +972,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK(creatorClassNameId, creatorClassPK,
 			start, end, orderByComparator);
@@ -966,9 +990,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByCCNI_CCPK_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByCCNI_CCPK_PrevAndNext(
 		long microblogsEntryId, long creatorClassNameId, long creatorClassPK,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK_PrevAndNext(microblogsEntryId,
@@ -982,7 +1006,7 @@ public class MicroblogsEntryUtil {
 	* @param creatorClassPKs the creator class p ks
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK(creatorClassNameId, creatorClassPKs);
@@ -992,7 +1016,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1001,7 +1025,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs, int start, int end) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK(creatorClassNameId, creatorClassPKs,
@@ -1012,7 +1036,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1022,9 +1046,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK(creatorClassNameId, creatorClassPKs,
 			start, end, orderByComparator);
@@ -1034,14 +1058,14 @@ public class MicroblogsEntryUtil {
 	* Returns all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
 	* @param creatorClassPKs the creator class p ks
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs) {
 		return getPersistence()
 				   .findByCCNI_CCPK(creatorClassNameId, creatorClassPKs);
@@ -1051,7 +1075,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1060,7 +1084,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs, int start, int end) {
 		return getPersistence()
 				   .findByCCNI_CCPK(creatorClassNameId, creatorClassPKs, start,
@@ -1071,7 +1095,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1081,9 +1105,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCCNI_CCPK(creatorClassNameId, creatorClassPKs, start,
 			end, orderByComparator);
@@ -1159,8 +1183,8 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_T(long creatorClassNameId,
-		int type) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_T(
+		long creatorClassNameId, int type) {
 		return getPersistence().findByCCNI_T(creatorClassNameId, type);
 	}
 
@@ -1168,7 +1192,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where creatorClassNameId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1177,8 +1201,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_T(long creatorClassNameId,
-		int type, int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_T(
+		long creatorClassNameId, int type, int start, int end) {
 		return getPersistence()
 				   .findByCCNI_T(creatorClassNameId, type, start, end);
 	}
@@ -1187,7 +1211,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1197,9 +1221,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_T(long creatorClassNameId,
-		int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_T(
+		long creatorClassNameId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCCNI_T(creatorClassNameId, type, start, end,
 			orderByComparator);
@@ -1214,8 +1238,9 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCCNI_T_First(long creatorClassNameId,
-		int type, OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCCNI_T_First(
+		long creatorClassNameId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_T_First(creatorClassNameId, type,
@@ -1230,8 +1255,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCCNI_T_First(long creatorClassNameId,
-		int type, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCCNI_T_First(
+		long creatorClassNameId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCCNI_T_First(creatorClassNameId, type,
 			orderByComparator);
@@ -1246,8 +1272,9 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCCNI_T_Last(long creatorClassNameId,
-		int type, OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCCNI_T_Last(
+		long creatorClassNameId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_T_Last(creatorClassNameId, type,
@@ -1262,8 +1289,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCCNI_T_Last(long creatorClassNameId,
-		int type, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCCNI_T_Last(
+		long creatorClassNameId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCCNI_T_Last(creatorClassNameId, type,
 			orderByComparator);
@@ -1279,9 +1307,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByCCNI_T_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByCCNI_T_PrevAndNext(
 		long microblogsEntryId, long creatorClassNameId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_T_PrevAndNext(microblogsEntryId,
@@ -1295,7 +1323,7 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_T(
 		long creatorClassNameId, int type) {
 		return getPersistence().filterFindByCCNI_T(creatorClassNameId, type);
 	}
@@ -1304,7 +1332,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1313,7 +1341,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_T(
 		long creatorClassNameId, int type, int start, int end) {
 		return getPersistence()
 				   .filterFindByCCNI_T(creatorClassNameId, type, start, end);
@@ -1323,7 +1351,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where creatorClassNameId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1333,9 +1361,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_T(
 		long creatorClassNameId, int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByCCNI_T(creatorClassNameId, type, start, end,
 			orderByComparator);
@@ -1351,9 +1379,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByCCNI_T_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByCCNI_T_PrevAndNext(
 		long microblogsEntryId, long creatorClassNameId, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByCCNI_T_PrevAndNext(microblogsEntryId,
@@ -1399,8 +1427,8 @@ public class MicroblogsEntryUtil {
 	* @param parentMicroblogsEntryId the parent microblogs entry ID
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByT_P(int type,
-		long parentMicroblogsEntryId) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByT_P(
+		int type, long parentMicroblogsEntryId) {
 		return getPersistence().findByT_P(type, parentMicroblogsEntryId);
 	}
 
@@ -1408,7 +1436,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where type = &#63; and parentMicroblogsEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param type the type
@@ -1417,8 +1445,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByT_P(int type,
-		long parentMicroblogsEntryId, int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByT_P(
+		int type, long parentMicroblogsEntryId, int start, int end) {
 		return getPersistence()
 				   .findByT_P(type, parentMicroblogsEntryId, start, end);
 	}
@@ -1427,7 +1455,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where type = &#63; and parentMicroblogsEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param type the type
@@ -1437,9 +1465,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByT_P(int type,
-		long parentMicroblogsEntryId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByT_P(
+		int type, long parentMicroblogsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByT_P(type, parentMicroblogsEntryId, start, end,
 			orderByComparator);
@@ -1454,9 +1482,9 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByT_P_First(int type,
-		long parentMicroblogsEntryId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByT_P_First(
+		int type, long parentMicroblogsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByT_P_First(type, parentMicroblogsEntryId,
@@ -1471,9 +1499,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByT_P_First(int type,
-		long parentMicroblogsEntryId,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByT_P_First(
+		int type, long parentMicroblogsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_P_First(type, parentMicroblogsEntryId,
 			orderByComparator);
@@ -1488,9 +1516,9 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByT_P_Last(int type,
-		long parentMicroblogsEntryId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByT_P_Last(
+		int type, long parentMicroblogsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByT_P_Last(type, parentMicroblogsEntryId,
@@ -1505,9 +1533,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByT_P_Last(int type,
-		long parentMicroblogsEntryId,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByT_P_Last(
+		int type, long parentMicroblogsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_P_Last(type, parentMicroblogsEntryId,
 			orderByComparator);
@@ -1523,9 +1551,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByT_P_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByT_P_PrevAndNext(
 		long microblogsEntryId, int type, long parentMicroblogsEntryId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByT_P_PrevAndNext(microblogsEntryId, type,
@@ -1539,8 +1567,8 @@ public class MicroblogsEntryUtil {
 	* @param parentMicroblogsEntryId the parent microblogs entry ID
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByT_P(int type,
-		long parentMicroblogsEntryId) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByT_P(
+		int type, long parentMicroblogsEntryId) {
 		return getPersistence().filterFindByT_P(type, parentMicroblogsEntryId);
 	}
 
@@ -1548,7 +1576,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where type = &#63; and parentMicroblogsEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param type the type
@@ -1557,8 +1585,8 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByT_P(int type,
-		long parentMicroblogsEntryId, int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByT_P(
+		int type, long parentMicroblogsEntryId, int start, int end) {
 		return getPersistence()
 				   .filterFindByT_P(type, parentMicroblogsEntryId, start, end);
 	}
@@ -1567,7 +1595,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where type = &#63; and parentMicroblogsEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param type the type
@@ -1577,9 +1605,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByT_P(int type,
-		long parentMicroblogsEntryId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByT_P(
+		int type, long parentMicroblogsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByT_P(type, parentMicroblogsEntryId, start, end,
 			orderByComparator);
@@ -1595,9 +1623,9 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByT_P_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByT_P_PrevAndNext(
 		long microblogsEntryId, int type, long parentMicroblogsEntryId,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByT_P_PrevAndNext(microblogsEntryId, type,
@@ -1644,7 +1672,7 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type) {
 		return getPersistence()
 				   .findByCCNI_CCPK_T(creatorClassNameId, creatorClassPK, type);
@@ -1654,7 +1682,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1664,7 +1692,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
 		int end) {
 		return getPersistence()
@@ -1676,7 +1704,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1687,9 +1715,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCCNI_CCPK_T(creatorClassNameId, creatorClassPK, type,
 			start, end, orderByComparator);
@@ -1705,9 +1734,9 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCCNI_CCPK_T_First(
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCCNI_CCPK_T_First(
 		long creatorClassNameId, long creatorClassPK, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_CCPK_T_First(creatorClassNameId, creatorClassPK,
@@ -1723,9 +1752,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCCNI_CCPK_T_First(
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCCNI_CCPK_T_First(
 		long creatorClassNameId, long creatorClassPK, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCCNI_CCPK_T_First(creatorClassNameId,
 			creatorClassPK, type, orderByComparator);
@@ -1741,9 +1770,9 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByCCNI_CCPK_T_Last(
+	public static com.liferay.microblogs.model.MicroblogsEntry findByCCNI_CCPK_T_Last(
 		long creatorClassNameId, long creatorClassPK, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_CCPK_T_Last(creatorClassNameId, creatorClassPK,
@@ -1759,9 +1788,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByCCNI_CCPK_T_Last(
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByCCNI_CCPK_T_Last(
 		long creatorClassNameId, long creatorClassPK, int type,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCCNI_CCPK_T_Last(creatorClassNameId, creatorClassPK,
 			type, orderByComparator);
@@ -1778,9 +1807,10 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByCCNI_CCPK_T_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByCCNI_CCPK_T_PrevAndNext(
 		long microblogsEntryId, long creatorClassNameId, long creatorClassPK,
-		int type, OrderByComparator<MicroblogsEntry> orderByComparator)
+		int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCCNI_CCPK_T_PrevAndNext(microblogsEntryId,
@@ -1795,7 +1825,7 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK_T(creatorClassNameId, creatorClassPK,
@@ -1806,7 +1836,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1816,7 +1846,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
 		int end) {
 		return getPersistence()
@@ -1828,7 +1858,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1839,9 +1869,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK_T(creatorClassNameId, creatorClassPK,
 			type, start, end, orderByComparator);
@@ -1858,9 +1889,10 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByCCNI_CCPK_T_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByCCNI_CCPK_T_PrevAndNext(
 		long microblogsEntryId, long creatorClassNameId, long creatorClassPK,
-		int type, OrderByComparator<MicroblogsEntry> orderByComparator)
+		int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK_T_PrevAndNext(microblogsEntryId,
@@ -1875,7 +1907,7 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK_T(creatorClassNameId,
@@ -1886,7 +1918,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1896,7 +1928,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
 		int end) {
 		return getPersistence()
@@ -1908,7 +1940,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permission to view where creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1919,9 +1951,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByCCNI_CCPK_T(creatorClassNameId,
 			creatorClassPKs, type, start, end, orderByComparator);
@@ -1931,7 +1964,7 @@ public class MicroblogsEntryUtil {
 	* Returns all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1939,7 +1972,7 @@ public class MicroblogsEntryUtil {
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type) {
 		return getPersistence()
 				   .findByCCNI_CCPK_T(creatorClassNameId, creatorClassPKs, type);
@@ -1949,7 +1982,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1959,7 +1992,7 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
 		int end) {
 		return getPersistence()
@@ -1971,7 +2004,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
@@ -1982,9 +2015,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByCCNI_CCPK_T(
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCCNI_CCPK_T(creatorClassNameId, creatorClassPKs,
 			type, start, end, orderByComparator);
@@ -2070,8 +2104,8 @@ public class MicroblogsEntryUtil {
 	* @param socialRelationType the social relation type
 	* @return the matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByU_C_T_S(long userId,
-		java.util.Date createDate, int type, int socialRelationType) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_C_T_S(
+		long userId, java.util.Date createDate, int type, int socialRelationType) {
 		return getPersistence()
 				   .findByU_C_T_S(userId, createDate, type, socialRelationType);
 	}
@@ -2080,7 +2114,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -2091,9 +2125,9 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByU_C_T_S(long userId,
-		java.util.Date createDate, int type, int socialRelationType, int start,
-		int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_C_T_S(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType, int start, int end) {
 		return getPersistence()
 				   .findByU_C_T_S(userId, createDate, type, socialRelationType,
 			start, end);
@@ -2103,7 +2137,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -2115,9 +2149,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries
 	*/
-	public static List<MicroblogsEntry> findByU_C_T_S(long userId,
-		java.util.Date createDate, int type, int socialRelationType, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findByU_C_T_S(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByU_C_T_S(userId, createDate, type, socialRelationType,
 			start, end, orderByComparator);
@@ -2134,9 +2169,10 @@ public class MicroblogsEntryUtil {
 	* @return the first matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByU_C_T_S_First(long userId,
-		java.util.Date createDate, int type, int socialRelationType,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByU_C_T_S_First(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByU_C_T_S_First(userId, createDate, type,
@@ -2153,9 +2189,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByU_C_T_S_First(long userId,
-		java.util.Date createDate, int type, int socialRelationType,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByU_C_T_S_First(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_T_S_First(userId, createDate, type,
 			socialRelationType, orderByComparator);
@@ -2172,9 +2209,10 @@ public class MicroblogsEntryUtil {
 	* @return the last matching microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry findByU_C_T_S_Last(long userId,
-		java.util.Date createDate, int type, int socialRelationType,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByU_C_T_S_Last(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByU_C_T_S_Last(userId, createDate, type,
@@ -2191,9 +2229,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
-	public static MicroblogsEntry fetchByU_C_T_S_Last(long userId,
-		java.util.Date createDate, int type, int socialRelationType,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByU_C_T_S_Last(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_T_S_Last(userId, createDate, type,
 			socialRelationType, orderByComparator);
@@ -2211,10 +2250,10 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] findByU_C_T_S_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] findByU_C_T_S_PrevAndNext(
 		long microblogsEntryId, long userId, java.util.Date createDate,
 		int type, int socialRelationType,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByU_C_T_S_PrevAndNext(microblogsEntryId, userId,
@@ -2230,8 +2269,8 @@ public class MicroblogsEntryUtil {
 	* @param socialRelationType the social relation type
 	* @return the matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByU_C_T_S(long userId,
-		java.util.Date createDate, int type, int socialRelationType) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByU_C_T_S(
+		long userId, java.util.Date createDate, int type, int socialRelationType) {
 		return getPersistence()
 				   .filterFindByU_C_T_S(userId, createDate, type,
 			socialRelationType);
@@ -2241,7 +2280,7 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries that the user has permission to view where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -2252,9 +2291,9 @@ public class MicroblogsEntryUtil {
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByU_C_T_S(long userId,
-		java.util.Date createDate, int type, int socialRelationType, int start,
-		int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByU_C_T_S(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType, int start, int end) {
 		return getPersistence()
 				   .filterFindByU_C_T_S(userId, createDate, type,
 			socialRelationType, start, end);
@@ -2264,7 +2303,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries that the user has permissions to view where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -2276,9 +2315,10 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching microblogs entries that the user has permission to view
 	*/
-	public static List<MicroblogsEntry> filterFindByU_C_T_S(long userId,
-		java.util.Date createDate, int type, int socialRelationType, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> filterFindByU_C_T_S(
+		long userId, java.util.Date createDate, int type,
+		int socialRelationType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByU_C_T_S(userId, createDate, type,
 			socialRelationType, start, end, orderByComparator);
@@ -2296,10 +2336,10 @@ public class MicroblogsEntryUtil {
 	* @return the previous, current, and next microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry[] filterFindByU_C_T_S_PrevAndNext(
+	public static com.liferay.microblogs.model.MicroblogsEntry[] filterFindByU_C_T_S_PrevAndNext(
 		long microblogsEntryId, long userId, java.util.Date createDate,
 		int type, int socialRelationType,
-		OrderByComparator<MicroblogsEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByU_C_T_S_PrevAndNext(microblogsEntryId, userId,
@@ -2356,7 +2396,8 @@ public class MicroblogsEntryUtil {
 	*
 	* @param microblogsEntry the microblogs entry
 	*/
-	public static void cacheResult(MicroblogsEntry microblogsEntry) {
+	public static void cacheResult(
+		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
 		getPersistence().cacheResult(microblogsEntry);
 	}
 
@@ -2365,7 +2406,8 @@ public class MicroblogsEntryUtil {
 	*
 	* @param microblogsEntries the microblogs entries
 	*/
-	public static void cacheResult(List<MicroblogsEntry> microblogsEntries) {
+	public static void cacheResult(
+		java.util.List<com.liferay.microblogs.model.MicroblogsEntry> microblogsEntries) {
 		getPersistence().cacheResult(microblogsEntries);
 	}
 
@@ -2375,7 +2417,8 @@ public class MicroblogsEntryUtil {
 	* @param microblogsEntryId the primary key for the new microblogs entry
 	* @return the new microblogs entry
 	*/
-	public static MicroblogsEntry create(long microblogsEntryId) {
+	public static com.liferay.microblogs.model.MicroblogsEntry create(
+		long microblogsEntryId) {
 		return getPersistence().create(microblogsEntryId);
 	}
 
@@ -2386,12 +2429,14 @@ public class MicroblogsEntryUtil {
 	* @return the microblogs entry that was removed
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry remove(long microblogsEntryId)
+	public static com.liferay.microblogs.model.MicroblogsEntry remove(
+		long microblogsEntryId)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence().remove(microblogsEntryId);
 	}
 
-	public static MicroblogsEntry updateImpl(MicroblogsEntry microblogsEntry) {
+	public static com.liferay.microblogs.model.MicroblogsEntry updateImpl(
+		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
 		return getPersistence().updateImpl(microblogsEntry);
 	}
 
@@ -2402,7 +2447,8 @@ public class MicroblogsEntryUtil {
 	* @return the microblogs entry
 	* @throws com.liferay.microblogs.NoSuchEntryException if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry findByPrimaryKey(long microblogsEntryId)
+	public static com.liferay.microblogs.model.MicroblogsEntry findByPrimaryKey(
+		long microblogsEntryId)
 		throws com.liferay.microblogs.exception.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(microblogsEntryId);
 	}
@@ -2413,11 +2459,12 @@ public class MicroblogsEntryUtil {
 	* @param microblogsEntryId the primary key of the microblogs entry
 	* @return the microblogs entry, or <code>null</code> if a microblogs entry with the primary key could not be found
 	*/
-	public static MicroblogsEntry fetchByPrimaryKey(long microblogsEntryId) {
+	public static com.liferay.microblogs.model.MicroblogsEntry fetchByPrimaryKey(
+		long microblogsEntryId) {
 		return getPersistence().fetchByPrimaryKey(microblogsEntryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, MicroblogsEntry> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.microblogs.model.MicroblogsEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -2427,7 +2474,7 @@ public class MicroblogsEntryUtil {
 	*
 	* @return the microblogs entries
 	*/
-	public static List<MicroblogsEntry> findAll() {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -2435,14 +2482,15 @@ public class MicroblogsEntryUtil {
 	* Returns a range of all the microblogs entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of microblogs entries
 	*/
-	public static List<MicroblogsEntry> findAll(int start, int end) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -2450,7 +2498,7 @@ public class MicroblogsEntryUtil {
 	* Returns an ordered range of all the microblogs entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of microblogs entries
@@ -2458,8 +2506,9 @@ public class MicroblogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of microblogs entries
 	*/
-	public static List<MicroblogsEntry> findAll(int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.microblogs.model.MicroblogsEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

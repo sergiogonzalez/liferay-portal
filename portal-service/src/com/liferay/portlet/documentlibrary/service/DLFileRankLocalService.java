@@ -93,13 +93,15 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
-		long fileRankId) throws PortalException;
+		long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteFileRank(
 		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
 
-	public void deleteFileRank(long fileRankId) throws PortalException;
+	public void deleteFileRank(long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteFileRanksByFileEntryId(long fileEntryId);
 
@@ -111,12 +113,12 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void disableFileRanks(long fileEntryId);
 
 	public void disableFileRanksByFolderId(long folderId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -186,7 +188,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public void enableFileRanks(long fileEntryId);
 
 	public void enableFileRanksByFolderId(long folderId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchDLFileRank(
@@ -211,7 +213,8 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileRank getDLFileRank(
-		long fileRankId) throws PortalException;
+		long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the document library file ranks.
@@ -243,7 +246,8 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

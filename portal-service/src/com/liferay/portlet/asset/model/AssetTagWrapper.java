@@ -167,7 +167,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @return the create date of this asset tag
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _assetTag.getCreateDate();
 	}
 
@@ -192,7 +192,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @return the modified date of this asset tag
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _assetTag.getModifiedDate();
 	}
 
@@ -327,7 +327,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @param createDate the create date of this asset tag
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_assetTag.setCreateDate(createDate);
 	}
 
@@ -365,7 +365,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	* @param modifiedDate the modified date of this asset tag
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_assetTag.setModifiedDate(modifiedDate);
 	}
 

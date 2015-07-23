@@ -180,7 +180,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	* @return the create date of this user group
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _userGroup.getCreateDate();
 	}
 
@@ -217,7 +217,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	* @return the modified date of this user group
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _userGroup.getModifiedDate();
 	}
 
@@ -406,7 +406,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	* @param createDate the create date of this user group
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_userGroup.setCreateDate(createDate);
 	}
 
@@ -443,7 +443,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	* @param modifiedDate the modified date of this user group
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_userGroup.setModifiedDate(modifiedDate);
 	}
 

@@ -28,7 +28,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see CounterImpl
- * @see Counter
+ * @see com.liferay.counter.model.Counter
  * @generated
  */
 @ProviderType

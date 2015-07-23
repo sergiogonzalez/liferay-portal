@@ -28,7 +28,7 @@ import com.liferay.portal.service.TicketLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see TicketImpl
- * @see Ticket
+ * @see com.liferay.portal.model.Ticket
  * @generated
  */
 @ProviderType

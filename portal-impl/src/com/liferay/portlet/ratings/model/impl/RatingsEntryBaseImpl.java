@@ -28,7 +28,7 @@ import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see RatingsEntryImpl
- * @see RatingsEntry
+ * @see com.liferay.portlet.ratings.model.RatingsEntry
  * @generated
  */
 @ProviderType

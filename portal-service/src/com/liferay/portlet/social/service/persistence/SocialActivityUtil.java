@@ -115,7 +115,8 @@ public class SocialActivityUtil {
 	* @param groupId the group ID
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByGroupId(long groupId) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByGroupId(
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -123,7 +124,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -131,8 +132,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByGroupId(long groupId, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByGroupId(
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -140,7 +141,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -149,8 +150,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByGroupId(long groupId, int start,
-		int end, OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -161,10 +163,11 @@ public class SocialActivityUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByGroupId_First(long groupId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -176,8 +179,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByGroupId_First(long groupId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -187,10 +191,11 @@ public class SocialActivityUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByGroupId_Last(long groupId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -202,8 +207,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByGroupId_Last(long groupId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -214,10 +220,11 @@ public class SocialActivityUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByGroupId_PrevAndNext(long activityId,
-		long groupId, OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity[] findByGroupId_PrevAndNext(
+		long activityId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityId, groupId,
@@ -249,7 +256,8 @@ public class SocialActivityUtil {
 	* @param companyId the company ID
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByCompanyId(long companyId) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByCompanyId(
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -257,7 +265,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -265,8 +273,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByCompanyId(long companyId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByCompanyId(
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -274,7 +282,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -283,8 +291,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -295,10 +304,11 @@ public class SocialActivityUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByCompanyId_First(long companyId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -311,8 +321,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByCompanyId_First(long companyId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -323,10 +334,11 @@ public class SocialActivityUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByCompanyId_Last(long companyId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -339,8 +351,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByCompanyId_Last(long companyId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -352,11 +365,11 @@ public class SocialActivityUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByCompanyId_PrevAndNext(
+	public static com.liferay.portlet.social.model.SocialActivity[] findByCompanyId_PrevAndNext(
 		long activityId, long companyId,
-		OrderByComparator<SocialActivity> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(activityId, companyId,
@@ -388,7 +401,8 @@ public class SocialActivityUtil {
 	* @param userId the user ID
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByUserId(long userId) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByUserId(
+		long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -396,7 +410,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -404,8 +418,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByUserId(long userId, int start,
-		int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByUserId(
+		long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -413,7 +427,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -422,8 +436,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByUserId(long userId, int start,
-		int end, OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -434,10 +449,11 @@ public class SocialActivityUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByUserId_First(long userId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -449,8 +465,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByUserId_First(long userId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -460,10 +477,11 @@ public class SocialActivityUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByUserId_Last(long userId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -475,8 +493,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByUserId_Last(long userId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -487,10 +506,11 @@ public class SocialActivityUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByUserId_PrevAndNext(long activityId,
-		long userId, OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity[] findByUserId_PrevAndNext(
+		long activityId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(activityId, userId,
@@ -522,7 +542,8 @@ public class SocialActivityUtil {
 	* @param activitySetId the activity set ID
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByActivitySetId(long activitySetId) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByActivitySetId(
+		long activitySetId) {
 		return getPersistence().findByActivitySetId(activitySetId);
 	}
 
@@ -530,7 +551,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where activitySetId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param activitySetId the activity set ID
@@ -538,8 +559,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByActivitySetId(long activitySetId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByActivitySetId(
+		long activitySetId, int start, int end) {
 		return getPersistence().findByActivitySetId(activitySetId, start, end);
 	}
 
@@ -547,7 +568,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where activitySetId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param activitySetId the activity set ID
@@ -556,8 +577,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByActivitySetId(long activitySetId,
-		int start, int end, OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByActivitySetId(
+		long activitySetId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByActivitySetId(activitySetId, start, end,
 			orderByComparator);
@@ -569,10 +591,11 @@ public class SocialActivityUtil {
 	* @param activitySetId the activity set ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByActivitySetId_First(long activitySetId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByActivitySetId_First(
+		long activitySetId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByActivitySetId_First(activitySetId, orderByComparator);
@@ -585,8 +608,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByActivitySetId_First(
-		long activitySetId, OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByActivitySetId_First(
+		long activitySetId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByActivitySetId_First(activitySetId, orderByComparator);
 	}
@@ -597,10 +621,11 @@ public class SocialActivityUtil {
 	* @param activitySetId the activity set ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByActivitySetId_Last(long activitySetId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByActivitySetId_Last(
+		long activitySetId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByActivitySetId_Last(activitySetId, orderByComparator);
@@ -613,8 +638,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByActivitySetId_Last(long activitySetId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByActivitySetId_Last(
+		long activitySetId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByActivitySetId_Last(activitySetId, orderByComparator);
 	}
@@ -626,11 +652,11 @@ public class SocialActivityUtil {
 	* @param activitySetId the activity set ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByActivitySetId_PrevAndNext(
+	public static com.liferay.portlet.social.model.SocialActivity[] findByActivitySetId_PrevAndNext(
 		long activityId, long activitySetId,
-		OrderByComparator<SocialActivity> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByActivitySetId_PrevAndNext(activityId, activitySetId,
@@ -657,13 +683,14 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	* Returns the social activity where mirrorActivityId = &#63; or throws a {@link NoSuchActivityException} if it could not be found.
+	* Returns the social activity where mirrorActivityId = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityException} if it could not be found.
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @return the matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByMirrorActivityId(long mirrorActivityId)
+	public static com.liferay.portlet.social.model.SocialActivity findByMirrorActivityId(
+		long mirrorActivityId)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().findByMirrorActivityId(mirrorActivityId);
 	}
@@ -674,7 +701,8 @@ public class SocialActivityUtil {
 	* @param mirrorActivityId the mirror activity ID
 	* @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByMirrorActivityId(long mirrorActivityId) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByMirrorActivityId(
+		long mirrorActivityId) {
 		return getPersistence().fetchByMirrorActivityId(mirrorActivityId);
 	}
 
@@ -685,7 +713,7 @@ public class SocialActivityUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByMirrorActivityId(
+	public static com.liferay.portlet.social.model.SocialActivity fetchByMirrorActivityId(
 		long mirrorActivityId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByMirrorActivityId(mirrorActivityId, retrieveFromCache);
@@ -697,7 +725,8 @@ public class SocialActivityUtil {
 	* @param mirrorActivityId the mirror activity ID
 	* @return the social activity that was removed
 	*/
-	public static SocialActivity removeByMirrorActivityId(long mirrorActivityId)
+	public static com.liferay.portlet.social.model.SocialActivity removeByMirrorActivityId(
+		long mirrorActivityId)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().removeByMirrorActivityId(mirrorActivityId);
 	}
@@ -718,7 +747,8 @@ public class SocialActivityUtil {
 	* @param classNameId the class name ID
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByClassNameId(long classNameId) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByClassNameId(
+		long classNameId) {
 		return getPersistence().findByClassNameId(classNameId);
 	}
 
@@ -726,7 +756,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -734,8 +764,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByClassNameId(long classNameId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByClassNameId(
+		long classNameId, int start, int end) {
 		return getPersistence().findByClassNameId(classNameId, start, end);
 	}
 
@@ -743,7 +773,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -752,8 +782,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByClassNameId(long classNameId,
-		int start, int end, OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByClassNameId(
+		long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByClassNameId(classNameId, start, end, orderByComparator);
 	}
@@ -764,10 +795,11 @@ public class SocialActivityUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByClassNameId_First(long classNameId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByClassNameId_First(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
@@ -780,8 +812,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByClassNameId_First(long classNameId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByClassNameId_First(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -792,10 +825,11 @@ public class SocialActivityUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByClassNameId_Last(long classNameId,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByClassNameId_Last(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
@@ -808,8 +842,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByClassNameId_Last(long classNameId,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByClassNameId_Last(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -821,11 +856,11 @@ public class SocialActivityUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByClassNameId_PrevAndNext(
+	public static com.liferay.portlet.social.model.SocialActivity[] findByClassNameId_PrevAndNext(
 		long activityId, long classNameId,
-		OrderByComparator<SocialActivity> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(activityId, classNameId,
@@ -857,7 +892,8 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByReceiverUserId(long receiverUserId) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByReceiverUserId(
+		long receiverUserId) {
 		return getPersistence().findByReceiverUserId(receiverUserId);
 	}
 
@@ -865,7 +901,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where receiverUserId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param receiverUserId the receiver user ID
@@ -873,7 +909,7 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByReceiverUserId(
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByReceiverUserId(
 		long receiverUserId, int start, int end) {
 		return getPersistence().findByReceiverUserId(receiverUserId, start, end);
 	}
@@ -882,7 +918,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where receiverUserId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param receiverUserId the receiver user ID
@@ -891,9 +927,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByReceiverUserId(
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		OrderByComparator<SocialActivity> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByReceiverUserId(receiverUserId, start, end,
 			orderByComparator);
@@ -905,10 +941,11 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByReceiverUserId_First(
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByReceiverUserId_First(
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByReceiverUserId_First(receiverUserId, orderByComparator);
@@ -921,8 +958,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByReceiverUserId_First(
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByReceiverUserId_First(
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByReceiverUserId_First(receiverUserId,
 			orderByComparator);
@@ -934,10 +972,11 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByReceiverUserId_Last(
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByReceiverUserId_Last(
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByReceiverUserId_Last(receiverUserId, orderByComparator);
@@ -950,8 +989,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByReceiverUserId_Last(
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByReceiverUserId_Last(
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByReceiverUserId_Last(receiverUserId, orderByComparator);
 	}
@@ -963,11 +1003,11 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByReceiverUserId_PrevAndNext(
+	public static com.liferay.portlet.social.model.SocialActivity[] findByReceiverUserId_PrevAndNext(
 		long activityId, long receiverUserId,
-		OrderByComparator<SocialActivity> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByReceiverUserId_PrevAndNext(activityId,
@@ -1000,7 +1040,8 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByC_C(long classNameId, long classPK) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByC_C(
+		long classNameId, long classPK) {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -1008,7 +1049,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -1017,8 +1058,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByC_C(long classNameId,
-		long classPK, int start, int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByC_C(
+		long classNameId, long classPK, int start, int end) {
 		return getPersistence().findByC_C(classNameId, classPK, start, end);
 	}
 
@@ -1026,7 +1067,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -1036,9 +1077,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByC_C(long classNameId,
-		long classPK, int start, int end,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -1051,10 +1092,11 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByC_C_First(long classNameId,
-		long classPK, OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByC_C_First(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -1068,8 +1110,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByC_C_First(long classNameId,
-		long classPK, OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByC_C_First(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1081,10 +1124,11 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByC_C_Last(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -1098,8 +1142,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByC_C_Last(long classNameId,
-		long classPK, OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByC_C_Last(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1112,11 +1157,11 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByC_C_PrevAndNext(long activityId,
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity[] findByC_C_PrevAndNext(
+		long activityId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(activityId, classNameId, classPK,
@@ -1152,8 +1197,8 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByM_C_C(long mirrorActivityId,
-		long classNameId, long classPK) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByM_C_C(
+		long mirrorActivityId, long classNameId, long classPK) {
 		return getPersistence()
 				   .findByM_C_C(mirrorActivityId, classNameId, classPK);
 	}
@@ -1162,7 +1207,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param mirrorActivityId the mirror activity ID
@@ -1172,8 +1217,9 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByM_C_C(long mirrorActivityId,
-		long classNameId, long classPK, int start, int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByM_C_C(
+		long mirrorActivityId, long classNameId, long classPK, int start,
+		int end) {
 		return getPersistence()
 				   .findByM_C_C(mirrorActivityId, classNameId, classPK, start,
 			end);
@@ -1183,7 +1229,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param mirrorActivityId the mirror activity ID
@@ -1194,9 +1240,10 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByM_C_C(long mirrorActivityId,
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByM_C_C(
+		long mirrorActivityId, long classNameId, long classPK, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByM_C_C(mirrorActivityId, classNameId, classPK, start,
 			end, orderByComparator);
@@ -1210,11 +1257,11 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByM_C_C_First(long mirrorActivityId,
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByM_C_C_First(
+		long mirrorActivityId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByM_C_C_First(mirrorActivityId, classNameId, classPK,
@@ -1230,9 +1277,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByM_C_C_First(long mirrorActivityId,
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByM_C_C_First(
+		long mirrorActivityId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByM_C_C_First(mirrorActivityId, classNameId, classPK,
 			orderByComparator);
@@ -1246,11 +1293,11 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByM_C_C_Last(long mirrorActivityId,
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByM_C_C_Last(
+		long mirrorActivityId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByM_C_C_Last(mirrorActivityId, classNameId, classPK,
@@ -1266,9 +1313,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByM_C_C_Last(long mirrorActivityId,
-		long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByM_C_C_Last(
+		long mirrorActivityId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByM_C_C_Last(mirrorActivityId, classNameId, classPK,
 			orderByComparator);
@@ -1283,11 +1330,11 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByM_C_C_PrevAndNext(long activityId,
-		long mirrorActivityId, long classNameId, long classPK,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity[] findByM_C_C_PrevAndNext(
+		long activityId, long mirrorActivityId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByM_C_C_PrevAndNext(activityId, mirrorActivityId,
@@ -1328,8 +1375,8 @@ public class SocialActivityUtil {
 	* @param type the type
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByC_C_T(long classNameId,
-		long classPK, int type) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByC_C_T(
+		long classNameId, long classPK, int type) {
 		return getPersistence().findByC_C_T(classNameId, classPK, type);
 	}
 
@@ -1337,7 +1384,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -1347,8 +1394,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByC_C_T(long classNameId,
-		long classPK, int type, int start, int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByC_C_T(
+		long classNameId, long classPK, int type, int start, int end) {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end);
 	}
@@ -1357,7 +1404,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -1368,9 +1415,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByC_C_T(long classNameId,
-		long classPK, int type, int start, int end,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByC_C_T(
+		long classNameId, long classPK, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end,
 			orderByComparator);
@@ -1384,11 +1431,11 @@ public class SocialActivityUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByC_C_T_First(long classNameId,
-		long classPK, int type,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByC_C_T_First(
+		long classNameId, long classPK, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_T_First(classNameId, classPK, type,
@@ -1404,9 +1451,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByC_C_T_First(long classNameId,
-		long classPK, int type,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByC_C_T_First(
+		long classNameId, long classPK, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_First(classNameId, classPK, type,
 			orderByComparator);
@@ -1420,11 +1467,11 @@ public class SocialActivityUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByC_C_T_Last(long classNameId,
-		long classPK, int type,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByC_C_T_Last(
+		long classNameId, long classPK, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_T_Last(classNameId, classPK, type,
@@ -1440,9 +1487,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByC_C_T_Last(long classNameId,
-		long classPK, int type,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByC_C_T_Last(
+		long classNameId, long classPK, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -1457,11 +1504,11 @@ public class SocialActivityUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByC_C_T_PrevAndNext(long activityId,
-		long classNameId, long classPK, int type,
-		OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity[] findByC_C_T_PrevAndNext(
+		long activityId, long classNameId, long classPK, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_T_PrevAndNext(activityId, classNameId, classPK,
@@ -1502,8 +1549,8 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @return the matching social activities
 	*/
-	public static List<SocialActivity> findByG_U_C_C_T_R(long groupId,
-		long userId, long classNameId, long classPK, int type,
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByG_U_C_C_T_R(
+		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId) {
 		return getPersistence()
 				   .findByG_U_C_C_T_R(groupId, userId, classNameId, classPK,
@@ -1514,7 +1561,7 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1527,8 +1574,8 @@ public class SocialActivityUtil {
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
 	*/
-	public static List<SocialActivity> findByG_U_C_C_T_R(long groupId,
-		long userId, long classNameId, long classPK, int type,
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByG_U_C_C_T_R(
+		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId, int start, int end) {
 		return getPersistence()
 				   .findByG_U_C_C_T_R(groupId, userId, classNameId, classPK,
@@ -1539,7 +1586,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1553,10 +1600,10 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activities
 	*/
-	public static List<SocialActivity> findByG_U_C_C_T_R(long groupId,
-		long userId, long classNameId, long classPK, int type,
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findByG_U_C_C_T_R(
+		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId, int start, int end,
-		OrderByComparator<SocialActivity> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_C_C_T_R(groupId, userId, classNameId, classPK,
 			type, receiverUserId, start, end, orderByComparator);
@@ -1573,11 +1620,12 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByG_U_C_C_T_R_First(long groupId,
-		long userId, long classNameId, long classPK, int type,
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByG_U_C_C_T_R_First(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_C_C_T_R_First(groupId, userId, classNameId,
@@ -1596,9 +1644,10 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByG_U_C_C_T_R_First(long groupId,
-		long userId, long classNameId, long classPK, int type,
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByG_U_C_C_T_R_First(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_C_C_T_R_First(groupId, userId, classNameId,
 			classPK, type, receiverUserId, orderByComparator);
@@ -1615,11 +1664,12 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByG_U_C_C_T_R_Last(long groupId,
-		long userId, long classNameId, long classPK, int type,
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
+	public static com.liferay.portlet.social.model.SocialActivity findByG_U_C_C_T_R_Last(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_C_C_T_R_Last(groupId, userId, classNameId,
@@ -1638,9 +1688,10 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByG_U_C_C_T_R_Last(long groupId,
-		long userId, long classNameId, long classPK, int type,
-		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByG_U_C_C_T_R_Last(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_C_C_T_R_Last(groupId, userId, classNameId,
 			classPK, type, receiverUserId, orderByComparator);
@@ -1658,12 +1709,12 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity[] findByG_U_C_C_T_R_PrevAndNext(
+	public static com.liferay.portlet.social.model.SocialActivity[] findByG_U_C_C_T_R_PrevAndNext(
 		long activityId, long groupId, long userId, long classNameId,
 		long classPK, int type, long receiverUserId,
-		OrderByComparator<SocialActivity> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_C_C_T_R_PrevAndNext(activityId, groupId, userId,
@@ -1706,7 +1757,7 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	* Returns the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or throws a {@link NoSuchActivityException} if it could not be found.
+	* Returns the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
@@ -1716,11 +1767,11 @@ public class SocialActivityUtil {
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the matching social activity
-	* @throws NoSuchActivityException if a matching social activity could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
 	*/
-	public static SocialActivity findByG_U_CD_C_C_T_R(long groupId,
-		long userId, long createDate, long classNameId, long classPK, int type,
-		long receiverUserId)
+	public static com.liferay.portlet.social.model.SocialActivity findByG_U_CD_C_C_T_R(
+		long groupId, long userId, long createDate, long classNameId,
+		long classPK, int type, long receiverUserId)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_CD_C_C_T_R(groupId, userId, createDate,
@@ -1739,9 +1790,9 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByG_U_CD_C_C_T_R(long groupId,
-		long userId, long createDate, long classNameId, long classPK, int type,
-		long receiverUserId) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByG_U_CD_C_C_T_R(
+		long groupId, long userId, long createDate, long classNameId,
+		long classPK, int type, long receiverUserId) {
 		return getPersistence()
 				   .fetchByG_U_CD_C_C_T_R(groupId, userId, createDate,
 			classNameId, classPK, type, receiverUserId);
@@ -1760,9 +1811,9 @@ public class SocialActivityUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
-	public static SocialActivity fetchByG_U_CD_C_C_T_R(long groupId,
-		long userId, long createDate, long classNameId, long classPK, int type,
-		long receiverUserId, boolean retrieveFromCache) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByG_U_CD_C_C_T_R(
+		long groupId, long userId, long createDate, long classNameId,
+		long classPK, int type, long receiverUserId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_U_CD_C_C_T_R(groupId, userId, createDate,
 			classNameId, classPK, type, receiverUserId, retrieveFromCache);
@@ -1780,9 +1831,9 @@ public class SocialActivityUtil {
 	* @param receiverUserId the receiver user ID
 	* @return the social activity that was removed
 	*/
-	public static SocialActivity removeByG_U_CD_C_C_T_R(long groupId,
-		long userId, long createDate, long classNameId, long classPK, int type,
-		long receiverUserId)
+	public static com.liferay.portlet.social.model.SocialActivity removeByG_U_CD_C_C_T_R(
+		long groupId, long userId, long createDate, long classNameId,
+		long classPK, int type, long receiverUserId)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence()
 				   .removeByG_U_CD_C_C_T_R(groupId, userId, createDate,
@@ -1814,7 +1865,8 @@ public class SocialActivityUtil {
 	*
 	* @param socialActivity the social activity
 	*/
-	public static void cacheResult(SocialActivity socialActivity) {
+	public static void cacheResult(
+		com.liferay.portlet.social.model.SocialActivity socialActivity) {
 		getPersistence().cacheResult(socialActivity);
 	}
 
@@ -1823,7 +1875,8 @@ public class SocialActivityUtil {
 	*
 	* @param socialActivities the social activities
 	*/
-	public static void cacheResult(List<SocialActivity> socialActivities) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.social.model.SocialActivity> socialActivities) {
 		getPersistence().cacheResult(socialActivities);
 	}
 
@@ -1833,7 +1886,8 @@ public class SocialActivityUtil {
 	* @param activityId the primary key for the new social activity
 	* @return the new social activity
 	*/
-	public static SocialActivity create(long activityId) {
+	public static com.liferay.portlet.social.model.SocialActivity create(
+		long activityId) {
 		return getPersistence().create(activityId);
 	}
 
@@ -1842,25 +1896,28 @@ public class SocialActivityUtil {
 	*
 	* @param activityId the primary key of the social activity
 	* @return the social activity that was removed
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity remove(long activityId)
+	public static com.liferay.portlet.social.model.SocialActivity remove(
+		long activityId)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().remove(activityId);
 	}
 
-	public static SocialActivity updateImpl(SocialActivity socialActivity) {
+	public static com.liferay.portlet.social.model.SocialActivity updateImpl(
+		com.liferay.portlet.social.model.SocialActivity socialActivity) {
 		return getPersistence().updateImpl(socialActivity);
 	}
 
 	/**
-	* Returns the social activity with the primary key or throws a {@link NoSuchActivityException} if it could not be found.
+	* Returns the social activity with the primary key or throws a {@link com.liferay.portlet.social.NoSuchActivityException} if it could not be found.
 	*
 	* @param activityId the primary key of the social activity
 	* @return the social activity
-	* @throws NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity findByPrimaryKey(long activityId)
+	public static com.liferay.portlet.social.model.SocialActivity findByPrimaryKey(
+		long activityId)
 		throws com.liferay.portlet.social.NoSuchActivityException {
 		return getPersistence().findByPrimaryKey(activityId);
 	}
@@ -1871,11 +1928,12 @@ public class SocialActivityUtil {
 	* @param activityId the primary key of the social activity
 	* @return the social activity, or <code>null</code> if a social activity with the primary key could not be found
 	*/
-	public static SocialActivity fetchByPrimaryKey(long activityId) {
+	public static com.liferay.portlet.social.model.SocialActivity fetchByPrimaryKey(
+		long activityId) {
 		return getPersistence().fetchByPrimaryKey(activityId);
 	}
 
-	public static java.util.Map<java.io.Serializable, SocialActivity> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivity> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -1885,7 +1943,7 @@ public class SocialActivityUtil {
 	*
 	* @return the social activities
 	*/
-	public static List<SocialActivity> findAll() {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1893,14 +1951,15 @@ public class SocialActivityUtil {
 	* Returns a range of all the social activities.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of social activities
 	*/
-	public static List<SocialActivity> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1908,7 +1967,7 @@ public class SocialActivityUtil {
 	* Returns an ordered range of all the social activities.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of social activities
@@ -1916,8 +1975,9 @@ public class SocialActivityUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of social activities
 	*/
-	public static List<SocialActivity> findAll(int start, int end,
-		OrderByComparator<SocialActivity> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivity> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

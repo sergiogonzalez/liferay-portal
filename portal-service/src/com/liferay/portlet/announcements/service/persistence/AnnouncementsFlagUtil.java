@@ -115,7 +115,8 @@ public class AnnouncementsFlagUtil {
 	* @param entryId the entry ID
 	* @return the matching announcements flags
 	*/
-	public static List<AnnouncementsFlag> findByEntryId(long entryId) {
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
+		long entryId) {
 		return getPersistence().findByEntryId(entryId);
 	}
 
@@ -123,7 +124,7 @@ public class AnnouncementsFlagUtil {
 	* Returns a range of all the announcements flags where entryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId the entry ID
@@ -131,8 +132,8 @@ public class AnnouncementsFlagUtil {
 	* @param end the upper bound of the range of announcements flags (not inclusive)
 	* @return the range of matching announcements flags
 	*/
-	public static List<AnnouncementsFlag> findByEntryId(long entryId,
-		int start, int end) {
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
+		long entryId, int start, int end) {
 		return getPersistence().findByEntryId(entryId, start, end);
 	}
 
@@ -140,7 +141,7 @@ public class AnnouncementsFlagUtil {
 	* Returns an ordered range of all the announcements flags where entryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param entryId the entry ID
@@ -149,9 +150,9 @@ public class AnnouncementsFlagUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements flags
 	*/
-	public static List<AnnouncementsFlag> findByEntryId(long entryId,
-		int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
+		long entryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence()
 				   .findByEntryId(entryId, start, end, orderByComparator);
 	}
@@ -162,10 +163,11 @@ public class AnnouncementsFlagUtil {
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements flag
-	* @throws NoSuchFlagException if a matching announcements flag could not be found
+	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
 	*/
-	public static AnnouncementsFlag findByEntryId_First(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator)
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_First(
+		long entryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().findByEntryId_First(entryId, orderByComparator);
 	}
@@ -177,8 +179,9 @@ public class AnnouncementsFlagUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	*/
-	public static AnnouncementsFlag fetchByEntryId_First(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_First(
+		long entryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence().fetchByEntryId_First(entryId, orderByComparator);
 	}
 
@@ -188,10 +191,11 @@ public class AnnouncementsFlagUtil {
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements flag
-	* @throws NoSuchFlagException if a matching announcements flag could not be found
+	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
 	*/
-	public static AnnouncementsFlag findByEntryId_Last(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator)
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_Last(
+		long entryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().findByEntryId_Last(entryId, orderByComparator);
 	}
@@ -203,8 +207,9 @@ public class AnnouncementsFlagUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	*/
-	public static AnnouncementsFlag fetchByEntryId_Last(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_Last(
+		long entryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence().fetchByEntryId_Last(entryId, orderByComparator);
 	}
 
@@ -215,10 +220,11 @@ public class AnnouncementsFlagUtil {
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements flag
-	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
+	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
-	public static AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
-		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator)
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag[] findByEntryId_PrevAndNext(
+		long flagId, long entryId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence()
 				   .findByEntryId_PrevAndNext(flagId, entryId, orderByComparator);
@@ -244,16 +250,17 @@ public class AnnouncementsFlagUtil {
 	}
 
 	/**
-	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link NoSuchFlagException} if it could not be found.
+	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link com.liferay.portlet.announcements.NoSuchFlagException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param entryId the entry ID
 	* @param value the value
 	* @return the matching announcements flag
-	* @throws NoSuchFlagException if a matching announcements flag could not be found
+	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
 	*/
-	public static AnnouncementsFlag findByU_E_V(long userId, long entryId,
-		int value) throws com.liferay.portlet.announcements.NoSuchFlagException {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag findByU_E_V(
+		long userId, long entryId, int value)
+		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().findByU_E_V(userId, entryId, value);
 	}
 
@@ -265,8 +272,8 @@ public class AnnouncementsFlagUtil {
 	* @param value the value
 	* @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	*/
-	public static AnnouncementsFlag fetchByU_E_V(long userId, long entryId,
-		int value) {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByU_E_V(
+		long userId, long entryId, int value) {
 		return getPersistence().fetchByU_E_V(userId, entryId, value);
 	}
 
@@ -279,8 +286,8 @@ public class AnnouncementsFlagUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	*/
-	public static AnnouncementsFlag fetchByU_E_V(long userId, long entryId,
-		int value, boolean retrieveFromCache) {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByU_E_V(
+		long userId, long entryId, int value, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_E_V(userId, entryId, value, retrieveFromCache);
 	}
@@ -293,8 +300,9 @@ public class AnnouncementsFlagUtil {
 	* @param value the value
 	* @return the announcements flag that was removed
 	*/
-	public static AnnouncementsFlag removeByU_E_V(long userId, long entryId,
-		int value) throws com.liferay.portlet.announcements.NoSuchFlagException {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag removeByU_E_V(
+		long userId, long entryId, int value)
+		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().removeByU_E_V(userId, entryId, value);
 	}
 
@@ -315,7 +323,8 @@ public class AnnouncementsFlagUtil {
 	*
 	* @param announcementsFlag the announcements flag
 	*/
-	public static void cacheResult(AnnouncementsFlag announcementsFlag) {
+	public static void cacheResult(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
 		getPersistence().cacheResult(announcementsFlag);
 	}
 
@@ -324,7 +333,8 @@ public class AnnouncementsFlagUtil {
 	*
 	* @param announcementsFlags the announcements flags
 	*/
-	public static void cacheResult(List<AnnouncementsFlag> announcementsFlags) {
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> announcementsFlags) {
 		getPersistence().cacheResult(announcementsFlags);
 	}
 
@@ -334,7 +344,8 @@ public class AnnouncementsFlagUtil {
 	* @param flagId the primary key for the new announcements flag
 	* @return the new announcements flag
 	*/
-	public static AnnouncementsFlag create(long flagId) {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag create(
+		long flagId) {
 		return getPersistence().create(flagId);
 	}
 
@@ -343,26 +354,28 @@ public class AnnouncementsFlagUtil {
 	*
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag that was removed
-	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
+	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
-	public static AnnouncementsFlag remove(long flagId)
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag remove(
+		long flagId)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().remove(flagId);
 	}
 
-	public static AnnouncementsFlag updateImpl(
-		AnnouncementsFlag announcementsFlag) {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag updateImpl(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
 		return getPersistence().updateImpl(announcementsFlag);
 	}
 
 	/**
-	* Returns the announcements flag with the primary key or throws a {@link NoSuchFlagException} if it could not be found.
+	* Returns the announcements flag with the primary key or throws a {@link com.liferay.portlet.announcements.NoSuchFlagException} if it could not be found.
 	*
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag
-	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
+	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
-	public static AnnouncementsFlag findByPrimaryKey(long flagId)
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag findByPrimaryKey(
+		long flagId)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().findByPrimaryKey(flagId);
 	}
@@ -373,11 +386,12 @@ public class AnnouncementsFlagUtil {
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag, or <code>null</code> if a announcements flag with the primary key could not be found
 	*/
-	public static AnnouncementsFlag fetchByPrimaryKey(long flagId) {
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByPrimaryKey(
+		long flagId) {
 		return getPersistence().fetchByPrimaryKey(flagId);
 	}
 
-	public static java.util.Map<java.io.Serializable, AnnouncementsFlag> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.announcements.model.AnnouncementsFlag> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -387,7 +401,7 @@ public class AnnouncementsFlagUtil {
 	*
 	* @return the announcements flags
 	*/
-	public static List<AnnouncementsFlag> findAll() {
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -395,14 +409,15 @@ public class AnnouncementsFlagUtil {
 	* Returns a range of all the announcements flags.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of announcements flags
 	* @param end the upper bound of the range of announcements flags (not inclusive)
 	* @return the range of announcements flags
 	*/
-	public static List<AnnouncementsFlag> findAll(int start, int end) {
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll(
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -410,7 +425,7 @@ public class AnnouncementsFlagUtil {
 	* Returns an ordered range of all the announcements flags.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of announcements flags
@@ -418,8 +433,9 @@ public class AnnouncementsFlagUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of announcements flags
 	*/
-	public static List<AnnouncementsFlag> findAll(int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
