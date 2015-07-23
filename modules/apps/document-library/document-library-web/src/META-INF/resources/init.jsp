@@ -189,6 +189,8 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%@ page import="com.liferay.portal.model.WorkflowDefinitionLink" %>
 <%@ page import="com.liferay.portal.NoSuchWorkflowDefinitionLinkException" %>
 
+<%@ page import="com.liferay.taglib.search.ResultRow" %>
+
 <%@ page import="java.util.Collections" %>
 <%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %>
 <%@ page import="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException" %>
