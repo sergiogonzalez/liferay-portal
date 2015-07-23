@@ -916,7 +916,7 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = DDLRecordLocalService.class)
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class)
 	protected DDLRecordLocalService ddlRecordLocalService;
 	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordService.class)
 	protected com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService;

@@ -969,7 +969,7 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	protected CalendarBookingFinder calendarBookingFinder;
 	@BeanReference(type = com.liferay.calendar.service.CalendarImporterLocalService.class)
 	protected com.liferay.calendar.service.CalendarImporterLocalService calendarImporterLocalService;
-	@BeanReference(type = CalendarNotificationTemplateLocalService.class)
+	@BeanReference(type = com.liferay.calendar.service.CalendarNotificationTemplateLocalService.class)
 	protected CalendarNotificationTemplateLocalService calendarNotificationTemplateLocalService;
 	@BeanReference(type = com.liferay.calendar.service.CalendarNotificationTemplateService.class)
 	protected com.liferay.calendar.service.CalendarNotificationTemplateService calendarNotificationTemplateService;

@@ -4959,8 +4959,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			try {
 				announcementsEntry.setContent(SanitizerUtil.sanitize(
 						companyId, groupId, userId,
-						AnnouncementsEntry.class.getName(), entryId,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+						com.liferay.portlet.announcements.model.AnnouncementsEntry.class.getName(),
+						entryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
 						announcementsEntry.getContent(), null));
 			}
 			catch (SanitizerException se) {

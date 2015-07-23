@@ -576,7 +576,7 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLFileEntryMetadataLocalService.class)
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService.class)
 	protected DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
 	@BeanReference(type = DLFileEntryMetadataPersistence.class)
 	protected DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence;

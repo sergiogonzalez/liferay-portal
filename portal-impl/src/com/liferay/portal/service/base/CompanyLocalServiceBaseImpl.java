@@ -1387,7 +1387,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CompanyLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.CompanyLocalService.class)
 	protected CompanyLocalService companyLocalService;
 	@BeanReference(type = com.liferay.portal.service.CompanyService.class)
 	protected com.liferay.portal.service.CompanyService companyService;

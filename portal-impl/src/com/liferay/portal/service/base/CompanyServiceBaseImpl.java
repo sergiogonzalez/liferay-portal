@@ -1143,7 +1143,7 @@ public abstract class CompanyServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.CompanyLocalService.class)
 	protected com.liferay.portal.service.CompanyLocalService companyLocalService;
-	@BeanReference(type = CompanyService.class)
+	@BeanReference(type = com.liferay.portal.service.CompanyService.class)
 	protected CompanyService companyService;
 	@BeanReference(type = CompanyPersistence.class)
 	protected CompanyPersistence companyPersistence;

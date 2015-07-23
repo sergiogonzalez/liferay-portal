@@ -920,7 +920,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDLRecordSetLocalService.class)
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService.class)
 	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordSetService.class)
 	protected com.liferay.dynamic.data.lists.service.DDLRecordSetService ddlRecordSetService;

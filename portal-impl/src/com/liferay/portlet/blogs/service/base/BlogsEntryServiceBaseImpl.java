@@ -1052,7 +1052,7 @@ public abstract class BlogsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryLocalService.class)
 	protected com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService;
-	@BeanReference(type = BlogsEntryService.class)
+	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryService.class)
 	protected BlogsEntryService blogsEntryService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;

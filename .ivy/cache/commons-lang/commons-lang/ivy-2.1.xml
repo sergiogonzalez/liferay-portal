@@ -4,7 +4,7 @@
 		module="commons-lang"
 		revision="2.1"
 		status="release"
-		publication="20130118120059"
+		publication="20051123212021"
 	>
 		<license name="The Apache Software License, Version 2.0" url="/LICENSE.txt" />
 		<description homepage="http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/">

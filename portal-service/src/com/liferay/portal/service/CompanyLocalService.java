@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.service.BaseLocalService;
+import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
  * Provides the local service interface for Company. Methods of this
@@ -625,7 +627,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*
 	* @param companyId the primary key of the company
 	* @param properties the company's properties. See {@link
-	com.liferay.portal.kernel.util.UnicodeProperties}
+	UnicodeProperties}
 	* @throws PortalException if the properties contained new locales that were
 	not supported
 	*/

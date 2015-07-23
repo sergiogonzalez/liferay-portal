@@ -1037,7 +1037,7 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = AssetTagLocalService.class)
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetTagLocalService.class)
 	protected AssetTagLocalService assetTagLocalService;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetTagService.class)
 	protected com.liferay.portlet.asset.service.AssetTagService assetTagService;

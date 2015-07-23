@@ -4,7 +4,7 @@
 		module="jsqlparser"
 		revision="0.9.3"
 		status="release"
-		publication="20150512181315"
+		publication="20150512151315"
 	>
 		<license name="GNU Library or Lesser General Public License (LGPL) V2.1" url="http://www.gnu.org/licenses/lgpl-2.1.html" />
 		<description homepage="https://github.com/JSQLParser/JSqlParser">

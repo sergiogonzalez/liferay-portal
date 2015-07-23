@@ -1669,7 +1669,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = MBMessageLocalService.class)
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBMessageLocalService.class)
 	protected MBMessageLocalService mbMessageLocalService;
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBMessageService.class)
 	protected com.liferay.portlet.messageboards.service.MBMessageService mbMessageService;

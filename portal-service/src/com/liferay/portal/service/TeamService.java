@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.service.BaseService;
 
 /**
  * Provides the remote service interface for Team. Methods of this
@@ -49,8 +50,8 @@ public interface TeamService extends BaseService {
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
-	#addTeam(long,long,String,String,ServiceContext)}
+	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, String,
+	String, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.model.Team addTeam(long groupId,

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.service.BaseLocalService;
+import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
  * Provides the local service interface for Role. Methods of this
@@ -363,13 +365,11 @@ public interface RoleLocalService extends BaseLocalService,
 	*
 	* <p>
 	* If the group is a site, then the default role is {@link
-	* com.liferay.portal.model.RoleConstants#SITE_MEMBER}. If the group is an
-	* organization, then the default role is {@link
-	* com.liferay.portal.model.RoleConstants#ORGANIZATION_USER}. If the group
-	* is a user or user group, then the default role is {@link
-	* com.liferay.portal.model.RoleConstants#POWER_USER}. For all other group
-	* types, the default role is {@link
-	* com.liferay.portal.model.RoleConstants#USER}.
+	* RoleConstants#SITE_MEMBER}. If the group is an organization, then the
+	* default role is {@link RoleConstants#ORGANIZATION_USER}. If the group is
+	* a user or user group, then the default role is {@link
+	* RoleConstants#POWER_USER}. For all other group types, the default role is
+	* {@link RoleConstants#USER}.
 	* </p>
 	*
 	* @param groupId the primary key of the group

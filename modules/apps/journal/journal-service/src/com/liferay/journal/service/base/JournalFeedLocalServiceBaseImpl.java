@@ -860,7 +860,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = JournalFeedLocalService.class)
+	@BeanReference(type = com.liferay.journal.service.JournalFeedLocalService.class)
 	protected JournalFeedLocalService journalFeedLocalService;
 	@BeanReference(type = com.liferay.journal.service.JournalFeedService.class)
 	protected com.liferay.journal.service.JournalFeedService journalFeedService;

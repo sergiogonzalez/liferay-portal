@@ -84,6 +84,7 @@ public class JournalArticleWrapper implements JournalArticle,
 		attributes.put("smallImage", getSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -266,6 +267,12 @@ public class JournalArticleWrapper implements JournalArticle,
 
 		if (smallImageURL != null) {
 			setSmallImageURL(smallImageURL);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -631,6 +638,16 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public boolean getIndexable() {
 		return _journalArticle.getIndexable();
+	}
+
+	/**
+	* Returns the last publish date of this journal article.
+	*
+	* @return the last publish date of this journal article
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _journalArticle.getLastPublishDate();
 	}
 
 	@Override
@@ -1402,6 +1419,16 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public void setIndexable(boolean indexable) {
 		_journalArticle.setIndexable(indexable);
+	}
+
+	/**
+	* Sets the last publish date of this journal article.
+	*
+	* @param lastPublishDate the last publish date of this journal article
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_journalArticle.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

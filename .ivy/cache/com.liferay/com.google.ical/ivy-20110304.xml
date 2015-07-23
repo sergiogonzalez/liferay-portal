@@ -4,7 +4,7 @@
 		module="com.google.ical"
 		revision="20110304"
 		status="release"
-		publication="20140613212306"
+		publication="20140613172306"
 	>
 		<license name="LGPL 2.1" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt" />
 		<description homepage="">

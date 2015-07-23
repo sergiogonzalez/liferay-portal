@@ -628,7 +628,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryLocalService.class)
 	protected com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService;
-	@BeanReference(type = RatingsEntryService.class)
+	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryService.class)
 	protected RatingsEntryService ratingsEntryService;
 	@BeanReference(type = RatingsEntryPersistence.class)
 	protected RatingsEntryPersistence ratingsEntryPersistence;

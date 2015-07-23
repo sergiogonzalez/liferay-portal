@@ -1974,7 +1974,7 @@ public abstract class JournalArticleLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = JournalArticleLocalService.class)
+	@BeanReference(type = com.liferay.journal.service.JournalArticleLocalService.class)
 	protected JournalArticleLocalService journalArticleLocalService;
 	@BeanReference(type = com.liferay.journal.service.JournalArticleService.class)
 	protected com.liferay.journal.service.JournalArticleService journalArticleService;

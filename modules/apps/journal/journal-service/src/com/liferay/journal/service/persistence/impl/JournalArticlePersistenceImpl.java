@@ -29867,6 +29867,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		journalArticleImpl.setSmallImage(journalArticle.isSmallImage());
 		journalArticleImpl.setSmallImageId(journalArticle.getSmallImageId());
 		journalArticleImpl.setSmallImageURL(journalArticle.getSmallImageURL());
+		journalArticleImpl.setLastPublishDate(journalArticle.getLastPublishDate());
 		journalArticleImpl.setStatus(journalArticle.getStatus());
 		journalArticleImpl.setStatusByUserId(journalArticle.getStatusByUserId());
 		journalArticleImpl.setStatusByUserName(journalArticle.getStatusByUserName());

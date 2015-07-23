@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.service.BaseService;
 
 /**
  * Provides the remote service interface for Company. Methods of this
@@ -343,8 +344,7 @@ public interface CompanyService extends BaseService {
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String, String,
-	String, java.util.List, java.util.List, java.util.List,
-	java.util.List, UnicodeProperties)}
+	String, List, List, List, List, UnicodeProperties)}
 	*/
 	@java.lang.Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -426,7 +426,7 @@ public interface CompanyService extends BaseService {
 	*
 	* @param companyId the primary key of the company
 	* @param properties the company's properties. See {@link
-	com.liferay.portal.kernel.util.UnicodeProperties}
+	UnicodeProperties}
 	* @throws PortalException if the user was not an administrator
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

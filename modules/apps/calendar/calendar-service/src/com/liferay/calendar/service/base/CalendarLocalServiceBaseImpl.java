@@ -935,7 +935,7 @@ public abstract class CalendarLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CalendarLocalService.class)
+	@BeanReference(type = com.liferay.calendar.service.CalendarLocalService.class)
 	protected CalendarLocalService calendarLocalService;
 	@BeanReference(type = com.liferay.calendar.service.CalendarService.class)
 	protected com.liferay.calendar.service.CalendarService calendarService;
