@@ -17,7 +17,9 @@ package com.liferay.layout.set.community.site.action;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -28,6 +30,7 @@ import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,11 +58,18 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 			List<LayoutSetPrototype> layoutSetPrototypes)
 		throws Exception {
 
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", LocaleUtil.getDefault());
+
 		LayoutSet layoutSet =
 			DefaultLayoutSetPrototypesUtil.addLayoutSetPrototype(
 				companyId, defaultUserId,
-				"layout-set-prototype-community-site-title",
-				"layout-set-prototype-community-site-description",
+				LanguageUtil.get(
+					resourceBundle,
+					"layout-set-prototype-community-site-title"),
+				LanguageUtil.get(
+					resourceBundle,
+					"layout-set-prototype-community-site-description"),
 				layoutSetPrototypes);
 
 		if (layoutSet == null) {
