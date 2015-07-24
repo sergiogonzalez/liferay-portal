@@ -25,11 +25,14 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -165,6 +168,18 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		DLFolder dlFolder = getDLFolder(classPK);
 
 		return dlFolder.getTrashEntry();
+	}
+
+	@Override
+	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				DLFolder.class.getName());
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(classPK);
+
+		return (TrashRenderer)assetRendererFactory.getAssetRenderer(
+			dlFolder.getFolderId());
 	}
 
 	@Override
