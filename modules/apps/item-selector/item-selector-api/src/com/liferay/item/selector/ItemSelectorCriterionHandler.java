@@ -17,12 +17,31 @@ package com.liferay.item.selector;
 import java.util.List;
 
 /**
+ * Returns the ItemSelectorViews for the ItemSelectorCriterio handled by this
+ * class. Each ItemSelectorCriterion should have one
+ * ItemSelectorCriterionHandler.
+ *
  * @author Iván Zaera
  */
 public interface ItemSelectorCriterionHandler<T extends ItemSelectorCriterion> {
 
+	/**
+	 * Returns the handled ItemSelectorCriterion class. This method is a
+	 * way to declare which ItemSelectorCriterion this class belongs to.
+	 *
+	 * @return the ItemSelectorCriterion class.
+	 */
 	public Class<T> getItemSelectorCriterionClass();
 
+	/**
+	 * Returns a List of ItemSelectorViews for the handled
+	 * ItemSelectorCriterion.
+	 *
+	 * @param  itemSelectorCriterion the instance of the ItemSelectorCriterion.
+	 *         Some important information for the view rendered could be
+	 *         retrieved from this param.
+	 * @return a List of ItemSelectorViews.
+	 */
 	public List<ItemSelectorView<T>> getItemSelectorViews(
 		T itemSelectorCriterion);
 
