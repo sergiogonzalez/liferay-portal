@@ -64,6 +64,23 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	/>
 </c:if>
 
+<%
+	AddMenuItem addMenuItem = new AddMenuItem("A", "http://google.es");
+
+	List<AddMenuItem> addMenuItems = new ArrayList<AddMenuItem>();
+
+	addMenuItems.add(addMenuItem);
+%>
+
+<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>">
+	<liferay-frontend:add-menu-item title="a google ir" url="http://google.es" />
+	<liferay-frontend:add-menu-item title="a asdf ir" url="http://google.es" />
+	<liferay-frontend:add-menu-item title="a goasdgfasgogle ir" url="http://google.es" />
+	<liferay-frontend:add-menu-item title="a goa ir sdfdsogle" url="http://google.es" />
+	<liferay-frontend:add-menu-item title="a gsdf ir sfsoogle" url="http://google.es" />
+	<liferay-frontend:add-menu-item title="a fdsfgle goosd ir" url="http://google.es" />
+</liferay-frontend:add-menu>
+
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <aui:form action="<%= editEntryURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>

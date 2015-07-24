@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.frontend.taglib.servlet.taglib.util.AddMenuItem" %>
+
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
 
