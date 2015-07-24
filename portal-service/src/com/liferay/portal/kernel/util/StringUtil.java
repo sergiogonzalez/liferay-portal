@@ -3888,6 +3888,49 @@ public class StringUtil {
 	}
 
 	/**
+	 * Returns the original string without an appended parenthetical suffix.
+	 *
+	 * <p>
+	 * Example:
+	 * <p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * stripParentheticalSuffix("file") returns "file"
+	 * stripParentheticalSuffix("file (0)") returns "file"
+	 * stripParentheticalSuffix("file (0 0)") returns "file"
+	 * stripParentheticalSuffix("file(0)") returns "file(0)"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @return a string representing the string <code>s</code> without the
+	 *         parentheticalSuffix
+	 */
+	public static String stripParentheticalSuffix(String s) {
+		int x = s.lastIndexOf(StringPool.OPEN_PARENTHESIS);
+		int y = s.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+		if ((x == -1) || (y == -1)) {
+			return s;
+		}
+
+		if ((x > y) || !s.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+			return s;
+		}
+
+		int z = x - 1;
+
+		if (!s.substring(z, x).equals(StringPool.SPACE)) {
+			return s;
+		}
+
+		return s.substring(0, z).concat(s.substring(y + 1, s.length()));
+	}
+
+	/**
 	 * Returns a string representing the Unicode character codes of the
 	 * characters comprising the string <code>s</code>.
 	 *
