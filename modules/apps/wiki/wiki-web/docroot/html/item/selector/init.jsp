@@ -43,8 +43,13 @@ page import="com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorV
 page import="com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.ResourceBundle" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<%
+ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale);
+%>
