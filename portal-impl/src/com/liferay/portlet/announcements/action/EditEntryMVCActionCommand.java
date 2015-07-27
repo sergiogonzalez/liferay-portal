@@ -82,20 +82,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.sendRedirect(redirect);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof EntryContentException ||
-				e instanceof EntryDisplayDateException ||
-				e instanceof EntryExpirationDateException ||
-				e instanceof EntryTitleException ||
-				e instanceof EntryURLException ||
-				e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
+		catch (EntryContentException | EntryDisplayDateException |
+				EntryExpirationDateException | EntryTitleException |
+				EntryURLException | NoSuchEntryException |
+				PrincipalException e) {
 
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
+			SessionErrors.add(actionRequest, e.getClass());
 		}
 	}
 
