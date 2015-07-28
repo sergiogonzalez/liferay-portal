@@ -12,27 +12,40 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.layout.set.community.site.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
-import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
-public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
+@Component(
+	immediate = true, service = AddCommunitySiteLayoutSetPrototypeAction.class
+)
+public class AddCommunitySiteLayoutSetPrototypeAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -44,16 +57,41 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		}
 	}
 
+	@Activate
+	protected void activate() throws ActionException {
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			List<Company> companies = _companyLocalService.getCompanies();
+
+			for (Company company : companies) {
+				CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
+				run(new String[] {String.valueOf(company.getCompanyId())});
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyId);
+		}
+	}
+
 	protected void addPublicSite(
 			long companyId, long defaultUserId,
 			List<LayoutSetPrototype> layoutSetPrototypes)
 		throws Exception {
 
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", LocaleUtil.getDefault());
+
 		LayoutSet layoutSet =
 			DefaultLayoutSetPrototypesUtil.addLayoutSetPrototype(
 				companyId, defaultUserId,
-				"layout-set-prototype-community-site-title",
-				"layout-set-prototype-community-site-description",
+				LanguageUtil.get(
+					resourceBundle,
+					"layout-set-prototype-community-site-title"),
+				LanguageUtil.get(
+					resourceBundle,
+					"layout-set-prototype-community-site-description"),
 				layoutSetPrototypes);
 
 		if (layoutSet == null) {
@@ -78,13 +116,36 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		List<LayoutSetPrototype> layoutSetPrototypes =
-			LayoutSetPrototypeLocalServiceUtil.search(
+			_layoutSetPrototypeLocalService.search(
 				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		addPublicSite(companyId, defaultUserId, layoutSetPrototypes);
 	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private CompanyLocalService _companyLocalService;
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+	private UserLocalService _userLocalService;
 
 }
