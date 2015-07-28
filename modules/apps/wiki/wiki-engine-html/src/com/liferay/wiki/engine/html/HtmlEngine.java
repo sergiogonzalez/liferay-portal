@@ -80,6 +80,11 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Override
+	public String getToolbarSet() {
+		return "liferay";
+	}
+
+	@Override
 	protected ServletContext getHelpPageServletContext() {
 		return null;
 	}
