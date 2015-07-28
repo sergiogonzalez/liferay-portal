@@ -68,8 +68,6 @@ public class AggregateTestRule implements TestRule {
 		TransactionalTestRule.class.getName(),
 		SynchronousDestinationTestRule.class.getName(),
 		"com.liferay.portal.test.rule.SynchronousMailTestRule",
-		"com.liferay.portlet.documentlibrary.webdav." +
-			"WebDAVEnvironmentConfigTestRule",
 		"com.liferay.portal.test.rule.SyntheticBundleRule"
 	};
 
