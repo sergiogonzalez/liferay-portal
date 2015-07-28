@@ -81,7 +81,7 @@ public class RepositoryStagedModelDataHandlerTest
 		_repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
 			mountFolder.getFolderId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), PortletKeys.DOCUMENT_LIBRARY,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new UnicodeProperties(), false, serviceContext);
 
 		RepositoryEntry repositoryEntry =
