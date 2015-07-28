@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.webdav.test;
+package com.liferay.portlet.documentlibrary.webdav;
 
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 

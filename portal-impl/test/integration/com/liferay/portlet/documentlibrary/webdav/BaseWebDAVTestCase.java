@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.document.library.webdav.test;
+package com.liferay.portlet.documentlibrary.webdav;
 
-import com.liferay.document.library.web.webdav.DLWebDAVStorageImpl;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CharPool;

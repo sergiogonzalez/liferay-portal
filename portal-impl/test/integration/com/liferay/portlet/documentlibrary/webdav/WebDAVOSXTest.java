@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.document.library.webdav.test;
+package com.liferay.portlet.documentlibrary.webdav;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -44,7 +43,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * <p>
@@ -53,7 +51,6 @@ import org.junit.runner.RunWith;
  *
  * @author Alexander Chow
  */
-@RunWith(Arquillian.class)
 public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@ClassRule
@@ -409,13 +406,13 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	}
 
 	private static final String _OFFICE_TEST_DELTA_DOCX =
-		"/com/liferay/document/library/dependencies/OSX_Test_Delta.docx";
+		"dependencies/OSX_Test_Delta.docx";
 
 	private static final String _OFFICE_TEST_DOCX =
-		"/com/liferay/document/library/dependencies/OSX_Test.docx";
+		"dependencies/OSX_Test.docx";
 
 	private static final String _OFFICE_TEST_META_DOCX =
-		"/com/liferay/document/library/dependencies/OSX_Test_Meta.docx";
+		"dependencies/OSX_Test_Meta.docx";
 
 	private static final String _TEMP_FILE_NAME_1 = "Word Work File D_1.tmp";
 
