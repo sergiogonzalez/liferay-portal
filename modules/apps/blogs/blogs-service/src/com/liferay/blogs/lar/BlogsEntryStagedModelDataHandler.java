@@ -110,7 +110,7 @@ public class BlogsEntryStagedModelDataHandler
 	public int[] getExportableStatuses() {
 		return new int[] {
 			WorkflowConstants.STATUS_APPROVED,
-				WorkflowConstants.STATUS_SCHEDULED
+			WorkflowConstants.STATUS_SCHEDULED
 		};
 	}
 
