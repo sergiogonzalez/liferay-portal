@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
 	<tlib-version>1.0</tlib-version>
-	<short-name>item-selector</short-name>
+	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>
 	<tag>
 		<name>browser</name>

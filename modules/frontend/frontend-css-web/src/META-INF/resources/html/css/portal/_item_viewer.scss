@@ -1,4 +1,6 @@
 .lfr-item-viewer {
+	position: relative;
+
 	#cardSection {
 		margin-bottom: 20px;
 	}
@@ -66,6 +68,17 @@
 
 	.tabular-list-group {
 		width: 100%;
+	}
+
+	.upload-view {
+		display: table;
+		height: 400px;
+		width: 100%;
+
+		& > div {
+			display: table-cell;
+			vertical-align: middle;
+		}
 	}
 
 	.url-view {

@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
 	<tlib-version>1.0</tlib-version>
-	<short-name>application-list</short-name>
+	<short-name>liferay-application-list</short-name>
 	<uri>http://liferay.com/tld/application-list</uri>
 	<tag>
 		<name>application-content</name>
