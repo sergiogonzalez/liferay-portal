@@ -110,7 +110,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</p>
 					</c:when>
 					<c:when test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || viewSingleEntry %>">
-						<div>
+						<div class="entry-content">
 							<%= entry.getContent() %>
 						</div>
 
@@ -140,8 +140,19 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:if>
 
 				<div class="entry-social">
+					<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
+						<%
+						int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(BlogsEntry.class.getName(), entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
+						%>
 
-					<!-- TODO nº de comentarios que tiene (solo en viewSingleEntry) -->
+						<div class="comments">
+							<liferay-ui:icon
+								iconCssClass="icon-comment"
+								label="<%= true %>"
+								message="<%= Integer.toString(messagesCount) %>"
+							/>
+						</div>
+					</c:if>
 
 					<c:if test="<%= blogsPortletInstanceConfiguration.enableRatings() %>">
 						<div class="ratings">

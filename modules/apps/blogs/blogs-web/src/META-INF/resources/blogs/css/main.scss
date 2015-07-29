@@ -100,19 +100,25 @@
 		}
 
 		.entry-social {
-			.ratings {
+			& > div {
 				display: inline-block;
+				margin-top: 0;
+				vertical-align: top;
+			}
 
-				.taglib-ratings {
-					display: inline-block;
-					vertical-align: middle;
+			.comments {
+				margin-right: 10px;
+			}
 
-					&.stars {
-						margin-top: 0;
+			.ratings .taglib-ratings {
+				display: inline-block;
+				vertical-align: middle;
 
-						.liferay-rating-score {
-							padding-left: 0;
-						}
+				&.stars {
+					margin-top: 0;
+
+					.liferay-rating-score {
+						padding-left: 0;
 					}
 				}
 			}
