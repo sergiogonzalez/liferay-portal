@@ -39,8 +39,6 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
-import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -233,7 +231,9 @@ public class FileEntryStagedModelDataHandler
 			InputStream is = null;
 
 			try {
-				is = FileEntryUtil.getContentStream(fileEntry);
+				is =
+					com.liferay.portlet.documentlibrary.lar.FileEntryUtil.
+						getContentStream(fileEntry);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -269,7 +269,7 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "previews-and-thumbnails")) {
+				"document_library", "previews-and-thumbnails")) {
 
 			DLProcessorRegistryUtil.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
@@ -347,7 +347,9 @@ public class FileEntryStagedModelDataHandler
 			portletDataContext.isPerformDirectBinaryImport()) {
 
 			try {
-				is = FileEntryUtil.getContentStream(fileEntry);
+				is =
+					com.liferay.portlet.documentlibrary.lar.FileEntryUtil.
+						getContentStream(fileEntry);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -593,7 +595,7 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "previews-and-thumbnails")) {
+				"document_library", "previews-and-thumbnails")) {
 
 			DLProcessorRegistryUtil.importGeneratedFiles(
 				portletDataContext, fileEntry, importedFileEntry,

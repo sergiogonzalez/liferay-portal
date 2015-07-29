@@ -139,8 +139,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		// Main portlets
 
 		upgradeMainPortlet(
-			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
+			"20", DLConstants.SERVICE_NAME, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+			true);
 		upgradeMainPortlet(
 			PortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
@@ -151,10 +151,10 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		// Display portlets
 
 		upgradeDisplayPortlet(
-			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, DLConstants.SERVICE_NAME,
+			"110", DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 		upgradeDisplayPortlet(
-			PortletKeys.MEDIA_GALLERY_DISPLAY, DLConstants.SERVICE_NAME,
+			"31", DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 	}
 

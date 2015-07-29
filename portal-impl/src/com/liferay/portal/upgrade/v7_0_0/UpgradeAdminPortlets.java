@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
-import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Sergio González
@@ -24,8 +23,7 @@ public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateAccessInControlPanelPermission(
-			PortletKeys.DOCUMENT_LIBRARY, PortletKeys.DOCUMENT_LIBRARY_ADMIN);
+		updateAccessInControlPanelPermission("20", "199");
 	}
 
 }
