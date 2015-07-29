@@ -4,6 +4,13 @@
 @import url(common_main.scss);
 
 .portlet-blogs {
+
+	a.dropdown-toggle {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
 	.taglib-custom-attributes-list {
 		margin-bottom: 1em;
 	}
