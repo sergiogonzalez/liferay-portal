@@ -1,7 +1,7 @@
 @import "bourbon";
 @import "mixins";
 
-@import url(common_main.css);
+@import url(common_main.scss);
 
 .portlet-blogs {
 	.taglib-custom-attributes-list {
@@ -29,10 +29,15 @@
 	}
 
 	.entry-author {
-		color: #999;
 		float: left;
 		line-height: 20px;
+		margin-right: 30px;
 		vertical-align: middle;
+	}
+
+	.entry-info {
+		color: #999;
+		margin-top: 15px;
 	}
 
 	.taglib-user-display {
@@ -81,32 +86,17 @@
 		}
 	}
 
-	.read-more {
-		font-size: 14px;
-		margin-bottom: 40px;
-	}
-
 	.entry-footer {
-		margin-bottom: 60px;
-		margin-top: 80px;
 		vertical-align: middle;
+
+		&.border {
+			border-top: 1px solid #EDEEF0;
+			margin-top: 30px;
+			padding-top: 20px;
+		}
 
 		.entry-social, .flags, .social-bookmarks {
 			display: inline-block;
-
-			&:before {
-				background: #EDEEF0;
-				content: '';
-				display: inline-block;
-				height: 20px;
-				margin: 0 40px;
-				vertical-align: middle;
-				width: 1px;
-
-				@include respond-to(phone, tablet) {
-					margin: 0 15px;
-				}
-			}
 		}
 
 		.entry-social {
@@ -194,17 +184,11 @@
 	.entry-title {
 		display: block;
 
-		h2 {
-			font-size: 26px;
-			font-weight: bold;
-			margin-bottom: 24px;
+		h2 .alloy-editor-placeholder {
+			color: #32A8E6;
 
-			.alloy-editor-placeholder {
-				color: #32A8E6;
-
-				p {
-					margin-bottom: 0;
-				}
+			p {
+				margin-bottom: 0;
 			}
 		}
 
@@ -244,8 +228,6 @@
 	}
 
 	.entry-navigation {
-		border-bottom: 1px solid #EDEEF0;
-		border-top: 1px solid #EDEEF0;
 		padding: 60px 0;
 		width: 100%;
 
@@ -348,6 +330,10 @@
 	.search-root-entry {
 		color: #999;
 		float: right;
+	}
+
+	.separator {
+		border-color: transparent;
 	}
 
 	.subscribe {
