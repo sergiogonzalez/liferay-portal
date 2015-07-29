@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.service.impl;
 
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -27,6 +28,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
@@ -34,15 +36,23 @@ import org.powermock.reflect.Whitebox;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({PropsValues.class})
+@PrepareForTest({PropsValues.class, CommentManagerUtil.class})
 @RunWith(PowerMockRunner.class)
-public class BlogsEntryLocalServiceImplTest {
+public class BlogsEntryLocalServiceImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		_blogsEntryLocalServiceImpl.commentManager = _commentManager;
+		mockStatic(CommentManagerUtil.class, Mockito.CALLS_REAL_METHODS);
+
+		stub(
+			method(CommentManagerUtil.class, "getCommentManager")
+		).toReturn(
+			_commentManager
+		);
+
+		_blogsEntryLocalServiceImpl = new BlogsEntryLocalServiceImpl();
 	}
 
 	@Test
@@ -117,8 +127,7 @@ public class BlogsEntryLocalServiceImplTest {
 	@Mock
 	private BlogsEntry _blogsEntry;
 
-	private final BlogsEntryLocalServiceImpl _blogsEntryLocalServiceImpl =
-		new BlogsEntryLocalServiceImpl();
+	private BlogsEntryLocalServiceImpl _blogsEntryLocalServiceImpl;
 
 	@Mock
 	private CommentManager _commentManager;
