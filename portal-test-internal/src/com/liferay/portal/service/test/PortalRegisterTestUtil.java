@@ -22,10 +22,6 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.util.AssetEntryIndexer;
 import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
-import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory;
-import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
-import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory;
 import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
 import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
@@ -77,8 +73,6 @@ public class PortalRegisterTestUtil {
 
 		IndexerRegistryUtil.register(new AssetEntryIndexer());
 		IndexerRegistryUtil.register(new ContactIndexer());
-		IndexerRegistryUtil.register(new DLFileEntryIndexer());
-		IndexerRegistryUtil.register(new DLFolderIndexer());
 		IndexerRegistryUtil.register(new MBMessageIndexer());
 		IndexerRegistryUtil.register(new OrganizationIndexer());
 		IndexerRegistryUtil.register(new TrashIndexer());
@@ -112,8 +106,6 @@ public class PortalRegisterTestUtil {
 	}
 
 	private static final Class<?>[] _ASSET_RENDERER_FACTORY_CLASSES = {
-		DLFileEntryAssetRendererFactory.class,
-		DLFolderAssetRendererFactory.class,
 		MBCategoryAssetRendererFactory.class,
 		MBMessageAssetRendererFactory.class, UserAssetRendererFactory.class
 	};
