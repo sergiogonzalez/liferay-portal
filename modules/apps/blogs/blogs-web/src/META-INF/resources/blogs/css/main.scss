@@ -4,11 +4,10 @@
 @import url(common_main.scss);
 
 .portlet-blogs {
-
 	a.dropdown-toggle {
 		position: absolute;
-		top: 0;
 		right: 0;
+		top: 0;
 	}
 
 	.taglib-custom-attributes-list {
@@ -227,11 +226,7 @@
 
 	.entry-navigation, .entry-metadata {
 		h2 {
-			color: #868896;
-			display: block;
-			font-size: 20px;
-			font-weight: 400;
-			margin-bottom: 16px;
+			margin-bottom: 15px;
 			margin-top: 0;
 		}
 	}
@@ -244,90 +239,11 @@
 		padding: 60px 0;
 		width: 100%;
 
-		a:hover {
-			text-decoration: none;
-
-			h3 {
-				text-decoration: underline;
-			}
-		}
-
-		h2 {
-			@include ellipsis;
-		}
-
-		h3 {
-			color: #2B4259;
-			font-size: 20px;
-			font-weight: bold;
-			margin-bottom: 16px;
-			margin-top: 0;
-
-			@include ellipsis;
-		}
-
-		.entry-content {
-			display: block;
-			overflow: hidden;
-
-			.entry-content-body {
-				color: #555;
-				display: block;
-				font-size: 18px;
-				font-weight: 400;
-				margin-bottom: 0;
-			}
-		}
-
 		.small-image {
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
-			display: block;
-			float: right;
 			height: 140px;
-			margin-left: 60px;
-			width: 140px;
-		}
-
-		.taglib-user-display {
-			display: block;
-			margin-top: 28px;
-			overflow: hidden;
-
-			@include respond-to(phone, tablet) {
-				margin-top: 0;
-			}
-		}
-
-		.previous-entry {
-			.previous-entry-content {
-				padding-right: 60px;
-			}
-
-			&.has-next-entry .previous-entry-content {
-				border-right: 1px solid #EDEEF0;
-
-				@include respond-to(phone) {
-					border-right-width: 0;
-				}
-			}
-		}
-
-		.next-entry {
-			> h2, .next-entry-content {
-				margin-left: 30px;
-
-				@include respond-to(phone) {
-					margin-left: 0;
-				}
-			}
-
-			> h2 {
-				@include respond-to(phone) {
-					margin-top: 60px;
-				}
-			}
 		}
 	}
 

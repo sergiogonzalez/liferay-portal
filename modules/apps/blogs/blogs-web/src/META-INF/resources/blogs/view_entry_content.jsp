@@ -39,7 +39,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				%>
 
 				<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= true %>" showWhenSingleIcon="<%= true %>" view="lexicon">
+					<liferay-ui:icon-menu direction="top-right" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= false %>" showWhenSingleIcon="<%= true %>" view="lexicon">
 						<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 							<portlet:renderURL var="editEntryURL">
 								<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
@@ -177,7 +177,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:if>
 
 				<div class="entry-social">
-					<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
+					<c:if test="<%= !viewSingleEntry && blogsPortletInstanceConfiguration.enableComments() %>">
 						<%
 						int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(BlogsEntry.class.getName(), entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
 						%>
@@ -214,6 +214,17 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								title="<%= entry.getTitle() %>"
 								types="<%= blogsPortletInstanceConfiguration.socialBookmarksTypes() %>"
 								url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, layout) %>"
+							/>
+						</div>
+					</c:if>
+
+					<c:if test="<%= viewSingleEntry && blogsPortletInstanceConfiguration.enableFlags() %>">
+						<div class="flags">
+							<liferay-ui:flags
+								className="<%= BlogsEntry.class.getName() %>"
+								classPK="<%= entry.getEntryId() %>"
+								contentTitle="<%= entry.getTitle() %>"
+								reportedUserId="<%= entry.getUserId() %>"
 							/>
 						</div>
 					</c:if>
