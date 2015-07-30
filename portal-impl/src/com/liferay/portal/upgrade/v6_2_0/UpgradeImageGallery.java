@@ -24,7 +24,7 @@ public class UpgradeImageGallery extends UpgradePortletId {
 
 	@Override
 	protected String[] getUninstanceablePortletIds() {
-		return new String[] {PortletKeys.MEDIA_GALLERY_DISPLAY};
+		return new String[] {"31"};
 	}
 
 }
