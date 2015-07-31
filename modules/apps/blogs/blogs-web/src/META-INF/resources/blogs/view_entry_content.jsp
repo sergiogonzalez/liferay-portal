@@ -134,6 +134,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			<div class="entry-body">
 				<c:choose>
 					<c:when test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_ABSTRACT) && !viewSingleEntry %>">
+
 						<%
 						String summary = entry.getDescription();
 
@@ -164,7 +165,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:choose>
 			</div>
 
-			<div class="<% if (viewSingleEntry) { %>border <% } %>entry-footer">
+			<div class="<%= viewSingleEntry ? "border" : StringPool.BLANK %> entry-footer">
 				<c:if test="<%= viewSingleEntry %>">
 					<div class="entry-author">
 						<liferay-ui:user-display
@@ -178,15 +179,16 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<div class="entry-social">
 					<c:if test="<%= !viewSingleEntry && blogsPortletInstanceConfiguration.enableComments() %>">
+
 						<%
-						int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(BlogsEntry.class.getName(), entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
+						int messagesCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
 						%>
 
 						<div class="comments">
 							<liferay-ui:icon
 								iconCssClass="icon-comment"
 								label="<%= true %>"
-								message="<%= Integer.toString(messagesCount) %>"
+								message="<%= String.valueOf(messagesCount) %>"
 							/>
 						</div>
 					</c:if>
@@ -200,7 +202,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</div>
 					</c:if>
 
-					<c:if test='<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() %>'>
+					<c:if test="<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() %>">
 						<portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />

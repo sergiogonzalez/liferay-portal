@@ -85,6 +85,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
 		<aui:container cssClass="entry-navigation">
 			<h2 class="text-uppercase"><strong><liferay-ui:message key="more-blog-entries" /></strong></h2>
+
 			<aui:row>
 				<c:if test="<%= previousEntry != null %>">
 					<aui:col cssClass='<%= "previous-entry " + ((nextEntry != null) ? "has-next-entry" : StringPool.BLANK) %>' md="6" sm="6">
@@ -173,7 +174,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 </c:if>
 
 <c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
-	<h2 class="text-uppercase"><strong><%= LanguageUtil.format(request, "x-comments", MBMessageLocalServiceUtil.getDiscussionMessagesCount(BlogsEntry.class.getName(), entry.getEntryId(), WorkflowConstants.STATUS_APPROVED)) %></strong></h2>
+	<h2 class="text-uppercase"><strong><%= LanguageUtil.format(request, "x-comments", CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId())) %></strong></h2>
 
 	<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
 		<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
