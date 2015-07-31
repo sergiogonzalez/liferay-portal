@@ -1184,11 +1184,11 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void updateResourcePermissions(
-			Resource resource, ModelPermissions modelPermissions)
+			long groupId, Resource resource, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		for (String roleName : modelPermissions.getRoleNames()) {
-			Role role = getRole(resource.getCompanyId(), 0, roleName);
+			Role role = getRole(resource.getCompanyId(), groupId, roleName);
 
 			List<String> actionIds = modelPermissions.getActionIdsList(
 				roleName);
@@ -1214,7 +1214,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				groupId, resource, modelPermissions, permissionedModel);
 		}
 		else {
-			updateResourcePermissions(resource, modelPermissions);
+			updateResourcePermissions(groupId, resource, modelPermissions);
 		}
 	}
 
