@@ -30,7 +30,7 @@ public class BlogsTempImageUploadHandler extends BaseBlogsImageUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName,InputStream inputStream,
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
 			String contentType)
 		throws PortalException {
 

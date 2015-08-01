@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
-import com.liferay.portal.kernel.upload.BaseUploadHandler;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.BaseUniqueFileNameUploadHandler;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -33,7 +31,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -53,7 +50,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Roberto Díaz
  */
-public class WikiImageUploadHandler extends BaseUploadHandler {
+public class WikiImageUploadHandler extends BaseUniqueFileNameUploadHandler {
 
 	public WikiImageUploadHandler(long classPK) {
 		_classPK = classPK;
@@ -63,43 +60,17 @@ public class WikiImageUploadHandler extends BaseUploadHandler {
 		this(0);
 	}
 
-	protected FileEntry addFileEntry(PortletRequest portletRequest)
+	@Override
+	protected FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String uniqueFileName,
+			InputStream inputStream, String contentType)
 		throws PortalException {
 
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		InputStream inputStream = null;
-
-		try {
-			String parameterName = getParameterName();
-
-			String fileName = uploadPortletRequest.getFileName(parameterName);
-			String contentType = uploadPortletRequest.getContentType(
-				parameterName);
-			long size = uploadPortletRequest.getSize(parameterName);
-
-			validateFile(fileName, size);
-
-			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
-
-			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
-
-			WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
-
-			return WikiPageServiceUtil.addPageAttachment(
-				page.getNodeId(), page.getTitle(), uniqueFileName, inputStream,
-				contentType);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
+		return WikiPageServiceUtil.addPageAttachment(
+			page.getNodeId(), page.getTitle(), uniqueFileName, inputStream,
+			contentType);
 	}
 
 	@Override
@@ -120,8 +91,7 @@ public class WikiImageUploadHandler extends BaseUploadHandler {
 	}
 
 	protected FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, String fileName)
-		throws PortalException {
+		ThemeDisplay themeDisplay, String fileName) {
 
 		try {
 			WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
