@@ -98,7 +98,7 @@ public class DLImageUploadHandler extends BaseUploadHandler {
 				contentType = MimeTypesUtil.getContentType(fileName);
 			}
 
-			validateFile(fileName, contentType, size);
+			validateFile(fileName, size);
 
 			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
@@ -120,15 +120,6 @@ public class DLImageUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
-			String contentType)
-		throws PortalException {
-
-		return null;
-	}
-
-	@Override
 	protected void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -143,19 +134,6 @@ public class DLImageUploadHandler extends BaseUploadHandler {
 				permissionChecker, DLPermission.RESOURCE_NAME, groupId,
 				ActionKeys.ADD_DOCUMENT);
 		}
-	}
-
-	@Override
-	protected FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, String fileName)
-		throws PortalException {
-
-		return null;
-	}
-
-	@Override
-	protected String getParameterName() {
-		return null;
 	}
 
 	@Override
@@ -216,8 +194,7 @@ public class DLImageUploadHandler extends BaseUploadHandler {
 		}
 	}
 
-	@Override
-	protected void validateFile(String fileName, String contentType, long size)
+	protected void validateFile(String fileName, long size)
 		throws PortalException {
 
 		long maxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);

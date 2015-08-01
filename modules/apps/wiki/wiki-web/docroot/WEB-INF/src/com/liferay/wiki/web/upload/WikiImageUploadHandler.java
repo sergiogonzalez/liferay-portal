@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -31,6 +33,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -60,17 +63,43 @@ public class WikiImageUploadHandler extends BaseUploadHandler {
 		this(0);
 	}
 
-	@Override
-	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
-			String contentType)
+	protected FileEntry addFileEntry(PortletRequest portletRequest)
 		throws PortalException {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(portletRequest);
 
-		return WikiPageServiceUtil.addPageAttachment(
-			page.getNodeId(), page.getTitle(), fileName, inputStream,
-			contentType);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		InputStream inputStream = null;
+
+		try {
+			String parameterName = getParameterName();
+
+			String fileName = uploadPortletRequest.getFileName(parameterName);
+			String contentType = uploadPortletRequest.getContentType(
+				parameterName);
+			long size = uploadPortletRequest.getSize(parameterName);
+
+			validateFile(fileName, size);
+
+			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
+
+			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
+
+			WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
+
+			return WikiPageServiceUtil.addPageAttachment(
+				page.getNodeId(), page.getTitle(), uniqueFileName, inputStream,
+				contentType);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 	@Override
@@ -90,7 +119,6 @@ public class WikiImageUploadHandler extends BaseUploadHandler {
 		}
 	}
 
-	@Override
 	protected FileEntry fetchFileEntry(
 			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException {
@@ -107,9 +135,37 @@ public class WikiImageUploadHandler extends BaseUploadHandler {
 		}
 	}
 
-	@Override
 	protected String getParameterName() {
 		return "imageSelectorFileName";
+	}
+
+	protected String getUniqueFileName(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException {
+
+		FileEntry fileEntry = fetchFileEntry(themeDisplay, fileName);
+
+		if (fileEntry == null) {
+			return fileName;
+		}
+
+		int suffix = 1;
+
+		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+			String curFileName = FileUtil.appendParentheticalSuffix(
+				fileName, String.valueOf(suffix));
+
+			fileEntry = fetchFileEntry(themeDisplay, curFileName);
+
+			if (fileEntry == null) {
+				return curFileName;
+			}
+
+			suffix++;
+		}
+
+		throw new PortalException(
+			"Unable to get a unique file name for " + fileName);
 	}
 
 	@Override
@@ -170,8 +226,7 @@ public class WikiImageUploadHandler extends BaseUploadHandler {
 		}
 	}
 
-	@Override
-	protected void validateFile(String fileName, String contentType, long size)
+	protected void validateFile(String fileName, long size)
 		throws PortalException {
 
 		WikiWebComponentProvider wikiWebComponentProvider =
@@ -201,6 +256,8 @@ public class WikiImageUploadHandler extends BaseUploadHandler {
 		throw new PageAttachmentNameException(
 			"Invalid image for file name " + fileName);
 	}
+
+	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 
 	private final long _classPK;
 

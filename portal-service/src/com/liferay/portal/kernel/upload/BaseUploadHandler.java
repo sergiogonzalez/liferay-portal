@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -33,7 +31,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -113,98 +110,19 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		}
 	}
 
-	protected FileEntry addFileEntry(PortletRequest portletRequest)
-		throws PortalException {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		InputStream inputStream = null;
-
-		try {
-			String parameterName = getParameterName();
-
-			String fileName = uploadPortletRequest.getFileName(parameterName);
-			String contentType = uploadPortletRequest.getContentType(
-				parameterName);
-			long size = uploadPortletRequest.getSize(parameterName);
-
-			validateFile(fileName, contentType, size);
-
-			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
-
-			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
-
-			return addFileEntry(
-				themeDisplay, uniqueFileName, inputStream, contentType);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
-	}
-
-	protected abstract FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
-			String contentType)
+	protected abstract FileEntry addFileEntry(PortletRequest portletRequest)
 		throws PortalException;
 
 	protected abstract void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException;
 
-	protected abstract FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, String fileName)
-		throws PortalException;
-
-	protected abstract String getParameterName();
-
-	protected String getUniqueFileName(
-			ThemeDisplay themeDisplay, String fileName)
-		throws PortalException {
-
-		FileEntry fileEntry = fetchFileEntry(themeDisplay, fileName);
-
-		if (fileEntry == null) {
-			return fileName;
-		}
-
-		int suffix = 1;
-
-		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
-			String curFileName = FileUtil.appendParentheticalSuffix(
-				fileName, String.valueOf(suffix));
-
-			fileEntry = fetchFileEntry(themeDisplay, curFileName);
-
-			if (fileEntry == null) {
-				return curFileName;
-			}
-
-			suffix++;
-		}
-
-		throw new PortalException(
-			"Unable to get a unique file name for " + fileName);
-	}
-
 	protected abstract void handleUploadException(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
 		throws PortalException;
 
-	protected abstract void validateFile(
-			String fileName, String contentType, long size)
-		throws PortalException;
-
 	protected static final String _TEMP_FOLDER_NAME =
 		BaseUploadHandler.class.getName();
-
-	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 
 }
