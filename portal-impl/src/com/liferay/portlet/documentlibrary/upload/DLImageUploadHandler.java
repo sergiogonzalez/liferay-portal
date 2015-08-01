@@ -48,7 +48,6 @@ import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,40 +61,7 @@ import javax.portlet.PortletResponse;
 public class DLImageUploadHandler extends BaseUploadHandler {
 
 	@Override
-	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, long classPK, String fileName,
-			InputStream inputStream, String contentType)
-		throws PortalException {
-
-		return null;
-	}
-
-	protected void checkPermission(
-			long groupId, long classPK, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		boolean containsResourcePermission =
-			ResourcePermissionCheckerUtil.containsResourcePermission(
-				permissionChecker, DLPermission.RESOURCE_NAME, groupId,
-				ActionKeys.ADD_DOCUMENT);
-
-		if (!containsResourcePermission) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DLPermission.RESOURCE_NAME, groupId,
-				ActionKeys.ADD_DOCUMENT);
-		}
-	}
-
-	@Override
-	protected FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, long classPK, String fileName)
-		throws PortalException {
-
-		return null;
-	}
-
-	@Override
-	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
+	protected FileEntry addFileEntry(PortletRequest portletRequest)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -103,8 +69,6 @@ public class DLImageUploadHandler extends BaseUploadHandler {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
 		InputStream inputStream = null;
 
@@ -142,20 +106,10 @@ public class DLImageUploadHandler extends BaseUploadHandler {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), uploadPortletRequest);
 
-			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			return DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, fileName, contentType, fileName,
 				StringPool.BLANK, StringPool.BLANK, inputStream, size,
 				serviceContext);
-
-			imageJSONObject.put(
-				"url",
-				DLUtil.getPreviewURL(
-					fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
-					StringPool.BLANK));
-
-			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-
-			return imageJSONObject;
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -163,6 +117,40 @@ public class DLImageUploadHandler extends BaseUploadHandler {
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
+	}
+
+	@Override
+	protected FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
+			String contentType)
+		throws PortalException {
+
+		return null;
+	}
+
+	@Override
+	protected void checkPermission(
+			long groupId, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		boolean containsResourcePermission =
+			ResourcePermissionCheckerUtil.containsResourcePermission(
+				permissionChecker, DLPermission.RESOURCE_NAME, groupId,
+				ActionKeys.ADD_DOCUMENT);
+
+		if (!containsResourcePermission) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, DLPermission.RESOURCE_NAME, groupId,
+				ActionKeys.ADD_DOCUMENT);
+		}
+	}
+
+	@Override
+	protected FileEntry fetchFileEntry(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException {
+
+		return null;
 	}
 
 	@Override

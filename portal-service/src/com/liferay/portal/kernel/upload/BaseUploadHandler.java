@@ -80,7 +80,20 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
 		try {
-			JSONObject imageJSONObject = getImageJSONObject(portletRequest);
+			FileEntry fileEntry = addFileEntry(portletRequest);
+
+			JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+
+			imageJSONObject.put(
+				"attributeDataImageId",
+				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+
+			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+
+			imageJSONObject.put(
+				"url",
+				PortletFileRepositoryUtil.getPortletFileEntryURL(
+					themeDisplay, fileEntry, StringPool.BLANK));
 
 			jsonObject.put("success", Boolean.TRUE);
 
@@ -100,20 +113,7 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		}
 	}
 
-	protected abstract FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
-			String contentType)
-		throws PortalException;
-
-	protected abstract void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
-		throws PortalException;
-
-	protected abstract FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, String fileName)
-		throws PortalException;
-
-	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
+	protected FileEntry addFileEntry(PortletRequest portletRequest)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -122,15 +122,9 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
-
 		InputStream inputStream = null;
 
 		try {
-			imageJSONObject.put(
-				"attributeDataImageId",
-				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-
 			String parameterName = getParameterName();
 
 			String fileName = uploadPortletRequest.getFileName(parameterName);
@@ -144,17 +138,8 @@ public abstract class BaseUploadHandler implements UploadHandler {
 
 			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
 
-			FileEntry fileEntry = addFileEntry(
+			return addFileEntry(
 				themeDisplay, uniqueFileName, inputStream, contentType);
-
-			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-
-			imageJSONObject.put(
-				"url",
-				PortletFileRepositoryUtil.getPortletFileEntryURL(
-					themeDisplay, fileEntry, StringPool.BLANK));
-
-			return imageJSONObject;
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -163,6 +148,19 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
+
+	protected abstract FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
+			String contentType)
+		throws PortalException;
+
+	protected abstract void checkPermission(
+			long groupId, PermissionChecker permissionChecker)
+		throws PortalException;
+
+	protected abstract FileEntry fetchFileEntry(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException;
 
 	protected abstract String getParameterName();
 
