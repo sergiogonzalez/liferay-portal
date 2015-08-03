@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
+package com.liferay.portlet.documentlibrary;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class CoverImageNameException extends PortalException {
+public class ImageNameException extends PortalException {
 
-	public CoverImageNameException() {
+	public ImageNameException() {
 	}
 
-	public CoverImageNameException(String msg) {
+	public ImageNameException(String msg) {
 		super(msg);
 	}
 
-	public CoverImageNameException(String msg, Throwable cause) {
+	public ImageNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public CoverImageNameException(Throwable cause) {
+	public ImageNameException(Throwable cause) {
 		super(cause);
 	}
 

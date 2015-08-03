@@ -12,43 +12,41 @@
  * details.
  */
 
-package com.liferay.blogs.web.portlet.action;
+package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.image.selector.SmallImageSelectorUploadHandler;
-import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.upload.UploadHandler;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.upload.DLImageUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-@Component(
-	immediate = true,
+@OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
-		"mvc.command.name=/blogs/small_image_selector"
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/document_library/upload_image"
 	},
 	service = MVCActionCommand.class
 )
-public class SmallImageSelectorMVCActionCommand extends BaseMVCActionCommand {
+public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_imageSelectorUploadHandler.uploadSelectedImage(
-			actionRequest, actionResponse);
+		_uploadHandler.upload(actionRequest, actionResponse);
 	}
 
-	private final ImageSelectorUploadHandler _imageSelectorUploadHandler =
-		new SmallImageSelectorUploadHandler();
+	private UploadHandler _uploadHandler = new DLImageUploadHandler();
 
 }

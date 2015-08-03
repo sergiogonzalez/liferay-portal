@@ -12,34 +12,20 @@
  * details.
  */
 
-package com.liferay.blogs.web.image.selector;
+package com.liferay.portal.kernel.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.CoverImageSizeException;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
- * @author Sergio González
  * @author Adolfo Pérez
  */
-public class CoverImageSelectorUploadHandler
-	extends BaseBlogsImageSelectorUploadHandler {
+public interface UploadHandler {
 
-	@Override
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
-
-		if (size > getMaxFileSize()) {
-			throw new CoverImageSizeException();
-		}
-
-		super.validateFile(fileName, contentType, size);
-	}
-
-	@Override
-	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
-	}
+	public void upload(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException;
 
 }

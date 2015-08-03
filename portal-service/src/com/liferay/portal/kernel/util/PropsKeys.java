@@ -239,11 +239,9 @@ public interface PropsKeys {
 
 	public static final String BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = "blogs.entry.previous.and.next.navigation.enabled";
 
-	public static final String BLOGS_IMAGE_ALLOY_EDITOR_MAX_SIZE = "blogs.image.alloy.editor.max.size";
-
-	public static final String BLOGS_IMAGE_COVER_MAX_SIZE = "blogs.image.cover.max.size";
-
 	public static final String BLOGS_IMAGE_EXTENSIONS = "blogs.image.extensions";
+
+	public static final String BLOGS_IMAGE_MAX_SIZE = "blogs.image.max.size";
 
 	public static final String BLOGS_IMAGE_SMALL_MAX_SIZE = "blogs.image.small.max.size";
 
@@ -722,6 +720,8 @@ public interface PropsKeys {
 	public static final String DL_FOLDER_MENU_VISIBLE = "dl.folder.menu.visible";
 
 	public static final String DL_FOLDERS_SEARCH_VISIBLE = "dl.folders.search.visible";
+
+	public static final String DL_IMAGE_EXTENSIONS = "dl.image.extensions";
 
 	public static final String DL_NAME_BLACKLIST = "dl.name.blacklist";
 

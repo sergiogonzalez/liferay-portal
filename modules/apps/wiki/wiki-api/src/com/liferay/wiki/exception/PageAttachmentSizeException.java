@@ -12,20 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.image.selector;
+package com.liferay.wiki.exception;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 /**
- * @author Adolfo Pérez
+ * @author Brian Wing Shun Chan
  */
-public interface ImageSelectorUploadHandler {
+@ProviderType
+public class PageAttachmentSizeException extends PortalException {
 
-	public void uploadSelectedImage(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws PortalException;
+	public PageAttachmentSizeException() {
+	}
+
+	public PageAttachmentSizeException(String msg) {
+		super(msg);
+	}
+
+	public PageAttachmentSizeException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public PageAttachmentSizeException(Throwable cause) {
+		super(cause);
+	}
 
 }
