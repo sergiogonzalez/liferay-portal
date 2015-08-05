@@ -63,7 +63,19 @@ User selUser = (User)request.getAttribute("user.selUser");
 <div class="row">
 	<aui:fieldset cssClass="col-md-6">
 		<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
-		<liferay-ui:error exception="<%= OrganizationNameException.class %>" message="please-enter-a-valid-name" />
+
+		<liferay-ui:error exception="<%= OrganizationNameException.class %>">
+
+			<%
+			String subject = "organization name";
+
+			String organizationNameGeneralRestrictions = StringUtil.toLowerCase(LanguageUtil.get(request, "blank"));
+
+			String organizationNameReservedWords = StringPool.NULL;
+			%>
+
+			<liferay-ui:message arguments="<%= new String[] {subject, organizationNameGeneralRestrictions, organizationNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
 
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
