@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet.action;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.document.library.web.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/image_gallery_display/view_slide_show"
-	},
-	service = MVCRenderCommand.class
-)
-public class ViewSlideShowMVCRenderCommand extends GetFolderMVCRenderCommand {
+public class DLPortletKeys {
 
-	@Override
-	protected String getPath() {
-		return "/image_gallery_display/view_slide_show.jsp";
-	}
+	public static final String DOCUMENT_LIBRARY =
+		"com_liferay_document_library_web_portlet_DLPortlet";
+
+	public static final String DOCUMENT_LIBRARY_ADMIN =
+		"com_liferay_document_library_web_portlet_DLAdminPortlet";
+
+	public static final String DOCUMENT_LIBRARY_DISPLAY =
+		"com_liferay_document_library_web_portlet_DLDisplayPortlet";
+
+	public static final String MEDIA_GALLERY_DISPLAY =
+		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
 
 }
