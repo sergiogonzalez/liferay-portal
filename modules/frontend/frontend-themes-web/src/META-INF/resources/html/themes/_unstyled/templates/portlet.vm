@@ -8,9 +8,9 @@
 
 <section class="portlet" id="portlet_$portlet_id">
 	<header class="portlet-topper">
-		<h1 class="portlet-title">
+		<div class="portlet-title-default">
 			<span class="portlet-title-text">$portlet_title</span>
-		</h1>
+		</div>
 
 		#foreach ($portletTitleMenu in $portlet_toolbar.getPortletTitleMenus($portlet_id, $renderRequest))
 			<menu class="portlet-title-menu portlet-topper-toolbar" id="portlet-title-menu_${portlet_id}_${velocityCount}" type="toolbar">
