@@ -10,9 +10,9 @@
 
 <section class="portlet" id="portlet_${portlet_id}">
 	<header class="portlet-topper">
-		<h1 class="portlet-title">
+		<div class="portlet-title-default">
 			<span class="portlet-title-text">${portlet_title}</span>
-		</h1>
+		</div>
 
 		<#list portlet_toolbar.getPortletTitleMenus(portlet_id, renderRequest) as portletTitleMenu>
 			<menu class="portlet-title-menu portlet-topper-toolbar" id="portlet-title-menu_${portlet_id}_${portletTitleMenu_index + 1}" type="toolbar">
