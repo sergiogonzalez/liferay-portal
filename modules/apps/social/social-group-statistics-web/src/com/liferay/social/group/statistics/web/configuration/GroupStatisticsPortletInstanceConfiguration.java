@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,4 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
+
+package com.liferay.social.group.statistics.web.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+/**
+ * @author Iván Zaera
+ */
+@Meta.OCD(
+	id = "com.liferay.social.group.statistics.configuration.GroupStatisticsPortletInstanceConfiguration"
+)
+public interface GroupStatisticsPortletInstanceConfiguration {
+
+	@Meta.AD(required = false)
+	public String[] chartType();
+
+	@Meta.AD(required = false)
+	public String[] chartWidth();
+
+	@Meta.AD(required = false)
+	public String[] dataRange();
+
+	@Meta.AD(required = false)
+	public String[] displayActivityCounterName();
+
+}
