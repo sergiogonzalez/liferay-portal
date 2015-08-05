@@ -53,7 +53,31 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="old-role-name-is-a-required-system-role" />
-	<liferay-ui:error exception="<%= RoleNameException.class %>" message="please-enter-a-valid-name" />
+
+	<liferay-ui:error exception="<%= RoleNameException.class %>">
+
+		<%
+		String subject = "role name";
+		
+		String roleNameGeneralRestrictions = StringUtil.toLowerCase(LanguageUtil.get(request, "blank"));
+
+		if (!PropsValues.ROLES_NAME_ALLOW_NUMERIC) {
+			roleNameGeneralRestrictions += StringPool.COMMA_AND_SPACE + StringUtil.toLowerCase(LanguageUtil.get(request, "numeric"));
+		}
+
+		String roleNameReservedWords = StringPool.NULL;
+
+		String roleNameInvalidCharacters = StringPool.COMMA + StringPool.SPACE + StringPool.STAR;
+		%>
+
+		<p>
+			<liferay-ui:message arguments="<%= new String[] {subject, roleNameGeneralRestrictions, roleNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" />
+		</p>
+
+		<p>
+			<liferay-ui:message arguments="<%= new String[] {subject, roleNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" />
+		</p>
+	</liferay-ui:error>
 
 	<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
 
