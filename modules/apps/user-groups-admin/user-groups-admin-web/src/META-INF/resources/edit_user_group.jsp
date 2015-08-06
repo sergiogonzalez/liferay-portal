@@ -48,6 +48,7 @@ if (userGroup != null) {
 	<liferay-ui:error exception="<%= RequiredUserGroupException.class %>" message="this-is-a-required-user-group" />
 
 	<liferay-ui:error exception="<%= UserGroupNameException.class %>">
+
 		<%
 		String subject = "user group name";
 

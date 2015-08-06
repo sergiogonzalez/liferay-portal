@@ -84,7 +84,7 @@ if (workflowEnabled) {
 
 		<%
 		String subject = "folder name";
-		
+
 		String folderNameGeneralRestrictions = StringUtil.toLowerCase(LanguageUtil.get(request, "blank"));
 
 		String folderNameReservedWords = StringPool.NULL + StringPool.COMMA_AND_SPACE + StringUtil.merge(PropsValues.DL_NAME_BLACKLIST, StringPool.COMMA_AND_SPACE);

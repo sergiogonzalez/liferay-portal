@@ -58,7 +58,7 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 
 		<%
 		String subject = "role name";
-		
+
 		String roleNameGeneralRestrictions = StringUtil.toLowerCase(LanguageUtil.get(request, "blank"));
 
 		if (!PropsValues.ROLES_NAME_ALLOW_NUMERIC) {
