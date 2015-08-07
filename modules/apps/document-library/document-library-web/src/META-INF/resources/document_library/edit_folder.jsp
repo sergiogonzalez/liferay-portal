@@ -94,29 +94,19 @@ if (workflowEnabled) {
 		String folderNameInvalidEndCharacters = StringPool.BLANK;
 
 		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
-			String invalidEndChar = blacklistLastChar;
-
-			if (invalidEndChar.startsWith("\\u")) {
-				invalidEndChar = UnicodeFormatter.parseString(invalidEndChar);
+			if (blacklistLastChar.startsWith("\\u")) {
+				blacklistLastChar = UnicodeFormatter.parseString(blacklistLastChar);
 			}
 
-			folderNameInvalidEndCharacters += invalidEndChar + StringPool.SPACE;
+			folderNameInvalidEndCharacters += blacklistLastChar + StringPool.SPACE;
 		}
 
 		folderNameInvalidEndCharacters = StringUtil.trimTrailing(folderNameInvalidEndCharacters);
 		%>
 
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {subject, folderNameGeneralRestrictions, folderNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" />
-		</p>
-
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {folderNameInvalidEndCharacters} %>" key="the-folder-name-cannot-end-with-the-following-characters-x" />
-		</p>
-
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {subject, folderNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" />
-		</p>
+		<p><liferay-ui:message arguments="<%= new String[] {subject, folderNameGeneralRestrictions, folderNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" /></p>
+		<p><liferay-ui:message arguments="<%= new String[] {folderNameInvalidEndCharacters} %>" key="the-folder-name-cannot-end-with-the-following-characters-x" /></p>
+		<p><liferay-ui:message arguments="<%= new String[] {subject, folderNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" /></p>
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="please-select-a-document-type" />

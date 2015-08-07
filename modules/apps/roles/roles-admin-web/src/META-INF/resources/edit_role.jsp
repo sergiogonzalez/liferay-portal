@@ -70,13 +70,8 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 		String roleNameInvalidCharacters = StringPool.COMMA + StringPool.SPACE + StringPool.STAR;
 		%>
 
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {subject, roleNameGeneralRestrictions, roleNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" />
-		</p>
-
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {subject, roleNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" />
-		</p>
+		<p><liferay-ui:message arguments="<%= new String[] {subject, roleNameGeneralRestrictions, roleNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" /></p>
+		<p><liferay-ui:message arguments="<%= new String[] {subject, roleNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" /></p>
 	</liferay-ui:error>
 
 	<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />

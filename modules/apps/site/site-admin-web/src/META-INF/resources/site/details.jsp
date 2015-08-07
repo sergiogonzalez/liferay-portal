@@ -125,13 +125,8 @@ else if (group != null) {
 	String siteNameInvalidCharacters = StringPool.STAR;
 	%>
 
-	<p>
-		<liferay-ui:message arguments="<%= new String[] {subject, siteNameGeneralRestrictions, siteNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" />
-	</p>
-
-	<p>
-		<liferay-ui:message arguments="<%= new String[] {subject, siteNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" />
-	</p>
+	<p><liferay-ui:message arguments="<%= new String[] {subject, siteNameGeneralRestrictions, siteNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" /></p>
+	<p><liferay-ui:message arguments="<%= new String[] {subject, siteNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" /></p>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= GroupParentException.MustNotBeOwnParent.class %>" message="the-site-cannot-be-its-own-parent-site" />

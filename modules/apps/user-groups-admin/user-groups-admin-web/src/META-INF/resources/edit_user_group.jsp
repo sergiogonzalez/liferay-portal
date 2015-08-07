@@ -59,13 +59,8 @@ if (userGroup != null) {
 		String siteNameInvalidCharacters = StringPool.STAR;
 		%>
 
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {subject, siteNameGeneralRestrictions, siteNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" />
-		</p>
-
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {subject, siteNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" />
-		</p>
+		<p><liferay-ui:message arguments="<%= new String[] {subject, siteNameGeneralRestrictions, siteNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" /></p>
+		<p><liferay-ui:message arguments="<%= new String[] {subject, siteNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" /></p>
 	</liferay-ui:error>
 
 	<aui:model-context bean="<%= userGroup %>" model="<%= UserGroup.class %>" />
