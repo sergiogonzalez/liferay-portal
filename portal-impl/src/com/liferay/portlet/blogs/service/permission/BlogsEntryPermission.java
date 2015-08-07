@@ -73,7 +73,7 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 			return hasPermission.booleanValue();
 		}
 
-		if (entry.isDraft() || entry.isScheduled()) {
+		if (entry.isDraft()) {
 			if (actionId.equals(ActionKeys.VIEW) &&
 				!contains(permissionChecker, entry, ActionKeys.UPDATE)) {
 
