@@ -105,7 +105,7 @@ if (workflowEnabled) {
 		%>
 
 		<p><liferay-ui:message arguments="<%= new String[] {subject, folderNameGeneralRestrictions, folderNameReservedWords} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" translateArguments="<%= false %>" /></p>
-		<p><liferay-ui:message arguments="<%= new String[] {folderNameInvalidEndCharacters} %>" key="the-folder-name-cannot-end-with-the-following-characters-x" /></p>
+		<p><liferay-ui:message arguments="<%= new String[] {folderNameInvalidEndCharacters} %>" key="the-folder-name-cannot-end-with-the-following-characters-x" translateArguments="<%= false %>" /></p>
 		<p><liferay-ui:message arguments="<%= new String[] {subject, folderNameInvalidCharacters} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" translateArguments="<%= false %>" /></p>
 	</liferay-ui:error>
 
