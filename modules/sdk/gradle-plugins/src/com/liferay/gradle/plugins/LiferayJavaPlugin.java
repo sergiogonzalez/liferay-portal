@@ -83,12 +83,8 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
-import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
-import org.gradle.api.artifacts.ResolvedArtifact;
-import org.gradle.api.artifacts.ResolvedConfiguration;
-import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
@@ -135,8 +131,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
-	public static final String EXPAND_PORTAL_WEB_TASK_NAME = "expandPortalWeb";
-
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
 
 	public static final String FORMAT_XSD_TASK_NAME = "formatXSD";
@@ -144,8 +138,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
 
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
-
-	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
 
 	public static final String SETUP_ARQUILLIAN_TASK_NAME = "setupArquillian";
 
@@ -228,30 +220,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		delete.delete(deployedFile);
 	}
 
-	protected Configuration addConfigurationPortalWeb(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, PORTAL_WEB_CONFIGURATION_NAME);
-
-		configuration.setDescription(
-			"Configures portal-web for compiling CSS files.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addDependenciesPortalWeb(project);
-				}
-
-			});
-
-		return configuration;
-	}
-
 	protected void addConfigurations(Project project) {
-		addConfigurationPortalWeb(project);
 	}
 
 	protected void addDependenciesJspC(
@@ -260,12 +229,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME,
 			liferayExtension.getAppServerLibGlobalDir());
-	}
-
-	protected void addDependenciesPortalWeb(Project project) {
-		GradleUtil.addDependency(
-			project, PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
-			"portal-web", "default", false);
 	}
 
 	protected LiferayExtension addLiferayExtension(Project project) {
@@ -323,41 +286,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
 
 		GradleUtil.setProperty(copy, AUTO_CLEAN_PROPERTY_NAME, false);
-
-		return copy;
-	}
-
-	protected Copy addTaskExpandPortalWeb(final Project project) {
-		Copy copy = GradleUtil.addTask(
-			project, EXPAND_PORTAL_WEB_TASK_NAME, Copy.class);
-
-		copy.from(
-			new Callable<FileTree>() {
-
-				@Override
-				public FileTree call() throws Exception {
-					Configuration configuration = GradleUtil.getConfiguration(
-						project, PORTAL_WEB_CONFIGURATION_NAME);
-
-					return project.zipTree(configuration.getSingleFile());
-				}
-
-			});
-
-		copy.include("html/css/common/**/*");
-
-		copy.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						project, LiferayExtension.class);
-
-					return new File(liferayExtension.getTmpDir(), "portal-web");
-				}
-
-			});
 
 		return copy;
 	}
@@ -513,7 +441,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addTasks(Project project) {
 		addTaskDeploy(project);
-		addTaskExpandPortalWeb(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
@@ -1134,7 +1061,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 		configureTaskBuildCSSDocrootDirName(buildCSSTask);
-		configureTaskBuildCSSPortalCommonDirName(buildCSSTask);
 	}
 
 	protected void configureTaskBuildCSSDocrootDirName(
@@ -1153,39 +1079,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		File resourcesDir = getResourcesDir(project);
 
 		buildCSSTask.setDocrootDirName(project.relativePath(resourcesDir));
-	}
-
-	protected void configureTaskBuildCSSPortalCommonDirName(
-		BuildCSSTask buildCSSTask) {
-
-		Project project = buildCSSTask.getProject();
-
-		String portalCommonDirName = buildCSSTask.getPortalCommonDirName();
-
-		if (Validator.isNotNull(portalCommonDirName) &&
-			FileUtil.exists(project, portalCommonDirName)) {
-
-			return;
-		}
-
-		Task expandPortalWebTask = GradleUtil.getTask(
-			project, EXPAND_PORTAL_WEB_TASK_NAME);
-
-		FileCollection cssFiles = buildCSSTask.getCSSFiles();
-
-		if (!cssFiles.isEmpty()) {
-			buildCSSTask.dependsOn(expandPortalWebTask);
-		}
-
-		TaskOutputs taskOutputs = expandPortalWebTask.getOutputs();
-
-		FileCollection fileCollection = taskOutputs.getFiles();
-
-		File portalCommonDir = new File(
-			fileCollection.getSingleFile(), "html/css/common");
-
-		buildCSSTask.setPortalCommonDirName(
-			project.relativePath(portalCommonDir));
 	}
 
 	protected void configureTaskBuildLang(Project project) {
@@ -2084,86 +1977,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"javax.mail:mail:1.4", "javax.servlet.jsp:jsp-api:2.1",
 		"javax.servlet:javax.servlet-api:3.0.1", "log4j:log4j:1.2.17"
 	};
-
-	protected static class RenameDependencyClosure extends Closure<String> {
-
-		public RenameDependencyClosure(
-			Project project, String ... configurationNames) {
-
-			super(null);
-
-			_project = project;
-			_configurationNames = configurationNames;
-		}
-
-		public String doCall(String name) {
-			Map<String, String> newDependencyNames = _getNewDependencyNames();
-
-			String newDependencyName = newDependencyNames.get(name);
-
-			if (Validator.isNotNull(newDependencyName)) {
-				return newDependencyName;
-			}
-
-			return name;
-		}
-
-		private Map<String, String> _getNewDependencyNames() {
-			if (_newDependencyNames != null) {
-				return _newDependencyNames;
-			}
-
-			_newDependencyNames = new HashMap<>();
-
-			for (String configurationName : _configurationNames) {
-				Configuration configuration = GradleUtil.getConfiguration(
-					_project, configurationName);
-
-				ResolvedConfiguration resolvedConfiguration =
-					configuration.getResolvedConfiguration();
-
-				for (ResolvedArtifact resolvedArtifact :
-						resolvedConfiguration.getResolvedArtifacts()) {
-
-					ResolvedModuleVersion resolvedModuleVersion =
-						resolvedArtifact.getModuleVersion();
-
-					ModuleVersionIdentifier moduleVersionIdentifier =
-						resolvedModuleVersion.getId();
-
-					File file = resolvedArtifact.getFile();
-
-					String oldDependencyName = file.getName();
-
-					String newDependencyName = null;
-
-					String suffix =
-						"-" + moduleVersionIdentifier.getVersion() + ".jar";
-
-					if (oldDependencyName.endsWith(suffix)) {
-						newDependencyName = oldDependencyName.substring(
-							0, oldDependencyName.length() - suffix.length());
-
-						newDependencyName += ".jar";
-					}
-					else {
-						newDependencyName =
-							moduleVersionIdentifier.getName() + ".jar";
-					}
-
-					_newDependencyNames.put(
-						oldDependencyName, newDependencyName);
-				}
-			}
-
-			return _newDependencyNames;
-		}
-
-		private final String[] _configurationNames;
-		private Map<String, String> _newDependencyNames;
-		private final Project _project;
-
-	}
 
 	private int _updateStartedAppServerStopCounters(
 		File appServerBinDir, boolean increment) {

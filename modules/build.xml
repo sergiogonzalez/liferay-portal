@@ -36,6 +36,7 @@
 		<dirset dir="apps/message-boards" includes="*" />
 		<dirset dir="apps/microblogs" includes="*" />
 		<dirset dir="apps/mobile-device-rules" includes="*" />
+		<dirset dir="apps/my-account" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />
 		<dirset dir="apps/password-generator" includes="*" />
@@ -69,7 +70,7 @@
 		<dirset dir="apps/xsl-content" includes="*" />
 		<dirset dir="core" includes="*" />
 		<dirset dir="frontend" includes="*" />
-		<dirset dir="portal" excludes="portal-search-solr,portal-taglib-aui-form-extension-sample" includes="*" />
+		<dirset dir="portal" excludes="portal-background-task-api,portal-background-task-service,portal-background-task-test,portal-search-solr,portal-taglib-aui-form-extension-sample" includes="*" />
 		<dirset dir="portal-cache" includes="portal-cache,portal-cache-ehcache,portal-cache-ehcache-provider" />
 		<dirset dir="portal-security" includes="*" />
 		<dirset dir="portal-store" includes="*" />

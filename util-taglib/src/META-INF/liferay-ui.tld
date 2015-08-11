@@ -3469,7 +3469,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayStyleDefinition</name>
+			<name>ddmTemplateGroupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -3501,6 +3506,16 @@
 		<attribute>
 			<name>rootLayoutType</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>organization-search-container-results</name>
+		<tag-class>com.liferay.taglib.ui.OrganizationSearchContainerResultsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>organizationParams</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -5436,6 +5451,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>userIconCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>userId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5505,6 +5525,16 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>userParams</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>user-search-container-results</name>
+		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
+		<body-content>JSP</body-content>
 		<attribute>
 			<name>userParams</name>
 			<required>true</required>

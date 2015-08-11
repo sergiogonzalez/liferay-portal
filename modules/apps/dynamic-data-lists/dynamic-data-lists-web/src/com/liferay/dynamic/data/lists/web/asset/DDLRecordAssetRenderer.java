@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.asset.model.DDMFormValuesReader;
 
@@ -48,7 +49,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marcellus Tavares
  * @author Sergio González
  */
-public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
+public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 
 	public DDLRecordAssetRenderer(
 		DDLRecord record, DDLRecordVersion recordVersion) {
@@ -72,6 +73,11 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
 
 		_ddmStructure = ddmStructure;
 		_recordSet = recordSet;
+	}
+
+	@Override
+	public DDLRecord getAssetObject() {
+		return _record;
 	}
 
 	@Override
@@ -135,9 +141,9 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			DDLPortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 		portletURL.setParameter(

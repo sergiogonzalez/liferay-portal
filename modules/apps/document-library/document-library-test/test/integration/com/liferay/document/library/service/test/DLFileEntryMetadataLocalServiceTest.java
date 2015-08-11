@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -85,10 +85,11 @@ public class DLFileEntryMetadataLocalServiceTest {
 		byte[] testFileBytes = FileUtil.getBytes(
 			getClass(), "dependencies/ddmstructure.xml");
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-			new String(testFileBytes));
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormXSDDeserializerUtil.deserialize(new String(testFileBytes));
 
-		serviceContext.setAttribute("ddmForm", ddmForm);
+		serviceContext.setAttribute(
+			"ddmForm", DDMBeanCopyUtil.copyDDMForm(ddmForm));
 
 		User user = TestPropsValues.getUser();
 
@@ -187,8 +188,10 @@ public class DLFileEntryMetadataLocalServiceTest {
 		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
 			currentLocale);
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			availableLocales, currentLocale);
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(availableLocales);
+		ddmForm.setDefaultLocale(currentLocale);
 
 		DDMFormField ddmFormField = new DDMFormField("date_an", "ddm-date");
 
@@ -196,8 +199,10 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm, availableLocales, currentLocale);
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setAvailableLocales(availableLocales);
+		ddmFormValues.setDefaultLocale(currentLocale);
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
