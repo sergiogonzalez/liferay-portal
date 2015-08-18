@@ -13,7 +13,6 @@
 		<dirset dir="comment" includes="*" />
 		<dirset dir="configuration-admin" includes="*" />
 		<dirset dir="control-menu" includes="*" />
-		<dirset dir="control-panel" includes="*" />
 		<dirset dir="currency-converter" includes="*" />
 		<dirset dir="dictionary" includes="*" />
 		<dirset dir="document-library" includes="*" />
@@ -35,10 +34,12 @@
 		<dirset dir="message-boards" includes="*" />
 		<dirset dir="microblogs" includes="*" />
 		<dirset dir="mobile-device-rules" includes="*" />
+		<dirset dir="my-account" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />
 		<dirset dir="password-generator" includes="*" />
 		<dirset dir="password-policies-admin" includes="*" />
+		<dirset dir="plugins-admin" includes="*" />
 		<dirset dir="polls" includes="*" />
 		<dirset dir="portal-instances" includes="*" />
 		<dirset dir="portlet-configuration" includes="*" />
@@ -51,6 +52,7 @@
 		<dirset dir="rss" includes="*" />
 		<dirset dir="search" includes="*" />
 		<dirset dir="service-access-policy" includes="*" />
+		<dirset dir="shopping" includes="*" />
 		<dirset dir="site" includes="*" />
 		<dirset dir="site-navigation" includes="*" />
 		<dirset dir="social" includes="*" />

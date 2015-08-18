@@ -43,7 +43,7 @@ public class SiteTeamsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return SiteTeamsPortletKeys.SITE_TEAMS_ADMIN;
+		return SiteTeamsPortletKeys.SITE_TEAMS;
 	}
 
 	@Reference(unbind = "-")

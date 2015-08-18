@@ -505,11 +505,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isPartialText(String locator, String value) {
-		WebElement webElement = getWebElement(locator, "1");
-
-		String text = webElement.getText();
-
-		return text.contains(value);
+		return WebDriverHelper.isPartialText(this, locator, value);
 	}
 
 	@Override
@@ -544,6 +540,16 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public boolean isValue(String locator, String value) {
 		return value.equals(getValue(locator, "1"));
+	}
+
+	@Override
+	public void javaScriptMouseDown(String locator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void javaScriptMouseUp(String locator) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

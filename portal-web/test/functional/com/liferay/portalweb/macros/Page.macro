@@ -207,7 +207,9 @@
 
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_ALL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_NAME" value1="${siteName}" />
+		<var name="key_portletName" value="${siteName}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${siteName}" />
 	</command>
 
 	<command name="deleteFriendlyURLPG">
@@ -303,7 +305,7 @@
 		</if>
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" />
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_SIDEBAR_OPEN" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#CONTROL_PANEL_SIDE_NAVIGATION_TOGGLE" />
 			</then>
@@ -323,9 +325,16 @@
 
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
 
-		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
+			<then>
+				<var name="key_portletCategoryName" value="${portletCategoryName}" />
+
+				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
+			</then>
+		</if>
 
 		<if>
 			<not>
@@ -518,7 +527,7 @@
 			<equals arg1="${portletCategoryName}" arg2="Administration" />
 			<then>
 				<if>
-					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" />
+					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_SIDEBAR_OPEN" />
 					<then>
 						<execute function="Click" locator1="ProductMenu#CONTROL_PANEL_SIDE_NAVIGATION_TOGGLE" />
 					</then>
@@ -530,7 +539,7 @@
 			</then>
 			<else>
 				<if>
-					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_NAVIGATION" />
+					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_SIDEBAR_OPEN" />
 					<then>
 						<execute function="Click" locator1="ProductMenu#CONTROL_PANEL_SIDE_NAVIGATION_TOGGLE" />
 					</then>
@@ -595,7 +604,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION" />
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_SIDEBAR_OPEN" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#CONTROL_PANEL_SIDE_NAVIGATION_TOGGLE" />
 			</then>

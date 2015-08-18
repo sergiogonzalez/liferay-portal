@@ -732,7 +732,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/postgresql.jar</file-name>
-				<version>9.1-901 JDBC 3</version>
+				<version>9.4-1201 JDBC 41</version>
 				<project-name>PostgreSQL JDBC Driver</project-name>
 				<project-url>http://jdbc.postgresql.org</project-url>
 				<licenses>
@@ -1906,6 +1906,18 @@
 				<comments>
 					This includes a public patch from HHH-6286.
 				</comments>
+			</library>
+			<library>
+				<file-name>lib/portal/hikaricp.jar</file-name>
+				<version>2.4.0</version>
+				<project-name>HikariCP</project-name>
+				<project-url>https://github.com/brettwooldridge/HikariCP</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/htmlparser.jar</file-name>

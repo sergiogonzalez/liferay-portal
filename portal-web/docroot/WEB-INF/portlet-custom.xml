@@ -2,20 +2,6 @@
 
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
 	<portlet>
-		<portlet-name>2</portlet-name>
-		<display-name>My Account</display-name>
-		<portlet-class>com.liferay.portlet.myaccount.MyAccountPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/my_account/</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-	</portlet>
-	<portlet>
 		<portlet-name>9</portlet-name>
 		<display-name>Admin</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
@@ -81,30 +67,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>34</portlet-name>
-		<display-name>Shopping</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/shopping/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/shopping/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>47</portlet-name>
 		<display-name>Hello World</display-name>
 		<portlet-class>com.liferay.portlet.helloworld.HelloWorldPortlet</portlet-class>
@@ -130,7 +92,7 @@
 	<portlet>
 		<portlet-name>58</portlet-name>
 		<display-name>Login</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.login.LoginPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/login/configuration.jsp</value>
@@ -140,8 +102,8 @@
 			<value>/html/portlet/login/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/login/login</value>
+			<name>view-template</name>
+			<value>/html/portlet/login/login.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -262,62 +224,16 @@
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
 	</portlet>
 	<portlet>
-		<portlet-name>125</portlet-name>
-		<display-name>Users Admin</display-name>
-		<portlet-class>com.liferay.portlet.usersadmin.UsersAdminPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/users_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/users_admin/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>128</portlet-name>
-		<display-name>Roles Admin</display-name>
-		<portlet-class>com.liferay.portlet.rolesadmin.RolesAdminPortlet</portlet-class>
-		<init-param>
-			<name>mvc-action-command-package-prefix</name>
-			<value>com.liferay.portlet.rolesadmin.action</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/roles_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/roles_admin/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>130</portlet-name>
 		<display-name>Portal Settings</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.portalsettings.portlet.PortalSettingsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/portal_settings/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/portal_settings/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/portal_settings/edit_company.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -339,27 +255,6 @@
 		<init-param>
 			<name>view-action</name>
 			<value>/monitoring/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>132</portlet-name>
-		<display-name>Plugins Admin</display-name>
-		<portlet-class>com.liferay.portlet.pluginsadmin.PluginsAdminPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/plugins_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/plugins_admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -463,7 +358,7 @@
 	<portlet>
 		<portlet-name>164</portlet-name>
 		<display-name>Fast Login</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.login.LoginPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/login/configuration.jsp</value>
@@ -473,8 +368,8 @@
 			<value>/html/portlet/login/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/login/login</value>
+			<name>view-template</name>
+			<value>/html/portlet/login/login.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -627,31 +522,6 @@
 		</security-role-ref>
 		<security-role-ref>
 			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>197</portlet-name>
-		<display-name>Shopping Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/shopping_admin/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/shopping_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/shopping_admin/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
 		</security-role-ref>
 	</portlet>
 	<custom-portlet-mode>

@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = SearchFacet.class)
 public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
-	public List<AssetRendererFactory> getAssetRendererFactories() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactories() {
 		return _assetRendererFactories;
 	}
 
@@ -127,6 +127,11 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
+		return "any-asset";
+	}
+
+	@Override
+	public String getTitle() {
 		return "asset-type";
 	}
 
@@ -145,7 +150,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 		target = "(search.asset.type=*)", unbind = "removeAssetRendererFactory"
 	)
 	protected void addAssetRendererFactory(
-		AssetRendererFactory assetRendererFactory) {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		_assetRendererFactories.add(assetRendererFactory);
 	}
@@ -154,7 +159,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 		String[] assetTypes = new String[_assetRendererFactories.size()];
 
 		for (int i = 0; i < _assetRendererFactories.size(); i++) {
-			AssetRendererFactory assetRendererFactory =
+			AssetRendererFactory<?> assetRendererFactory =
 				_assetRendererFactories.get(i);
 
 			assetTypes[i] = assetRendererFactory.getClassName();
@@ -164,12 +169,12 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	protected void removeAssetRendererFactory(
-		AssetRendererFactory assetRendererFactory) {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		_assetRendererFactories.remove(assetRendererFactory);
 	}
 
-	private final List<AssetRendererFactory> _assetRendererFactories =
+	private final List<AssetRendererFactory<?>> _assetRendererFactories =
 		new CopyOnWriteArrayList<>();
 
 }

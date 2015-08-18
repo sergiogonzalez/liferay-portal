@@ -27,9 +27,6 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailNotificationPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeGroup;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeJournal;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeJournalArticleType;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeListType;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMembershipRequest;
@@ -39,12 +36,9 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeOrganization;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePhone;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
-import com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeShopping;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeShoppingPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 
@@ -73,9 +67,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeEmailNotificationPreferences.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeJournal.class);
-		upgrade(UpgradeJournalDisplayPreferences.class);
-		upgrade(UpgradeJournalArticleType.class);
 		upgrade(UpgradeLastPublishDate.class);
 		upgrade(UpgradeListType.class);
 		upgrade(UpgradeMembershipRequest.class);
@@ -87,16 +78,8 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradePortletDisplayTemplatePreferences.class);
 		upgrade(UpgradeRatings.class);
 		upgrade(UpgradeRepositoryEntry.class);
-		upgrade(UpgradeShopping.class);
-		upgrade(UpgradeShoppingPreferences.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
-
-		// This must be the last upgrade process. Otherwise, upgrades based on
-		// BaseUpgradePortletPreferences will fail because the portlet
-		// preferences will be in the new settings format.
-
-		upgrade(UpgradePortletSettings.class);
 	}
 
 }

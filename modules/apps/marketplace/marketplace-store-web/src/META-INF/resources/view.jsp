@@ -21,3 +21,11 @@
 </liferay-portlet:renderURL>
 
 <iframe frameborder="0" id="<portlet:namespace />frame" name="<portlet:namespace />frame" scrolling="no" src="<%= viewURL %>"></iframe>
+
+<c:if test="<%= GetterUtil.getBoolean(request.getAttribute(MarketplaceStoreWebKeys.OAUTH_AUTHORIZED)) %>">
+	<div class="sign-out">
+		<liferay-portlet:actionURL name="deauthorize" var="deauthorizeURL" />
+
+		<aui:button onClick="<%= deauthorizeURL %>" value="sign-out" />
+	</div>
+</c:if>

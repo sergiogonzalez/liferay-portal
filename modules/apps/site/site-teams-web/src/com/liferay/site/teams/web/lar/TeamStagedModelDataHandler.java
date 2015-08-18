@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS_ADMIN},
+	property = {"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS},
 	service = StagedModelDataHandler.class
 )
 public class TeamStagedModelDataHandler
