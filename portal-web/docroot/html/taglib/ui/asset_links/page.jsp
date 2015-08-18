@@ -49,7 +49,7 @@ if (assetEntryId > 0) {
 
 				assetLinkEntry = assetLinkEntry.toEscapedModel();
 
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetLinkEntry.getClassNameId());
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetLinkEntry.getClassNameId());
 
 				if (Validator.isNull(assetRendererFactory)) {
 					if (_log.isWarnEnabled()) {
@@ -63,7 +63,7 @@ if (assetEntryId > 0) {
 					continue;
 				}
 
-				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
+				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
 
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
@@ -91,14 +91,6 @@ if (assetEntryId > 0) {
 					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, viewFullContentURLString);
 
 					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", true);
-
-					String method = null;
-					String target = "_self";
-
-					if (themeDisplay.isStatePopUp()) {
-						method = "get";
-						target = "_blank";
-					}
 			%>
 
 					<li class="asset-links-list-item">
@@ -106,8 +98,8 @@ if (assetEntryId > 0) {
 							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= asseLinktEntryTitle %>"
-							method="<%= method %>"
-							target="<%= target %>"
+							method="get"
+							target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'
 							url="<%= urlViewInContext %>"
 						/>
 					</li>

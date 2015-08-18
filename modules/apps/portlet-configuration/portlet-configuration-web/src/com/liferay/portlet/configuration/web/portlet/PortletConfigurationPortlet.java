@@ -553,8 +553,18 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			Portlet portlet = ActionUtil.getPortlet(renderRequest);
 
 			if (mvcPath.endsWith("edit_configuration.jsp")) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				String settingsScope = renderRequest.getParameter(
+					"settingsScope");
+
+				PortletPreferences portletPreferences = getPortletPreferences(
+					themeDisplay, portlet.getPortletId(), settingsScope);
+
 				renderRequest = ActionUtil.getWrappedRenderRequest(
-					renderRequest, null);
+					renderRequest, portletPreferences);
 
 				renderEditConfiguration(renderRequest, portlet);
 			}

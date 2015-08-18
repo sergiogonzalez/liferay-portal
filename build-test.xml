@@ -117,10 +117,19 @@
 			<get-database-property property.name="database.username" />
 
 			<echo file="@{properties.file}"><![CDATA[liferay.home=${project.dir}
+
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}]]></echo>
+jdbc.default.password=${database.password}
+
+jdbc.default.maximumPoolSize=20
+jdbc.default.minimumIdle=0
+
+jdbc.counter.maximumPoolSize=5
+jdbc.counter.minimumIdle=0
+
+counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<post-action />
 		</sequential>
@@ -961,9 +970,7 @@ jdbc.default.password=${database.password}]]></echo>
 				</elseif>
 				<else>
 					<then>
-						<fail>
-Operating system is not supported.
-						</fail>
+						<fail message="Operating system is not supported." />
 					</then>
 				</else>
 			</if>
@@ -1064,6 +1071,7 @@ Operating system is not supported.
 			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
 				additionalConfigurations=\
 					cluster.routing.allocation.disk.threshold_enabled: false,\
+					cluster.service.slow_task_logging_threshold: 600s, \
 					index.indexing.slowlog.threshold.index.warn: 600s,\
 					index.search.slowlog.threshold.fetch.warn: 600s,\
 					index.search.slowlog.threshold.query.warn: 600s,\
@@ -1160,6 +1168,29 @@ Operating system is not supported.
 
 					<delete file="${basedir}/${patching.tool.zip.file.name}" />
 				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-ie-driver">
+		<sequential>
+			<if>
+				<os family="windows" />
+				<then>
+					<property name="selenium.ie.driver.zip" value="IEDriverServer_Win32_${selenium.ie.driver.version}.0.zip" />
+
+					<mirrors-get
+						dest="tools/selenium/${selenium.ie.driver.zip}"
+						src="http://selenium-release.storage.googleapis.com/${selenium.ie.driver.version}/${selenium.ie.driver.zip}"
+					/>
+
+					<stop-ie-driver />
+
+					<unzip src="tools/selenium/${selenium.ie.driver.zip}" dest="tools/selenium" />
+				</then>
+				<else>
+					<fail message="Operating system is not supported." />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -2398,6 +2429,14 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-ie-driver">
+		<sequential>
+			<exec executable="taskkill.exe">
+				<arg line="/F /IM IEDriverServer.exe" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-lcs-app-server">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -2642,20 +2681,52 @@ go]]></replacevalue>
 		<get-testray-testcase-product-edition />
 
 		<if>
-			<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
+			<and>
+				<isset property="env.GITHUB_BRANCH_NAME" />
+				<isset property="env.GITHUB_USERNAME" />
+			</and>
 			<then>
 				<propertyregex
 					input="${testray.build.name}"
 					override="true"
 					property="testray.build.name"
 					regexp="(-\s)\d+(\s-)"
-					replace="\1${env.TEST_BUILD_FIX_PACK_NAME}\2"
+					replace="\1${env.GITHUB_USERNAME} - ${env.GITHUB_BRANCH_NAME}\2"
 				/>
+			</then>
+			<elseif>
+				<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
+				<then>
+					<propertyregex
+						input="${testray.build.name}"
+						override="true"
+						property="testray.build.name"
+						regexp="(-\s)\d+(\s-)"
+						replace="\1${env.TEST_BUILD_FIX_PACK_NAME}\2"
+					/>
+				</then>
+			</elseif>
+		</if>
+
+		<var name="result.file" value="portal-web/test-results/functional/report.html" />
+
+		<if>
+			<and>
+				<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+				<isset property="test.class" />
+			</and>
+			<then>
+				<get-poshi-class-name />
+				<get-poshi-method-name />
+
+				<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
+
+				<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
 			</then>
 		</if>
 
 		<if>
-			<available file="portal-web/test-results/functional/report.html" />
+			<available file="${result.file}" />
 			<then>
 				<property name="test.case.attachments">
 					<![CDATA[
@@ -3346,20 +3417,24 @@ go]]></replacevalue>
 			</and>
 			<then>
 				<if>
-					<contains string="${test.class}" substring="#" />
+					<isset property="test.class" />
 					<then>
+						<antcall target="record-test-generated-properties" />
+
+						<property file="test.generated.properties" />
+
 						<get-test-class-name />
 
-						<get-test-method-name />
+						<if>
+							<contains string="${test.class}" substring="#" />
+							<then>
+								<get-test-method-name />
+							</then>
+							<else>
+								<property name="test.method.name" value="" />
+							</else>
+						</if>
 					</then>
-					<elseif>
-						<isset property="test.class" />
-						<then>
-							<get-test-class-name />
-
-							<property name="test.method.name" value="" />
-						</then>
-					</elseif>
 				</if>
 
 				<if>
@@ -4619,6 +4694,29 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
+	<target name="prepare-selenium-browser-driver">
+		<if>
+			<equals arg1="${browser.type}" arg2="googlechrome" />
+			<then>
+				<prepare-chrome-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="ie" />
+			<then>
+				<prepare-ie-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-selenium-browser-properties">
 		<if>
 			<equals arg1="${browser.type}" arg2="firefox" />
@@ -4641,6 +4739,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<then>
 					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 						browser.type=*iehta
+						selenium.ie.driver.executable=${selenium.ie.driver.executable}
 					</echo>
 				</then>
 			</elseif>
@@ -5187,13 +5286,16 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="sharepoint.enabled" />
+		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					sharepoint.vm.host.name=${sharepoint.vm.host.name}
+					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
 				</echo>
 			</then>
 		</if>
@@ -5865,17 +5967,36 @@ if (ppstate.equals("normal")) {
 
 				<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
+				<var name="result.file" value="portal-web/test-results/functional/report.html" />
+				<var name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
+
+				<if>
+					<and>
+						<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+						<isset property="test.class" />
+					</and>
+					<then>
+						<get-poshi-class-name />
+						<get-poshi-method-name />
+
+						<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
+
+						<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+						<var name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
+					</then>
+				</if>
+
 				<mkdir dir="${testray.logs.dir}" />
 
 				<copy
 					failonerror="false"
-					file="portal-web/test-results/functional/report.html"
+					file="${result.file}"
 					tofile="${testray.logs.dir}/report.html"
 				/>
 
 				<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
 					<fileset
-						dir="portal-web/test-results/functional/screenshots"
+						dir="${screenshot.dir}"
 					/>
 				</copy>
 
@@ -5958,8 +6079,10 @@ if (ppstate.equals("normal")) {
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
+			<arg value="-PprojectDir=${project.dir}" />
 			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
 			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
+			<arg value="-PtestBaseDirName=${project.dir}/portal-web/test/functional" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 			<arg value="-PtestConsoleLogFileName=${test.console.log.file.name}" />
 			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
@@ -6221,6 +6344,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<param name="todir" value="${app.server.lib.global.dir}" />
 		</antcall>
 
+		<get-testcase-property property.name="skip.clean-app-server-deploy-dir" />
+
 		<if>
 			<not>
 				<equals arg1="${skip.clean-app-server-deploy-dir}" arg2="true" />
@@ -6236,6 +6361,51 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<start-app-server />
 
 				<stop-app-server />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="cmis.repository.type" />
+
+		<if>
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
+			<then>
+				<if>
+					<os family="unix" />
+					<then>
+						<exec executable="/bin/bash" os="${os.unix}" outputproperty="cmis.repository.vm.host.name">
+							<arg value="-c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
+						</exec>
+					</then>
+					<else>
+						<exec executable="cmd" outputproperty="cmis.repository.vm.host.name">
+							<arg value="/c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
+						</exec>
+					</else>
+				</if>
+
+				<propertyregex
+					input="${cmis.repository.vm.host.name}"
+					override="true"
+					property="cmis.repository.vm.host.name"
+					regexp="&quot;(cloud.*?)&quot;"
+					select="\1"
+				/>
+
+				<if>
+					<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+					<then>
+						<replace
+							file="${lp.plugins.dir}/hooks/documentum-hook/docroot/WEB-INF/src/dfc.properties"
+							token="dfc.docbroker.host[0]=localhost"
+							value="dfc.docbroker.host[0]=${cmis.repository.vm.host.name}"
+						/>
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -6284,61 +6454,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="sharepoint.enabled" />
-
-		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
-			<then>
-				<if>
-					<os family="unix" />
-					<then>
-						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
-							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</then>
-					<else>
-						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
-							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</else>
-				</if>
-
-				<propertyregex
-					input="${sharepoint.vm.host.name}"
-					override="true"
-					property="sharepoint.vm.host.name"
-					regexp="&quot;(cloud.*?)&quot;"
-					select="\1"
-				/>
-			</then>
-		</if>
-
 		<antcall target="prepare-selenium" />
 
 		<remake-dir dir="${selenium.output.dir}" />
 
-		<if>
-			<equals arg1="${browser.type}" arg2="googlechrome" />
-			<then>
-				<prepare-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="ie" />
-			<then>
-				<antcall target="start-ie-driver" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="safari" />
-			<then>
-				<prepare-safari-driver />
-			</then>
-		</if>
+		<antcall target="prepare-selenium-browser-driver" />
 
 		<antcall target="copy-sikuli-temp-files" />
 
@@ -6391,10 +6511,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<antcall target="run-selenium-test" />
 
-		<get-testcase-property property.name="sharepoint.enabled" />
+		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
 			<then>
 				<property file="${project.dir}/portal-web/test/test-portal-web-ext.properties" />
 
@@ -6403,13 +6526,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}">
 							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${cmis.repository.vm.host.name}&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</then>
 					<else>
 						<exec executable="cmd">
 							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${cmis.repository.vm.host.name}&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</else>
 				</if>
@@ -6468,7 +6591,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="ie" />
 			<then>
-				<antcall target="stop-ie-driver" />
+				<stop-ie-driver />
 			</then>
 		</if>
 	</target>
@@ -6499,28 +6622,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			app.server.bundle.index="${app.server.bundle.index}"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
-	</target>
-
-	<target name="start-ie-driver">
-		<if>
-			<not>
-				<isset property="ie.driver.zip" />
-			</not>
-			<then>
-				<fail>
-.
-
-Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.31.0.zip" or "IEDriverServer_Win32_2.31.0.zip" which can be downloaded from this website: https://code.google.com/p/selenium/wiki/InternetExplorerDriver.
-				</fail>
-			</then>
-			<else>
-				<exec executable="taskkill.exe">
-					<arg line="/F /IM IEDriverServer.exe" />
-				</exec>
-
-				<unzip src="${ie.driver.zip}" dest="tools/selenium" />
-			</else>
-		</if>
 	</target>
 
 	<target name="start-lcs-server">
@@ -6589,12 +6690,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<stop-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 		/>
-	</target>
-
-	<target name="stop-ie-driver">
-		<exec executable="taskkill.exe">
-			<arg line="/F /IM IEDriverServer.exe" />
-		</exec>
 	</target>
 
 	<target name="stop-lcs-server">

@@ -15,11 +15,13 @@
 package com.liferay.document.library.web.portlet;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.upgrade.DLWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -31,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.control-panel-entry-weight=3.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-document-library",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/main.js",
-		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/upload.js",
+		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/modules.js",
 		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
 		"com.liferay.portlet.icon=/document_library/icons/document_library.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -56,4 +57,9 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DLAdminPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setDLWebUpgrade(DLWebUpgrade dlWebUpgrade) {
+	}
+
 }

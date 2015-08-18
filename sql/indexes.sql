@@ -56,14 +56,6 @@ create unique index IX_C0AAD74D on AssetVocabulary (groupId, name);
 create index IX_C4E6FD10 on AssetVocabulary (uuid_, companyId);
 create unique index IX_1B2B8792 on AssetVocabulary (uuid_, groupId);
 
-create index IX_C5A6C78F on BackgroundTask (companyId);
-create index IX_579C63B0 on BackgroundTask (groupId, name, taskExecutorClassName, completed);
-create index IX_C71C3B7 on BackgroundTask (groupId, status);
-create index IX_7A9FF471 on BackgroundTask (groupId, taskExecutorClassName, completed);
-create index IX_7E757D70 on BackgroundTask (groupId, taskExecutorClassName, status);
-create index IX_75638CDF on BackgroundTask (status);
-create index IX_2FCFE748 on BackgroundTask (taskExecutorClassName, status);
-
 create index IX_BB0C2905 on BlogsEntry (companyId, displayDate, status);
 create index IX_EB2DCE27 on BlogsEntry (companyId, status);
 create index IX_A5F57B61 on BlogsEntry (companyId, userId, status);
@@ -313,24 +305,6 @@ create unique index IX_33781904 on MBThreadFlag (userId, threadId);
 create index IX_DCE308C5 on MBThreadFlag (uuid_, companyId);
 create unique index IX_FEB0FC87 on MBThreadFlag (uuid_, groupId);
 
-create index IX_FD90786C on MDRAction (ruleGroupInstanceId);
-create index IX_C58A516B on MDRAction (uuid_, companyId);
-create unique index IX_75BE36AD on MDRAction (uuid_, groupId);
-
-create index IX_4F4293F1 on MDRRule (ruleGroupId);
-create index IX_7DEA8DF1 on MDRRule (uuid_, companyId);
-create unique index IX_F3EFDCB3 on MDRRule (uuid_, groupId);
-
-create index IX_5849891C on MDRRuleGroup (groupId);
-create index IX_CC14DC2 on MDRRuleGroup (uuid_, companyId);
-create unique index IX_46665CC4 on MDRRuleGroup (uuid_, groupId);
-
-create unique index IX_808A0036 on MDRRuleGroupInstance (classNameId, classPK, ruleGroupId);
-create index IX_22DAB85C on MDRRuleGroupInstance (groupId, classNameId, classPK);
-create index IX_BF3E642B on MDRRuleGroupInstance (ruleGroupId);
-create index IX_25C9D1F7 on MDRRuleGroupInstance (uuid_, companyId);
-create unique index IX_9CBC6A39 on MDRRuleGroupInstance (uuid_, groupId);
-
 create index IX_C28C72EC on MembershipRequest (groupId, statusId);
 create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);
 create index IX_66D70879 on MembershipRequest (userId);
@@ -442,31 +416,6 @@ create index IX_7020130F on SCProductVersion (directDownloadURL);
 create index IX_8377A211 on SCProductVersion (productEntryId);
 
 create unique index IX_4F0315B8 on ServiceComponent (buildNamespace, buildNumber);
-
-create unique index IX_FC46FE16 on ShoppingCart (groupId, userId);
-create index IX_54101CC8 on ShoppingCart (userId);
-
-create index IX_6A84467D on ShoppingCategory (groupId, name);
-create index IX_1E6464F5 on ShoppingCategory (groupId, parentCategoryId);
-
-create unique index IX_DC60CFAE on ShoppingCoupon (code_);
-create index IX_3251AF16 on ShoppingCoupon (groupId);
-
-create unique index IX_1C717CA6 on ShoppingItem (companyId, sku);
-create index IX_FEFE7D76 on ShoppingItem (groupId, categoryId);
-create index IX_903DC750 on ShoppingItem (largeImageId);
-create index IX_D217AB30 on ShoppingItem (mediumImageId);
-create index IX_FF203304 on ShoppingItem (smallImageId);
-
-create index IX_6D5F9B87 on ShoppingItemField (itemId);
-
-create index IX_EA6FD516 on ShoppingItemPrice (itemId);
-
-create index IX_119B5630 on ShoppingOrder (groupId, userId, ppPaymentStatus);
-create unique index IX_D7D6E87A on ShoppingOrder (number_);
-create index IX_F474FD89 on ShoppingOrder (ppTxnId);
-
-create index IX_B5F82C7A on ShoppingOrderItem (orderId);
 
 create index IX_F542E9BC on SocialActivity (activitySetId);
 create index IX_D0E9029E on SocialActivity (classNameId, classPK, type_);

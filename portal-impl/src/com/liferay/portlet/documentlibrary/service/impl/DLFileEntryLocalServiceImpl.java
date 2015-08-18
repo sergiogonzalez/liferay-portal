@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -103,10 +104,10 @@ import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
@@ -2007,6 +2008,17 @@ public class DLFileEntryLocalServiceImpl
 			userId, new LiferayFileEntry(dlFileEntry),
 			new LiferayFileVersion(dlFileVersion), oldStatus, status,
 			serviceContext, workflowContext);
+
+		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				CommentManagerUtil.moveDiscussionToTrash(
+					DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+			}
+			else if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				CommentManagerUtil.restoreDiscussionFromTrash(
+					DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+			}
+		}
 
 		// Indexer
 

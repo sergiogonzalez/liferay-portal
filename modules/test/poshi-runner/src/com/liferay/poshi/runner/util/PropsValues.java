@@ -96,6 +96,8 @@ public class PropsValues {
 
 	public static final String PRODUCT_NAMES = PropsUtil.get("product.names");
 
+	public static final String PROJECT_DIR = PropsUtil.get("project.dir");
+
 	public static final boolean SAVE_SCREENSHOT = GetterUtil.getBoolean(
 		PropsUtil.get("save.screenshot"));
 
@@ -105,10 +107,19 @@ public class PropsValues {
 	public static final String SELENIUM_CHROME_DRIVER_EXECUTABLE =
 		PropsUtil.get("selenium.chrome.driver.executable");
 
+	public static final String SELENIUM_DESIRED_CAPABILITIES_PLATFORM =
+		PropsUtil.get("selenium.desired.capabilities.platform");
+
+	public static final String SELENIUM_DESIRED_CAPABILITIES_VERSION =
+		PropsUtil.get("selenium.desired.capabilities.version");
+
 	public static final String SELENIUM_EXECUTABLE_DIR_NAME =
 		PropsUtil.get("selenium.executable.dir.name");
 
 	public static final String SELENIUM_HOST = PropsUtil.get("selenium.host");
+
+	public static final String SELENIUM_IE_DRIVER_EXECUTABLE =
+		PropsUtil.get("selenium.ie.driver.executable");
 
 	public static final String SELENIUM_IMPLEMENTATION = PropsUtil.get(
 		"selenium.implementation");
@@ -118,6 +129,12 @@ public class PropsValues {
 
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		PropsUtil.get("selenium.port"));
+
+	public static final boolean SELENIUM_REMOTE_DRIVER_ENABLED =
+		GetterUtil.getBoolean(PropsUtil.get("selenium.remote.driver.enabled"));
+
+	public static final String SELENIUM_REMOTE_DRIVER_HUB =
+		PropsUtil.get("selenium.remote.driver.hub");
 
 	public static final String TCAT_ADMIN_REPOSITORY = PropsUtil.get(
 		"tcat.admin.repository");

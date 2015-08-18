@@ -19,9 +19,11 @@ import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.marketplace.store.web.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
+import com.liferay.marketplace.store.web.constants.MarketplaceStoreWebKeys;
 import com.liferay.marketplace.store.web.oauth.util.OAuthManager;
 import com.liferay.marketplace.store.web.util.MarketplaceLicenseUtil;
 import com.liferay.marketplace.util.MarketplaceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;
@@ -37,6 +39,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -48,9 +51,13 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import org.scribe.model.Token;
 
 /**
  * @author Ryan Park
@@ -385,6 +392,34 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		return true;
 	}
 
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			Token accessToken = _oAuthManager.getAccessToken(
+				themeDisplay.getUser());
+
+			if (accessToken == null) {
+				include("/login.jsp", renderRequest, renderResponse);
+
+				return;
+			}
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
+
+		renderRequest.setAttribute(
+			MarketplaceStoreWebKeys.OAUTH_AUTHORIZED, Boolean.TRUE);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 	protected JSONObject getAppJSONObject(long remoteAppId) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -425,8 +460,8 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	}
 
 	@Override
-	protected String getServerNamespace() {
-		return PortalUtil.getPortletNamespace(_OSB_PORTLET_ID);
+	protected String getServerPortletId() {
+		return _OSB_PORTLET_ID;
 	}
 
 	@Override

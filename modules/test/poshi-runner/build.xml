@@ -165,12 +165,15 @@
 				portal,\
 				social-office
 
-			test.base.dir.name=../../../portal-web/test/functional/com/liferay/portalweb/
+			project.dir=${lp.portal.project.dir}
+
+			test.base.dir.name=${lp.portal.project.dir}/portal-web/test/functional/com/liferay/portalweb/
 
 			test.case.available.property.names=\
 				app.server.bundles.size,\
 				captcha.max.challenges,\
 				cluster.enabled,\
+				cmis.repository.type,\
 				custom.properties,\
 				data.archive.type,\
 				database.jndi.enabled,\
@@ -193,7 +196,6 @@
 				portlet.properties.marketplace-portlet,\
 				portlet.properties.private-messaging-portlet,\
 				setup.wizard.enabled,\
-				sharepoint.enabled,\
 				solr.enabled,\
 				test.assert.javascript.errors,\
 				testcase.url,\

@@ -16,10 +16,13 @@ package com.liferay.portal.theme;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
@@ -83,6 +86,52 @@ public class NavItem implements Serializable {
 			WebKeys.THEME_DISPLAY);
 		_layout = layout;
 		_contextObjects = contextObjects;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof NavItem)) {
+			return false;
+		}
+
+		NavItem navItem = (NavItem)obj;
+
+		if (Validator.equals(getLayoutId(), navItem.getLayoutId())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns all of the browsable child layouts that the current user has
+	 * permission to access from this navigation item's layout.
+	 *
+	 * @return the list of all browsable child layouts that the current user has
+	 *         permission to access from this navigation item's layout
+	 * @throws Exception if an exception occurred
+	 */
+	public List<NavItem> getBrowsableChildren() throws Exception {
+		if (_browsableChildren == null) {
+			List<NavItem> children = getChildren();
+
+			_browsableChildren = ListUtil.filter(
+				children,
+				new PredicateFilter<NavItem>() {
+
+					@Override
+					public boolean filter(NavItem navItem) {
+						return navItem.isBrowsable();
+					}
+
+				});
+		}
+
+		return _browsableChildren;
 	}
 
 	/**
@@ -215,6 +264,25 @@ public class NavItem implements Serializable {
 	}
 
 	/**
+	 * Returns <code>true</code> if the navigation item's layout has browsable
+	 * child layouts.
+	 *
+	 * @return <code>true</code> if the navigation item's layout has browsable
+	 * 		   child layouts; <code>false</code> otherwise
+	 * @throws Exception if an exception occurred
+	 */
+	public boolean hasBrowsableChildren() throws Exception {
+		List<NavItem> browsableChildren = getBrowsableChildren();
+
+		if (!browsableChildren.isEmpty()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Returns <code>true</code> if the navigation item's layout has child
 	 * layouts.
 	 *
@@ -233,6 +301,11 @@ public class NavItem implements Serializable {
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		return _layout.hashCode();
+	}
+
 	public void icon() throws Exception {
 		Object velocityTaglib = _contextObjects.get("theme");
 
@@ -242,9 +315,23 @@ public class NavItem implements Serializable {
 		method.invoke(velocityTaglib, _layout);
 	}
 
+	public boolean isBrowsable() {
+		LayoutType layoutType = _layout.getLayoutType();
+
+		return layoutType.isBrowsable();
+	}
+
 	public boolean isChildSelected() throws PortalException {
 		return _layout.isChildSelected(
 			_themeDisplay.isTilesSelectable(), _themeDisplay.getLayout());
+	}
+
+	public boolean isInNavigation(List<NavItem> navItems) {
+		if (navItems == null) {
+			return false;
+		}
+
+		return navItems.contains(this);
 	}
 
 	public boolean isSelected() throws Exception {
@@ -253,6 +340,7 @@ public class NavItem implements Serializable {
 			_themeDisplay.getLayout().getAncestorPlid());
 	}
 
+	private List<NavItem> _browsableChildren;
 	private List<NavItem> _children;
 	private final Map<String, Object> _contextObjects;
 	private final Layout _layout;

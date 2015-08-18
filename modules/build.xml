@@ -3,6 +3,7 @@
 
 <project>
 	<path id="plugins.includes.path">
+		<dirset dir="addons/layout-type-controller" includes="*" />
 		<dirset dir="addons/portlet-configuration-icon" includes="*" />
 		<dirset dir="apps/amazon-rankings" includes="*" />
 		<dirset dir="apps/announcements" includes="*" />
@@ -14,7 +15,6 @@
 		<dirset dir="apps/comment" includes="*" />
 		<dirset dir="apps/configuration-admin" includes="*" />
 		<dirset dir="apps/control-menu" includes="*" />
-		<dirset dir="apps/control-panel" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />
 		<dirset dir="apps/document-library" includes="*" />
@@ -36,10 +36,12 @@
 		<dirset dir="apps/message-boards" includes="*" />
 		<dirset dir="apps/microblogs" includes="*" />
 		<dirset dir="apps/mobile-device-rules" includes="*" />
+		<dirset dir="apps/my-account" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />
 		<dirset dir="apps/password-generator" includes="*" />
 		<dirset dir="apps/password-policies-admin" includes="*" />
+		<dirset dir="apps/plugins-admin" includes="*" />
 		<dirset dir="apps/polls" includes="*" />
 		<dirset dir="apps/portal-instances" includes="*" />
 		<dirset dir="apps/portlet-configuration" includes="*" />
@@ -53,6 +55,7 @@
 		<dirset dir="apps/search" includes="*" />
 		<dirset dir="apps/service-access-policy" includes="*" />
 		<dirset dir="apps/site" includes="*" />
+		<dirset dir="apps/shopping" includes="*" />
 		<dirset dir="apps/site-navigation" includes="*" />
 		<dirset dir="apps/social" excludes="social-networking-*" includes="*" />
 		<dirset dir="apps/social-office" includes="*" />

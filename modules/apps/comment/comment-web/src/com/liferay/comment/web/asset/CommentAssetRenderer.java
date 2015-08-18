@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
@@ -50,10 +50,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class CommentAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<WorkflowableComment> implements TrashRenderer {
 
 	public CommentAssetRenderer(WorkflowableComment workflowableComment) {
 		_workflowableComment = workflowableComment;
+	}
+
+	@Override
+	public WorkflowableComment getAssetObject() {
+		return _workflowableComment;
 	}
 
 	@Override
@@ -90,7 +95,8 @@ public class CommentAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -140,15 +146,9 @@ public class CommentAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL editPortletURL = PortletURLFactoryUtil.create(
-			request, CommentPortletKeys.COMMENT,
-			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
+		PortletURL editPortletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, CommentPortletKeys.COMMENT, 0,
+			PortletRequest.RENDER_PHASE);
 
 		editPortletURL.setParameter("mvcPath", "/edit_discussion.jsp");
 		editPortletURL.setParameter(
@@ -163,7 +163,8 @@ public class CommentAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

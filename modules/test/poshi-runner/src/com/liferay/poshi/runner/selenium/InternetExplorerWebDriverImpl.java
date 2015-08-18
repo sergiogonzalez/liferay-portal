@@ -14,7 +14,11 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.internal.WrapsDriver;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,6 +29,62 @@ public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 		String projectDirName, String browserURL) {
 
 		super(projectDirName, browserURL, new InternetExplorerDriver());
+	}
+
+	public InternetExplorerWebDriverImpl(
+		String projectDirName, String browserURL, WebDriver webDriver) {
+
+		super(projectDirName, browserURL, webDriver);
+	}
+
+	@Override
+	public void javaScriptMouseDown(String locator) {
+		WebElement webElement = getWebElement(locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append("var element = arguments[0];");
+		sb.append("var event = document.createEvent('MouseEvents');");
+		sb.append("event.initEvent('pointerdown', true, false);");
+		sb.append("element.dispatchEvent(event);");
+
+		javascriptExecutor.executeScript(sb.toString(), webElement);
+	}
+
+	@Override
+	public void javaScriptMouseUp(String locator) {
+		WebElement webElement = getWebElement(locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		StringBuilder sb = new StringBuilder(5);
+
+		sb.append("var element = arguments[0];");
+		sb.append("var event = document.createEvent('MouseEvents');");
+		sb.append("event.initEvent('pointerup', true, false);");
+		sb.append("element.dispatchEvent(event)");
+
+		javascriptExecutor.executeScript(sb.toString(), webElement);
 	}
 
 }

@@ -2,7 +2,9 @@ import com.liferay.gradle.util.FileUtil
 
 buildscript {
 	repositories {
-		mavenLocal()
+		if (!Boolean.getBoolean("maven.local.ignore")) {
+			mavenLocal()
+		}
 
 		maven {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
@@ -16,14 +18,6 @@ buildscript {
 }
 
 buildDir = new File(rootDir.parentFile, "build")
-
-task wrapper(type: Wrapper) {
-	File wrapperDir = rootDir.parentFile
-
-	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
-	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
-	scriptFile = new File(wrapperDir, "gradlew")
-}
 
 gradle.beforeProject {
 	Project project ->

@@ -1007,6 +1007,13 @@ public class LayoutStagedModelDataHandler
 
 			Layout importedLinkedLayout = layouts.get(linkToLayoutId);
 
+			if (importedLinkedLayout == null) {
+				throw new NoSuchLayoutException(
+					"Layout with layout id " + linkToLayoutId +
+						" that is linked from layout with layout id " +
+							layout.getLayoutId() + " does not exist");
+			}
+
 			typeSettingsProperties.setProperty(
 				"privateLayout",
 				String.valueOf(importedLinkedLayout.isPrivateLayout()));

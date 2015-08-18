@@ -47,8 +47,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
+import com.liferay.portlet.mobiledevicerules.MDRRuleGroupInstance;
 
 import java.io.Serializable;
 
@@ -536,8 +537,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Returns the URL for the portal instance's JavaScript resources. This
-	 * method typically returns <code>/html/js</code>.
+	 * Returns the URL for the portal instance's JavaScript resources.
 	 *
 	 * @return the URL for the portal instance's JavaScript resources
 	 */
@@ -918,9 +918,12 @@ public class ThemeDisplay
 	@JSON(include = false)
 	public PortletURL getURLMyAccount() {
 		if (_urlMyAccount == null) {
+			String portletId = PortletProviderUtil.getPortletId(
+				PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+				PortletProvider.Action.VIEW);
+
 			_urlMyAccount = PortalUtil.getControlPanelPortletURL(
-				getRequest(), PortletKeys.MY_ACCOUNT, 0,
-				PortletRequest.RENDER_PHASE);
+				getRequest(), portletId, 0, PortletRequest.RENDER_PHASE);
 		}
 
 		return _urlMyAccount;

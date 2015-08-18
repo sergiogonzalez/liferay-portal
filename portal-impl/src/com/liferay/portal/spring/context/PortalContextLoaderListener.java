@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.context;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
+import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.dao.orm.hibernate.FieldInterceptionHelperUtil;
 import com.liferay.portal.deploy.hot.CustomJspBagRegistryUtil;
 import com.liferay.portal.deploy.hot.IndexerPostProcessorRegistry;
@@ -74,7 +75,9 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.beans.PropertyDescriptor;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 
 import java.lang.reflect.Field;
 
@@ -82,6 +85,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -160,6 +165,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		closeDataSource("counterDataSourceWrapper");
+
+		closeDataSource("liferayDataSourceWrapper");
 
 		try {
 			super.contextDestroyed(servletContextEvent);
@@ -379,6 +388,24 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	protected void closeDataSource(String name) {
+		DataSourceWrapper dataSourceWrapper =
+			(DataSourceWrapper)PortalBeanLocatorUtil.locate(name);
+
+		DataSource dataSource = dataSourceWrapper.getWrappedDataSource();
+
+		if (dataSource instanceof Closeable) {
+			try {
+				Closeable closeable = (Closeable)dataSource;
+
+				closeable.close();
+			}
+			catch (IOException e) {
+				_log.error(e, e);
+			}
 		}
 	}
 

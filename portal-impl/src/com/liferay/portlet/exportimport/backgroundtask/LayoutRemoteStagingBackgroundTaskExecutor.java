@@ -20,6 +20,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -93,7 +93,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			Map<Long, Boolean> layoutIdMap =
 				(Map<Long, Boolean>)settingsMap.get("layoutIdMap");
-			long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 
 			Map<String, Serializable> taskContextMap =
 				backgroundTask.getTaskContextMap();
@@ -101,13 +101,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			httpPrincipal = (HttpPrincipal)taskContextMap.get("httpPrincipal");
 
 			file = exportLayoutsAsFile(
-				exportImportConfiguration, layoutIdMap, remoteGroupId,
+				exportImportConfiguration, layoutIdMap, targetGroupId,
 				httpPrincipal);
 
 			String checksum = FileUtil.getMD5Checksum(file);
 
 			stagingRequestId = StagingServiceHttp.createStagingRequest(
-				httpPrincipal, remoteGroupId, checksum);
+				httpPrincipal, targetGroupId, checksum);
 
 			transferFileToRemoteLive(file, stagingRequestId, httpPrincipal);
 
