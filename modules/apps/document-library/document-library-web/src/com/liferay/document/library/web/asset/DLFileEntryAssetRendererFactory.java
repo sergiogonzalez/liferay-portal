@@ -34,8 +34,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -48,6 +48,7 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -78,7 +79,7 @@ public class DLFileEntryAssetRendererFactory
 	public AssetRenderer<FileEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(classPK);
 
 		FileVersion fileVersion = null;
 
@@ -125,7 +126,7 @@ public class DLFileEntryAssetRendererFactory
 	public String getTypeName(Locale locale, long subtypeId) {
 		try {
 			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryType(subtypeId);
+				_dlFileEntryTypeLocalService.getFileEntryType(subtypeId);
 
 			return dlFileEntryType.getName(locale);
 		}
@@ -213,5 +214,20 @@ public class DLFileEntryAssetRendererFactory
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/clip.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }
