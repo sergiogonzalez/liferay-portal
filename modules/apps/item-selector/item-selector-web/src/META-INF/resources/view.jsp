@@ -50,9 +50,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		if (Validator.isNull(selectedTab)) {
 			selectedTab = titles.get(0);
 		}
+
+		ItemSelectorViewRenderer initialItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
+
+		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = initialItemSelectorViewRenderer.getItemSelectorView();
 		%>
 
-		<div class="form-search" id="<portlet:namespace />formSearch">
+		<div class="form-search <%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
 			<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
 				<div class="input-group-input">
 					<div class="basic-search-slider">
