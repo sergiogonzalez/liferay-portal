@@ -14,9 +14,11 @@
 
 package com.liferay.item.selector.upload.web.display.context;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.ItemSelectorUploadView;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -32,6 +34,16 @@ public class ItemSelectorUploadViewDisplayContext {
 		_uploadItemSelectorCriterion = uploadItemSelectorCriterion;
 		_itemSelectorUploadView = itemSelectorUploadView;
 		_itemSelectedEventName = itemSelectedEventName;
+	}
+
+	public String getFirstReturnTypeClassName() {
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			_uploadItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+		ItemSelectorReturnType itemSelectorReturnType =
+			desiredItemSelectorReturnTypes.get(0);
+
+		return itemSelectorReturnType.getClass().getName();
 	}
 
 	public String getItemSelectedEventName() {

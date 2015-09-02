@@ -17,8 +17,10 @@ package com.liferay.item.selector.taglib;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.TitleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.item.selector.criteria.UploadableFileTitleReturnType;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -63,6 +65,10 @@ public class ItemSelectorBrowserReturnTypeUtil
 
 		if (className.equals(FileEntryItemSelectorReturnType.class.getName())) {
 			return getFileEntryValue(fileEntry, themeDisplay);
+		}
+
+		if (className.equals(TitleItemSelectorReturnType.class.getName())) {
+			return fileEntry.getTitle();
 		}
 		else if (className.equals(URLItemSelectorReturnType.class.getName())) {
 			return getURLValue(fileEntry, themeDisplay);
@@ -119,12 +125,14 @@ public class ItemSelectorBrowserReturnTypeUtil
 		ListUtil.fromArray(
 			new String[] {
 				ClassUtil.getClassName(new Base64ItemSelectorReturnType()),
-				ClassUtil.getClassName(new UploadableFileReturnType())
+				ClassUtil.getClassName(new UploadableFileReturnType()),
+				ClassUtil.getClassName(new UploadableFileTitleReturnType())
 			});
 	private static final List<String> _existingFileEntryReturnTypeNames =
 		ListUtil.fromArray(
 			new String[] {
 				ClassUtil.getClassName(new FileEntryItemSelectorReturnType()),
+				ClassUtil.getClassName(new TitleItemSelectorReturnType()),
 				ClassUtil.getClassName(new URLItemSelectorReturnType())
 			});
 

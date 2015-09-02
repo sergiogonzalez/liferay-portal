@@ -3,6 +3,8 @@
 
 	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
 
+	var STR_UPLOADABLE_FILE_TITLE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileTitleReturnType';
+
 	CKEDITOR.plugins.add(
 		pluginName,
 		{
@@ -18,22 +20,30 @@
 								var selectedItem = event.newVal;
 
 								if (selectedItem) {
-									var imageSrc = selectedItem.value;
+									var value = selectedItem.value;
 
 									if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
 										try {
-											imageSrc = JSON.parse(selectedItem.value).url;
+											value = JSON.parse(selectedItem.value).url;
 										}
 										catch (e) {
 										}
 									}
 
-									if (imageSrc) {
+									if (selectedItem.returnType === STR_UPLOADABLE_FILE_TITLE_RETURN_TYPE) {
+										try {
+											value = JSON.parse(selectedItem.value).title;
+										}
+										catch (e) {
+										}
+									}
+
+									if (value) {
 										if (callback) {
-											callback(imageSrc);
+											callback(value);
 										}
 										else {
-											var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
+											var el = CKEDITOR.dom.element.createFromHtml('<img src="' + value + '">');
 
 											editor.insertElement(el);
 										}
