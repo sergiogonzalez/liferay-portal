@@ -254,6 +254,22 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap fetchFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.fetchFileEntryByFileName(groupId,
+					folderId, fileName);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap fetchFileEntryByImageId(
 		long imageId) throws RemoteException {
 		try {
