@@ -237,6 +237,15 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		return dlFileEntryLocalService.fetchFileEntryByFileName(
+			groupId, folderId, fileName);
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByImageId(long imageId)
 		throws PortalException {
 
@@ -387,6 +396,21 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 			groupId, folderId, title);
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), dlFileEntry, ActionKeys.VIEW);
+
+		return dlFileEntry;
+	}
+
+	@Override
+	public DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName, boolean includePWC)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry =
+			dlFileEntryLocalService.getFileEntryByFileName(
+				groupId, folderId, fileName, includePWC);
 
 		DLFileEntryPermission.check(
 			getPermissionChecker(), dlFileEntry, ActionKeys.VIEW);

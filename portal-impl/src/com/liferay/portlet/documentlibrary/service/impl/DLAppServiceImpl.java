@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.FileNameCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -1168,6 +1169,34 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				Repository repository = getFolderRepository(folderId);
 
 				return repository.getFileEntry(folderId, title);
+			}
+			else {
+				throw nsfee;
+			}
+		}
+	}
+
+	public FileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		try {
+			Repository repository = getRepository(groupId);
+
+			FileNameCapability fileNameCapability = repository.getCapability(
+				FileNameCapability.class);
+
+			return fileNameCapability.getFileEntry(folderId, fileName, true);
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				Repository repository = getFolderRepository(folderId);
+
+				FileNameCapability fileNameCapability =
+					repository.getCapability(FileNameCapability.class);
+
+				return fileNameCapability.getFileEntry(
+					folderId, fileName, true);
 			}
 			else {
 				throw nsfee;
