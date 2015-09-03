@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
+import com.liferay.portal.kernel.repository.capabilities.FileNameCapability;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferayCommentCapability;
+import com.liferay.portal.repository.capabilities.LiferayFileNameCapability;
 import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
@@ -49,6 +51,7 @@ import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
+import com.liferay.portal.service.persistence.RepositoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
@@ -104,6 +107,11 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			ThumbnailCapability.class,
 			new LiferayThumbnailCapability(
 				repositoryEntryConverter, repositoryEntryChecker));
+		capabilityRegistry.addExportedCapability(
+			FileNameCapability.class,
+			new LiferayFileNameCapability(
+				documentRepository, dlFileEntryServiceAdapter,
+				repositoryEntryChecker, RepositoryUtil.getPersistence()));
 
 		TrashCapability trashCapability = new LiferayTrashCapability(
 			DLAppHelperLocalServiceUtil.getService(),
