@@ -20,19 +20,25 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,14 +54,38 @@ public class EditorConfigContributorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Collection<ServiceReference<EditorConfigContributor>>
+			serviceReferences = registry.getServiceReferences(
+				EditorConfigContributor.class, null);
+
+		for (ServiceReference<EditorConfigContributor> serviceReference :
+				serviceReferences) {
+
+			Long bundleId = (Long)serviceReference.getProperty(
+				"service.bundleid");
+
+			_bundleIds.add(bundleId);
+
+			ModuleFrameworkUtilAdapter.stopBundle(Long.valueOf(bundleId));
+		}
+	}
+
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
 		if (_editorConfigContributorServiceRegistration1 != null) {
 			_editorConfigContributorServiceRegistration1.unregister();
 		}
 
 		if (_editorConfigContributorServiceRegistration2 != null) {
 			_editorConfigContributorServiceRegistration2.unregister();
+		}
+
+		for (long bundleId : _bundleIds) {
+			ModuleFrameworkUtilAdapter.startBundle(Long.valueOf(bundleId));
 		}
 	}
 
@@ -521,6 +551,7 @@ public class EditorConfigContributorTest {
 
 	private static final String _PORTLET_NAME = "testPortletName";
 
+	private final List<Long> _bundleIds = new ArrayList<>();
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration1;
 	private ServiceRegistration<EditorConfigContributor>
