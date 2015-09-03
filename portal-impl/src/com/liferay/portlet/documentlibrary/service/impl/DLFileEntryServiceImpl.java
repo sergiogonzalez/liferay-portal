@@ -237,6 +237,15 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		return dlFileEntryLocalService.fetchFileEntryByFileName(
+			groupId, folderId, fileName);
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByImageId(long imageId)
 		throws PortalException {
 
