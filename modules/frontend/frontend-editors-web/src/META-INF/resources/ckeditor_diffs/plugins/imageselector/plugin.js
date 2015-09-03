@@ -1,6 +1,8 @@
 (function() {
 	var pluginName = 'imageselector';
 
+	var STR_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
+
 	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
 
 	CKEDITOR.plugins.add(
@@ -18,11 +20,16 @@
 								var selectedItem = event.newVal;
 
 								if (selectedItem) {
+									var imageAlt = '';
 									var imageSrc = selectedItem.value;
 
-									if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+									if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE ||
+										selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
 										try {
-											imageSrc = JSON.parse(selectedItem.value).url;
+											var itemValue = JSON.parse(selectedItem.value);
+
+											imageAlt = itemValue.title || '';
+											imageSrc = itemValue.url;
 										}
 										catch (e) {
 										}
@@ -33,7 +40,7 @@
 											callback(imageSrc);
 										}
 										else {
-											var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
+											var el = CKEDITOR.dom.element.createFromHtml('<img alt="' + imageAlt + '" src="' + imageSrc + '">');
 
 											editor.insertElement(el);
 										}
