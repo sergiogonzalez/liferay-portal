@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
@@ -74,6 +75,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
@@ -129,20 +131,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public Folder addAttachmentsFolder(long userId, long groupId)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
-
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			userId, repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			BlogsConstants.SERVICE_NAME, serviceContext);
-
-		return folder;
+		return doAddFolder(userId, groupId, BlogsConstants.SERVICE_NAME);
 	}
 
 	@Override
@@ -1398,8 +1387,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			(coverImageImageSelector.getImageId() !=
 				entry.getCoverImageFileEntryId())) {
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				coverImageImageSelector.getImageId());
+
+			if (fileEntry.isRepositoryCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					coverImageImageSelector.getImageId());
+			}
 		}
 
 		if (tempSmallImageFileEntry != null) {
@@ -1632,7 +1628,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ImageSelector coverImageImageSelector)
 		throws PortalException {
 
-		long coverImageId = 0;
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			coverImageImageSelector.getImageId());
+
+		if (fileEntry.isRepositoryCapabilityProvided(
+				TemporaryFileEntriesCapability.class)) {
+
+			BlogsEntryAttachmentFileEntryHelper
+				blogsEntryAttachmentFileEntryHelper =
+					new BlogsEntryAttachmentFileEntryHelper();
+
+			blogsEntryAttachmentFileEntryHelper.
+				addBlogsEntryAttachmentFileEntry(
+					groupId, userId, entryId, fileEntry.getTitle(),
+					fileEntry.getMimeType(), fileEntry.getContentStream());
+		}
+
+		long coverImageFileEntryId = 0;
 
 		byte[] bytes = null;
 
@@ -1656,8 +1668,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		try {
 			file = FileUtil.createTempFile(bytes);
 
-			String title = coverImageImageSelector.getTitle();
-			String mimeType = coverImageImageSelector.getMimeType();
+			String title = fileEntry.getTitle();
+			String mimeType = fileEntry.getMimeType();
 
 			if (Validator.isNull(title)) {
 				title =
@@ -1669,14 +1681,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			Folder folder = addAttachmentsFolder(userId, groupId);
+			Folder folder = addCoverImageFolder(userId, groupId);
 
-			FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-				groupId, userId, BlogsEntry.class.getName(), entryId,
-				BlogsConstants.SERVICE_NAME, folder.getFolderId(), file, title,
-				mimeType, false);
+			String fileName = title + StringUtil.randomString();
 
-			coverImageId = fileEntry.getFileEntryId();
+			FileEntry coverImageFileEntry =
+				PortletFileRepositoryUtil.addPortletFileEntry(
+					groupId, userId, BlogsEntry.class.getName(), entryId,
+					BlogsConstants.SERVICE_NAME, folder.getFolderId(), file,
+					fileName, mimeType, false);
+
+			coverImageFileEntryId = coverImageFileEntry.getFileEntryId();
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
@@ -1689,7 +1704,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			FileUtil.delete(file);
 		}
 
-		return coverImageId;
+		return coverImageFileEntryId;
+	}
+
+	protected Folder addCoverImageFolder(long userId, long groupId)
+		throws PortalException {
+
+		return doAddFolder(userId, groupId, BlogsConstants.BLOGS_COVER_IMAGE);
 	}
 
 	protected void addDiscussion(BlogsEntry entry, long userId, long groupId)
@@ -1725,6 +1746,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
 		commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
+	}
+
+	protected Folder doAddFolder(long userId, long groupId, String folderName)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			userId, repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
+			serviceContext);
+
+		return folder;
 	}
 
 	protected String getEntryURL(
