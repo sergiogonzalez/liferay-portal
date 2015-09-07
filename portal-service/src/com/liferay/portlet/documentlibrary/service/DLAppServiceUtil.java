@@ -843,6 +843,12 @@ public class DLAppServiceUtil {
 		return getService().getFileEntry(groupId, folderId, title);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry getFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFileEntryByFileName(groupId, folderId, fileName);
+	}
+
 	/**
 	* Returns the file entry with the UUID and group.
 	*

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
+import com.liferay.portal.kernel.repository.capabilities.FileNameCapability;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferayCommentCapability;
+import com.liferay.portal.repository.capabilities.LiferayFileNameCapability;
 import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
@@ -104,6 +106,10 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			ThumbnailCapability.class,
 			new LiferayThumbnailCapability(
 				repositoryEntryConverter, repositoryEntryChecker));
+		capabilityRegistry.addExportedCapability(
+			FileNameCapability.class,
+			new LiferayFileNameCapability(
+				dlFileEntryServiceAdapter, repositoryEntryChecker));
 
 		TrashCapability trashCapability = new LiferayTrashCapability(
 			DLAppHelperLocalServiceUtil.getService(),

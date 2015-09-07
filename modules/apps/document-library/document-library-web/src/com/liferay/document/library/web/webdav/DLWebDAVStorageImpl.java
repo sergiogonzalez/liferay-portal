@@ -378,11 +378,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 
 				try {
-					String titleWithExtension = name;
-
-					FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
-						webDAVRequest.getGroupId(), parentFolderId,
-						titleWithExtension);
+					FileEntry fileEntry =
+						DLAppServiceUtil.getFileEntryByFileName(
+							webDAVRequest.getGroupId(), parentFolderId, name);
 
 					return toResource(webDAVRequest, fileEntry, false);
 				}
@@ -1178,7 +1176,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		String name = StringPool.BLANK;
 
 		if (appendPath) {
-			name = fileEntry.getTitle();
+			name = fileEntry.getFileName();
 		}
 
 		return new DLFileEntryResourceImpl(

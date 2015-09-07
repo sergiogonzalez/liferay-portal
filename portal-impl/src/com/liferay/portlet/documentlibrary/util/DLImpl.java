@@ -677,7 +677,14 @@ public class DLImpl implements DL {
 	@Override
 	public String getSanitizedFileName(String title, String extension) {
 		String fileName = StringUtil.replace(
-			title, StringPool.SLASH, StringPool.UNDERLINE);
+			title, _SANITIZATION_ESCAPE_CHAR,
+			_SANITIZATION_ESCAPE_CHAR + _SANITIZATION_ESCAPE_CHAR);
+
+		for (int i = 0; i<_SANITIZATION_REPLACEMENTS.length; i+= 2) {
+			fileName = StringUtil.replace(
+				fileName, _SANITIZATION_REPLACEMENTS[i],
+				_SANITIZATION_ESCAPE_CHAR + _SANITIZATION_REPLACEMENTS[i+1]);
+		}
 
 		if (Validator.isNotNull(extension) &&
 			!StringUtil.endsWith(fileName, StringPool.PERIOD + extension)) {
@@ -1194,6 +1201,13 @@ public class DLImpl implements DL {
 		"vsx", "vtx", "wbk", "wll", "xar", "xl", "xla", "xlam", "xlb", "xlc",
 		"xll", "xlm", "xls", "xlsb", "xlsm", "xlsx", "xlt", "xltm", "xltx",
 		"xlw", "xsf", "xsn"
+	};
+
+	private static final String _SANITIZATION_ESCAPE_CHAR =
+		StringPool.UNDERLINE;
+
+	private static final String[] _SANITIZATION_REPLACEMENTS = {
+		StringPool.SLASH, StringPool.DASH
 	};
 
 	private static final String _STRUCTURE_KEY_PREFIX = "AUTO_";
