@@ -1351,6 +1351,47 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName, boolean includePWC)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
+			groupId, folderId, fileName);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		if (includePWC) {
+			List<DLFileVersion> dlFileVersions =
+				dlFileVersionPersistence.findByG_F_FN_V(
+					groupId, folderId, fileName,
+					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
+
+			long userId = PrincipalThreadLocal.getUserId();
+
+			for (DLFileVersion dlFileVersion : dlFileVersions) {
+				if (hasFileEntryLock(userId, dlFileVersion.getFileEntryId())) {
+					return dlFileVersion.getFileEntry();
+				}
+			}
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("No DLFileEntry exists with the key {");
+		sb.append("groupId=");
+		sb.append(groupId);
+		sb.append(", folderId=");
+		sb.append(folderId);
+		sb.append(", fileName=");
+		sb.append(fileName);
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(sb.toString());
+	}
+
+	@Override
 	public DLFileEntry getFileEntryByName(
 			long groupId, long folderId, String name)
 		throws PortalException {

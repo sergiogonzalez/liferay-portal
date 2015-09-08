@@ -1106,6 +1106,159 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public int countByG_F_S(long groupId, long folderId, int status);
 
 	/**
+	* Returns all the document library file versions where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @return the matching document library file versions
+	*/
+	public java.util.List<DLFileVersion> findByG_F_FN_V(long groupId,
+		long folderId, java.lang.String fileName, java.lang.String version);
+
+	/**
+	* Returns a range of all the document library file versions where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @return the range of matching document library file versions
+	*/
+	public java.util.List<DLFileVersion> findByG_F_FN_V(long groupId,
+		long folderId, java.lang.String fileName, java.lang.String version,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the document library file versions where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library file versions
+	*/
+	public java.util.List<DLFileVersion> findByG_F_FN_V(long groupId,
+		long folderId, java.lang.String fileName, java.lang.String version,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator);
+
+	/**
+	* Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file version
+	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	*/
+	public DLFileVersion findByG_F_FN_V_First(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+
+	/**
+	* Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	*/
+	public DLFileVersion fetchByG_F_FN_V_First(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator);
+
+	/**
+	* Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file version
+	* @throws NoSuchFileVersionException if a matching document library file version could not be found
+	*/
+	public DLFileVersion findByG_F_FN_V_Last(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+
+	/**
+	* Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	*/
+	public DLFileVersion fetchByG_F_FN_V_Last(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator);
+
+	/**
+	* Returns the document library file versions before and after the current document library file version in the ordered set where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* @param fileVersionId the primary key of the current document library file version
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library file version
+	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	*/
+	public DLFileVersion[] findByG_F_FN_V_PrevAndNext(long fileVersionId,
+		long groupId, long folderId, java.lang.String fileName,
+		java.lang.String version,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+
+	/**
+	* Removes all the document library file versions where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	*/
+	public void removeByG_F_FN_V(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String version);
+
+	/**
+	* Returns the number of document library file versions where groupId = &#63; and folderId = &#63; and fileName = &#63; and version = &#63;.
+	*
+	* @param groupId the group ID
+	* @param folderId the folder ID
+	* @param fileName the file name
+	* @param version the version
+	* @return the number of matching document library file versions
+	*/
+	public int countByG_F_FN_V(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String version);
+
+	/**
 	* Returns all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
 	*
 	* @param groupId the group ID

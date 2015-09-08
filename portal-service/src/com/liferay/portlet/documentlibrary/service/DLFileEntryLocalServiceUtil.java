@@ -697,6 +697,15 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileEntry(groupId, folderId, title);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName,
+		boolean includePWC)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileEntryByFileName(groupId, folderId, fileName,
+			includePWC);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByName(
 		long groupId, long folderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

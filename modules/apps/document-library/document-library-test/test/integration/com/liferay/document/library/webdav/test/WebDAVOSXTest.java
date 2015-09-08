@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
@@ -98,10 +97,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				StringPool.BLANK, _testFileBytes,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-			String fileName = HttpUtil.encodeURL(
-				_TEST_FILE_NAME_ILLEGAL_CHARACTERS);
-
-			assertCode(HttpServletResponse.SC_OK, serviceGet(fileName));
+			assertCode(
+				HttpServletResponse.SC_OK,
+				serviceGet(_TEST_FILE_NAME_ILLEGAL_CHARACTERS_ESCAPED));
 		}
 		finally {
 			if (fileEntry != null) {
@@ -433,6 +431,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	private static final String _TEST_FILE_NAME_ILLEGAL_CHARACTERS =
 		"Test/0.docx";
+
+	private static final String _TEST_FILE_NAME_ILLEGAL_CHARACTERS_ESCAPED =
+		"Test~-0.docx";
 
 	private static final String _TEST_META_NAME = "._Test.docx";
 

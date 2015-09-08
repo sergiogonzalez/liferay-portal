@@ -151,6 +151,12 @@ public class DLFileEntryServiceUtil {
 		getService().deleteFileVersion(fileEntryId, version);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchFileEntryByFileName(groupId, folderId, fileName);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByImageId(
 		long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -242,6 +248,15 @@ public class DLFileEntryServiceUtil {
 		long groupId, long folderId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFileEntry(groupId, folderId, title);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName,
+		boolean includePWC)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileEntryByFileName(groupId, folderId, fileName,
+			includePWC);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByUuidAndGroupId(

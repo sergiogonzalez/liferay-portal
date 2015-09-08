@@ -740,6 +740,11 @@ public interface DLAppService extends BaseService {
 		long groupId, long folderId, java.lang.String title)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName)
+		throws PortalException;
+
 	/**
 	* Returns the file entry with the UUID and group.
 	*

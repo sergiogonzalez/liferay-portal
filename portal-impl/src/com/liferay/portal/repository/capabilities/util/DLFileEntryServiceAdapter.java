@@ -81,6 +81,24 @@ public class DLFileEntryServiceAdapter {
 		return dlFileEntry;
 	}
 
+	public DLFileEntry fetchFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = null;
+
+		if (_dlFileEntryService != null) {
+			dlFileEntry = _dlFileEntryService.fetchFileEntryByFileName(
+				groupId, folderId, fileName);
+		}
+		else {
+			dlFileEntry = _dlFileEntryLocalService.fetchFileEntryByFileName(
+				groupId, folderId, fileName);
+		}
+
+		return dlFileEntry;
+	}
+
 	public ActionableDynamicQuery getActionableDynamicQuery()
 		throws PortalException {
 
@@ -99,6 +117,24 @@ public class DLFileEntryServiceAdapter {
 		}
 		else {
 			dlFileEntry = _dlFileEntryLocalService.getFileEntry(fileEntryId);
+		}
+
+		return dlFileEntry;
+	}
+
+	public DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName, boolean includePWC)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = null;
+
+		if (_dlFileEntryService != null) {
+			dlFileEntry = _dlFileEntryService.getFileEntryByFileName(
+				groupId, folderId, fileName, includePWC);
+		}
+		else {
+			dlFileEntry = _dlFileEntryLocalService.getFileEntryByFileName(
+				groupId, folderId, fileName, includePWC);
 		}
 
 		return dlFileEntry;
