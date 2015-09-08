@@ -415,6 +415,10 @@ else {
 
 			</c:if>
 
+			<c:if test="<%= fileEntry != null %>">
+				<aui:input label="major-version" name="majorVersion" type="checkbox" />
+			</c:if>
+
 			<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
 				<liferay-ui:custom-attribute-list
 					className="<%= DLFileEntryConstants.getClassName() %>"
@@ -516,6 +520,15 @@ else {
 		submitForm(form);
 	}
 
+	function <portlet:namespace />checkMajorVersion() {
+		var majorVersionCheckbox = $('#<portlet:namespace />majorVersion');
+		var fileInput = $('#<portlet:namespace />file');
+
+		if (majorVersionCheckbox && fileInput.val()) {
+			majorVersionCheckbox.attr('checked', true);
+		}
+	}
+
 	function <portlet:namespace />checkOut() {
 		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
 	}
@@ -564,6 +577,8 @@ else {
 	function <portlet:namespace />validateTitle() {
 		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
 	}
+
+	Liferay.Form.get('<portlet:namespace />fm').formValidator.on('validField', <portlet:namespace />checkMajorVersion);
 </aui:script>
 
 <%
