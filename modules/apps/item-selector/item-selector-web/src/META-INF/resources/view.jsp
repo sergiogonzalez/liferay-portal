@@ -51,9 +51,9 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 			selectedTab = titles.get(0);
 		}
 
-		ItemSelectorViewRenderer initialItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
+		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
 
-		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = initialItemSelectorViewRenderer.getItemSelectorView();
+		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
 		%>
 
 		<div class="form-search <%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
@@ -81,11 +81,11 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 			<%
 			for (String title : titles) {
-				ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+				ItemSelectorViewRenderer curItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
 
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
+				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
 
 				data.put("showSearch", itemSelectorView.isShowSearch());
 			%>
@@ -94,7 +94,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					<div>
 
 						<%
-						itemSelectorViewRenderer.renderHTML(pageContext);
+						curItemSelectorViewRenderer.renderHTML(pageContext);
 						%>
 
 					</div>
