@@ -761,6 +761,15 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName,
+		boolean includePWC)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryLocalService.getFileEntryByFileName(groupId,
+			folderId, fileName, includePWC);
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByName(
 		long groupId, long folderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

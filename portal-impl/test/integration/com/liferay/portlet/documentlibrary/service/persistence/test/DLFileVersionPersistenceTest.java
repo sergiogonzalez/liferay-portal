@@ -321,6 +321,16 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_F_FN_V() throws Exception {
+		_persistence.countByG_F_FN_V(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+
+		_persistence.countByG_F_FN_V(0L, 0L, StringPool.NULL, StringPool.NULL);
+
+		_persistence.countByG_F_FN_V(0L, 0L, (String)null, (String)null);
+	}
+
+	@Test
 	public void testCountByG_F_T_V() throws Exception {
 		_persistence.countByG_F_T_V(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);

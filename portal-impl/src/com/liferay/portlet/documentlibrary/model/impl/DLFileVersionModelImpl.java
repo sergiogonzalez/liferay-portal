@@ -153,14 +153,15 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long FILEENTRYID_COLUMN_BITMASK = 2L;
-	public static final long FOLDERID_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long MIMETYPE_COLUMN_BITMASK = 16L;
-	public static final long STATUS_COLUMN_BITMASK = 32L;
-	public static final long TITLE_COLUMN_BITMASK = 64L;
-	public static final long UUID_COLUMN_BITMASK = 128L;
-	public static final long VERSION_COLUMN_BITMASK = 256L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 512L;
+	public static final long FILENAME_COLUMN_BITMASK = 4L;
+	public static final long FOLDERID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long MIMETYPE_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+	public static final long TITLE_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long VERSION_COLUMN_BITMASK = 512L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -713,7 +714,17 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public void setFileName(String fileName) {
+		_columnBitmask |= FILENAME_COLUMN_BITMASK;
+
+		if (_originalFileName == null) {
+			_originalFileName = _fileName;
+		}
+
 		_fileName = fileName;
+	}
+
+	public String getOriginalFileName() {
+		return GetterUtil.getString(_originalFileName);
 	}
 
 	@JSON
@@ -1237,6 +1248,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		dlFileVersionModelImpl._setOriginalFileEntryId = false;
 
+		dlFileVersionModelImpl._originalFileName = dlFileVersionModelImpl._fileName;
+
 		dlFileVersionModelImpl._originalMimeType = dlFileVersionModelImpl._mimeType;
 
 		dlFileVersionModelImpl._originalTitle = dlFileVersionModelImpl._title;
@@ -1637,6 +1650,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private boolean _setOriginalFileEntryId;
 	private String _treePath;
 	private String _fileName;
+	private String _originalFileName;
 	private String _extension;
 	private String _mimeType;
 	private String _originalMimeType;
