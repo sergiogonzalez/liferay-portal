@@ -30,9 +30,9 @@ List<FileEntry> results = new ArrayList<FileEntry>();
 
 if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	String keywords = ParamUtil.getString(request, "keywords");
-	String selectedTab = ParamUtil.getString(request, "selectedTab");
+	String searchTab = ParamUtil.getString(request, "searchTab");
 
-	if (Validator.isNotNull(keywords) && selectedTab.equals(wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale))) {
+	if (Validator.isNotNull(keywords) && searchTab.equals(wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale))) {
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 		searchContext.setEnd(searchContainer.getEnd());

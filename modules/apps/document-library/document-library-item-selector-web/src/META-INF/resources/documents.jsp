@@ -31,9 +31,9 @@ long folderId = dlItemSelectorViewDisplayContext.getFolderId(request);
 String[] mimeTypes = dlItemSelectorViewDisplayContext.getMimeTypes();
 
 String keywords = ParamUtil.getString(request, "keywords");
-String selectedTab = ParamUtil.getString(request, "selectedTab");
+String searchTab = ParamUtil.getString(request, "searchTab");
 
-if (Validator.isNotNull(keywords) && selectedTab.equals(dlItemSelectorViewDisplayContext.getTitle(locale))) {
+if (Validator.isNotNull(keywords) && searchTab.equals(dlItemSelectorViewDisplayContext.getTitle(locale))) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("mimeTypes", mimeTypes);
