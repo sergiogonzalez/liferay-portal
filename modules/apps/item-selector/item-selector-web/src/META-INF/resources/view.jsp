@@ -47,6 +47,12 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		<%
 		String selectedTab = localizedItemSelectorRendering.getSelectedTab();
 
+		String searchTab = ParamUtil.getString(request, "searchTab");
+
+		if (Validator.isNotNull(searchTab)) {
+			selectedTab = searchTab;
+		}
+
 		if (Validator.isNull(selectedTab)) {
 			selectedTab = titles.get(0);
 		}
@@ -58,7 +64,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					<div class="basic-search-slider">
 						<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span></button>
 
-						<aui:input name="selectedTab" type="hidden" value="<%= selectedTab %>" />
+						<aui:input name="searchTab" type="hidden" value="<%= selectedTab %>" />
 
 						<%
 						String keywords = ParamUtil.getString(request, "keywords");
@@ -111,7 +117,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 			var searchForm = A.one('#<portlet:namespace />searchFm');
 
 			if (searchForm) {
-				A.one('#<portlet:namespace />selectedTab').val(event.id);
+				A.one('#<portlet:namespace />searchTab').val(event.id);
 
 				var tabSection = event.tabSection;
 
