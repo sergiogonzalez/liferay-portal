@@ -55,6 +55,11 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	}
 
 	@Override
+	public PortletURL getPortletUrl() {
+		return _portletURL;
+	}
+
+	@Override
 	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException {
 

@@ -20,6 +20,12 @@
 LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
 
 List<String> titles = localizedItemSelectorRendering.getTitles();
+
+String selectedTab = localizedItemSelectorRendering.getSelectedTab();
+
+if (Validator.isNull(selectedTab)) {
+	selectedTab = titles.get(0);
+}
 %>
 
 <c:choose>
@@ -45,12 +51,6 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 	<c:otherwise>
 
 		<%
-		String selectedTab = localizedItemSelectorRendering.getSelectedTab();
-
-		if (Validator.isNull(selectedTab)) {
-			selectedTab = titles.get(0);
-		}
-
 		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
 
 		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
@@ -88,6 +88,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
 
 				data.put("showSearch", itemSelectorView.isShowSearch());
+
+				if (selectedTab.equals(itemSelectorView.getTitle(locale))) {
+					data.put("portletURL", currentURL);
+				}
+				else {
+					data.put("portletURL", itemSelectorViewRenderer.getPortletUrl());
+				}
 			%>
 
 				<liferay-ui:section data="<%= data %>">
@@ -125,6 +132,10 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 				if (formSearch) {
 					formSearch.toggle(showSearch === 'true');
+
+					var searchFm = A.one('#<portlet:namespace />searchFm');
+
+					searchFm.setAttribute('action', tabSection.getData('portletURL'));
 				}
 			}
 		}
