@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -93,6 +94,32 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddEntryWithCoverImage() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		FileEntry fileEntry = getTempFileEntry(
+			_user.getUserId(), serviceContext);
+
+		ImageSelector coverImageSelector = new ImageSelector(
+			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
+		ImageSelector smallImageSelector = null;
+
+		BlogsEntry expectedEntry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), true, true,
+			new String[0], StringPool.BLANK, coverImageSelector,
+			smallImageSelector, serviceContext);
+
+		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+			expectedEntry.getEntryId());
+
+		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
+	}
+
+	@Test
 	public void testAddEntryWithoutSmallImage() throws Exception {
 		BlogsEntry expectedEntry = testAddEntry(false);
 
@@ -167,9 +194,8 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = addEntry(false);
 
 		MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			BlogsEntry.class.getName(), entry.getEntryId(),
-			WorkflowConstants.STATUS_ANY);
+			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), WorkflowConstants.STATUS_ANY);
 	}
 
 	@Test
@@ -441,14 +467,14 @@ public class BlogsEntryLocalServiceTest {
 	public void testSubscribe() throws Exception {
 		int initialCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -457,17 +483,17 @@ public class BlogsEntryLocalServiceTest {
 	public void testUnsubscribe() throws Exception {
 		int initialCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		BlogsEntryLocalServiceUtil.unsubscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		Assert.assertEquals(initialCount, actualCount);
 	}
@@ -481,7 +507,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {
-		return addEntry(TestPropsValues.getUserId(), statusInTrash);
+		return addEntry(_user.getUserId(), statusInTrash);
 	}
 
 	protected BlogsEntry addEntry(long userId, boolean statusInTrash)
@@ -511,24 +537,7 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = TempFileEntryUtil.getTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg");
-		}
-		catch (Exception e) {
-			fileEntry = TempFileEntryUtil.addTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg", inputStream,
-				MimeTypesUtil.getContentType("image.jpg"));
-		}
+		FileEntry fileEntry = getTempFileEntry(userId, serviceContext);
 
 		ImageSelector coverImageSelector = null;
 		ImageSelector smallImageSelector = new ImageSelector(
@@ -564,6 +573,32 @@ public class BlogsEntryLocalServiceTest {
 		}
 	}
 
+	protected FileEntry getTempFileEntry(
+			long userId, ServiceContext serviceContext)
+		throws PortalException {
+
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = TempFileEntryUtil.getTempFileEntry(
+				serviceContext.getScopeGroupId(), userId,
+				BlogsEntry.class.getName(), "image.jpg");
+		}
+		catch (Exception e) {
+			fileEntry = TempFileEntryUtil.addTempFileEntry(
+				serviceContext.getScopeGroupId(), userId,
+				BlogsEntry.class.getName(), "image.jpg", inputStream,
+				MimeTypesUtil.getContentType("image.jpg"));
+		}
+
+		return fileEntry;
+	}
+
 	protected BlogsEntry testAddEntry(boolean smallImage) throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusApprovedQueryDefinition);
@@ -571,7 +606,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = null;
 
 		if (smallImage) {
-			entry = addEntryWithSmallImage(TestPropsValues.getUserId());
+			entry = addEntryWithSmallImage(_user.getUserId());
 		}
 		else {
 			entry = addEntry(false);
@@ -847,6 +882,9 @@ public class BlogsEntryLocalServiceTest {
 
 		return sb.toString();
 	}
+
+	private static final String _IMAGE_CROP_REGION =
+		"{\"height\":10,\"width\":10,\"x\":0,\"y\":0}";
 
 	@DeleteAfterTestRun
 	private Group _group;
