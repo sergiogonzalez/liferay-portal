@@ -36,7 +36,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		<div class="alert alert-info">
 
 			<%
-			ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", locale);
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content/Language", locale, getClass().getClassLoader());
 			%>
 
 			<%= LanguageUtil.get(resourceBundle, "selection-is-not-available") %>
@@ -87,6 +87,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
 
+				if (selectedTab.equals(itemSelectorView.getTitle(locale))) {
+					data.put("portletURL", currentURL);
+				}
+				else {
+					data.put("portletURL", itemSelectorViewRenderer.getPortletURL());
+				}
+
 				data.put("showSearch", itemSelectorView.isShowSearch());
 			%>
 
@@ -125,6 +132,10 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 				if (formSearch) {
 					formSearch.toggle(showSearch === 'true');
+
+					var searchFm = A.one('#<portlet:namespace />searchFm');
+
+					searchFm.setAttribute('action', tabSection.getData('portletURL'));
 				}
 			}
 		}
