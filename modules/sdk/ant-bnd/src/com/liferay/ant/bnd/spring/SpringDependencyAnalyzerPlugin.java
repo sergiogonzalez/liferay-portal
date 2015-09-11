@@ -85,8 +85,8 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 		StringBuffer sb = new StringBuffer(6);
 
-		sb.append(Object.class.getName());
-		sb.append(" (&(release.bundle.symbolic.name=");
+		sb.append("com.liferay.portal.model.Release ");
+		sb.append("(&(release.bundle.symbolic.name=");
 
 		Map.Entry<String, Attrs> entry = analyzer.getBundleSymbolicName();
 

@@ -34,7 +34,7 @@ import java.util.Set;
  */
 public class CacheResponseData implements Serializable {
 
-	public CacheResponseData() throws IOException {
+	public CacheResponseData() {
 		_content = null;
 		_contentType = null;
 		_headers = null;
