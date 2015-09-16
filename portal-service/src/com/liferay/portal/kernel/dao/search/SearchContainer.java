@@ -142,9 +142,14 @@ public class SearchContainer<R> {
 
 		_iteratorURL.setParameter(_curParam, String.valueOf(_cur));
 		_iteratorURL.setParameter(_deltaParam, String.valueOf(_delta));
-		_iteratorURL.setParameter(
-			DisplayTerms.KEYWORDS,
-			ParamUtil.getString(portletRequest, DisplayTerms.KEYWORDS));
+
+		String keywords = ParamUtil.getString(
+			portletRequest, DisplayTerms.KEYWORDS);
+
+		if (Validator.isNotNull(keywords)) {
+			_iteratorURL.setParameter(DisplayTerms.KEYWORDS, keywords);
+		}
+
 		_iteratorURL.setParameter(
 			DisplayTerms.ADVANCED_SEARCH,
 			String.valueOf(

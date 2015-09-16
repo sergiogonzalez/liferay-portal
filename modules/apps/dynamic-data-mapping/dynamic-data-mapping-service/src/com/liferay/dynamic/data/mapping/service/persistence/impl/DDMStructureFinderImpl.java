@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -75,6 +76,18 @@ public class DDMStructureFinderImpl
 	}
 
 	@Override
+	public int countByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return countByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true);
+	}
+
+	@Override
 	public int countByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String name,
 		String description, String storageType, int type, int status,
@@ -119,6 +132,18 @@ public class DDMStructureFinderImpl
 		return filterCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
 			DDMStructureConstants.TYPE_DEFAULT, status, andOperator);
+	}
+
+	@Override
+	public int filterCountByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return filterCountByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true);
 	}
 
 	@Override
@@ -167,6 +192,20 @@ public class DDMStructureFinderImpl
 		return filterFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
 			DDMStructureConstants.TYPE_DEFAULT, status, andOperator, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<DDMStructure> filterFindByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return filterFindByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true, start, end,
 			orderByComparator);
 	}
 
@@ -222,6 +261,20 @@ public class DDMStructureFinderImpl
 	}
 
 	@Override
+	public List<DDMStructure> findByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return findByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public List<DDMStructure> findByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String name,
 		String description, String storageType, int type, int status,
@@ -265,7 +318,9 @@ public class DDMStructureFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMStructure.class.getName(),
+					sql,
+					DDMStructurePermission.getStructureModelResourceName(
+						classNameId),
 					"DDMStructure.structureId", groupIds);
 			}
 
@@ -341,7 +396,9 @@ public class DDMStructureFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMStructure.class.getName(),
+					sql,
+					DDMStructurePermission.getStructureModelResourceName(
+						classNameId),
 					"DDMStructure.structureId", groupIds);
 			}
 
