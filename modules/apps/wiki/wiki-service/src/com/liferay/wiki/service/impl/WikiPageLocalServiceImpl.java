@@ -2049,10 +2049,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		wikiPagePersistence.update(page);
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			String cmd = GetterUtil.getString(
-				workflowContext.get(WorkflowConstants.CONTEXT_COMMAND));
+		String cmd = GetterUtil.getString(
+			workflowContext.get(WorkflowConstants.CONTEXT_COMMAND));
 
+		if (status == WorkflowConstants.STATUS_APPROVED) {
 			if (cmd.equals(Constants.MOVE)) {
 				long resourcePrimKey = page.getResourcePrimKey();
 
@@ -2133,21 +2133,35 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 						new GroupServiceSettingsLocator(
 							page.getGroupId(), WikiConstants.SERVICE_NAME));
 
-			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
-				(page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
+			if ((cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) &&
 				(!page.isMinorEdit() ||
 				 wikiGroupServiceOverriddenConfiguration.
 					 pageMinorEditAddSocialActivity())) {
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+				if (status == WorkflowConstants.STATUS_APPROVED) {
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put("title", page.getTitle());
-				extraDataJSONObject.put("version", page.getVersion());
+					extraDataJSONObject.put("title", page.getTitle());
+					extraDataJSONObject.put("version", page.getVersion());
 
-				SocialActivityManagerUtil.addActivity(
-					userId, page, WikiActivityKeys.ADD_PAGE,
-					extraDataJSONObject.toString(), 0);
+					int type = WikiActivityKeys.ADD_PAGE;
+
+					if (cmd.equals(Constants.UPDATE)) {
+						type = WikiActivityKeys.UPDATE_PAGE;
+					}
+
+					SocialActivityManagerUtil.addActivity(
+						userId, page, type, extraDataJSONObject.toString(), 0);
+				}
+				else {
+					Date statusDate = page.getStatusDate();
+					Date createDate = new Date(statusDate.getTime() + 1);
+
+					SocialActivityManagerUtil.updateLastSocialActivity(
+						serviceContext.getUserId(), page,
+						WikiActivityKeys.UPDATE_PAGE, createDate);
+				}
 			}
 
 			// Subscriptions
@@ -3380,39 +3394,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId, page, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		// Social
-
-		WikiGroupServiceOverriddenConfiguration
-			wikiGroupServiceOverriddenConfiguration =
-				configurationFactory.getConfiguration(
-					WikiGroupServiceOverriddenConfiguration.class,
-					new GroupServiceSettingsLocator(
-						node.getGroupId(), WikiConstants.SERVICE_NAME));
-
-		if (!page.isMinorEdit() ||
-			wikiGroupServiceOverriddenConfiguration.
-				pageMinorEditAddSocialActivity()) {
-
-			if (oldPage.getVersion() == newVersion) {
-				Date createDate = new Date(now.getTime() + 1);
-
-				SocialActivityManagerUtil.updateLastSocialActivity(
-					serviceContext.getUserId(), page,
-					WikiActivityKeys.UPDATE_PAGE, createDate);
-			}
-			else {
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", page.getTitle());
-				extraDataJSONObject.put("version", page.getVersion());
-
-				SocialActivityManagerUtil.addActivity(
-					userId, page, WikiActivityKeys.UPDATE_PAGE,
-					extraDataJSONObject.toString(), 0);
-			}
-		}
 
 		// Workflow
 
