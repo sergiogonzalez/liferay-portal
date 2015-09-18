@@ -14,18 +14,31 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel;
 import com.liferay.portlet.documentlibrary.service.base.DLContentLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.comparator.DLContentVersionComparator;
 
 import java.io.InputStream;
+import java.io.Serializable;
+
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 
 import java.util.List;
 
@@ -175,6 +188,18 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 	}
 
 	@Override
+	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey) {
+		DB db = DBFactoryUtil.getDB();
+
+		if (db.getType().equals(DB.TYPE_POSTGRESQL)) {
+			return getPostgreDataBlobModel(primaryKey);
+		}
+		else {
+			return super.getDataBlobModel(primaryKey);
+		}
+	}
+
+	@Override
 	public boolean hasContent(
 		long companyId, long repositoryId, String path, String version) {
 
@@ -203,6 +228,64 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 			dlContentPersistence.update(dLContent);
 		}
+	}
+
+	protected DLContentDataBlobModel getPostgreDataBlobModel(
+		Serializable primaryKey) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		DLContentDataBlobModel dlContentDataBlobModel = null;
+
+		UnsyncByteArrayInputStream unsyncByteArrayInputStream = null;
+
+		Blob blob = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"SELECT data_ FROM DLContent WHERE contentId = ?");
+
+			ps.setLong(1, (Long)primaryKey);
+
+			rs = ps.executeQuery();
+
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			String columnType = rsmd.getColumnTypeName(1);
+
+			if (rs.next()) {
+				if (Validator.equals(columnType, "oid")) {
+					byte[] bytes = PostgreSQLJDBCUtil.getLargeObject(
+						rs, "data_");
+
+					unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(
+						bytes);
+
+					blob = new OutputBlob(
+						unsyncByteArrayInputStream, bytes.length);
+
+					unsyncByteArrayInputStream.close();
+				}
+				else {
+					blob = rs.getBlob("data_");
+				}
+			}
+
+			dlContentDataBlobModel = new DLContentDataBlobModel(
+				(Long)primaryKey, blob);
+		}
+		catch (Exception e) {
+			throw dlContentPersistence.processException(e);
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return dlContentDataBlobModel;
 	}
 
 }
