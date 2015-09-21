@@ -25,6 +25,9 @@ JournalArticle article = ActionUtil.getArticle(request);
 
 long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack((article == null) ? redirect : backURL);
+
 String title = StringPool.BLANK;
 
 if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
@@ -36,9 +39,6 @@ else if ((article != null) && !article.isNew()) {
 else {
 	title = LanguageUtil.get(request, "new-web-content");
 }
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack((article == null) ? redirect : backURL);
 
 renderResponse.setTitle(title);
 %>

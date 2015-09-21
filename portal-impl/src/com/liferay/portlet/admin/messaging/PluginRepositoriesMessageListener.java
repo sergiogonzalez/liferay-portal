@@ -16,6 +16,8 @@ package com.liferay.portlet.admin.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 /**
@@ -25,6 +27,8 @@ public class PluginRepositoriesMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		SearchEngineUtil.initialize(CompanyConstants.SYSTEM);
+
 		PluginPackageUtil.reloadRepositories();
 	}
 

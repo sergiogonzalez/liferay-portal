@@ -749,6 +749,8 @@ public interface PropsKeys {
 
 	public static final String DL_TABS_VISIBLE = "dl.tabs.visible";
 
+	public static final String DL_WEBDAV_SUBSTITUTION_CHAR = "dl.webdav.substitution.char";
+
 	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
 
 	public static final String DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP = "dockbar.administrative.links.show.in.pop.up";
@@ -1076,20 +1078,6 @@ public interface PropsKeys {
 	public static final String LAYOUT_GUEST_SHOW_MIN_ICON = "layout.guest.show.min.icon";
 
 	public static final String LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN = "layout.manage.pages.initial.children";
-
-	public static final String LAYOUT_PARALLEL_RENDER_ENABLE = "layout.parallel.render.enable";
-
-	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT = "layout.parallel.render.thread.pool.allow.core.thread.timeout";
-
-	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT = "layout.parallel.render.thread.pool.core.thread.count";
-
-	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_KEEP_ALIVE_TIME = "layout.parallel.render.thread.pool.keep.alive.time";
-
-	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_QUEUE_SIZE = "layout.parallel.render.thread.pool.max.queue.size";
-
-	public static final String LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_THREAD_COUNT = "layout.parallel.render.thread.pool.max.thread.count";
-
-	public static final String LAYOUT_PARALLEL_RENDER_TIMEOUT = "layout.parallel.render.timeout";
 
 	public static final String LAYOUT_PARENTABLE = "layout.parentable";
 

@@ -19,12 +19,28 @@ import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Eudaldo Alonso
  */
 public class ManagementBarFiltersTag extends IncludeTag implements BodyTag {
+
+	@Override
+	public int doEndTag() {
+		ManagementBarTag managementBarTag =
+			(ManagementBarTag)findAncestorWithClass(
+				this, ManagementBarTag.class);
+
+		BodyContent bodyContent = getBodyContent();
+
+		if (bodyContent != null) {
+			managementBarTag.setFilters(bodyContent.getString());
+		}
+
+		return EVAL_PAGE;
+	}
 
 	@Override
 	public int doStartTag() throws JspException {

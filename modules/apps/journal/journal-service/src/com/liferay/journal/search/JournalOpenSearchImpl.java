@@ -35,6 +35,8 @@ import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.List;
 
@@ -158,14 +160,17 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			return layoutURL;
 		}
 
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		if (assetEntry == null) {
+			return null;
+		}
+
 		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/view_article.jsp");
+			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
 		portletURL.setParameter("groupId", String.valueOf(groupId));
 		portletURL.setParameter("articleId", articleId);
-
-		String version = result.get("version");
-
-		portletURL.setParameter("version", version);
 
 		return portletURL.toString();
 	}

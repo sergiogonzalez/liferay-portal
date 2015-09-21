@@ -1057,18 +1057,19 @@ public class MainServlet extends ActionServlet {
 
 		userId = GetterUtil.getLong(remoteUser);
 
-		EventsProcessorUtil.process(
-			PropsKeys.LOGIN_EVENTS_PRE, PropsValues.LOGIN_EVENTS_PRE, request,
-			response);
-
 		User user = UserLocalServiceUtil.getUserById(userId);
 
-		if (!user.isDefaultUser() &&
-			(PropsValues.USERS_UPDATE_LAST_LOGIN ||
-			 (user.getLastLoginDate() == null))) {
+		if (!user.isDefaultUser()) {
+			EventsProcessorUtil.process(
+				PropsKeys.LOGIN_EVENTS_PRE, PropsValues.LOGIN_EVENTS_PRE,
+				request, response);
 
-			user = UserLocalServiceUtil.updateLastLogin(
-				userId, request.getRemoteAddr());
+			if (PropsValues.USERS_UPDATE_LAST_LOGIN ||
+				(user.getLastLoginDate() == null)) {
+
+				user = UserLocalServiceUtil.updateLastLogin(
+					userId, request.getRemoteAddr());
+			}
 		}
 
 		HttpSession session = request.getSession();
@@ -1077,9 +1078,11 @@ public class MainServlet extends ActionServlet {
 		session.setAttribute(WebKeys.USER_ID, Long.valueOf(userId));
 		session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
 
-		EventsProcessorUtil.process(
-			PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST, request,
-			response);
+		if (!user.isDefaultUser()) {
+			EventsProcessorUtil.process(
+				PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST,
+				request, response);
+		}
 
 		return userId;
 	}
