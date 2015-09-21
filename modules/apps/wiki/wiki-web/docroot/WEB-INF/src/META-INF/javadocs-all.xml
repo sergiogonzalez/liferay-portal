@@ -3001,19 +3001,6 @@
 			</throws>
 		</method>
 		<method>
-			<name>changeNode</name>
-			<param>
-				<name>actionRequest</name>
-				<type>javax.portlet.ActionRequest</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<throws>
-				<name>Exception</name>
-				<type>java.lang.Exception</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-		</method>
-		<method>
 			<name>changeParentPage</name>
 			<param>
 				<name>actionRequest</name>
