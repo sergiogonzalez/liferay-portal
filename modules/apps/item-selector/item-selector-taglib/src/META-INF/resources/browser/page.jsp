@@ -365,7 +365,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 								%>
 
 									<liferay-ui:search-container-column-image
-										src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>"
+										src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
 									/>
 
 									<liferay-ui:search-container-column-text colspan="<%= 3 %>">
