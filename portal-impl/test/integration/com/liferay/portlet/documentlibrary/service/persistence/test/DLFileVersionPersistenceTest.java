@@ -173,6 +173,8 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setStatusDate(RandomTestUtil.nextDate());
 
+		newDLFileVersion.setMajorVersion(RandomTestUtil.randomBoolean());
+
 		_dlFileVersions.add(_persistence.update(newDLFileVersion));
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
@@ -237,6 +239,8 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileVersion.getStatusDate()),
 			Time.getShortTimestamp(newDLFileVersion.getStatusDate()));
+		Assert.assertEquals(existingDLFileVersion.getMajorVersion(),
+			newDLFileVersion.getMajorVersion());
 	}
 
 	@Test
@@ -364,7 +368,7 @@ public class DLFileVersionPersistenceTest {
 			true, "changeLog", true, "fileEntryTypeId", true, "version", true,
 			"size", true, "checksum", true, "lastPublishDate", true, "status",
 			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"statusDate", true, "majorVersion", true);
 	}
 
 	@Test
@@ -642,6 +646,8 @@ public class DLFileVersionPersistenceTest {
 		dlFileVersion.setStatusByUserName(RandomTestUtil.randomString());
 
 		dlFileVersion.setStatusDate(RandomTestUtil.nextDate());
+
+		dlFileVersion.setMajorVersion(RandomTestUtil.randomBoolean());
 
 		_dlFileVersions.add(_persistence.update(dlFileVersion));
 

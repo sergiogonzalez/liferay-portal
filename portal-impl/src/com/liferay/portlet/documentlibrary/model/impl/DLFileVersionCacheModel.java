@@ -66,7 +66,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -124,6 +124,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", majorVersion=");
+		sb.append(majorVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -268,6 +270,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 			dlFileVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		dlFileVersionImpl.setMajorVersion(majorVersion);
+
 		dlFileVersionImpl.resetOriginalValues();
 
 		return dlFileVersionImpl;
@@ -303,6 +307,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		majorVersion = objectInput.readBoolean();
 	}
 
 	@Override
@@ -419,6 +424,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeBoolean(majorVersion);
 	}
 
 	public String uuid;
@@ -449,4 +455,5 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public boolean majorVersion;
 }
