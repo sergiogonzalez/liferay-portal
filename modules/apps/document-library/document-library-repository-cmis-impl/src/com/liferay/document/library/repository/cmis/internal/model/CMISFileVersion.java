@@ -357,6 +357,11 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	@Override
+	public boolean isMajorVersion() {
+		return false;
+	}
+
+	@Override
 	public boolean isPending() {
 		return false;
 	}
