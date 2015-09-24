@@ -90,6 +90,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "mimeType", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "majorVersion", Types.BOOLEAN },
 			{ "changeLog", Types.VARCHAR },
 			{ "extraSettings", Types.CLOB },
 			{ "fileEntryTypeId", Types.BIGINT },
@@ -122,6 +123,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		TABLE_COLUMNS_MAP.put("mimeType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("majorVersion", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("changeLog", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("extraSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("fileEntryTypeId", Types.BIGINT);
@@ -135,7 +137,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,majorVersion BOOLEAN,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -192,6 +194,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setMimeType(soapModel.getMimeType());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
+		model.setMajorVersion(soapModel.getMajorVersion());
 		model.setChangeLog(soapModel.getChangeLog());
 		model.setExtraSettings(soapModel.getExtraSettings());
 		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
@@ -284,6 +287,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		attributes.put("mimeType", getMimeType());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
+		attributes.put("majorVersion", getMajorVersion());
 		attributes.put("changeLog", getChangeLog());
 		attributes.put("extraSettings", getExtraSettings());
 		attributes.put("fileEntryTypeId", getFileEntryTypeId());
@@ -404,6 +408,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Boolean majorVersion = (Boolean)attributes.get("majorVersion");
+
+		if (majorVersion != null) {
+			setMajorVersion(majorVersion);
 		}
 
 		String changeLog = (String)attributes.get("changeLog");
@@ -802,6 +812,22 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@JSON
 	@Override
+	public boolean getMajorVersion() {
+		return _majorVersion;
+	}
+
+	@Override
+	public boolean isMajorVersion() {
+		return _majorVersion;
+	}
+
+	@Override
+	public void setMajorVersion(boolean majorVersion) {
+		_majorVersion = majorVersion;
+	}
+
+	@JSON
+	@Override
 	public String getChangeLog() {
 		if (_changeLog == null) {
 			return StringPool.BLANK;
@@ -1127,6 +1153,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setMimeType(getMimeType());
 		dlFileVersionImpl.setTitle(getTitle());
 		dlFileVersionImpl.setDescription(getDescription());
+		dlFileVersionImpl.setMajorVersion(getMajorVersion());
 		dlFileVersionImpl.setChangeLog(getChangeLog());
 		dlFileVersionImpl.setExtraSettings(getExtraSettings());
 		dlFileVersionImpl.setFileEntryTypeId(getFileEntryTypeId());
@@ -1350,6 +1377,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			dlFileVersionCacheModel.description = null;
 		}
 
+		dlFileVersionCacheModel.majorVersion = getMajorVersion();
+
 		dlFileVersionCacheModel.changeLog = getChangeLog();
 
 		String changeLog = dlFileVersionCacheModel.changeLog;
@@ -1421,7 +1450,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1457,6 +1486,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getTitle());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", majorVersion=");
+		sb.append(getMajorVersion());
 		sb.append(", changeLog=");
 		sb.append(getChangeLog());
 		sb.append(", extraSettings=");
@@ -1486,7 +1517,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileVersion");
@@ -1559,6 +1590,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>majorVersion</column-name><column-value><![CDATA[");
+		sb.append(getMajorVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>changeLog</column-name><column-value><![CDATA[");
@@ -1643,6 +1678,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private String _title;
 	private String _originalTitle;
 	private String _description;
+	private boolean _majorVersion;
 	private String _changeLog;
 	private String _extraSettings;
 	private long _fileEntryTypeId;

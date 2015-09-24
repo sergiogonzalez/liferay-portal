@@ -77,7 +77,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 			{ "repositoryId", Types.BIGINT },
 			{ "mappedId", Types.VARCHAR },
 			{ "manualCheckInRequired", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "typeSettings", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -95,9 +96,10 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		TABLE_COLUMNS_MAP.put("mappedId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("manualCheckInRequired", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RepositoryEntry (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,repositoryEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mappedId VARCHAR(255) null,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table RepositoryEntry (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,repositoryEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mappedId VARCHAR(255) null,manualCheckInRequired BOOLEAN,lastPublishDate DATE null,typeSettings VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table RepositoryEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY repositoryEntry.repositoryEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RepositoryEntry.repositoryEntryId ASC";
@@ -172,6 +174,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		attributes.put("mappedId", getMappedId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("typeSettings", getTypeSettings());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -258,6 +261,12 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -488,6 +497,21 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				RepositoryEntry.class.getName()));
@@ -537,6 +561,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		repositoryEntryImpl.setMappedId(getMappedId());
 		repositoryEntryImpl.setManualCheckInRequired(getManualCheckInRequired());
 		repositoryEntryImpl.setLastPublishDate(getLastPublishDate());
+		repositoryEntryImpl.setTypeSettings(getTypeSettings());
 
 		repositoryEntryImpl.resetOriginalValues();
 
@@ -689,12 +714,20 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 			repositoryEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		repositoryEntryCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = repositoryEntryCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			repositoryEntryCacheModel.typeSettings = null;
+		}
+
 		return repositoryEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -722,6 +755,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		sb.append(getManualCheckInRequired());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", typeSettings=");
+		sb.append(getTypeSettings());
 		sb.append("}");
 
 		return sb.toString();
@@ -729,7 +764,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.RepositoryEntry");
@@ -787,6 +822,10 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
+		sb.append(getTypeSettings());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -819,6 +858,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	private String _originalMappedId;
 	private boolean _manualCheckInRequired;
 	private Date _lastPublishDate;
+	private String _typeSettings;
 	private long _columnBitmask;
 	private RepositoryEntry _escapedModel;
 }

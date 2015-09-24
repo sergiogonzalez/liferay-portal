@@ -51,6 +51,7 @@ public class DLFileVersionSoap implements Serializable {
 		soapModel.setMimeType(model.getMimeType());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setMajorVersion(model.getMajorVersion());
 		soapModel.setChangeLog(model.getChangeLog());
 		soapModel.setExtraSettings(model.getExtraSettings());
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
@@ -250,6 +251,18 @@ public class DLFileVersionSoap implements Serializable {
 		_description = description;
 	}
 
+	public boolean getMajorVersion() {
+		return _majorVersion;
+	}
+
+	public boolean isMajorVersion() {
+		return _majorVersion;
+	}
+
+	public void setMajorVersion(boolean majorVersion) {
+		_majorVersion = majorVersion;
+	}
+
 	public String getChangeLog() {
 		return _changeLog;
 	}
@@ -355,6 +368,7 @@ public class DLFileVersionSoap implements Serializable {
 	private String _mimeType;
 	private String _title;
 	private String _description;
+	private boolean _majorVersion;
 	private String _changeLog;
 	private String _extraSettings;
 	private long _fileEntryTypeId;

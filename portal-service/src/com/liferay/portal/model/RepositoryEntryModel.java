@@ -287,6 +287,21 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the type settings of this repository entry.
+	 *
+	 * @return the type settings of this repository entry
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this repository entry.
+	 *
+	 * @param typeSettings the type settings of this repository entry
+	 */
+	public void setTypeSettings(String typeSettings);
+
 	@Override
 	public boolean isNew();
 

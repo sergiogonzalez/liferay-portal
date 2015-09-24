@@ -66,7 +66,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		sb.append(title);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", majorVersion=");
+		sb.append(majorVersion);
 		sb.append(", changeLog=");
 		sb.append(changeLog);
 		sb.append(", extraSettings=");
@@ -212,6 +214,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 			dlFileVersionImpl.setDescription(description);
 		}
 
+		dlFileVersionImpl.setMajorVersion(majorVersion);
+
 		if (changeLog == null) {
 			dlFileVersionImpl.setChangeLog(StringPool.BLANK);
 		}
@@ -292,6 +296,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		mimeType = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
+		majorVersion = objectInput.readBoolean();
 		changeLog = objectInput.readUTF();
 		extraSettings = objectInput.readUTF();
 		fileEntryTypeId = objectInput.readLong();
@@ -375,6 +380,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeBoolean(majorVersion);
+
 		if (changeLog == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -438,6 +445,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public String mimeType;
 	public String title;
 	public String description;
+	public boolean majorVersion;
 	public String changeLog;
 	public String extraSettings;
 	public long fileEntryTypeId;
