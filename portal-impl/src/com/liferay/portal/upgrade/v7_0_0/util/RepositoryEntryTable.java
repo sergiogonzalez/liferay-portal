@@ -40,7 +40,8 @@ public class RepositoryEntryTable {
 		{"repositoryId", Types.BIGINT},
 		{"mappedId", Types.VARCHAR},
 		{"manualCheckInRequired", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"lastPublishDate", Types.TIMESTAMP},
+		{"typeSettings", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -72,15 +73,17 @@ TABLE_COLUMNS_MAP.put("manualCheckInRequired", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
+TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+
 }
-	public static final String TABLE_SQL_CREATE = "create table RepositoryEntry (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,repositoryEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mappedId VARCHAR(255) null,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table RepositoryEntry (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,repositoryEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mappedId VARCHAR(255) null,manualCheckInRequired BOOLEAN,lastPublishDate DATE null,typeSettings VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RepositoryEntry";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_9BDCF489 on RepositoryEntry (repositoryId, mappedId)",
-		"create index IX_D3B9AF62 on RepositoryEntry (uuid_, companyId)",
-		"create unique index IX_354AA664 on RepositoryEntry (uuid_, groupId)"
+		"create unique index IX_9BDCF489 on RepositoryEntry (repositoryId, mappedId[$COLUMN_LENGTH:255$])",
+		"create index IX_D3B9AF62 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], companyId)",
+		"create unique index IX_354AA664 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], groupId)"
 	};
 
 }
