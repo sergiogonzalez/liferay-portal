@@ -1577,6 +1577,7 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="majorVersion" type="boolean" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFolder">
 		<field name="uuid" type="String" />
