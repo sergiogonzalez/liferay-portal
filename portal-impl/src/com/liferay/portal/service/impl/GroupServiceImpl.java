@@ -901,6 +901,64 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return userSitesGroups.size();
 	}
 
+	@Override
+	public int getUserSitesGroupsCount(long userId, String[] classNames)
+		throws PortalException {
+
+		User user = userPersistence.fetchByPrimaryKey(userId);
+
+		if (user.isDefaultUser()) {
+			return 0;
+		}
+
+		int userSiteGroupsCount = 0;
+
+		if ((classNames == null) ||
+			ArrayUtil.contains(classNames, Company.class.getName())) {
+
+			userSiteGroupsCount += groupLocalService.searchCount(
+				user.getCompanyId(),
+				new long[] {
+					classNameLocalService.getClassNameId(Company.class)
+				},
+				null, new LinkedHashMap<String, Object>());
+		}
+
+		if ((classNames == null) ||
+			ArrayUtil.contains(classNames, Group.class.getName())) {
+
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+
+			groupParams.put("active", true);
+			groupParams.put("usersGroups", userId);
+
+			userSiteGroupsCount += groupLocalService.searchCount(
+				user.getCompanyId(), null, groupParams);
+		}
+
+		if ((classNames == null) ||
+			ArrayUtil.contains(classNames, Organization.class.getName())) {
+
+			List<Organization> userOrgs =
+				organizationLocalService.getOrganizations(
+					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			userSiteGroupsCount += userOrgs.size();
+		}
+
+		if ((classNames == null) ||
+			ArrayUtil.contains(classNames, User.class.getName())) {
+
+			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
+				PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
+
+				userSiteGroupsCount++;
+			}
+		}
+
+		return userSiteGroupsCount;
+	}
+
 	/**
 	 * Returns <code>true</code> if the user is associated with the group,
 	 * including the user's inherited organizations and user groups. System and

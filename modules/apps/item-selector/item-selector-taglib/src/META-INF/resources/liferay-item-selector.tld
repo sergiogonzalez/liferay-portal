@@ -63,5 +63,15 @@
 		<name>group-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.GroupSelectorTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>groups</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 </taglib>
