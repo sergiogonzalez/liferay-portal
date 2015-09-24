@@ -475,6 +475,7 @@
 		<column name="mimeType" type="String" />
 		<column name="title" type="String" />
 		<column name="description" type="String" />
+		<column name="majorVersion" type="boolean" />
 		<column name="changeLog" type="String" />
 		<column name="extraSettings" type="String" />
 		<column name="fileEntryTypeId" type="long" />
