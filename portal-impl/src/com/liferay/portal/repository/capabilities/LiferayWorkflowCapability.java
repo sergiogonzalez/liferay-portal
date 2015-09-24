@@ -76,10 +76,12 @@ public class LiferayWorkflowCapability
 
 	@Override
 	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean keepFileVersionLabel =
+			!majorVersion &&
 			_dlFileEntryServiceAdapter.isKeepFileVersionLabel(
 				fileEntry.getFileEntryId(), serviceContext);
 
