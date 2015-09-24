@@ -327,6 +327,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	@Override
+	public boolean isMajorVersion() {
+		return _dlFileVersion.isMajorVersion();
+	}
+
+	@Override
 	public boolean isPending() {
 		return _dlFileVersion.isPending();
 	}
