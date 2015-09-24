@@ -61,6 +61,8 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 						input.val(fields[fieldName]);
 					}
 				);
+
+				<portlet:namespace />checkMajorVersion();
 			};
 
 			<%= dlFilePicker.getJavaScript() %>

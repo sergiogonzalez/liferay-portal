@@ -55,7 +55,8 @@ public class MinimalWorkflowCapability
 
 	@Override
 	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		doUpdateStatus(userId, fileEntry, serviceContext);
