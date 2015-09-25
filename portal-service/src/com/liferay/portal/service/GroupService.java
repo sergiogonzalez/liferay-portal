@@ -569,6 +569,10 @@ public interface GroupService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSitesGroupsCount() throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserSitesGroupsCount(long userId,
+		java.lang.String[] classNames) throws PortalException;
+
 	/**
 	* Returns <code>true</code> if the user is associated with the group,
 	* including the user's inherited organizations and user groups. System and
