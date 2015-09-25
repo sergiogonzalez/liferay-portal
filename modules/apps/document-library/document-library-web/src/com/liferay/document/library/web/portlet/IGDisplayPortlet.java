@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.webdav-storage-token=document_library",
 		"javax.portlet.display-name=Media Gallery",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/image_gallery_display/view.jsp",
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
