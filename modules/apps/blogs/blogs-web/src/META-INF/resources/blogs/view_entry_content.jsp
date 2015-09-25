@@ -53,6 +53,16 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</portlet:renderURL>
 
 					<div class="entry-options">
+						<c:if test="<%= (entry.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
+							<div class="status">
+								<small class="text-capitalize text-muted">
+									<%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>
+
+									<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+								</small>
+							</div>
+						</c:if>
+
 						<aui:button cssClass="icon-monospaced" href="<%= editEntryURL %>" icon="icon-pencil" />
 					</div>
 				</c:if>
