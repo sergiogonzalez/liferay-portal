@@ -83,6 +83,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("majorVersion", getMajorVersion());
 
 		return attributes;
 	}
@@ -255,6 +256,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Boolean majorVersion = (Boolean)attributes.get("majorVersion");
+
+		if (majorVersion != null) {
+			setMajorVersion(majorVersion);
 		}
 	}
 
@@ -467,6 +474,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public Date getLastPublishDate() {
 		return _dlFileVersion.getLastPublishDate();
+	}
+
+	/**
+	* Returns the major version of this document library file version.
+	*
+	* @return the major version of this document library file version
+	*/
+	@Override
+	public boolean getMajorVersion() {
+		return _dlFileVersion.getMajorVersion();
 	}
 
 	/**
@@ -719,6 +736,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		return _dlFileVersion.isIncomplete();
 	}
 
+	/**
+	* Returns <code>true</code> if this document library file version is major version.
+	*
+	* @return <code>true</code> if this document library file version is major version; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isMajorVersion() {
+		return _dlFileVersion.isMajorVersion();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _dlFileVersion.isNew();
@@ -916,6 +943,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		_dlFileVersion.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	* Sets whether this document library file version is major version.
+	*
+	* @param majorVersion the major version of this document library file version
+	*/
+	@Override
+	public void setMajorVersion(boolean majorVersion) {
+		_dlFileVersion.setMajorVersion(majorVersion);
 	}
 
 	/**

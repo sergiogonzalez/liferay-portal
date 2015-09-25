@@ -290,6 +290,11 @@ public class FileVersionWrapper
 	}
 
 	@Override
+	public boolean isMajorVersion() {
+		return _fileVersion.isMajorVersion();
+	}
+
+	@Override
 	public boolean isPending() {
 		return _fileVersion.isPending();
 	}

@@ -504,7 +504,8 @@ create table DLFileVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	majorVersion BOOLEAN
 );
 
 create table DLFolder (
