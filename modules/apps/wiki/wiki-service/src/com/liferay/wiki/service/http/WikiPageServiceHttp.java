@@ -274,35 +274,6 @@ public class WikiPageServiceHttp {
 		}
 	}
 
-	public static void changeNode(HttpPrincipal httpPrincipal, long nodeId,
-		java.lang.String title, long newNodeId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
-					"changeNode", _changeNodeParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
-					title, newNodeId, serviceContext);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static void changeParent(HttpPrincipal httpPrincipal, long nodeId,
 		java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1595,10 +1566,6 @@ public class WikiPageServiceHttp {
 	private static final Class<?>[] _addTempPageAttachmentParameterTypes6 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.io.InputStream.class, java.lang.String.class
-		};
-	private static final Class<?>[] _changeNodeParameterTypes7 = new Class[] {
-			long.class, java.lang.String.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _changeParentParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
