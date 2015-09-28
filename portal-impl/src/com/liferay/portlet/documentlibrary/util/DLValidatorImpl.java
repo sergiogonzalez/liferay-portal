@@ -40,6 +40,21 @@ import java.io.InputStream;
 public final class DLValidatorImpl implements DLValidator {
 
 	@Override
+	public String fixName(String name) {
+		if (Validator.isNull(name)) {
+			return StringPool.UNDERLINE;
+		}
+
+		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
+			name = name.replace(blacklistChar, StringPool.UNDERLINE);
+		}
+
+		name = replaceDlCharLastBlacklist(name);
+
+		return replaceDlNameBlacklist(name);
+	}
+
+	@Override
 	public boolean isValidName(String name) {
 		if (Validator.isNull(name)) {
 			return false;
@@ -52,7 +67,7 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
-			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
+			if (blacklistLastChar.startsWith(UnicodeFormatter.UNICODE_PREFIX)) {
 				blacklistLastChar = UnicodeFormatter.parseString(
 					blacklistLastChar);
 			}
@@ -203,6 +218,56 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 	}
 
-	private static final String _UNICODE_PREFIX = "\\u";
+	protected String replaceDlCharLastBlacklist(String title) {
+		String previousTitle = null;
+
+		while (!title.equals(previousTitle)) {
+			previousTitle = title;
+
+			for (String blacklistLastChar :
+					PropsValues.DL_CHAR_LAST_BLACKLIST) {
+
+				if (blacklistLastChar.startsWith(
+						UnicodeFormatter.UNICODE_PREFIX)) {
+
+					blacklistLastChar = UnicodeFormatter.parseString(
+						blacklistLastChar);
+				}
+
+				if (title.endsWith(blacklistLastChar)) {
+					title = StringUtil.replaceLast(
+						title, blacklistLastChar, StringPool.BLANK);
+				}
+			}
+		}
+
+		return title;
+	}
+
+	protected String replaceDlNameBlacklist(String title) {
+		String nameWithoutExtension = title;
+
+		String extension = StringPool.BLANK;
+
+		if (title.contains(StringPool.PERIOD)) {
+			int index = title.lastIndexOf(StringPool.PERIOD);
+
+			nameWithoutExtension = title.substring(0, index);
+
+			extension = title.substring(index);
+		}
+
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			if (StringUtil.equalsIgnoreCase(
+					nameWithoutExtension, blacklistName)) {
+
+				title = nameWithoutExtension + StringPool.UNDERLINE + extension;
+
+				break;
+			}
+		}
+
+		return title;
+	}
 
 }
