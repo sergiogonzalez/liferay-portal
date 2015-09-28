@@ -39,7 +39,7 @@ SearchContainer<Group> searchContainer = (SearchContainer<Group>)request.getAttr
 		>
 
 			<%
-			row.setCssClass("col-md-3");
+			row.setCssClass("col-md-3 card-horizontal-dm");
 
 			PortletURL viewGroupURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 

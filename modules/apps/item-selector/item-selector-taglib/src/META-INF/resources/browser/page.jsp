@@ -292,7 +292,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 							<c:when test='<%= displayStyle.equals("icon") %>'>
 
 								<%
-								row.setCssClass("col-md-3");
+								row.setCssClass("col-md-3 card-horizontal-dm");
 
 								if (folder != null) {
 									PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
