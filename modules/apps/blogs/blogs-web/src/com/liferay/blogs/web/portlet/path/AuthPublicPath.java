@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"auth.public.path=/blogs/find_entry", "auth.public.path=/blogs/rss",
 		"auth.public.path=/blogs/trackback",
+		"auth.public.path=/document_library/oembed",
 		"auth.public.path=/blogs_aggregator/rss"
 	},
 	service = Object.class
