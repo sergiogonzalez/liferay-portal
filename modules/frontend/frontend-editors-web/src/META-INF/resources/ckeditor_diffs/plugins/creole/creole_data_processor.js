@@ -391,9 +391,7 @@
 
 				listTagsIn.push('[[');
 
-				if (linkText !== hrefAttribute) {
-					listTagsIn.push(hrefAttribute, STR_PIPE);
-				}
+				listTagsIn.push(hrefAttribute, STR_PIPE);
 
 				listTagsOut.push(']]');
 			}
