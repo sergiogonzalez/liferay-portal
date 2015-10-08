@@ -301,7 +301,7 @@
 
 	<command name="advancedSearchCP">
 		<execute function="AssertClick" locator1="NavTab#ALL_ORGANIZATIONS" value1="All Organizations" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADVANCED_SEARCH_ICON" />
+		<execute function="Click" locator1="UsersAndOrganizations#ADVANCED_SEARCH_ICON" />
 
 		<if>
 			<equals arg1="${orgAdvancedSearch}" arg2="Name" />
@@ -633,7 +633,7 @@
 	</command>
 
 	<command name="viewMembersNotFoundCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This organization does not have any users. " />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This organization does not have any users." />
 	</command>
 
 	<command name="viewParentOrganizationCP">

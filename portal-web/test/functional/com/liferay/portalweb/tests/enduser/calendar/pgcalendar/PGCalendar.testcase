@@ -126,7 +126,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventAllDayRSVPYes" priority="4">
+	<command name="AddCalendarEventAllDayRSVPYes" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 
@@ -254,7 +254,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventAllDayWithUserInviteAccept" priority="4">
+	<command name="AddCalendarEventAllDayWithUserInviteAccept" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 		<var name="resourceNameList" value="userfn userln" />
@@ -409,7 +409,7 @@
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
-			<var name="calendarName" value="Site Name (Staging)" />
+			<var name="calendarName" value="Site Name" />
 			<var name="eventTitle" value="Site Name Staged Event" />
 			<var name="eventType" value="Regular" />
 			<var name="pageName" value="Staging Test Page" />
@@ -613,6 +613,10 @@
 			<var name="user" value="Test Test" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="LAR#exportPortlet">
 			<var name="larFileName" value="calendar_calendar_with_comments.portlet.lar" />
 			<var name="portletName" value="Calendar" />
@@ -750,7 +754,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventRegularWithUserInviteAccept" priority="4">
+	<command name="AddCalendarEventRegularWithUserInviteAccept" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="resourceNameList" value="userfn userln" />
@@ -971,7 +975,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventRepeatingRSVPYes" priority="4">
+	<command name="AddCalendarEventRepeatingRSVPYes" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -1138,7 +1142,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventRepeatingWithUserInviteAccept" priority="4">
+	<command name="AddCalendarEventRepeatingWithUserInviteAccept" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 		<var name="resourceNameList" value="userfn userln" />
@@ -2225,12 +2229,12 @@
 			<var name="eventTitle" value="Current Day Event" />
 		</execute>
 
-		<execute macro="CalendarEvent#setDatesToday" />
-
 		<execute macro="CalendarEvent#setTimes">
 			<var name="endDateTime" value="11:59 PM" />
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
 
 		<execute macro="CalendarEvent#publish" />
 
@@ -2280,12 +2284,12 @@
 			<var name="eventTitle" value="Current Day Event" />
 		</execute>
 
-		<execute macro="CalendarEvent#setDatesToday" />
-
 		<execute macro="CalendarEvent#setTimes">
 			<var name="endDateTime" value="11:59 PM" />
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
 
 		<execute macro="CalendarEvent#publish" />
 
@@ -3174,7 +3178,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="EnableAutoApprovalForEvents" priority="3">
+	<command name="EnableAutoApprovalForEvents" priority="3">
 		<description message="This is a use case for LPS-53057." />
 
 		<property name="portlet.properties.calendar-portlet" value="calendar.auto.approve.group.event=true" />
@@ -3384,7 +3388,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="InviteUsersAndViewResponse" priority="4">
+	<command name="InviteUsersAndViewResponse" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -3524,7 +3528,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="SearchCalendarEventInSearchPortletWithTag" priority="3">
+	<command name="SearchCalendarEventInSearchPortletWithTag" priority="3">
 		<description message="This is a use case for LPS-54548." />
 
 		<execute macro="Page#gotoPG">
@@ -3776,7 +3780,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55278" name="View24hourTimeFormat" priority="4">
+	<command name="View24hourTimeFormat" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -4612,12 +4616,12 @@
 			<var name="eventTitle" value="Current Day Event" />
 		</execute>
 
-		<execute macro="CalendarEvent#setDatesToday" />
-
 		<execute macro="CalendarEvent#setTimes">
 			<var name="endDateTime" value="11:59 PM" />
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
 
 		<execute macro="CalendarEvent#publish" />
 
