@@ -213,6 +213,13 @@
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.joinAE_ByDLFileEntry">
+		<![CDATA[
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = AssetEntry.classPK)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder.findByMismatchedCompanyId">
 		<![CDATA[
 			SELECT
@@ -253,11 +260,11 @@
 				DLFileEntryType
 			WHERE
 				(
-					(companyId = ?) AND
+					(DLFileEntryType.companyId = ?) AND
 					[$GROUP_ID$]
 					(
-						(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(description LIKE ? [$AND_OR_NULL_CHECK$])
+						(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 				)
 		]]>
@@ -271,11 +278,11 @@
 				DLFileEntryType
 			WHERE
 				(
-					(companyId = ?) AND
+					(DLFileEntryType.companyId = ?) AND
 					[$GROUP_ID$]
 					(
-						(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(description LIKE ? [$AND_OR_NULL_CHECK$])
+						(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 				)
 		]]>
@@ -398,6 +405,13 @@
 				(DLFileShortcut.active_ = ?) AND
 				([$STATUS$]) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinAE_ByDLFolder">
+		<![CDATA[
+			INNER JOIN
+				DLFolder ON
+					(DLFolder.folderId = AssetEntry.classPK)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinFE_ByDLFileVersion">

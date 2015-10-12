@@ -103,6 +103,7 @@ page import="com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil" 
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.SessionClicks" %><%@
 page import="com.liferay.portal.util.comparator.UserScreenNameComparator" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -125,7 +126,9 @@ page import="java.util.TimeZone" %>
 <liferay-theme:defineObjects />
 
 <%
-String currentURL = PortalUtil.getCurrentURL(request);
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
 
 CalendarBooking calendarBooking = (CalendarBooking)request.getAttribute(CalendarWebKeys.CALENDAR_BOOKING);
 

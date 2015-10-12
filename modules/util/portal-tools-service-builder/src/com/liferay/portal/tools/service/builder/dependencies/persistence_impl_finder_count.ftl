@@ -37,7 +37,7 @@ public int countBy${finder.name}(
 		</#list>
 	};
 
-	Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+	Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 	if (count == null) {
 		<#include "persistence_impl_count_by_query.ftl">
@@ -57,10 +57,10 @@ public int countBy${finder.name}(
 
 			count = (Long)q.uniqueResult();
 
-			FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			finderCache.putResult(finderPath, finderArgs, count);
 		}
 		catch (Exception e) {
-			FinderCacheUtil.removeResult(finderPath, finderArgs);
+			finderCache.removeResult(finderPath, finderArgs);
 
 			throw processException(e);
 		}
@@ -106,13 +106,19 @@ public int countBy${finder.name}(
 				if (${finderCol.names} == null) {
 					${finderCol.names} = new ${finderCol.type}[0];
 				}
-				else {
+				else if (${finderCol.names}.length > 1) {
 					${finderCol.names} =
 						<#if finderCol.type == "String">
 							ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							ArrayUtil.unique(${finderCol.names});
 						</#if>
+
+					<#if finderCol.type == "String">
+						Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
+					<#else>
+						Arrays.sort(${finderCol.names});
+					</#if>
 				}
 			</#if>
 		</#list>
@@ -131,7 +137,7 @@ public int countBy${finder.name}(
 			</#list>
 		};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, this);
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, this);
 
 		if (count == null) {
 			<#include "persistence_impl_count_by_arrayable_query.ftl">
@@ -155,10 +161,10 @@ public int countBy${finder.name}(
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, count);
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs);
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs);
 
 				throw processException(e);
 			}
@@ -331,13 +337,19 @@ public int countBy${finder.name}(
 					if (${finderCol.names} == null) {
 						${finderCol.names} = new ${finderCol.type}[0];
 					}
-					else {
+					else if (${finderCol.names}.length > 1) {
 						${finderCol.names} =
 							<#if finderCol.type == "String">
 								ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 							<#else>
 								ArrayUtil.unique(${finderCol.names});
 							</#if>
+
+						<#if finderCol.type == "String">
+							Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
+						<#else>
+							Arrays.sort(${finderCol.names});
+						</#if>
 					}
 				</#if>
 			</#list>

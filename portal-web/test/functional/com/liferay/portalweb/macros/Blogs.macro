@@ -54,6 +54,24 @@
 		<execute macro="BlogsEntry#publish" />
 	</command>
 
+	<command name="addEntryWithPermissions">
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="BlogsEntry#entryAddPermissions">
+			<var name="viewableBy" value="${viewableBy}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
 	<command name="addEntryWithTag">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
@@ -90,6 +108,25 @@
 		</for>
 
 		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addEntryWithUploadedCoverImage">
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCoverImage" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="${navTab}" />
+			<var name="uploadFileName" value="${uploadFileName}" />
+		</execute>
+
+		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="addScheduled">
@@ -429,7 +466,7 @@
 	</command>
 
 	<command name="subscribePG">
-		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertClick" locator1="Blogs#SUBSCRIBE_LINK" value1="Subscribe" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -550,6 +587,13 @@
 			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+	</command>
+
+	<command name="viewDraftStatusViaAdmin">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Draft" />
 	</command>
 
 	<command name="viewNoEntryCP">

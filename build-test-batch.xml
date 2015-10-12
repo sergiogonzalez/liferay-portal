@@ -823,6 +823,7 @@
 						<test-action>
 							<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
 								<property name="database.type" value="@{database.type}" />
+								<property name="print.java.process.on.fail" value="Bootstrap" />
 								<property name="test.class" value="${axis.variable}" />
 							</ant>
 						</test-action>
@@ -933,9 +934,7 @@
 
 	<macrodef name="run-source-formatter">
 		<sequential>
-			<antcall target="test-package" inheritAll="false">
-				<param name="test.package" value="com.liferay.source.formatter" />
-			</antcall>
+			<gradle-execute dir="modules/util/source-formatter" task="test" />
 		</sequential>
 	</macrodef>
 
@@ -992,6 +991,10 @@
 			<property name="testray.axis.name" value="${test.batch.name}#${axis.variable}" />
 		</sequential>
 	</macrodef>
+
+	<target name="functional-tomcat-hypersonic">
+		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
+	</target>
 
 	<target name="functional-tomcat-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
