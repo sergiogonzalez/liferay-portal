@@ -14,8 +14,6 @@
 
 package com.liferay.sync.engine.util;
 
-import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -36,31 +34,34 @@ import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
  */
 public class MSOfficeFileUtil {
 
-	public static Date getLastSavedDate(Path filePath) throws IOException {
-		NPOIFSFileSystem npoifsFileSystem = new NPOIFSFileSystem(
-			filePath.toFile());
+	public static Date getLastSavedDate(Path filePath) {
+		try {
+			NPOIFSFileSystem npoifsFileSystem = new NPOIFSFileSystem(
+				filePath.toFile());
 
-		HPSFPropertiesOnlyDocument hpsfPropertiesOnlyDocument =
-			new HPSFPropertiesOnlyDocument(npoifsFileSystem);
+			HPSFPropertiesOnlyDocument hpsfPropertiesOnlyDocument =
+				new HPSFPropertiesOnlyDocument(npoifsFileSystem);
 
-		SummaryInformation summaryInformation =
-			hpsfPropertiesOnlyDocument.getSummaryInformation();
+			SummaryInformation summaryInformation =
+				hpsfPropertiesOnlyDocument.getSummaryInformation();
 
-		return summaryInformation.getLastSaveDateTime();
+			return summaryInformation.getLastSaveDateTime();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static boolean isExcelFile(Path filePath) {
-		if (Files.isDirectory(filePath)) {
-			return false;
-		}
-
 		String extension = FilenameUtils.getExtension(filePath.toString());
 
 		if (extension == null) {
 			return false;
 		}
 
-		if (_excelExtensions.contains(extension.toLowerCase())) {
+		if (_excelExtensions.contains(extension.toLowerCase()) &&
+			!Files.isDirectory(filePath)) {
+
 			return true;
 		}
 
@@ -68,10 +69,6 @@ public class MSOfficeFileUtil {
 	}
 
 	public static boolean isLegacyExcelFile(Path filePath) {
-		if (Files.isDirectory(filePath)) {
-			return false;
-		}
-
 		String extension = FilenameUtils.getExtension(filePath.toString());
 
 		if (extension == null) {
@@ -80,7 +77,7 @@ public class MSOfficeFileUtil {
 
 		extension = extension.toLowerCase();
 
-		if (extension.equals("xls")) {
+		if (extension.equals("xls") && !Files.isDirectory(filePath)) {
 			return true;
 		}
 
@@ -88,14 +85,11 @@ public class MSOfficeFileUtil {
 	}
 
 	public static boolean isTempCreatedFile(Path filePath) {
-		if (Files.isDirectory(filePath)) {
-			return false;
-		}
-
 		String fileName = String.valueOf(filePath.getFileName());
 
-		if (fileName.startsWith("~$") ||
-			(fileName.startsWith("~") && fileName.endsWith(".tmp"))) {
+		if ((fileName.startsWith("~$") ||
+			 (fileName.startsWith("~") && fileName.endsWith(".tmp"))) &&
+			!Files.isDirectory(filePath)) {
 
 			return true;
 		}
