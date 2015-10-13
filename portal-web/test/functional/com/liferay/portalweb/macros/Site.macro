@@ -125,20 +125,25 @@
 		<execute function="AssertTextEquals" locator1="CPSitesEdit#DETAILS_NAME" value1="${siteName}" />
 
 		<if>
-			<equals arg1="${siteLimitMembership}" arg2="Yes" />
+			<isset var="siteLimitMembership" />
 			<then>
-				<execute function="Check" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${siteLimitMembership}" arg2="No" />
-				<then>
-					<execute function="Uncheck" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
+				<if>
+					<equals arg1="${siteLimitMembership}" arg2="Yes" />
+					<then>
+						<execute function="Check" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+					</then>
+					<elseif>
+						<equals arg1="${siteLimitMembership}" arg2="No" />
+						<then>
+							<execute function="Uncheck" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+						</then>
+					</elseif>
+				</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+			</then>
+		</if>
 	</command>
 
 	<command name="addIntranetCP">
@@ -195,9 +200,9 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#USER_GROUPS" value1="User Group" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="MenuItem#USER_GROUP" value1="User Group" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsAddMembers#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 		<execute function="Check" locator1="SiteMembershipsAddMembers#USER_GROUP_TABLE_CHECKBOX" />
 		<execute function="Click" locator1="Button#SAVE" />
@@ -344,8 +349,8 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_USER_GROUPS" value1="User Groups" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 		<execute function="Click" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_ACTIONS" />
@@ -468,7 +473,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 		<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />
@@ -499,18 +504,6 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO_5" value1="No sites were found." />
 		<execute function="AssertTextNotPresent" value1="${siteName}" />
-	</command>
-
-	<command name="disableRecycleBinCP">
-		<execute function="AssertClick" locator1="NavListItem#RECYCLE_BIN" value1="Recycle Bin" />
-
-		<execute function="ClickNoError" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
-
-		<execute function="Confirm" value1="Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin." />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editCP">
