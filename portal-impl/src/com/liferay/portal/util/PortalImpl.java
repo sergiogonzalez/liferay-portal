@@ -3230,14 +3230,12 @@ public class PortalImpl implements Portal {
 		if ((user != null) && !user.isDefaultUser()) {
 			Locale userLocale = getAvailableLocale(groupId, user.getLocale());
 
-			if (userLocale != null) {
-				if (LanguageUtil.isAvailableLocale(groupId, userLocale)) {
-					if (initialize) {
-						setLocale(request, response, userLocale);
-					}
-
-					return userLocale;
+			if (LanguageUtil.isAvailableLocale(groupId, userLocale)) {
+				if (initialize) {
+					setLocale(request, response, userLocale);
 				}
+
+				return userLocale;
 			}
 		}
 
@@ -3250,14 +3248,12 @@ public class PortalImpl implements Portal {
 			Locale cookieLocale = getAvailableLocale(
 				groupId, LocaleUtil.fromLanguageId(languageId));
 
-			if (cookieLocale != null) {
-				if (LanguageUtil.isAvailableLocale(groupId, cookieLocale)) {
-					if (initialize) {
-						setLocale(request, response, cookieLocale);
-					}
-
-					return cookieLocale;
+			if (LanguageUtil.isAvailableLocale(groupId, cookieLocale)) {
+				if (initialize) {
+					setLocale(request, response, cookieLocale);
 				}
+
+				return cookieLocale;
 			}
 		}
 
@@ -3270,16 +3266,12 @@ public class PortalImpl implements Portal {
 				Locale requestLocale = getAvailableLocale(
 					groupId, locales.nextElement());
 
-				if (requestLocale != null) {
-					if (LanguageUtil.isAvailableLocale(
-							groupId, requestLocale)) {
-
-						if (initialize) {
-							setLocale(request, response, requestLocale);
-						}
-
-						return requestLocale;
+				if (LanguageUtil.isAvailableLocale(groupId, requestLocale)) {
+					if (initialize) {
+						setLocale(request, response, requestLocale);
 					}
+
+					return requestLocale;
 				}
 			}
 		}
@@ -3313,14 +3305,12 @@ public class PortalImpl implements Portal {
 		Locale defaultUserLocale = getAvailableLocale(
 			groupId, defaultUser.getLocale());
 
-		if (defaultUserLocale != null) {
-			if (LanguageUtil.isAvailableLocale(groupId, defaultUserLocale)) {
-				if (initialize) {
-					setLocale(request, response, defaultUserLocale);
-				}
-
-				return defaultUserLocale;
+		if (LanguageUtil.isAvailableLocale(groupId, defaultUserLocale)) {
+			if (initialize) {
+				setLocale(request, response, defaultUserLocale);
 			}
+
+			return defaultUserLocale;
 		}
 
 		try {
