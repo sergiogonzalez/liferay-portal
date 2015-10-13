@@ -71,8 +71,6 @@ recordSetSearch.setOrderByType(orderByType);
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<% request.setAttribute("rowURL", rowURL); %>
-
 						<liferay-ui:search-container-column-image
 							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 							toggleRowChecker="<%= true %>"
@@ -80,6 +78,7 @@ recordSetSearch.setOrderByType(orderByType);
 
 						<liferay-ui:search-container-column-jsp
 							colspan="2"
+							href="<%= rowURL %>"
 							path="/admin/view_record_set_descriptive.jsp"
 						/>
 

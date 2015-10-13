@@ -2,7 +2,7 @@
 	<property name="setup.wizard.enabled" value="true" />
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
-	<command known-issues="LPS-54934" name="HSQLtoDB2" priority="4">
+	<command name="HSQLtoDB2" priority="4">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
@@ -32,7 +32,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-54934" name="HSQLtoDB2SampleDataDisabled" priority="4">
+	<command name="HSQLtoDB2SampleDataDisabled" priority="4">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
@@ -53,23 +53,6 @@
 			<var name="databaseUserName" property-value="database.db2.username" />
 			<var name="jdbcDriverClassName" property-value="database.db2.driver" />
 			<var name="jdbcURL" property-value="database.db2.url" />
-		</execute>
-
-		<execute macro="Smoke#viewWelcomePage" />
-
-		<execute macro="Smoke#runSmoke" />
-	</command>
-
-	<command name="HSQLtoHSQL" priority="4">
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.hypersonic.password" />
-			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hypersonic.username" />
-			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
-			<var name="jdbcURL" property-value="database.hypersonic.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -131,29 +114,6 @@
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
-
-		<execute macro="Smoke#runSmoke" />
-	</command>
-
-	<command name="HSQLtoMySQL" priority="4">
-		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=mysql -Ddelete.liferay.home=false" />
-
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var name="databaseName" value="lportal1" />
-			<var name="databasePassword" property-value="database.mysql.password" />
-			<var name="databaseType" value="MySQL" />
-			<var name="databaseUserName" property-value="database.mysql.username" />
-			<var name="jdbcDriverClassName" property-value="database.mysql.driver" />
-			<var name="jdbcURL" property-value="database.mysql.url" />
-		</execute>
-
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Joe" />
-			<var name="userLastName" value="Bloggs" />
-		</execute>
 
 		<execute macro="Smoke#runSmoke" />
 	</command>
@@ -279,7 +239,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-52571" name="HSQLtoSybase" priority="4">
+	<command name="HSQLtoSybase" priority="4">
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
@@ -299,7 +259,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-52571" name="HSQLtoSybaseSampleDataDisabled" priority="4">
+	<command name="HSQLtoSybaseSampleDataDisabled" priority="4">
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />
 			<var name="administratorEmail" value="test@liferay.com" />

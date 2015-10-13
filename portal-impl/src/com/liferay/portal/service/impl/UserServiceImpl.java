@@ -69,6 +69,7 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -1879,9 +1880,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long[] oldGroupIds = user.getGroupIds();
 
 		List<Long> addGroupIds = new ArrayList<>();
-		List<Long> removeGroupIds = ListUtil.toList(oldGroupIds);
+		List<Long> removeGroupIds = Collections.emptyList();
 
 		if (groupIds != null) {
+			removeGroupIds = ListUtil.toList(oldGroupIds);
+
 			groupIds = checkGroups(userId, groupIds);
 
 			for (long groupId : groupIds) {
@@ -1905,9 +1908,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long[] oldOrganizationIds = user.getOrganizationIds();
 
 		List<Long> addOrganizationIds = new ArrayList<>();
-		List<Long> removeOrganizationIds = ListUtil.toList(oldOrganizationIds);
+		List<Long> removeOrganizationIds = Collections.emptyList();
 
 		if (organizationIds != null) {
+			removeOrganizationIds = ListUtil.toList(oldOrganizationIds);
+
 			organizationIds = checkOrganizations(userId, organizationIds);
 
 			for (long organizationId : organizationIds) {
@@ -1934,9 +1939,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long[] oldRoleIds = user.getRoleIds();
 
 		List<Long> addRoleIds = new ArrayList<>();
-		List<Long> removeRoleIds = ListUtil.toList(oldRoleIds);
+		List<Long> removeRoleIds = Collections.emptyList();
 
 		if (roleIds != null) {
+			removeRoleIds = ListUtil.toList(oldRoleIds);
+
 			roleIds = checkRoles(userId, roleIds);
 
 			for (long roleId : roleIds) {
@@ -1973,14 +1980,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 
 		List<UserGroupRole> addOrganizationUserGroupRoles = new ArrayList<>();
-		List<UserGroupRole> removeOrganizationUserGroupRoles = ListUtil.copy(
-			oldOrganizationUserGroupRoles);
+		List<UserGroupRole> removeOrganizationUserGroupRoles =
+			Collections.emptyList();
 		List<UserGroupRole> addSiteUserGroupRoles = new ArrayList<>();
-		List<UserGroupRole> removeSiteUserGroupRoles = ListUtil.copy(
-			oldSiteUserGroupRoles);
+		List<UserGroupRole> removeSiteUserGroupRoles = Collections.emptyList();
 
 		if (userGroupRoles != null) {
 			userGroupRoles = checkUserGroupRoles(userId, userGroupRoles);
+
+			removeOrganizationUserGroupRoles = ListUtil.copy(
+				oldOrganizationUserGroupRoles);
+			removeSiteUserGroupRoles = ListUtil.copy(oldSiteUserGroupRoles);
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
 				Role role = userGroupRole.getRole();
@@ -2024,9 +2034,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long[] oldUserGroupIds = user.getUserGroupIds();
 
 		List<Long> addUserGroupIds = new ArrayList<>();
-		List<Long> removeUserGroupIds = ListUtil.toList(oldUserGroupIds);
+		List<Long> removeUserGroupIds = Collections.emptyList();
 
 		if (userGroupIds != null) {
+			removeUserGroupIds = ListUtil.toList(oldUserGroupIds);
+
 			userGroupIds = checkUserGroupIds(userId, userGroupIds);
 
 			for (long userGroupId : userGroupIds) {
@@ -2092,7 +2104,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				removeOrganizationUserGroupRoles);
 		}
 
-		if (!addUserGroupIds.isEmpty() || !removeGroupIds.isEmpty()) {
+		if (!addUserGroupIds.isEmpty() || !removeUserGroupIds.isEmpty()) {
 			UserGroupMembershipPolicyUtil.propagateMembership(
 				new long[] {user.getUserId()},
 				ArrayUtil.toLongArray(addUserGroupIds),

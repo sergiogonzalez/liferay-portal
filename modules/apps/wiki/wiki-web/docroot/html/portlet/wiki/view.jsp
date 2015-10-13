@@ -169,7 +169,7 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("assetEntry", layoutAssetEntry);
 contextObjects.put("formattedContent", formattedContent);
-contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInstanceOverriddenConfiguration);
+contextObjects.put("wikiPortletInstanceSettingsHelper", wikiPortletInstanceSettingsHelper);
 %>
 
 <liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
