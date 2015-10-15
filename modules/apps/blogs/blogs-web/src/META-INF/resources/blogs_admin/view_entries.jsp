@@ -17,10 +17,10 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
+String navigationFilter = ParamUtil.getString(request, "navigationFilter");
+
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
-
-String navigationFilter = ParamUtil.getString(request, "navigationFilter");
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
