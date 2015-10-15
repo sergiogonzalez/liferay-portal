@@ -21,7 +21,7 @@ String[] navigationKeys = (String[])request.getAttribute("liferay-frontend:manag
 String navigationParam = (String)request.getAttribute("liferay-frontend:management-bar-navigation:navigationParam");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-navigation:portletURL");
 
-String curNavigationKey = ParamUtil.getString(request, navigationParam);
+String navigationKey = ParamUtil.getString(request, navigationParam);
 %>
 
 <c:if test="<%= ArrayUtil.isNotEmpty(navigationKeys) %>">
@@ -29,10 +29,10 @@ String curNavigationKey = ParamUtil.getString(request, navigationParam);
 		<aui:select inlineField="<%= true %>" inlineLabel="left" label="" name="<%= navigationParam %>">
 
 			<%
-			for (String navigationKey : navigationKeys) {
+			for (String curNavigationKey : navigationKeys) {
 			%>
 
-				<aui:option label="<%= navigationKey %>" selected="<%= navigationKey.equals(curNavigationKey) %>" value="<%= navigationKey %>" />
+				<aui:option label="<%= curNavigationKey %>" selected="<%= curNavigationKey.equals(navigationKey) %>" value="<%= curNavigationKey %>" />
 
 			<%
 			}
