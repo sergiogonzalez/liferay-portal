@@ -282,7 +282,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public void checkInFileEntry(
-		long userId, long fileEntryId, boolean major, String changeLog,
+		long userId, long fileEntryId, boolean majorVersion, String changeLog,
 		ServiceContext serviceContext) {
 
 		try {
@@ -301,13 +301,13 @@ public class CMISRepository extends BaseCmisRepository {
 
 			if (Validator.isNotNull(versionSeriesCheckedOutId)) {
 				if (!isSupportsMinorVersions()) {
-					major = true;
+					majorVersion = true;
 				}
 
 				document = (Document)session.getObject(
 					versionSeriesCheckedOutId);
 
-				document.checkIn(major, null, null, changeLog);
+				document.checkIn(majorVersion, null, null, changeLog);
 
 				document = (Document)session.getObject(versionSeriesId);
 
