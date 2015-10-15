@@ -16,33 +16,39 @@
 
 <%@ include file="/card/init.jsp" %>
 
-<div class="<%= cssClass %>">
-	<div class="card-horizontal">
-		<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
-			<div class="card-col-field <%= (((rowChecker != null) && (resultRow != null)) || showCheckbox) ? "checkbox-default" : StringPool.BLANK %>">
+<c:if test="<%= cssClass != null %>">
+	<div class="<%= cssClass %>">
+</c:if>
+		<div class="card-horizontal">
+			<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
 				<c:choose>
 					<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-						<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+						<div class="card-col-field checkbox-default">
+							<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+						</div>
 					</c:when>
 					<c:when test="<%= showCheckbox %>">
-						<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+						<div class="card-col-field checkbox-default">
+							<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+						</div>
 					</c:when>
 				</c:choose>
-			</div>
 
-			<div class="card-col-field">
-				<span class="<%= imageCSSClass %> <%= imageUrl %>"></span>
-			</div>
+				<div class="card-col-field">
+					<span class="<%= imageCSSClass %> <%= imageUrl %>"></span>
+				</div>
 
-			<div class="card-col-content card-col-gutters">
-				<h4>
-					<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(title) %>" />
-				</h4>
-			</div>
+				<div class="card-col-content card-col-gutters">
+					<h4>
+						<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(title) %>" />
+					</h4>
+				</div>
 
-			<div class="card-col-content card-col-gutters">
-				<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
+				<div class="card-col-content card-col-gutters">
+					<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
+				</div>
 			</div>
 		</div>
+<c:if test="<%= cssClass != null %>">
 	</div>
-</div>
+</c:if>

@@ -633,6 +633,12 @@ public class GroupServiceUtil {
 		return getService().getUserSitesGroupsCount();
 	}
 
+	public static int getUserSitesGroupsCount(long userId,
+		java.lang.String[] classNames)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserSitesGroupsCount(userId, classNames);
+	}
+
 	/**
 	* Returns <code>true</code> if the user is associated with the group,
 	* including the user's inherited organizations and user groups. System and

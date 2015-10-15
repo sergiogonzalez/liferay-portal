@@ -82,7 +82,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 	}
 
 	if (showBreadcrumb && !showSearchInfo) {
-		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, PortletURLUtil.clone(portletURL, liferayPortletResponse));
+		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, liferayPortletResponse, PortletURLUtil.clone(portletURL, liferayPortletResponse));
 	%>
 
 		<liferay-ui:breadcrumb
@@ -298,7 +298,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 							<c:when test='<%= displayStyle.equals("icon") %>'>
 
 								<%
-								row.setCssClass("col-md-3");
+								row.setCssClass("col-md-3 card-horizontal-dm");
 
 								if (folder != null) {
 									PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);

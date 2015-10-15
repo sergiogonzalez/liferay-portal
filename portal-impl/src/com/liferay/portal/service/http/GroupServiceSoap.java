@@ -925,6 +925,21 @@ public class GroupServiceSoap {
 		}
 	}
 
+	public static int getUserSitesGroupsCount(long userId,
+		java.lang.String[] classNames) throws RemoteException {
+		try {
+			int returnValue = GroupServiceUtil.getUserSitesGroupsCount(userId,
+					classNames);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns <code>true</code> if the user is associated with the group,
 	* including the user's inherited organizations and user groups. System and
