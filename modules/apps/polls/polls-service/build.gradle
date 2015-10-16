@@ -12,6 +12,7 @@ dependencies {
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:polls:polls-api")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {
