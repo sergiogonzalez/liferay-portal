@@ -55,12 +55,18 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for the wiki page entity.
  *
  * @author Eudaldo Alonso
  * @author Roberto Díaz
  */
+@Component(
+	property = {"model.class.name=com.liferay.wiki.model.WikiPage"},
+	service = TrashHandler.class
+)
 public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	@Override
@@ -425,10 +431,11 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 			if (containerModel) {
 				portletURL.setParameter(
-					"struts_action", "/wiki_admin/view_all_pages");
+					"mvcRenderCommandName", "/wiki_admin/view_all_pages");
 			}
 			else {
-				portletURL.setParameter("struts_action", "/wiki_admin/view");
+				portletURL.setParameter(
+					"mvcRenderCommandName", "/wiki_admin/view");
 			}
 		}
 		else {
@@ -438,10 +445,10 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 			if (containerModel) {
 				portletURL.setParameter(
-					"struts_action", "/wiki/view_all_pages");
+					"mvcRenderCommandName", "/wiki/view_all_pages");
 			}
 			else {
-				portletURL.setParameter("struts_action", "/wiki/view");
+				portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 			}
 		}
 
