@@ -67,8 +67,8 @@ public class WikiPageStagedModelDataHandler
 		throws PortalException {
 
 		WikiPageResource pageResource =
-			_wikiPageResourceLocalService.
-				fetchWikiPageResourceByUuidAndGroupId(uuid, groupId);
+			_wikiPageResourceLocalService.fetchWikiPageResourceByUuidAndGroupId(
+				uuid, groupId);
 
 		if (pageResource == null) {
 			return;
