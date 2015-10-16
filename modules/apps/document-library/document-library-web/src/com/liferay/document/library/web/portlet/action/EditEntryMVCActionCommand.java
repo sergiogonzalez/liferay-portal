@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -99,8 +100,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
+
+			FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
 			DLAppServiceUtil.checkInFileEntry(
-				fileEntryId, false, StringPool.BLANK, serviceContext);
+				fileEntryId, fileVersion.isMajorVersion(), StringPool.BLANK,
+				serviceContext);
 		}
 	}
 

@@ -78,7 +78,7 @@ public interface Repository extends DocumentRepository {
 	 */
 	@Deprecated
 	public void checkInFileEntry(
-			long fileEntryId, boolean major, String changeLog,
+			long fileEntryId, boolean majorVersion, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException;
 

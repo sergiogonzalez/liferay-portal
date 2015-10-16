@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -339,16 +340,27 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
+
+			FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
 			DLAppServiceUtil.checkInFileEntry(
-				fileEntryId, false, StringPool.BLANK, serviceContext);
+				fileEntryId, fileVersion.isMajorVersion(), StringPool.BLANK,
+				serviceContext);
 		}
 		else {
 			long[] fileEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
+				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+					fileEntryId);
+
+				FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
 				DLAppServiceUtil.checkInFileEntry(
-					fileEntryIds[i], false, StringPool.BLANK, serviceContext);
+					fileEntryIds[i], fileVersion.isMajorVersion(),
+					StringPool.BLANK, serviceContext);
 			}
 		}
 	}

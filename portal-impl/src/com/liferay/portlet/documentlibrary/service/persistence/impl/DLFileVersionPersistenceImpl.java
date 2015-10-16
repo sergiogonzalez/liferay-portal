@@ -6241,6 +6241,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		dlFileVersionImpl.setStatusByUserId(dlFileVersion.getStatusByUserId());
 		dlFileVersionImpl.setStatusByUserName(dlFileVersion.getStatusByUserName());
 		dlFileVersionImpl.setStatusDate(dlFileVersion.getStatusDate());
+		dlFileVersionImpl.setMajorVersion(dlFileVersion.isMajorVersion());
 
 		return dlFileVersionImpl;
 	}
