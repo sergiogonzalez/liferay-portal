@@ -1412,8 +1412,9 @@ public class PortalImpl implements Portal {
 		throws PortalException {
 
 		boolean cdnEnabled = ParamUtil.getBoolean(request, "cdn_enabled", true);
+		String portletId = ParamUtil.getString(request, "p_p_id");
 
-		if (!cdnEnabled) {
+		if (!cdnEnabled || portletId.equals(PortletKeys.PORTAL_SETTINGS)) {
 			return StringPool.BLANK;
 		}
 
@@ -3239,14 +3240,12 @@ public class PortalImpl implements Portal {
 		if ((user != null) && !user.isDefaultUser()) {
 			Locale userLocale = getAvailableLocale(groupId, user.getLocale());
 
-			if (userLocale != null) {
-				if (LanguageUtil.isAvailableLocale(groupId, userLocale)) {
-					if (initialize) {
-						setLocale(request, response, userLocale);
-					}
-
-					return userLocale;
+			if (LanguageUtil.isAvailableLocale(groupId, userLocale)) {
+				if (initialize) {
+					setLocale(request, response, userLocale);
 				}
+
+				return userLocale;
 			}
 		}
 
@@ -3259,14 +3258,12 @@ public class PortalImpl implements Portal {
 			Locale cookieLocale = getAvailableLocale(
 				groupId, LocaleUtil.fromLanguageId(languageId));
 
-			if (cookieLocale != null) {
-				if (LanguageUtil.isAvailableLocale(groupId, cookieLocale)) {
-					if (initialize) {
-						setLocale(request, response, cookieLocale);
-					}
-
-					return cookieLocale;
+			if (LanguageUtil.isAvailableLocale(groupId, cookieLocale)) {
+				if (initialize) {
+					setLocale(request, response, cookieLocale);
 				}
+
+				return cookieLocale;
 			}
 		}
 
@@ -3279,17 +3276,41 @@ public class PortalImpl implements Portal {
 				Locale requestLocale = getAvailableLocale(
 					groupId, locales.nextElement());
 
-				if (requestLocale != null) {
-					if (LanguageUtil.isAvailableLocale(
-							groupId, requestLocale)) {
+				if (LanguageUtil.isAvailableLocale(groupId, requestLocale)) {
+					if (initialize) {
+						setLocale(request, response, requestLocale);
+					}
 
+					return requestLocale;
+				}
+			}
+		}
+
+		// Get locale from the group
+
+		if (groupId > 0) {
+			try {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				UnicodeProperties typeSettingsProperties =
+					group.getTypeSettingsProperties();
+
+				String defaultLanguageId = typeSettingsProperties.getProperty(
+					"languageId");
+
+				if (Validator.isNotNull(defaultLanguageId)) {
+					locale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+					if (LanguageUtil.isAvailableLocale(groupId, locale)) {
 						if (initialize) {
-							setLocale(request, response, requestLocale);
+							setLocale(request, response, locale);
 						}
 
-						return requestLocale;
+						return locale;
 					}
 				}
+			}
+			catch (Exception e) {
 			}
 		}
 
@@ -3322,14 +3343,12 @@ public class PortalImpl implements Portal {
 		Locale defaultUserLocale = getAvailableLocale(
 			groupId, defaultUser.getLocale());
 
-		if (defaultUserLocale != null) {
-			if (LanguageUtil.isAvailableLocale(groupId, defaultUserLocale)) {
-				if (initialize) {
-					setLocale(request, response, defaultUserLocale);
-				}
-
-				return defaultUserLocale;
+		if (LanguageUtil.isAvailableLocale(groupId, defaultUserLocale)) {
+			if (initialize) {
+				setLocale(request, response, defaultUserLocale);
 			}
+
+			return defaultUserLocale;
 		}
 
 		try {
@@ -3409,8 +3428,9 @@ public class PortalImpl implements Portal {
 				requestURI, layoutFriendlyURL, layout.getFriendlyURL(locale));
 		}
 
-		String i18nPath = getI18nPathLanguageId(
-			locale, LocaleUtil.toLanguageId(locale));
+		String i18nPath =
+			StringPool.SLASH +
+				getI18nPathLanguageId(locale, LocaleUtil.toLanguageId(locale));
 
 		boolean appendI18nPath = true;
 
@@ -3424,7 +3444,7 @@ public class PortalImpl implements Portal {
 		String localizedFriendlyURL = contextPath;
 
 		if (appendI18nPath) {
-			localizedFriendlyURL += StringPool.SLASH + i18nPath;
+			localizedFriendlyURL += i18nPath;
 		}
 
 		localizedFriendlyURL += requestURI;

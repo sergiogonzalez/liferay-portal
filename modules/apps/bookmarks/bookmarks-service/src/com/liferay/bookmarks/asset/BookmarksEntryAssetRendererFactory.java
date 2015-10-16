@@ -17,7 +17,7 @@ package com.liferay.bookmarks.asset;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
@@ -69,7 +70,7 @@ public class BookmarksEntryAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
+		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
 
 		BookmarksEntryAssetRenderer bookmarksEntryAssetRenderer =
 			new BookmarksEntryAssetRenderer(entry);
@@ -100,8 +101,9 @@ public class BookmarksEntryAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			BookmarksPortletKeys.BOOKMARKS);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");
 		portletURL.setParameter(
@@ -160,6 +162,14 @@ public class BookmarksEntryAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/ratings/star_hover.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setBookmarksEntryLocalService(
+		BookmarksEntryLocalService bookmarksEntryLocalService) {
+
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+	}
+
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 	private ServletContext _servletContext;
 
 }
