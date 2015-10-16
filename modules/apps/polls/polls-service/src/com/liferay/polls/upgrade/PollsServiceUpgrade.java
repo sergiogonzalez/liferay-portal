@@ -16,11 +16,11 @@ package com.liferay.polls.upgrade;
 
 import com.liferay.polls.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.polls.upgrade.v1_0_0.UpgradeLastPublishDate;
+import com.liferay.polls.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
