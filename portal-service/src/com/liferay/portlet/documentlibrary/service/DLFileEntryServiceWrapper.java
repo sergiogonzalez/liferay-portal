@@ -74,12 +74,12 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	@Override
-	public void checkInFileEntry(long fileEntryId, boolean major,
+	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
 		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryService.checkInFileEntry(fileEntryId, major, changeLog,
-			serviceContext);
+		_dlFileEntryService.checkInFileEntry(fileEntryId, majorVersion,
+			changeLog, serviceContext);
 	}
 
 	/**

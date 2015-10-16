@@ -100,7 +100,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "majorVersion", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -133,9 +134,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("majorVersion", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,majorVersion BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -203,6 +205,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setMajorVersion(soapModel.getMajorVersion());
 
 		return model;
 	}
@@ -295,6 +298,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("majorVersion", getMajorVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -470,6 +474,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Boolean majorVersion = (Boolean)attributes.get("majorVersion");
+
+		if (majorVersion != null) {
+			setMajorVersion(majorVersion);
 		}
 	}
 
@@ -984,6 +994,22 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_statusDate = statusDate;
 	}
 
+	@JSON
+	@Override
+	public boolean getMajorVersion() {
+		return _majorVersion;
+	}
+
+	@Override
+	public boolean isMajorVersion() {
+		return _majorVersion;
+	}
+
+	@Override
+	public void setMajorVersion(boolean majorVersion) {
+		_majorVersion = majorVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1138,6 +1164,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setStatusByUserId(getStatusByUserId());
 		dlFileVersionImpl.setStatusByUserName(getStatusByUserName());
 		dlFileVersionImpl.setStatusDate(getStatusDate());
+		dlFileVersionImpl.setMajorVersion(getMajorVersion());
 
 		dlFileVersionImpl.resetOriginalValues();
 
@@ -1416,12 +1443,14 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			dlFileVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		dlFileVersionCacheModel.majorVersion = getMajorVersion();
+
 		return dlFileVersionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1479,6 +1508,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", majorVersion=");
+		sb.append(getMajorVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -1486,7 +1517,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileVersion");
@@ -1604,6 +1635,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>majorVersion</column-name><column-value><![CDATA[");
+		sb.append(getMajorVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1657,6 +1692,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private boolean _majorVersion;
 	private long _columnBitmask;
 	private DLFileVersion _escapedModel;
 }

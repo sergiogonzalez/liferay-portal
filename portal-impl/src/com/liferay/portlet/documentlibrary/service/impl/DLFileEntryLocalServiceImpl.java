@@ -321,9 +321,13 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		boolean keepFileVersionLabel = isKeepFileVersionLabel(
-			dlFileEntry, lastDLFileVersion, latestDLFileVersion,
-			serviceContext);
+		boolean keepFileVersionLabel = false;
+
+		if (!majorVersion) {
+			keepFileVersionLabel = isKeepFileVersionLabel(
+				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
+				serviceContext);
+		}
 
 		if (keepFileVersionLabel) {
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
@@ -433,8 +437,12 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
+
 		checkInFileEntry(
-			userId, fileEntryId, false, StringPool.BLANK, serviceContext);
+			userId, fileEntryId, dlFileVersion.isMajorVersion(),
+			StringPool.BLANK, serviceContext);
 	}
 
 	/**
@@ -535,6 +543,7 @@ public class DLFileEntryLocalServiceImpl
 					existingDLFileVersion.getTitle(),
 					existingDLFileVersion.getDescription(),
 					existingDLFileVersion.getChangeLog(),
+					existingDLFileVersion.isMajorVersion(),
 					existingDLFileVersion.getExtraSettings(),
 					existingDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
@@ -2665,8 +2674,8 @@ public class DLFileEntryLocalServiceImpl
 
 			updateFileVersion(
 				user, dlFileVersion, sourceFileName, fileName, extension,
-				mimeType, title, description, changeLog, extraSettings,
-				fileEntryTypeId, ddmFormValuesMap, version, size,
+				mimeType, title, description, changeLog, majorVersion,
+				extraSettings, fileEntryTypeId, ddmFormValuesMap, version, size,
 				dlFileVersion.getStatus(), serviceContext.getModifiedDate(now),
 				serviceContext);
 
@@ -2760,10 +2769,10 @@ public class DLFileEntryLocalServiceImpl
 	protected DLFileVersion updateFileVersion(
 			User user, DLFileVersion dlFileVersion, String sourceFileName,
 			String fileName, String extension, String mimeType, String title,
-			String description, String changeLog, String extraSettings,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
-			String version, long size, int status, Date statusDate,
-			ServiceContext serviceContext)
+			String description, String changeLog, boolean majorVersion,
+			String extraSettings, long fileEntryTypeId, Map<String,
+			DDMFormValues> ddmFormValuesMap, String version, long size,
+			int status, Date statusDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		dlFileVersion.setUserId(user.getUserId());
@@ -2787,6 +2796,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusByUserId(user.getUserId());
 		dlFileVersion.setStatusByUserName(user.getFullName());
 		dlFileVersion.setStatusDate(statusDate);
+		dlFileVersion.setMajorVersion(majorVersion);
 
 		ExpandoBridgeUtil.setExpandoBridgeAttributes(
 			dlFileVersion.getExpandoBridge(), dlFileVersion.getExpandoBridge(),

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.upgrade.v7_0_0.util.DLFileVersionTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DLFolderTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -99,6 +100,16 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		// DLFileVersion
 
 		updateFileVersionFileNames();
+
+		try {
+			runSQL("alter table DLFileVersion add majorVersion BOOLEAN null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
+				DLFileVersionTable.TABLE_SQL_CREATE,
+				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
+		}
 
 		// DLFolder
 
