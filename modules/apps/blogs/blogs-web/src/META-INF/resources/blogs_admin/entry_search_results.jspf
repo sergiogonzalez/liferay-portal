@@ -27,7 +27,7 @@ if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 	}
 }
 else if (Validator.isNull(searchTerms.getKeywords())) {
-	if (navigationFilter.equals("mine")) {
+	if (entriesNavigation.equals("mine")) {
 		total = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY);
 	}
 	else {
@@ -36,7 +36,7 @@ else if (Validator.isNull(searchTerms.getKeywords())) {
 
 	searchContainer.setTotal(total);
 
-	if (navigationFilter.equals("mine")) {
+	if (entriesNavigation.equals("mine")) {
 		results = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 	else {

@@ -17,7 +17,7 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-String navigationFilter = ParamUtil.getString(request, "navigationFilter");
+String entriesNavigation = ParamUtil.getString(request, "entriesNavigation");
 
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
@@ -43,7 +43,7 @@ navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
-portletURL.setParameter("navigationFilter", navigationFilter);
+portletURL.setParameter("entriesNavigation", entriesNavigation);
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>
@@ -64,7 +64,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all", "mine"} %>'
-				navigationParam="navigationFilter"
+				navigationParam="entriesNavigation"
 				portletURL="<%= navigationPortletURL %>"
 			/>
 
