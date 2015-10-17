@@ -102,7 +102,6 @@ public class UploadServletRequestImpl
 
 			long uploadServletRequestImplMaxSize = PrefsPropsUtil.getLong(
 				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-
 			long uploadServletRequestImplSize = 0;
 
 			Collections.sort(
@@ -113,7 +112,7 @@ public class UploadServletRequestImpl
 					public int compare(
 						org.apache.commons.fileupload.FileItem fileItem1,
 						org.apache.commons.fileupload.FileItem fileItem2) {
-						
+
 						LiferayFileItem liferayFileItem1 =
 							(LiferayFileItem)fileItem1;
 
