@@ -100,10 +100,10 @@ public class UploadServletRequestImpl
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
 
-			long maxRequestSize = PrefsPropsUtil.getLong(
+			long uploadServletRequestImplMaxSize = PrefsPropsUtil.getLong(
 				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 
-			long uploadServletRequestSize = 0;
+			long uploadServletRequestImplSize = 0;
 
 			Collections.sort(
 				fileItems,
@@ -111,17 +111,24 @@ public class UploadServletRequestImpl
 
 					@Override
 					public int compare(
-						org.apache.commons.fileupload.FileItem o1,
-						org.apache.commons.fileupload.FileItem o2) {
+						org.apache.commons.fileupload.FileItem fileItem1,
+						org.apache.commons.fileupload.FileItem fileItem2) {
+						
+						LiferayFileItem liferayFileItem1 =
+							(LiferayFileItem)fileItem1;
 
-						long size1 = ((LiferayFileItem)o1).getItemSize();
-						long size2 = ((LiferayFileItem)o2).getItemSize();
+						long itemSize1 = liferayFileItem1.getItemSize();
 
-						if (size1 > size2) {
+						LiferayFileItem liferayFileItem2 =
+							(LiferayFileItem)fileItem2;
+
+						long itemSize2 = liferayFileItem2.getItemSize();
+
+						if (itemSize1 > itemSize2) {
 							return 1;
 						}
 
-						if (size1 < size2) {
+						if (itemSize1 < itemSize2) {
 							return -1;
 						}
 
@@ -135,11 +142,13 @@ public class UploadServletRequestImpl
 
 				long itemSize = liferayFileItem.getItemSize();
 
-				if ((uploadServletRequestSize + itemSize) > maxRequestSize) {
+				if ((uploadServletRequestImplSize + itemSize) >
+						uploadServletRequestImplMaxSize) {
+
 					StringBundler sb = new StringBundler(3);
 
 					sb.append("Request reached the maximum permitted size of ");
-					sb.append(maxRequestSize);
+					sb.append(uploadServletRequestImplMaxSize);
 					sb.append(" bytes");
 
 					UploadException uploadException = new UploadException(
@@ -154,7 +163,7 @@ public class UploadServletRequestImpl
 					continue;
 				}
 
-				uploadServletRequestSize += itemSize;
+				uploadServletRequestImplSize += itemSize;
 
 				if (liferayFileItem.isFormField()) {
 					liferayFileItem.setString(request.getCharacterEncoding());
