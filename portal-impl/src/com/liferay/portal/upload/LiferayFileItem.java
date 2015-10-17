@@ -104,10 +104,10 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	public long getItemSize() {
 		long size = getSize();
 
-		String fileName = getFileName();
+		String contentType = getContentType();
 
-		if (fileName != null) {
-			byte[] bytes = fileName.getBytes();
+		if (contentType != null) {
+			byte[] bytes = contentType.getBytes();
 
 			size += bytes.length;
 		}
@@ -120,10 +120,10 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			size += bytes.length;
 		}
 
-		String contentType = getContentType();
+		String fileName = getFileName();
 
-		if (contentType != null) {
-			byte[] bytes = contentType.getBytes();
+		if (fileName != null) {
+			byte[] bytes = fileName.getBytes();
 
 			size += bytes.length;
 		}
