@@ -1882,6 +1882,7 @@
 		<column name="mappedId" type="String" />
 		<column name="manualCheckInRequired" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Finder methods -->
 
