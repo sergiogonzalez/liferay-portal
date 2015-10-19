@@ -80,12 +80,12 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
-	public static void checkInFileEntry(long fileEntryId, boolean major,
+	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
 		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			DLFileEntryServiceUtil.checkInFileEntry(fileEntryId, major,
+			DLFileEntryServiceUtil.checkInFileEntry(fileEntryId, majorVersion,
 				changeLog, serviceContext);
 		}
 		catch (Exception e) {

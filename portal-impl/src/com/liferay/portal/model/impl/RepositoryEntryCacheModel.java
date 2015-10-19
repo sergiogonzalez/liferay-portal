@@ -79,7 +79,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		sb.append(manualCheckInRequired);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -169,6 +171,13 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 			repositoryEntryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		if (typeSettings == null) {
+			repositoryEntryImpl.setTypeSettings(StringPool.BLANK);
+		}
+		else {
+			repositoryEntryImpl.setTypeSettings(typeSettings);
+		}
+
 		repositoryEntryImpl.resetOriginalValues();
 
 		return repositoryEntryImpl;
@@ -189,6 +198,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		mappedId = objectInput.readUTF();
 		manualCheckInRequired = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		typeSettings = objectInput.readUTF();
 	}
 
 	@Override
@@ -228,6 +238,13 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 
 		objectOutput.writeBoolean(manualCheckInRequired);
 		objectOutput.writeLong(lastPublishDate);
+
+		if (typeSettings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(typeSettings);
+		}
 	}
 
 	public long mvccVersion;
@@ -243,4 +260,5 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	public String mappedId;
 	public boolean manualCheckInRequired;
 	public long lastPublishDate;
+	public String typeSettings;
 }

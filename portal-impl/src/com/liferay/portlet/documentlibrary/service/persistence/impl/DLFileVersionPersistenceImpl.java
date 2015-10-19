@@ -6230,6 +6230,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		dlFileVersionImpl.setMimeType(dlFileVersion.getMimeType());
 		dlFileVersionImpl.setTitle(dlFileVersion.getTitle());
 		dlFileVersionImpl.setDescription(dlFileVersion.getDescription());
+		dlFileVersionImpl.setMajorVersion(dlFileVersion.isMajorVersion());
 		dlFileVersionImpl.setChangeLog(dlFileVersion.getChangeLog());
 		dlFileVersionImpl.setExtraSettings(dlFileVersion.getExtraSettings());
 		dlFileVersionImpl.setFileEntryTypeId(dlFileVersion.getFileEntryTypeId());

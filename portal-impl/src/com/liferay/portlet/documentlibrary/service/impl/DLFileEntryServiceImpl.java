@@ -93,7 +93,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public void checkInFileEntry(
-			long fileEntryId, boolean major, String changeLog,
+			long fileEntryId, boolean majorVersion, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -109,7 +109,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 
 		dlFileEntryLocalService.checkInFileEntry(
-			getUserId(), fileEntryId, major, changeLog, serviceContext);
+			getUserId(), fileEntryId, majorVersion, changeLog, serviceContext);
 	}
 
 	/**

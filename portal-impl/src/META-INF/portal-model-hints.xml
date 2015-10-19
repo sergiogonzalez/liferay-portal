@@ -773,6 +773,7 @@
 		</field>
 		<field name="manualCheckInRequired" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="typeSettings" type="String" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceAction">
 		<field name="mvccVersion" type="long" />
@@ -1564,6 +1565,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="majorVersion" type="boolean" />
 		<field name="changeLog" type="String" />
 		<field name="extraSettings" type="String">
 			<hint-collection name="CLOB" />

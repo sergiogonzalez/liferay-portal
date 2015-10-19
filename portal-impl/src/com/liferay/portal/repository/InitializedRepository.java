@@ -92,14 +92,14 @@ public class InitializedRepository
 	@Deprecated
 	@Override
 	public void checkInFileEntry(
-			long fileEntryId, boolean major, String changeLog,
+			long fileEntryId, boolean majorVersion, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		checkDocumentRepository();
 
 		documentRepository.checkInFileEntry(
-			fileEntryId, major, changeLog, serviceContext);
+			fileEntryId, majorVersion, changeLog, serviceContext);
 	}
 
 	@Deprecated

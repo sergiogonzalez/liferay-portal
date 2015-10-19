@@ -72,7 +72,7 @@ public interface DLFileEntryService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void checkInFileEntry(long fileEntryId, boolean major,
+	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
 		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

@@ -67,6 +67,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		attributes.put("mappedId", getMappedId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -150,6 +151,12 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -282,6 +289,32 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	@Override
 	public long getRepositoryId() {
 		return _repositoryEntry.getRepositoryId();
+	}
+
+	/**
+	* Returns the type settings of this repository entry.
+	*
+	* @return the type settings of this repository entry
+	*/
+	@Override
+	public java.lang.String getTypeSettings() {
+		return _repositoryEntry.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _repositoryEntry.getTypeSettingsProperties();
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+		return _repositoryEntry.getTypeSettingsProperty(key);
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+		java.lang.String defaultValue) {
+		return _repositoryEntry.getTypeSettingsProperty(key, defaultValue);
 	}
 
 	/**
@@ -499,6 +532,28 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	@Override
 	public void setRepositoryId(long repositoryId) {
 		_repositoryEntry.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Sets the type settings of this repository entry.
+	*
+	* @param typeSettings the type settings of this repository entry
+	*/
+	@Override
+	public void setTypeSettings(java.lang.String typeSettings) {
+		_repositoryEntry.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		_repositoryEntry.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public void setTypeSettingsProperty(java.lang.String key,
+		java.lang.String value) {
+		_repositoryEntry.setTypeSettingsProperty(key, value);
 	}
 
 	/**

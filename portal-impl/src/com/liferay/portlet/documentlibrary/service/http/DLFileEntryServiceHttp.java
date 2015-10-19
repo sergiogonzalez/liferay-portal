@@ -129,7 +129,7 @@ public class DLFileEntryServiceHttp {
 	}
 
 	public static void checkInFileEntry(HttpPrincipal httpPrincipal,
-		long fileEntryId, boolean major, java.lang.String changeLog,
+		long fileEntryId, boolean majorVersion, java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -137,7 +137,7 @@ public class DLFileEntryServiceHttp {
 					"checkInFileEntry", _checkInFileEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, major, changeLog, serviceContext);
+					fileEntryId, majorVersion, changeLog, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);

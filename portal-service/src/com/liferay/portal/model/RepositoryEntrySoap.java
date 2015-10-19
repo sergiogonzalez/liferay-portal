@@ -46,6 +46,7 @@ public class RepositoryEntrySoap implements Serializable {
 		soapModel.setMappedId(model.getMappedId());
 		soapModel.setManualCheckInRequired(model.getManualCheckInRequired());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setTypeSettings(model.getTypeSettings());
 
 		return soapModel;
 	}
@@ -208,6 +209,14 @@ public class RepositoryEntrySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public String getTypeSettings() {
+		return _typeSettings;
+	}
+
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _repositoryEntryId;
@@ -221,4 +230,5 @@ public class RepositoryEntrySoap implements Serializable {
 	private String _mappedId;
 	private boolean _manualCheckInRequired;
 	private Date _lastPublishDate;
+	private String _typeSettings;
 }

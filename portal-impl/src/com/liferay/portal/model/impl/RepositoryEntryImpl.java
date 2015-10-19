@@ -14,8 +14,70 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class RepositoryEntryImpl extends RepositoryEntryBaseImpl {
+
+	@Override
+	public String getTypeSettings() {
+		if (_typeSettingsProperties == null) {
+			return super.getTypeSettings();
+		}
+		else {
+			return _typeSettingsProperties.toString();
+		}
+	}
+
+	@Override
+	public UnicodeProperties getTypeSettingsProperties() {
+		if (_typeSettingsProperties == null) {
+			_typeSettingsProperties = new UnicodeProperties(true);
+
+			_typeSettingsProperties.fastLoad(super.getTypeSettings());
+		}
+
+		return _typeSettingsProperties;
+	}
+
+	@Override
+	public String getTypeSettingsProperty(String key) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key);
+	}
+
+	@Override
+	public String getTypeSettingsProperty(String key, String defaultValue) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key, defaultValue);
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		_typeSettingsProperties = null;
+
+		super.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		_typeSettingsProperties = typeSettingsProperties;
+
+		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	public void setTypeSettingsProperty(String key, String value) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(key, value);
+	}
+
+	private UnicodeProperties _typeSettingsProperties;
+
 }

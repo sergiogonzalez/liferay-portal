@@ -17,6 +17,7 @@ package com.liferay.portal.repository.liferayrepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.repository.capabilities.WorkflowSupport;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
@@ -84,16 +85,17 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
+			long userId, long fileEntryId, boolean majorVersion,
+			String changeLog, ServiceContext serviceContext)
 		throws PortalException {
 
 		super.checkInFileEntry(
-			userId, fileEntryId, major, changeLog, serviceContext);
+			userId, fileEntryId, majorVersion, changeLog, serviceContext);
 
 		FileEntry fileEntry = super.getFileEntry(fileEntryId);
 
-		_workflowSupport.checkInFileEntry(userId, fileEntry, serviceContext);
+		_workflowSupport.checkInFileEntry(
+			userId, fileEntry, majorVersion, serviceContext);
 	}
 
 	@Override
@@ -106,7 +108,10 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		FileEntry fileEntry = super.getFileEntry(fileEntryId);
 
-		_workflowSupport.checkInFileEntry(userId, fileEntry, serviceContext);
+		FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
+		_workflowSupport.checkInFileEntry(
+			userId, fileEntry, fileVersion.isMajorVersion(), serviceContext);
 	}
 
 	@Override

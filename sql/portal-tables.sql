@@ -497,6 +497,7 @@ create table DLFileVersion (
 	mimeType VARCHAR(75) null,
 	title VARCHAR(255) null,
 	description STRING null,
+	majorVersion BOOLEAN,
 	changeLog VARCHAR(75) null,
 	extraSettings TEXT null,
 	fileEntryTypeId LONG,
@@ -1277,7 +1278,8 @@ create table RepositoryEntry (
 	repositoryId LONG,
 	mappedId VARCHAR(255) null,
 	manualCheckInRequired BOOLEAN,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	typeSettings VARCHAR(75) null
 );
 
 create table ResourceAction (

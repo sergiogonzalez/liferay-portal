@@ -79,12 +79,13 @@ public class DLFileEntryServiceUtil {
 		getService().checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 	}
 
-	public static void checkInFileEntry(long fileEntryId, boolean major,
+	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
 		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
-			.checkInFileEntry(fileEntryId, major, changeLog, serviceContext);
+			.checkInFileEntry(fileEntryId, majorVersion, changeLog,
+			serviceContext);
 	}
 
 	/**
