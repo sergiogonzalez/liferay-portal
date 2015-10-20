@@ -146,8 +146,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryLocalService.deleteRepository(repository);
 		}
 
-		repositoryProvider.invalidateRepository(repositoryId);
-
 		return repository;
 	}
 

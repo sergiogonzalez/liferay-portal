@@ -172,11 +172,6 @@ public class RepositoryClassDefinition
 		_localRepositoryCache.clear();
 	}
 
-	public void invalidateCachedRepository(long repositoryId) {
-		_repositoryCache.remove(repositoryId);
-		_localRepositoryCache.remove(repositoryId);
-	}
-
 	@Override
 	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
 		if (_repositoryFactory != null) {
@@ -193,6 +188,11 @@ public class RepositoryClassDefinition
 
 		_repositoryDefiner = repositoryDefiner;
 		_rootRepositoryEventTrigger = rootRepositoryEventTrigger;
+	}
+
+	protected void invalidateCachedRepository(long repositoryId) {
+		_repositoryCache.remove(repositoryId);
+		_localRepositoryCache.remove(repositoryId);
 	}
 
 	protected void setUpCommonCapabilities(
