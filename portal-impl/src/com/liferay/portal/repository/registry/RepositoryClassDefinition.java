@@ -34,6 +34,8 @@ import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerC
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Adolfo Pérez
@@ -62,6 +64,10 @@ public class RepositoryClassDefinition
 	@Override
 	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
+
+		if (_localRepositoryCache.containsKey(repositoryId)) {
+			return _localRepositoryCache.get(repositoryId);
+		}
 
 		InitializedLocalRepository initializedLocalRepository =
 			new InitializedLocalRepository();
@@ -95,12 +101,18 @@ public class RepositoryClassDefinition
 		initializedLocalRepository.setDocumentRepository(
 			capabilityLocalRepository);
 
+		_localRepositoryCache.put(repositoryId, capabilityLocalRepository);
+
 		return capabilityLocalRepository;
 	}
 
 	@Override
 	public Repository createRepository(long repositoryId)
 		throws PortalException {
+
+		if (_repositoryCache.containsKey(repositoryId)) {
+			return _repositoryCache.get(repositoryId);
+		}
 
 		InitializedRepository initializedRepository =
 			new InitializedRepository();
@@ -132,6 +144,8 @@ public class RepositoryClassDefinition
 
 		initializedRepository.setDocumentRepository(capabilityRepository);
 
+		_repositoryCache.put(repositoryId, capabilityRepository);
+
 		return capabilityRepository;
 	}
 
@@ -151,6 +165,16 @@ public class RepositoryClassDefinition
 	@Override
 	public String[][] getSupportedParameters() {
 		return _repositoryDefiner.getSupportedParameters();
+	}
+
+	public void invalidateCache() {
+		_repositoryCache.clear();
+		_localRepositoryCache.clear();
+	}
+
+	public void invalidateCachedRepository(long repositoryId) {
+		_repositoryCache.remove(repositoryId);
+		_localRepositoryCache.remove(repositoryId);
 	}
 
 	@Override
@@ -196,6 +220,10 @@ public class RepositoryClassDefinition
 		}
 	}
 
+	private final Map<Long, LocalRepository> _localRepositoryCache =
+		new ConcurrentHashMap<>();
+	private final Map<Long, Repository> _repositoryCache =
+		new ConcurrentHashMap<>();
 	private final RepositoryDefiner _repositoryDefiner;
 	private RepositoryFactory _repositoryFactory;
 	private final RepositoryEventTrigger _rootRepositoryEventTrigger;
