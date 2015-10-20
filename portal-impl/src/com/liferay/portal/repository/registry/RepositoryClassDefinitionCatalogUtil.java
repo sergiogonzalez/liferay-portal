@@ -52,6 +52,13 @@ public class RepositoryClassDefinitionCatalogUtil {
 		return _repositoryClassDefinitionCatalog;
 	}
 
+	public static Collection<RepositoryClassDefinition>
+		getRepositoryClassDefinitions() {
+
+		return getRepositoryClassDefinitionCatalog().
+			getRepositoryClassDefinitions();
+	}
+
 	public static void registerLegacyExternalRepositoryFactory(
 		String className, ExternalRepositoryFactory externalRepositoryFactory) {
 
