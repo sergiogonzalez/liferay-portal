@@ -191,7 +191,7 @@ public class DefaultCommentTreeDisplayContext
 			_discussionTaglibHelper.getClassPK());
 	}
 
-	protected boolean isCommentApproved() {
+	public boolean isCommentApproved() {
 		boolean approved = true;
 
 		if (_discussionComment instanceof WorkflowableComment) {
