@@ -21,6 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
+long referringPlid = ParamUtil.getLong(request, "referringPlid");
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
 boolean changeStructure = GetterUtil.getBoolean(ParamUtil.getString(request, "changeStructure"));
@@ -134,6 +135,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+		<aui:input name="referringPlid" type="hidden" value="<%= referringPlid %>" />
 		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="privateLayout" type="hidden" value="<%= layout.isPrivateLayout() %>" />
@@ -150,7 +152,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 		<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
-		<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="a-file-with-that-name-already-exists" />
+		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
 
 		<liferay-ui:error exception="<%= FileSizeException.class %>">
 

@@ -47,7 +47,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -163,7 +163,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (NoSuchMessageException | PrincipalException |
-				RequiredMessageException e) {
+			   RequiredMessageException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 
@@ -171,12 +171,12 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/message_boards/error.jsp");
 		}
 		catch (AntivirusScannerException | CaptchaConfigurationException |
-				CaptchaMaxChallengesException | CaptchaTextException |
-				DuplicateFileException | FileExtensionException |
-				FileNameException | FileSizeException |
-				LiferayFileItemException | LockedThreadException |
-				MessageBodyException | MessageSubjectException |
-				SanitizerException e) {
+			   CaptchaMaxChallengesException | CaptchaTextException |
+			   DuplicateFileEntryException | FileExtensionException |
+			   FileNameException | FileSizeException |
+			   LiferayFileItemException | LockedThreadException |
+			   MessageBodyException | MessageSubjectException |
+			   SanitizerException e) {
 
 			UploadException uploadException =
 				(UploadException)actionRequest.getAttribute(

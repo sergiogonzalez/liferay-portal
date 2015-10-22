@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `616fcb4`.*
+*This document has been reviewed through commit `d6e41b2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -916,7 +916,7 @@ of reserved screen names.
 #### What changed?
 
 Previous to Liferay 7, several methods of `UserLocalService` and `UserService`
-could throw a `ReservedUserEmailAddressException` when a user set an email 
+could throw a `ReservedUserEmailAddressException` when a user set an email
 address that was not allowed. That exception has been deprecated and replaced
 with `UserEmailAddressException.MustNotUseCompanyMx`,
 `UserEmailAddressException.MustNotBePOP3User`, and
@@ -1018,8 +1018,8 @@ All operations that used the `Fields` class have been removed from the
 
 #### Who is affected?
 
-This affects developers who have written code that directly calls these 
-operations. 
+This affects developers who have written code that directly calls these
+operations.
 
 #### How should I update my code?
 
@@ -1028,7 +1028,7 @@ You should update your code to use the `DDMFormValues` class instead of the
 
 #### Why was this change made?
 
-This change has been made due to the deprecation of the `Fields` class. 
+This change has been made due to the deprecation of the `Fields` class.
 
 ---------------------------------------
 
@@ -1114,7 +1114,7 @@ called `resourceClassNameId`.
 
 #### Who is affected?
 
-This affects developers who have direct calls to the `DDMTemplateService` or 
+This affects developers who have direct calls to the `DDMTemplateService` or
 `DDMTemplateLocalService`.
 
 #### How should I update my code?
@@ -1249,7 +1249,7 @@ the `ScreenNameValidator` interface.
 
 You should implement the new methods introduced in the interface.
 
-- `getDescription(Locale)`: returns a description of what the screen name 
+- `getDescription(Locale)`: returns a description of what the screen name
 validator validates.
 
 - `getJSValidation()`: returns the JavaScript input validator on the client
@@ -1257,7 +1257,7 @@ side.
 
 #### Why was this change made?
 
-Previous to Liferay 7, validation for user screen name characters was hard-coded 
+Previous to Liferay 7, validation for user screen name characters was hard-coded
 in `UserLocalService`. A new portal property named
 `users.screen.name.special.characters` has been added to provide configurability
 of special characters allowed in screen names.
@@ -1308,7 +1308,7 @@ code.
 The API for adding tags, categories, and vocabularies now requires passing the
 `groupId` parameter. Previously, it had to be included in the `ServiceContext`
 parameter passed to the method.
- 
+
 #### Who is affected?
 
 This affects developers who have direct calls to the following methods:
@@ -1549,7 +1549,7 @@ their code.
 While the old classes remain for backwards-compatibility, they are being
 deprecated. You're encouraged to use the new pattern of inner classes for
 exceptions wherever possible. For example, instead of using
-`ContactFirstNameExeception`, use `ContactNameException.MustHaveFirstName`. 
+`ContactFirstNameExeception`, use `ContactNameException.MustHaveFirstName`.
 
 #### Why was this change made?
 
@@ -1588,7 +1588,7 @@ Portal property `USERS_LAST_NAME_REQUIRED` didn't support the multicultural user
 name configurations introduced in LPS-48406. Language property files (e.g.,
 `language.properties`) now support these configurations. Control of all user
 name configuration, except with regards to first name, is relegated to language
-property files. First name is required and always present. 
+property files. First name is required and always present.
 
 ---------------------------------------
 
@@ -1611,7 +1611,7 @@ This affects anyone who uses those methods.
 
 The removed methods were generic and had long signatures with optional
 parameters. They now have one specialized version per parameter and are
-in the `RepositoryProvider` service. 
+in the `RepositoryProvider` service.
 
 **Example**
 
@@ -1735,19 +1735,19 @@ bypass the permission system by providing customized `className`, `classPK`, or
 
 ---------------------------------------
 
-### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures, and Removed Indexer.getQueryString 
+### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures, and Removed Indexer.getQueryString
 - **Date:** 2015-May-27
 - **JIRA Ticket:** LPS-55928
 
 #### What changed?
 
-Method `Indexer.addRelatedEntryFields(Document, Object)` has been moved into 
+Method `Indexer.addRelatedEntryFields(Document, Object)` has been moved into
 `RelatedEntryIndexer`.
 
 `Indexer.reindexDDMStructures(List<Long>)` has been moved into
 `DDMStructureIndexer`.
 
-`Indexer.getQueryString(SearchContext, Query)` has been removed, in favor of 
+`Indexer.getQueryString(SearchContext, Query)` has been removed, in favor of
 calling `SearchEngineUtil.getQueryString(SearchContext, Query)`
 
 #### Who is affected?
@@ -1757,7 +1757,7 @@ that implements the interface methods.
 
 #### How should I update my code?
 
-Any code implementing `Indexer.addRelatedEntryFields(...)` should implement the 
+Any code implementing `Indexer.addRelatedEntryFields(...)` should implement the
 `RelatedEntryIndexer` interface.
 
 Any code calling `Indexer.addRelatedEntryFields(...)` should determine first if
@@ -1776,11 +1776,11 @@ New code:
         relatedEntryIndexer.addRelatedEntryFields(...);
     }
 
-Any code implementing `Indexer.reindexDDMStructures(...)` should implement the 
+Any code implementing `Indexer.reindexDDMStructures(...)` should implement the
 `DDMStructureIndexer` interface.
 
 Any code calling `Indexer.reindexDDMStructures(...)` should determine first if
-the `Indexer` is an instance of `DDMStructureIndexer`. 
+the `Indexer` is an instance of `DDMStructureIndexer`.
 
 Old code:
 
@@ -1795,7 +1795,7 @@ New code:
         ddmStructureIndexer.reindexDDMStructures(...);
     }
 
-Any code calling Indexer.getQueryString(...) should call 
+Any code calling Indexer.getQueryString(...) should call
 SearchEngineUtil.getQueryString(...)
 
 Old code:
@@ -2490,5 +2490,103 @@ Menu, developers should use the `application-list-api` module to call the
 The Control Panel is no longer a site per se, but just a context in which some
 applications are displayed. This concept conflicts with the idea of returning a
 site called Control Panel in the Sites API.
+
+---------------------------------------
+
+### Changed exception thrown by D&M services when duplicate files are found
+- **Date:** 2015-Sep-24
+- **JIRA Ticket:** LPS-53819
+
+#### What changed?
+
+When a duplicate file entry is found by D&M services, a
+`DuplicateFileEntryException` will be thrown. Previously, the
+exception `DuplicateFileException` was used.
+
+The `DuplicateFileException` is now raised only by `Store`
+implementations.
+
+#### Who is affected?
+
+Any caller of the `addFileEntry` methods in `DLApp` and `DLFileEntry`
+local and remote services.
+
+#### How should I update my code?
+
+Change the exception type from `DuplicateFileException` to
+`DuplicateFileEntryException` in `try-catch` blocks surrounding calls
+to D&M services.
+
+#### Why was this change made?
+
+The `DuplicateFileException` exception was used in two different
+contexts:
+- When creating a new file through D&M and a row in the database
+already existed for a file entry with the same title.
+- When the stores tried to save a file and the underlying storage unit
+(a file in the case of FileSystemStore) already existed.
+
+This made it impossible to detect and recover from store corruption
+issues, as they were undifferentiable from other errors.
+
+---------------------------------------
+
+### Removed All References to Windows Live Messenger
+- **Date:** 2015-Oct-15
+- **JIRA Ticket:** LPS-30883
+
+#### What changed?
+
+All references to the `msnSn` column in the Contacts table have been removed
+from portal. All references to Windows Live Messenger have been removed from
+properties, tests, classes, and the frontend. Also, the `getMsnSn` and
+`setMsnSn` methods have been removed from the `Contact` and `LDAPUser` models.
+
+The following classes have been removed:
+
+- `MSNConnector`
+- `MSNMessageAdapter`
+
+The following constants have been removed:
+
+- `CalEventConstants.REMIND_BY_MSN`
+- `ContactConverterKeys.MSN_SN`
+- `PropsKeys.MSN_LOGIN`
+- `PropsKeys.MSN_PASSWORD`
+
+The following methods have been removed:
+
+- `Contact.getMsnSn`
+- `Contact.setMsnSn`
+- `LDAPUser.getMsnSn`
+- `LDAPUser.setMsnSn`
+
+The following methods have been changed:
+
+- `AdminUtil.updateUser`
+- `ContactLocalServiceUtil.addContact`
+- `ContactLocalServiceUtil.updateContact`
+- `UserLocalServiceUtil.addContact`
+- `UserLocalServiceUtil.updateContact`
+- `UserLocalServiceUtil.updateUser`
+- `UserServiceUtil.updateUser`
+
+#### Who is affected?
+
+This affects developers who use any of the classes, constants, or methods listed
+above.
+
+#### How should I update my code?
+
+When updating or adding a user or contact using one of the changed methods
+above, remove the `msnSn` argument from the method call. If you are using one of
+the removed items above, you should remove all references to them from your code
+and look for alternatives, if necessary. Lastly, remove any references to the
+`msnSN` column in the Contacts table from your SQL queries.
+
+#### Why was this change made?
+
+Since Microsoft dropped support for Windows Live Messenger, Liferay will no
+longer continue to support it.
 
 ---------------------------------------

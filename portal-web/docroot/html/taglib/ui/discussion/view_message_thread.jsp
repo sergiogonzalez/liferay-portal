@@ -142,7 +142,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					Date modifiedDate = discussionComment.getModifiedDate();
 					%>
 
-					<c:if test="<%= createDate.before(modifiedDate) %>">
+					<c:if test="<%= !commentTreeDisplayContext.isCommentApproved() && createDate.before(modifiedDate) %>">
 						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateFormatDateTime.format(modifiedDate)) %>');">
 							- <liferay-ui:message key="edited" />
 						</strong>

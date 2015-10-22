@@ -87,6 +87,27 @@ public class DefaultCommentTreeDisplayContext
 	}
 
 	@Override
+	public boolean isCommentApproved() {
+		boolean approved = true;
+
+		if (_discussionComment instanceof WorkflowableComment) {
+			WorkflowableComment workflowableComment =
+				(WorkflowableComment) _discussionComment;
+
+			if (workflowableComment.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				approved = true;
+			}
+			else {
+				approved = false;
+			}
+		}
+
+		return approved;
+	}
+
+	@Override
 	public boolean isDeleteActionControlVisible() throws PortalException {
 		if (_discussionPermission == null) {
 			return false;
@@ -189,26 +210,6 @@ public class DefaultCommentTreeDisplayContext
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getClassName(),
 			_discussionTaglibHelper.getClassPK());
-	}
-
-	protected boolean isCommentApproved() {
-		boolean approved = true;
-
-		if (_discussionComment instanceof WorkflowableComment) {
-			WorkflowableComment workflowableComment =
-				(WorkflowableComment) _discussionComment;
-
-			if (workflowableComment.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
-
-				approved = true;
-			}
-			else {
-				approved = false;
-			}
-		}
-
-		return approved;
 	}
 
 	protected boolean isCommentAuthor() {

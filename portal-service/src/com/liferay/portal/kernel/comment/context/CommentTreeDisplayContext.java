@@ -27,6 +27,8 @@ public interface CommentTreeDisplayContext extends CommentDisplayContext {
 
 	public boolean isActionControlsVisible() throws PortalException;
 
+	public boolean isCommentApproved() throws PortalException;
+
 	public boolean isDeleteActionControlVisible() throws PortalException;
 
 	public boolean isDiscussionVisible() throws PortalException;

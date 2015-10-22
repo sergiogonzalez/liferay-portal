@@ -2556,19 +2556,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/msnm.jar</file-name>
-				<version>1.2.2</version>
-				<project-name>JMSN - Open source MSN messenger clone</project-name>
-				<project-url>http://jmsn.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-						<copyright-notice>Copyright (c) 2002 Jang-Ho Hwang. All rights reserved.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/nekohtml.jar</file-name>
 				<version>1.9.14</version>
 				<project-name>CyberNeko HTML Parser</project-name>

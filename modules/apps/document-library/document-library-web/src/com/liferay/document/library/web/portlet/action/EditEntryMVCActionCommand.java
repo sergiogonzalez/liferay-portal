@@ -36,7 +36,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -229,48 +229,41 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateLockException ||
-				e instanceof NoSuchFileEntryException ||
-				e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
+		catch (DuplicateLockException | NoSuchFileEntryException |
+			   NoSuchFolderException | PrincipalException e) {
 
-				if (e instanceof DuplicateLockException) {
-					DuplicateLockException dle = (DuplicateLockException)e;
+			if (e instanceof DuplicateLockException) {
+				DuplicateLockException dle = (DuplicateLockException)e;
 
-					SessionErrors.add(
-						actionRequest, dle.getClass(), dle.getLock());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof SourceFileNameException) {
-
-				if (e instanceof DuplicateFileException) {
-					HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(actionResponse);
-
-					response.setStatus(
-						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
-				}
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof InvalidFolderException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
 			}
 			else {
-				throw new PortletException(e);
+				SessionErrors.add(actionRequest, e.getClass());
 			}
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (DuplicateFileEntryException | DuplicateFolderNameException |
+			   SourceFileNameException e) {
+
+			if (e instanceof DuplicateFileEntryException) {
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(actionResponse);
+
+				response.setStatus(
+					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
+			}
+
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+		catch (AssetCategoryException | AssetTagException |
+			   InvalidFolderException e) {
+
+			SessionErrors.add(actionRequest, e.getClass(), e);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
 		}
 	}
 

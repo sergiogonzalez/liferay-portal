@@ -176,25 +176,19 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				updateWorkflowDefinitions(actionRequest);
 			}
 		}
+		catch (NoSuchFolderException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (DuplicateFileException | DuplicateFolderNameException |
+			   FolderNameException | RequiredFileEntryTypeException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof FolderNameException ||
-					 e instanceof RequiredFileEntryTypeException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 	}
 
