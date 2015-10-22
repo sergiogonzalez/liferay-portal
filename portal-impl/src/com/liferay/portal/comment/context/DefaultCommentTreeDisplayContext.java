@@ -86,6 +86,7 @@ public class DefaultCommentTreeDisplayContext
 			_discussionComment.getCommentId());
 	}
 
+	@Override
 	public boolean isCommentApproved() {
 		boolean approved = true;
 
