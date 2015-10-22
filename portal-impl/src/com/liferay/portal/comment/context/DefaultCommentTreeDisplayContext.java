@@ -86,6 +86,26 @@ public class DefaultCommentTreeDisplayContext
 			_discussionComment.getCommentId());
 	}
 
+	public boolean isCommentApproved() {
+		boolean approved = true;
+
+		if (_discussionComment instanceof WorkflowableComment) {
+			WorkflowableComment workflowableComment =
+				(WorkflowableComment) _discussionComment;
+
+			if (workflowableComment.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				approved = true;
+			}
+			else {
+				approved = false;
+			}
+		}
+
+		return approved;
+	}
+
 	@Override
 	public boolean isDeleteActionControlVisible() throws PortalException {
 		if (_discussionPermission == null) {
@@ -189,26 +209,6 @@ public class DefaultCommentTreeDisplayContext
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getClassName(),
 			_discussionTaglibHelper.getClassPK());
-	}
-
-	public boolean isCommentApproved() {
-		boolean approved = true;
-
-		if (_discussionComment instanceof WorkflowableComment) {
-			WorkflowableComment workflowableComment =
-				(WorkflowableComment) _discussionComment;
-
-			if (workflowableComment.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
-
-				approved = true;
-			}
-			else {
-				approved = false;
-			}
-		}
-
-		return approved;
 	}
 
 	protected boolean isCommentAuthor() {
