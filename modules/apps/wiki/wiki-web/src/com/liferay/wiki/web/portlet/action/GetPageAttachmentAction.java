@@ -59,6 +59,11 @@ public class GetPageAttachmentAction extends BaseStrutsAction {
 			int status = ParamUtil.getInteger(
 				request, "status", WorkflowConstants.STATUS_APPROVED);
 
+			if (fileName.contains("SharedImages/")) {
+				fileName = fileName.split("SharedImages/")[1];
+				title = "SharedImages";
+			}
+
 			getFile(nodeId, title, fileName, status, request, response);
 
 			return null;
