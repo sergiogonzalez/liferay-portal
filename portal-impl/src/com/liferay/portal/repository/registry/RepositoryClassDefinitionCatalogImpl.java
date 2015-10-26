@@ -32,6 +32,7 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,6 +60,14 @@ public class RepositoryClassDefinitionCatalogImpl
 		String className) {
 
 		return _repositoryClassDefinitions.get(className);
+	}
+
+	@Override
+	public Collection<RepositoryClassDefinition>
+		getRepositoryClassDefinitions() {
+
+		return Collections.unmodifiableCollection(
+			_repositoryClassDefinitions.values());
 	}
 
 	public void loadDefaultRepositoryDefiners() {

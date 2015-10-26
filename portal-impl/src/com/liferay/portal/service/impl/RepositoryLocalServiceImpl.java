@@ -31,6 +31,7 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.repository.RepositoryCache;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 import com.liferay.portal.util.RepositoryUtil;
@@ -146,7 +147,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryLocalService.deleteRepository(repository);
 		}
 
-		repositoryProvider.invalidateRepository(repositoryId);
+		repositoryCache.invalidate(repository.getClassName(), repositoryId);
 
 		return repository;
 	}
@@ -362,6 +363,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		return repositoryId;
 	}
+
+	@BeanReference(type = RepositoryCache.class)
+	protected RepositoryCache repositoryCache;
 
 	@BeanReference(type = RepositoryProvider.class)
 	protected RepositoryProvider repositoryProvider;

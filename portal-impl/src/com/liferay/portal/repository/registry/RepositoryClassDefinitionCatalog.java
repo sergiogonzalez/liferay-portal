@@ -31,6 +31,9 @@ public interface RepositoryClassDefinitionCatalog {
 	public RepositoryClassDefinition getRepositoryClassDefinition(
 		String className);
 
+	public Collection<RepositoryClassDefinition>
+		getRepositoryClassDefinitions();
+
 	public void registerLegacyExternalRepositoryFactory(
 		String className, ExternalRepositoryFactory externalRepositoryFactory);
 
