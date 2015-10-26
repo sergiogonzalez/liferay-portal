@@ -20,10 +20,15 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.InitializedLocalRepository;
 import com.liferay.portal.repository.InitializedRepository;
@@ -218,6 +223,9 @@ public class RepositoryClassDefinition
 				new LiferayRepositoryEventTriggerCapability(
 					repositoryEventTrigger));
 		}
+
+		capabilityRegistry.addSupportedCapability(
+			CacheCapability.class, new CacheCapability());
 	}
 
 	private final Map<Long, LocalRepository> _localRepositoryCache =
@@ -227,5 +235,29 @@ public class RepositoryClassDefinition
 	private final RepositoryDefiner _repositoryDefiner;
 	private RepositoryFactory _repositoryFactory;
 	private final RepositoryEventTrigger _rootRepositoryEventTrigger;
+
+	private class CacheCapability implements Capability, RepositoryEventAware {
+
+		@Override
+		public void registerRepositoryEventListeners(
+			RepositoryEventRegistry repositoryEventRegistry) {
+
+			repositoryEventRegistry.registerRepositoryEventListener(
+				RepositoryEventType.Delete.class, LocalRepository.class,
+				new RepositoryEventListener
+					<RepositoryEventType.Delete, LocalRepository>() {
+
+					@Override
+					public void execute(LocalRepository localRepository)
+						throws PortalException {
+
+						invalidateCachedRepository(
+							localRepository.getRepositoryId());
+					}
+
+				});
+		}
+
+	}
 
 }
