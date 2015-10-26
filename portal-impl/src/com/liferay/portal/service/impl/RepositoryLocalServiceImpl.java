@@ -144,6 +144,13 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	public Repository deleteRepository(long repositoryId)
 		throws PortalException {
 
+		Repository repository = repositoryPersistence.fetchByPrimaryKey(
+			repositoryId);
+
+		if (repository == null) {
+			return null;
+		}
+
 		LocalRepository localRepository = repositoryProvider.getLocalRepository(
 			repositoryId);
 
@@ -159,14 +166,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 				localRepository);
 		}
 
-		Repository repository = repositoryPersistence.fetchByPrimaryKey(
-			repositoryId);
-
-		if (repository != null) {
-			repositoryLocalService.deleteRepository(repository);
-		}
-
-		return repository;
+		return repositoryLocalService.deleteRepository(repository);
 	}
 
 	@Override
