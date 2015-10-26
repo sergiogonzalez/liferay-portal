@@ -227,6 +227,10 @@ public class SearchContainer<R> {
 	}
 
 	public String getEmptyResultsMessage() {
+		if (_emptyResultsMessage == null) {
+			return StringPool.BLANK;
+		}
+
 		return _emptyResultsMessage;
 	}
 
