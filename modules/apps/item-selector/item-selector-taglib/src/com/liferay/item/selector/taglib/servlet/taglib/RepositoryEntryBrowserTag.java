@@ -19,7 +19,6 @@ import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,6 +27,7 @@ import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -53,6 +53,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_displayStyle = displayStyle;
 	}
 
+	public void setEmptyResultsMessage(String emptyResultsMessage) {
+		_emptyResultsMessage = emptyResultsMessage;
+	}
+
 	public void setItemSelectedEventName(String itemSelectedEventName) {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
@@ -68,8 +72,12 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_portletURL = portletURL;
 	}
 
-	public void setSearchContainer(SearchContainer<?> searchContainer) {
-		_searchContainer = searchContainer;
+	public void setRepositoryEntries(List repositoryEntries) {
+		_repositoryEntries = repositoryEntries;
+	}
+
+	public void setRepositoryEntriesCount(int repositoryEntriesCount) {
+		_repositoryEntriesCount = repositoryEntriesCount;
 	}
 
 	public void setShowBreadcrumb(boolean showBreadcrumb) {
@@ -94,9 +102,11 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 
 		_desiredItemSelectorReturnTypes = null;
 		_displayStyle = null;
+		_emptyResultsMessage = null;
 		_itemSelectedEventName = null;
 		_portletURL = null;
-		_searchContainer = null;
+		_repositoryEntries = new ArrayList();
+		_repositoryEntriesCount = 0;
 		_showBreadcrumb = false;
 		_showDragAndDropZone = true;
 		_tabName = null;
@@ -165,6 +175,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 			getDisplayStyle());
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
+				"emptyResultsMessage",
+			_emptyResultsMessage);
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:" +
 				"draggableFileReturnType",
 			getDraggableFileReturnType());
 		request.setAttribute(
@@ -181,8 +195,12 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 			"liferay-item-selector:repository-entry-browser:portletURL",
 			_portletURL);
 		request.setAttribute(
-			"liferay-item-selector:repository-entry-browser:results",
-			_searchContainer);
+			"liferay-item-selector:repository-entry-browser:repositoryEntries",
+			_repositoryEntries);
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:" +
+				"repositoryEntriesCount",
+			_repositoryEntriesCount);
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:showBreadcrumb",
 			_showBreadcrumb);
@@ -199,9 +217,11 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
+	private String _emptyResultsMessage;
 	private String _itemSelectedEventName;
 	private PortletURL _portletURL;
-	private SearchContainer<?> _searchContainer;
+	private List _repositoryEntries = new ArrayList();
+	private int _repositoryEntriesCount;
 	private boolean _showBreadcrumb;
 	private boolean _showDragAndDropZone = true;
 	private String _tabName;

@@ -21,10 +21,12 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_browse
 
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:displayStyle"));
 ItemSelectorReturnType draggableFileReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:draggableFileReturnType");
+String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:emptyResultsMessage"));
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:existingFileEntryReturnType");
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectedEventName"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:portletURL");
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-item-selector:repository-entry-browser:searchContainer");
+List repositoryEntries = (List)request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntries");
+int repositoryEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntriesCount"));
 boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showBreadcrumb"));
 boolean showDragAndDropZone = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showDragAndDropZone"));
 String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:tabName"));
@@ -33,6 +35,11 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:r
 String keywords = ParamUtil.getString(request, "keywords");
 
 boolean showSearchInfo = false;
+
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, portletURL, null, emptyResultsMessage);
+
+searchContainer.setTotal(repositoryEntriesCount);
+searchContainer.setResults(repositoryEntries);
 
 if (Validator.isNotNull(keywords)) {
 	showSearchInfo = true;
