@@ -163,6 +163,9 @@ public class DLFileEntryTypeFinderImpl
 			}
 
 			sql = StringUtil.replace(
+				sql, "[$BASIC_DOCUMENT$]",
+				getBasicDocument(includeBasicFileEntryType));
+			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
@@ -184,10 +187,6 @@ public class DLFileEntryTypeFinderImpl
 			qPos.add(descriptions, 2);
 
 			int countValue = 0;
-
-			if (includeBasicFileEntryType) {
-				countValue = 1;
-			}
 
 			Iterator<Long> itr = q.iterate();
 
