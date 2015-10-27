@@ -57,6 +57,7 @@ page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

@@ -21,14 +21,7 @@ BlogsItemSelectorViewDisplayContext blogsItemSelectorViewDisplayContext = (Blogs
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = blogsItemSelectorViewDisplayContext.getBlogsItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curBlogsAttachments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments"));
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
-
-searchContainer.setOrderByComparator(orderByComparator);
+SearchContainer searchContainer = new SearchContainer(renderRequest, blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, null);
 
 Folder folder = blogsItemSelectorViewDisplayContext.fetchAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 
@@ -72,19 +65,24 @@ if (folder != null) {
 	}
 	else {
 		total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
-		results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+
+		results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
 	}
 }
-
-searchContainer.setTotal(total);
-searchContainer.setResults(results);
 %>
 
 <liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
+	emptyResultsMessage="<%= LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments") %>"
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
-	searchContainer="<%= searchContainer %>"
+	repositoryEntries="<%= results %>"
+	repositoryEntriesCount="<%= total %>"
 	showDragAndDropZone="<%= false %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= blogsItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
