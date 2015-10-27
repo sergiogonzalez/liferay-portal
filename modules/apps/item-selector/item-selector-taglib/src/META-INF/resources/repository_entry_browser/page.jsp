@@ -14,25 +14,32 @@
  */
 --%>
 
-<%@ include file="/browser/init.jsp" %>
+<%@ include file="/repository_entry_browser/init.jsp" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_browser_page") + StringPool.UNDERLINE;
 
-String displayStyle = GetterUtil.getString(request.getAttribute("liferay-item-selector:browser:displayStyle"));
-ItemSelectorReturnType draggableFileReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:browser:draggableFileReturnType");
-ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:browser:existingFileEntryReturnType");
-String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-item-selector:browser:itemSelectedEventName"));
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:browser:portletURL");
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-item-selector:browser:searchContainer");
-boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:browser:showBreadcrumb"));
-boolean showDragAndDropZone = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:browser:showDragAndDropZone"));
-String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:browser:tabName"));
-PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:browser:uploadURL");
+String displayStyle = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:displayStyle"));
+ItemSelectorReturnType draggableFileReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:draggableFileReturnType");
+String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:emptyResultsMessage"));
+ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:existingFileEntryReturnType");
+String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectedEventName"));
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:portletURL");
+List repositoryEntries = (List)request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntries");
+int repositoryEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntriesCount"));
+boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showBreadcrumb"));
+boolean showDragAndDropZone = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showDragAndDropZone"));
+String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:tabName"));
+PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:uploadURL");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
 boolean showSearchInfo = false;
+
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, portletURL, null, emptyResultsMessage);
+
+searchContainer.setTotal(repositoryEntriesCount);
+searchContainer.setResults(repositoryEntries);
 
 if (Validator.isNotNull(keywords)) {
 	showSearchInfo = true;
@@ -47,7 +54,7 @@ if (Validator.isNotNull(keywords)) {
 	<liferay-frontend:management-bar>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
-				displayViews="<%= BrowserTag.DISPLAY_STYLES %>"
+				displayViews="<%= RepositoryEntryBrowserTag.DISPLAY_STYLES %>"
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
@@ -84,7 +91,7 @@ if (Validator.isNotNull(keywords)) {
 	long folderId = ParamUtil.getLong(request, "folderId");
 
 	if (showBreadcrumb && !showSearchInfo) {
-		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, PortletURLUtil.clone(portletURL, liferayPortletResponse));
+		ItemSelectorRepositoryEntryBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, PortletURLUtil.clone(portletURL, liferayPortletResponse));
 	%>
 
 		<liferay-ui:breadcrumb
@@ -217,11 +224,11 @@ if (Validator.isNotNull(keywords)) {
 
 							String title = DLUtil.getTitleWithExtension(fileEntry);
 
-							JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
+							JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 						%>
 
 							<liferay-ui:search-container-column-text name="title">
-								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 
 									<%
 									String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
@@ -328,7 +335,7 @@ if (Validator.isNotNull(keywords)) {
 
 									String title = DLUtil.getTitleWithExtension(fileEntry);
 
-									JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
+									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 
 									Map<String, Object> data = new HashMap<String, Object>();
 
@@ -337,7 +344,7 @@ if (Validator.isNotNull(keywords)) {
 									data.put("returnType", ClassUtil.getClassName(existingFileEntryReturnType));
 									data.put("title", title);
 									data.put("url", DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK));
-									data.put("value", ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay));
+									data.put("value", ItemSelectorRepositoryEntryBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay));
 								%>
 
 									<liferay-ui:search-container-column-text>
@@ -396,7 +403,7 @@ if (Validator.isNotNull(keywords)) {
 
 									String title = DLUtil.getTitleWithExtension(fileEntry);
 
-									JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
+									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 								%>
 
 									<liferay-ui:search-container-column-image
@@ -404,7 +411,7 @@ if (Validator.isNotNull(keywords)) {
 									/>
 
 									<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-										<div class="item-preview" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>">
+										<div class="item-preview" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>">
 											<liferay-ui:app-view-entry
 												assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
 												assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"

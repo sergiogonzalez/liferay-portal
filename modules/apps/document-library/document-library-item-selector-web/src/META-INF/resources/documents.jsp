@@ -21,14 +21,7 @@ DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelec
 
 ItemSelectorCriterion itemSelectorCriterion = dlItemSelectorViewDisplayContext.getItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder"));
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true);
-
-searchContainer.setOrderByComparator(orderByComparator);
+SearchContainer searchContainer = new SearchContainer(renderRequest, dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, null);
 
 List results = null;
 int total = 0;
@@ -44,7 +37,7 @@ if (dlItemSelectorViewDisplayContext.isSearch()) {
 	searchContext.setFolderIds(new long[] {dlItemSelectorViewDisplayContext.getFolderId(request)});
 	searchContext.setStart(searchContainer.getStart());
 
-	Hits hits = DLAppServiceUtil.search(themeDisplay.getScopeGroupId(), searchContext);
+	Hits hits = DLAppServiceUtil.search(scopeGroupId, searchContext);
 
 	total = hits.getLength();
 
@@ -74,19 +67,24 @@ if (dlItemSelectorViewDisplayContext.isSearch()) {
 	}
 }
 else {
-	total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
-	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-}
+	total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
 
-searchContainer.setTotal(total);
-searchContainer.setResults(results);
+	String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+	OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true);
+
+	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
+}
 %>
 
-<liferay-item-selector:browser
+<liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= itemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
+	emptyResultsMessage="<%= LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder") %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
-	searchContainer="<%= searchContainer %>"
+	repositoryEntries="<%= results %>"
+	repositoryEntriesCount="<%= total %>"
 	showBreadcrumb="<%= true %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= dlItemSelectorViewDisplayContext.getUploadURL(request, liferayPortletResponse) %>"
