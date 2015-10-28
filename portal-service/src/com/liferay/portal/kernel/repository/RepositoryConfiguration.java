@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.repository;
 
+import java.util.Collection;
+
 /**
  * @author Adolfo Pérez
  */
 public interface RepositoryConfiguration {
 
-	public String[] getSupportedConfigurations();
-
-	public String[][] getSupportedParameters();
+	public Collection<RepositoryParameter> getRepositoryParameters();
 
 }
