@@ -444,6 +444,14 @@ public class LiferayPortlet extends GenericPortlet {
 		if (SessionMessages.contains(
 				actionRequest,
 				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET)) {
+
+			sessionMessagesSize--;
+		}
+
+		if (SessionMessages.contains(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA)) {
 
 			sessionMessagesSize--;
