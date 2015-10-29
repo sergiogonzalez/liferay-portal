@@ -70,6 +70,13 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
 	@Override
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		PortletRequest portletRequest) {
+
+		return getItemSelectorCriteria(portletRequest.getParameterMap());
+	}
+
+	@Override
 	public ItemSelectorRendering getItemSelectorRendering(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
