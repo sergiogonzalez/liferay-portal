@@ -106,7 +106,13 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 <liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 
 <div id="<portlet:namespace />documentLibraryContainer">
-	<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<div class="sidenav-menu-slider">
+			<div class="sidebar sidebar-default sidenav-menu">
+				<liferay-util:include page="/document_library/info_panel.jsp" servletContext="<%= application %>" />
+			</div>
+		</div>
+
 		<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 			<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
 				<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
@@ -156,6 +162,17 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 %>
 
 <aui:script>
+	$('#<portlet:namespace />infoPanelId').sideNavigation(
+		{
+			gutter: 15,
+			position: 'right',
+			toggler: '.infoPanelToggler',
+			type: 'relative',
+			typeMobile: 'fixed',
+			width: 320
+		}
+	);
+
 	$('#<portlet:namespace />infoPanelId').sideNavigation(
 		{
 			gutter: 15,
