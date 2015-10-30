@@ -137,6 +137,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.repository.model.FileEntry"
+				cssClass="selectable"
 				keyProperty="fileEntryId"
 				modelVar="fileEntry"
 			>
