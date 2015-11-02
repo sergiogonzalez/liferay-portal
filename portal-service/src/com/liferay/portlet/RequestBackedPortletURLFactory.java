@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.model.Group;
+
 import javax.portlet.PortletURL;
 
 /**
@@ -22,6 +24,15 @@ import javax.portlet.PortletURL;
 public interface RequestBackedPortletURLFactory {
 
 	public PortletURL createActionURL(String portletId);
+
+	public PortletURL createControlPanelActionURL(
+		String portletId, Group group, long refererPlid);
+
+	public PortletURL createControlPanelRenderURL(
+		String portletId, Group group, long refererPlid);
+
+	public PortletURL createControlPanelResourceURL(
+		String portletId, Group group, long refererPlid);
 
 	public PortletURL createRenderURL(String portletId);
 

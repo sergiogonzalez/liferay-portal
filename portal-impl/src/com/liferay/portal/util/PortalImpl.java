@@ -192,6 +192,8 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
@@ -275,7 +277,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -1652,6 +1653,28 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public Layout getControlPanelLayout(long companyId, Group group) {
+		Layout layout = null;
+
+		try {
+			long plid = getControlPanelPlid(companyId);
+
+			layout = LayoutLocalServiceUtil.getLayout(plid);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get control panel layout", pe);
+
+			return null;
+		}
+
+		if (group == null) {
+			return layout;
+		}
+
+		return new VirtualLayout(layout, group);
+	}
+
+	@Override
 	public long getControlPanelPlid(long companyId) throws PortalException {
 		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
 			companyId, GroupConstants.CONTROL_PANEL);
@@ -1678,22 +1701,18 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			request, portletId,
-			getControlPanelLayout(themeDisplay, group, portletId), lifecycle);
-
-		if (refererPlid > 0) {
-			liferayPortletURL.setRefererPlid(refererPlid);
+		if (group == null) {
+			group = getControlPanelDisplayGroup(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getDoAsGroupId(), portletId
+			);
 		}
 
-		try {
-			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-		catch (WindowStateException wse) {
-			_log.error(wse);
-		}
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(request);
 
-		return liferayPortletURL;
+		return requestBackedPortletURLFactory.createControlPanelActionURL(
+			portletId, group, refererPlid);
 	}
 
 	@Override
@@ -1713,22 +1732,18 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			portletRequest, portletId,
-			getControlPanelLayout(themeDisplay, group, portletId), lifecycle);
-
-		if (refererPlid > 0) {
-			liferayPortletURL.setRefererPlid(refererPlid);
+		if (group == null) {
+			group = getControlPanelDisplayGroup(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getDoAsGroupId(), portletId
+			);
 		}
 
-		try {
-			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-		catch (WindowStateException wse) {
-			_log.error(wse);
-		}
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(portletRequest);
 
-		return liferayPortletURL;
+		return requestBackedPortletURLFactory.createControlPanelActionURL(
+			portletId, group, refererPlid);
 	}
 
 	@Override
@@ -7570,35 +7585,6 @@ public class PortalImpl implements Portal {
 
 			return group;
 		}
-	}
-
-	protected Layout getControlPanelLayout(
-		ThemeDisplay themeDisplay, Group group, String portletId) {
-
-		Layout layout = null;
-
-		try {
-			long plid = getControlPanelPlid(themeDisplay.getCompanyId());
-
-			layout = LayoutLocalServiceUtil.getLayout(plid);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to get control panel layout", pe);
-
-			return null;
-		}
-
-		if (group == null) {
-			group = getControlPanelDisplayGroup(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				themeDisplay.getDoAsGroupId(), portletId);
-
-			if (group == null) {
-				return layout;
-			}
-		}
-
-		return new VirtualLayout(layout, group);
 	}
 
 	protected long getDoAsUserId(
