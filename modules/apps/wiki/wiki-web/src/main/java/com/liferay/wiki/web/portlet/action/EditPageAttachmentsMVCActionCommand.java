@@ -559,10 +559,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
 			if (!cmd.equals(Constants.ADD_DYNAMIC) &&
 				!cmd.equals(Constants.ADD_MULTIPLE) &&
 				!cmd.equals(Constants.ADD_TEMP)) {
