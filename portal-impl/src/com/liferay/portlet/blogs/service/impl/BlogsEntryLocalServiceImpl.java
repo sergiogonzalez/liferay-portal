@@ -85,6 +85,7 @@ import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
 import com.liferay.portlet.blogs.EntrySmallImageScaleException;
 import com.liferay.portlet.blogs.EntryTitleException;
+import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
@@ -1006,7 +1007,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		List<BlogsEntry> entries = blogsEntryPersistence.findByGroupId(groupId);
 
 		for (BlogsEntry entry : entries) {
-			blogsEntryLocalService.moveEntryToTrash(userId, entry);
+			if (!entry.isInTrash()) {
+				blogsEntryLocalService.moveEntryToTrash(userId, entry);
+			}
 		}
 	}
 
@@ -1076,6 +1079,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		if (entry.isInTrash()) {
+			throw new NoSuchEntryException(
+				"No BlogsEntry exists with the primary key " + entryId);
+		}
 
 		return blogsEntryLocalService.moveEntryToTrash(userId, entry);
 	}
