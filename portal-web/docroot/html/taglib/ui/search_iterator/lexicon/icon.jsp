@@ -153,7 +153,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				rowClassNameAlternateHover: '<%= _ROW_CLASS_NAME_ALTERNATE_HOVER %>',
 				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',
 				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>',
-				rowSelector: 'li.selectable'
+				rowSelector: 'div.selectable'
 			}
 		).render();
 

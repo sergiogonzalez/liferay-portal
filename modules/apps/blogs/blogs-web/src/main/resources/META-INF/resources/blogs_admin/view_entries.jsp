@@ -123,6 +123,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portlet.blogs.model.BlogsEntry"
+				cssClass="selectable"
 				escapedModel="<%= true %>"
 				keyProperty="entryId"
 				modelVar="entry"
