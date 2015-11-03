@@ -25,7 +25,7 @@ RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPor
 
 String itemSelectedEventName = ParamUtil.getString(request, "itemSelectedEventName");
 
-List<ItemSelectorCriterion> criteria = itemSelector.getItemSelectorCriteria(liferayPortletRequest);
+List<ItemSelectorCriterion> criteria = itemSelector.getItemSelectorCriteria(liferayPortletRequest.getParameterMap());
 
 PortletURL iteratorURL = itemSelector.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay.getScopeGroup(), themeDisplay.getRefererPlid(), itemSelectedEventName, criteria.toArray(new ItemSelectorCriterion[criteria.size()]));
 

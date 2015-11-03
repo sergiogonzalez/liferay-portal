@@ -29,11 +29,9 @@ import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -47,8 +45,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -73,22 +69,32 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
-		PortletRequest portletRequest) {
+		Map<String, String[]> parameters) {
 
-		return getItemSelectorCriteria(portletRequest.getParameterMap());
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
+				parameters);
+
+		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
+				itemSelectorCriterionClasses.get(i);
+
+			String prefix = i + "_";
+
+			itemSelectorCriteria.add(
+				getItemSelectorCriterion(
+					parameters, prefix, itemSelectorCriterionClass));
+		}
+
+		return itemSelectorCriteria;
 	}
 
 	@Override
 	public ItemSelectorRendering getItemSelectorRendering(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(portletRequest);
-
-		Map<String, String[]> parameters = portletRequest.getParameterMap();
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		Map<String, String[]> parameters, ThemeDisplay themeDisplay) {
 
 		String itemSelectedEventName = getValue(
 			parameters, PARAMETER_ITEM_SELECTED_EVENT_NAME);
@@ -129,7 +135,7 @@ public class ItemSelectorImpl implements ItemSelector {
 				}
 
 				String title = itemSelectorView.getTitle(
-					portletRequest.getLocale());
+					themeDisplay.getLocale());
 
 				PortletURL portletURL = null;
 
@@ -155,7 +161,7 @@ public class ItemSelectorImpl implements ItemSelector {
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
 						itemSelectorView, itemSelectorCriterion, portletURL,
-						itemSelectedEventName, isSearch(portletRequest)));
+						itemSelectedEventName, isSearch(parameters)));
 			}
 		}
 
@@ -206,29 +212,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		return getItemSelectorURL(
 			requestBackedPortletURLFactory, null, 0, itemSelectedEventName,
 			itemSelectorCriteria);
-	}
-
-	protected List<ItemSelectorCriterion> getItemSelectorCriteria(
-		Map<String, String[]> parameters) {
-
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
-
-		List<Class<? extends ItemSelectorCriterion>>
-			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
-				parameters);
-
-		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
-				itemSelectorCriterionClasses.get(i);
-
-			String prefix = i + "_";
-
-			itemSelectorCriteria.add(
-				getItemSelectorCriterion(
-					parameters, prefix, itemSelectorCriterionClass));
-		}
-
-		return itemSelectorCriteria;
 	}
 
 	protected <T extends ItemSelectorCriterion> T getItemSelectorCriterion(
@@ -309,8 +292,8 @@ public class ItemSelectorImpl implements ItemSelector {
 		return values[0];
 	}
 
-	protected boolean isSearch(PortletRequest portletRequest) {
-		String keywords = portletRequest.getParameter("keywords");
+	protected boolean isSearch(Map<String, String[]> parameters) {
+		String keywords = getValue(parameters, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			return true;
