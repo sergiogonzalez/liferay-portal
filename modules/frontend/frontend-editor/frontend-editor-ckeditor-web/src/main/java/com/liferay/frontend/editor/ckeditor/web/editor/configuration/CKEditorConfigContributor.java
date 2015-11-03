@@ -69,7 +69,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		jsonObject.put("entities", Boolean.FALSE);
 
 		String extraPlugins =
-			"a11yhelpbtn,imageselector,lfrpopup,media,scayt,wsc";
+			"a11yhelpbtn,itemselector,lfrpopup,media";
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
@@ -317,7 +317,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		String buttons = "['Table', '-', 'ImageSelector',";
 
 		if (XugglerUtil.isEnabled()) {
-			buttons = buttons.concat(" 'Audio', 'Video',");
+			buttons = buttons.concat(" 'AudioSelector', 'VideoSelector',");
 		}
 
 		buttons = buttons.concat(" 'Flash', '-', 'Smiley', 'SpecialChar']");
