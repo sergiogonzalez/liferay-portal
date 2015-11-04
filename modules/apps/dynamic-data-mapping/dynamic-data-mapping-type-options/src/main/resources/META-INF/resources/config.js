@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_DDM_TYPE_OPTIONS = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-options';
+	var PATH_DDM_TYPE_OPTIONS = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-options';
 
 	AUI().applyConfig(
 		{
@@ -13,7 +13,8 @@
 							},
 							path: 'options_field.js',
 							requires: [
-								'liferay-auto-fields',
+								'aui-sortable-list',
+								'liferay-ddm-form-field-key-value',
 								'liferay-ddm-form-renderer-field'
 							]
 						},

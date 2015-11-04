@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CATEGORY_ALERT</td>
+	<td>//div[contains(@id,'categorization')]/div[contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUCCESS</td>
 	<td>//div[contains(@class,'lfr-asset-column-details')]/div[contains(@class,'alert-success')]</td>
 	<td></td>
@@ -16,11 +21,6 @@
 <tr>
 	<td>CUSTOMIZED_PAGE_INFO</td>
 	<td>//div[contains(@class,'layout')]/span[contains(@class,'message-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMPTY</td>
-	<td>//div[contains(@class,'empty-message')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'empty-message') and contains(@class,'text-center')]/span</td>
+	<td>//div[contains(@class,'empty-result-message')]//div[@class='card-footer']/div/div</td>
 	<td></td>
 </tr>
 <tr>

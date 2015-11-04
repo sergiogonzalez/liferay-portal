@@ -4,8 +4,12 @@ AUI.add(
 		var ExpressionsEvaluator = A.Component.create(
 			{
 				ATTRS: {
+					enabled: {
+						value: true
+					},
+
 					evaluationURL: {
-						value: '/o/ddm-form-evaluator/'
+						value: '/o/dynamic-data-mapping-form-evaluator/'
 					},
 
 					form: {
@@ -25,9 +29,11 @@ AUI.add(
 					evaluate: function(callback) {
 						var instance = this;
 
+						var enabled = instance.get('enabled');
+
 						var form = instance.get('form');
 
-						if (form && !instance.evaluating()) {
+						if (enabled && form && !instance.evaluating()) {
 							instance.fire('evaluationStarted');
 
 							instance._evaluate(
@@ -101,6 +107,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-request']
+		requires: ['aui-component', 'aui-io-request']
 	}
 );

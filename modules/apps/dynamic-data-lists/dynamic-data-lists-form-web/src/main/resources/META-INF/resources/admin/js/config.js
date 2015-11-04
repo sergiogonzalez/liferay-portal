@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_DDL_FORM_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/ddl-form-web';
+	var PATH_DDL_FORM_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-lists-form-web';
 
 	AUI().applyConfig(
 		{
@@ -60,7 +60,8 @@
 						'liferay-ddl-form-builder-settings-form': {
 							path: 'form_builder_settings_form.js',
 							requires: [
-								'liferay-ddm-form-renderer'
+								'liferay-ddm-form-renderer',
+								'liferay-form'
 							]
 						},
 						'liferay-ddl-form-builder-settings-support': {

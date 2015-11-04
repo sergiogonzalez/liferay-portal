@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1adcc25`.*
+*This document has been reviewed through commit `1641223`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1748,7 +1748,7 @@ Method `Indexer.addRelatedEntryFields(Document, Object)` has been moved into
 `DDMStructureIndexer`.
 
 `Indexer.getQueryString(SearchContext, Query)` has been removed, in favor of
-calling `SearchEngineUtil.getQueryString(SearchContext, Query)`
+calling `SearchEngineUtil.getQueryString(SearchContext, Query)`.
 
 #### Who is affected?
 
@@ -1795,8 +1795,8 @@ New code:
         ddmStructureIndexer.reindexDDMStructures(...);
     }
 
-Any code calling Indexer.getQueryString(...) should call
-SearchEngineUtil.getQueryString(...)
+Any code calling `Indexer.getQueryString(...)` should call
+`SearchEngineUtil.getQueryString(...)`.
 
 Old code:
 
@@ -2345,7 +2345,8 @@ this tag.
 #### How should I update my code?
 
 Embedding another portlet is only supported from a template. You should embed
-the portlet by passing its name in a call to `theme.runtime`.
+the portlet by passing its name in a call to `theme.runtime` or using the right
+tag in FreeMarker.
 
 **Example**
 
@@ -2355,7 +2356,9 @@ In Velocity:
 
 In FreeMarker:
 
-    ${theme.runtime("145")
+    <#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"] />
+
+    <@liferay_portlet["runtime"] portletName="145" />
 
 #### Why was this change made?
 
@@ -2493,15 +2496,15 @@ site called Control Panel in the Sites API.
 
 ---------------------------------------
 
-### Changed exception thrown by D&M services when duplicate files are found
+### Changed Exception Thrown by Documents and Media Services When Duplicate Files are Found
 - **Date:** 2015-Sep-24
 - **JIRA Ticket:** LPS-53819
 
 #### What changed?
 
-When a duplicate file entry is found by D&M services, a
-`DuplicateFileEntryException` will be thrown. Previously, the
-exception `DuplicateFileException` was used.
+When a duplicate file entry is found by Documents and Media (D&M) services, a
+`DuplicateFileEntryException` will be thrown. Previously, the exception
+`DuplicateFileException` was used.
 
 The `DuplicateFileException` is now raised only by `Store`
 implementations.
@@ -2509,7 +2512,7 @@ implementations.
 #### Who is affected?
 
 Any caller of the `addFileEntry` methods in `DLApp` and `DLFileEntry`
-local and remote services.
+local and remote services is affected.
 
 #### How should I update my code?
 
@@ -2524,7 +2527,7 @@ contexts:
 - When creating a new file through D&M and a row in the database
 already existed for a file entry with the same title.
 - When the stores tried to save a file and the underlying storage unit
-(a file in the case of FileSystemStore) already existed.
+(a file in the case of `FileSystemStore`) already existed.
 
 This made it impossible to detect and recover from store corruption
 issues, as they were undifferentiable from other errors.
@@ -2537,7 +2540,7 @@ issues, as they were undifferentiable from other errors.
 
 #### What changed?
 
-All references to the `msnSn` column in the Contacts table have been removed
+All references to the `msnSn` column in the `Contacts` table have been removed
 from portal. All references to Windows Live Messenger have been removed from
 properties, tests, classes, and the frontend. Also, the `getMsnSn` and
 `setMsnSn` methods have been removed from the `Contact` and `LDAPUser` models.
@@ -2582,7 +2585,7 @@ When updating or adding a user or contact using one of the changed methods
 above, remove the `msnSn` argument from the method call. If you are using one of
 the removed items above, you should remove all references to them from your code
 and look for alternatives, if necessary. Lastly, remove any references to the
-`msnSN` column in the Contacts table from your SQL queries.
+`msnSN` column in the `Contacts` table from your SQL queries.
 
 #### Why was this change made?
 
@@ -2701,7 +2704,7 @@ You should update your code to call one of these methods:
 Instead of simply providing the class name of your scheduled job listener, you
 should follow these steps:
 
-1.  Instantiate your MessageListener.
+1.  Instantiate your `MessageListener`.
 
 2.  Call `SchedulerEngineHelper.register(MessageListener, SchedulerEntry)` to
     register your `SchedulerEventMessageListener`.
@@ -2710,7 +2713,8 @@ should follow these steps:
 #### Why was this change made?
 
 The deleted methods provided facilities that aren't compatible with using
-declarative services in an OSGI container. The new approach allows for proper
+declarative services in an OSGi container. The new approach allows for proper
 injection of dependencies into scheduled event message listeners.
 
 ---------------------------------------
+
