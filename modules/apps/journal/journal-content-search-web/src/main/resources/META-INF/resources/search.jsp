@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String backURL = ParamUtil.getString(request, "backURL");
+
 if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -38,6 +40,11 @@ String defaultKeywords = LanguageUtil.get(request, "search") + StringPool.TRIPLE
 
 String keywords = StringUtil.unquote(ParamUtil.getString(request, "keywords", defaultKeywords));
 %>
+
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	title="search"
+/>
 
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
