@@ -36,6 +36,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -92,10 +93,6 @@ public class UploadServletRequestImpl
 			ServletFileUpload servletFileUpload = new ServletFileUpload(
 				new LiferayFileItemFactory(getTempDir()));
 
-			servletFileUpload.setSizeMax(
-				PrefsPropsUtil.getLong(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
-
 			liferayServletRequest = new LiferayServletRequest(request);
 
 			List<org.apache.commons.fileupload.FileItem> fileItems =
@@ -103,8 +100,69 @@ public class UploadServletRequestImpl
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
 
+			long uploadServletRequestImplMaxSize = PrefsPropsUtil.getLong(
+				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			long uploadServletRequestImplSize = 0;
+
+			Collections.sort(
+				fileItems,
+				new Comparator<org.apache.commons.fileupload.FileItem>() {
+
+					@Override
+					public int compare(
+						org.apache.commons.fileupload.FileItem fileItem1,
+						org.apache.commons.fileupload.FileItem fileItem2) {
+
+						LiferayFileItem liferayFileItem1 =
+							(LiferayFileItem)fileItem1;
+
+						long itemSize1 = liferayFileItem1.getItemSize();
+
+						LiferayFileItem liferayFileItem2 =
+							(LiferayFileItem)fileItem2;
+
+						long itemSize2 = liferayFileItem2.getItemSize();
+
+						if (itemSize1 > itemSize2) {
+							return 1;
+						}
+
+						if (itemSize1 < itemSize2) {
+							return -1;
+						}
+
+						return 0;
+					}
+
+				});
+
 			for (org.apache.commons.fileupload.FileItem fileItem : fileItems) {
 				LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+
+				long itemSize = liferayFileItem.getItemSize();
+
+				if ((uploadServletRequestImplSize + itemSize) >
+						uploadServletRequestImplMaxSize) {
+
+					StringBundler sb = new StringBundler(3);
+
+					sb.append("Request reached the maximum permitted size of ");
+					sb.append(uploadServletRequestImplMaxSize);
+					sb.append(" bytes");
+
+					UploadException uploadException = new UploadException(
+						sb.toString());
+
+					uploadException.setExceededLiferayFileItemSizeLimit(false);
+					uploadException.setExceededSizeLimit(true);
+
+					request.setAttribute(
+						WebKeys.UPLOAD_EXCEPTION, uploadException);
+
+					continue;
+				}
+
+				uploadServletRequestImplSize += itemSize;
 
 				if (liferayFileItem.isFormField()) {
 					liferayFileItem.setString(request.getCharacterEncoding());
