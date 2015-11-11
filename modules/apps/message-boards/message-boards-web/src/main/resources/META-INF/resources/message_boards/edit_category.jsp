@@ -35,11 +35,11 @@ if ((category == null) && (parentCategoryId > 0)) {
 
 String displayStyle = BeanParamUtil.getString(category, request, "displayStyle", defaultDisplayStyle);
 
-MBMailingList mailingList = MBMailingListServiceUtil.fetchCategoryMailingList(scopeGroupId, categoryId);
+MBMailingList mailingList = MBMailingListLocalServiceUtil.fetchCategoryMailingList(scopeGroupId, categoryId);
 
 if ((category == null) && (mailingList == null)) {
 	if (parentCategoryId > 0) {
-		mailingList = MBMailingListServiceUtil.fetchCategoryMailingList(scopeGroupId, parentCategoryId);
+		mailingList = MBMailingListLocalServiceUtil.fetchCategoryMailingList(scopeGroupId, parentCategoryId);
 	}
 }
 
