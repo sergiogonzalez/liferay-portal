@@ -191,9 +191,20 @@ public class MediaWikiImporter implements WikiImporter {
 				readAssetTagNames(userId, node, content));
 
 			if (Validator.isNull(redirectTitle)) {
-				_translator.setStrictImportMode(strictImportMode);
+				if (Validator.equals(
+						_wikiGroupServiceConfiguration.defaultFormat(),
+						"creole")) {
 
-				content = _translator.translate(content);
+					_translator.setStrictImportMode(strictImportMode);
+
+					content = _translator.translate(content);
+				}
+				else {
+					content = content.replaceAll(
+						_imagesPattern.pattern(),
+						"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH +
+						"$3$4");
+				}
 			}
 			else {
 				content =
@@ -214,8 +225,9 @@ public class MediaWikiImporter implements WikiImporter {
 
 			_wikiPageLocalService.updatePage(
 				authorUserId, node.getNodeId(), title, page.getVersion(),
-				content, summary, true, "creole", parentTitle, redirectTitle,
-				serviceContext);
+				content, summary, true,
+				_wikiGroupServiceConfiguration.defaultFormat(), parentTitle,
+				redirectTitle, serviceContext);
 		}
 		catch (Exception e) {
 			throw new PortalException("Error importing page " + title, e);
@@ -710,6 +722,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 	private static final Pattern _categoriesPattern = Pattern.compile(
 		"\\[\\[[Cc]ategory:([^\\]]*)\\]\\][\\n]*");
+	private static final Pattern _imagesPattern = Pattern.compile(
+		"(\\[\\[Image|File)(:)([^\\]]*)(\\]\\])", Pattern.DOTALL);
 	private static final Pattern _parentPattern = Pattern.compile(
 		"\\{{2}OtherTopics\\|([^\\}]*)\\}{2}");
 	private static final Pattern _redirectPattern = Pattern.compile(
