@@ -20,9 +20,11 @@ import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.base.PollsVoteServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsQuestionPermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,6 +41,12 @@ public class PollsVoteServiceImpl extends PollsVoteServiceBaseImpl {
 
 		try {
 			userId = getUserId();
+			
+			User user = UserLocalServiceUtil.getUser(userId);
+			
+			if (user.isDefaultUser()) {
+				throw new PrincipalException();
+			}
 		}
 		catch (PrincipalException pe) {
 			userId = counterLocalService.increment();
