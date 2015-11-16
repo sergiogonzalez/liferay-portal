@@ -100,6 +100,7 @@ public class AssetMetadataTag extends IncludeTag {
 			else {
 				WorkflowHandler workflowHandler =
 					WorkflowHandlerRegistryUtil.getWorkflowHandler(_className);
+
 				assetRenderer = workflowHandler.getAssetRenderer(_classPK);
 			}
 
