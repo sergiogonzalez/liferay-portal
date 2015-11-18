@@ -17,7 +17,7 @@
 <%@ include file="/card/horizontal_card/init.jsp" %>
 
 <div class="card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
-	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
+	<div class="card-row card-row-padded">
 		<c:if test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
 			<div class="card-col-field checkbox">
 				<c:choose>
