@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -90,8 +92,17 @@ public class AssetMetadataTag extends IncludeTag {
 				_className);
 
 		try {
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(_classPK);
+			AssetRenderer<?> assetRenderer = null;
+
+			if (assetEntry.isVisible()) {
+				assetRenderer = assetRendererFactory.getAssetRenderer(_classPK);
+			}
+			else {
+				WorkflowHandler workflowHandler =
+					WorkflowHandlerRegistryUtil.getWorkflowHandler(_className);
+
+				assetRenderer = workflowHandler.getAssetRenderer(_classPK);
+			}
 
 			request.setAttribute(
 				"liferay-ui:asset-metadata:assetRenderer", assetRenderer);
