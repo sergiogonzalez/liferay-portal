@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.portal.kernel.upload.RequestContentLengthException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -360,8 +361,13 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
+				if (uploadException.isExceededFileSizeLimit()) {
 					throw new FileSizeException(uploadException.getCause());
+				}
+
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(
+						uploadException.getCause());
 				}
 
 				throw new PortalException(uploadException.getCause());
@@ -555,6 +561,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof FileSizeException ||
 				 e instanceof LiferayFileItemException ||
 				 e instanceof NoSuchFolderException ||
+				 e instanceof RequestContentLengthException ||
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
@@ -579,7 +586,8 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof DuplicateFileEntryException ||
 				e instanceof FileExtensionException ||
 				e instanceof FileNameException ||
-				e instanceof FileSizeException) {
+				e instanceof FileSizeException ||
+				e instanceof RequestContentLengthException) {
 
 				HttpServletResponse response =
 					PortalUtil.getHttpServletResponse(actionResponse);
