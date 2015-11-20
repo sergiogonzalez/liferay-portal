@@ -287,29 +287,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (Exception e) {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				Throwable cause = uploadException.getCause();
-
-				if (cause instanceof FileUploadBase.IOFileUploadException) {
-					// Cancelled a temporary upload
-				}
-
-				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(cause);
-				}
-
-				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(cause);
-				}
-			}
-
-			throw e;
-		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
@@ -467,6 +444,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (uploadException != null) {
 				Throwable cause = uploadException.getCause();
+
+				if (Validator.isNotNull(cmd) &&
+						cmd.equals(cmd.equals(Constants.ADD_TEMP))) {
+
+					if (cause instanceof FileUploadBase.IOFileUploadException) {
+						// Cancelled a temporary upload
+					}
+				}
 
 				if (uploadException.isExceededFileSizeLimit()) {
 					throw new FileSizeException(cause);
@@ -1040,25 +1025,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			return fileEntry;
-		}
-		catch (Exception e) {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				Throwable cause = uploadException.getCause();
-
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(cause);
-				}
-
-				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(cause);
-				}
-			}
-
-			throw e;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
