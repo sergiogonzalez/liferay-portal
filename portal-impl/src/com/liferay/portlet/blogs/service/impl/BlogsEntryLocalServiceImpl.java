@@ -1619,7 +1619,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		File file = null;
 
 		try {
-			byte[] bytes = imageSelector.getCroppedImageBytes();
+			byte[] bytes = imageSelector.getImageBytes();
 
 			if (bytes == null) {
 				throw new EntryCoverImageCropException();
