@@ -329,6 +329,10 @@ public class CMISStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (repositoryId == newRepositoryId) {
+			return;
+		}
+
 		Folder oldVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 

@@ -651,6 +651,10 @@ public class JCRStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (repositoryId == newRepositoryId) {
+			return;
+		}
+
 		Session session = null;
 
 		try {

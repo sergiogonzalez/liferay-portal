@@ -297,6 +297,10 @@ public class S3Store extends BaseStore {
 			String fileName)
 		throws PortalException {
 
+		if (repositoryId == newRepositoryId) {
+			return;
+		}
+
 		String oldKey = _s3KeyTransformer.getFileKey(
 			companyId, repositoryId, fileName);
 		String newKey = _s3KeyTransformer.getFileKey(
