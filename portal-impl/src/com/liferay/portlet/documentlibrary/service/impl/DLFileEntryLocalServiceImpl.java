@@ -2543,6 +2543,10 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
+		if (dlFileEntry.getFolderId() == newFolderId) {
+			return dlFileEntry;
+		}
+
 		long oldDataRepositoryId = dlFileEntry.getDataRepositoryId();
 
 		validateFile(
