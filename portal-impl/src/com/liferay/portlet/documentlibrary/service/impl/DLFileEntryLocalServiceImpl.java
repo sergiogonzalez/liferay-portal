@@ -163,7 +163,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (Validator.isNull(title)) {
 			if (Validator.isNull(sourceFileName)) {
-				throw new FileNameException();
+				throw new FileNameException("Title is null");
 			}
 			else {
 				title = sourceFileName;
@@ -862,10 +862,13 @@ public class DLFileEntryLocalServiceImpl
 			long userId, long fileEntryId, String version)
 		throws PortalException {
 
-		if (Validator.isNull(version) ||
-			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+		if (Validator.isNull(version)) {
+			throw new InvalidFileVersionException("Version is null");
+		}
 
-			throw new InvalidFileVersionException();
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+			throw new InvalidFileVersionException(
+				"Unable to delete a private working copy file version");
 		}
 
 		if (!hasFileEntryLock(userId, fileEntryId)) {
@@ -1674,10 +1677,13 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isNull(version) ||
-			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+		if (Validator.isNull(version)) {
+			throw new InvalidFileVersionException("Version is null");
+		}
 
-			throw new InvalidFileVersionException();
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+			throw new InvalidFileVersionException(
+				"Unable to revert a private working copy file version");
 		}
 
 		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
@@ -1685,7 +1691,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!dlFileVersion.isApproved()) {
 			throw new InvalidFileVersionException(
-				"Cannot revert from an unapproved file version");
+				"Unable to revert from an unapproved file version");
 		}
 
 		DLFileVersion latestDLFileVersion =
@@ -1693,7 +1699,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (version.equals(latestDLFileVersion.getVersion())) {
 			throw new InvalidFileVersionException(
-				"Cannot revert from the latest file version");
+				"Unable to revert from the latest file version");
 		}
 
 		String sourceFileName = dlFileVersion.getTitle();
@@ -2537,6 +2543,10 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
+		if (dlFileEntry.getFolderId() == newFolderId) {
+			return dlFileEntry;
+		}
+
 		long oldDataRepositoryId = dlFileEntry.getDataRepositoryId();
 
 		validateFile(
@@ -2869,7 +2879,8 @@ public class DLFileEntryLocalServiceImpl
 				DLFileEntry.class.getName(), "extension");
 
 			if (extension.length() > maxLength) {
-				throw new FileExtensionException();
+				throw new FileExtensionException(
+					extension + " exceeds max length of " + maxLength);
 			}
 		}
 	}

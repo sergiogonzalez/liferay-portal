@@ -686,17 +686,6 @@ public abstract class BaseStoreTestCase {
 		store.deleteDirectory(companyId, newRepositoryId, StringPool.SLASH);
 	}
 
-	@Test(expected = DuplicateFileException.class)
-	public void testUpdateFileWithNewRepositoryIdDuplicateFileException()
-		throws Exception {
-
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
-
-		store.updateFile(companyId, repositoryId, repositoryId, fileName);
-	}
-
 	@Test(expected = NoSuchFileException.class)
 	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
 		throws Exception {
@@ -704,6 +693,20 @@ public abstract class BaseStoreTestCase {
 		store.updateFile(
 			companyId, repositoryId, RandomTestUtil.nextLong(),
 			RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testUpdateFileWithSameNewRepositoryId() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		store.updateFile(companyId, repositoryId, repositoryId, fileName);
+
+		Assert.assertTrue(store.hasFile(companyId, repositoryId, fileName));
+		Assert.assertArrayEquals(
+			_DATA_VERSION_1,
+			store.getFileAsBytes(companyId, repositoryId, fileName));
 	}
 
 	protected void addVersions(String fileName, int newVersionCount)

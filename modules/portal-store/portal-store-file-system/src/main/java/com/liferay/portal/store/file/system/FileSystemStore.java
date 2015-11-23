@@ -327,6 +327,10 @@ public class FileSystemStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (repositoryId == newRepositoryId) {
+			return;
+		}
+
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
 		if (!fileNameDir.exists()) {

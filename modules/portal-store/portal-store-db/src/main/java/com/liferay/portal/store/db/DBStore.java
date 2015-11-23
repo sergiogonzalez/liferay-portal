@@ -314,6 +314,10 @@ public class DBStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (repositoryId == newRepositoryId) {
+			return;
+		}
+
 		if (!hasFile(companyId, repositoryId, fileName)) {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}

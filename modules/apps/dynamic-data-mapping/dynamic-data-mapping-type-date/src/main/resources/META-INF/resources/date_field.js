@@ -1,9 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-field-date',
 	function(A) {
-		var Lang = A.Lang;
-
-		var isArray = Lang.isArray;
+		var isArray = Array.isArray;
 
 		var datePicker = new A.DatePicker(
 			{
@@ -43,7 +41,9 @@ AUI.add(
 							datePicker.on('activeInputChange', A.bind('_onActiveInputChange', instance))
 						);
 
-						instance.bindContainerEvent('click', instance._onClickCalendar, '.input-group-addon');
+						if (!instance.get('readOnly')) {
+							instance.bindContainerEvent('click', instance._onClickCalendar, '.input-group-addon');
+						}
 					},
 
 					formatDate: function(isoDate) {
@@ -72,13 +72,13 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						var isoDate = instance.getLocalizedValue(instance.get('value'));
+						var value = instance.getContextValue();
 
 						return A.merge(
 							DateField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								displayValue: instance.formatDate(isoDate),
-								value: isoDate
+								displayValue: instance.formatDate(value),
+								value: value
 							}
 						);
 					},
