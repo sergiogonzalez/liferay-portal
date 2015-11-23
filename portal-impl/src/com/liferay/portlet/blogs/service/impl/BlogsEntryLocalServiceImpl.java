@@ -291,7 +291,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String smallImageURL = null;
 
 		if (smallImageImageSelector != null) {
-			smallImage = !smallImageImageSelector.isRemoveSmallImage();
+			smallImage = !smallImageImageSelector.isRemoveImage();
 			smallImageFileEntryId = smallImageImageSelector.getImageId();
 			smallImageURL = smallImageImageSelector.getImageURL();
 		}
@@ -1305,7 +1305,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long deletePreviousSmallImageFileEntryId = 0;
 
 		if (smallImageImageSelector != null) {
-			smallImage = !smallImageImageSelector.isRemoveSmallImage();
+			smallImage = !smallImageImageSelector.isRemoveImage();
 			smallImageFileEntryId = smallImageImageSelector.getImageId();
 			smallImageURL = smallImageImageSelector.getImageURL();
 

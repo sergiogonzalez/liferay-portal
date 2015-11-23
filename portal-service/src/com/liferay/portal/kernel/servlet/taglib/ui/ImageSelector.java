@@ -128,7 +128,7 @@ public class ImageSelector {
 		return fileEntry.getTitle();
 	}
 
-	public boolean isRemoveSmallImage() {
+	public boolean isRemoveImage() {
 		if ((_imageId == 0) && Validator.isNull(_imageURL)) {
 			return true;
 		}
