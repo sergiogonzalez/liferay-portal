@@ -294,7 +294,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		ImageSelector coverImageImageSelector = new ImageSelector(
-			smallImageFileEntryId, entry.getCoverImageURL(), null);
+			entry.getCoverImageFileEntryId(), entry.getCoverImageURL(), null);
 
 		ImageSelector smallImageImageSelector = null;
 
