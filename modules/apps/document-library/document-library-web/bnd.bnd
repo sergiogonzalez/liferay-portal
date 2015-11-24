@@ -5,8 +5,7 @@ Export-Package:\
 	com.liferay.document.library.web.asset,\
 	com.liferay.document.library.web.lar,\
 	com.liferay.document.library.web.social,\
-	com.liferay.document.library.web.webdav,\
-	com.liferay.document.library.web.portlet.action
+	com.liferay.document.library.web.webdav
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
