@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 
@@ -29,21 +30,16 @@ import java.io.IOException;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class ImageSelector {
 
 	public ImageSelector(long imageId) {
-		_imageId = imageId;
-
-		_imageCropRegion = null;
-		_imageURL = null;
+		this(imageId, null, null);
 	}
 
 	public ImageSelector(long imageId, String imageCropRegion) {
-		_imageId = imageId;
-		_imageCropRegion = imageCropRegion;
-
-		_imageURL = null;
+		this(imageId, null, imageCropRegion);
 	}
 
 	public ImageSelector(
@@ -55,41 +51,47 @@ public class ImageSelector {
 	}
 
 	public ImageSelector(String imageURL, String imageCropRegion) {
-		_imageURL = imageURL;
-		_imageCropRegion = imageCropRegion;
-
-		_imageId = 0;
+		this(0, imageURL, imageCropRegion);
 	}
 
-	public byte[] getCroppedImageBytes() throws IOException, PortalException {
-		if (!isCroppedImage()) {
+	public byte[] getImageBytes() throws IOException, PortalException {
+		if (_imageId == 0) {
 			return null;
 		}
+
+		byte[] bytes = null;
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			_imageId);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_imageCropRegion);
+		if (Validator.isNotNull(_imageCropRegion)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				_imageCropRegion);
 
-		int height = jsonObject.getInt("height");
-		int width = jsonObject.getInt("width");
-		int x = jsonObject.getInt("x");
-		int y = jsonObject.getInt("y");
+			int height = jsonObject.getInt("height");
+			int width = jsonObject.getInt("width");
+			int x = jsonObject.getInt("x");
+			int y = jsonObject.getInt("y");
 
-		if ((x > 0) || (y > 0) || (width > 0) || (height > 0)) {
-			ImageBag imageBag = ImageToolUtil.read(
-				fileEntry.getContentStream());
+			if ((x > 0) || (y > 0) || (width > 0) || (height > 0)) {
+				ImageBag imageBag = ImageToolUtil.read(
+					fileEntry.getContentStream());
 
-			RenderedImage renderedImage = imageBag.getRenderedImage();
+				RenderedImage renderedImage = imageBag.getRenderedImage();
 
-			renderedImage = ImageToolUtil.crop(
-				renderedImage, height, width, x, y);
+				renderedImage = ImageToolUtil.crop(
+					renderedImage, height, width, x, y);
 
-			return ImageToolUtil.getBytes(renderedImage, imageBag.getType());
+				bytes = ImageToolUtil.getBytes(
+					renderedImage, imageBag.getType());
+			}
 		}
 
-		return null;
+		if (bytes == null) {
+			bytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
+		return bytes;
 	}
 
 	public String getImageCropRegion() {
@@ -126,15 +128,7 @@ public class ImageSelector {
 		return fileEntry.getTitle();
 	}
 
-	public boolean isCroppedImage() {
-		if ((_imageId == 0) || Validator.isNull(_imageCropRegion)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isRemoveSmallImage() {
+	public boolean isRemoveImage() {
 		if ((_imageId == 0) && Validator.isNull(_imageURL)) {
 			return true;
 		}
