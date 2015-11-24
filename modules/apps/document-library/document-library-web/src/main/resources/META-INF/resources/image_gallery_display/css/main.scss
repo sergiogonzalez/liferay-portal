@@ -9,6 +9,11 @@
 		margin: 0 auto;
 		max-height: 100%;
 		max-width: 100%;
+		z-index: 0;
+
+		.image-viewer-base-current-image {
+			z-index: 0;
+		}
 	}
 
 	.folder-search {
