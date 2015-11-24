@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.portal.kernel.upload.RequestContentLengthException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -273,27 +276,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (Exception e) {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if ((uploadException != null) &&
-				(uploadException.getCause() instanceof
-					FileUploadBase.IOFileUploadException)) {
-
-				// Cancelled a temporary upload
-
-			}
-			else if ((uploadException != null) &&
-					 uploadException.isExceededSizeLimit()) {
-
-				throw new FileSizeException(uploadException.getCause());
-			}
-			else {
-				throw e;
-			}
-		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
@@ -450,15 +432,31 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(
-						uploadException.getCause());
-				}
-				else if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
+				Throwable cause = uploadException.getCause();
+
+				if (Validator.isNotNull(cmd) &&
+					cmd.equals(cmd.equals(Constants.ADD_TEMP))) {
+
+					if (cause instanceof FileUploadBase.IOFileUploadException) {
+						if (_log.isErrorEnabled()) {
+							_log.error("Temporary upload was cancelled");
+						}
+					}
 				}
 
-				throw new PortalException(uploadException.getCause());
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(cause);
+				}
+
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException(cause);
+				}
+
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
+				}
+
+				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.ADD_DYNAMIC) ||
@@ -735,6 +733,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof FileSizeException ||
 				 e instanceof LiferayFileItemException ||
 				 e instanceof NoSuchFolderException ||
+				 e instanceof RequestContentLengthException ||
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
@@ -759,7 +758,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof DuplicateFileEntryException ||
 				e instanceof FileExtensionException ||
 				e instanceof FileNameException ||
-				e instanceof FileSizeException) {
+				e instanceof FileSizeException ||
+				e instanceof RequestContentLengthException) {
 
 				HttpServletResponse response =
 					PortalUtil.getHttpServletResponse(actionResponse);
@@ -1017,27 +1017,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			return fileEntry;
 		}
-		catch (Exception e) {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(
-						uploadException.getCause());
-				}
-				else if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
-				}
-			}
-
-			throw e;
-		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditFileEntryMVCActionCommand.class);
 
 	private volatile DLAppService _dlAppService;
 	private volatile TrashEntryService _trashEntryService;

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.portal.kernel.upload.RequestContentLengthException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -165,14 +166,21 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException();
-				}
-				else if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
+				Throwable cause = uploadException.getCause();
+
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(cause);
 				}
 
-				throw new PortalException(uploadException.getCause());
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException(cause);
+				}
+
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
+				}
+
+				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
@@ -333,7 +341,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   EntryDescriptionException | EntryDisplayDateException |
 			   EntrySmallImageNameException | EntrySmallImageScaleException |
 			   EntryTitleException | FileSizeException |
-			   LiferayFileItemException | SanitizerException e) {
+			   LiferayFileItemException | RequestContentLengthException |
+			   SanitizerException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 

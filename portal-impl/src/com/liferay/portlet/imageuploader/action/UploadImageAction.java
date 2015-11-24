@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.upload.RequestContentLengthException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -97,11 +98,17 @@ public class UploadImageAction extends PortletAction {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
+				Throwable cause = uploadException.getCause();
+
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(cause);
 				}
 
-				throw new PortalException(uploadException.getCause());
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
+				}
+
+				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
 				FileEntry tempImageFileEntry = addTempImageFileEntry(
@@ -259,6 +266,7 @@ public class UploadImageAction extends PortletAction {
 				 e instanceof FileSizeException ||
 				 e instanceof ImageTypeException ||
 				 e instanceof NoSuchFileException ||
+				 e instanceof RequestContentLengthException ||
 				 e instanceof UploadException) {
 
 			if (cmd.equals(Constants.ADD_TEMP)) {
