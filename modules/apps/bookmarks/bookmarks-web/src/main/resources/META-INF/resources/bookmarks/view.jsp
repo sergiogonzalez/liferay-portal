@@ -17,7 +17,7 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "home");
+String navigation = ParamUtil.getString(request, "navigation", "home");
 
 BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER);
 
@@ -49,7 +49,7 @@ boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetT
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-portletURL.setParameter("topLink", topLink);
+portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-folder", folder);
@@ -73,9 +73,9 @@ if (folder != null) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/bookmarks/navigation.jsp" servletContext="<%= application %>" />
 
+<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<c:choose>
 		<c:when test="<%= useAssetEntryQuery %>">
 			<liferay-ui:categorization-filter
@@ -86,7 +86,7 @@ if (folder != null) {
 			<%@ include file="/bookmarks/view_entries.jspf" %>
 
 		</c:when>
-		<c:when test='<%= topLink.equals("home") %>'>
+		<c:when test='<%= navigation.equals("home") %>'>
 			<c:if test="<%= folder != null %>">
 				<liferay-ui:header
 					localizeTitle="<%= false %>"
@@ -201,15 +201,15 @@ if (folder != null) {
 			%>
 
 		</c:when>
-		<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
+		<c:when test='<%= navigation.equals("mine") || navigation.equals("recent") %>'>
 			<liferay-ui:header
-				title="<%= topLink %>"
+				title="<%= navigation %>"
 			/>
 
 			<%
 			long groupEntriesUserId = 0;
 
-			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
+			if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
 				groupEntriesUserId = user.getUserId();
 			}
 			%>
@@ -254,10 +254,10 @@ if (folder != null) {
 
 			<%
 			if (!layout.isTypeControlPanel()) {
-				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, topLink), currentURL);
+				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, navigation), currentURL);
 			}
 
-			PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
+			PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(navigation, StringPool.UNDERLINE, StringPool.DASH)), request);
 			%>
 
 		</c:when>

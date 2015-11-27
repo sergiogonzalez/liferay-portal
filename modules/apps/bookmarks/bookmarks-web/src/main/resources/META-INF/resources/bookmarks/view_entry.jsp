@@ -35,8 +35,6 @@ BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 %>
 
 <div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
-
 	<c:choose>
 		<c:when test="<%= Validator.isNull(redirect) %>">
 			<portlet:renderURL var="backURL">
