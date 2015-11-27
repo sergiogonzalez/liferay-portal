@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.UserConstants;
@@ -329,13 +328,6 @@ public class DLAppHelperLocalServiceImpl
 		return null;
 	}
 
-	@Override
-	public void moveDependentsToTrash(DLFolder dlFolder)
-		throws PortalException {
-
-		trashOrRestoreFolder(dlFolder, true);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #moveDependentsToTrash(DLFolder)}
@@ -472,38 +464,6 @@ public class DLAppHelperLocalServiceImpl
 		try {
 			return doMoveFolderFromTrash(
 				userId, folder, parentFolderId, serviceContext);
-		}
-		finally {
-			if (!hasLock) {
-				dlFolderLocalService.unlockFolder(
-					folder.getFolderId(), lock.getUuid());
-			}
-		}
-	}
-
-	/**
-	 * Moves the folder to the recycle bin.
-	 *
-	 * @param  userId the primary key of the user moving the folder
-	 * @param  folder the folder to be moved
-	 * @return the moved folder
-	 */
-	@Override
-	public Folder moveFolderToTrash(long userId, Folder folder)
-		throws PortalException {
-
-		boolean hasLock = dlFolderLocalService.hasFolderLock(
-			userId, folder.getFolderId());
-
-		Lock lock = null;
-
-		if (!hasLock) {
-			lock = dlFolderLocalService.lockFolder(
-				userId, folder.getFolderId());
-		}
-
-		try {
-			return doMoveFolderToTrash(userId, folder);
 		}
 		finally {
 			if (!hasLock) {
@@ -1255,57 +1215,6 @@ public class DLAppHelperLocalServiceImpl
 
 		return dlAppLocalService.moveFolder(
 			userId, folder.getFolderId(), parentFolderId, serviceContext);
-	}
-
-	protected Folder doMoveFolderToTrash(long userId, Folder folder)
-		throws PortalException {
-
-		// Folder
-
-		DLFolder dlFolder = dlFolderLocalService.updateStatus(
-			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
-
-		// File rank
-
-		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
-
-		// Trash
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("title", dlFolder.getName());
-
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
-			userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
-			dlFolder.getFolderId(), dlFolder.getUuid(), null,
-			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
-
-		dlFolder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
-
-		dlFolderPersistence.update(dlFolder);
-
-		// Folders, file entries, and file shortcuts
-
-		moveDependentsToTrash(dlFolder);
-
-		// Sync
-
-		triggerRepositoryEvent(
-			folder.getRepositoryId(),
-			TrashRepositoryEventType.EntryTrashed.class, Folder.class, folder);
-
-		// Social
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", folder.getName());
-
-		SocialActivityManagerUtil.addActivity(
-			userId, folder, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			extraDataJSONObject.toString(), 0);
-
-		return new LiferayFolder(dlFolder);
 	}
 
 	protected long getFileEntryTypeId(FileEntry fileEntry) {
