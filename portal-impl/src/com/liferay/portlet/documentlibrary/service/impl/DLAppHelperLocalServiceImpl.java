@@ -453,50 +453,6 @@ public class DLAppHelperLocalServiceImpl
 			fileShortcut.getToFileEntryId(), serviceContext);
 	}
 
-	/**
-	 * Moves the file shortcut to the recycle bin.
-	 *
-	 * @param  userId the primary key of the user moving the file shortcut
-	 * @param  fileShortcut the file shortcut to be moved
-	 * @return the moved file shortcut
-	 */
-	@Override
-	public FileShortcut moveFileShortcutToTrash(
-			long userId, FileShortcut fileShortcut)
-		throws PortalException {
-
-		// File shortcut
-
-		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
-
-		int oldStatus = dlFileShortcut.getStatus();
-
-		dlFileShortcutLocalService.updateStatus(
-			userId, fileShortcut.getFileShortcutId(),
-			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
-
-		// Social
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
-			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
-
-		SocialActivityManagerUtil.addActivity(
-			userId, fileShortcut, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			extraDataJSONObject.toString(), 0);
-
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, fileShortcut.getGroupId(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), null,
-			oldStatus, null, null);
-
-		return fileShortcut;
-	}
-
 	@Override
 	public Folder moveFolderFromTrash(
 			long userId, Folder folder, long parentFolderId,

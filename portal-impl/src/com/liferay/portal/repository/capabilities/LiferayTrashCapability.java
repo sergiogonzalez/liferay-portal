@@ -49,6 +49,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -203,8 +205,36 @@ public class LiferayTrashCapability
 			long userId, FileShortcut fileShortcut)
 		throws PortalException {
 
-		return _dlAppHelperLocalService.moveFileShortcutToTrash(
-			userId, fileShortcut);
+		// File shortcut
+
+		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
+
+		int oldStatus = dlFileShortcut.getStatus();
+
+		dlFileShortcutLocalService.updateStatus(
+			userId, fileShortcut.getFileShortcutId(),
+			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
+
+		// Social
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put(
+			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
+
+		SocialActivityManagerUtil.addActivity(
+			userId, fileShortcut, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			extraDataJSONObject.toString(), 0);
+
+		// Trash
+
+		trashEntryLocalService.addTrashEntry(
+			userId, fileShortcut.getGroupId(),
+			DLFileShortcutConstants.getClassName(),
+			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), null,
+			oldStatus, null, null);
+
+		return fileShortcut;
 	}
 
 	@Override
