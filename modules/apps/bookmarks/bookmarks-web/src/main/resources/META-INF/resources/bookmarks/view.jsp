@@ -104,104 +104,80 @@ if (folder != null) {
 					/>
 				</c:if>
 
-				<aui:row>
-					<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
-						<liferay-ui:panel-container extended="<%= false %>" id="bookmarksInfoPanelContainer" persistState="<%= true %>">
-							<c:if test="<%= folder != null %>">
-								<div class="lfr-asset-description">
-									<%= HtmlUtil.escape(folder.getDescription()) %>
-								</div>
+				<liferay-ui:panel-container extended="<%= false %>" id="bookmarksInfoPanelContainer" persistState="<%= true %>">
+					<c:if test="<%= folder != null %>">
+						<div class="lfr-asset-description">
+							<%= HtmlUtil.escape(folder.getDescription()) %>
+						</div>
 
-								<div class="lfr-asset-metadata">
-									<div class="icon-calendar lfr-asset-icon">
-										<liferay-ui:message arguments="<%= dateFormatDate.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
-									</div>
+						<div class="lfr-asset-metadata">
+							<div class="icon-calendar lfr-asset-icon">
+								<liferay-ui:message arguments="<%= dateFormatDate.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
+							</div>
 
-									<%
-									AssetRendererFactory<BookmarksEntry> bookmarksEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksEntry.class);
+							<%
+							AssetRendererFactory<BookmarksEntry> bookmarksEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksEntry.class);
 
-									AssetRendererFactory<BookmarksFolder> bookmarksFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
-									%>
+							AssetRendererFactory<BookmarksFolder> bookmarksFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
+							%>
 
-									<div class="<%= bookmarksFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
-										<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
-									</div>
+							<div class="<%= bookmarksFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
+								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+							</div>
 
-									<div class="<%= bookmarksEntryAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
-										<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "entry" : "entries" %>' />
-									</div>
-								</div>
-
-								<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
-									<liferay-ui:custom-attribute-list
-										className="<%= BookmarksFolder.class.getName() %>"
-										classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-										editable="<%= false %>"
-										label="<%= true %>"
-									/>
-								</liferay-ui:custom-attributes-available>
-							</c:if>
-
-							<c:if test="<%= foldersCount > 0 %>">
-								<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksEntriesFoldersListingPanel" persistState="<%= true %>" title='<%= (folder != null) ? "subfolders" : "folders" %>'>
-									<liferay-ui:search-container
-										curParam="cur1"
-										delta="<%= GetterUtil.getInteger(bookmarksGroupServiceOverriddenConfiguration.foldersPerPage()) %>"
-										deltaConfigurable="<%= false %>"
-										headerNames="<%= StringUtil.merge(folderColumns) %>"
-										iteratorURL="<%= portletURL %>"
-										total="<%= BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>"
-									>
-										<liferay-ui:search-container-results
-											results="<%= BookmarksFolderServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-										/>
-
-										<liferay-ui:search-container-row
-											className="com.liferay.bookmarks.model.BookmarksFolder"
-											escapedModel="<%= true %>"
-											keyProperty="folderId"
-											modelVar="curFolder"
-										>
-											<liferay-portlet:renderURL varImpl="rowURL">
-												<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
-												<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-												<portlet:param name="redirect" value="<%= currentURL %>" />
-											</liferay-portlet:renderURL>
-
-											<%@ include file="/bookmarks/folder_columns.jspf" %>
-										</liferay-ui:search-container-row>
-
-										<liferay-ui:search-iterator />
-									</liferay-ui:search-container>
-								</liferay-ui:panel>
-							</c:if>
-
-							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksEntriesListingPanel" persistState="<%= true %>" title="bookmarks">
-								<%@ include file="/bookmarks/view_entries.jspf" %>
-							</liferay-ui:panel>
-						</liferay-ui:panel-container>
-					</aui:col>
-
-					<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
-						<div class="lfr-asset-summary">
-							<liferay-ui:icon
-								cssClass="lfr-asset-avatar"
-								image='<%= "../file_system/large/" + (((foldersCount + entriesCount) > 0) ? "folder_full_bookmark" : "folder_empty_bookmark") %>'
-								message='<%= (folder != null) ? HtmlUtil.escapeAttribute(folder.getName()) : "home" %>'
-							/>
-
-							<div class="lfr-asset-name">
-								<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
+							<div class="<%= bookmarksEntryAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
+								<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "entry" : "entries" %>' />
 							</div>
 						</div>
 
-						<%
-						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-						%>
+						<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
+							<liferay-ui:custom-attribute-list
+								className="<%= BookmarksFolder.class.getName() %>"
+								classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+								editable="<%= false %>"
+								label="<%= true %>"
+							/>
+						</liferay-ui:custom-attributes-available>
+					</c:if>
 
-						<liferay-util:include page="/bookmarks/folder_action.jsp" servletContext="<%= application %>" />
-					</aui:col>
-				</aui:row>
+					<c:if test="<%= foldersCount > 0 %>">
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksEntriesFoldersListingPanel" persistState="<%= true %>" title='<%= (folder != null) ? "subfolders" : "folders" %>'>
+							<liferay-ui:search-container
+								curParam="cur1"
+								delta="<%= GetterUtil.getInteger(bookmarksGroupServiceOverriddenConfiguration.foldersPerPage()) %>"
+								deltaConfigurable="<%= false %>"
+								headerNames="<%= StringUtil.merge(folderColumns) %>"
+								iteratorURL="<%= portletURL %>"
+								total="<%= BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>"
+							>
+								<liferay-ui:search-container-results
+									results="<%= BookmarksFolderServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+								/>
+
+								<liferay-ui:search-container-row
+									className="com.liferay.bookmarks.model.BookmarksFolder"
+									escapedModel="<%= true %>"
+									keyProperty="folderId"
+									modelVar="curFolder"
+								>
+									<liferay-portlet:renderURL varImpl="rowURL">
+										<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+										<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+										<portlet:param name="redirect" value="<%= currentURL %>" />
+									</liferay-portlet:renderURL>
+
+									<%@ include file="/bookmarks/folder_columns.jspf" %>
+								</liferay-ui:search-container-row>
+
+								<liferay-ui:search-iterator />
+							</liferay-ui:search-container>
+						</liferay-ui:panel>
+					</c:if>
+
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksEntriesListingPanel" persistState="<%= true %>" title="bookmarks">
+						<%@ include file="/bookmarks/view_entries.jspf" %>
+					</liferay-ui:panel>
+				</liferay-ui:panel-container>
 
 				<%
 				if (!defaultFolderView && (folder != null) && (portletName.equals(BookmarksPortletKeys.BOOKMARKS) || portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN))) {
