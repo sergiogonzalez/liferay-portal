@@ -16,6 +16,7 @@ package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -27,6 +28,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryUtil;
 
 import java.io.Serializable;
 
@@ -43,26 +46,42 @@ public class DLFileEntryServiceAdapter {
 
 		if (documentRepository instanceof LocalRepository) {
 			return new DLFileEntryServiceAdapter(
-				DLFileEntryLocalServiceUtil.getService());
+				DLFileEntryLocalServiceUtil.getService(),
+				DLFileEntryUtil.getPersistence());
 		}
 
 		return new DLFileEntryServiceAdapter(
 			DLFileEntryLocalServiceUtil.getService(),
-			DLFileEntryServiceUtil.getService());
-	}
-
-	public DLFileEntryServiceAdapter(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		this(dlFileEntryLocalService, null);
+			DLFileEntryServiceUtil.getService(),
+			DLFileEntryUtil.getPersistence());
 	}
 
 	public DLFileEntryServiceAdapter(
 		DLFileEntryLocalService dlFileEntryLocalService,
-		DLFileEntryService dlFileEntryService) {
+		DLFileEntryPersistence dlFileEntryPersistence) {
+
+		this(dlFileEntryLocalService, null, DLFileEntryUtil.getPersistence());
+	}
+
+	public DLFileEntryServiceAdapter(
+		DLFileEntryLocalService dlFileEntryLocalService,
+		DLFileEntryService dlFileEntryService,
+		DLFileEntryPersistence dlFileEntryPersistence) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlFileEntryService = dlFileEntryService;
+		_dlFileEntryPersistence = dlFileEntryPersistence;
+	}
+
+	public void cancelCheckOut(long userId, long fileEntryId)
+		throws PortalException {
+
+		if (_dlFileEntryService != null) {
+			_dlFileEntryService.cancelCheckOut(fileEntryId);
+		}
+		else {
+			_dlFileEntryLocalService.cancelCheckOut(userId, fileEntryId);
+		}
 	}
 
 	public DLFileEntry fetchDLFileEntryByImageId(long imageId)
@@ -124,6 +143,12 @@ public class DLFileEntryServiceAdapter {
 		return dlFileEntries;
 	}
 
+	public boolean hasFileEntryLock(long userId, long fileEntryId)
+		throws PortalException {
+
+		return _dlFileEntryLocalService.hasFileEntryLock(userId, fileEntryId);
+	}
+
 	public boolean isKeepFileVersionLabel(
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
@@ -136,6 +161,20 @@ public class DLFileEntryServiceAdapter {
 			return _dlFileEntryLocalService.isKeepFileVersionLabel(
 				fileEntryId, serviceContext);
 		}
+	}
+
+	public Lock lockFileEntry(long userId, long fileEntryId)
+		throws PortalException {
+
+		return _dlFileEntryLocalService.lockFileEntry(userId, fileEntryId);
+	}
+
+	public void unlockFileEntry(long fileEntryId) {
+		_dlFileEntryLocalService.unlockFileEntry(fileEntryId);
+	}
+
+	public DLFileEntry update(DLFileEntry dlFileEntry) {
+		return _dlFileEntryPersistence.update(dlFileEntry);
 	}
 
 	public DLFileEntry updateStatus(
@@ -159,6 +198,7 @@ public class DLFileEntryServiceAdapter {
 	}
 
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private final DLFileEntryPersistence _dlFileEntryPersistence;
 	private final DLFileEntryService _dlFileEntryService;
 
 }
