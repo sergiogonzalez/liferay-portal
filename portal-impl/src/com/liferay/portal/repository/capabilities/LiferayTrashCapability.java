@@ -158,17 +158,17 @@ public class LiferayTrashCapability
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		boolean hasLock = dlFileEntryLocalService.hasFileEntryLock(
+		boolean hasLock = _dlFileEntryServiceAdapter.hasFileEntryLock(
 			userId, fileEntry.getFileEntryId());
 
 		if (!hasLock) {
-			dlFileEntryLocalService.lockFileEntry(
+			_dlFileEntryServiceAdapter.lockFileEntry(
 				userId, fileEntry.getFileEntryId());
 		}
 
 		try {
 			if (fileEntry.isCheckedOut()) {
-				dlFileEntryLocalService.cancelCheckOut(
+				_dlFileEntryServiceAdapter.cancelCheckOut(
 					userId, fileEntry.getFileEntryId());
 			}
 
@@ -176,7 +176,7 @@ public class LiferayTrashCapability
 		}
 		finally {
 			if (!hasLock) {
-				dlFileEntryLocalService.unlockFileEntry(
+				_dlFileEntryServiceAdapter.unlockFileEntry(
 					fileEntry.getFileEntryId());
 			}
 		}
@@ -376,7 +376,7 @@ public class LiferayTrashCapability
 		// File versions
 
 		List<DLFileVersion> dlFileVersions =
-			dlFileVersionLocalService.getFileVersions(
+			_dlFileVersionServiceAdapter.getFileVersions(
 				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
 
 		dlFileVersions = ListUtil.sort(
@@ -393,7 +393,7 @@ public class LiferayTrashCapability
 
 		int oldStatus = fileVersion.getStatus();
 
-		dlFileEntryLocalService.updateStatus(
+		_dlFileEntryServiceAdapter.updateStatus(
 			userId, fileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext(),
 			new HashMap<String, Serializable>());
@@ -402,12 +402,13 @@ public class LiferayTrashCapability
 
 			// File shortcut
 
-			dlFileShortcutLocalService.disableFileShortcuts(
+			_dlFileShortcutLocalService.disableFileShortcuts(
 				fileEntry.getFileEntryId());
 
 			// File rank
 
-			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
+			_dlFileRankLocalService.disableFileRanks(
+				fileEntry.getFileEntryId());
 
 			// Sync
 
@@ -426,7 +427,7 @@ public class LiferayTrashCapability
 		for (DLFileVersion curDLFileVersion : dlFileVersions) {
 			curDLFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-			dlFileVersionPersistence.update(curDLFileVersion);
+			_dlFileVersionServiceAdapter.update(curDLFileVersion);
 		}
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -436,7 +437,7 @@ public class LiferayTrashCapability
 		typeSettingsProperties.put("fileName", dlFileEntry.getFileName());
 		typeSettingsProperties.put("title", dlFileEntry.getTitle());
 
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, dlFileEntry.getGroupId(),
 			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId(),
 			dlFileEntry.getUuid(), dlFileEntry.getClassName(),
@@ -448,7 +449,7 @@ public class LiferayTrashCapability
 		dlFileEntry.setFileName(trashTitle);
 		dlFileEntry.setTitle(trashTitle);
 
-		dlFileEntryPersistence.update(dlFileEntry);
+		_dlFileEntryServiceAdapter.update(dlFileEntry);
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return fileEntry;
@@ -468,7 +469,7 @@ public class LiferayTrashCapability
 		// Workflow
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 				fileVersion.getCompanyId(), fileVersion.getGroupId(),
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId());
