@@ -211,7 +211,7 @@ public class LiferayTrashCapability
 
 		int oldStatus = dlFileShortcut.getStatus();
 
-		dlFileShortcutLocalService.updateStatus(
+		_dlFileShortcutLocalService.updateStatus(
 			userId, fileShortcut.getFileShortcutId(),
 			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
 
@@ -228,7 +228,7 @@ public class LiferayTrashCapability
 
 		// Trash
 
-		trashEntryLocalService.addTrashEntry(
+		_trashEntryLocalService.addTrashEntry(
 			userId, fileShortcut.getGroupId(),
 			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), null,
