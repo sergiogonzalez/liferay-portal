@@ -263,3 +263,7 @@ if (folder != null) {
 		</c:when>
 	</c:choose>
 </div>
+
+<c:if test="<%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) %>">
+	<liferay-util:include page="/bookmarks/add_button.jsp" servletContext="<%= application %>" />
+</c:if>
