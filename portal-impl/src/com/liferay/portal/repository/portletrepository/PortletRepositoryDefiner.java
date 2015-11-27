@@ -29,11 +29,15 @@ import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
 import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
@@ -70,11 +74,14 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 		TrashCapability trashCapability = new LiferayTrashCapability(
 			DLAppHelperLocalServiceUtil.getService(),
 			DLAppServiceAdapter.create(documentRepository),
-			dlFileEntryServiceAdapter,
+			dlFileEntryServiceAdapter, DLFileRankLocalServiceUtil.getService(),
+			DLFileShortcutLocalServiceUtil.getService(),
+			DLFileVersionServiceAdapter.create(documentRepository),
 			DLFolderServiceAdapter.create(documentRepository),
 			RepositoryServiceAdapter.create(documentRepository),
 			TrashEntryLocalServiceUtil.getService(),
-			TrashVersionLocalServiceUtil.getService());
+			TrashVersionLocalServiceUtil.getService(),
+			WorkflowInstanceLinkLocalServiceUtil.getService());
 
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, trashCapability);

@@ -30,16 +30,20 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileRankLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
 import com.liferay.portlet.trash.service.TrashVersionLocalService;
@@ -56,18 +60,26 @@ public class LiferayTrashCapability
 		DLAppHelperLocalService dlAppHelperLocalService,
 		DLAppServiceAdapter dlAppServiceAdapter,
 		DLFileEntryServiceAdapter dlFileEntryServiceAdapter,
+		DLFileRankLocalService dlFileRankLocalService,
+		DLFileShortcutLocalService dlFileShortcutLocalService,
+		DLFileVersionServiceAdapter dlFileVersionServiceAdapter,
 		DLFolderServiceAdapter dlFolderServiceAdapter,
 		RepositoryServiceAdapter repositoryServiceAdapter,
 		TrashEntryLocalService trashEntryLocalService,
-		TrashVersionLocalService trashVersionLocalService) {
+		TrashVersionLocalService trashVersionLocalService,
+		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
 
 		_dlAppHelperLocalService = dlAppHelperLocalService;
 		_dlAppServiceAdapter = dlAppServiceAdapter;
 		_dlFileEntryServiceAdapter = dlFileEntryServiceAdapter;
+		_dlFileRankLocalService = dlFileRankLocalService;
+		_dlFileShortcutLocalService = dlFileShortcutLocalService;
+		_dlFileVersionServiceAdapter = dlFileVersionServiceAdapter;
 		_dlFolderServiceAdapter = dlFolderServiceAdapter;
 		_repositoryServiceAdapter = repositoryServiceAdapter;
 		_trashEntryLocalService = trashEntryLocalService;
 		_trashVersionLocalService = trashVersionLocalService;
+		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 	}
 
 	@Override
@@ -321,10 +333,15 @@ public class LiferayTrashCapability
 	private final DLAppHelperLocalService _dlAppHelperLocalService;
 	private final DLAppServiceAdapter _dlAppServiceAdapter;
 	private final DLFileEntryServiceAdapter _dlFileEntryServiceAdapter;
+	private final DLFileRankLocalService _dlFileRankLocalService;
+	private final DLFileShortcutLocalService _dlFileShortcutLocalService;
+	private final DLFileVersionServiceAdapter _dlFileVersionServiceAdapter;
 	private final DLFolderServiceAdapter _dlFolderServiceAdapter;
 	private final RepositoryServiceAdapter _repositoryServiceAdapter;
 	private final TrashEntryLocalService _trashEntryLocalService;
 	private final TrashVersionLocalService _trashVersionLocalService;
+	private final WorkflowInstanceLinkLocalService
+		_workflowInstanceLinkLocalService;
 
 	private class DeleteFileEntryRepositoryEventListener
 		implements RepositoryEventListener
