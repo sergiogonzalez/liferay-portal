@@ -17,15 +17,26 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
@@ -44,10 +55,18 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileRankLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService;
+import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
 import com.liferay.portlet.trash.service.TrashVersionLocalService;
+import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -139,7 +158,28 @@ public class LiferayTrashCapability
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		return _dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
+		boolean hasLock = dlFileEntryLocalService.hasFileEntryLock(
+			userId, fileEntry.getFileEntryId());
+
+		if (!hasLock) {
+			dlFileEntryLocalService.lockFileEntry(
+				userId, fileEntry.getFileEntryId());
+		}
+
+		try {
+			if (fileEntry.isCheckedOut()) {
+				dlFileEntryLocalService.cancelCheckOut(
+					userId, fileEntry.getFileEntryId());
+			}
+
+			return doMoveFileEntryToTrash(userId, fileEntry);
+		}
+		finally {
+			if (!hasLock) {
+				dlFileEntryLocalService.unlockFileEntry(
+					fileEntry.getFileEntryId());
+			}
+		}
 	}
 
 	@Override
@@ -328,6 +368,156 @@ public class LiferayTrashCapability
 
 	protected void deleteTrashEntry(Folder folder) {
 		deleteTrashEntry((DLFolder)folder.getModel());
+	}
+
+	protected FileEntry doMoveFileEntryToTrash(long userId, FileEntry fileEntry)
+		throws PortalException {
+
+		// File versions
+
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionLocalService.getFileVersions(
+				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
+
+		dlFileVersions = ListUtil.sort(
+			dlFileVersions, new DLFileVersionVersionComparator());
+
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
+			new ArrayList<>();
+
+		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
+			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
+		}
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		int oldStatus = fileVersion.getStatus();
+
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext(),
+			new HashMap<String, Serializable>());
+
+		if (DLAppHelperThreadLocal.isEnabled()) {
+
+			// File shortcut
+
+			dlFileShortcutLocalService.disableFileShortcuts(
+				fileEntry.getFileEntryId());
+
+			// File rank
+
+			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
+
+			// Sync
+
+			triggerRepositoryEvent(
+				fileEntry.getRepositoryId(),
+				TrashRepositoryEventType.EntryTrashed.class, FileEntry.class,
+				fileEntry);
+		}
+
+		// Trash
+
+		DLFileVersion oldDLFileVersion = (DLFileVersion)fileVersion.getModel();
+
+		int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
+
+		for (DLFileVersion curDLFileVersion : dlFileVersions) {
+			curDLFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+			dlFileVersionPersistence.update(curDLFileVersion);
+		}
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("fileName", dlFileEntry.getFileName());
+		typeSettingsProperties.put("title", dlFileEntry.getTitle());
+
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, dlFileEntry.getGroupId(),
+			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId(),
+			dlFileEntry.getUuid(), dlFileEntry.getClassName(),
+			oldDLFileVersionStatus, dlFileVersionStatusOVPs,
+			typeSettingsProperties);
+
+		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
+
+		dlFileEntry.setFileName(trashTitle);
+		dlFileEntry.setTitle(trashTitle);
+
+		dlFileEntryPersistence.update(dlFileEntry);
+
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return fileEntry;
+		}
+
+		// Social
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put(
+			"title", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
+
+		SocialActivityManagerUtil.addActivity(
+			userId, fileEntry, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			extraDataJSONObject.toString(), 0);
+
+		// Workflow
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+				fileVersion.getCompanyId(), fileVersion.getGroupId(),
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+		}
+
+		return fileEntry;
+	}
+
+	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(
+		List<DLFileVersion> dlFileVersions) {
+
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
+			new ArrayList<>(dlFileVersions.size());
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			int status = dlFileVersion.getStatus();
+
+			if (status == WorkflowConstants.STATUS_PENDING) {
+				status = WorkflowConstants.STATUS_DRAFT;
+			}
+
+			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
+				new ObjectValuePair<>(dlFileVersion.getFileVersionId(), status);
+
+			dlFileVersionStatusOVPs.add(dlFileVersionStatusOVP);
+		}
+
+		return dlFileVersionStatusOVPs;
+	}
+
+	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(
+			long repositoryId,
+			Class<? extends RepositoryEventType> repositoryEventType,
+			Class<T> modelClass, T target)
+		throws PortalException {
+
+		com.liferay.portal.kernel.repository.Repository repository =
+			RepositoryProviderUtil.getRepository(repositoryId);
+
+		if (repository.isCapabilityProvided(
+				RepositoryEventTriggerCapability.class)) {
+
+			RepositoryEventTriggerCapability repositoryEventTriggerCapability =
+				repository.getCapability(
+					RepositoryEventTriggerCapability.class);
+
+			repositoryEventTriggerCapability.trigger(
+				repositoryEventType, modelClass, target);
+		}
 	}
 
 	private final DLAppHelperLocalService _dlAppHelperLocalService;
