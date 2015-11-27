@@ -137,31 +137,6 @@ if (row == null) {
 		</c:choose>
 	</c:if>
 
-	<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
-		<portlet:renderURL var="addFolderURL">
-			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon cssClass="<%= listGroupItemCssClass %>" iconCssClass="icon-plus" message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>' url="<%= addFolderURL %>" />
-	</c:if>
-
-	<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ENTRY) %>">
-		<portlet:renderURL var="editEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			cssClass="<%= listGroupItemCssClass %>"
-			iconCssClass="icon-plus"
-			message="add-bookmark"
-			url="<%= editEntryURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= (folder != null) && BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
