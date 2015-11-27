@@ -49,10 +49,6 @@ else {
 %>
 
 <div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-		<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
-	</c:if>
-
 	<portlet:actionURL name="/bookmarks/edit_folder" var="editFolderURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 	</portlet:actionURL>

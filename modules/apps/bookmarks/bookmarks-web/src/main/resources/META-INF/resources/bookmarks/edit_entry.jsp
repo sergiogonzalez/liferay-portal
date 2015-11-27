@@ -47,10 +47,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
 
 <div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-		<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
-	</c:if>
-
 	<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
 	</portlet:actionURL>
