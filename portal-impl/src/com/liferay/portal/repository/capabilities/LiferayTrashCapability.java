@@ -16,7 +16,6 @@ package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -52,7 +51,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -71,7 +69,6 @@ import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
 import com.liferay.portlet.trash.service.TrashVersionLocalService;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
 
@@ -624,35 +621,11 @@ public class LiferayTrashCapability
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 
-		long dlFileEntryClassNameId = classNameLocalService.getClassNameId(
-			DLFileEntry.class);
+		_dlFolderServiceAdapter.updateAssets(
+			dlFolder.getFolderId(), !moveToTrash);
 
-		List<AssetEntry> dlFileEntryAssetEntries =
-			assetEntryFinder.findByDLFileEntryC_T(
-				dlFileEntryClassNameId, dlFolder.getTreePath());
-
-		for (AssetEntry dlFileEntryAssetEntry : dlFileEntryAssetEntries) {
-			assetEntryLocalService.updateVisible(
-				dlFileEntryAssetEntry, !moveToTrash);
-		}
-
-		long dlFolderClassNameId = classNameLocalService.getClassNameId(
-			DLFolder.class);
-
-		List<AssetEntry> dlFolderAssetEntries =
-			assetEntryFinder.findByDLFolderC_T(
-				dlFolderClassNameId, dlFolder.getTreePath());
-
-		for (AssetEntry dlFolderAssetEntry : dlFolderAssetEntries) {
-			assetEntryLocalService.updateVisible(
-				dlFolderAssetEntry, !moveToTrash);
-		}
-
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(
-			dlFolder.getGroupId(), false,
-			CustomSQLUtil.keywords(
-				dlFolder.getTreePath(), WildcardMode.TRAILING)[0],
-			false);
+		List<DLFolder> dlFolders = _dlFolderServiceAdapter.getFolders(
+			dlFolder.getGroupId(), dlFolder.getFolderId(), false, false);
 
 		for (DLFolder childDLFolder : dlFolders) {
 			trashOrRestoreFolder(
