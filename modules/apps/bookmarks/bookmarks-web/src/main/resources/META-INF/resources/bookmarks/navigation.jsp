@@ -34,7 +34,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 		portletURL.setParameter("navigation", "home");
 		%>
 
-		<aui:nav-item href="<%= portletURL.toString() %>" label="home" selected='<%= navigation.equals("home") %>' />
+		<aui:nav-item href="<%= portletURL.toString() %>" label="folders" selected='<%= navigation.equals("home") %>' />
 
 		<%
 		portletURL.setParameter("navigation", "recent");
