@@ -528,6 +528,15 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountFolders,
+		boolean hidden)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFolders(groupId, parentFolderId, includeMountFolders,
+			hidden);
+	}
+
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		long groupId, long parentFolderId, boolean includeMountfolders) {
 		return getService()
 				   .getFolders(groupId, parentFolderId, includeMountfolders);
@@ -796,6 +805,11 @@ public class DLFolderLocalServiceUtil {
 		java.lang.String name, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unlockFolder(groupId, parentFolderId, name, lockUuid);
+	}
+
+	public static void updateAssets(long folderId, boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateAssets(folderId, visible);
 	}
 
 	/**
