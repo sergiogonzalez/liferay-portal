@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.DateOverrideIncrement;
@@ -53,6 +54,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.RepositoryUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -60,6 +62,7 @@ import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -70,6 +73,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FolderIdComparator;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
 
@@ -448,6 +452,22 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			return dlFolderPersistence.findByG_M_P_H(
 				groupId, false, parentFolderId, false);
 		}
+	}
+
+	@Override
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountFolders,
+			boolean hidden)
+		throws PortalException {
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
+			parentFolderId);
+
+		String treePath = CustomSQLUtil.keywords(
+			dlFolder.getTreePath(), WildcardMode.TRAILING)[0];
+
+		return dlFolderPersistence.findByG_M_T_H(
+			groupId, includeMountFolders, treePath, hidden);
 	}
 
 	@Override
@@ -914,6 +934,36 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		LockManagerUtil.unlock(DLFolder.class.getName(), folderId);
+	}
+
+	@Override
+	public void updateAssets(long folderId, boolean visible)
+		throws PortalException {
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+		long dlFileEntryClassNameId = classNameLocalService.getClassNameId(
+			DLFileEntryConstants.getClassName());
+
+		List<AssetEntry> dlFileEntryAssetEntries =
+			assetEntryFinder.findByDLFileEntryC_T(
+				dlFileEntryClassNameId, dlFolder.getTreePath());
+
+		for (AssetEntry dlFileEntryAssetEntry : dlFileEntryAssetEntries) {
+			assetEntryLocalService.updateVisible(
+				dlFileEntryAssetEntry, visible);
+		}
+
+		long dlFolderClassNameId = classNameLocalService.getClassNameId(
+			DLFolderConstants.getClassName());
+
+		List<AssetEntry> dlFolderAssetEntries =
+			assetEntryFinder.findByDLFolderC_T(
+				dlFolderClassNameId, dlFolder.getTreePath());
+
+		for (AssetEntry dlFolderAssetEntry : dlFolderAssetEntries) {
+			assetEntryLocalService.updateVisible(dlFolderAssetEntry, visible);
+		}
 	}
 
 	/**

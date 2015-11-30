@@ -17,15 +17,21 @@ package com.liferay.portal.repository.capabilities.util;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -78,6 +84,15 @@ public class DLFolderServiceAdapter {
 		return _dlFolderLocalService.getActionableDynamicQuery();
 	}
 
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountFolders,
+			boolean hidden)
+		throws PortalException {
+
+		return _dlFolderLocalService.getFolders(
+			groupId, parentFolderId, includeMountFolders, hidden);
+	}
+
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, String[] mimeTypes,
 			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
@@ -126,6 +141,12 @@ public class DLFolderServiceAdapter {
 
 	public DLFolder update(DLFolder dlFolder) {
 		return _dlFolderLocalService.updateDLFolder(dlFolder);
+	}
+
+	public void updateAssets(long folderId, boolean visible)
+		throws PortalException {
+
+		_dlFolderLocalService.updateAssets(folderId, visible);
 	}
 
 	public DLFolder updateStatus(
