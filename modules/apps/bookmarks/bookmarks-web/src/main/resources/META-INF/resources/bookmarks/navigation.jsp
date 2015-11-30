@@ -69,9 +69,3 @@ portletURL.setParameter("tag", StringPool.BLANK);
 		</aui:nav-bar-search>
 	</c:if>
 </aui:nav-bar>
-
-<c:if test="<%= layout.isTypeControlPanel() %>">
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-	</div>
-</c:if>
