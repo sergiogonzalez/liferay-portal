@@ -19,6 +19,8 @@
 <%
 BookmarksGroupServiceOverriddenConfiguration bookmarksGroupServiceOverriddenConfiguration = ConfigurationFactoryUtil.getConfiguration(BookmarksGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, BookmarksConstants.SERVICE_NAME));
 
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 long rootFolderId = bookmarksGroupServiceOverriddenConfiguration.rootFolderId();

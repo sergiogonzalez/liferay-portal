@@ -26,5 +26,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+
+		<liferay-util:include page="/bookmarks/display_style_buttons.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
