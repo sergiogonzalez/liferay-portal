@@ -333,24 +333,12 @@ if (Validator.isNotNull(keywords)) {
 									String title = DLUtil.getTitleWithExtension(fileEntry);
 
 									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
-
-									Map<String, Object> data = new HashMap<String, Object>();
-
-									data.put("href", DLUtil.getImagePreviewURL(fileEntry, themeDisplay));
-									data.put("metadata", itemMedatadaJSONObject.toString());
-									data.put("returnType", ClassUtil.getClassName(existingFileEntryReturnType));
-									data.put("title", title);
-									data.put("url", DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK));
-									data.put("value", ItemSelectorRepositoryEntryBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay));
 								%>
 
 									<liferay-ui:search-container-column-text>
-										<liferay-frontend:vertical-card
-											cssClass="item-preview"
-											data="<%= data %>"
-											imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-											resultRow="<%= row %>"
-										/>
+										<div class="figure">
+											<img class="item-preview" src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" data-href="<%= DLUtil.getImagePreviewURL(fileEntry, themeDisplay)  %>" data-metadata="<%= itemMedatadaJSONObject.toString() %>" data-returnType="<%= ClassUtil.getClassName(existingFileEntryReturnType) %>" data-title="<%= title %>" data-url="<%= DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK) %>" data-value="<%= ItemSelectorRepositoryEntryBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay) %>" />
+										</div>
 									</liferay-ui:search-container-column-text>
 
 								<%
