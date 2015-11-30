@@ -328,45 +328,6 @@ public class DLAppHelperLocalServiceImpl
 		return null;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #moveDependentsToTrash(DLFolder)}
-	 */
-	@Deprecated
-	@Override
-	public void moveDependentsToTrash(
-			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws PortalException {
-
-		if (dlFileEntriesAndDLFolders.isEmpty()) {
-			return;
-		}
-
-		Object object = dlFileEntriesAndDLFolders.get(0);
-
-		long folderId = 0;
-
-		if (object instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-			folderId = dlFileEntry.getFolderId();
-		}
-		else if (object instanceof DLFileShortcut) {
-			DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
-
-			folderId = dlFileShortcut.getFolderId();
-		}
-		else if (object instanceof DLFolder) {
-			DLFolder dlFolder = (DLFolder)object;
-
-			folderId = dlFolder.getFolderId();
-		}
-
-		DLFolder dlFolder = dlFolderLocalService.getDLFolder(folderId);
-
-		moveDependentsToTrash(dlFolder);
-	}
-
 	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
