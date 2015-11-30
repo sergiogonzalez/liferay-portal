@@ -101,6 +101,43 @@ public class DLFolderServiceAdapter {
 		return foldersAndFileEntriesAndFileShortcuts;
 	}
 
+	public boolean hasFolderLock(long userId, long folderId) {
+		return _dlFolderLocalService.hasFolderLock(userId, folderId);
+	}
+
+	public Lock lockFolder(long userId, long folderId) throws PortalException {
+		if (_dlFolderService != null) {
+			return _dlFolderService.lockFolder(folderId);
+		}
+
+		return _dlFolderLocalService.lockFolder(userId, folderId);
+	}
+
+	public void unlockFolder(long folderId, String lockUuid)
+		throws PortalException {
+
+		if (_dlFolderService != null) {
+			_dlFolderService.unlockFolder(folderId, lockUuid);
+		}
+		else {
+			_dlFolderLocalService.unlockFolder(folderId, lockUuid);
+		}
+	}
+
+	public DLFolder update(DLFolder dlFolder) {
+		return _dlFolderLocalService.updateDLFolder(dlFolder);
+	}
+
+	public DLFolder updateStatus(
+			long userId, long folderId, int status,
+			Map<String, Serializable> workflowStatus,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _dlFolderLocalService.updateStatus(
+			userId, folderId, status, workflowStatus, serviceContext);
+	}
+
 	private final DLFolderLocalService _dlFolderLocalService;
 	private final DLFolderService _dlFolderService;
 

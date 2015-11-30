@@ -123,6 +123,10 @@ public class DLFileEntryServiceAdapter {
 		return dlFileEntry;
 	}
 
+	public List<DLFileEntry> getFileEntries(long groupId, long folderId) {
+		return _dlFileEntryLocalService.getFileEntries(groupId, folderId);
+	}
+
 	public List<DLFileEntry> getGroupFileEntries(
 			long groupId, int userId, long repositoryId, long folderId,
 			int start, int end, OrderByComparator<DLFileEntry> obc)
