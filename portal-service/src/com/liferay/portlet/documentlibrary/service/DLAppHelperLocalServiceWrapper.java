@@ -142,27 +142,6 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		return _dlAppHelperLocalService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder)}
-	*/
-	@Deprecated
-	@Override
-	public void moveDependentsToTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppHelperLocalService.moveDependentsToTrash(dlFileEntriesAndDLFolders,
-			trashEntryId);
-	}
-
-	@Override
-	public void moveDependentsToTrash(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppHelperLocalService.moveDependentsToTrash(dlFolder);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId,
@@ -172,21 +151,6 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.moveFileEntryFromTrash(userId,
 			fileEntry, newFolderId, serviceContext);
-	}
-
-	/**
-	* Moves the file entry to the recycle bin.
-	*
-	* @param userId the primary key of the user moving the file entry
-	* @param fileEntry the file entry to be moved
-	* @return the moved file entry
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
 	}
 
 	@Override
@@ -200,22 +164,6 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 			fileShortcut, newFolderId, serviceContext);
 	}
 
-	/**
-	* Moves the file shortcut to the recycle bin.
-	*
-	* @param userId the primary key of the user moving the file shortcut
-	* @param fileShortcut the file shortcut to be moved
-	* @return the moved file shortcut
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppHelperLocalService.moveFileShortcutToTrash(userId,
-			fileShortcut);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
@@ -224,20 +172,6 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.moveFolderFromTrash(userId, folder,
 			parentFolderId, serviceContext);
-	}
-
-	/**
-	* Moves the folder to the recycle bin.
-	*
-	* @param userId the primary key of the user moving the folder
-	* @param folder the folder to be moved
-	* @return the moved folder
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppHelperLocalService.moveFolderToTrash(userId, folder);
 	}
 
 	/**

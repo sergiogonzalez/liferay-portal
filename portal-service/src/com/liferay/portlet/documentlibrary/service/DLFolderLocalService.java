@@ -431,6 +431,11 @@ public interface DLFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountFolders,
+		boolean hidden) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		long groupId, long parentFolderId, boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -621,6 +626,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 
 	public void unlockFolder(long groupId, long parentFolderId,
 		java.lang.String name, java.lang.String lockUuid)
+		throws PortalException;
+
+	public void updateAssets(long folderId, boolean visible)
 		throws PortalException;
 
 	/**
