@@ -44,6 +44,17 @@ else {
 }
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
+String headerTitle = (entry == null) ? LanguageUtil.get(request, "add-bookmark") : LanguageUtil.format(request, "edit-x", entry.getName(), false);
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
@@ -59,11 +70,11 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 
-		<c:if test="<%= showHeader %>">
+		<c:if test="<%= !portletTitleBasedNavigation && showHeader %>">
 			<liferay-ui:header
 				backURL="<%= backURL %>"
 				localizeTitle="<%= (entry == null) %>"
-				title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(request, "edit-x", entry.getName(), false) %>'
+				title="<%= headerTitle %>"
 			/>
 		</c:if>
 

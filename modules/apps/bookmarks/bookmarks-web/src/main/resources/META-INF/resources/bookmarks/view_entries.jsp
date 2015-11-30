@@ -68,6 +68,21 @@ else {
 	}
 }
 
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation && (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != rootFolderId)) {
+	String redirect = ParamUtil.getString(request, "redirect");
+
+	if (Validator.isNotNull(redirect)) {
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(redirect);
+	}
+
+	BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
+
+	renderResponse.setTitle(folder.getName());
+}
+
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
