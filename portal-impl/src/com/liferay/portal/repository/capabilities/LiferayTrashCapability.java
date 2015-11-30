@@ -271,13 +271,13 @@ public class LiferayTrashCapability
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException {
 
-		boolean hasLock = dlFolderLocalService.hasFolderLock(
+		boolean hasLock = _dlFolderServiceAdapter.hasFolderLock(
 			userId, folder.getFolderId());
 
 		Lock lock = null;
 
 		if (!hasLock) {
-			lock = dlFolderLocalService.lockFolder(
+			lock = _dlFolderServiceAdapter.lockFolder(
 				userId, folder.getFolderId());
 		}
 
@@ -286,7 +286,7 @@ public class LiferayTrashCapability
 		}
 		finally {
 			if (!hasLock) {
-				dlFolderLocalService.unlockFolder(
+				_dlFolderServiceAdapter.unlockFolder(
 					folder.getFolderId(), lock.getUuid());
 			}
 		}
@@ -545,13 +545,14 @@ public class LiferayTrashCapability
 
 		// Folder
 
-		DLFolder dlFolder = dlFolderLocalService.updateStatus(
+		DLFolder dlFolder = _dlFolderServiceAdapter.updateStatus(
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
 		// File rank
 
-		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
+		_dlFileRankLocalService.disableFileRanksByFolderId(
+			folder.getFolderId());
 
 		// Trash
 
@@ -559,14 +560,14 @@ public class LiferayTrashCapability
 
 		typeSettingsProperties.put("title", dlFolder.getName());
 
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
 			dlFolder.getFolderId(), dlFolder.getUuid(), null,
 			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
 
 		dlFolder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
 
-		dlFolderPersistence.update(dlFolder);
+		_dlFolderServiceAdapter.update(dlFolder);
 
 		// Folders, file entries, and file shortcuts
 
@@ -619,7 +620,7 @@ public class LiferayTrashCapability
 		TrashEntry trashEntry = null;
 
 		if (moveToTrash) {
-			trashEntry = trashEntryLocalService.getEntry(
+			trashEntry = _trashEntryLocalService.getEntry(
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 
@@ -665,7 +666,7 @@ public class LiferayTrashCapability
 		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries =
-			dlFileEntryLocalService.getFileEntries(
+			_dlFileEntryServiceAdapter.getFileEntries(
 				childDLFolder.getGroupId(), childDLFolder.getFolderId());
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
@@ -680,7 +681,7 @@ public class LiferayTrashCapability
 
 			// File shortcut
 
-			dlFileShortcutLocalService.updateFileShortcutsActive(
+			_dlFileShortcutLocalService.updateFileShortcutsActive(
 				dlFileEntry.getFileEntryId(), !moveToTrash);
 
 			// File versions
@@ -688,11 +689,11 @@ public class LiferayTrashCapability
 			List<DLFileVersion> dlFileVersions = null;
 
 			if (moveToTrash) {
-				dlFileVersions = dlFileVersionLocalService.getFileVersions(
+				dlFileVersions = _dlFileVersionServiceAdapter.getFileVersions(
 					dlFileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
 			}
 			else {
-				dlFileVersions = dlFileVersionLocalService.getFileVersions(
+				dlFileVersions = _dlFileVersionServiceAdapter.getFileVersions(
 					dlFileEntry.getFileEntryId(),
 					WorkflowConstants.STATUS_IN_TRASH);
 			}
@@ -706,7 +707,7 @@ public class LiferayTrashCapability
 
 					dlFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-					dlFileVersionPersistence.update(dlFileVersion);
+					_dlFileVersionServiceAdapter.update(dlFileVersion);
 
 					// Trash
 
@@ -717,7 +718,7 @@ public class LiferayTrashCapability
 							newStatus = WorkflowConstants.STATUS_DRAFT;
 						}
 
-						trashVersionLocalService.addTrashVersion(
+						_trashVersionLocalService.addTrashVersion(
 							trashEntry.getEntryId(),
 							DLFileVersion.class.getName(),
 							dlFileVersion.getFileVersionId(), newStatus, null);
@@ -726,7 +727,7 @@ public class LiferayTrashCapability
 					// Workflow
 
 					if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-						workflowInstanceLinkLocalService.
+						_workflowInstanceLinkLocalService.
 							deleteWorkflowInstanceLink(
 								dlFileVersion.getCompanyId(),
 								dlFileVersion.getGroupId(),
@@ -736,7 +737,7 @@ public class LiferayTrashCapability
 				}
 				else {
 					TrashVersion trashVersion =
-						trashVersionLocalService.fetchVersion(
+						_trashVersionLocalService.fetchVersion(
 							DLFileVersion.class.getName(),
 							dlFileVersion.getFileVersionId());
 
@@ -748,12 +749,12 @@ public class LiferayTrashCapability
 
 					dlFileVersion.setStatus(oldStatus);
 
-					dlFileVersionPersistence.update(dlFileVersion);
+					_dlFileVersionServiceAdapter.update(dlFileVersion);
 
 					// Trash
 
 					if (trashVersion != null) {
-						trashVersionLocalService.deleteTrashVersion(
+						_trashVersionLocalService.deleteTrashVersion(
 							trashVersion);
 					}
 				}
@@ -781,12 +782,13 @@ public class LiferayTrashCapability
 
 				dlFileShortcut.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				dlFileShortcutPersistence.update(dlFileShortcut);
+				_dlFileShortcutLocalService.updateDLFileShortcut(
+					dlFileShortcut);
 
 				// Trash
 
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-					trashVersionLocalService.addTrashVersion(
+					_trashVersionLocalService.addTrashVersion(
 						trashEntry.getEntryId(),
 						DLFileShortcutConstants.getClassName(),
 						dlFileShortcut.getFileShortcutId(), oldStatus, null);
@@ -798,7 +800,7 @@ public class LiferayTrashCapability
 				}
 
 				TrashVersion trashVersion =
-					trashVersionLocalService.fetchVersion(
+					_trashVersionLocalService.fetchVersion(
 						DLFileShortcutConstants.getClassName(),
 						dlFileShortcut.getFileShortcutId());
 
@@ -810,10 +812,11 @@ public class LiferayTrashCapability
 
 				dlFileShortcut.setStatus(oldStatus);
 
-				dlFileShortcutPersistence.update(dlFileShortcut);
+				_dlFileShortcutLocalService.updateDLFileShortcut(
+					dlFileShortcut);
 
 				if (trashVersion != null) {
-					trashVersionLocalService.deleteTrashVersion(trashVersion);
+					_trashVersionLocalService.deleteTrashVersion(trashVersion);
 				}
 			}
 		}
@@ -831,12 +834,12 @@ public class LiferayTrashCapability
 
 			childDLFolder.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-			dlFolderPersistence.update(childDLFolder);
+			_dlFolderServiceAdapter.update(childDLFolder);
 
 			// Trash
 
 			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-				trashVersionLocalService.addTrashVersion(
+				_trashVersionLocalService.addTrashVersion(
 					trashEntry.getEntryId(), DLFolder.class.getName(),
 					childDLFolder.getFolderId(), oldStatus, null);
 			}
@@ -846,7 +849,7 @@ public class LiferayTrashCapability
 				return;
 			}
 
-			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+			TrashVersion trashVersion = _trashVersionLocalService.fetchVersion(
 				DLFolder.class.getName(), childDLFolder.getFolderId());
 
 			int oldStatus = WorkflowConstants.STATUS_APPROVED;
@@ -857,12 +860,12 @@ public class LiferayTrashCapability
 
 			childDLFolder.setStatus(oldStatus);
 
-			dlFolderPersistence.update(childDLFolder);
+			_dlFolderServiceAdapter.update(childDLFolder);
 
 			// Trash
 
 			if (trashVersion != null) {
-				trashVersionLocalService.deleteTrashVersion(trashVersion);
+				_trashVersionLocalService.deleteTrashVersion(trashVersion);
 			}
 		}
 
