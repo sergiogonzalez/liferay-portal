@@ -38,7 +38,7 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 	folder="<%= true %>"
 	markupView="lexicon"
 	modifiedDate="<%= folder.getModifiedDate() %>"
-	showCheckbox="<%= false %>"
+	showCheckbox="<%= true %>"
 	title="<%= folder.getName() %>"
 	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 />
