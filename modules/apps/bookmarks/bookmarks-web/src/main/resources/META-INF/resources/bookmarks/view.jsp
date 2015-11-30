@@ -43,6 +43,25 @@ String assetTagName = ParamUtil.getString(request, "tag");
 
 boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetTagName);
 
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+String[] displayViews = new String[] {"descriptive", "list"};
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(BookmarksPortletKeys.BOOKMARKS, "display-style", "descriptive");
+}
+else {
+	if (ArrayUtil.contains(displayViews, displayStyle)) {
+		portalPreferences.setValue(BookmarksPortletKeys.BOOKMARKS, "display-style", displayStyle);
+
+		request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+	}
+}
+
+if (!ArrayUtil.contains(displayViews, displayStyle)) {
+	displayStyle = displayViews[0];
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
@@ -149,7 +168,26 @@ else {
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</liferay-portlet:renderURL>
 
-						<%@ include file="/bookmarks/folder_columns.jspf" %>
+						<c:choose>
+							<c:when test='<%= displayStyle.equals("descriptive") %>'>
+								<liferay-ui:search-container-column-icon
+									icon="icon-folder-close"
+									toggleRowChecker="<%= false %>"
+								/>
+
+								<liferay-ui:search-container-column-jsp
+									colspan="2"
+									path="/bookmarks/view_folder_descriptive.jsp"
+								/>
+
+								<liferay-ui:search-container-column-jsp
+									path="/bookmarks/folder_action.jsp"
+								/>
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/bookmarks/folder_columns.jspf" %>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
 
@@ -167,12 +205,31 @@ else {
 						}
 						%>
 
-						<%@ include file="/bookmarks/entry_columns.jspf" %>
+						<c:choose>
+							<c:when test='<%= displayStyle.equals("descriptive") %>'>
+								<liferay-ui:search-container-column-icon
+									icon="icon-share-alt"
+									toggleRowChecker="<%= false %>"
+								/>
+
+								<liferay-ui:search-container-column-jsp
+									colspan="2"
+									path="/bookmarks/view_entry_descriptive.jsp"
+									/>
+
+								<liferay-ui:search-container-column-jsp
+									path="/bookmarks/entry_action.jsp"
+								/>
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/bookmarks/entry_columns.jspf" %>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" resultRowSplitter="<%= new BookmarksResultRowSplitter() %>" searchContainer="<%= bookmarksSearchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new BookmarksResultRowSplitter() %>" searchContainer="<%= bookmarksSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </div>
