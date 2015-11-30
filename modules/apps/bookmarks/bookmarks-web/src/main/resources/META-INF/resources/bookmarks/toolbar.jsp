@@ -18,10 +18,12 @@
 
 <%
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
+	includeCheckBox="<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId) > 0 %>"
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -29,4 +31,26 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 		<liferay-util:include page="/bookmarks/display_style_buttons.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
+		%>
+
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<aui:script>
+	function <portlet:namespace />deleteEntries() {
+		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
+
+			submitForm(form, '<portlet:actionURL name="/bookmarks/edit_entry" />');
+		}
+	}
+</aui:script>

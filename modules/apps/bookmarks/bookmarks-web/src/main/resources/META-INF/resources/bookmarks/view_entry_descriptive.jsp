@@ -41,7 +41,7 @@ rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 	displayStyle="descriptive"
 	markupView="lexicon"
 	modifiedDate="<%= entry.getModifiedDate() %>"
-	showCheckbox="<%= false %>"
+	showCheckbox="<%= true %>"
 	title="<%= entry.getName() %>"
 	url="<%= rowURL.toString() %>"
 />

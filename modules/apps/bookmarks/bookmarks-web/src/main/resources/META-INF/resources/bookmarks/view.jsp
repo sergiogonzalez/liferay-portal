@@ -62,17 +62,13 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-portletURL.setParameter("navigation", navigation);
-portletURL.setParameter("folderId", String.valueOf(folderId));
-
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
+
+request.setAttribute("view.jsp-displayStyle", displayStyle);
 
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
 
@@ -93,39 +89,6 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	<liferay-util:param name="searchContainerId" value="entries" />
 </liferay-util:include>
 
-<%
-SearchContainer bookmarksSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-bookmarks-in-this-folder");
-
-List results = null;
-int total = 0;
-
-if (navigation.equals("mine") || navigation.equals("recent")) {
-	long groupEntriesUserId = 0;
-
-	if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
-		groupEntriesUserId = user.getUserId();
-	}
-
-	results = BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd());
-	total = BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId);
-}
-else {
-	if (useAssetEntryQuery) {
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
-
-			assetEntryQuery.setExcludeZeroViewCount(false);
-			assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
-			assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
-
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-	}
-	else {
-		results = BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd());
-		total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
-	}
-}
-%>
-
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<div class="sidenav-menu-slider">
 		<div class="sidebar sidebar-default sidenav-menu">
@@ -139,98 +102,17 @@ else {
 			</c:if>
 		</div>
 
-		<%
-		String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-		%>
+		<liferay-portlet:actionURL varImpl="editEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
+		</liferay-portlet:actionURL>
 
-		<liferay-ui:search-container
-			id="<%= searchContainerId %>"
-			searchContainer="<%= bookmarksSearchContainer %>"
-			total="<%= total %>"
-			totalVar="bookmarksSearchContainerTotal"
-		>
-			<liferay-ui:search-container-results
-				results="<%= results %>"
-				resultsVar="bookmarksSearchContainerResults"
-			/>
+		<aui:form action="<%= editEntryURL.toString() %>" method="get" name="fm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
-			<liferay-ui:search-container-row
-				className="Object"
-				modelVar="result"
-			>
-				<%@ include file="/bookmarks/cast_result.jspf" %>
-
-				<c:choose>
-					<c:when test="<%= curFolder != null %>">
-						<liferay-portlet:renderURL varImpl="rowURL">
-							<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-						</liferay-portlet:renderURL>
-
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("descriptive") %>'>
-								<liferay-ui:search-container-column-icon
-									icon="icon-folder-close"
-									toggleRowChecker="<%= false %>"
-								/>
-
-								<liferay-ui:search-container-column-jsp
-									colspan="2"
-									path="/bookmarks/view_folder_descriptive.jsp"
-								/>
-
-								<liferay-ui:search-container-column-jsp
-									path="/bookmarks/folder_action.jsp"
-								/>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/bookmarks/folder_columns.jspf" %>
-							</c:otherwise>
-						</c:choose>
-					</c:when>
-					<c:otherwise>
-
-						<%
-						String rowHREF = null;
-
-						if (BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.VIEW)) {
-							PortletURL tempRowURL = renderResponse.createRenderURL();
-
-							tempRowURL.setParameter("mvcRenderCommandName", "/bookmarks/view_entry");
-							tempRowURL.setParameter("redirect", currentURL);
-							tempRowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-
-							rowHREF = tempRowURL.toString();
-						}
-						%>
-
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("descriptive") %>'>
-								<liferay-ui:search-container-column-icon
-									icon="icon-share-alt"
-									toggleRowChecker="<%= false %>"
-								/>
-
-								<liferay-ui:search-container-column-jsp
-									colspan="2"
-									path="/bookmarks/view_entry_descriptive.jsp"
-									/>
-
-								<liferay-ui:search-container-column-jsp
-									path="/bookmarks/entry_action.jsp"
-								/>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/bookmarks/entry_columns.jspf" %>
-							</c:otherwise>
-						</c:choose>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new BookmarksResultRowSplitter() %>" searchContainer="<%= bookmarksSearchContainer %>" />
-		</liferay-ui:search-container>
+			<liferay-util:include page="/bookmarks/view_entries.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="searchContainerId" value="entries" />
+			</liferay-util:include>
+		</aui:form>
 	</div>
 </div>
 
