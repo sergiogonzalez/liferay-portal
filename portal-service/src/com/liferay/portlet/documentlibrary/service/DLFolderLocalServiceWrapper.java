@@ -583,6 +583,15 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountFolders,
+		boolean hidden)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.getFolders(groupId, parentFolderId,
+			includeMountFolders, hidden);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		long groupId, long parentFolderId, boolean includeMountfolders) {
 		return _dlFolderLocalService.getFolders(groupId, parentFolderId,
 			includeMountfolders);
@@ -887,6 +896,12 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFolderLocalService.unlockFolder(groupId, parentFolderId, name,
 			lockUuid);
+	}
+
+	@Override
+	public void updateAssets(long folderId, boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFolderLocalService.updateAssets(folderId, visible);
 	}
 
 	/**

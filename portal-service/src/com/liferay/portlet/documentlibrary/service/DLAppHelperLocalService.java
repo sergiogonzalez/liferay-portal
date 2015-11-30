@@ -113,36 +113,11 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder)}
-	*/
-	@java.lang.Deprecated
-	public void moveDependentsToTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId) throws PortalException;
-
-	public void moveDependentsToTrash(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
-		throws PortalException;
-
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Moves the file entry to the recycle bin.
-	*
-	* @param userId the primary key of the user moving the file entry
-	* @param fileEntry the file entry to be moved
-	* @return the moved file entry
-	*/
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
@@ -152,33 +127,10 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	* Moves the file shortcut to the recycle bin.
-	*
-	* @param userId the primary key of the user moving the file shortcut
-	* @param fileShortcut the file shortcut to be moved
-	* @return the moved file shortcut
-	*/
-	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
-		throws PortalException;
-
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
 		long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Moves the folder to the recycle bin.
-	*
-	* @param userId the primary key of the user moving the folder
-	* @param folder the folder to be moved
-	* @return the moved folder
-	*/
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
 		throws PortalException;
 
 	/**
