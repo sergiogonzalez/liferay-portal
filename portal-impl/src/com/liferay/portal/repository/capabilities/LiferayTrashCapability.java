@@ -742,7 +742,7 @@ public class LiferayTrashCapability
 		}
 
 		List<DLFileShortcut> dlFileShortcuts =
-			dlFileShortcutPersistence.findByG_F(
+			_dlFileShortcutLocalService.getFileShortcuts(
 				childDLFolder.getGroupId(), childDLFolder.getFolderId());
 
 		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
