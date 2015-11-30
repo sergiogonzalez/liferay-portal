@@ -45,8 +45,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.UserConstants;
@@ -84,7 +82,6 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -332,52 +329,6 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
-	public void moveDependentsToTrash(DLFolder dlFolder)
-		throws PortalException {
-
-		trashOrRestoreFolder(dlFolder, true);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #moveDependentsToTrash(DLFolder)}
-	 */
-	@Deprecated
-	@Override
-	public void moveDependentsToTrash(
-			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws PortalException {
-
-		if (dlFileEntriesAndDLFolders.isEmpty()) {
-			return;
-		}
-
-		Object object = dlFileEntriesAndDLFolders.get(0);
-
-		long folderId = 0;
-
-		if (object instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-			folderId = dlFileEntry.getFolderId();
-		}
-		else if (object instanceof DLFileShortcut) {
-			DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
-
-			folderId = dlFileShortcut.getFolderId();
-		}
-		else if (object instanceof DLFolder) {
-			DLFolder dlFolder = (DLFolder)object;
-
-			folderId = dlFolder.getFolderId();
-		}
-
-		DLFolder dlFolder = dlFolderLocalService.getDLFolder(folderId);
-
-		moveDependentsToTrash(dlFolder);
-	}
-
-	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
 			ServiceContext serviceContext)
@@ -394,41 +345,6 @@ public class DLAppHelperLocalServiceImpl
 		try {
 			return doMoveFileEntryFromTrash(
 				userId, fileEntry, newFolderId, serviceContext);
-		}
-		finally {
-			if (!hasLock) {
-				dlFileEntryLocalService.unlockFileEntry(
-					fileEntry.getFileEntryId());
-			}
-		}
-	}
-
-	/**
-	 * Moves the file entry to the recycle bin.
-	 *
-	 * @param  userId the primary key of the user moving the file entry
-	 * @param  fileEntry the file entry to be moved
-	 * @return the moved file entry
-	 */
-	@Override
-	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
-		throws PortalException {
-
-		boolean hasLock = dlFileEntryLocalService.hasFileEntryLock(
-			userId, fileEntry.getFileEntryId());
-
-		if (!hasLock) {
-			dlFileEntryLocalService.lockFileEntry(
-				userId, fileEntry.getFileEntryId());
-		}
-
-		try {
-			if (fileEntry.isCheckedOut()) {
-				dlFileEntryLocalService.cancelCheckOut(
-					userId, fileEntry.getFileEntryId());
-			}
-
-			return doMoveFileEntryToTrash(userId, fileEntry);
 		}
 		finally {
 			if (!hasLock) {
@@ -490,50 +406,6 @@ public class DLAppHelperLocalServiceImpl
 			fileShortcut.getToFileEntryId(), serviceContext);
 	}
 
-	/**
-	 * Moves the file shortcut to the recycle bin.
-	 *
-	 * @param  userId the primary key of the user moving the file shortcut
-	 * @param  fileShortcut the file shortcut to be moved
-	 * @return the moved file shortcut
-	 */
-	@Override
-	public FileShortcut moveFileShortcutToTrash(
-			long userId, FileShortcut fileShortcut)
-		throws PortalException {
-
-		// File shortcut
-
-		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
-
-		int oldStatus = dlFileShortcut.getStatus();
-
-		dlFileShortcutLocalService.updateStatus(
-			userId, fileShortcut.getFileShortcutId(),
-			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
-
-		// Social
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
-			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
-
-		SocialActivityManagerUtil.addActivity(
-			userId, fileShortcut, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			extraDataJSONObject.toString(), 0);
-
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, fileShortcut.getGroupId(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), null,
-			oldStatus, null, null);
-
-		return fileShortcut;
-	}
-
 	@Override
 	public Folder moveFolderFromTrash(
 			long userId, Folder folder, long parentFolderId,
@@ -553,38 +425,6 @@ public class DLAppHelperLocalServiceImpl
 		try {
 			return doMoveFolderFromTrash(
 				userId, folder, parentFolderId, serviceContext);
-		}
-		finally {
-			if (!hasLock) {
-				dlFolderLocalService.unlockFolder(
-					folder.getFolderId(), lock.getUuid());
-			}
-		}
-	}
-
-	/**
-	 * Moves the folder to the recycle bin.
-	 *
-	 * @param  userId the primary key of the user moving the folder
-	 * @param  folder the folder to be moved
-	 * @return the moved folder
-	 */
-	@Override
-	public Folder moveFolderToTrash(long userId, Folder folder)
-		throws PortalException {
-
-		boolean hasLock = dlFolderLocalService.hasFolderLock(
-			userId, folder.getFolderId());
-
-		Lock lock = null;
-
-		if (!hasLock) {
-			lock = dlFolderLocalService.lockFolder(
-				userId, folder.getFolderId());
-		}
-
-		try {
-			return doMoveFolderToTrash(userId, folder);
 		}
 		finally {
 			if (!hasLock) {
@@ -1274,113 +1114,6 @@ public class DLAppHelperLocalServiceImpl
 		return fileEntry;
 	}
 
-	protected FileEntry doMoveFileEntryToTrash(long userId, FileEntry fileEntry)
-		throws PortalException {
-
-		// File versions
-
-		List<DLFileVersion> dlFileVersions =
-			dlFileVersionLocalService.getFileVersions(
-				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
-
-		dlFileVersions = ListUtil.sort(
-			dlFileVersions, new DLFileVersionVersionComparator());
-
-		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<>();
-
-		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
-			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
-		}
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		int oldStatus = fileVersion.getStatus();
-
-		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext(),
-			new HashMap<String, Serializable>());
-
-		if (DLAppHelperThreadLocal.isEnabled()) {
-
-			// File shortcut
-
-			dlFileShortcutLocalService.disableFileShortcuts(
-				fileEntry.getFileEntryId());
-
-			// File rank
-
-			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
-
-			// Sync
-
-			triggerRepositoryEvent(
-				fileEntry.getRepositoryId(),
-				TrashRepositoryEventType.EntryTrashed.class, FileEntry.class,
-				fileEntry);
-		}
-
-		// Trash
-
-		DLFileVersion oldDLFileVersion = (DLFileVersion)fileVersion.getModel();
-
-		int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
-
-		for (DLFileVersion curDLFileVersion : dlFileVersions) {
-			curDLFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-			dlFileVersionPersistence.update(curDLFileVersion);
-		}
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("fileName", dlFileEntry.getFileName());
-		typeSettingsProperties.put("title", dlFileEntry.getTitle());
-
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
-			userId, dlFileEntry.getGroupId(),
-			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId(),
-			dlFileEntry.getUuid(), dlFileEntry.getClassName(),
-			oldDLFileVersionStatus, dlFileVersionStatusOVPs,
-			typeSettingsProperties);
-
-		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
-
-		dlFileEntry.setFileName(trashTitle);
-		dlFileEntry.setTitle(trashTitle);
-
-		dlFileEntryPersistence.update(dlFileEntry);
-
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return fileEntry;
-		}
-
-		// Social
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
-			"title", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
-
-		SocialActivityManagerUtil.addActivity(
-			userId, fileEntry, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			extraDataJSONObject.toString(), 0);
-
-		// Workflow
-
-		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-				fileVersion.getCompanyId(), fileVersion.getGroupId(),
-				DLFileEntryConstants.getClassName(),
-				fileVersion.getFileVersionId());
-		}
-
-		return fileEntry;
-	}
-
 	protected Folder doMoveFolderFromTrash(
 			long userId, Folder folder, long parentFolderId,
 			ServiceContext serviceContext)
@@ -1443,79 +1176,6 @@ public class DLAppHelperLocalServiceImpl
 
 		return dlAppLocalService.moveFolder(
 			userId, folder.getFolderId(), parentFolderId, serviceContext);
-	}
-
-	protected Folder doMoveFolderToTrash(long userId, Folder folder)
-		throws PortalException {
-
-		// Folder
-
-		DLFolder dlFolder = dlFolderLocalService.updateStatus(
-			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
-
-		// File rank
-
-		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
-
-		// Trash
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("title", dlFolder.getName());
-
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
-			userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
-			dlFolder.getFolderId(), dlFolder.getUuid(), null,
-			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
-
-		dlFolder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
-
-		dlFolderPersistence.update(dlFolder);
-
-		// Folders, file entries, and file shortcuts
-
-		moveDependentsToTrash(dlFolder);
-
-		// Sync
-
-		triggerRepositoryEvent(
-			folder.getRepositoryId(),
-			TrashRepositoryEventType.EntryTrashed.class, Folder.class, folder);
-
-		// Social
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", folder.getName());
-
-		SocialActivityManagerUtil.addActivity(
-			userId, folder, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			extraDataJSONObject.toString(), 0);
-
-		return new LiferayFolder(dlFolder);
-	}
-
-	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(
-		List<DLFileVersion> dlFileVersions) {
-
-		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<>(dlFileVersions.size());
-
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			int status = dlFileVersion.getStatus();
-
-			if (status == WorkflowConstants.STATUS_PENDING) {
-				status = WorkflowConstants.STATUS_DRAFT;
-			}
-
-			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
-				new ObjectValuePair<>(dlFileVersion.getFileVersionId(), status);
-
-			dlFileVersionStatusOVPs.add(dlFileVersionStatusOVP);
-		}
-
-		return dlFileVersionStatusOVPs;
 	}
 
 	protected long getFileEntryTypeId(FileEntry fileEntry) {

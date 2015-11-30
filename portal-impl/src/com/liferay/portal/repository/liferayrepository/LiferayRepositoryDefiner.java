@@ -49,8 +49,11 @@ import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
@@ -108,10 +111,14 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		TrashCapability trashCapability = new LiferayTrashCapability(
 			DLAppHelperLocalServiceUtil.getService(),
 			DLAppServiceAdapter.create(documentRepository),
-			dlFileEntryServiceAdapter, dlFolderServiceAdapter,
+			dlFileEntryServiceAdapter, DLFileRankLocalServiceUtil.getService(),
+			DLFileShortcutLocalServiceUtil.getService(),
+			DLFileVersionServiceAdapter.create(documentRepository),
+			DLFolderServiceAdapter.create(documentRepository),
 			RepositoryServiceAdapter.create(documentRepository),
 			TrashEntryLocalServiceUtil.getService(),
-			TrashVersionLocalServiceUtil.getService());
+			TrashVersionLocalServiceUtil.getService(),
+			WorkflowInstanceLinkLocalServiceUtil.getService());
 
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, trashCapability);

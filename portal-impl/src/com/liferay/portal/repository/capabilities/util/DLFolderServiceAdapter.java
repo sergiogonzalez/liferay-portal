@@ -17,15 +17,21 @@ package com.liferay.portal.repository.capabilities.util;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -78,6 +84,15 @@ public class DLFolderServiceAdapter {
 		return _dlFolderLocalService.getActionableDynamicQuery();
 	}
 
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountFolders,
+			boolean hidden)
+		throws PortalException {
+
+		return _dlFolderLocalService.getFolders(
+			groupId, parentFolderId, includeMountFolders, hidden);
+	}
+
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, String[] mimeTypes,
 			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
@@ -99,6 +114,49 @@ public class DLFolderServiceAdapter {
 		}
 
 		return foldersAndFileEntriesAndFileShortcuts;
+	}
+
+	public boolean hasFolderLock(long userId, long folderId) {
+		return _dlFolderLocalService.hasFolderLock(userId, folderId);
+	}
+
+	public Lock lockFolder(long userId, long folderId) throws PortalException {
+		if (_dlFolderService != null) {
+			return _dlFolderService.lockFolder(folderId);
+		}
+
+		return _dlFolderLocalService.lockFolder(userId, folderId);
+	}
+
+	public void unlockFolder(long folderId, String lockUuid)
+		throws PortalException {
+
+		if (_dlFolderService != null) {
+			_dlFolderService.unlockFolder(folderId, lockUuid);
+		}
+		else {
+			_dlFolderLocalService.unlockFolder(folderId, lockUuid);
+		}
+	}
+
+	public DLFolder update(DLFolder dlFolder) {
+		return _dlFolderLocalService.updateDLFolder(dlFolder);
+	}
+
+	public void updateAssets(long folderId, boolean visible)
+		throws PortalException {
+
+		_dlFolderLocalService.updateAssets(folderId, visible);
+	}
+
+	public DLFolder updateStatus(
+			long userId, long folderId, int status,
+			Map<String, Serializable> workflowStatus,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _dlFolderLocalService.updateStatus(
+			userId, folderId, status, workflowStatus, serviceContext);
 	}
 
 	private final DLFolderLocalService _dlFolderLocalService;
