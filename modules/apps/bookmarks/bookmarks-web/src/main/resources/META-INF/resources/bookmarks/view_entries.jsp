@@ -142,7 +142,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<%
 				row.setPrimaryKey(String.valueOf(entry.getEntryId()));
 
-				String rowHREF = null;
+				String rowURL = null;
 
 				if (BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.VIEW)) {
 					PortletURL tempRowURL = renderResponse.createRenderURL();
@@ -151,7 +151,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					tempRowURL.setParameter("redirect", currentURL);
 					tempRowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
-					rowHREF = tempRowURL.toString();
+					rowURL = tempRowURL.toString();
 				}
 				%>
 
