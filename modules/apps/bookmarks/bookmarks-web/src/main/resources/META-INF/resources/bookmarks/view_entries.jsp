@@ -54,13 +54,13 @@ if (navigation.equals("mine") || navigation.equals("recent")) {
 }
 else {
 	if (useAssetEntryQuery) {
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
 
-			assetEntryQuery.setExcludeZeroViewCount(false);
-			assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
-			assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
+		assetEntryQuery.setExcludeZeroViewCount(false);
+		assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
+		assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
 
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 	}
 	else {
 		results = BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd());
@@ -108,19 +108,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				<%
 				row.setPrimaryKey(String.valueOf(curFolder.getFolderId()));
-
-				String rowURL = null;
-
-				if (BookmarksFolderPermissionChecker.contains(permissionChecker, curFolder, ActionKeys.VIEW)) {
-					PortletURL tempRowURL = renderResponse.createRenderURL();
-
-					tempRowURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-
-					rowURL = tempRowURL.toString();
-				}
 				%>
+
+				<liferay-portlet:renderURL varImpl="rowURL">
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</liferay-portlet:renderURL>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
@@ -147,19 +141,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				<%
 				row.setPrimaryKey(String.valueOf(entry.getEntryId()));
-
-				String rowURL = null;
-
-				if (BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.VIEW)) {
-					PortletURL tempRowURL = renderResponse.createRenderURL();
-
-					tempRowURL.setParameter("mvcRenderCommandName", "/bookmarks/view_entry");
-					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-
-					rowURL = tempRowURL.toString();
-				}
 				%>
+
+				<liferay-portlet:renderURL varImpl="rowURL">
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_entry" />
+					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</liferay-portlet:renderURL>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
