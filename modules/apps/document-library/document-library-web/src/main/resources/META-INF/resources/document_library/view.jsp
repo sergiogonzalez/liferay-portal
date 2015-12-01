@@ -112,7 +112,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 %>
 
 <div id="<portlet:namespace />documentLibraryContainer">
-	<div class='<%= portletTitleBasedNavigation ? "\"container-fluid-1280\"" : StringPool.BLANK %> sidenav-container sidenav-right' id="<portlet:namespace />infoPanelId">
+	<div class="closed <%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-default sidenav-menu">
 				<liferay-util:include page="/document_library/info_panel.jsp" servletContext="<%= application %>" />
