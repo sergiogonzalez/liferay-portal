@@ -37,7 +37,7 @@ if (portletTitleBasedNavigation) {
 
 <portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
 
-<div class="container-fluid-1280">
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

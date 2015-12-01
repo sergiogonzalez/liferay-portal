@@ -107,7 +107,11 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<%
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+%>
+
+<div class='<%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId'>
 	<div class="sidenav-menu-slider">
 		<div class="sidebar sidebar-default sidenav-menu">
 			<liferay-util:include page="/wiki_admin/info_panel.jsp" servletContext="<%= application %>" />
