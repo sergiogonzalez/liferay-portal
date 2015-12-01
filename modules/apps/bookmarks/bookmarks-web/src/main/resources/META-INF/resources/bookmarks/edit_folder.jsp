@@ -90,7 +90,7 @@ if (portletTitleBasedNavigation) {
 
 		<aui:model-context bean="<%= folder %>" model="<%= BookmarksFolder.class %>" />
 
-		<aui:fieldset-group>
+		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<c:if test="<%= folder != null %>">
 
@@ -154,30 +154,34 @@ if (portletTitleBasedNavigation) {
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
 				<aui:input name="description" />
+			</aui:fieldset>
 
-				<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
+			<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 					<liferay-ui:custom-attribute-list
 						className="<%= BookmarksFolder.class.getName() %>"
 						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
 						editable="<%= true %>"
 						label="<%= true %>"
 					/>
-				</liferay-ui:custom-attributes-available>
+				</aui:fieldset>
+			</liferay-ui:custom-attributes-available>
 
-				<c:if test="<%= folder == null %>">
+			<c:if test="<%= folder == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 					<aui:field-wrapper label="permissions">
 						<liferay-ui:input-permissions
 							modelName="<%= BookmarksFolder.class.getName() %>"
 						/>
 					</aui:field-wrapper>
-				</c:if>
-			</aui:fieldset>
+				</aui:fieldset>
+			</c:if>
 		</aui:fieldset-group>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

@@ -87,7 +87,7 @@ if (portletTitleBasedNavigation) {
 
 		<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
 
-		<aui:fieldset-group>
+		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<c:if test="<%= (entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource) %>">
 
@@ -150,45 +150,45 @@ if (portletTitleBasedNavigation) {
 				<aui:input name="url" />
 
 				<aui:input name="description" />
+			</aui:fieldset>
 
-				<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+			<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 					<liferay-ui:custom-attribute-list
 						className="<%= BookmarksEntry.class.getName() %>"
 						classPK="<%= entryId %>"
 						editable="<%= true %>"
 						label="<%= true %>"
 					/>
-				</liferay-ui:custom-attributes-available>
+				</aui:fieldset>
+			</liferay-ui:custom-attributes-available>
 
-				<c:if test="<%= entry == null %>">
-					<aui:field-wrapper label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= BookmarksEntry.class.getName() %>"
-						/>
-					</aui:field-wrapper>
-				</c:if>
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+				<aui:input name="categories" type="assetCategories" />
 
-				<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="bookmarksEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
-					<aui:input name="categories" type="assetCategories" />
-
-					<aui:input name="tags" type="assetTags" />
-				</liferay-ui:panel>
-
-				<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="bookmarksEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-					<aui:fieldset>
-						<liferay-ui:input-asset-links
-							className="<%= BookmarksEntry.class.getName() %>"
-							classPK="<%= entryId %>"
-						/>
-					</aui:fieldset>
-				</liferay-ui:panel>
+				<aui:input name="tags" type="assetTags" />
 			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+				<liferay-ui:input-asset-links
+					className="<%= BookmarksEntry.class.getName() %>"
+					classPK="<%= entryId %>"
+				/>
+			</aui:fieldset>
+
+			<c:if test="<%= entry == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= BookmarksEntry.class.getName() %>"
+					/>
+				</aui:fieldset>
+			</c:if>
 		</aui:fieldset-group>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>
