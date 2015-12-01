@@ -395,6 +395,12 @@ public class DLFileShortcutLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
+		long groupId, long folderId) {
+		return _dlFileShortcutLocalService.getFileShortcuts(groupId, folderId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
 		long groupId, long folderId, boolean active, int status, int start,
 		int end) {
 		return _dlFileShortcutLocalService.getFileShortcuts(groupId, folderId,

@@ -260,6 +260,11 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileShortcut> getFileShortcuts(long groupId, long folderId) {
+		return dlFileShortcutPersistence.findByG_F(groupId, folderId);
+	}
+
+	@Override
 	public List<DLFileShortcut> getFileShortcuts(
 		long groupId, long folderId, boolean active, int status, int start,
 		int end) {
