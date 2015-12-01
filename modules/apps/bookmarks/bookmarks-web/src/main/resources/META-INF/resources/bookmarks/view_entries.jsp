@@ -108,13 +108,19 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				<%
 				row.setPrimaryKey(String.valueOf(curFolder.getFolderId()));
-				%>
 
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
-					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</liferay-portlet:renderURL>
+				String rowURL = null;
+
+				if (BookmarksFolderPermissionChecker.contains(permissionChecker, curFolder, ActionKeys.VIEW)) {
+					PortletURL tempRowURL = renderResponse.createRenderURL();
+
+					tempRowURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+					tempRowURL.setParameter("redirect", currentURL);
+					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+
+					rowURL = tempRowURL.toString();
+				}
+				%>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
