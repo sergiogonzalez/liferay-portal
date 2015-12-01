@@ -46,13 +46,20 @@ else {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 	}
 }
+
+String headerTitle = (folder == null) ? ((parentFolderId > 0) ? LanguageUtil.get(request, "add-subfolder") : LanguageUtil.get(request, "add-folder")) : LanguageUtil.format(request, "edit-x", folder.getName(), false);
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
-<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-		<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
-	</c:if>
-
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<portlet:actionURL name="/bookmarks/edit_folder" var="editFolderURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 	</portlet:actionURL>
@@ -63,11 +70,13 @@ else {
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
 
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			localizeTitle="<%= (folder == null) %>"
-			title='<%= (folder == null) ? ((parentFolderId > 0) ? "add-subfolder" : "add-folder") : LanguageUtil.format(request, "edit-x", folder.getName(), false) %>'
-		/>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				localizeTitle="<%= (folder == null) %>"
+				title="<%= headerTitle %>"
+			/>
+		</c:if>
 
 		<liferay-ui:error exception="<%= FolderNameException.class %>">
 			<p>
@@ -81,87 +90,89 @@ else {
 
 		<aui:model-context bean="<%= folder %>" model="<%= BookmarksFolder.class %>" />
 
-		<aui:fieldset>
-			<c:if test="<%= folder != null %>">
-
-				<%
-				String parentFolderName = LanguageUtil.get(request, "home");
-
-				try {
-					BookmarksFolder parentFolder = BookmarksFolderServiceUtil.getFolder(parentFolderId);
-
-					parentFolderName = parentFolder.getName();
-				}
-				catch (NoSuchFolderException nsfe) {
-				}
-				%>
-
-				<div class="form-group">
-					<aui:input label="parent-folder" name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
-
-					<aui:button name="selectFolderButton" value="select" />
-
-					<aui:script>
-						AUI.$('#<portlet:namespace />selectFolderButton').on(
-							'click',
-							function(event) {
-								Liferay.Util.selectEntity(
-									{
-										dialog: {
-											constrain: true,
-											modal: true,
-											width: 680
-										},
-										id: '<portlet:namespace />selectFolder',
-										title: '<liferay-ui:message arguments="folder" key="select-x" />',
-										uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
-									},
-									function(event) {
-										var folderData = {
-											idString: 'parentFolderId',
-											idValue: event.folderid,
-											nameString: 'parentFolderName',
-											nameValue: event.name
-										};
-
-										Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-									}
-								);
-							}
-						);
-					</aui:script>
+		<aui:fieldset-group>
+			<aui:fieldset>
+				<c:if test="<%= folder != null %>">
 
 					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + renderResponse.getNamespace() + "');";
+					String parentFolderName = LanguageUtil.get(request, "home");
+
+					try {
+						BookmarksFolder parentFolder = BookmarksFolderServiceUtil.getFolder(parentFolderId);
+
+						parentFolderName = parentFolder.getName();
+					}
+					catch (NoSuchFolderException nsfe) {
+					}
 					%>
 
-					<aui:button disabled="<%= (parentFolderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-				</div>
+					<div class="form-group">
+						<aui:input label="parent-folder" name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
-				<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="checkbox" />
-			</c:if>
+						<aui:button name="selectFolderButton" value="select" />
 
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+						<aui:script>
+							AUI.$('#<portlet:namespace />selectFolderButton').on(
+								'click',
+								function(event) {
+									Liferay.Util.selectEntity(
+										{
+											dialog: {
+												constrain: true,
+												modal: true,
+												width: 680
+											},
+											id: '<portlet:namespace />selectFolder',
+											title: '<liferay-ui:message arguments="folder" key="select-x" />',
+											uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+										},
+										function(event) {
+											var folderData = {
+												idString: 'parentFolderId',
+												idValue: event.folderid,
+												nameString: 'parentFolderName',
+												nameValue: event.name
+											};
 
-			<aui:input name="description" />
+											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+										}
+									);
+								}
+							);
+						</aui:script>
 
-			<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= BookmarksFolder.class.getName() %>"
-					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-					editable="<%= true %>"
-					label="<%= true %>"
-				/>
-			</liferay-ui:custom-attributes-available>
+						<%
+						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + renderResponse.getNamespace() + "');";
+						%>
 
-			<c:if test="<%= folder == null %>">
-				<aui:field-wrapper label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= BookmarksFolder.class.getName() %>"
+						<aui:button disabled="<%= (parentFolderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					</div>
+
+					<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="checkbox" />
+				</c:if>
+
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+
+				<aui:input name="description" />
+
+				<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
+					<liferay-ui:custom-attribute-list
+						className="<%= BookmarksFolder.class.getName() %>"
+						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+						editable="<%= true %>"
+						label="<%= true %>"
 					/>
-				</aui:field-wrapper>
-			</c:if>
-		</aui:fieldset>
+				</liferay-ui:custom-attributes-available>
+
+				<c:if test="<%= folder == null %>">
+					<aui:field-wrapper label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= BookmarksFolder.class.getName() %>"
+						/>
+					</aui:field-wrapper>
+				</c:if>
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<aui:button-row>
 			<aui:button type="submit" />
