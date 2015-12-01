@@ -114,7 +114,7 @@ portletURL.setParameter("state", state);
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>
-					<a href="<%= HttpUtil.encodeURL(appDisplay.getDisplayURL(renderResponse)) %>">
+					<a href="<%= HtmlUtil.escapeHREF(appDisplay.getDisplayURL(renderResponse)) %>">
 						<%= appDisplay.getTitle() %>
 					</a>
 				</h5>
@@ -141,6 +141,10 @@ portletURL.setParameter("state", state);
 					</div>
 				</div>
 			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				path="/app_display_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
