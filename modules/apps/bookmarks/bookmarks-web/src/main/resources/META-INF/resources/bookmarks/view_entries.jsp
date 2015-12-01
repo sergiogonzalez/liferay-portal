@@ -120,7 +120,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-icon
-							icon="icon-folder-close"
+							icon="folder"
 							toggleRowChecker="<%= true %>"
 						/>
 
@@ -153,7 +153,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-icon
-							icon="icon-share-alt"
+							icon="link"
 							toggleRowChecker="<%= true %>"
 						/>
 
