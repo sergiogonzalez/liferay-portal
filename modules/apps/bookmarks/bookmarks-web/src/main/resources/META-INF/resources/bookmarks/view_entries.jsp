@@ -56,6 +56,7 @@ else {
 	if (useAssetEntryQuery) {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
 
+		assetEntryQuery.setEnablePermissions(true);
 		assetEntryQuery.setExcludeZeroViewCount(false);
 		assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
 		assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
