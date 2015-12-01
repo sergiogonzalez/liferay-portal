@@ -19,7 +19,18 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-BookmarksEntry entry = (BookmarksEntry)row.getObject();
+Object rowObject = row.getObject();
+
+BookmarksEntry entry = null;
+
+if (rowObject instanceof AssetEntry) {
+	AssetEntry assetEntry = (AssetEntry)rowObject;
+
+	entry = BookmarksEntryServiceUtil.getEntry(assetEntry.getClassPK());
+}
+else {
+	entry = (BookmarksEntry)rowObject;
+}
 
 entry = entry.toEscapedModel();
 
