@@ -43,7 +43,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
 		<c:choose>
 			<c:when test="<%= Validator.isNull(redirect) %>">
