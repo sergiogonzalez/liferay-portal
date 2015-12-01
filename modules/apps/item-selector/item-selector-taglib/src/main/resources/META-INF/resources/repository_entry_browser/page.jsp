@@ -345,20 +345,11 @@ if (Validator.isNotNull(keywords)) {
 								%>
 
 									<liferay-ui:search-container-column-text>
-
-										<%
-										String imageUrl = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
-										%>
-
-										<div class="taglib-vertical-card item-preview" <%= AUIUtil.buildData(data) %>>
-											<div>
-												<div class="card card-dm">
-													<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="<%= "background-image: url('" + imageUrl + "')" %>">
-														<img alt="" class="sr-only" src="<%= imageUrl %>" />
-													</div>
-												</div>
-											</div>
-										</div>
+										<liferay-frontend:image-vertical-card
+											cssClass="item-preview"
+											data="<%= data %>"
+											imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
+										/>
 									</liferay-ui:search-container-column-text>
 
 								<%
