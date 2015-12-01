@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -386,12 +386,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	@Override
 	public void deleteAllRepositories(long groupId) throws PortalException {
 		LocalRepository groupLocalRepository =
-			RepositoryProviderUtil.getLocalRepository(groupId);
+			repositoryProvider.getLocalRepository(groupId);
 
 		deleteRepository(groupLocalRepository);
 
 		List<LocalRepository> localRepositories =
-			RepositoryProviderUtil.getLocalRepositoriesByGroupId(groupId);
+			repositoryProvider.getGroupLocalRepositories(groupId);
 
 		for (LocalRepository localRepository : localRepositories) {
 			if (localRepository.getRepositoryId() !=
@@ -1355,28 +1355,27 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	protected LocalRepository getFileEntryLocalRepository(long fileEntryId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
+		return repositoryProvider.getFileEntryLocalRepository(fileEntryId);
 	}
 
 	protected LocalRepository getFileShortcutLocalRepository(
 			long fileShortcutId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFileShortcutLocalRepository(
+		return repositoryProvider.getFileShortcutLocalRepository(
 			fileShortcutId);
 	}
 
 	protected LocalRepository getFileVersionLocalRepository(long fileVersionId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFileVersionLocalRepository(
-			fileVersionId);
+		return repositoryProvider.getFileVersionLocalRepository(fileVersionId);
 	}
 
 	protected LocalRepository getFolderLocalRepository(long folderId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFolderLocalRepository(folderId);
+		return repositoryProvider.getFolderLocalRepository(folderId);
 	}
 
 	protected LocalRepository getFolderLocalRepository(
@@ -1394,7 +1393,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return RepositoryProviderUtil.getLocalRepository(repositoryId);
+			return repositoryProvider.getLocalRepository(repositoryId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -1505,6 +1504,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	@BeanReference(type = DLAppService.class)
 	protected DLAppService dlAppService;
+
+	@BeanReference(type = RepositoryProvider.class)
+	protected RepositoryProvider repositoryProvider;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAppLocalServiceImpl.class);
