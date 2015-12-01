@@ -73,7 +73,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
 	</portlet:actionURL>
