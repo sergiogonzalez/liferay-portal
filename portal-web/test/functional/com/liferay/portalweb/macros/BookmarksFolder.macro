@@ -17,7 +17,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<var name="key_folderDescription" value="${folderDescription}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescription}" />
 	</command>
@@ -66,7 +66,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<var name="key_folderDescription" value="${folderDescription}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescription}" />
 	</command>
@@ -141,7 +141,15 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<var name="key_folderName" value="${folderNameEdit}" />
+
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_TITLE" value1="${folderNameEdit}" />
+
+		<var name="key_folderDescription" value="${folderDescriptionEdit}" />
+
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescriptionEdit}" />
 	</command>
 
@@ -164,7 +172,7 @@
 		<var name="key_folderName" value="${folderNameEdit}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_TITLE" value1="${folderNameEdit}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescriptionEdit}" />
+		<var name="key_folderDescription" value="${folderDescriptionEdit}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescriptionEdit}" />
 	</command>
@@ -310,7 +318,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<var name="key_folderDescription" value="${folderDescription}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescription}" />
 	</command>
@@ -319,7 +327,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<var name="key_folderDescription" value="${folderDescription}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescription}" />
 	</command>
