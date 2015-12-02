@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.proxy;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -185,6 +186,13 @@ public class FileShortcutProxyBean
 	@Override
 	public boolean isEscapedModel() {
 		return _fileShortcut.isEscapedModel();
+	}
+
+	@Override
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return _fileShortcut.isRepositoryCapabilityProvided(capabilityClass);
 	}
 
 	@Override

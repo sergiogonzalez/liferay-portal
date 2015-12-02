@@ -15,6 +15,10 @@
 package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.util.Validator;
@@ -273,6 +277,15 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	@Override
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		Repository repository = getRepository();
+
+		return repository.isCapabilityProvided(capabilityClass);
+	}
+
+	@Override
 	public boolean isRoot() {
 		return _dlFolder.isRoot();
 	}
@@ -413,6 +426,16 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		}
 		else {
 			return this;
+		}
+	}
+
+	protected Repository getRepository() {
+		try {
+			return RepositoryProviderUtil.getRepository(getRepositoryId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to get repository for folder " + getFolderId(), pe);
 		}
 	}
 

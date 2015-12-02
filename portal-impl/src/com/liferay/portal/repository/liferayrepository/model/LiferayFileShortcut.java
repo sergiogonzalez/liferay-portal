@@ -15,6 +15,10 @@
 package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -223,6 +227,15 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		Repository repository = getRepository();
+
+		return repository.isCapabilityProvided(capabilityClass);
+	}
+
+	@Override
 	public void setCompanyId(long companyId) {
 		_dlFileShortcut.setCompanyId(companyId);
 	}
@@ -295,6 +308,18 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 		}
 		else {
 			return this;
+		}
+	}
+
+	protected Repository getRepository() {
+		try {
+			return RepositoryProviderUtil.getRepository(getRepositoryId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to get repository for file entry shortcut " +
+					getFileShortcutId(),
+				pe);
 		}
 	}
 
