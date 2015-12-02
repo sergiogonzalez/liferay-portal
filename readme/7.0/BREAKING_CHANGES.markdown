@@ -2925,3 +2925,33 @@ In previous versions of Liferay, some applications such as Blogs and Wiki shared
 the tags of their entries within the page. The Asset Publisher was able to use
 them to show other assets with the same tags. This functionality has changed, so
 the preference is no longer used.
+
+---------------------------------------
+
+### Moved Recycle Bin logic into a new `DLTrashService` interface
+- **Date:** 2015-12-2
+- **JIRA Ticket:** LPS-60810
+
+#### What changed?
+
+All Recycle Bin logic in Documents and Media services was moved from
+`DLAppService` into the new `DLTrashService` service interface. All
+moved methods have the same name and signatures.
+
+#### Who is affected?
+
+Any local or remote caller of `DLAppService`.
+
+#### How should I update my code?
+
+As all methods have been simply moved into the new service, calling
+the equivalent method on `DLTrashService` will suffice.
+
+#### Why was this change made?
+
+Documents and Media services have complex interdependencies that
+result in circular dependencies. Until now, `DLAppService` was
+responsible of exposing the Recycle Bin logic, delegating into another
+components; problem was, those components depended themselves on
+`DLAppService` to implement their logic. Breaking the service in two
+was the only sensible solution to this circularity.
