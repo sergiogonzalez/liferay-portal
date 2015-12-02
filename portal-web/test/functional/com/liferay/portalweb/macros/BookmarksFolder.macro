@@ -2,7 +2,9 @@
 	<var name="assetType" value="Bookmarks Folder" />
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="NavListItem#ADD_FOLDER" value1="Add Folder" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
@@ -17,7 +19,9 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute function="AssertClick" locator1="NavListItem#ADD_FOLDER" value1="Add Folder" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Name" />

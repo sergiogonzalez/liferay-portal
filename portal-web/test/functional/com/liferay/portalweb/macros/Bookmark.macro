@@ -24,7 +24,9 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
 
 		<if>
 			<isset var="bookmarkName" />
@@ -80,7 +82,9 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
 
 		<if>
 			<isset var="bookmarkName" />
