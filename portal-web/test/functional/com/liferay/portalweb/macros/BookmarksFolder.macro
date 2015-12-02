@@ -161,7 +161,7 @@
 	<command name="editPG">
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
-		<var name="key_folderName" value="${folderName}" />
+		<var name="key_listEntry" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
