@@ -139,10 +139,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<var name="key_folderName" value="${folderName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${folderNameEdit}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescriptionEdit}" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
