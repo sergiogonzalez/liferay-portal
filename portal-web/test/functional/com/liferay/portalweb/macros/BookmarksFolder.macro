@@ -131,7 +131,7 @@
 	</command>
 
 	<command name="editCP">
-		<execute function="Click" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC" />
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<var name="key_folderName" value="${folderName}" />
@@ -154,6 +154,8 @@
 	</command>
 
 	<command name="editPG">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
