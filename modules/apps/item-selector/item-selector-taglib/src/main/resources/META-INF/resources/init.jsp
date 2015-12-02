@@ -60,7 +60,8 @@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
+page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
+page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
