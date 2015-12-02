@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.capabilities.ExportCapability;
+import com.liferay.portal.kernel.repository.capabilities.ImportCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -193,7 +195,7 @@ public class FileEntryStagedModelDataHandler
 
 		String fileEntryPath = ExportImportPathUtil.getModelPath(fileEntry);
 
-		if (!fileEntry.isDefaultRepository()) {
+		if (!fileEntry.isRepositoryCapabilityProvided(ExportCapability.class)) {
 			Repository repository = _repositoryLocalService.getRepository(
 				fileEntry.getRepositoryId());
 
@@ -306,10 +308,7 @@ public class FileEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
 
-		if (!fileEntry.isDefaultRepository()) {
-
-			// References has been automatically imported, nothing to do here
-
+		if (!fileEntry.isRepositoryCapabilityProvided(ImportCapability.class)) {
 			return;
 		}
 

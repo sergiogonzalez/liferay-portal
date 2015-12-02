@@ -17,6 +17,8 @@ package com.liferay.document.library.lar;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.capabilities.ExportCapability;
+import com.liferay.portal.kernel.repository.capabilities.ImportCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -143,7 +145,7 @@ public class FolderStagedModelDataHandler
 
 		String folderPath = ExportImportPathUtil.getModelPath(folder);
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ExportCapability.class)) {
 			Repository repository = _repositoryLocalService.getRepository(
 				folder.getRepositoryId());
 
@@ -200,7 +202,7 @@ public class FolderStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Folder.class + ".folderIdsAndRepositoryEntryIds");
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ImportCapability.class)) {
 			Map<Long, Long> repositoryEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					RepositoryEntry.class);
@@ -314,7 +316,7 @@ public class FolderStagedModelDataHandler
 			Folder folder)
 		throws Exception {
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ExportCapability.class)) {
 			return;
 		}
 
@@ -388,7 +390,7 @@ public class FolderStagedModelDataHandler
 			Folder folder, Folder importedFolder, ServiceContext serviceContext)
 		throws Exception {
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ImportCapability.class)) {
 			return;
 		}
 
