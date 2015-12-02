@@ -206,6 +206,8 @@
 	</command>
 
 	<command name="gotoPG">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
