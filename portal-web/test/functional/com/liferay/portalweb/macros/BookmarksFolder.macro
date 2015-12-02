@@ -167,7 +167,7 @@
 
 		<execute function="Type" locator1="PGBookmarksEditFolder#NAME_FIELD" value1="${folderNameEdit}" />
 		<execute function="Type" locator1="PGBookmarksEditFolder#DESCRIPTION_FIELD" value1="${folderDescriptionEdit}" />
-		<execute function="AssertClick" locator1="PGBookmarksEditFolder#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
