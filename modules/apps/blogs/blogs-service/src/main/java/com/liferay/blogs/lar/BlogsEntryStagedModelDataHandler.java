@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -37,6 +36,7 @@ import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
+import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
@@ -293,19 +293,6 @@ public class BlogsEntryStagedModelDataHandler
 			}
 		}
 
-		ImageSelector coverImageImageSelector = new ImageSelector(
-			smallImageFileEntryId, entry.getCoverImageURL(), null);
-
-		ImageSelector smallImageImageSelector = null;
-
-		if (!entry.isSmallImage()) {
-			smallImageImageSelector = new ImageSelector(0);
-		}
-		else {
-			smallImageImageSelector = new ImageSelector(
-				smallImageFileEntryId, entry.getSmallImageURL(), null);
-		}
-
 		BlogsEntry importedEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
@@ -323,8 +310,7 @@ public class BlogsEntryStagedModelDataHandler
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
 					allowTrackbacks, trackbacks, entry.getCoverImageCaption(),
-					coverImageImageSelector, smallImageImageSelector,
-					serviceContext);
+					null, null, serviceContext);
 			}
 			else {
 				importedEntry = _blogsEntryLocalService.updateEntry(
@@ -333,8 +319,7 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getContent(), displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					allowPingbacks, allowTrackbacks, trackbacks,
-					entry.getCoverImageCaption(), coverImageImageSelector,
-					smallImageImageSelector, serviceContext);
+					entry.getCoverImageCaption(), null, null, serviceContext);
 			}
 		}
 		else {
@@ -343,9 +328,16 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getDescription(), entry.getContent(), displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				entry.getCoverImageCaption(), coverImageImageSelector,
-				smallImageImageSelector, serviceContext);
+				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
+
+		importedEntry.setSmallImageId(smallImageFileEntryId);
+		importedEntry.setSmallImageURL(entry.getSmallImageURL());
+		importedEntry.setCoverImageFileEntryId(
+			entry.getCoverImageFileEntryId());
+		importedEntry.setCoverImageURL(entry.getCoverImageURL());
+
+		_blogsEntryPersistece.update(importedEntry);
 
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
@@ -424,6 +416,13 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setBlogsEntryPersistence(
+		BlogsEntryPersistence blogsEntryPersistence) {
+
+		_blogsEntryPersistece = blogsEntryPersistence;
+	}
+
+	@Reference(unbind = "-")
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}
@@ -434,6 +433,7 @@ public class BlogsEntryStagedModelDataHandler
 	private volatile BlogsEntryExportImportContentProcessor
 		_blogsEntryExportImportContentProcessor;
 	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private volatile BlogsEntryPersistence _blogsEntryPersistece;
 	private volatile ImageLocalService _imageLocalService;
 
 }
