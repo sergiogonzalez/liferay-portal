@@ -103,7 +103,23 @@
 </tr>
 <tr>
 	<td>BOOKMARK_TABLE_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${key_bookmarkName}')]/td[4]</td>
+	<td>//table[contains(@class,'table-list')]//td[2]//a[contains(.,'${key_bookmarkName}')]/../../../../td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDERS_DESCRIPTIVE-->
+<tr>
+	<td>FOLDERS_DESCRIPTIVE_ENTRY_TITLE</td>
+	<td>//li[contains(@class,'list-group-item')]//div/h5[contains(.,'${key_folderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION</td>
+	<td>//li[contains(@class,'list-group-item')]//div/h6[contains(.,'${key_folderDescription}')]</td>
 	<td></td>
 </tr>
 </tbody>
