@@ -47,7 +47,9 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick" locator1="NavListItem#ADD_FOLDER" value1="Add Folder" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />

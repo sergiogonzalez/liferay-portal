@@ -70,9 +70,9 @@
 	</command>
 
 	<command name="addInvalidURLPG">
-		<var name="key_folderName" value="${folderName}" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="AssertClick" locator1="PGBookmarksFolder#FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${bookmarkName}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURLInvalid}" />
@@ -107,7 +107,9 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
 
 		<if>
 			<isset var="bookmarkName" />
