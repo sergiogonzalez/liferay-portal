@@ -117,7 +117,7 @@
 
 		<var name="key_folderName" value="${folderName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+		<var name="key_listEntry" value="${folderName}" />
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
@@ -278,7 +278,7 @@
 
 		<var name="key_folderName" value="${folderName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+		<var name="key_listEntry" value="${folderName}" />
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
