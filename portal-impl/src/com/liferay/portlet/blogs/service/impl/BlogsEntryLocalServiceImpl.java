@@ -180,24 +180,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
-		if (smallImage && Validator.isNotNull(smallImageFileName) &&
-			(smallImageInputStream != null)) {
+		if (smallImage) {
+			if (Validator.isNotNull(smallImageFileName) &&
+				(smallImageInputStream != null)) {
 
-			try {
-				byte[] bytes = FileUtil.getBytes(smallImageInputStream);
+				try {
+					byte[] bytes = FileUtil.getBytes(smallImageInputStream);
 
-				smallImageImageSelector = new ImageSelector(
-					bytes, smallImageFileName,
-					MimeTypesUtil.getContentType(smallImageFileName), null);
-			}
-			catch (IOException ioe) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Could not create the imageSelector", ioe);
+					smallImageImageSelector = new ImageSelector(
+						bytes, smallImageFileName,
+						MimeTypesUtil.getContentType(smallImageFileName), null);
+				}
+				catch (IOException ioe) {
+					if (_log.isErrorEnabled()) {
+						_log.error("Could not create the image selector", ioe);
+					}
 				}
 			}
-		}
-		else if (smallImage && Validator.isNotNull(smallImageURL)) {
-			smallImageImageSelector = new ImageSelector(smallImageURL);
+			else if (Validator.isNotNull(smallImageURL)) {
+				smallImageImageSelector = new ImageSelector(smallImageURL);
+			}
 		}
 
 		return addEntry(
@@ -277,8 +279,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Images
 
-		long coverImageFileEntryId = entry.getCoverImageFileEntryId();
-		String coverImageURL = entry.getCoverImageURL();
+		long coverImageFileEntryId = 0;
+		String coverImageURL = null;
 
 		if (coverImageImageSelector != null) {
 			coverImageURL = coverImageImageSelector.getImageURL();
@@ -289,8 +291,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			}
 		}
 
-		long smallImageFileEntryId = entry.getSmallImageFileEntryId();
-		String smallImageURL = entry.getSmallImageURL();
+		long smallImageFileEntryId = 0;
+		String smallImageURL = null;
 
 		if (smallImageImageSelector != null) {
 			smallImageURL = smallImageImageSelector.getImageURL();
@@ -406,25 +408,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		byte[] imageBytes = imageSelector.getImageBytes();
 
-		if (imageBytes != null) {
-			BlogsEntryAttachmentFileEntryHelper
-				blogsEntryAttachmentFileEntryHelper =
-					new BlogsEntryAttachmentFileEntryHelper();
-
-			Folder folder = addAttachmentsFolder(userId, groupId);
-
-			FileEntry originalFileEntry =
-				blogsEntryAttachmentFileEntryHelper.
-					addBlogsEntryAttachmentFileEntry(
-						groupId, userId, entryId, folder.getFolderId(),
-						imageSelector.getImageTitle(),
-						imageSelector.getImageMimeType(),
-						imageSelector.getImageBytes());
-
-			return originalFileEntry.getFileEntryId();
+		if (imageBytes == null) {
+			return 0;
 		}
 
-		return 0;
+		BlogsEntryAttachmentFileEntryHelper
+			blogsEntryAttachmentFileEntryHelper =
+			new BlogsEntryAttachmentFileEntryHelper();
+
+		Folder folder = addAttachmentsFolder(userId, groupId);
+
+		FileEntry originalFileEntry =
+			blogsEntryAttachmentFileEntryHelper.
+				addBlogsEntryAttachmentFileEntry(
+					groupId, userId, entryId, folder.getFolderId(),
+					imageSelector.getImageTitle(),
+					imageSelector.getImageMimeType(),
+					imageSelector.getImageBytes());
+
+		return originalFileEntry.getFileEntryId();
 	}
 
 	@Override
@@ -1213,24 +1215,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
-		if (smallImage && Validator.isNotNull(smallImageFileName) &&
-			(smallImageInputStream != null)) {
+		if (smallImage) {
+			if (Validator.isNotNull(smallImageFileName) &&
+				(smallImageInputStream != null)) {
 
-			try {
-				byte[] bytes = FileUtil.getBytes(smallImageInputStream);
+				try {
+					byte[] bytes = FileUtil.getBytes(smallImageInputStream);
 
-				smallImageImageSelector = new ImageSelector(
-					bytes, smallImageFileName,
-					MimeTypesUtil.getContentType(smallImageFileName), null);
-			}
-			catch (IOException ioe) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Could not create the imageSelector", ioe);
+					smallImageImageSelector = new ImageSelector(
+						bytes, smallImageFileName,
+						MimeTypesUtil.getContentType(smallImageFileName), null);
+				}
+				catch (IOException ioe) {
+					if (_log.isErrorEnabled()) {
+						_log.error("Could not create the image selector", ioe);
+					}
 				}
 			}
-		}
-		else if (smallImage && Validator.isNotNull(smallImageURL)) {
-			smallImageImageSelector = new ImageSelector(smallImageURL);
+			else if (Validator.isNotNull(smallImageURL)) {
+				smallImageImageSelector = new ImageSelector(smallImageURL);
+			}
 		}
 
 		return updateEntry(
@@ -1329,7 +1333,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			if (smallImageImageSelector.getImageBytes() != null) {
 				smallImageFileEntryId = addSmallImageFileEntry(
-					userId, entry.getGroupId(), entry.getEntryId(),
+					userId, entry.getGroupId(), entryId,
 					smallImageImageSelector);
 			}
 			else {
@@ -1346,7 +1350,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
 		entry.setCoverImageURL(coverImageURL);
 
-		if ((smallImageFileEntryId != 0 )||
+		if ((smallImageFileEntryId != 0) ||
 			Validator.isNotNull(smallImageURL)) {
 
 			entry.setSmallImage(true);
