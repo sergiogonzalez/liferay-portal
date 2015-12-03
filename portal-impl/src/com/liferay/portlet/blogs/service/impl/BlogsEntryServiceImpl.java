@@ -17,15 +17,16 @@ package com.liferay.portlet.blogs.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
@@ -53,6 +54,7 @@ import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -96,14 +98,21 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		if (smallImage && Validator.isNotNull(smallImageFileName) &&
 			(smallImageInputStream != null)) {
 
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				serviceContext.getScopeGroupId(), getUserId(),
-				BlogsEntry.class.getName(), smallImageFileName,
-				smallImageInputStream,
-				MimeTypesUtil.getContentType(smallImageFileName));
+			try {
+				byte[] bytes = FileUtil.getBytes(smallImageInputStream);
 
-			smallImageImageSelector = new ImageSelector(
-				fileEntry.getFileEntryId(), smallImageURL, null);
+				smallImageImageSelector = new ImageSelector(
+					bytes, smallImageFileName,
+					MimeTypesUtil.getContentType(smallImageFileName), null);
+			}
+			catch (IOException ioe) {
+				if (_log.isErrorEnabled()) {
+					_log.error("Could not create the imageSelector", ioe);
+				}
+			}
+		}
+		else if (smallImage && Validator.isNotNull(smallImageURL)) {
+			smallImageImageSelector = new ImageSelector(smallImageURL);
 		}
 
 		return addEntry(
@@ -512,22 +521,24 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
-		if (smallImage) {
-			if (Validator.isNotNull(smallImageFileName) &&
-				(smallImageInputStream != null)) {
+		if (smallImage && Validator.isNotNull(smallImageFileName) &&
+			(smallImageInputStream != null)) {
 
-				FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-					serviceContext.getScopeGroupId(), getUserId(),
-					BlogsEntry.class.getName(), smallImageFileName,
-					smallImageInputStream,
-					MimeTypesUtil.getContentType(smallImageFileName));
+			try {
+				byte[] bytes = FileUtil.getBytes(smallImageInputStream);
 
 				smallImageImageSelector = new ImageSelector(
-					fileEntry.getFileEntryId(), smallImageURL, null);
+					bytes, smallImageFileName,
+					MimeTypesUtil.getContentType(smallImageFileName), null);
+			}
+			catch (IOException ioe) {
+				if (_log.isErrorEnabled()) {
+					_log.error("Could not create the imageSelector", ioe);
+				}
 			}
 		}
-		else {
-			smallImageImageSelector = new ImageSelector(0);
+		else if (smallImage && Validator.isNotNull(smallImageURL)) {
+			smallImageImageSelector = new ImageSelector(smallImageURL);
 		}
 
 		return updateEntry(
@@ -661,5 +672,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			throw new SystemException(fe);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsEntryServiceImpl.class);
 
 }
