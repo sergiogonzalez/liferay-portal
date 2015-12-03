@@ -95,24 +95,26 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
-		if (smallImage && Validator.isNotNull(smallImageFileName) &&
-			(smallImageInputStream != null)) {
+		if (smallImage) {
+			if (Validator.isNotNull(smallImageFileName) &&
+				(smallImageInputStream != null)) {
 
-			try {
-				byte[] bytes = FileUtil.getBytes(smallImageInputStream);
+				try {
+					byte[] bytes = FileUtil.getBytes(smallImageInputStream);
 
-				smallImageImageSelector = new ImageSelector(
-					bytes, smallImageFileName,
-					MimeTypesUtil.getContentType(smallImageFileName), null);
-			}
-			catch (IOException ioe) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Could not create the imageSelector", ioe);
+					smallImageImageSelector = new ImageSelector(
+						bytes, smallImageFileName,
+						MimeTypesUtil.getContentType(smallImageFileName), null);
+				}
+				catch (IOException ioe) {
+					if (_log.isErrorEnabled()) {
+						_log.error("Could not create the image selector", ioe);
+					}
 				}
 			}
-		}
-		else if (smallImage && Validator.isNotNull(smallImageURL)) {
-			smallImageImageSelector = new ImageSelector(smallImageURL);
+			else if (Validator.isNotNull(smallImageURL)) {
+				smallImageImageSelector = new ImageSelector(smallImageURL);
+			}
 		}
 
 		return addEntry(
@@ -521,24 +523,26 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
-		if (smallImage && Validator.isNotNull(smallImageFileName) &&
-			(smallImageInputStream != null)) {
+		if (smallImage) {
+			if (Validator.isNotNull(smallImageFileName) &&
+				(smallImageInputStream != null)) {
 
-			try {
-				byte[] bytes = FileUtil.getBytes(smallImageInputStream);
+				try {
+					byte[] bytes = FileUtil.getBytes(smallImageInputStream);
 
-				smallImageImageSelector = new ImageSelector(
-					bytes, smallImageFileName,
-					MimeTypesUtil.getContentType(smallImageFileName), null);
-			}
-			catch (IOException ioe) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Could not create the imageSelector", ioe);
+					smallImageImageSelector = new ImageSelector(
+						bytes, smallImageFileName,
+						MimeTypesUtil.getContentType(smallImageFileName), null);
+				}
+				catch (IOException ioe) {
+					if (_log.isErrorEnabled()) {
+						_log.error("Could not create the image selector", ioe);
+					}
 				}
 			}
-		}
-		else if (smallImage && Validator.isNotNull(smallImageURL)) {
-			smallImageImageSelector = new ImageSelector(smallImageURL);
+			else if (Validator.isNotNull(smallImageURL)) {
+				smallImageImageSelector = new ImageSelector(smallImageURL);
+			}
 		}
 
 		return updateEntry(
