@@ -1236,6 +1236,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				smallImageImageSelector = new ImageSelector(smallImageURL);
 			}
 		}
+		else {
+			smallImageImageSelector = new ImageSelector();
+		}
 
 		return updateEntry(
 			userId, entryId, title, StringPool.BLANK, description, content,
