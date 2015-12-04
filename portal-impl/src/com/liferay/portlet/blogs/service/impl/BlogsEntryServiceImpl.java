@@ -544,6 +544,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 				smallImageImageSelector = new ImageSelector(smallImageURL);
 			}
 		}
+		else {
+			smallImageImageSelector = new ImageSelector();
+		}
 
 		return updateEntry(
 			entryId, title, StringPool.BLANK, description, content,
