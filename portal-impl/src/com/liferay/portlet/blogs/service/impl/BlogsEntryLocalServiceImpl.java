@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +30,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelectorBytesProcessor;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -94,8 +93,6 @@ import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-
-import java.awt.image.RenderedImage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -414,7 +411,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntryAttachmentFileEntryHelper
 			blogsEntryAttachmentFileEntryHelper =
-			new BlogsEntryAttachmentFileEntryHelper();
+				new BlogsEntryAttachmentFileEntryHelper();
 
 		Folder folder = addAttachmentsFolder(userId, groupId);
 
@@ -1626,25 +1623,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			ImageSelectorBytesProcessor imageSelectorBytesProcessor =
+				new ImageSelectorBytesProcessor(imageSelector.getImageBytes());
+
+			imageBytes = imageSelectorBytesProcessor.cropBytes(
 				imageSelector.getImageCropRegion());
-
-			int height = jsonObject.getInt("height");
-			int width = jsonObject.getInt("width");
-			int x = jsonObject.getInt("x");
-			int y = jsonObject.getInt("y");
-
-			if ((x > 0) || (y > 0) || (width > 0) || (height > 0)) {
-				ImageBag imageBag = ImageToolUtil.read(imageBytes);
-
-				RenderedImage renderedImage = imageBag.getRenderedImage();
-
-				renderedImage = ImageToolUtil.crop(
-					renderedImage, height, width, x, y);
-
-				imageBytes = ImageToolUtil.getBytes(
-					renderedImage, imageBag.getType());
-			}
 
 			if (imageBytes == null) {
 				throw new EntryCoverImageCropException();
@@ -1711,18 +1694,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		try {
-			ImageBag imageBag = ImageToolUtil.read(imageBytes);
-
-			RenderedImage renderedImage = imageBag.getRenderedImage();
-
 			BlogsGroupServiceSettings blogsGroupServiceSettings =
 				BlogsGroupServiceSettings.getInstance(groupId);
 
-			renderedImage = ImageToolUtil.scale(
-				renderedImage, blogsGroupServiceSettings.getSmallImageWidth());
+			ImageSelectorBytesProcessor imageSelectorBytesProcessor =
+				new ImageSelectorBytesProcessor(imageSelector.getImageBytes());
 
-			imageBytes = ImageToolUtil.getBytes(
-				renderedImage, imageBag.getType());
+			imageBytes = imageSelectorBytesProcessor.scaleBytes(
+				blogsGroupServiceSettings.getSmallImageWidth());
 
 			if (imageBytes == null) {
 				throw new EntrySmallImageScaleException();
