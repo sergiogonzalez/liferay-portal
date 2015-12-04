@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -61,6 +59,7 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
+import com.liferay.portlet.blogs.BlogsEntryImageSelectorHelper;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryCoverImageCropException;
 import com.liferay.portlet.blogs.EntryDescriptionException;
@@ -509,65 +508,26 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			oldSmallImageURL = entry.getSmallImageURL();
 		}
 
-		ImageSelector coverImageImageSelector = null;
+		BlogsEntryImageSelectorHelper blogsEntryCoverImageSelectorHelper =
+			new BlogsEntryImageSelectorHelper(
+				coverImageFileEntryId, oldCoverImageId,
+				coverImageFileEntryCropRegion, coverImageURL, oldCoverImageURL);
 
-		boolean coverImageTempFile = false;
-
-		if (coverImageFileEntryId != oldCoverImageId) {
-			if (coverImageFileEntryId != 0) {
-				FileEntry coverImageFileEntry =
-					PortletFileRepositoryUtil.getPortletFileEntry(
-						coverImageFileEntryId);
-
-				coverImageTempFile =
-					coverImageFileEntry.isRepositoryCapabilityProvided(
-						TemporaryFileEntriesCapability.class);
-
-				coverImageImageSelector = new ImageSelector(
-					FileUtil.getBytes(coverImageFileEntry.getContentStream()),
-					coverImageFileEntry.getTitle(),
-					coverImageFileEntry.getMimeType(),
-					coverImageFileEntryCropRegion);
-			}
-			else {
-				coverImageImageSelector = new ImageSelector();
-			}
-		}
-		else if (!coverImageURL.equals(oldCoverImageURL)) {
-			coverImageImageSelector = new ImageSelector(coverImageURL);
-		}
+		ImageSelector coverImageImageSelector =
+			blogsEntryCoverImageSelectorHelper.getImageSelector();
 
 		long smallImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "smallImageFileEntryId");
 		String smallImageURL = ParamUtil.getString(
 			actionRequest, "smallImageURL");
 
-		ImageSelector smallImageImageSelector = null;
+		BlogsEntryImageSelectorHelper blogsEntrySmallImageSelectorHelper =
+			new BlogsEntryImageSelectorHelper(
+				smallImageFileEntryId, oldSmallImageId, StringPool.BLANK,
+				smallImageURL, oldSmallImageURL);
 
-		boolean smallImageTempFile = false;
-
-		if (smallImageFileEntryId != oldSmallImageId) {
-			if (smallImageFileEntryId != 0) {
-				FileEntry smallImageFileEntry =
-					PortletFileRepositoryUtil.getPortletFileEntry(
-						smallImageFileEntryId);
-
-				smallImageTempFile =
-					smallImageFileEntry.isRepositoryCapabilityProvided(
-						TemporaryFileEntriesCapability.class);
-
-				smallImageImageSelector = new ImageSelector(
-					FileUtil.getBytes(smallImageFileEntry.getContentStream()),
-					smallImageFileEntry.getTitle(),
-					smallImageFileEntry.getMimeType(), StringPool.BLANK);
-			}
-			else {
-				smallImageImageSelector = new ImageSelector();
-			}
-		}
-		else if (!smallImageURL.equals(oldSmallImageURL)) {
-			smallImageImageSelector = new ImageSelector(smallImageURL);
-		}
+		ImageSelector smallImageImageSelector =
+			blogsEntrySmallImageSelectorHelper.getImageSelector();
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
@@ -684,7 +644,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		if (coverImageTempFile) {
+		if (blogsEntryCoverImageSelectorHelper.isFileEntryTempFile()) {
 			_blogsEntryLocalService.addOriginalImageFileEntry(
 				themeDisplay.getUserId(), entry.getGroupId(),
 				entry.getEntryId(), coverImageImageSelector);
@@ -693,7 +653,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				coverImageFileEntryId);
 		}
 
-		if (smallImageTempFile) {
+		if (blogsEntrySmallImageSelectorHelper.isFileEntryTempFile()) {
 			_blogsEntryLocalService.addOriginalImageFileEntry(
 				themeDisplay.getUserId(), entry.getGroupId(),
 				entry.getEntryId(), smallImageImageSelector);
