@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -59,7 +58,6 @@ public class BlogsEntryImageSelectorHelperTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_user = UserTestUtil.addGroupAdminUser(_group);
 	}
 
 	@Test
@@ -75,7 +73,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				_user.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
 				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
 				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
@@ -135,7 +133,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				_user.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
 				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
 				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
@@ -174,8 +172,9 @@ public class BlogsEntryImageSelectorHelperTest {
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
 			FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
-				_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
-				_IMAGE_TITLE, getInputStream(), ContentTypes.IMAGE_JPEG);
+				_group.getGroupId(), TestPropsValues.getUserId(),
+				_TEMP_FOLDER_NAME, _IMAGE_TITLE, getInputStream(),
+				ContentTypes.IMAGE_JPEG);
 
 			BlogsEntryImageSelectorHelper blogsEntryImageSelectorHelper =
 				new BlogsEntryImageSelectorHelper(
@@ -224,8 +223,5 @@ public class BlogsEntryImageSelectorHelperTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }
