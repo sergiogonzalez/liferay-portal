@@ -27,13 +27,13 @@ import java.io.IOException;
 /**
  * @author Roberto Díaz
  */
-public class ImageSelectorBytesProcessor {
+public class ImageSelectorProcessor {
 
-	public ImageSelectorBytesProcessor(byte[] bytes) {
+	public ImageSelectorProcessor(byte[] bytes) {
 		_bytes = bytes;
 	}
 
-	public byte[] cropBytes(String cropRegion)
+	public byte[] cropImage(String cropRegion)
 		throws IOException, PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(cropRegion);
@@ -57,7 +57,7 @@ public class ImageSelectorBytesProcessor {
 		return _bytes;
 	}
 
-	public byte[] scaleBytes(int width) throws IOException {
+	public byte[] scaleImage(int width) throws IOException {
 		ImageBag imageBag = ImageToolUtil.read(_bytes);
 
 		RenderedImage renderedImage = imageBag.getRenderedImage();

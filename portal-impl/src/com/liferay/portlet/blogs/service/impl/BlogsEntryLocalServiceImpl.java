@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
-import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelectorBytesProcessor;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelectorProcessor;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -1623,10 +1623,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		try {
-			ImageSelectorBytesProcessor imageSelectorBytesProcessor =
-				new ImageSelectorBytesProcessor(imageSelector.getImageBytes());
+			ImageSelectorProcessor imageSelectorProcessor =
+				new ImageSelectorProcessor(imageSelector.getImageBytes());
 
-			imageBytes = imageSelectorBytesProcessor.cropBytes(
+			imageBytes = imageSelectorProcessor.cropImage(
 				imageSelector.getImageCropRegion());
 
 			if (imageBytes == null) {
@@ -1697,10 +1697,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsGroupServiceSettings blogsGroupServiceSettings =
 				BlogsGroupServiceSettings.getInstance(groupId);
 
-			ImageSelectorBytesProcessor imageSelectorBytesProcessor =
-				new ImageSelectorBytesProcessor(imageSelector.getImageBytes());
+			ImageSelectorProcessor imageSelectorProcessor =
+				new ImageSelectorProcessor(imageSelector.getImageBytes());
 
-			imageBytes = imageSelectorBytesProcessor.scaleBytes(
+			imageBytes = imageSelectorProcessor.scaleImage(
 				blogsGroupServiceSettings.getSmallImageWidth());
 
 			if (imageBytes == null) {
