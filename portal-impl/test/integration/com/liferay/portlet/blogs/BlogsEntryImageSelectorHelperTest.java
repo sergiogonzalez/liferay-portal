@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -37,12 +37,11 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.io.InputStream;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Roberto Díaz
@@ -61,7 +60,7 @@ public class BlogsEntryImageSelectorHelperTest {
 	}
 
 	@Test
-	public void testGetImageSelectorWithImageFileEntry() throws Exception {
+	public void testGetImageSelectorWithDLImageFileEntry() throws Exception {
 		InputStream inputStream = null;
 
 		try {
@@ -75,12 +74,13 @@ public class BlogsEntryImageSelectorHelperTest {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
-				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
-				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+				MimeTypesUtil.getContentType(_IMAGE_TITLE),
+				StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+				bytes, serviceContext);
 
 			BlogsEntryImageSelectorHelper blogsEntryImageSelectorHelper =
 				new BlogsEntryImageSelectorHelper(
-					fileEntry.getFileEntryId(), fileEntry.getFileEntryId() +1,
+					fileEntry.getFileEntryId(), fileEntry.getFileEntryId() + 1,
 					_IMAGE_CROP_REGION, StringPool.BLANK, StringPool.BLANK);
 
 			ImageSelector imageSelector =
@@ -93,7 +93,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				imageSelector.getImageMimeType());
 			Assert.assertEquals(
 				_IMAGE_CROP_REGION, imageSelector.getImageCropRegion());
-			Assert.assertTrue(Validator.isNull(imageSelector.getImageURL()));
+			Assert.assertEquals(StringPool.BLANK, imageSelector.getImageURL());
 			Assert.assertFalse(
 				blogsEntryImageSelectorHelper.isFileEntryTempFile());
 		}
@@ -111,7 +111,7 @@ public class BlogsEntryImageSelectorHelperTest {
 		ImageSelector imageSelector =
 			blogsEntryImageSelectorHelper.getImageSelector();
 
-		Assert.assertEquals(null, imageSelector.getImageBytes());
+		Assert.assertNull(imageSelector.getImageBytes());
 		Assert.assertEquals(StringPool.BLANK, imageSelector.getImageTitle());
 		Assert.assertEquals(StringPool.BLANK, imageSelector.getImageMimeType());
 		Assert.assertEquals(
@@ -121,7 +121,7 @@ public class BlogsEntryImageSelectorHelperTest {
 	}
 
 	@Test
-	public void testGetImageSelectorWithSameImageFileEntry() throws Exception {
+	public void testGetImageSelectorWithSameDLImageFileEntry() throws Exception {
 		InputStream inputStream = null;
 
 		try {
@@ -192,8 +192,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				imageSelector.getImageMimeType());
 			Assert.assertEquals(
 				_IMAGE_CROP_REGION, imageSelector.getImageCropRegion());
-			Assert.assertTrue(Validator.isNull(imageSelector.getImageURL()));
-
+			Assert.assertEquals(_IMAGE_URL, imageSelector.getImageURL());
 			Assert.assertTrue(
 				blogsEntryImageSelectorHelper.isFileEntryTempFile());
 		}
