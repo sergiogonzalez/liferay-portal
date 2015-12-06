@@ -60,6 +60,25 @@ public class BlogsEntryImageSelectorHelperTest {
 	}
 
 	@Test
+	public void testGetEmptyImageSelectorWithDifferentFileEntryIds()
+		throws Exception {
+
+		BlogsEntryImageSelectorHelper blogsEntryImageSelectorHelper =
+			new BlogsEntryImageSelectorHelper(
+				0, 1, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+
+		ImageSelector imageSelector =
+			blogsEntryImageSelectorHelper.getImageSelector();
+
+		Assert.assertNull(imageSelector.getImageBytes());
+		Assert.assertEquals(StringPool.BLANK, imageSelector.getImageTitle());
+		Assert.assertEquals(StringPool.BLANK, imageSelector.getImageMimeType());
+		Assert.assertEquals(
+			StringPool.BLANK, imageSelector.getImageCropRegion());
+		Assert.assertEquals(StringPool.BLANK, imageSelector.getImageURL());
+	}
+
+	@Test
 	public void testGetImageSelectorWithDLImageFileEntry() throws Exception {
 		InputStream inputStream = null;
 
@@ -121,7 +140,9 @@ public class BlogsEntryImageSelectorHelperTest {
 	}
 
 	@Test
-	public void testGetImageSelectorWithSameDLImageFileEntry() throws Exception {
+	public void testGetImageSelectorWithSameDLImageFileEntry()
+		throws Exception {
+
 		InputStream inputStream = null;
 
 		try {
