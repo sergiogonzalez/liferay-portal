@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -63,10 +64,32 @@ public class BlogsEntryImageSelectorHelper {
 	}
 
 	public boolean isFileEntryTempFile() {
+		if (_fileEntryTempFile = null) {
+			if ((_imageFileEntryId == 0) ||
+				(_imageFileEntryId == _oldImageFileEntryId) ) {
+
+				_fileEntryTempFile = false;
+			}
+			else {
+				try {
+					FileEntry fileEntry =
+						PortletFileRepositoryUtil.getPortletFileEntry(
+							_imageFileEntryId);
+
+					_fileEntryTempFile =
+						fileEntry.isRepositoryCapabilityProvided(
+							TemporaryFileEntriesCapability.class);
+				}
+				catch (PortalException pe) {
+					return false;
+				}
+			}
+		}
+
 		return _fileEntryTempFile;
 	}
 
-	private boolean _fileEntryTempFile;
+	private Boolean _fileEntryTempFile;
 	private final String _imageCropRegion;
 	private final long _imageFileEntryId;
 	private final String _imageURL;
