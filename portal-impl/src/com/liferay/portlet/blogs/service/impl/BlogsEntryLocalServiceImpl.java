@@ -1610,7 +1610,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected long addCoverImageFileEntry(
+	public long addCoverImageFileEntry(
 			long userId, long groupId, long entryId,
 			ImageSelector imageSelector)
 		throws PortalException {
@@ -1681,7 +1681,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return processedImageFileEntry.getFileEntryId();
 	}
 
-	protected long addSmallImageFileEntry(
+	public long addSmallImageFileEntry(
 			long userId, long groupId, long entryId,
 			ImageSelector imageSelector)
 		throws PortalException {
