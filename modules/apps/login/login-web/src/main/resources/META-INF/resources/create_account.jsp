@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String key = ParamUtil.getString(request, "key");
 String redirect = ParamUtil.getString(request, "redirect");
 
 String openId = ParamUtil.getString(request, "openId");
@@ -29,7 +30,9 @@ birthdayCalendar.set(Calendar.DATE, 1);
 birthdayCalendar.set(Calendar.YEAR, 1970);
 %>
 
-<portlet:actionURL name="/login/create_account" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>" />
+<portlet:actionURL name="/login/create_account" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
+	<portlet:param name="key" value="<%= key %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= createAccountURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
