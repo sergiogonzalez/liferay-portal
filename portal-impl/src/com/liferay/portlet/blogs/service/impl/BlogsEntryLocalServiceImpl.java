@@ -133,6 +133,40 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return doAddFolder(userId, groupId, BlogsConstants.SERVICE_NAME);
 	}
 
+	public long addCoverImageFileEntry(
+			long userId, long groupId, long entryId,
+			ImageSelector imageSelector)
+		throws PortalException {
+
+		byte[] imageBytes = imageSelector.getImageBytes();
+
+		if (imageBytes == null) {
+			return 0;
+		}
+
+		try {
+			ImageSelectorProcessor imageSelectorProcessor =
+				new ImageSelectorProcessor(imageSelector.getImageBytes());
+
+			imageBytes = imageSelectorProcessor.cropImage(
+				imageSelector.getImageCropRegion());
+
+			if (imageBytes == null) {
+				throw new EntryCoverImageCropException();
+			}
+
+			Folder folder = addCoverImageFolder(userId, groupId);
+
+			return addProcessedImageFileEntry(
+				userId, groupId, entryId, folder.getFolderId(),
+				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
+				imageBytes);
+		}
+		catch (IOException ioe) {
+			throw new EntryCoverImageCropException();
+		}
+	}
+
 	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String content, Date displayDate,
@@ -423,6 +457,43 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					imageSelector.getImageMimeType(), imageBytes);
 
 		return originalFileEntry.getFileEntryId();
+	}
+
+	public long addSmallImageFileEntry(
+			long userId, long groupId, long entryId,
+			ImageSelector imageSelector)
+		throws PortalException {
+
+		byte[] imageBytes = imageSelector.getImageBytes();
+
+		if (imageBytes == null) {
+			return 0;
+		}
+
+		try {
+			BlogsGroupServiceSettings blogsGroupServiceSettings =
+				BlogsGroupServiceSettings.getInstance(groupId);
+
+			ImageSelectorProcessor imageSelectorProcessor =
+				new ImageSelectorProcessor(imageSelector.getImageBytes());
+
+			imageBytes = imageSelectorProcessor.scaleImage(
+				blogsGroupServiceSettings.getSmallImageWidth());
+
+			if (imageBytes == null) {
+				throw new EntrySmallImageScaleException();
+			}
+
+			Folder folder = addSmallImageFolder(userId, groupId);
+
+			return addProcessedImageFileEntry(
+				userId, groupId, entryId, folder.getFolderId(),
+				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
+				imageBytes);
+		}
+		catch (IOException ioe) {
+			throw new EntrySmallImageScaleException();
+		}
 	}
 
 	@Override
@@ -1610,40 +1681,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	public long addCoverImageFileEntry(
-			long userId, long groupId, long entryId,
-			ImageSelector imageSelector)
-		throws PortalException {
-
-		byte[] imageBytes = imageSelector.getImageBytes();
-
-		if (imageBytes == null) {
-			return 0;
-		}
-
-		try {
-			ImageSelectorProcessor imageSelectorProcessor =
-				new ImageSelectorProcessor(imageSelector.getImageBytes());
-
-			imageBytes = imageSelectorProcessor.cropImage(
-				imageSelector.getImageCropRegion());
-
-			if (imageBytes == null) {
-				throw new EntryCoverImageCropException();
-			}
-
-			Folder folder = addCoverImageFolder(userId, groupId);
-
-			return addProcessedImageFileEntry(
-				userId, groupId, entryId, folder.getFolderId(),
-				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
-				imageBytes);
-		}
-		catch (IOException ioe) {
-			throw new EntryCoverImageCropException();
-		}
-	}
-
 	protected Folder addCoverImageFolder(long userId, long groupId)
 		throws PortalException {
 
@@ -1679,43 +1716,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					groupId, userId, entryId, folderId, title, mimeType, bytes);
 
 		return processedImageFileEntry.getFileEntryId();
-	}
-
-	public long addSmallImageFileEntry(
-			long userId, long groupId, long entryId,
-			ImageSelector imageSelector)
-		throws PortalException {
-
-		byte[] imageBytes = imageSelector.getImageBytes();
-
-		if (imageBytes == null) {
-			return 0;
-		}
-
-		try {
-			BlogsGroupServiceSettings blogsGroupServiceSettings =
-				BlogsGroupServiceSettings.getInstance(groupId);
-
-			ImageSelectorProcessor imageSelectorProcessor =
-				new ImageSelectorProcessor(imageSelector.getImageBytes());
-
-			imageBytes = imageSelectorProcessor.scaleImage(
-				blogsGroupServiceSettings.getSmallImageWidth());
-
-			if (imageBytes == null) {
-				throw new EntrySmallImageScaleException();
-			}
-
-			Folder folder = addSmallImageFolder(userId, groupId);
-
-			return addProcessedImageFileEntry(
-				userId, groupId, entryId, folder.getFolderId(),
-				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
-				imageBytes);
-		}
-		catch (IOException ioe) {
-			throw new EntrySmallImageScaleException();
-		}
 	}
 
 	protected Folder addSmallImageFolder(long userId, long groupId)
