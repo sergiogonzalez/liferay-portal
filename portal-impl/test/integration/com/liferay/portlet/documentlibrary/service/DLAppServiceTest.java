@@ -48,8 +48,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.test.WorkflowHandlerInvocationCounter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.ContextUserReplacer;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
@@ -61,6 +64,7 @@ import com.liferay.portal.util.test.PrefsPropsTemporarySwapper;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
+import com.liferay.portlet.documentlibrary.FileEntryLockException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -546,6 +550,50 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Sync
+	public static class WhenCancellingCheckOut extends BaseDLAppTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Test
+		public void shouldSucceedIfUserIsAdmin() throws Exception {
+			User user = UserTestUtil.addUser();
+
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(
+						user, _alwaysAllowingPermissionChecker)) {
+
+				fileEntry = addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId());
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId(), user.getUserId());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), serviceContext);
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+			fileEntry = DLAppServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			Assert.assertFalse(fileEntry.isCheckedOut());
+		}
+
+	}
+
+	@Sync
 	public static class WhenCheckingInAFileEntry extends BaseDLAppTestCase {
 
 		@ClassRule
@@ -600,6 +648,37 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					workflowHandlerInvocationCounter.getCount(
 						"updateStatus", int.class, Map.class));
 			}
+		}
+
+		@Test(expected = FileEntryLockException.MustOwnLock.class)
+		public void shouldFailIfSameUserDidNotCheckOutTheFile()
+			throws Exception {
+
+			User user = UserTestUtil.addUser();
+
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(
+						user, _alwaysAllowingPermissionChecker)) {
+
+				fileEntry = addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId());
+
+				ServiceContext serviceContext =
+						ServiceContextTestUtil.getServiceContext(
+							group.getGroupId(), user.getUserId());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), serviceContext);
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntry.getFileEntryId(), false,
+				RandomTestUtil.randomString(), serviceContext);
 		}
 
 		@Test
@@ -1663,5 +1742,33 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAppServiceTest.class);
+
+	private static final PermissionChecker _alwaysAllowingPermissionChecker =
+		new SimplePermissionChecker() {
+
+			@Override
+			public boolean hasOwnerPermission(
+				long companyId, String name, String primKey, long ownerId,
+				String actionId) {
+
+				return true;
+			}
+
+			@Override
+			public boolean hasPermission(
+				long groupId, String name, String primKey, String actionId) {
+
+				return true;
+			}
+
+			@Override
+			public boolean hasUserPermission(
+				long groupId, String name, String primKey, String actionId,
+				boolean checkAdmin) {
+
+				return true;
+			}
+
+		};
 
 }
