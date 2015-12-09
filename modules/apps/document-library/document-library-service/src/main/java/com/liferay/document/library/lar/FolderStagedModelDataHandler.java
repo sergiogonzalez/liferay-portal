@@ -156,12 +156,7 @@ public class FolderStagedModelDataHandler
 			portletDataContext.addClassedModel(
 				folderElement, folderPath, folder);
 
-			long portletRepositoryClassNameId = PortalUtil.getClassNameId(
-				PortletRepository.class.getName());
-
-			if (repository.getClassNameId() != portletRepositoryClassNameId) {
-				return;
-			}
+			return;
 		}
 
 		if (folder.getParentFolderId() !=
@@ -170,6 +165,14 @@ public class FolderStagedModelDataHandler
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, folder, folder.getParentFolder(),
 				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
+		else {
+			Repository repository = _repositoryLocalService.getRepository(
+				folder.getRepositoryId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, folder, repository,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
 		exportFolderFileEntryTypes(portletDataContext, folderElement, folder);

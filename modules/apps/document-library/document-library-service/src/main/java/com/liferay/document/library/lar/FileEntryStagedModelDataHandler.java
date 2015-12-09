@@ -34,8 +34,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -213,6 +215,14 @@ public class FileEntryStagedModelDataHandler
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, fileEntry, fileEntry.getFolder(),
 				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
+		else {
+			Repository repository = _repositoryLocalService.getRepository(
+				fileEntry.getRepositoryId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, fileEntry, repository,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
