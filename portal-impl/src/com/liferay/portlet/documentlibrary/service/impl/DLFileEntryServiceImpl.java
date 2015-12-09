@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.FileEntryLockException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -100,12 +101,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		boolean isLocked = LockManagerUtil.isLocked(
 			DLFileEntry.class.getName(), fileEntryId);
 
-		if (isLocked && !hasFileEntryLock(fileEntryId) &&
-			!_hasOverrideCheckoutPermission(fileEntryId)) {
-
-			throw new PrincipalException.MustHavePermission(
-				getUserId(), DLFileEntry.class.getName(), fileEntryId,
-				ActionKeys.OVERRIDE_CHECKOUT);
+		if (isLocked && !hasFileEntryLock(fileEntryId)) {
+			throw new FileEntryLockException.MustOwnLock();
 		}
 
 		dlFileEntryLocalService.checkInFileEntry(
@@ -129,12 +126,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!hasFileEntryLock(fileEntryId) &&
-			!_hasOverrideCheckoutPermission(fileEntryId)) {
-
-			throw new PrincipalException.MustHavePermission(
-				getUserId(), DLFileEntry.class.getName(), fileEntryId,
-				ActionKeys.OVERRIDE_CHECKOUT);
+		if (!hasFileEntryLock(fileEntryId)) {
+			throw new FileEntryLockException.MustOwnLock();
 		}
 
 		dlFileEntryLocalService.checkInFileEntry(
