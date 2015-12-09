@@ -2742,8 +2742,9 @@ public class DLFileEntryLocalServiceImpl
 						serviceContext);
 				}
 				else {
-					dlFileEntryService.checkInFileEntry(
-						fileEntryId, majorVersion, changeLog, serviceContext);
+					dlFileEntryLocalService.checkInFileEntry(
+						userId, fileEntryId, majorVersion, changeLog,
+						serviceContext);
 				}
 			}
 		}
@@ -2754,7 +2755,8 @@ public class DLFileEntryLocalServiceImpl
 						cancelCheckOut(userId, fileEntryId);
 					}
 					else {
-						dlFileEntryService.cancelCheckOut(fileEntryId);
+						dlFileEntryLocalService.cancelCheckOut(
+							userId, fileEntryId);
 					}
 				}
 				catch (Exception e) {
@@ -2771,7 +2773,8 @@ public class DLFileEntryLocalServiceImpl
 						cancelCheckOut(userId, fileEntryId);
 					}
 					else {
-						dlFileEntryService.cancelCheckOut(fileEntryId);
+						dlFileEntryLocalService.cancelCheckOut(
+							userId, fileEntryId);
 					}
 				}
 				catch (Exception e) {
