@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -85,6 +86,16 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, DLFileEntry dlFileEntry,
 			String actionId)
 		throws PortalException {
+
+		if (actionId.equals(ActionKeys.UPDATE) && dlFileEntry.isCheckedOut()) {
+			boolean hasLock = LockManagerUtil.hasLock(
+				permissionChecker.getUserId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId());
+
+			if (!hasLock) {
+				return false;
+			}
+		}
 
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.EDIT);
