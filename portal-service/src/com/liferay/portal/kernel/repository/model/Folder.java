@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -103,9 +102,6 @@ public interface Folder extends RepositoryEntry, RepositoryModel<Folder> {
 	public boolean isLocked();
 
 	public boolean isMountPoint();
-
-	public <T extends Capability> boolean isRepositoryCapabilityProvided(
-		Class<T> capabilityClass);
 
 	public boolean isRoot();
 

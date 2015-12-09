@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
@@ -42,8 +41,5 @@ public interface FileShortcut
 	public long getToFileEntryId();
 
 	public String getToTitle();
-
-	public <T extends Capability> boolean isRepositoryCapabilityProvided(
-		Class<T> capabilityClass);
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.repository.model;
 
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+
 import java.util.Date;
 
 /**
@@ -35,5 +37,8 @@ public interface RepositoryEntry {
 	public String getUserName();
 
 	public String getUserUuid();
+
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass);
 
 }
