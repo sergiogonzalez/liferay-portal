@@ -191,9 +191,6 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 
 	public boolean isManualCheckInRequired();
 
-	public <T extends Capability> boolean isRepositoryCapabilityProvided(
-		Class<T> capabilityClass);
-
 	public boolean isSupportsLocking();
 
 	public boolean isSupportsMetadata();

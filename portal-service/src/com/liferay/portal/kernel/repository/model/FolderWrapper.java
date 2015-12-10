@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -243,6 +244,13 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	@Override
 	public boolean isMountPoint() {
 		return _folder.isMountPoint();
+	}
+
+	@Override
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return _folder.isRepositoryCapabilityProvided(capabilityClass);
 	}
 
 	@Override

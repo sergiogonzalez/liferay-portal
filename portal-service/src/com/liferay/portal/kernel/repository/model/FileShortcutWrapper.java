@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -184,6 +185,13 @@ public class FileShortcutWrapper
 	@Override
 	public boolean isEscapedModel() {
 		return _fileShortcut.isEscapedModel();
+	}
+
+	@Override
+	public <T extends Capability> boolean isRepositoryCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return _fileShortcut.isRepositoryCapabilityProvided(capabilityClass);
 	}
 
 	@Override

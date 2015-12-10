@@ -17,6 +17,8 @@ package com.liferay.document.library.lar;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.capabilities.ExportCapability;
+import com.liferay.portal.kernel.repository.capabilities.ImportCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -143,7 +145,7 @@ public class FolderStagedModelDataHandler
 
 		String folderPath = ExportImportPathUtil.getModelPath(folder);
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ExportCapability.class)) {
 			Repository repository = _repositoryLocalService.getRepository(
 				folder.getRepositoryId());
 
@@ -154,12 +156,7 @@ public class FolderStagedModelDataHandler
 			portletDataContext.addClassedModel(
 				folderElement, folderPath, folder);
 
-			long portletRepositoryClassNameId = PortalUtil.getClassNameId(
-				PortletRepository.class.getName());
-
-			if (repository.getClassNameId() != portletRepositoryClassNameId) {
-				return;
-			}
+			return;
 		}
 
 		if (folder.getParentFolderId() !=
@@ -168,6 +165,14 @@ public class FolderStagedModelDataHandler
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, folder, folder.getParentFolder(),
 				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
+		else {
+			Repository repository = _repositoryLocalService.getRepository(
+				folder.getRepositoryId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, folder, repository,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
 		exportFolderFileEntryTypes(portletDataContext, folderElement, folder);
@@ -200,7 +205,7 @@ public class FolderStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Folder.class + ".folderIdsAndRepositoryEntryIds");
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ImportCapability.class)) {
 			Map<Long, Long> repositoryEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					RepositoryEntry.class);
@@ -213,6 +218,13 @@ public class FolderStagedModelDataHandler
 		}
 
 		long userId = portletDataContext.getUserId(folder.getUserUuid());
+
+		Map<Long, Long> repositoryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Repository.class);
+
+		long repositoryId = MapUtil.getLong(
+			repositoryIds, folder.getRepositoryId(), folder.getRepositoryId());
 
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -234,20 +246,18 @@ public class FolderStagedModelDataHandler
 
 			if (existingFolder == null) {
 				String name = getFolderName(
-					null, portletDataContext.getScopeGroupId(), parentFolderId,
-					folder.getName(), 2);
+					null, repositoryId, parentFolderId, folder.getName(), 2);
 
 				serviceContext.setUuid(folder.getUuid());
 
 				importedFolder = _dlAppLocalService.addFolder(
-					userId, portletDataContext.getScopeGroupId(),
-					parentFolderId, name, folder.getDescription(),
-					serviceContext);
+					userId, repositoryId, parentFolderId, name,
+					folder.getDescription(), serviceContext);
 			}
 			else {
 				String name = getFolderName(
-					folder.getUuid(), portletDataContext.getScopeGroupId(),
-					parentFolderId, folder.getName(), 2);
+					folder.getUuid(), repositoryId, parentFolderId,
+					folder.getName(), 2);
 
 				importedFolder = _dlAppLocalService.updateFolder(
 					existingFolder.getFolderId(), parentFolderId, name,
@@ -314,7 +324,7 @@ public class FolderStagedModelDataHandler
 			Folder folder)
 		throws Exception {
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ExportCapability.class)) {
 			return;
 		}
 
@@ -388,7 +398,7 @@ public class FolderStagedModelDataHandler
 			Folder folder, Folder importedFolder, ServiceContext serviceContext)
 		throws Exception {
 
-		if (!folder.isDefaultRepository()) {
+		if (!folder.isRepositoryCapabilityProvided(ImportCapability.class)) {
 			return;
 		}
 

@@ -12,33 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.model;
-
-import com.liferay.portal.kernel.repository.capabilities.Capability;
-
-import java.util.Date;
+package com.liferay.portal.kernel.repository.capabilities;
 
 /**
- * @author Adolfo Pérez
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public interface RepositoryEntry {
-
-	public long getCompanyId();
-
-	public Date getCreateDate();
-
-	public long getGroupId();
-
-	public Date getModifiedDate();
-
-	public long getUserId();
-
-	public String getUserName();
-
-	public String getUserUuid();
-
-	public <T extends Capability> boolean isRepositoryCapabilityProvided(
-		Class<T> capabilityClass);
-
+public interface ImportCapability extends Capability {
 }
