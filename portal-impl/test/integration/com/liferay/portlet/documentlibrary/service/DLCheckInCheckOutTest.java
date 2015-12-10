@@ -370,6 +370,28 @@ public class DLCheckInCheckOutTest {
 		}
 	}
 
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testCheckInWithoutPermissionOverrideCheckout() throws Exception {
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_overriderUser)) {
+
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntry.getFileEntryId(), false, StringUtil.randomString(),
+				_serviceContext);
+		}
+	}
+
 	@Test
 	public void testCancelCheckoutWithPermissionOverrideCheckout()
 		throws Exception {
