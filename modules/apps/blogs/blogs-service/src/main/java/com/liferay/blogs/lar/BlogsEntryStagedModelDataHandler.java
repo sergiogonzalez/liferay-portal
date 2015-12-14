@@ -116,26 +116,21 @@ public class BlogsEntryStagedModelDataHandler
 
 		Element entryElement = portletDataContext.getExportDataElement(entry);
 
-		if (entry.isSmallImage()) {
-			Image smallImage = _imageLocalService.fetchImage(
+		if (entry.getSmallImageId() != 0) {
+			Image smallImage = _imageLocalService.getImage(
 				entry.getSmallImageId());
 
-			if (Validator.isNotNull(entry.getSmallImageURL())) {
-				entry.setSmallImageURL(entry.getSmallImageURL());
-			}
-			else if (smallImage != null) {
-				String smallImagePath = ExportImportPathUtil.getModelPath(
-					entry,
-					smallImage.getImageId() + StringPool.PERIOD +
-						smallImage.getType());
+			String smallImagePath = ExportImportPathUtil.getModelPath(
+				entry,
+				smallImage.getImageId() + StringPool.PERIOD +
+					smallImage.getType());
 
-				entryElement.addAttribute("small-image-path", smallImagePath);
+			entryElement.addAttribute("small-image-path", smallImagePath);
 
-				entry.setSmallImageType(smallImage.getType());
+			entry.setSmallImageType(smallImage.getType());
 
-				portletDataContext.addZipEntry(
-					smallImagePath, smallImage.getTextObj());
-			}
+			portletDataContext.addZipEntry(
+				smallImagePath, smallImage.getTextObj());
 		}
 
 		if (entry.getSmallImageFileEntryId() != 0) {
