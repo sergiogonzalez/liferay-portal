@@ -189,6 +189,10 @@ public class POPNotificationsMessageListener
 			user = session.getProperty("mail.smtp.user");
 		}
 
+		if (!user.startsWith("recent:")) {
+			user = "recent:" + user;
+		}
+
 		String password = session.getProperty(prefix + "password");
 
 		if (Validator.isNull(password)) {
