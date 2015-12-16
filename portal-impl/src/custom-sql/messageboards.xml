@@ -47,6 +47,23 @@
 				(MBCategory.status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.countByS_G_U_P">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
+			FROM
+				MBCategory
+			INNER JOIN
+				Subscription ON
+					(Subscription.companyId = MBCategory.companyId) AND
+					(Subscription.classNameId = ?) AND
+					(Subscription.classPK = MBCategory.categoryId)
+			WHERE
+				(MBCategory.groupId = ?) AND
+				(MBCategory.parentCategoryId = ?) AND
+				(Subscription.userId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findT_ByG_C">
 		<![CDATA[
 			SELECT
@@ -99,23 +116,6 @@
 				(MBCategory.groupId = ?) AND
 				(MBCategory.parentCategoryId = ?) AND
 				(MBCategory.status = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.countByS_G_U_P">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
-			FROM
-				MBCategory
-			INNER JOIN
-				Subscription ON
-					(Subscription.companyId = MBCategory.companyId) AND
-					(Subscription.classNameId = ?) AND
-					(Subscription.classPK = MBCategory.categoryId)
-			WHERE
-				(MBCategory.groupId = ?) AND
-				(MBCategory.parentCategoryId = ?) AND
-				(Subscription.userId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findByS_G_U_P">
