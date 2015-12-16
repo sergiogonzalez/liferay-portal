@@ -403,6 +403,25 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			WorkflowConstants.STATUS_ANY);
+
+		return mbCategoryFinder.countC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(
+		long groupId, long categoryId, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return mbCategoryFinder.countC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
 	public int getCategoriesCount(long groupId) {
 		return mbCategoryPersistence.countByGroupId(groupId);
 	}
