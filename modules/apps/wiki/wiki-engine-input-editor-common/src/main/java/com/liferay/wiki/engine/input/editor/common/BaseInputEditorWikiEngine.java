@@ -16,6 +16,7 @@ package com.liferay.wiki.engine.input.editor.common;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.SessionClicks;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -24,7 +25,6 @@ import com.liferay.wiki.engine.input.editor.common.util.WikiEngineInputEditorCom
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import javax.portlet.RenderResponse;
 
@@ -51,37 +51,67 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 
 	public abstract String getEditorName();
 
-	public abstract String getHelpURL();
-
-	public String getToggleId(PageContext pageContext) {
+	public String getSyntaxHelpLinkId(PageContext pageContext) {
 		RenderResponse renderResponse =
 			(RenderResponse)pageContext.getAttribute("renderResponse");
 
-		return renderResponse.getNamespace() + "toggle_id_wiki_editor_help";
+		return renderResponse.getNamespace() + "syntax_help_link_id";
 	}
 
-	public boolean isHelpPageDefined() {
-		if ((getHelpPageServletContext() == null) ||
-			Validator.isNull(getHelpPageJSP())) {
+	public String getSyntaxHelpPageHTML(PageContext pageContext)
+		throws IOException, ServletException {
 
-			return false;
+		if (!isSyntaxHelpPageDefined()) {
+			return StringPool.BLANK;
 		}
 
-		return true;
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			response, unsyncStringWriter);
+
+		ServletContext servletContext = getSyntaxHelpPageServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(getHelpPageJSP());
+
+		requestDispatcher.include(
+			pageContext.getRequest(), pipingServletResponse);
+
+		StringBundler sb = unsyncStringWriter.getStringBundler();
+
+		return sb.toString();
 	}
 
-	public boolean isSyntaxHelpVisible(PageContext pageContext) {
+	public abstract String getSyntaxHelpPageLinkURL();
+
+	public abstract String getSyntaxHelpPageTitle(HttpServletRequest request);
+
+	public boolean isSyntaxHelpLinkVisible(PageContext pageContext) {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
 		String toggleValue = SessionClicks.get(
-			request, getToggleId(pageContext), null);
+			request, getSyntaxHelpLinkId(pageContext), null);
 
 		if ((toggleValue != null) && toggleValue.equals("block")) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public boolean isSyntaxHelpPageDefined() {
+		if ((getSyntaxHelpPageServletContext() == null) ||
+			Validator.isNull(getHelpPageJSP())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -93,36 +123,6 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 		servletRequest.setAttribute(_BASE_INPUT_EDITOR_WIKI_ENGINE, this);
 
 		super.renderEditPage(servletRequest, servletResponse, page);
-	}
-
-	public void renderHelpPage(PageContext pageContext)
-		throws IOException, ServletException {
-
-		if (!isHelpPageDefined()) {
-			return;
-		}
-
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
-
-		ServletContext servletContext = getHelpPageServletContext();
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(getHelpPageJSP());
-
-		requestDispatcher.include(
-			pageContext.getRequest(), pipingServletResponse);
-
-		Writer writer = pageContext.getOut();
-
-		StringBundler sb = unsyncStringWriter.getStringBundler();
-
-		writer.write(sb.toString());
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 		return "/help_page.jsp";
 	}
 
-	protected abstract ServletContext getHelpPageServletContext();
+	protected abstract ServletContext getSyntaxHelpPageServletContext();
 
 	private static final String _BASE_INPUT_EDITOR_WIKI_ENGINE =
 		BaseInputEditorWikiEngine.class.getName() +

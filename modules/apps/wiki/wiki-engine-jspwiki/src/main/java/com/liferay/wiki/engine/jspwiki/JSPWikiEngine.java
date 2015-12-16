@@ -20,9 +20,11 @@ import com.ecyrd.jspwiki.WikiPage;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,6 +43,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +51,7 @@ import java.util.regex.Pattern;
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -89,11 +93,6 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "creole";
-	}
-
-	@Override
-	public String getHelpURL() {
-		return "http://www.wikicreole.org/wiki/Creole1.0";
 	}
 
 	@Override
@@ -155,6 +154,19 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		catch (WikiException we) {
 			throw new PageContentException(we);
 		}
+	}
+
+	@Override
+	public String getSyntaxHelpPageLinkURL() {
+		return "http://www.wikicreole.org/wiki/Creole1.0";
+	}
+
+	@Override
+	public String getSyntaxHelpPageTitle(HttpServletRequest request) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", request.getLocale(), getClass());
+
+		return LanguageUtil.get(resourceBundle, "creole-syntax-help");
 	}
 
 	@Activate
@@ -226,7 +238,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Override
-	protected ServletContext getHelpPageServletContext() {
+	protected ServletContext getSyntaxHelpPageServletContext() {
 		return _servletContext;
 	}
 

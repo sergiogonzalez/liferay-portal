@@ -15,7 +15,9 @@
 package com.liferay.wiki.engine.mediawiki;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -34,10 +36,12 @@ import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jamwiki.Environment;
 import org.jamwiki.model.WikiUser;
@@ -76,11 +80,6 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "mediawiki";
-	}
-
-	@Override
-	public String getHelpURL() {
-		return "http://jamwiki.org/wiki/en/Help:Formatting";
 	}
 
 	@Override
@@ -130,6 +129,19 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		return outgoingLinks;
 	}
 
+	@Override
+	public String getSyntaxHelpPageLinkURL() {
+		return "http://jamwiki.org/wiki/en/Help:Formatting";
+	}
+
+	@Override
+	public String getSyntaxHelpPageTitle(HttpServletRequest request) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", request.getLocale(), getClass());
+
+		return LanguageUtil.get(resourceBundle, "mediawiki-syntax-help");
+	}
+
 	@Activate
 	protected void activate() {
 		Environment.setValue(
@@ -141,11 +153,6 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();
-	}
-
-	@Override
-	protected ServletContext getHelpPageServletContext() {
-		return _servletContext;
 	}
 
 	protected ParserInput getParserInput(long nodeId, String topicName) {
@@ -200,6 +207,11 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		}
 
 		return parserOutput;
+	}
+
+	@Override
+	protected ServletContext getSyntaxHelpPageServletContext() {
+		return _servletContext;
 	}
 
 	protected String parsePage(

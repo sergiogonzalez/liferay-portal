@@ -15,8 +15,10 @@
 package com.liferay.wiki.engine.creole;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
@@ -35,10 +37,12 @@ import com.liferay.wiki.service.WikiPageLocalService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -73,11 +77,6 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "creole";
-	}
-
-	@Override
-	public String getHelpURL() {
-		return "http://www.wikicreole.org/wiki/Creole1.0";
 	}
 
 	@Override
@@ -120,6 +119,19 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 		return outgoingLinks;
 	}
 
+	@Override
+	public String getSyntaxHelpPageLinkURL() {
+		return "http://www.wikicreole.org/wiki/Creole1.0";
+	}
+
+	@Override
+	public String getSyntaxHelpPageTitle(HttpServletRequest request) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", request.getLocale(), getClass());
+
+		return LanguageUtil.get(resourceBundle, "creole-syntax-help");
+	}
+
 	protected Creole10Parser build(String creoleCode) {
 		ANTLRStringStream antlrStringStream = new ANTLRStringStream(creoleCode);
 
@@ -132,7 +144,7 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Override
-	protected ServletContext getHelpPageServletContext() {
+	protected ServletContext getSyntaxHelpPageServletContext() {
 		return _servletContext;
 	}
 
