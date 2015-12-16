@@ -56,6 +56,18 @@ import java.util.List;
 public class MBCategoryFinderImpl
 	extends MBCategoryFinderBaseImpl implements MBCategoryFinder {
 
+	public static final String COUNT_T_BY_G_C =
+		MBCategoryFinder.class.getName() + ".countT_ByG_C";
+
+	public static final String COUNT_T_BY_G_C_S =
+		MBCategoryFinder.class.getName() + ".countT_ByG_C_S";
+
+	public static final String COUNT_C_BY_G_P =
+		MBCategoryFinder.class.getName() + ".countC_ByG_P";
+
+	public static final String COUNT_C_BY_G_P_S =
+		MBCategoryFinder.class.getName() + ".countC_ByG_P_S";
+
 	public static final String FIND_T_BY_G_C =
 		MBCategoryFinder.class.getName() + ".findT_ByG_C";
 
@@ -84,12 +96,10 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
-	public int filterCountByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds,
-		QueryDefinition<MBCategory> queryDefinition) {
+	public int countC_T_ByG_C(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
-		return doCountByS_G_U_P(
-			groupId, userId, parentCategoryIds, queryDefinition, true);
+		return doCountC_T_ByG_C(groupId, categoryId, queryDefinition, false);
 	}
 
 	@Override
@@ -113,6 +123,22 @@ public class MBCategoryFinderImpl
 		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
 		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, false);
+	}
+
+	@Override
+	public int filterCountC_T_ByG_C(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+
+		return doCountC_T_ByG_C(groupId, categoryId, queryDefinition, true);
+	}
+
+	@Override
+	public int filterCountByS_G_U_P(
+		long groupId, long userId, long[] parentCategoryIds,
+		QueryDefinition<MBCategory> queryDefinition) {
+
+		return doCountByS_G_U_P(
+			groupId, userId, parentCategoryIds, queryDefinition, true);
 	}
 
 	@Override
@@ -306,6 +332,101 @@ public class MBCategoryFinderImpl
 			}
 
 			return models;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountC_T_ByG_C(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+
+			String sql = null;
+
+			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(COUNT_T_BY_G_C);
+			}
+			else {
+				sql = CustomSQLUtil.get(COUNT_T_BY_G_C_S);
+
+				sql = replaceExcludeStatus(sql, queryDefinition);
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, MBMessage.class.getName(), "MBThread.rootMessageId",
+					groupId);
+			}
+
+			sb.append(sql);
+			sb.append(") UNION ALL (");
+
+			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(COUNT_C_BY_G_P);
+			}
+			else {
+				sql = CustomSQLUtil.get(COUNT_C_BY_G_P_S);
+
+				sql = replaceExcludeStatus(sql, queryDefinition);
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, MBCategory.class.getName(), "MBCategory.categoryId",
+					groupId);
+			}
+
+			sb.append(sql);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			sql = sb.toString();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(categoryId);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			qPos.add(groupId);
+			qPos.add(categoryId);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			int count = 0;
+
+			Iterator<Long> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Long l = itr.next();
+
+				if (l != null) {
+					count += l.intValue();
+				}
+			}
+
+			return count;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
