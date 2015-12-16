@@ -342,18 +342,9 @@ public class MBCategoryLocalServiceTest {
 
 	@Test
 	public void testGetParentCategory() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		MBCategory parentCategory = addCategory();
 
-		MBCategory parentCategory = MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-
-		MBCategory category = MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentCategory.getCategoryId(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+		MBCategory category = addCategory(parentCategory.getCategoryId());
 
 		Assert.assertNotNull(category.getParentCategory());
 		Assert.assertNull(parentCategory.getParentCategory());
@@ -369,13 +360,16 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	protected MBCategory addCategory() throws Exception {
+		return addCategory(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+	}
+
+	protected MBCategory addCategory(long parentCategoryId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		return MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			TestPropsValues.getUserId(), parentCategoryId,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
