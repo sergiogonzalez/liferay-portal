@@ -64,6 +64,86 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetCategoriesAndThreadsCountInRootCategory()
+		throws Exception {
+
+		addMessage(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		MBCategory category1 = addCategory();
+
+		addMessage(category1.getCategoryId());
+
+		MBCategory category2 = addCategory();
+
+		addMessage(category2.getCategoryId());
+
+		addMessage(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		int categoriesAndThreadsCount =
+			MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
+				_group.getGroupId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(4, categoriesAndThreadsCount);
+	}
+
+	@Test
+	public void
+			testGetCategoriesAndThreadsCountInRootCategoryWithOnlyCategories()
+		throws Exception {
+
+		MBCategory category1 = addCategory();
+
+		addCategory(category1.getCategoryId());
+
+		addCategory();
+
+		int categoriesAndThreadsCount =
+			MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
+				_group.getGroupId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(2, categoriesAndThreadsCount);
+	}
+
+	@Test
+	public void testGetCategoriesAndThreadsCountInRootCategoryWithOnlyThreads()
+		throws Exception {
+
+		addMessage(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		addMessage(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		int categoriesAndThreadsCount =
+			MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
+				_group.getGroupId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(2, categoriesAndThreadsCount);
+	}
+
+	@Test
+	public void testGetCategoriesAndThreadsCountWithOnlyCategories()
+		throws Exception {
+
+		MBCategory category1 = addCategory();
+
+		addCategory(category1.getCategoryId());
+
+		addCategory();
+
+		int categoriesAndThreadsCount =
+			MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
+				_group.getGroupId(), category1.getCategoryId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(1, categoriesAndThreadsCount);
+	}
+
+	@Test
 	public void testGetCategoriesAndThreadsInRootCategory() throws Exception {
 		MBMessage message1 = addMessage(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
