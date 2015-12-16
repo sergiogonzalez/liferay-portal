@@ -56,11 +56,8 @@ import java.util.List;
 public class MBCategoryFinderImpl
 	extends MBCategoryFinderBaseImpl implements MBCategoryFinder {
 
-	public static final String COUNT_T_BY_G_C =
-		MBCategoryFinder.class.getName() + ".countT_ByG_C";
-
-	public static final String COUNT_T_BY_G_C_S =
-		MBCategoryFinder.class.getName() + ".countT_ByG_C_S";
+	public static final String COUNT_BY_S_G_U_P =
+		MBCategoryFinder.class.getName() + ".countByS_G_U_P";
 
 	public static final String COUNT_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".countC_ByG_P";
@@ -68,11 +65,14 @@ public class MBCategoryFinderImpl
 	public static final String COUNT_C_BY_G_P_S =
 		MBCategoryFinder.class.getName() + ".countC_ByG_P_S";
 
-	public static final String FIND_T_BY_G_C =
-		MBCategoryFinder.class.getName() + ".findT_ByG_C";
+	public static final String COUNT_T_BY_G_C =
+		MBCategoryFinder.class.getName() + ".countT_ByG_C";
 
-	public static final String FIND_T_BY_G_C_S =
-		MBCategoryFinder.class.getName() + ".findT_ByG_C_S";
+	public static final String COUNT_T_BY_G_C_S =
+		MBCategoryFinder.class.getName() + ".countT_ByG_C_S";
+
+	public static final String FIND_BY_S_G_U_P =
+		MBCategoryFinder.class.getName() + ".findByS_G_U_P";
 
 	public static final String FIND_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".findC_ByG_P";
@@ -80,11 +80,11 @@ public class MBCategoryFinderImpl
 	public static final String FIND_C_BY_G_P_S =
 		MBCategoryFinder.class.getName() + ".findC_ByG_P_S";
 
-	public static final String COUNT_BY_S_G_U_P =
-		MBCategoryFinder.class.getName() + ".countByS_G_U_P";
+	public static final String FIND_T_BY_G_C =
+		MBCategoryFinder.class.getName() + ".findT_ByG_C";
 
-	public static final String FIND_BY_S_G_U_P =
-		MBCategoryFinder.class.getName() + ".findByS_G_U_P";
+	public static final String FIND_T_BY_G_C_S =
+		MBCategoryFinder.class.getName() + ".findT_ByG_C_S";
 
 	@Override
 	public int countByS_G_U_P(
