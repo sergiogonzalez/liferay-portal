@@ -3089,3 +3089,30 @@ circular dependencies. Until now, `DLAppService` was responsible for exposing
 the Recycle Bin logic, delegating it to other components. The problem was, the
 components depended on `DLAppService` to implement their logic. Extracting the
 services from `DLAppService` was the only sensible solution to this circularity.
+
+---------------------------------------
+
+### The liferay-ui:social-activities has been removed and replaced with liferay-social:activities
+- **Date:** 2015-DEC-1
+- **JIRA Ticket:** LPS-60911
+
+#### What changed?
+
+The `liferay-ui:social-activities` taglib has been removed and replaced with
+`liferay-social:activities` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:social-activities` tag need
+to update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-frontend` tag library if it isn't already and
+update the tag namespace from `liferay-ui:social-activities` to
+`liferay-social:activities`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.

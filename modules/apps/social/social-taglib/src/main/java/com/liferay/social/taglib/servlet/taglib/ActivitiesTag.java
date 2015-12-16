@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.social.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.social.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -23,11 +24,12 @@ import java.util.List;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Raymond Augé
  */
-public class SocialActivitiesTag extends IncludeTag {
+public class ActivitiesTag extends IncludeTag {
 
 	public void setActivities(List<SocialActivity> activities) {
 		_activities = activities;
@@ -94,6 +96,13 @@ public class SocialActivitiesTag extends IncludeTag {
 	}
 
 	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
+	@Override
 	protected void cleanUp() {
 		_activities = null;
 		_className = StringPool.BLANK;
@@ -117,35 +126,30 @@ public class SocialActivitiesTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:social-activities:activities", _activities);
+			"liferay-social:activities:activities", _activities);
+		request.setAttribute("liferay-social:activities:className", _className);
 		request.setAttribute(
-			"liferay-ui:social-activities:className", _className);
+			"liferay-social:activities:classPK", String.valueOf(_classPK));
 		request.setAttribute(
-			"liferay-ui:social-activities:classPK", String.valueOf(_classPK));
-		request.setAttribute(
-			"liferay-ui:social-activities:displayRSSFeed",
+			"liferay-social:activities:displayRSSFeed",
 			String.valueOf(_displayRSSFeed));
 		request.setAttribute(
-			"liferay-ui:social-activities:feedDelta",
-			String.valueOf(_feedDelta));
+			"liferay-social:activities:feedDelta", String.valueOf(_feedDelta));
 		request.setAttribute(
-			"liferay-ui:social-activities:feedDisplayStyle", _feedDisplayStyle);
+			"liferay-social:activities:feedDisplayStyle", _feedDisplayStyle);
 		request.setAttribute(
-			"liferay-ui:social-activities:feedEnabled",
+			"liferay-social:activities:feedEnabled",
 			String.valueOf(_feedEnabled));
 		request.setAttribute(
-			"liferay-ui:social-activities:feedResourceURL", _feedResourceURL);
+			"liferay-social:activities:feedResourceURL", _feedResourceURL);
+		request.setAttribute("liferay-social:activities:feedTitle", _feedTitle);
+		request.setAttribute("liferay-social:activities:feedType", _feedType);
+		request.setAttribute("liferay-social:activities:feedURL", _feedURL);
 		request.setAttribute(
-			"liferay-ui:social-activities:feedTitle", _feedTitle);
-		request.setAttribute(
-			"liferay-ui:social-activities:feedType", _feedType);
-		request.setAttribute("liferay-ui:social-activities:feedURL", _feedURL);
-		request.setAttribute(
-			"liferay-ui:social-activities:feedURLMessage", _feedURLMessage);
+			"liferay-social:activities:feedURLMessage", _feedURLMessage);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/social_activities/page.jsp";
+	private static final String _PAGE = "/activities/page.jsp";
 
 	private List<SocialActivity> _activities;
 	private String _className = StringPool.BLANK;

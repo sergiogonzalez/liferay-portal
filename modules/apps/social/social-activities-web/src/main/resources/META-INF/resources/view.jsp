@@ -41,7 +41,7 @@ rssURL.setResourceID("rss");
 String taglibFeedTitle = LanguageUtil.format(request, "subscribe-to-x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 %>
 
-<liferay-ui:social-activities
+<liferay-social:activities
 	activities="<%= socialActivities %>"
 	feedDisplayStyle="<%= rssDisplayStyle %>"
 	feedEnabled="<%= enableRSS %>"
