@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -148,7 +149,13 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 			if (actionId.equals(ActionKeys.VIEW) &&
 				!contains(permissionChecker, page, ActionKeys.UPDATE)) {
 
-				return false;
+				WikiPage latestPage = _wikiPageLocalService.fetchLatestPage(
+					page.getNodeId(), page.getTitle(),
+					WorkflowConstants.STATUS_APPROVED, true);
+
+				if (latestPage == null) {
+					return false;
+				}
 			}
 
 			if (actionId.equals(ActionKeys.DELETE) &&
