@@ -365,20 +365,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public List<Object> getCategoriesAndThreads(long groupId, long categoryId) {
-		List<Object> categoriesAndThreads = new ArrayList<>();
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			WorkflowConstants.STATUS_ANY);
 
-		List<MBCategory> categories = getCategories(
-			groupId, categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		categoriesAndThreads.addAll(categories);
-
-		List<MBThread> threads = mbThreadLocalService.getThreads(
-			groupId, categoryId, WorkflowConstants.STATUS_ANY,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		categoriesAndThreads.addAll(threads);
-
-		return categoriesAndThreads;
+		return mbCategoryFinder.findC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
 	}
 
 	@Override
