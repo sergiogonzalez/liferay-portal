@@ -206,8 +206,6 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1105,8 +1103,6 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1154,8 +1150,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1202,19 +1197,24 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<!-- The time zone option should change automatically because of Daylight Savings Time (DST). Since Los Angeles switches between Pacific Daylight Time (PDT), (UTC -07:00) and Pacific Standard Time (PST), (UTC -08:00), this macro will have to be updated accordingly. -->
-
 	<command name="editUserDisplaySettingsCP">
 		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
+		<execute macro="User#editUserDisplaySettingsTimeZonePacific">
+			<var name="displaySettingsGreeting" value="${displaySettingsGreeting}" />
+		</execute>
+	</command>
+
+	<!-- The time zone option should change automatically because of Daylight Savings Time (DST). Since Los Angeles switches between Pacific Daylight Time (PDT), (UTC -07:00) and Pacific Standard Time (PST), (UTC -08:00), this macro will have to be updated accordingly. -->
+
+	<command name="editUserDisplaySettingsTimeZonePacific">
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_TAB" value1="Display Settings" />
 
 		<if>
@@ -1229,8 +1229,9 @@
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_GREETING_FIELD" value1="${displaySettingsGreeting}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccess" />
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />
@@ -1250,8 +1251,6 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1267,8 +1266,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1283,8 +1281,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1312,8 +1309,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1396,10 +1392,6 @@
 
 	<command name="gotoEditCP">
 		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
-		<execute macro="User#searchCP">
-			<var name="searchToken" value="${userScreenName}" />
-		</execute>
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1737,8 +1729,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
@@ -1781,8 +1772,7 @@
 				<var name="key_userScreenName" value="${userScreenName}" />
 
 				<execute function="Pause" locator1="1000" />
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

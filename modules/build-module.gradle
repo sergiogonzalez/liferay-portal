@@ -128,7 +128,7 @@ dependencies {
 	alloyTaglib group: "com.liferay", name: "com.liferay.alloy.taglib", version: "1.1.6"
 	alloyTaglib group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
 
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.11"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.12"
 	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "1.0.8"
 	jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.4"
 	jspCTool group: "org.apache.ant", name: "ant", version: "1.9.4"
@@ -146,7 +146,7 @@ dependencies {
 	portalTest group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
 	portalTest group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
 
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.97"
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.99"
 
 	testCompile group: "org.powermock", name: "powermock-api-mockito", version: "1.6.1"
 	testCompile group: "org.powermock", name: "powermock-core", version: "1.6.1"
@@ -207,6 +207,54 @@ idea {
 		}
 
 		scopes.TEST.plus += [configurations.portalTest]
+	}
+}
+
+javadoc {
+	String exportPackages = bundle.instructions["Export-Package"]
+
+	if (exportPackages) {
+		List<String> exportPackagesList = exportPackages.tokenize("," as char)
+
+		exportPackagesList*.trim()
+
+		exportPackagesList.each {
+			String pattern ->
+
+			boolean excludePattern = false
+
+			int start = 0
+
+			if (pattern.startsWith("!")) {
+				excludePattern = true
+
+				start = 1
+			}
+
+			int end = pattern.indexOf(";")
+
+			if (end == -1) {
+				end = pattern.length()
+			}
+
+			pattern = pattern[start .. (end - 1)]
+
+			pattern = "**/" + pattern.replace("." as char, "/" as char)
+
+			if (pattern.endsWith("/*")) {
+				pattern = pattern[0 .. -2]
+			}
+			else {
+				pattern += "/*"
+			}
+
+			if (excludePattern) {
+				exclude pattern
+			}
+			else {
+				include pattern
+			}
+		}
 	}
 }
 
@@ -280,7 +328,7 @@ pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
 			serviceBuilder fileTree(dir: new File(portalRootDir, "tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
 		}
 		else {
-			serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.64"
+			serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.65"
 		}
 	}
 }

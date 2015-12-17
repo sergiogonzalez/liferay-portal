@@ -45,7 +45,6 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.upload.UploadException" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -55,14 +54,20 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="java.util.Dictionary" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Collection" %><%@
+page import="java.util.Dictionary" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.Portlet" %><%@
+page import="javax.portlet.PortletURL" %>
 
-<%@ page import="org.osgi.framework.Bundle" %>
+<%@ page import="org.osgi.framework.Bundle" %><%@
+page import="org.osgi.framework.BundleContext" %><%@
+page import="org.osgi.framework.ServiceReference" %>
 
 <portlet:defineObjects />
 
