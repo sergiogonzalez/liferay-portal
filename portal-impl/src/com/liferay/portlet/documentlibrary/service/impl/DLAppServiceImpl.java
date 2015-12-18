@@ -2107,7 +2107,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		// Move file entries between repositories
 
-		return moveFileEntries(
+		return moveFileEntry(
 			fileEntryId, newFolderId, fromRepository, toRepository,
 			serviceContext);
 	}
@@ -3054,7 +3054,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
-	protected FileEntry moveFileEntries(
+	protected FileEntry moveFileEntry(
 			long fileEntryId, long newFolderId, Repository fromRepository,
 			Repository toRepository, ServiceContext serviceContext)
 		throws PortalException {
