@@ -188,6 +188,11 @@ AUI.add(
 						value: true
 					},
 
+					removeOnComplete: {
+						validator: Lang.isBoolean,
+						value: false
+					},
+
 					strings: {
 						value: {
 							allFilesSelectedText: Liferay.Language.get('all-files-selected'),
@@ -632,6 +637,14 @@ AUI.add(
 
 						instance._updateList(0, uploadsCompleteText);
 
+						var removeOnComplete = instance.get('removeOnComplete');
+
+						if (removeOnComplete) {
+							instance._listInfo.one('h4').hide();
+
+							instance._allRowIdsCheckbox.hide();
+						}
+
 						Liferay.fire('allUploadsComplete');
 					},
 
@@ -818,7 +831,7 @@ AUI.add(
 							if (li) {
 								if (data.warningMessages) {
 									file.selected = true;
-									file.temp = true;
+									file.temp = true; //?
 									file.warningMessages = data.warningMessages;
 
 									newLiNode = instance._fileListTPL.parse([file]);
@@ -829,7 +842,7 @@ AUI.add(
 								}
 								else if (data.name) {
 									file.selected = true;
-									file.temp = true;
+									file.temp = true; //?
 									file.name = data.name;
 									file.title = data.title;
 
@@ -864,6 +877,14 @@ AUI.add(
 
 							instance._updateMetadataContainer();
 						}
+
+						var removeOnComplete = instance.get('removeOnComplete');
+
+						if (removeOnComplete) {
+							li.remove(true);
+						}
+
+						instance.fire('uploadComplete', file);
 					},
 
 					_onUploadProgress: function(event) {
