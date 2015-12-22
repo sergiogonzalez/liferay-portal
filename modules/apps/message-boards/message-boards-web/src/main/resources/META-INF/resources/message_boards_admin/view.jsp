@@ -49,6 +49,10 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
+
+request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-categoryDisplay", categoryDisplay);
+request.setAttribute("view.jsp-displayStyle", displayStyle);
 %>
 
 <portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
@@ -444,60 +448,7 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 
 		</c:when>
 		<c:when test='<%= topLink.equals("statistics") %>'>
-			<liferay-ui:panel-container cssClass="statistics-panel" extended="<%= false %>" id="messageBoardsStatisticsPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsGeneralStatisticsPanel" persistState="<%= true %>" title="general">
-					<dl>
-						<dt>
-							<liferay-ui:message key="num-of-categories" />:
-						</dt>
-						<dd>
-							<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="num-of-posts" />:
-						</dt>
-						<dd>
-							<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="num-of-participants" />:
-						</dt>
-						<dd>
-							<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
-						</dd>
-					</dl>
-				</liferay-ui:panel>
-
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsTopPostersPanel" persistState="<%= true %>" title="top-posters">
-					<liferay-ui:search-container
-						emptyResultsMessage="there-are-no-top-posters"
-						iteratorURL="<%= portletURL %>"
-						total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
-					>
-						<liferay-ui:search-container-results
-							results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-						/>
-
-						<liferay-ui:search-container-row
-							className="com.liferay.portlet.messageboards.model.MBStatsUser"
-							keyProperty="statsUserId"
-							modelVar="statsUser"
-						>
-							<liferay-ui:search-container-column-jsp
-								path="/message_boards/top_posters_user_display.jsp"
-							/>
-						</liferay-ui:search-container-row>
-
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-					</liferay-ui:search-container>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
-
-			<%
-			PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
-			%>
-
+			<liferay-util:include page="/message_boards_admin/statistics.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= topLink.equals("banned-users") %>'>
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm1">
