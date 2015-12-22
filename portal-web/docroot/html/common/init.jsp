@@ -236,8 +236,7 @@ page import="java.util.Set" %><%@
 page import="java.util.TimeZone" %><%@
 page import="java.util.TreeSet" %>
 
-<%@ page import="javax.portlet.ActionRequest" %><%@
-page import="javax.portlet.MimeResponse" %><%@
+<%@ page import="javax.portlet.MimeResponse" %><%@
 page import="javax.portlet.PortletConfig" %><%@
 page import="javax.portlet.PortletContext" %><%@
 page import="javax.portlet.PortletException" %><%@
