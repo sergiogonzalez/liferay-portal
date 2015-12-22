@@ -65,16 +65,25 @@ else {
 }
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(LanguageUtil.get(request, mbHomeDisplayContext.getTitle()));
+}
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (category == null) %>"
-		title="<%= mbHomeDisplayContext.getTitle() %>"
-	/>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (category == null) %>"
+			title="<%= mbHomeDisplayContext.getTitle() %>"
+		/>
+	</c:if>
 
 	<portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />

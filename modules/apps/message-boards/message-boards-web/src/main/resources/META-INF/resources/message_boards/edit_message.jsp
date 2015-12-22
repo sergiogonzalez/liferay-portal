@@ -100,19 +100,37 @@ else {
 	}
 }
 
+String headerTitle = LanguageUtil.get(request, "add-message");
+
+if (curParentMessage != null) {
+	headerTitle = LanguageUtil.format(request, "reply-to-x", curParentMessage.getSubject(), false);
+}
+else if (message != null) {
+	headerTitle = LanguageUtil.format(request, "edit-x", message.getSubject(), false);
+}
+
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
-	</c:if>
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<c:if test="<%= Validator.isNull(referringPortletResource) %>">
+			<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+		</c:if>
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (message == null) %>"
-		title='<%= (curParentMessage != null) ? LanguageUtil.format(request, "reply-to-x", curParentMessage.getSubject(), false) : (message == null) ? "add-message" : LanguageUtil.format(request, "edit-x", message.getSubject(), false) %>'
-	/>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (message == null) %>"
+			title="<%= headerTitle %>"
+		/>
+	</c:if>
 
 	<c:if test="<%= preview %>">
 		<liferay-ui:message key="preview" />:
