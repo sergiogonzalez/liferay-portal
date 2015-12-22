@@ -116,67 +116,102 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="mbEntries"
->
+<c:choose>
+	<c:when test='<%= topLink.equals("message-boards-home") %>'>
+		<liferay-frontend:management-bar
+			includeCheckBox="<%= true %>"
+			searchContainerId="mbEntries"
+		>
 
-	<%
-	PortletURL displayStyleURL = renderResponse.createRenderURL();
+			<%
+			PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+			displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 
-	displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
-	%>
+			displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
+			%>
 
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-buttons>
+				<liferay-frontend:management-bar-display-buttons
+					displayViews='<%= new String[] {"descriptive"} %>'
+					portletURL="<%= displayStyleURL %>"
+					selectedDisplayStyle="<%= displayStyle %>"
+				/>
+			</liferay-frontend:management-bar-buttons>
 
-	<portlet:renderURL var="viewEntriesHomeURL">
-		<portlet:param name="categoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-	</portlet:renderURL>
+			<portlet:renderURL var="viewEntriesHomeURL">
+				<portlet:param name="categoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
+			</portlet:renderURL>
 
-	<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-filters>
 
-		<%
-		PortletURL navigationPortletURL = renderResponse.createRenderURL();
+				<%
+				PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
-		navigationPortletURL.setParameter("categoryId", String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
-		%>
+				navigationPortletURL.setParameter("categoryId", String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
+				%>
 
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "recent"} %>'
-			navigationParam="entriesNavigation"
-			portletURL="<%= navigationPortletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all", "recent"} %>'
+					navigationParam="entriesNavigation"
+					portletURL="<%= navigationPortletURL %>"
+				/>
+			</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-action-buttons>
 
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-		%>
+				<%
+				String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
+				%>
 
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+				<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 
-		<%
-		taglibURL = "javascript:" + renderResponse.getNamespace() + "lockEntries();";
-		%>
+				<%
+				taglibURL = "javascript:" + renderResponse.getNamespace() + "lockEntries();";
+				%>
 
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="lock" label="lock" />
+				<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="lock" label="lock" />
 
-		<%
-		taglibURL = "javascript:" + renderResponse.getNamespace() + "unlockEntries();";
-		%>
+				<%
+				taglibURL = "javascript:" + renderResponse.getNamespace() + "unlockEntries();";
+				%>
 
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unlock" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+				<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unlock" />
+			</liferay-frontend:management-bar-action-buttons>
+		</liferay-frontend:management-bar>
+	</c:when>
+	<c:when test='<%= topLink.equals("banned-users") %>'>
+		<liferay-frontend:management-bar
+			includeCheckBox="<%= true %>"
+			searchContainerId="mbBanUsers"
+		>
+
+			<%
+			PortletURL displayStyleURL = renderResponse.createRenderURL();
+
+			displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+			displayStyleURL.setParameter("topLink", "banned-users");
+			%>
+
+			<liferay-frontend:management-bar-buttons>
+				<liferay-frontend:management-bar-display-buttons
+					displayViews='<%= new String[] {"descriptive"} %>'
+					portletURL="<%= displayStyleURL %>"
+					selectedDisplayStyle="<%= displayStyle %>"
+				/>
+			</liferay-frontend:management-bar-buttons>
+
+			<liferay-frontend:management-bar-action-buttons>
+
+				<%
+				String taglibURL = "javascript:" + renderResponse.getNamespace() + "unbanUser();";
+				%>
+
+				<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unban-user" />
+			</liferay-frontend:management-bar-action-buttons>
+		</liferay-frontend:management-bar>
+	</c:when>
+</c:choose>
 
 <div class="container-fluid-1280">
 	<c:choose>
@@ -465,52 +500,63 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 
 		</c:when>
 		<c:when test='<%= topLink.equals("banned-users") %>'>
-			<liferay-ui:search-container
-				emptyResultsMessage="there-are-no-banned-users"
-				headerNames="banned-user,banned-by,ban-date"
-				iteratorURL="<%= portletURL %>"
-				total="<%= MBBanLocalServiceUtil.getBansCount(scopeGroupId) %>"
-			>
-				<liferay-ui:search-container-results
-					results="<%= MBBanLocalServiceUtil.getBans(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm1">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
-				<liferay-ui:search-container-row
-					className="com.liferay.portlet.messageboards.model.MBBan"
-					keyProperty="banId"
-					modelVar="ban"
+				<liferay-ui:search-container
+					emptyResultsMessage="there-are-no-banned-users"
+					headerNames="banned-user,banned-by,ban-date"
+					id="mbBanUsers"
+					iteratorURL="<%= portletURL %>"
+					rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+					total="<%= MBBanLocalServiceUtil.getBansCount(scopeGroupId) %>"
 				>
-					<liferay-ui:search-container-column-text
-						name="banned-user"
-						value="<%= HtmlUtil.escape(PortalUtil.getUserName(ban.getBanUserId(), StringPool.BLANK)) %>"
+					<liferay-ui:search-container-results
+						results="<%= MBBanLocalServiceUtil.getBans(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="banned-by"
-						value="<%= HtmlUtil.escape(PortalUtil.getUserName(ban.getUserId(), StringPool.BLANK)) %>"
-					/>
-
-					<liferay-ui:search-container-column-date
-						name="ban-date"
-						value="<%= ban.getCreateDate() %>"
-					/>
-
-					<c:if test="<%= PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL > 0 %>">
-						<liferay-ui:search-container-column-text
-							name="unban-date"
-							value="<%= dateFormatDateTime.format(MBUtil.getUnbanDate(ban, PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL)) %>"
+					<liferay-ui:search-container-row
+						className="com.liferay.portlet.messageboards.model.MBBan"
+						keyProperty="banId"
+						modelVar="ban"
+					>
+						<liferay-ui:search-container-column-user
+							cssClass="user-icon-lg"
+							showDetails="<%= false %>"
+							userId="<%= ban.getBanUserId() %>"
 						/>
-					</c:if>
 
-					<liferay-ui:search-container-column-jsp
-						align="right"
-						cssClass="entry-action"
-						path="/message_boards/ban_user_action.jsp"
-					/>
-				</liferay-ui:search-container-row>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-			</liferay-ui:search-container>
+							<%
+							Date createDate = ban.getCreateDate();
+
+							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+							%>
+
+							<h5 class="text-default">
+								<liferay-ui:message arguments="<%= new String[] {PortalUtil.getUserName(ban.getUserId(), StringPool.BLANK), modifiedDateDescription} %>" key="banned-by-x-x-ago" />
+							</h5>
+
+							<h4>
+								<%= HtmlUtil.escape(PortalUtil.getUserName(ban.getBanUserId(), StringPool.BLANK)) %>
+							</h4>
+
+							<h5 class="text-default">
+								<liferay-ui:message key="unban-date" />
+
+								<%= dateFormatDateTime.format(MBUtil.getUnbanDate(ban, PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL)) %>
+							</h5>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-jsp
+							path="/message_boards/ban_user_action.jsp"
+						/>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				</liferay-ui:search-container>
+			</aui:form>
 
 			<%
 			PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
@@ -542,6 +588,15 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.LOCK %>');
 
 		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
+	}
+
+	function <portlet:namespace />unbanUser() {
+		var form = AUI.$(document.<portlet:namespace />fm1);
+
+		form.attr('method', 'post');
+		form.fm('<%= Constants.CMD %>').val('unban');
+
+		submitForm(form, '<portlet:actionURL name="/message_boards/ban_user" />');
 	}
 
 	function <portlet:namespace />unlockEntries() {
