@@ -21,7 +21,16 @@ String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
-String displayStyle = GetterUtil.getString(request.getAttribute("view.jsp-displayStyle"));
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS, "banned-users-display-style", "descriptive");
+}
+else {
+	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS, "banned-users-display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
 %>
 
 <liferay-frontend:management-bar
