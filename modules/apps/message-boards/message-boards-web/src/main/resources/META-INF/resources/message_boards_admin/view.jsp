@@ -131,7 +131,7 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -286,109 +286,35 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 									<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 								</liferay-portlet:renderURL>
 
-								<c:choose>
-									<c:when test='<%= displayStyle.equals("descriptive") %>'>
-										<liferay-ui:search-container-column-icon
-											icon="folder"
-											toggleRowChecker="<%= true %>"
-										/>
+								<liferay-ui:search-container-column-icon
+									icon="folder"
+									toggleRowChecker="<%= true %>"
+								/>
 
-										<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-											<h4>
-												<aui:a href="<%= rowURL.toString() %>">
-													<%= HtmlUtil.escape(curCategory.getName()) %>
-												</aui:a>
-											</h4>
+								<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+									<h4>
+										<aui:a href="<%= rowURL.toString() %>">
+											<%= HtmlUtil.escape(curCategory.getName()) %>
+										</aui:a>
+									</h4>
 
-											<h5 class="text-default">
-												<%= HtmlUtil.escape(curCategory.getDescription()) %>
-											</h5>
+									<h5 class="text-default">
+										<%= HtmlUtil.escape(curCategory.getDescription()) %>
+									</h5>
 
-											<%
-											int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId());
-											int threadsCount = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_APPROVED);
-											%>
+									<%
+									int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId());
+									int threadsCount = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_APPROVED);
+									%>
 
-											<span class="h6">
-												<liferay-ui:message arguments="<%= subcategoriesCount %>" key='<%= subcategoriesCount == 1 ? "x-subcategory" : "x-subcategories" %>' />
-											</span>
+									<span class="h6">
+										<liferay-ui:message arguments="<%= subcategoriesCount %>" key='<%= subcategoriesCount == 1 ? "x-subcategory" : "x-subcategories" %>' />
+									</span>
 
-											<span class="h6">
-												<liferay-ui:message arguments="<%= threadsCount %>" key='<%= threadsCount == 1 ? "x-thread" : "x-threads" %>' />
-											</span>
-										</liferay-ui:search-container-column-text>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:search-container-column-text
-											name="category[message-board]"
-										>
-											<a href="<%= rowURL %>">
-												<span class="category-title">
-													<%= curCategory.getName() %>
-												</span>
-
-												<c:if test="<%= Validator.isNotNull(curCategory.getDescription()) %>">
-													<span class="category-description"><%= curCategory.getDescription() %></span>
-												</c:if>
-											</a>
-
-											<%
-											List subcategories = MBCategoryServiceUtil.getCategories(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED, 0, 5);
-
-											int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED);
-											%>
-
-											<c:if test="<%= subcategoriesCount > 0 %>">
-												<span class="subcategories">
-													<liferay-ui:message key="subcategories[message-board]" />:
-												</span>
-
-												<%
-												for (int j = 0; j < subcategories.size(); j++) {
-													MBCategory subcategory = (MBCategory)subcategories.get(j);
-
-													rowURL.setParameter("mbCategoryId", String.valueOf(subcategory.getCategoryId()));
-
-													String name = HtmlUtil.escape(subcategory.getName());
-
-													if (((j + 1) < subcategories.size()) || (subcategoriesCount > subcategories.size())) {
-														name += StringPool.COMMA_AND_SPACE;
-													}
-												%>
-
-													<a href="<%= rowURL %>"><%= name %></a>
-
-												<%
-												}
-
-												rowURL.setParameter("mbCategoryId", String.valueOf(curCategory.getCategoryId()));
-												%>
-
-												<c:if test="<%= subcategoriesCount > subcategories.size() %>">
-													<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
-												</c:if>
-											</c:if>
-										</liferay-ui:search-container-column-text>
-
-										<liferay-ui:search-container-column-text
-											href="<%= rowURL %>"
-											name="categories[message-board]"
-											value="<%= String.valueOf(categoryDisplay.getSubcategoriesCount(curCategory)) %>"
-										/>
-
-										<liferay-ui:search-container-column-text
-											href="<%= rowURL %>"
-											name="threads"
-											value="<%= String.valueOf(categoryDisplay.getSubcategoriesThreadsCount(curCategory)) %>"
-										/>
-
-										<liferay-ui:search-container-column-text
-											href="<%= rowURL %>"
-											name="posts"
-											value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
-										/>
-									</c:otherwise>
-								</c:choose>
+									<span class="h6">
+										<liferay-ui:message arguments="<%= threadsCount %>" key='<%= threadsCount == 1 ? "x-thread" : "x-threads" %>' />
+									</span>
+								</liferay-ui:search-container-column-text>
 
 								<liferay-ui:search-container-column-jsp
 									path="/message_boards/category_action.jsp"
@@ -419,94 +345,43 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 								</liferay-portlet:renderURL>
 
-								<c:choose>
-									<c:when test='<%= displayStyle.equals("descriptive") %>'>
-										<liferay-ui:search-container-column-user
-											cssClass="user-icon-lg"
-											showDetails="<%= false %>"
-											userId="<%= message.getUserId() %>"
-										/>
+								<liferay-ui:search-container-column-user
+									cssClass="user-icon-lg"
+									showDetails="<%= false %>"
+									userId="<%= message.getUserId() %>"
+								/>
 
-										<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+								<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
-											<%
-											Date modifiedDate = message.getModifiedDate();
+									<%
+									Date modifiedDate = message.getModifiedDate();
 
-											String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-											%>
+									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+									%>
 
-											<h5 class="text-default">
-												<liferay-ui:message arguments="<%= new String[] {message.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
-											</h5>
+									<h5 class="text-default">
+										<liferay-ui:message arguments="<%= new String[] {message.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									</h5>
 
-											<h4>
-												<aui:a href="<%= rowURL.toString() %>">
-													<%= message.getSubject() %>
-												</aui:a>
-											</h4>
+									<h4>
+										<aui:a href="<%= rowURL.toString() %>">
+											<%= message.getSubject() %>
+										</aui:a>
+									</h4>
 
-											<%
-											int messageCount = thread.getMessageCount();
-											int viewCount = thread.getViewCount();
-											%>
+									<%
+									int messageCount = thread.getMessageCount();
+									int viewCount = thread.getViewCount();
+									%>
 
-											<span class="h6">
-												<liferay-ui:message arguments="<%= messageCount %>" key='<%= messageCount == 1 ? "x-post" : "x-posts" %>' />
-											</span>
+									<span class="h6">
+										<liferay-ui:message arguments="<%= messageCount %>" key='<%= messageCount == 1 ? "x-post" : "x-posts" %>' />
+									</span>
 
-											<span class="h6">
-												<liferay-ui:message arguments="<%= viewCount %>" key='<%= viewCount == 1 ? "x-view" : "x-views" %>' />
-											</span>
-										</liferay-ui:search-container-column-text>
-									</c:when>
-									<c:otherwise>
-										<%@ include file="/message_boards/thread_priority.jspf" %>
-
-										<liferay-ui:search-container-column-text
-											href="<%= rowURL %>"
-											name="flag"
-										>
-											<c:choose>
-												<c:when test="<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) %>">
-													<liferay-ui:message key="resolved" />
-												</c:when>
-												<c:when test="<%= thread.isQuestion() %>">
-													<liferay-ui:message key="waiting-for-an-answer" />
-												</c:when>
-											</c:choose>
-										</liferay-ui:search-container-column-text>
-
-										<liferay-ui:search-container-column-text
-											href="<%= rowURL %>"
-											name="started-by"
-											value='<%= message.isAnonymous() ? LanguageUtil.get(request, "anonymous") : PortalUtil.getUserName(message) %>'
-										/>
-
-										<liferay-ui:search-container-column-text
-											href="<%= rowURL %>"
-											name="posts"
-											value="<%= String.valueOf(thread.getMessageCount()) %>"
-										/>
-
-										<liferay-ui:search-container-column-text
-											href="<%= rowURL %>"
-											name="views"
-											value="<%= String.valueOf(thread.getViewCount()) %>"
-										/>
-
-										<liferay-ui:search-container-column-user
-											date="<%= thread.getLastPostDate() %>"
-											name="last-post"
-											property="lastPostByUserId"
-										/>
-
-										<liferay-ui:search-container-column-status
-											href="<%= rowURL %>"
-											name="status"
-											status="<%= thread.getStatus() %>"
-										/>
-									</c:otherwise>
-								</c:choose>
+									<span class="h6">
+										<liferay-ui:message arguments="<%= viewCount %>" key='<%= viewCount == 1 ? "x-view" : "x-views" %>' />
+									</span>
+								</liferay-ui:search-container-column-text>
 
 								<%
 								row.setObject(new Object[] {message});
