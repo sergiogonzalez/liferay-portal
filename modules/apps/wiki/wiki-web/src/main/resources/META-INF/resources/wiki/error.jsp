@@ -70,6 +70,7 @@
 	</div>
 </c:if>
 
+<liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
 <liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-page-title" />
 
 <liferay-ui:error-principal />
