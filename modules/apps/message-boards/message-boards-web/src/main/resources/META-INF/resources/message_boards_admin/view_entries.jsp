@@ -119,12 +119,13 @@ else {
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:header
-			backLabel="<%= parentCategoryName %>"
-			backURL="<%= backURL.toString() %>"
-			localizeTitle="<%= false %>"
-			title="<%= category.getName() %>"
-		/>
+		<%
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL.toString());
+
+		renderResponse.setTitle(category.getName());
+		%>
+
 	</c:if>
 
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
