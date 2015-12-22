@@ -21,7 +21,9 @@ String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
-MBCategoryDisplay categoryDisplay = (MBCategoryDisplay)request.getAttribute("view.jsp-categoryDisplay");
+long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
+
+MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
 
 String displayStyle = GetterUtil.getString(request.getAttribute("view.jsp-displayStyle"));
 %>
