@@ -16,12 +16,20 @@ package com.liferay.item.selector.criteria.upload.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Ambrín Chaudhary
  */
 public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public UploadItemSelectorCriterion() {
+	}
+
+	public UploadItemSelectorCriterion(
+		PortletURL portletURL, String repositoryName) {
+
+		this(portletURL.toString(), repositoryName);
 	}
 
 	public UploadItemSelectorCriterion(String url, String repositoryName) {
