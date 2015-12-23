@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
@@ -63,11 +64,6 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Override
-	public String getHelpURL() {
-		return null;
-	}
-
-	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException {
 
@@ -80,12 +76,22 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Override
+	public String getSyntaxHelpPageLinkURL() {
+		return null;
+	}
+
+	@Override
+	public String getSyntaxHelpPageTitle(HttpServletRequest request) {
+		return null;
+	}
+
+	@Override
 	public String getToolbarSet() {
 		return null;
 	}
 
 	@Override
-	protected ServletContext getHelpPageServletContext() {
+	protected ServletContext getSyntaxHelpPageServletContext() {
 		return null;
 	}
 
