@@ -248,116 +248,36 @@ if (portletTitleBasedNavigation) {
 
 		<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
-		<aui:fieldset>
-			<c:if test="<%= message != null %>">
-				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
-			</c:if>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="subject" value="<%= subject %>" />
 
-			<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="subject" value="<%= subject %>" />
-
-			<aui:field-wrapper label="body">
-				<c:choose>
-					<c:when test='<%= ((messageId != 0) && message.isFormatBBCode()) || ((messageId == 0) && messageFormat.equals("bbcode")) %>'>
-						<%@ include file="/message_boards/bbcode_editor.jspf" %>
-					</c:when>
-					<c:otherwise>
-						<%@ include file="/message_boards/html_editor.jspf" %>
-					</c:otherwise>
-				</c:choose>
-				<aui:input name="body" type="hidden" />
-			</aui:field-wrapper>
+				<aui:field-wrapper label="body">
+					<c:choose>
+						<c:when test='<%= ((messageId != 0) && message.isFormatBBCode()) || ((messageId == 0) && messageFormat.equals("bbcode")) %>'>
+							<%@ include file="/message_boards/bbcode_editor.jspf" %>
+						</c:when>
+						<c:otherwise>
+							<%@ include file="/message_boards/html_editor.jspf" %>
+						</c:otherwise>
+					</c:choose>
+					<aui:input name="body" type="hidden" />
+				</aui:field-wrapper>
+			</aui:fieldset>
 
 			<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= MBMessage.class.getName() %>"
-					classPK="<%= messageId %>"
-					editable="<%= true %>"
-					label="<%= true %>"
-				/>
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+					<liferay-ui:custom-attribute-list
+						className="<%= MBMessage.class.getName() %>"
+						classPK="<%= messageId %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</aui:fieldset>
 			</liferay-ui:custom-attributes-available>
 
-			<c:if test="<%= curParentMessage == null %>">
-
-				<%
-				boolean disabled = false;
-				boolean question = threadAsQuestionByDefault;
-
-				if (message != null) {
-					thread = MBThreadLocalServiceUtil.getThread(threadId);
-
-					if (thread.isQuestion() || message.isAnswer()) {
-						question = true;
-					}
-				}
-				else {
-					MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-
-					if ((category != null) && category.getDisplayStyle().equals("question")) {
-						disabled = true;
-						question = true;
-					}
-				}
-				%>
-
-				<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
-			</c:if>
-
-			<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">
-				<aui:input helpMessage="message-boards-message-anonymous-help" name="anonymous" type="checkbox" />
-			</c:if>
-
-			<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
-				<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
-			</c:if>
-
-			<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
-
-				<%
-				double threadPriority = BeanParamUtil.getDouble(message, request, "priority");
-				%>
-
-				<aui:select name="priority">
-					<aui:option value="" />
-
-					<%
-					for (int i = 0; i < priorities.length; i++) {
-						String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
-
-						try {
-							String priorityName = priority[0];
-							String priorityImage = priority[1];
-							double priorityValue = GetterUtil.getDouble(priority[2]);
-
-							if (priorityValue > 0) {
-					%>
-
-								<aui:option label="<%= HtmlUtil.escape(priorityName) %>" selected="<%= (threadPriority == priorityValue) %>" value="<%= priorityValue %>" />
-
-					<%
-							}
-						}
-						catch (Exception e) {
-						}
-					}
-					%>
-
-				</aui:select>
-			</c:if>
-
-			<c:if test="<%= PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED %>">
-				<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
-			</c:if>
-
-			<c:if test="<%= message == null %>">
-				<aui:field-wrapper label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= MBMessage.class.getName() %>"
-					/>
-				</aui:field-wrapper>
-			</c:if>
-
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
-				<liferay-ui:panel cssClass="message-attachments" defaultState="closed" extended="<%= false %>" id="mbMessageAttachmentsPanel" persistState="<%= true %>" title="attachments">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
 					<c:if test="<%= existingAttachmentsFileEntries.size() > 0 %>">
 						<ul>
 
@@ -441,30 +361,110 @@ if (portletTitleBasedNavigation) {
 					}
 					%>
 
-				</liferay-ui:panel>
+				</aui:fieldset>
 			</c:if>
 
 			<c:if test="<%= (curParentMessage == null) || childrenMessagesTaggable %>">
-				<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="mbMessageCategorizationPanel" persistState="<%= true %>" title="categorization">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
 					<aui:input name="tags" type="assetTags" />
-				</liferay-ui:panel>
+				</aui:fieldset>
 			</c:if>
 
-			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="mbMessageAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-				<aui:fieldset>
-					<liferay-ui:input-asset-links
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+				<liferay-ui:input-asset-links
+					className="<%= MBMessage.class.getName() %>"
+					classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+				/>
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="more-settings">
+				<c:if test="<%= curParentMessage == null %>">
+
+					<%
+					boolean disabled = false;
+					boolean question = threadAsQuestionByDefault;
+
+					if (message != null) {
+						thread = MBThreadLocalServiceUtil.getThread(threadId);
+
+						if (thread.isQuestion() || message.isAnswer()) {
+							question = true;
+						}
+					}
+					else {
+						MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+
+						if ((category != null) && category.getDisplayStyle().equals("question")) {
+							disabled = true;
+							question = true;
+						}
+					}
+					%>
+
+					<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
+				</c:if>
+
+				<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">
+					<aui:input helpMessage="message-boards-message-anonymous-help" name="anonymous" type="checkbox" />
+				</c:if>
+
+				<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
+					<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
+				</c:if>
+
+				<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
+
+					<%
+					double threadPriority = BeanParamUtil.getDouble(message, request, "priority");
+					%>
+
+					<aui:select name="priority">
+						<aui:option value="" />
+
+						<%
+						for (int i = 0; i < priorities.length; i++) {
+							String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
+
+							try {
+								String priorityName = priority[0];
+								String priorityImage = priority[1];
+								double priorityValue = GetterUtil.getDouble(priority[2]);
+
+								if (priorityValue > 0) {
+						%>
+
+									<aui:option label="<%= HtmlUtil.escape(priorityName) %>" selected="<%= (threadPriority == priorityValue) %>" value="<%= priorityValue %>" />
+
+						<%
+								}
+							}
+							catch (Exception e) {
+							}
+						}
+						%>
+
+					</aui:select>
+				</c:if>
+
+				<c:if test="<%= PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED %>">
+					<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
+				</c:if>
+			</aui:fieldset>
+
+			<c:if test="<%= message == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= MBMessage.class.getName() %>"
 					/>
 				</aui:fieldset>
-			</liferay-ui:panel>
-		</aui:fieldset>
+			</c:if>
 
-		<c:if test="<%= (message == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE %>">
-			<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
+			<c:if test="<%= (message == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE %>">
+				<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
-			<liferay-ui:captcha url="<%= captchaURL %>" />
-		</c:if>
+				<liferay-ui:captcha url="<%= captchaURL %>" />
+			</c:if>
+		</aui:fieldset-group>
 
 		<%
 		boolean pending = false;
@@ -502,13 +502,13 @@ if (portletTitleBasedNavigation) {
 				</div>
 			</c:if>
 
+			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
 			<c:if test="<%= themeDisplay.isSignedIn() %>">
 				<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveMessage(true);" %>' value="<%= saveButtonLabel %>" />
 			</c:if>
 
 			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "previewMessage();" %>' value="preview" />
-
-			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
