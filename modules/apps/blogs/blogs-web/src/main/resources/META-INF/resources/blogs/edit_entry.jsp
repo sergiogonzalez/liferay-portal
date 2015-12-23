@@ -48,6 +48,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
+
+ItemSelectorHelper itemSelectorHelper = (ItemSelectorHelper)request.getAttribute(ItemSelectorWebKeys.ITEM_SELECTOR_HELPER);
 %>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
@@ -125,7 +127,12 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 				<portlet:actionURL name="/blogs/upload_cover_image" var="uploadCoverImageURL" />
 
 				<div class="lfr-blogs-cover-image-selector">
-					<liferay-frontend:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+
+					<%
+					String coverImageSelectedItem = liferayPortletResponse.getNamespace() + "coverImageSelectedItem";
+					%>
+
+					<liferay-frontend:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItem %>" itemSelectorURL="<%= itemSelectorHelper.getItemSelectorURL(liferayPortletRequest, liferayPortletResponse, coverImageSelectedItem) %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 				</div>
 
 				<aui:input name="coverImageCaption" type="hidden" />
@@ -189,7 +196,12 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
 						<div class="lfr-blogs-small-image-selector">
-							<liferay-frontend:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+
+							<%
+								String smallImageSelectedItem = liferayPortletResponse.getNamespace() + "smallImageSelectedItem";
+							%>
+
+							<liferay-frontend:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItem %>" itemSelectorURL="<%= itemSelectorHelper.getItemSelectorURL(liferayPortletRequest, liferayPortletResponse, smallImageSelectedItem) %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 						</div>
 
 						<div class="entry-description">

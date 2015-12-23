@@ -21,6 +21,8 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_
 
 String draggableImage = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:draggableImage"), "none");
 long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
+String itemSelectorEventName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorEventName"));
+String itemSelectorURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorURL"));
 long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:maxFileSize"));
 String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:paramName"));
 String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:uploadURL"));
@@ -95,34 +97,6 @@ if (fileEntryId != 0) {
 </div>
 
 <%
-PortletURL itemSelectorURL = liferayPortletResponse.createRenderURL(PortletKeys.ITEM_SELECTOR);
-
-itemSelectorURL.setParameter("criteria", "com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion,com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion");
-itemSelectorURL.setParameter("itemSelectedEventName", randomNamespace + "selectImage");
-
-JSONObject itemSelectorJSONParamJSONObject = JSONFactoryUtil.createJSONObject();
-
-itemSelectorJSONParamJSONObject.put("desiredItemSelectorReturnTypes", "com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType");
-
-JSONObject itemSelectorUploadParamJSONObject = JSONFactoryUtil.createJSONObject();
-
-itemSelectorUploadParamJSONObject.put("desiredItemSelectorReturnTypes", "com.liferay.item.selector.criteria.UploadableFileReturnType");
-
-itemSelectorURL.setParameter("0_json", itemSelectorJSONParamJSONObject.toString());
-itemSelectorURL.setParameter("1_json", itemSelectorJSONParamJSONObject.toString());
-
-PortletURL uploadItemSelectorCriterionUploadURL = liferayPortletResponse.createActionURL(PortletKeys.BLOGS);
-
-uploadItemSelectorCriterionUploadURL.setParameter(ActionRequest.ACTION_NAME, "/blogs/upload_cover_image");
-
-itemSelectorUploadParamJSONObject.put("repositoryName", LanguageUtil.get(locale, "blog-images"));
-itemSelectorUploadParamJSONObject.put("URL", uploadItemSelectorCriterionUploadURL.toString());
-
-itemSelectorURL.setParameter("2_json", itemSelectorUploadParamJSONObject.toString());
-
-itemSelectorURL.setPortletMode(PortletMode.VIEW);
-itemSelectorURL.setWindowState(LiferayWindowState.POP_UP);
-
 String modules = "liferay-image-selector";
 
 if (!draggableImage.equals("none")) {
@@ -135,7 +109,8 @@ if (!draggableImage.equals("none")) {
 		{
 			errorNode: '#<%= randomNamespace + "errorAlert" %>',
 			fileEntryImageNode: '#<%= randomNamespace %>image',
-			itemSelectorURL: '<%= itemSelectorURL.toString() %>',
+			itemSelectorEventName: '<%= itemSelectorEventName %>',
+			itemSelectorURL: '<%= itemSelectorURL %>',
 			maxFileSize: <%= maxFileSize %>,
 			namespace: '<%= randomNamespace %>',
 			paramName: '<portlet:namespace /><%= paramName %>',
