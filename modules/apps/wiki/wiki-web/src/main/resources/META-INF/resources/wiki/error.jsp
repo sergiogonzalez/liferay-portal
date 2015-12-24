@@ -18,6 +18,7 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
 <liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="please-enter-a-valid-page-title" />
 
 <c:if test="<%= SessionErrors.contains(renderRequest, NoSuchPageException.class.getName()) %>">
@@ -70,7 +71,6 @@
 	</div>
 </c:if>
 
-<liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
 <liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-page-title" />
 
 <liferay-ui:error-principal />
