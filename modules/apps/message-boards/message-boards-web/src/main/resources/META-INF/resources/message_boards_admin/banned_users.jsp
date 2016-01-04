@@ -66,6 +66,7 @@ else {
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<liferay-ui:search-container
 			emptyResultsMessage="there-are-no-banned-users"
@@ -81,7 +82,7 @@ else {
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portlet.messageboards.model.MBBan"
-				keyProperty="banId"
+				keyProperty="banUserId"
 				modelVar="ban"
 			>
 				<liferay-ui:search-container-column-user
@@ -130,7 +131,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextForm
 
 <aui:script>
 	function <portlet:namespace />unbanUser() {
-		var form = AUI.$(document.<portlet:namespace />fm1);
+		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
 		form.fm('<%= Constants.CMD %>').val('unban');
