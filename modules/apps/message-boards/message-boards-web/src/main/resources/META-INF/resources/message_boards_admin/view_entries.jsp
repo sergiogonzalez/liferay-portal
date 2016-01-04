@@ -224,7 +224,7 @@ else {
 
 							<%
 							int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId());
-							int threadsCount = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_APPROVED);
+							int threadsCount = MBThreadServiceUtil.getThreadsCount(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED);
 							%>
 
 							<span class="h6">
