@@ -74,8 +74,8 @@
 				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
 				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
-				<var name="key_listEntry" value="${siteName}" />
-				<execute function="ClickNoError" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+				<var name="key_rowEntry" value="${siteName}" />
+				<execute function="ClickNoError" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
 			</then>
 		</if>
@@ -724,9 +724,8 @@
 	<command name="viewOnlyAddOptionViaSiteAdminCP">
 		<execute function="Click" locator1="ControlMenu#ADD" />
 
-		<execute function="AssertElementNotPresent" locator1="NavPill#CONTENT" />
-		<execute function="AssertElementNotPresent" locator1="NavPill#APPLICATIONS" />
-		<execute function="AssertElementPresent" locator1="NavPill#PAGE" />
+		<execute function="AssertElementNotPresent" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" />
 
 		<execute function="Refresh" />
 	</command>

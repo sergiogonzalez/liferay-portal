@@ -16,7 +16,6 @@ FileTree fileTree = fileTree(rootDir) {
 		exclude "themes/product-app-theme/"
 		exclude "third-party/"
 		exclude "util/alloy-taglib/"
-		exclude "util/ant-build-logger/"
 		exclude "util/css-builder/"
 		exclude "util/deployment-helper/"
 		exclude "util/freemarker-osgi-bridge/"
