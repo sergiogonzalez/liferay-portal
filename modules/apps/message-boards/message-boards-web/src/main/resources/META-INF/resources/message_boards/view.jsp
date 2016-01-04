@@ -19,8 +19,6 @@
 <%
 String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);

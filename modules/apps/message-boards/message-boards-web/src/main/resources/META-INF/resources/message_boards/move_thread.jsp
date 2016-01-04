@@ -21,8 +21,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-long messageId = message.getMessageId();
-
 long categoryId = MBUtil.getCategoryId(request, message);
 
 MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);

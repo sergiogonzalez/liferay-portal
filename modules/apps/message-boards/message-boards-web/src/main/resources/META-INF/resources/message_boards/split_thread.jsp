@@ -28,7 +28,6 @@ MBThread thread = MBThreadLocalServiceUtil.getThread(message.getThreadId());
 long messageId = message.getMessageId();
 
 long categoryId = message.getCategoryId();
-long threadId = message.getThreadId();
 
 MBMessage curParentMessage = null;
 String parentAuthor = null;
