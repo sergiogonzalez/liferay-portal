@@ -48,16 +48,14 @@ if ((category == null) && (mailingList == null)) {
 }
 
 if (category != null) {
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 	}
 }
 else {
-	if (parentCategoryId > 0) {
-		MBUtil.addPortletBreadcrumbEntries(parentCategoryId, request, renderResponse);
-	}
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(parentCategoryId, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-category[message-board]"), currentURL);

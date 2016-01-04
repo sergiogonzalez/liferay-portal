@@ -128,6 +128,17 @@ else {
 
 	</c:if>
 
+	<%
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
+	%>
+
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
+
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
@@ -325,8 +336,6 @@ else {
 if (category != null) {
 	PortalUtil.setPageSubtitle(category.getName(), request);
 	PortalUtil.setPageDescription(category.getDescription(), request);
-
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 }
 %>
 

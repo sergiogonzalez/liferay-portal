@@ -36,6 +36,7 @@ page import="com.liferay.message.boards.web.display.context.MBDisplayContextProv
 page import="com.liferay.message.boards.web.display.context.util.MBRequestHelper" %><%@
 page import="com.liferay.message.boards.web.portlet.toolbar.contributor.MBPortletToolbarContributor" %><%@
 page import="com.liferay.message.boards.web.search.EntriesChecker" %><%@
+page import="com.liferay.message.boards.web.util.MBBreadcrumbUtil" %><%@
 page import="com.liferay.message.boards.web.util.MBWebComponentProvider" %><%@
 page import="com.liferay.portal.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

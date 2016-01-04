@@ -174,7 +174,7 @@ if (portletTitleBasedNavigation) {
 </aui:script>
 
 <%
-MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "split-thread"), currentURL);
 %>

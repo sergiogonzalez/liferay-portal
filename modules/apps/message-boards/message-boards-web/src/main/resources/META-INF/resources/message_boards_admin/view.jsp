@@ -31,10 +31,6 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
-if ((category != null) && layout.isTypeControlPanel()) {
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
-}
-
 request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-categoryId", categoryId);
 %>

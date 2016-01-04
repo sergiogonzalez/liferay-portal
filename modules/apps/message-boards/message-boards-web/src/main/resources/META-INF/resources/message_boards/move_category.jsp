@@ -95,11 +95,9 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <%
-if (category != null) {
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"), currentURL);
-}
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"), currentURL);
 %>
 
 <aui:script sandbox="<%= true %>">

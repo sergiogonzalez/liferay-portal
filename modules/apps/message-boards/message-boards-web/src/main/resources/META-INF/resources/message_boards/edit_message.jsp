@@ -78,22 +78,21 @@ if (Validator.isNull(redirect)) {
 }
 
 if (curParentMessage != null) {
-
-	MBUtil.addPortletBreadcrumbEntries(curParentMessage, request, renderResponse);
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(curParentMessage, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "reply"), currentURL);
 	}
 }
 else if (message != null) {
-	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 	}
 }
 else {
-	MBUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-message"), currentURL);
