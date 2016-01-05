@@ -66,35 +66,33 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			</div>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="num-of-items" /></h5>
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+					<%
+					long folderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			<%
-			long folderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+					if (folder != null) {
+						folderId = folder.getFolderId();
+					}
+					%>
 
-			if (folder != null) {
-				folderId = folder.getFolderId();
-			}
-			%>
+					<p>
+						<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
+					</p>
 
-			<p>
-				<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
-			</p>
+					<c:if test="<%= folder != null %>">
+						<h5><liferay-ui:message key="created" /></h5>
 
-			<c:if test="<%= folder != null %>">
-				<h5><liferay-ui:message key="created" /></h5>
-
-				<p>
-					<%= HtmlUtil.escape(folder.getUserName()) %>
-				</p>
-			</c:if>
-		</div>
+						<p>
+							<%= HtmlUtil.escape(folder.getUserName()) %>
+						</p>
+					</c:if>
+				</div>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
 	</c:when>
 	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(entries) && (entries.size() == 1) %>">
 
@@ -122,58 +120,101 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			</div>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<%
+		String tabNames = "details,categorization,custom-fields";
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="created" /></h5>
+		if (bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets()) {
+			tabNames += ",related-assets";
+		}
+		%>
 
-			<p>
-				<%= HtmlUtil.escape(entry.getUserName()) %>
-			</p>
+		<liferay-ui:tabs names="<%= tabNames %>" refresh="<%= false %>" type="dropdown">
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="created" /></h5>
 
-			<c:if test="<%= Validator.isNotNull(entry.getDescription()) %>">
-				<h5><liferay-ui:message key="description" /></h5>
+					<p>
+						<%= HtmlUtil.escape(entry.getUserName()) %>
+					</p>
 
-				<p>
-					<%= entry.getDescription() %>
-				</p>
+					<c:if test="<%= Validator.isNotNull(entry.getDescription()) %>">
+						<h5><liferay-ui:message key="description" /></h5>
+
+						<p>
+							<%= entry.getDescription() %>
+						</p>
+					</c:if>
+
+					<h5><liferay-ui:message key="url" /></h5>
+
+					<p>
+						<%= entry.getUrl() %>
+					</p>
+
+					<h5><liferay-ui:message key="visits" /></h5>
+
+					<p>
+						<%= entry.getVisits() %>
+					</p>
+
+					<liferay-ui:ratings
+						className="<%= BookmarksEntry.class.getName() %>"
+						classPK="<%= entry.getEntryId() %>"
+					/>
+				</div>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<liferay-ui:asset-categories-summary
+						className="<%= BookmarksEntry.class.getName() %>"
+						classPK="<%= entry.getEntryId() %>"
+					/>
+
+					<liferay-ui:asset-tags-summary
+						className="<%= BookmarksEntry.class.getName() %>"
+						classPK="<%= entry.getEntryId() %>"
+						message="tags"
+					/>
+				</div>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<liferay-ui:custom-attribute-list
+						className="<%= BookmarksEntry.class.getName() %>"
+						classPK="<%= entry.getEntryId() %>"
+						editable="<%= false %>"
+						label="<%= true %>"
+					/>
+				</div>
+			</liferay-ui:section>
+
+			<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>">
+
+				<%
+				AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry.class.getName(), entry.getEntryId());
+				%>
+
+				<liferay-ui:section>
+					<liferay-ui:asset-links
+						assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
+					/>
+				</liferay-ui:section>
 			</c:if>
-
-			<h5><liferay-ui:message key="url" /></h5>
-
-			<p>
-				<%= entry.getUrl() %>
-			</p>
-
-			<h5><liferay-ui:message key="visits" /></h5>
-
-			<p>
-				<%= entry.getVisits() %>
-			</p>
-
-			<liferay-ui:ratings
-				className="<%= BookmarksEntry.class.getName() %>"
-				classPK="<%= entry.getEntryId() %>"
-			/>
-		</div>
+		</liferay-ui:tabs>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-selected" /></h4>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-
-		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-selected" /></h5>
-		</div>
+		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<h5><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-selected" /></h5>
+				</div>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
 	</c:otherwise>
 </c:choose>
