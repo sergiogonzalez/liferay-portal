@@ -15,6 +15,7 @@
 --%>
 
 <%
+MBCategory curCategory = null;
 MBThread thread = null;
 
 if (result instanceof AssetEntry) {
@@ -24,7 +25,10 @@ if (result instanceof AssetEntry) {
 
 	thread = message.getThread();
 }
-else {
+else if (result instanceof MBCategory) {
+	curCategory = (MBCategory)result;
+}
+else if (result instanceof MBThread) {
 	thread = (MBThread)result;
 }
 %>

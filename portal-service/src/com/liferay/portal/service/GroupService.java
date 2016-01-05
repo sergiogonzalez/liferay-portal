@@ -205,6 +205,11 @@ public interface GroupService extends BaseService {
 	public com.liferay.portal.model.Group getGroup(long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getGroupDisplayURL(long groupId,
+		boolean privateLayout, boolean secureConnection)
+		throws PortalException;
+
 	/**
 	* Returns all the groups that are direct children of the parent group.
 	*

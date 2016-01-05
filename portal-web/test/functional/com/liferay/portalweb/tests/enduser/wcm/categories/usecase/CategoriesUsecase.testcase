@@ -90,8 +90,10 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesUsers">
+			<var name="portlet" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -572,8 +574,10 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesUsers">
+			<var name="portlet" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -672,8 +676,10 @@
 		</execute>
 
 		<for list="Category Name 1,Category Name 2" param="categoryName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Category#addCP">
@@ -815,14 +821,35 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
+		<execute macro="WebContent#viewCategorizationVocabularyCP">
+			<var name="vocabularyNameList" value="${vocabularyName}" />
+		</execute>
+
 		<execute macro="WebContent#viewCategorizationCategoryCP">
 			<var name="categoryNameList" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#copyCP">
-			<var name="categoryName" value="${categoryName}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditDuplicateEntryCP" />
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationVocabularyCP">
+			<var name="vocabularyNameList" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="${categoryName}" />
 		</execute>
 	</command>
 
@@ -992,8 +1019,10 @@
 		</execute>
 
 		<for list="dog,cat" param="categoryName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Category#addCP">
@@ -1003,8 +1032,10 @@
 		</for>
 
 		<for list="bone,milk" param="subcategoryName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Subcategory#addCP">
@@ -1076,8 +1107,10 @@
 		</execute>
 
 		<for list="llama,panda" param="categoryName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Category#searchCP">
@@ -1091,8 +1124,10 @@
 		</for>
 
 		<for list="brown,black" param="categoryDescription">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Category#searchCP">
@@ -1259,8 +1294,10 @@
 		</execute>
 
 		<for list="beard,mustache" param="categoryName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Subcategory#searchCP">
@@ -1275,8 +1312,10 @@
 		</for>
 
 		<for list="friendly chops,handlebar" param="categoryDescription">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Subcategory#searchCP">
@@ -1377,8 +1416,10 @@
 		</execute>
 
 		<for list="Food,Sport" param="vocabularyName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Vocabulary#searchCP">
@@ -1391,8 +1432,10 @@
 		</for>
 
 		<for list="Sushi,Futbol" param="vocabularyDescription">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Vocabulary#searchCP">

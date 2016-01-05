@@ -170,24 +170,24 @@ public class ASMUtil {
 				Opcodes.ASM5, methodNode, headMethodNode.access,
 				headMethodNode.name, headMethodNode.desc) {
 
-					@Override
-					protected void onMethodExit(int opcode) {
-						mv = _emptyMethodVisitor;
-					}
+				@Override
+				protected void onMethodExit(int opcode) {
+					mv = _emptyMethodVisitor;
+				}
 
-				});
+			});
 
 		tailMethodNode.accept(
 			new AdviceAdapter(
 				Opcodes.ASM5, _emptyMethodVisitor, tailMethodNode.access,
 				tailMethodNode.name, tailMethodNode.desc) {
 
-					@Override
-					protected void onMethodEnter() {
-						mv = methodNode;
-					}
+				@Override
+				protected void onMethodEnter() {
+					mv = methodNode;
+				}
 
-				});
+			});
 
 		containerMethodNode.instructions = methodNode.instructions;
 	}

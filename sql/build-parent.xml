@@ -14,6 +14,23 @@
 
 	<target name="build-db">
 		<if>
+			<available file="${project.dir}/modules/portal/portal-dao-db" type="dir" />
+			<then>
+				<gradle-execute dir="${project.dir}/modules/portal/portal-dao-db" task="jar" />
+
+				<path id="db.builder.classpath">
+					<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.dao.db-*.jar" />
+					<path refid="project.classpath" />
+				</path>
+			</then>
+			<else>
+				<path id="db.builder.classpath">
+					<path refid="project.classpath" />
+				</path>
+			</else>
+		</if>
+
+		<if>
 			<not>
 				<isset property="db.sql.dir" />
 			</not>
@@ -24,7 +41,7 @@
 
 		<java
 			classname="com.liferay.portal.tools.DBBuilder"
-			classpathref="project.classpath"
+			classpathref="db.builder.classpath"
 			fork="${fork.mode}"
 		>
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />

@@ -73,7 +73,9 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<var name="key_page" value="Public Pages" />
+
+		<execute function="Click" locator1="ProductMenu#ADD_PAGE_ICON" />
 
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
@@ -151,31 +153,6 @@
 		</if>
 	</command>
 
-	<command name="addWithWorkflowPG">
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
-
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
-
-		<execute function="AssertClick" locator1="NavPill#PAGE" value1="Page" />
-		<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#ADD_PAGE" value1="Add Page" />
-
-		<var name="key_pageName" value="${pageName}" />
-
-		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
-
-		<execute macro="Staging#submitForPublicationPageRevision" />
-	</command>
-
 	<command name="assertLocalizedPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT_LOCALIZED" value1="${localizedContent}" />
 
@@ -191,7 +168,7 @@
 	<command name="changeLogoViaPageCP">
 		<var name="key_page" value="${page}" />
 
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Logo" />

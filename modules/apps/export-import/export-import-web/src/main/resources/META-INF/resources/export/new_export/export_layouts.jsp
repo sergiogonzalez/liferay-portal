@@ -101,6 +101,10 @@ portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
+<liferay-util:include page="/export/new_export/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="processName" value="<%= (exportImportConfiguration != null) ? exportImportConfiguration.getName() : StringPool.BLANK %>" />
+</liferay-util:include>
+
 <div class="container-fluid-1280">
 	<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
 		<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
@@ -119,24 +123,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 		<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 		</liferay-util:include>
-	</div>
-
-	<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav" id="exportConfigurationButtons">
-				<aui:nav-item
-					data-value="custom"
-					iconCssClass="icon-puzzle"
-					label="custom"
-				/>
-
-				<aui:nav-item
-					data-value="saved"
-					iconCssClass="icon-archive"
-					label="export-templates"
-				/>
-			</aui:nav>
-		</aui:nav-bar>
 	</div>
 
 	<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
@@ -207,17 +193,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			</aui:button-row>
 		</aui:form>
 	</div>
-
-	<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
-		<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
-			<liferay-util:include page="/export/new_export/export_layouts_configurations.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<liferay-util:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</liferay-util:include>
-		</div>
-	</c:if>
 </div>
 
 <aui:script use="liferay-export-import">

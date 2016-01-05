@@ -43,6 +43,8 @@ import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
@@ -342,6 +344,32 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return group;
 	}
 
+	@Override
+	public String getGroupDisplayURL(
+			long groupId, boolean privateLayout, boolean secureConnection)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.VIEW);
+
+		if (!privateLayout && (group.getPublicLayoutsPageCount() > 0)) {
+			return PortalUtil.getLayoutSetDisplayURL(
+				group.getPublicLayoutSet(), secureConnection);
+		}
+		else if (privateLayout && (group.getPrivateLayoutsPageCount() > 0)) {
+			return PortalUtil.getLayoutSetDisplayURL(
+				group.getPrivateLayoutSet(), secureConnection);
+		}
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.UPDATE);
+
+		return PortalUtil.getControlPanelFullURL(
+			groupId, PortletKeys.LAYOUTS_ADMIN, null);
+	}
+
 	/**
 	 * Returns all the groups that are direct children of the parent group.
 	 *
@@ -383,8 +411,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			params.put("site", Boolean.TRUE);
 
 			return ListUtil.unique(
-				groupLocalService.search(permissionChecker.getCompanyId(), null,
-				null, null, params, true, 0, max));
+				groupLocalService.search(
+					permissionChecker.getCompanyId(), null, null, null, params,
+					true, 0, max));
 		}
 
 		Set<Group> groups = new LinkedHashSet<>();
