@@ -15,28 +15,54 @@
 package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.security.auth.PrincipalException;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Levente Hudák
+ * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
-		"mvc.command.name=/bookmarks/view_entry"
+		"mvc.command.name=/bookmarks/move_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
+public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected String getPath() {
-		return "/bookmarks/view_entry.jsp";
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			ActionUtil.getEntries(renderRequest);
+			ActionUtil.getEntry(renderRequest);
+			ActionUtil.getFolders(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchEntryException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/bookmarks/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		return "/bookmarks/move_entries.jsp";
 	}
 
 }
