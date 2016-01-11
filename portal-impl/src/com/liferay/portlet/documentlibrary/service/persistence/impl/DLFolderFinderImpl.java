@@ -475,6 +475,14 @@ public class DLFolderFinderImpl
 			qPos.add(folderId);
 			qPos.add(groupId);
 			qPos.add(queryDefinition.getStatus());
+
+			if ((queryDefinition.getOwnerUserId() > 0) &&
+				queryDefinition.isIncludeOwner()) {
+
+				qPos.add(queryDefinition.getOwnerUserId());
+				qPos.add(queryDefinition.getStatus());
+			}
+
 			qPos.add(folderId);
 
 			if (mimeTypes != null) {
