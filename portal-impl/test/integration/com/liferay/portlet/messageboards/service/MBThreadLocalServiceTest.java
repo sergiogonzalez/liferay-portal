@@ -29,6 +29,7 @@ import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 
+import java.io.File;
 import java.util.List;
 
 import org.junit.Assert;
@@ -50,6 +51,56 @@ public class MBThreadLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAttachmentsWhenSplittingThread() throws Exception {
+		MBMessage rootMessage = addMessage();
+		MBMessage splitMessage = addMessage();
+		MBMessage childMessage = addMessage();
+
+		Assert.assertEquals(
+			rootMessage.getThreadId(), splitMessage.getThreadId());
+
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			TestPropsValues.getUserId(), rootMessage.getMessageId(), "test",
+			_attachmentFile, "image/png");
+
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			TestPropsValues.getUserId(), splitMessage.getMessageId(), "test",
+			_attachmentFile, "image/png");
+
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			TestPropsValues.getUserId(), childMessage.getMessageId(), "test",
+			_attachmentFile, "image/png");
+
+		Assert.assertEquals(1, rootMessage.getAttachmentsFileEntriesCount());
+		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
+		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBThreadLocalServiceUtil.splitThread(
+			TestPropsValues.getUserId(), splitMessage.getMessageId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		rootMessage = MBMessageLocalServiceUtil.getMBMessage(
+			rootMessage.getMessageId());
+
+		splitMessage = MBMessageLocalServiceUtil.getMBMessage(
+			splitMessage.getMessageId());
+
+		childMessage = MBMessageLocalServiceUtil.getMBMessage(
+			childMessage.getMessageId());
+
+		Assert.assertNotEquals(
+			rootMessage.getThreadId(), splitMessage.getThreadId());
+
+		Assert.assertEquals(1, rootMessage.getAttachmentsFileEntriesCount());
+		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
+		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());
 	}
 
 	@Test
@@ -84,6 +135,10 @@ public class MBThreadLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
+
+	private static final File _attachmentFile = new File(
+		"portal-impl/test/integration/com/liferay/portlet/messageboards" +
+			"/attachments/dependencies/company_logo.png");
 
 	@DeleteAfterTestRun
 	private Group _group;
