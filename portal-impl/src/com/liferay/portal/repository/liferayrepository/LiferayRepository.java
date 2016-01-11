@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
@@ -37,6 +38,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -632,10 +634,14 @@ public class LiferayRepository
 			OrderByComparator<?> obc)
 		throws PortalException {
 
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
+			status, PrincipalThreadLocal.getUserId(), true, start, end,
+			(OrderByComparator<Object>)obc);
+
 		List<Object> dlFoldersAndDLFileEntriesAndDLFileShortcuts =
 			dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), status, mimeTypes,
-				includeMountFolders, start, end, obc);
+				getGroupId(), toFolderId(folderId), mimeTypes,
+				includeMountFolders, queryDefinition);
 
 		return RepositoryModelUtil.toRepositoryEntries(
 			dlFoldersAndDLFileEntriesAndDLFileShortcuts);
