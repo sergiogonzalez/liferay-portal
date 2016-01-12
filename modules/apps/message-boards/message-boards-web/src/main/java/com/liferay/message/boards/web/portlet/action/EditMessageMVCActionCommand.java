@@ -131,6 +131,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.ADD_QUICK_REPLY) ||
 					 cmd.equals(Constants.UPDATE)) {
 
 				message = updateMessage(actionRequest, actionResponse);
@@ -188,6 +189,18 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 			if (e instanceof AntivirusScannerException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (cmd.equals(Constants.ADD_QUICK_REPLY) &&
+					 (e instanceof CaptchaMaxChallengesException ||
+					  e instanceof CaptchaTextException ||
+					  e instanceof CaptchaConfigurationException)) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				SessionErrors.add(actionRequest, e.getClass());
