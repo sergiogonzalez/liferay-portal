@@ -27,6 +27,8 @@ public interface Constants {
 
 	public static final String ADD_MULTIPLE = "add_multiple";
 
+	public static final String ADD_QUICK_REPLY = "add_quick_reply";
+
 	public static final String ADD_TEMP = "add_temp";
 
 	public static final String ADD_WEBDAV = "add_webdav";

@@ -7,7 +7,26 @@
 	}
 }
 
-.control-menu-nav-level-1 .staging-links {
+.control-menu-nav {
+	@include display(flex);
+
+	font-size: 16px;
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+
+	> li {
+		@include align-self(center);
+
+		display: block;
+		float: left;
+		margin-left: 16px;
+	}
+}
+
+.control-menu .staging-links {
+	display:inline-block;
+	line-height: 25px;
 	position: static;
 
 	&:nth-last-of-type(2) {
@@ -17,6 +36,10 @@
 			@include flex(1);
 		}
 	}
+}
+
+.control-menu-level-1 .toolbar-group-expand-text {
+	overflow: visible;
 }
 
 .control-menu-level-2 {
@@ -75,28 +98,6 @@
 	}
 }
 
-.add-menu-toggle,
-.edit-controls-toggle,
-.edit-layout-link,
-.info-link,
-.simulation-menu-toggle {
-	padding-bottom: 15px;
-	padding-top: 15px;
-
-	.taglib-icon-label {
-		border: 0;
-		clip: rect(0, 0, 0, 0);
-		height: 1px;
-		margin: -1px;
-		overflow: hidden;
-		padding: 0;
-		position: absolute;
-		width: 1px;
-	}
-}
-
-.live-link,
-.staging-link,
 .staging-options-toggle {
 	padding: 15px 5px 15px 2px;
 }
@@ -105,9 +106,19 @@
 	margin-right: 24px;
 }
 
+.live-link,
+.staging-link,
+.staging-options-toggle {
+	padding: 15px 5px 15px 2px;
+}
+
 .publish-btn-group {
 	@media screen and (min-width: 768px) {
 		border-radius: 4px;
 		overflow: hidden;
 	}
+}
+
+.staging-ready {
+	padding-top: 55px;
 }

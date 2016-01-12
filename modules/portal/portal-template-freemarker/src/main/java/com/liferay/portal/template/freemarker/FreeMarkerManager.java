@@ -32,6 +32,8 @@ import com.liferay.portal.template.BaseSingleTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.helper.FreeMarkerThemeHelper;
+import com.liferay.portal.template.freemarker.helper.FreeMarkerThemeHelperImpl;
 
 import freemarker.cache.TemplateCache;
 
@@ -146,6 +148,19 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			applicationName,
 			new HttpRequestHashModel(
 				request, response, ObjectWrapper.DEFAULT_WRAPPER));
+	}
+
+	@Override
+	public void addTaglibTheme(
+		Map<String, Object> contextObjects, String themeName,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		FreeMarkerThemeHelper freeMarkerThemeHelper =
+			new FreeMarkerThemeHelperImpl(
+				request.getServletContext(), request, response, contextObjects);
+
+		contextObjects.put(themeName, freeMarkerThemeHelper);
+		contextObjects.put("theme", freeMarkerThemeHelper);
 	}
 
 	@Override
@@ -328,7 +343,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	private Configuration _configuration;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
-	private volatile TemplateClassResolver _templateClassResolver;
+	private TemplateClassResolver _templateClassResolver;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
 

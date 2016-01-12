@@ -55,7 +55,7 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 <portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
 <aui:form action="<%= editMessageURL %>" method="post" name="addQuickReplyFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_QUICK_REPLY %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
 	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
@@ -65,6 +65,10 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 	<aui:input name="priority" type="hidden" value="<%= priority %>" />
 	<aui:input name="propagatePermissions" type="hidden" value="<%= true %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
+
+	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+	<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
+	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 
 	<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
@@ -93,6 +97,12 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 				label="<%= true %>"
 			/>
 		</liferay-ui:custom-attributes-available>
+
+		<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE %>">
+			<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
+
+			<liferay-ui:captcha url="<%= captchaURL %>" />
+		</c:if>
 	</aui:fieldset>
 
 	<aui:button-row>
