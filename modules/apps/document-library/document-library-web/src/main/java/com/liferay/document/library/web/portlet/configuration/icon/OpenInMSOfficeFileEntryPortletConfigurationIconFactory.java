@@ -30,22 +30,22 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/edit_file_entry",
 		"path=/document_library/view_file_entry"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class FileEntryPermissionPortletConfigurationIconFactory
+public class OpenInMSOfficeFileEntryPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new FileEntryPermissionPortletConfigurationIcon(portletRequest);
+		return new OpenInMSOfficeFileEntryPortletConfigurationIcon(
+			portletRequest);
 	}
 
 	@Override
 	public double getWeight() {
-		return 101.0;
+		return 107.0;
 	}
 
 }
