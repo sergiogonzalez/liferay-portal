@@ -1,4 +1,5 @@
-<%--
+<%@ page
+		import="com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -136,7 +137,7 @@ if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack((viewParentPageURL != null) ? viewParentPageURL.toString() : backToViewPagesURL.toString());
 
-	renderResponse.setTitle(LanguageUtil.get(request, "new-wiki-page"));
+	renderResponse.setTitle(wikiPage.getTitle());
 }
 %>
 
@@ -165,7 +166,9 @@ if (portletTitleBasedNavigation) {
 		</c:otherwise>
 	</c:choose>
 
-	<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
+	</c:if>
 
 	<%
 	List entries = new ArrayList();
@@ -189,12 +192,14 @@ if (portletTitleBasedNavigation) {
 	%>
 
 	<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
-		<liferay-ui:header
-			backLabel="<%= parentTitle %>"
-			backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
-			localizeTitle="<%= false %>"
-			title="<%= title %>"
-		/>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backLabel="<%= parentTitle %>"
+				backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
+				localizeTitle="<%= false %>"
+				title="<%= title %>"
+			/>
+		</c:if>
 
 		<c:if test="<%= !print %>">
 			<div class="page-actions top-actions">
