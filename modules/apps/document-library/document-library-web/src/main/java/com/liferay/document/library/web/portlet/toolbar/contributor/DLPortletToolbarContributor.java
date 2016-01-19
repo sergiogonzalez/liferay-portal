@@ -214,47 +214,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		menuItems.add(urlMenuItem);
 	}
 
-	protected void addPortletTitleAddRepositoryMenuItem(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
-
-		if (folder != null) {
-			return;
-		}
-
-		if (!containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ActionKeys.ADD_REPOSITORY)) {
-
-			return;
-		}
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				"repository"));
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_repository");
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-
-		urlMenuItem.setURL(portletURL.toString());
-
-		menuItems.add(urlMenuItem);
-	}
-
 	protected void addPortletTitleAddShortcutMenuItem(
 			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
@@ -378,14 +337,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to add shortcut menu item", pe);
-		}
-
-		try {
-			addPortletTitleAddRepositoryMenuItem(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add repository menu item", pe);
 		}
 
 		try {
