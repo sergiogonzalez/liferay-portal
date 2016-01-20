@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>PAGE_HEADER</td>
-	<td>//div[contains(@class,'taglib-header') and contains(.,'${key_wikiPageTitle}')]</td>
+	<td>//div//h2[contains(.,'${key_wikiPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
