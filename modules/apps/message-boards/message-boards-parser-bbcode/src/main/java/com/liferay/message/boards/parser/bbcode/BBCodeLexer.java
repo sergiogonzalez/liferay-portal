@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.parser.bbcode;
+package com.liferay.message.boards.parser.bbcode;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

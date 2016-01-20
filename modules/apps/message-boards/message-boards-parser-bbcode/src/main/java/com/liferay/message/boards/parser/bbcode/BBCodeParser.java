@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.parser.bbcode;
+package com.liferay.message.boards.parser.bbcode;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
