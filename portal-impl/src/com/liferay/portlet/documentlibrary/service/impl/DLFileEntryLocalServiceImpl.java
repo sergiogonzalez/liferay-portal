@@ -1681,8 +1681,7 @@ public class DLFileEntryLocalServiceImpl
 			fileEntryTypeId, ddmFormValuesMap, null, is, size, serviceContext);
 
 		DLFileVersion newDlFileVersion =
-			dlFileVersionLocalService.getFileVersion(
-				fileEntryId, dlFileEntry.getVersion());
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		copyFileEntryMetadata(
 			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
