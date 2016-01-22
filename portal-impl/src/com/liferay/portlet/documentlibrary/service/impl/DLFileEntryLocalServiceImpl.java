@@ -1675,7 +1675,7 @@ public class DLFileEntryLocalServiceImpl
 
 		serviceContext.setCommand(Constants.REVERT);
 
-		DLFileEntry dlFileEntry = updateFileEntry(
+		updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
 			description, changeLog, majorVersion, extraSettings,
 			fileEntryTypeId, ddmFormValuesMap, null, is, size, serviceContext);
