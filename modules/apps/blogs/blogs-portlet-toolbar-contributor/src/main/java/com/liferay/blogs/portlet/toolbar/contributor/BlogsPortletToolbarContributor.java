@@ -15,13 +15,12 @@
 package com.liferay.blogs.portlet.toolbar.contributor;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -40,54 +39,24 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(
+	immediate = true,
 	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS, "struts.action=-"
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"mvc.render.command.name=-", "mvc.render.command.name=/blogs/view"
+	},
+	service = {
+		BlogsPortletToolbarContributor.class, PortletToolbarContributor.class
 	}
 )
 public class BlogsPortletToolbarContributor
-	implements PortletToolbarContributor {
+	extends BasePortletToolbarContributor {
 
-	@Override
-	public List<Menu> getPortletTitleMenus(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		Menu addEntryPortletTitleMenu = getAddEntryPortletTitleMenu(
-			portletRequest);
-
-		if (addEntryPortletTitleMenu == null) {
-			return Collections.emptyList();
-		}
-
-		List<Menu> menus = new ArrayList<>();
-
-		menus.add(addEntryPortletTitleMenu);
-
-		return menus;
-	}
-
-	protected Menu getAddEntryPortletTitleMenu(PortletRequest portletRequest) {
-		List<MenuItem> portletTitleMenuItems = getPortletTitleMenuItems(
-			portletRequest);
-
-		if (ListUtil.isEmpty(portletTitleMenuItems)) {
-			return null;
-		}
-
-		Menu menu = new Menu();
-
-		menu.setDirection("down");
-		menu.setExtended(false);
-		menu.setIcon("../aui/plus-sign-2");
-		menu.setMenuItems(portletTitleMenuItems);
-		menu.setShowArrow(false);
-
-		return menu;
-	}
-
-	protected URLMenuItem getPortletTitleMenuItem(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
+	protected void addPortletTitleMenuItem(
+		List<MenuItem> menuItems, PortletRequest portletRequest,
+		ThemeDisplay themeDisplay) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
@@ -106,11 +75,12 @@ public class BlogsPortletToolbarContributor
 
 		urlMenuItem.setURL(portletURL.toString());
 
-		return urlMenuItem;
+		menuItems.add(urlMenuItem);
 	}
 
+	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -124,7 +94,7 @@ public class BlogsPortletToolbarContributor
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		menuItems.add(getPortletTitleMenuItem(portletRequest, themeDisplay));
+		addPortletTitleMenuItem(menuItems, portletRequest, themeDisplay);
 
 		return menuItems;
 	}
