@@ -15,6 +15,10 @@
 package com.liferay.blogs.portlet.toolbar.contributor;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -33,6 +37,7 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,6 +66,10 @@ public class BlogsPortletToolbarContributor
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setIcon("icon-plus-sign-2");
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				"add-blog-entry"));
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, BlogsPortletKeys.BLOGS, themeDisplay.getPlid(),
@@ -72,6 +81,13 @@ public class BlogsPortletToolbarContributor
 
 		portletURL.setParameter("redirect", currentURL);
 		portletURL.setParameter("backURL", currentURL);
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+			_log.error(wse, wse);
+		}
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -107,6 +123,9 @@ public class BlogsPortletToolbarContributor
 
 		_resourcePermissionChecker = resourcePermissionChecker;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsPortletToolbarContributor.class);
 
 	private ResourcePermissionChecker _resourcePermissionChecker;
 
