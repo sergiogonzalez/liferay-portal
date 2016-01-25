@@ -179,6 +179,7 @@ public class WikiPageAssetRenderer
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
+		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		return portletURL;
 	}

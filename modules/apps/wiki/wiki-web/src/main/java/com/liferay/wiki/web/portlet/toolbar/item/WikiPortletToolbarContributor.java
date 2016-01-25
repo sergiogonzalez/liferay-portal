@@ -50,6 +50,8 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -102,6 +104,13 @@ public class WikiPortletToolbarContributor
 		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 		portletURL.setParameter("title", StringPool.BLANK);
 		portletURL.setParameter("editTitle", "1");
+
+		try {
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+			_log.error(wse, wse);
+		}
 
 		urlMenuItem.setURL(portletURL.toString());
 

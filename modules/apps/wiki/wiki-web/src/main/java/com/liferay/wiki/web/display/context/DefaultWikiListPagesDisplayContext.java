@@ -76,6 +76,8 @@ import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -406,6 +408,12 @@ public class DefaultWikiListPagesDisplayContext
 		portletURL.setParameter(
 			"templateTitle", HtmlUtil.unescape(wikiPage.getTitle()));
 
+		try {
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+		}
+
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
@@ -513,6 +521,12 @@ public class DefaultWikiListPagesDisplayContext
 		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
 		portletURL.setParameter(
 			"title", HtmlUtil.unescape(wikiPage.getTitle()));
+
+		try {
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+		}
 
 		urlMenuItem.setURL(portletURL.toString());
 

@@ -41,6 +41,7 @@ editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 editPageURL.setParameter("redirect", currentURL);
 editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 editPageURL.setParameter("title", wikiPage.getTitle());
+editPageURL.setWindowState(LiferayWindowState.MAXIMIZED);
 
 PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), viewPageURL.toString());
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details"), currentURL);
@@ -309,6 +310,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					copyPageURL.setParameter("editTitle", "1");
 					copyPageURL.setParameter("templateNodeId", String.valueOf(wikiPage.getNodeId()));
 					copyPageURL.setParameter("templateTitle", wikiPage.getTitle());
+					copyPageURL.setWindowState(WindowState.MAXIMIZED);
 					%>
 
 					<liferay-ui:icon

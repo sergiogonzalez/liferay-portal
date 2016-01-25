@@ -36,6 +36,7 @@ editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 editPageURL.setParameter("redirect", viewPageURL.toString());
 editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 editPageURL.setParameter("title", title);
+editPageURL.setWindowState(WindowState.MAXIMIZED);
 
 PortletURL viewPageDetailsURL = renderResponse.createRenderURL();
 

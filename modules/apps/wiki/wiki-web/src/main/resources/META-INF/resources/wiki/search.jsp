@@ -125,7 +125,7 @@ portletURL.setParameter("keywords", keywords);
 	</liferay-ui:search-container>
 
 	<c:if test="<%= createNewPage %>">
-		<portlet:renderURL var="addPageURL">
+		<portlet:renderURL var="addPageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />

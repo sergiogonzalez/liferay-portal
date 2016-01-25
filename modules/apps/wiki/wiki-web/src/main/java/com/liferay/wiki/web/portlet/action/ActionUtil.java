@@ -59,6 +59,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -254,6 +255,7 @@ public class ActionUtil {
 		editPageURL.setParameter("mvcRenderCommandName", "wiki/edit_page");
 		editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 		editPageURL.setParameter("title", title);
+		editPageURL.setWindowState(WindowState.MAXIMIZED);
 
 		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
 			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);

@@ -27,7 +27,7 @@ try {
 				</div>
 
 				<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
-					<portlet:renderURL var="removeRedirectURL">
+					<portlet:renderURL var="removeRedirectURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 						<portlet:param name="title" value="<%= title %>" />
