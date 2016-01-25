@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -50,6 +51,7 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -102,6 +104,13 @@ public class WikiPortletToolbarContributor
 		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 		portletURL.setParameter("title", StringPool.BLANK);
 		portletURL.setParameter("editTitle", "1");
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+			_log.error(wse, wse);
+		}
 
 		urlMenuItem.setURL(portletURL.toString());
 
