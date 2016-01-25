@@ -1509,6 +1509,77 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
+		public void shouldCountDraftsIfOwner() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			int foldersAndFileEntriesAndFileShortcutsCount =
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+					group.getGroupId(), parentFolder.getFolderId(),
+					WorkflowConstants.STATUS_APPROVED, false);
+
+			Assert.assertEquals(2, foldersAndFileEntriesAndFileShortcutsCount);
+		}
+
+		@Test
+		public void shouldNotCountDraftsIfNotOwner() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			User user = UserTestUtil.addGroupUser(group, "User");
+
+			try (ContextUserReplace contextUserReplace =
+					new ContextUserReplace(user)) {
+
+				int foldersAndFileEntriesAndFileShortcutsCount =
+					DLAppServiceUtil.
+						getFoldersAndFileEntriesAndFileShortcutsCount(
+							group.getGroupId(), parentFolder.getFolderId(),
+							WorkflowConstants.STATUS_APPROVED, false);
+
+				Assert.assertEquals(
+					1, foldersAndFileEntriesAndFileShortcutsCount);
+			}
+			finally {
+				UserLocalServiceUtil.deleteUser(user.getUserId());
+			}
+		}
+
+		@Test
 		public void shouldNotReturnDraftsIfNotOwner() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
