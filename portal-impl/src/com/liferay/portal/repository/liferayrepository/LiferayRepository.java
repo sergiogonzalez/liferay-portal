@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -38,7 +39,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -662,9 +662,12 @@ public class LiferayRepository
 			boolean includeMountFolders)
 		throws PortalException {
 
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
+			status, PrincipalThreadLocal.getUserId(), true);
+
 		return dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(
-			getGroupId(), toFolderId(folderId), status, mimeTypes,
-			includeMountFolders);
+			getGroupId(), toFolderId(folderId), mimeTypes, includeMountFolders,
+			queryDefinition);
 	}
 
 	@Override
