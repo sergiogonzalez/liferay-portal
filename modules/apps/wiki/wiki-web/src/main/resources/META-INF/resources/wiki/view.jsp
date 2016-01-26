@@ -411,8 +411,8 @@ if (portletTitleBasedNavigation) {
 			</div>
 
 			<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
-				<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
+				<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" markupView="lexicon" persistState="<%= true %>">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" markupView="lexicon" persistState="<%= true %>" title="comments">
 
 						<liferay-ui:discussion
 							className="<%= WikiPage.class.getName() %>"
@@ -436,7 +436,7 @@ if (portletTitleBasedNavigation) {
 		toc.find('a.toc-trigger').on(
 			'click',
 			function(event) {
-				index.toggleClass('hide');
+				index.toggleClass('hide');F
 			}
 		);
 	</aui:script>
