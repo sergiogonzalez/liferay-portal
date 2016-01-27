@@ -15,12 +15,12 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -28,20 +28,20 @@ import javax.portlet.PortletURL;
 /**
  * @author Roberto Díaz
  */
-public class MoveFileEntryPortletConfigurationIcon
+public class EditFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public MoveFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry) {
+	public EditFolderPortletConfigurationIcon(
+		PortletRequest portletRequest, Folder folder) {
 
 		super(portletRequest);
 
-		_fileEntry = fileEntry;
+		_folder = folder;
 	}
 
 	@Override
 	public String getMessage() {
-		return "move";
+		return "edit";
 	}
 
 	@Override
@@ -50,30 +50,20 @@ public class MoveFileEntryPortletConfigurationIcon
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/move_entry");
-
-		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		long folderId = _fileEntry.getFolderId();
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view");
+		if (_folder.isMountPoint()) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/edit_repository");
 		}
 		else {
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view_folder");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/edit_folder");
 		}
 
-		redirectURL.setParameter("folderId", String.valueOf(folderId));
-
-		portletURL.setParameter("redirect", redirectURL.toString());
-
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
-			"rowIdsFileEntry", String.valueOf(_fileEntry.getFileEntryId()));
+			"folderId", String.valueOf(_folder.getFolderId()));
+		portletURL.setParameter(
+			"repositoryId", String.valueOf(_folder.getRepositoryId()));
 
 		return portletURL.toString();
 	}
@@ -81,13 +71,12 @@ public class MoveFileEntryPortletConfigurationIcon
 	@Override
 	public boolean isShow() {
 		try {
-			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
-				new FileEntryDisplayContextHelper(
-					themeDisplay.getPermissionChecker(), _fileEntry);
-
-			return fileEntryDisplayContextHelper.isMoveActionAvailable();
+			return DLFolderPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+				ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
+		catch (PortalException e) {
 		}
 
 		return false;
@@ -98,6 +87,6 @@ public class MoveFileEntryPortletConfigurationIcon
 		return false;
 	}
 
-	private final FileEntry _fileEntry;
+	private final Folder _folder;
 
 }
