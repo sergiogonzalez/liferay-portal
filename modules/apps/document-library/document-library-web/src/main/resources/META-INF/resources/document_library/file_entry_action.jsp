@@ -54,21 +54,11 @@ if (row != null) {
 		}
 	}
 }
-else {
-	if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
-		if (request.getAttribute("search.jsp-fileEntry") != null) {
-			fileEntry = (FileEntry)request.getAttribute("search.jsp-fileEntry");
-		}
-	}
-	else {
-		if (request.getAttribute("info_panel.jsp-fileEntry") != null) {
-			fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
-		}
-
-		if (request.getAttribute("info_panel.jsp-fileShortcut") != null) {
-			fileShortcut = (FileShortcut)request.getAttribute("info_panel.jsp-fileShortcut");
-		}
-	}
+else if (request.getAttribute("info_panel.jsp-fileEntry") != null) {
+	fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
+}
+else if (request.getAttribute("info_panel.jsp-fileShortcut") != null) {
+	fileShortcut = (FileShortcut)request.getAttribute("info_panel.jsp-fileShortcut");
 }
 
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
