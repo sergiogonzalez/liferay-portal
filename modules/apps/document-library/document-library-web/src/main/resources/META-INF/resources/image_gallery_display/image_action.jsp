@@ -51,14 +51,6 @@ if (fileShortcut == null) {
 else {
 	igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileShortcut);
 }
-
-Menu menu = new Menu();
-
-menu.setDirection("left-side");
-menu.setMarkupView("lexicon");
-menu.setMenuItems(igViewFileVersionDisplayContext.getMenuItems());
-menu.setScroll(false);
-menu.setShowWhenSingleIcon(true);
 %>
 
-<liferay-ui:menu menu="<%= menu %>" />
+<liferay-ui:menu menu="<%= igViewFileVersionDisplayContext.getMenu() %>" />
