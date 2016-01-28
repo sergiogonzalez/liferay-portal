@@ -17,33 +17,19 @@
 <%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
-String[] mediaGalleryMimeTypes = (String[])request.getAttribute("view.jsp-mediaGalleryMimeTypes");
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.jsp-searchContainer");
-
-List results = searchContainer.getResults();
+SearchContainer igSearchContainer = (SearchContainer)request.getAttribute("view.jsp-igSearchContainer");
 
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(igRequestHelper);
 %>
 
-<c:choose>
-	<c:when test="<%= results.isEmpty() %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-are-no-media-files-in-this-folder" />
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="taglib-search-iterator-page-iterator-top">
-			<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" />
-		</div>
-	</c:otherwise>
-</c:choose>
-
-<div>
-
-	<%
-	for (int i = 0; i < results.size(); i++) {
-		Object result = results.get(i);
-	%>
+<liferay-ui:search-container
+	emptyResultsMessage="there-are-no-media-files-in-this-folder"
+	searchContainer="<%= igSearchContainer %>"
+>
+	<liferay-ui:search-container-row
+		className="Object"
+		modelVar="result"
+	>
 
 		<%@ include file="/document_library/cast_result.jspf" %>
 
@@ -99,59 +85,44 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					}
 				}
 
-				String title = fileEntry.getTitle();
-
-				if (Validator.isNotNull(fileEntry.getDescription())) {
-					title += " - " + fileEntry.getDescription();
-				}
+				row.setClassName("col-md-3 col-sm-4 col-xs-6");
 				%>
 
-				<div class="image-icon">
-					<a class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
-						<span class="image-thumbnail">
-							<img alt="<%= HtmlUtil.escapeAttribute(title) %>" src="<%= src %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
+				<liferay-ui:search-container-column-text>
+					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>">
+						<liferay-frontend:vertical-card
+							actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							imageUrl="<%= href %>"
+							resultRow="<%= row %>"
+							title="<%= fileEntry.getTitle() %>"
+						>
 
-							<c:if test="<%= fileShortcut != null %>">
-								<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
-							</c:if>
+							<%
+							List assetTags = AssetTagServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+							%>
 
-							<c:if test="<%= fileEntry.isCheckedOut() %>">
-								<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
-							</c:if>
-						</span>
+							<liferay-frontend:vertical-card-footer>
+								<div id="<portlet:namespace />categorizationContainer_<%= fileEntry.getFileEntryId() %>" style="display: none;">
+									<span <%= !assetTags.isEmpty() ? "class=\"has-tags\"" : "" %>>
+										<liferay-ui:asset-categories-summary
+											className="<%= DLFileEntryConstants.getClassName() %>"
+											classPK="<%= fileEntry.getFileEntryId() %>"
+										/>
+									</span>
 
-						<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
-					</a>
-				</div>
-
-				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-					<div class="hide" id="<portlet:namespace />buttonsContainer_<%= thumbnailId %>">
-						<div class="buttons-container float-container" id="<portlet:namespace />buttons_<%= thumbnailId %>">
-							<%@ include file="/image_gallery_display/image_action.jspf" %>
-						</div>
+									<liferay-ui:asset-tags-summary
+										className="<%= DLFileEntryConstants.getClassName() %>"
+										classPK="<%= fileEntry.getFileEntryId() %>"
+									/>
+								</div>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:vertical-card>
 					</div>
-				</c:if>
-
-				<%
-				List assetTags = AssetTagServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-				%>
-
-				<div id="<portlet:namespace />categorizationContainer_<%= fileEntry.getFileEntryId() %>" style="display: none;">
-					<span <%= !assetTags.isEmpty() ? "class=\"has-tags\"" : "" %>>
-						<liferay-ui:asset-categories-summary
-							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= fileEntry.getFileEntryId() %>"
-						/>
-					</span>
-
-					<liferay-ui:asset-tags-summary
-						className="<%= DLFileEntryConstants.getClassName() %>"
-						classPK="<%= fileEntry.getFileEntryId() %>"
-					/>
-				</div>
+				</liferay-ui:search-container-column-text>
 			</c:when>
-
-			<c:when test="<%= curFolder != null %>">
+			<c:otherwise>
 				<portlet:renderURL var="viewFolderURL">
 					<portlet:param name="mvcRenderCommandName" value="/image_gallery_display/view" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -159,105 +130,28 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</portlet:renderURL>
 
 				<%
-				String curFolderTitle = curFolder.getName();
-
-				if (Validator.isNotNull(curFolder.getDescription())) {
-					curFolderTitle += " - " + curFolder.getDescription();
-				}
+				row.setCssClass("col-md-4 col-sm-4 col-xs-6");
 				%>
 
-				<c:choose>
-					<c:when test="<%= curFolder.isMountPoint() %>">
-
-						<%
-						try {
-							int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
-
-							String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/drive.png";
-						%>
-
-							<div class="image-icon">
-								<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(curFolderTitle) %>">
-									<span class="image-thumbnail">
-										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="repository" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
-									</span>
-
-									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
-								</a>
-							</div>
-
-						<%
-						}
-						catch (Exception e) {
-							String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/drive_error.png";
-						%>
-
-							<div class="image-icon">
-								<span class="error image-thumbnail" title='<liferay-ui:message key="an-unexpected-error-occurred-while-connecting-to-the-repository" />'>
-									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="error" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
-
-									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
-								</span>
-							</div>
-
-						<%
-						}
-						%>
-
-					</c:when>
-					<c:otherwise>
-						<div class="image-icon">
-							<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(curFolderTitle) %>">
-
-								<%
-								String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_empty.png";
-
-								if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
-									int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
-
-									int curImagesCount = 0;
-
-									if (mediaGalleryMimeTypes != null) {
-										curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, mediaGalleryMimeTypes);
-									}
-									else {
-										curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
-									}
-
-									if ((curFoldersCount + curImagesCount) > 0) {
-										folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_image.png";
-									}
-								}
-								%>
-
-								<span class="image-thumbnail">
-									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="folder" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
-								</span>
-
-								<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
-							</a>
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<div style="float: left; margin: 100px 10px 0px;">
-					<i class="icon-ban-circle"></i>
-				</div>
+				<liferay-ui:search-container-column-text>
+					<liferay-frontend:horizontal-card
+						actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/folder_action.jsp" : StringPool.BLANK %>'
+						actionJspServletContext="<%= application %>"
+						resultRow="<%= row %>"
+						text="<%= HtmlUtil.escape(curFolder.getName()) %>"
+						url="<%= viewFolderURL %>"
+					>
+						<liferay-frontend:horizontal-card-icon>
+							<span class="icon-monospaced <%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close-alt" %>"></span>
+						</liferay-frontend:horizontal-card-icon>
+					</liferay-frontend:horizontal-card>
+				</liferay-ui:search-container-column-text>
 			</c:otherwise>
 		</c:choose>
+	</liferay-ui:search-container-row>
 
-	<%
-	}
-	%>
-
-</div>
-
-<c:if test="<%= !results.isEmpty() %>">
-	<div class="taglib-search-iterator-page-iterator-bottom">
-		<liferay-ui:search-paginator id="pageIteratorBottom" searchContainer="<%= searchContainer %>" />
-	</div>
-</c:if>
+	<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= igSearchContainer %>" />
+</liferay-ui:search-container>
 
 <%
 PortletURL embeddedPlayerURL = renderResponse.createRenderURL();
