@@ -14,26 +14,22 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Roberto Díaz
  */
-public class FolderPermissionPortletConfigurationIcon
+public class AccessFromDesktopPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public FolderPermissionPortletConfigurationIcon(
+	public AccessFromDesktopPortletConfigurationIcon(
 		PortletRequest portletRequest, Folder folder) {
 
 		super(portletRequest);
@@ -43,48 +39,38 @@ public class FolderPermissionPortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		return "permissions";
+		return "access-from-desktop";
 	}
 
 	@Override
 	public String getURL() {
-		String url = StringPool.BLANK;
-
-		try {
-			if (_folder != null) {
-				url = PermissionsURLTag.doTag(
-					null, DLFolderConstants.getClassName(),
-					HtmlUtil.unescape(_folder.getName()), null,
-					String.valueOf(_folder.getFolderId()),
-					LiferayWindowState.POP_UP.toString(), null,
-					themeDisplay.getRequest());
-			}
-			else {
-				url = PermissionsURLTag.doTag(
-					null, "com.liferay.portlet.documentlibrary",
-					HtmlUtil.unescape(themeDisplay.getScopeGroupName()), null,
-					String.valueOf(themeDisplay.getScopeGroupId()),
-					LiferayWindowState.POP_UP.toString(), null,
-					themeDisplay.getRequest());
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return url;
+		return "javascript:;";
 	}
 
 	@Override
 	public boolean isShow() {
 		try {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
 			if (_folder != null) {
-				return DLFolderPermission.contains(
+				folderId = _folder.getFolderId();
+			}
+
+			if (DLFolderPermission.contains(
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), _folder.getFolderId(),
-					ActionKeys.PERMISSIONS);
+					themeDisplay.getScopeGroupId(), folderId,
+					ActionKeys.VIEW) &&
+				portletDisplay.isWebDAVEnabled() &&
+				((_folder == null) ||
+				 (_folder.getRepositoryId() ==
+					 themeDisplay.getScopeGroupId()))) {
+
+				return true;
 			}
 		}
-		catch (PortalException e) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -93,11 +79,6 @@ public class FolderPermissionPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
-	}
-
-	@Override
-	public boolean isUseDialog() {
-		return true;
 	}
 
 	private final Folder _folder;
