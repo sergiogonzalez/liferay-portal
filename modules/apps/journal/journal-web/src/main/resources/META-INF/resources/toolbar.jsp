@@ -27,7 +27,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" disabled="<%= false %>" href="javascript:;" icon="info-circle" label="info" />
+			<liferay-frontend:management-bar-toggler-button 
+				cssClass="infoPanelToggler"
+				disabled="<%= false %>"
+				href="javascript:;"
+				icon="info-circle"
+				label="info"
+				togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() +  "infoPanelId" %>'
+			/>
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
@@ -91,7 +98,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" disabled="<%= false %>" href="javascript:;" icon="info-circle" label="info" />
+			<liferay-frontend:management-bar-toggler-button 
+				cssClass="infoPanelToggler"
+				disabled="<%= false %>"
+				href="javascript:;"
+				icon="info-circle"
+				label="info"
+				togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() +  "infoPanelId" %>'
+			/>
 		</c:if>
 
 		<%
