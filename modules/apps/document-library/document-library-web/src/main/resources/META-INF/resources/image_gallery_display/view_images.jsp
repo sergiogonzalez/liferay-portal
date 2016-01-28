@@ -53,8 +53,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 				boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
-				String href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-				String src = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
+				String imageURL = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 
 				int playerHeight = 500;
 
@@ -62,7 +61,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 					if (hasAudio) {
-						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1");
+						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1");
 
 						for (String audioContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
 							dataOptions += "&" + audioContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedAudio=1&audioPreview=1&type=" + audioContainer));
@@ -71,13 +70,13 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						playerHeight = 43;
 					}
 					else if (hasImages) {
-						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
+						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
 					}
 					else if (hasPDFImages) {
-						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
+						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
 					}
 					else if (hasVideo) {
-						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1");
+						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1");
 
 						for (String videoContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
 							dataOptions += "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&videoPreview=1&type=" + videoContainer));
@@ -89,12 +88,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>">
+					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= imageURL %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>">
 						<liferay-frontend:vertical-card
 							actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
 							actionJspServletContext="<%= application %>"
 							cssClass="entry-display-style"
-							imageUrl="<%= href %>"
+							imageUrl="<%= imageURL %>"
 							resultRow="<%= row %>"
 							title="<%= fileEntry.getTitle() %>"
 						>
