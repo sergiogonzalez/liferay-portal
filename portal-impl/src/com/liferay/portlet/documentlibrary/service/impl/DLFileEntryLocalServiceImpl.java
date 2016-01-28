@@ -1675,6 +1675,27 @@ public class DLFileEntryLocalServiceImpl
 
 		serviceContext.setCommand(Constants.REVERT);
 
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.getDLFileEntry(fileEntryId);
+
+		try {
+			validateFileEntryTypeId(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					dlFileEntry.getGroupId()),
+				dlFileEntry.getFolderId(), fileEntryTypeId);
+		}
+		catch (InvalidFileEntryTypeException ifete) {
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			DLFolder dlFolder = dlFolderPersistence.fetchByPrimaryKey(
+				dlFileEntry.getFolderId());
+
+			if (dlFolder != null) {
+				folderId = dlFolder.getFolderId();
+			}
+
+			fileEntryTypeId = dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
+		}
+
 		updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
 			description, changeLog, majorVersion, extraSettings,
