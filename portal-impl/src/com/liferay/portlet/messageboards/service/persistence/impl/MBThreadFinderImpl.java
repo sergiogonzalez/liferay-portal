@@ -23,10 +23,13 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.messageboards.exception.NoSuchThreadException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
@@ -77,6 +80,12 @@ public class MBThreadFinderImpl
 
 	public static final String FIND_BY_G_C =
 		MBThreadFinder.class.getName() + ".findByG_C";
+
+	public static final String FIND_BY_G_C_S_PREVANDNEXT =
+		MBThreadFinder.class.getName() + ".findByG_C_S_PrevAndNext";
+
+	public static final String FIND_BY_G_C_NOTS_PREVANDNEXT =
+		MBThreadFinder.class.getName() + ".findByG_C_NotS_PrevAndNext";
 
 	public static final String FIND_BY_G_U_C =
 		MBThreadFinder.class.getName() + ".findByG_U_C";
@@ -499,6 +508,54 @@ public class MBThreadFinderImpl
 		return doFindByG_C(groupId, categoryId, queryDefinition, true);
 	}
 
+	public MBThread[] filterFindByG_C_S_PrevAndNext(
+			long threadId, long groupId, long categoryId, int status,
+			OrderByComparator<MBThread> orderByComparator)
+		throws NoSuchThreadException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return mbThreadPersistence.findByG_C_S_PrevAndNext(
+				threadId, groupId, categoryId, status, orderByComparator);
+		}
+
+		MBThread mbThread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		MBThread[] array = new MBThreadImpl[3];
+
+		array[0] = doFindByG_C_S_PrevAndNext(mbThread, groupId,
+			categoryId, status, orderByComparator, true);
+
+		array[1] = mbThread;
+
+		array[2] = doFindByG_C_S_PrevAndNext(mbThread, groupId,
+			categoryId, status, orderByComparator, false);
+
+		return array;
+	}
+
+	public MBThread[] filterFindByG_C_NotS_PrevAndNext(
+			long threadId, long groupId, long categoryId, int status,
+			OrderByComparator<MBThread> orderByComparator)
+		throws NoSuchThreadException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return mbThreadPersistence.findByG_C_NotS_PrevAndNext(
+				threadId, groupId, categoryId, status, orderByComparator);
+		}
+
+		MBThread mbThread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		MBThread[] array = new MBThreadImpl[3];
+
+		array[0] = doFindByG_C_NotS_PrevAndNext(mbThread, groupId,
+			categoryId, status, orderByComparator, true);
+
+		array[1] = mbThread;
+
+		array[2] = doFindByG_C_NotS_PrevAndNext(mbThread, groupId,
+			categoryId, status, orderByComparator, false);
+
+		return array;
+	}
+
 	@Override
 	public List<MBThread> filterFindByS_G_U_C(
 		long groupId, long userId, long[] categoryIds,
@@ -817,6 +874,80 @@ public class MBThreadFinderImpl
 			groupId, userId, categoryIds, queryDefinition, false);
 	}
 
+	protected String appendOrderByComparator(
+		String sql, OrderByComparator<MBThread> orderByComparator, boolean previous){
+
+		if (orderByComparator == null) {
+			return sql;
+		}
+
+		StringBundler query = new StringBundler();
+
+		String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+		if (orderByConditionFields.length > 0) {
+			query.append(WHERE_AND);
+		}
+
+		for (int i = 0; i < orderByConditionFields.length; i++) {
+			query.append("MBThread.");
+
+			query.append(orderByConditionFields[i]);
+
+			if ((i + 1) < orderByConditionFields.length) {
+				if (orderByComparator.isAscending() ^ previous) {
+					query.append(WHERE_GREATER_THAN_HAS_NEXT);
+				}
+				else {
+					query.append(WHERE_LESSER_THAN_HAS_NEXT);
+				}
+			}
+			else {
+				if (orderByComparator.isAscending() ^ previous) {
+					query.append(WHERE_GREATER_THAN);
+				}
+				else {
+					query.append(WHERE_LESSER_THAN);
+				}
+			}
+		}
+
+		query.append(ORDER_BY_CLAUSE);
+
+		String[] orderByFields = orderByComparator.getOrderByFields();
+
+		for (int i = 0; i < orderByFields.length; i++) {
+			query.append("MBThread.");
+			query.append(orderByFields[i]);
+
+			if ((i + 1) < orderByFields.length) {
+				if (orderByComparator.isAscending() ^ previous) {
+					query.append(ORDER_BY_ASC_HAS_NEXT);
+				}
+				else {
+					query.append(ORDER_BY_DESC_HAS_NEXT);
+				}
+			}
+			else {
+				if (orderByComparator.isAscending() ^ previous) {
+					query.append(ORDER_BY_ASC);
+				}
+				else {
+					query.append(ORDER_BY_DESC);
+				}
+			}
+		}
+
+		int pos = sql.indexOf(ORDER_BY_CLAUSE);
+
+		if ((pos != -1) && (pos < sql.length())) {
+			return sql.substring(0, pos).concat(query.toString());
+		}
+		else {
+			return sql.concat(query.toString());
+		}
+	}
+
 	protected int doCountByG_C(
 		long groupId, long categoryId,
 		QueryDefinition<MBThread> queryDefinition, boolean inlineSQLHelper) {
@@ -1051,6 +1182,122 @@ public class MBThreadFinderImpl
 			return (List<MBThread>)QueryUtil.list(
 				q, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBThread doFindByG_C_S_PrevAndNext(
+			MBThread mbThread, long groupId, long categoryId, int status,
+			OrderByComparator<MBThread> orderByComparator, boolean previous) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_C_S_PREVANDNEXT);
+
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
+				groupId);
+
+			sql = appendOrderByComparator(sql, orderByComparator, previous);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.setFirstResult(0);
+			q.setMaxResults(2);
+
+			q.addEntity("MBThread", MBThreadImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(categoryId);
+
+			qPos.add(status);
+
+			if (orderByComparator != null) {
+				Object[] values = orderByComparator.getOrderByConditionValues(
+					mbThread);
+
+				for (Object value : values) {
+					qPos.add(value);
+				}
+			}
+
+			List<MBThread> list = q.list();
+
+			if (list.size() == 2) {
+				return list.get(1);
+			}
+			else {
+				return null;
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBThread doFindByG_C_NotS_PrevAndNext(
+			MBThread mbThread, long groupId, long categoryId, int status,
+			OrderByComparator<MBThread> orderByComparator, boolean previous) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_C_NOTS_PREVANDNEXT);
+
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
+				groupId);
+
+			sql = appendOrderByComparator(sql, orderByComparator, previous);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.setFirstResult(0);
+			q.setMaxResults(2);
+
+			q.addEntity("MBThread", MBThreadImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(categoryId);
+
+			qPos.add(status);
+
+			if (orderByComparator != null) {
+				Object[] values = orderByComparator.getOrderByConditionValues(
+					mbThread);
+
+				for (Object value : values) {
+					qPos.add(value);
+				}
+			}
+
+			List<MBThread> list = q.list();
+
+			if (list.size() == 2) {
+				return list.get(1);
+			}
+			else {
+				return null;
+			}
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

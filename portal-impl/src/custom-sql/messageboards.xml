@@ -420,6 +420,36 @@
 				MBThread.lastPostDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_C_S_PrevAndNext">
+		<![CDATA[
+			SELECT
+				DISTINCT {MBThread.*}
+			FROM
+				MBThread
+			WHERE
+				MBThread.groupId = ? AND
+				MBThread.categoryId = ? AND
+				MBThread.status = ?
+			ORDER BY
+				MBThread.lastPostDate DESC,
+				MBThread.threadId DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_C_NotS_PrevAndNext">
+		<![CDATA[
+			SELECT
+				DISTINCT {MBThread.*}
+			FROM
+				MBThread
+			WHERE
+				MBThread.groupId = ? AND
+				MBThread.categoryId = ? AND
+				MBThread.status != ?
+			ORDER BY
+				MBThread.lastPostDate DESC,
+				MBThread.threadId DESC
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_U_C">
 		<![CDATA[
 			SELECT
