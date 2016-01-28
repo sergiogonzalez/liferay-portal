@@ -60,15 +60,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					thumbnailId = "entry_" + fileEntry.getFileEntryId();
 				}
 
-				IGViewFileVersionDisplayContext igViewFileVersionDisplayContext = null;
-
-				if (fileShortcut == null) {
-					igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
-				}
-				else {
-					igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileShortcut);
-				}
-
 				FileVersion fileVersion = fileEntry.getFileVersion();
 
 				boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
