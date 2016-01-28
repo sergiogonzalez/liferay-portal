@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.flags.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.flags,\
-	com.liferay.flags.messaging,\
 	com.liferay.flags.service
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

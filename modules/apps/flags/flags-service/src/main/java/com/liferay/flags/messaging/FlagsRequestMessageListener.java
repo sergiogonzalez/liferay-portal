@@ -41,6 +41,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.util.ContentUtil;
 
 import java.io.IOException;
 
@@ -137,10 +138,15 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			companyId, PropsKeys.FLAGS_EMAIL_FROM_ADDRESS,
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
-		String subject = PrefsPropsUtil.getContent(
+		String subjectLocation = PrefsPropsUtil.getString(
 			companyId, PropsKeys.FLAGS_EMAIL_SUBJECT);
-		String body = PrefsPropsUtil.getContent(
+		String subject = ContentUtil.get(
+			getClass().getClassLoader(), subjectLocation);
+
+		String bodyLocation = PrefsPropsUtil.getString(
 			companyId, PropsKeys.FLAGS_EMAIL_BODY);
+		String body = ContentUtil.get(
+			getClass().getClassLoader(), bodyLocation);
 
 		// Recipients
 
