@@ -108,7 +108,6 @@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.Menu" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem" %><%@
 page import="com.liferay.portal.kernel.upload.LiferayFileItemException" %><%@
