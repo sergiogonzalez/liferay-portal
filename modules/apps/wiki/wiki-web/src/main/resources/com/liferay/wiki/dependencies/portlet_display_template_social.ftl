@@ -140,6 +140,7 @@
 		${addPageURL.setParameter("title", "")}
 		${addPageURL.setParameter("editTitle", "1")}
 		${addPageURL.setParameter("parentTitle", entry.getTitle())}
+		${addPageURL.setWindowState("maximized")}
 
 		<@liferay_ui["icon"]
 			iconCssClass="icon-plus"
@@ -192,6 +193,7 @@
 		${editPageURL.setParameter("redirect", currentURL)}
 		${editPageURL.setParameter("nodeId", entry.getNodeId()?string)}
 		${editPageURL.setParameter("title", entry.getTitle())}
+		${editPageURL.setWindowState("maximized")}
 
 		<@liferay_ui["icon"]
 			iconCssClass="icon-edit"

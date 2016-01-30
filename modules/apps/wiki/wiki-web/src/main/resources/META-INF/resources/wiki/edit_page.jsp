@@ -118,7 +118,7 @@ if (portletTitleBasedNavigation) {
 
 <portlet:actionURL name="/wiki/edit_page" var="editPageActionURL" />
 
-<portlet:renderURL var="editPageRenderURL">
+<portlet:renderURL var="editPageRenderURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 </portlet:renderURL>
 

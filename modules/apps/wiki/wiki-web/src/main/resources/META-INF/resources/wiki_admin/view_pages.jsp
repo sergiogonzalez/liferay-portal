@@ -172,6 +172,7 @@ else {
 				rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("nodeId", String.valueOf(curPage.getNodeId()));
+				rowURL.setWindowState(WindowState.MAXIMIZED);
 			}
 
 			rowURL.setParameter("title", curPage.getTitle());

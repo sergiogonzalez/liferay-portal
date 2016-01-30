@@ -48,6 +48,7 @@
 	editPageURL.setParameter("redirect", currentURL);
 	editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 	editPageURL.setParameter("title", title);
+	editPageURL.setWindowState(WindowState.MAXIMIZED);
 	%>
 
 	<div class="alert alert-info">
