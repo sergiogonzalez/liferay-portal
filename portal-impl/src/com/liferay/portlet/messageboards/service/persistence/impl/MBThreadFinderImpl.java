@@ -512,6 +512,7 @@ public class MBThreadFinderImpl
 			long threadId, long groupId, long categoryId, int status,
 			OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
+
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return mbThreadPersistence.findByG_C_S_PrevAndNext(
 				threadId, groupId, categoryId, status, orderByComparator);
@@ -521,13 +522,13 @@ public class MBThreadFinderImpl
 
 		MBThread[] array = new MBThreadImpl[3];
 
-		array[0] = doFindByG_C_S_PrevAndNext(mbThread, groupId,
-			categoryId, status, orderByComparator, true);
+		array[0] = doFindByG_C_S_PrevAndNext(mbThread, groupId, categoryId,
+			status, orderByComparator, true);
 
 		array[1] = mbThread;
 
-		array[2] = doFindByG_C_S_PrevAndNext(mbThread, groupId,
-			categoryId, status, orderByComparator, false);
+		array[2] = doFindByG_C_S_PrevAndNext(mbThread, groupId, categoryId,
+			status, orderByComparator, false);
 
 		return array;
 	}
@@ -536,6 +537,7 @@ public class MBThreadFinderImpl
 			long threadId, long groupId, long categoryId, int status,
 			OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
+
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return mbThreadPersistence.findByG_C_NotS_PrevAndNext(
 				threadId, groupId, categoryId, status, orderByComparator);
@@ -545,13 +547,13 @@ public class MBThreadFinderImpl
 
 		MBThread[] array = new MBThreadImpl[3];
 
-		array[0] = doFindByG_C_NotS_PrevAndNext(mbThread, groupId,
-			categoryId, status, orderByComparator, true);
+		array[0] = doFindByG_C_NotS_PrevAndNext(mbThread, groupId, categoryId,
+			status, orderByComparator, true);
 
 		array[1] = mbThread;
 
-		array[2] = doFindByG_C_NotS_PrevAndNext(mbThread, groupId,
-			categoryId, status, orderByComparator, false);
+		array[2] = doFindByG_C_NotS_PrevAndNext(mbThread, groupId, categoryId,
+			status, orderByComparator, false);
 
 		return array;
 	}
@@ -875,7 +877,8 @@ public class MBThreadFinderImpl
 	}
 
 	protected String appendOrderByComparator(
-		String sql, OrderByComparator<MBThread> orderByComparator, boolean previous){
+		String sql, OrderByComparator<MBThread> orderByComparator,
+		boolean previous) {
 
 		if (orderByComparator == null) {
 			return sql;
@@ -883,7 +886,8 @@ public class MBThreadFinderImpl
 
 		StringBundler query = new StringBundler();
 
-		String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+		String[] orderByConditionFields =
+			orderByComparator.getOrderByConditionFields();
 
 		if (orderByConditionFields.length > 0) {
 			query.append(WHERE_AND);
@@ -1192,8 +1196,8 @@ public class MBThreadFinderImpl
 	}
 
 	protected MBThread doFindByG_C_S_PrevAndNext(
-			MBThread mbThread, long groupId, long categoryId, int status,
-			OrderByComparator<MBThread> orderByComparator, boolean previous) {
+		MBThread mbThread, long groupId, long categoryId, int status,
+		OrderByComparator<MBThread> orderByComparator, boolean previous) {
 
 		Session session = null;
 
@@ -1250,8 +1254,8 @@ public class MBThreadFinderImpl
 	}
 
 	protected MBThread doFindByG_C_NotS_PrevAndNext(
-			MBThread mbThread, long groupId, long categoryId, int status,
-			OrderByComparator<MBThread> orderByComparator, boolean previous) {
+		MBThread mbThread, long groupId, long categoryId, int status,
+		OrderByComparator<MBThread> orderByComparator, boolean previous) {
 
 		Session session = null;
 
