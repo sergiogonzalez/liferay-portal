@@ -37,13 +37,13 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-toggler-button 
+		<liferay-frontend:management-bar-toggler-button
 			cssClass="infoPanelToggler"
 			disabled="<%= false %>"
 			href="javascript:;"
 			icon="info-circle"
 			label="info"
-			togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() +  "infoPanelId" %>'
+			togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 		/>
 
 		<c:if test="<%= !search %>">

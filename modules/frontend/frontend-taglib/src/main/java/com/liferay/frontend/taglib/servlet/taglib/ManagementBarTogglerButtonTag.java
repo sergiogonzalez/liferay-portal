@@ -53,4 +53,5 @@ public class ManagementBarTogglerButtonTag extends ManagementBarButtonTag {
 		"/management_bar_toggler_button/page.jsp";
 
 	private String _togglerSelector;
+
 }
