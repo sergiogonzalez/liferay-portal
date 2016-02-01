@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.util.SessionClicks" %>
+
 <%
 boolean active = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar-toggler-button:active"));
 String cssClass = (String)request.getAttribute("liferay-frontend:management-bar-toggler-button:cssClass");

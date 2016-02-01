@@ -29,7 +29,9 @@
 />
 
 <aui:script>
-	$('<%= togglerSelector %>').sideNavigation(
+	var sidenavSlider = $('<%= togglerSelector %>');
+
+	sidenavSlider.sideNavigation(
 		{
 			gutter: 15,
 			position: 'right',
@@ -37,6 +39,20 @@
 			type: 'relative',
 			typeMobile: 'fixed',
 			width: 320
+		}
+	);
+
+	sidenavSlider.on(
+		'closed.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('com.liferay.info.panel_<portlet:namespace />', 'closed');
+		}
+	);
+
+	sidenavSlider.on(
+		'open.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('com.liferay.info.panel_<portlet:namespace />', 'open');
 		}
 	);
 </aui:script>
