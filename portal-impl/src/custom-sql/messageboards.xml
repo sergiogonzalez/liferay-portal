@@ -427,9 +427,9 @@
 			FROM
 				MBThread
 			WHERE
-				MBThread.groupId = ? AND
-				MBThread.categoryId = ? AND
-				MBThread.status = ?
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId = ?) AND
+				(MBThread.status = ?)
 			ORDER BY
 				MBThread.lastPostDate DESC,
 				MBThread.threadId DESC
@@ -442,9 +442,9 @@
 			FROM
 				MBThread
 			WHERE
-				MBThread.groupId = ? AND
-				MBThread.categoryId = ? AND
-				MBThread.status != ?
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId = ?) AND
+				(MBThread.status != ?)
 			ORDER BY
 				MBThread.lastPostDate DESC,
 				MBThread.threadId DESC
