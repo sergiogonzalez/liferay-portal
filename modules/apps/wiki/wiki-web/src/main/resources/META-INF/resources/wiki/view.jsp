@@ -135,7 +135,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280 panel main-content-card\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280 sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
 		<c:choose>
 			<c:when test="<%= print %>">
@@ -187,7 +187,17 @@ if (portletTitleBasedNavigation) {
 	contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInstanceOverriddenConfiguration);
 	%>
 
-	<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
+	<c:if test="<%= !print && portletTitleBasedNavigation %>">
+		<div class="sidenav-menu-slider">
+			<div class="sidebar sidebar-default sidenav-menu">
+				<liferay-util:include page="/wiki_admin/page_info_panel.jsp" servletContext="<%= application %>" />
+			</div>
+		</div>
+	</c:if>
+
+	<div class="sidenav-content">
+		<div <%= !print && portletTitleBasedNavigation ? "class=\"container-fluid panel main-content-card\"" : StringPool.BLANK %>>
+		<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
 		<c:choose>
 			<c:when test="<%= !portletTitleBasedNavigation %>">
 				<liferay-ui:header
@@ -427,6 +437,8 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 		</c:if>
 	</liferay-ddm:template-renderer>
+	</div>
+	</div>
 
 	<aui:script sandbox="<%= true %>">
 		var toc = $('#p_p_id<portlet:namespace /> .toc');
@@ -474,3 +486,17 @@ if (portletTitleBasedNavigation) {
 
 	<liferay-util:dynamic-include key="com.liferay.wiki.web#/wiki/view.jsp#post" />
 </div>
+
+<c:if test="<%= !print && portletTitleBasedNavigation %>">
+	<aui:script>
+		$('#<portlet:namespace />infoPanelId').sideNavigation(
+			{
+				gutter: 15,
+				position: 'right',
+				type: 'relative',
+				typeMobile: 'fixed',
+				width: 320
+			}
+		);
+	</aui:script>
+</c:if>

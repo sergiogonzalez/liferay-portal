@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,23 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/wiki/init.jsp" %>
+package com.liferay.wiki.display.context;
 
-<%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+import com.liferay.wiki.model.WikiNode;
 
-WikiPage wikiPage = null;
+/**
+ * @author Roberto Díaz
+ */
+public interface WikiNodeInfoPanelDisplayContext extends WikiDisplayContext {
 
-if (row != null) {
-	wikiPage = (WikiPage)row.getObject();
+	public WikiNode getFirstNode();
+
+	public int getNodesCount();
+
+	public int getSelectedNodesCount();
+
+	public boolean isMultipleNodeSelection();
+
+	public boolean isSingleNodeSelection();
+
 }
-else {
-	wikiPage = (WikiPage)request.getAttribute("page_info_panel.jsp-wikiPage");
-}
-
-WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, wikiPage.getNode());
-%>
-
-<liferay-ui:menu menu="<%= wikiListPagesDisplayContext.getMenu(wikiPage) %>" />
