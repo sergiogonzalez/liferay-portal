@@ -876,8 +876,21 @@ public class DLFileEntryLocalServiceImpl
 						dlFileEntry.getFileEntryId(), true);
 
 				if (dlLatestFileVersion != null) {
+					long fileEntryTypeId = dlLatestFileVersion.getFileEntryTypeId();
+
+					try {
+						validateFileEntryTypeId(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								dlFileEntry.getGroupId()),
+							dlFileEntry.getFolderId(), fileEntryTypeId);
+					}
+					catch (InvalidFileEntryTypeException ifete) {
+						fileEntryTypeId = dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(dlFileEntry.getFolderId());
+					}
+
 					dlLatestFileVersion.setModifiedDate(new Date());
 					dlLatestFileVersion.setStatusDate(new Date());
+					dlLatestFileVersion.setFileEntryTypeId(fileEntryTypeId);
 
 					dlFileVersionPersistence.update(dlLatestFileVersion);
 
@@ -891,8 +904,7 @@ public class DLFileEntryLocalServiceImpl
 						dlLatestFileVersion.getDescription());
 					dlFileEntry.setExtraSettings(
 						dlLatestFileVersion.getExtraSettings());
-					dlFileEntry.setFileEntryTypeId(
-						dlLatestFileVersion.getFileEntryTypeId());
+					dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 					dlFileEntry.setVersion(dlLatestFileVersion.getVersion());
 					dlFileEntry.setSize(dlLatestFileVersion.getSize());
 
