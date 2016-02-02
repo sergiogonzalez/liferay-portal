@@ -28,5 +28,5 @@ String icon = (String)request.getAttribute("liferay-frontend:management-bar-togg
 String iconCssClass = (String)request.getAttribute("liferay-frontend:management-bar-toggler-button:iconCssClass");
 String id = (String)request.getAttribute("liferay-frontend:management-bar-toggler-button:id");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-toggler-button:label");
-String togglerSelector = (String)request.getAttribute("liferay-frontend:management-bar-toggler-button:togglerSelector");
+String sidenavSelector = (String)request.getAttribute("liferay-frontend:management-bar-toggler-button:sidenavSelector");
 %>

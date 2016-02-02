@@ -29,7 +29,7 @@
 />
 
 <aui:script>
-	var sidenavSlider = $('<%= togglerSelector %>');
+	var sidenavSlider = $('<%= sidenavSelector %>');
 
 	sidenavSlider.sideNavigation(
 		{

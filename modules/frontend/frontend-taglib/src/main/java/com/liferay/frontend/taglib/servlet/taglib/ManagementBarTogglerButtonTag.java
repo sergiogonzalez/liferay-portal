@@ -24,13 +24,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ManagementBarTogglerButtonTag extends ManagementBarButtonTag {
 
-	public void setTogglerSelector(String togglerSelector) {
-		_togglerSelector = togglerSelector;
+	public void setSidenavSelector(String sidenavSelector) {
+		_sidenavSelector = sidenavSelector;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_togglerSelector = null;
+		_sidenavSelector = null;
 
 		super.cleanUp();
 	}
@@ -48,7 +48,7 @@ public class ManagementBarTogglerButtonTag extends ManagementBarButtonTag {
 			setId(StringUtil.randomId());
 		}
 
-		setNamespacedAttribute(request, "togglerSelector", _togglerSelector);
+		setNamespacedAttribute(request, "sidenavSelector", _sidenavSelector);
 
 		super.setAttributes(request);
 	}
@@ -59,6 +59,6 @@ public class ManagementBarTogglerButtonTag extends ManagementBarButtonTag {
 	private static final String _PAGE =
 		"/management_bar_toggler_button/page.jsp";
 
-	private String _togglerSelector;
+	private String _sidenavSelector;
 
 }

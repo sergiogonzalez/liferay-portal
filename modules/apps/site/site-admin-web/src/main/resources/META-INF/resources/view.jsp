@@ -63,7 +63,7 @@ if (group != null) {
 				href="javascript:;"
 				icon="info-circle"
 				label="info"
-				togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+				sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 			/>
 		</c:if>
 

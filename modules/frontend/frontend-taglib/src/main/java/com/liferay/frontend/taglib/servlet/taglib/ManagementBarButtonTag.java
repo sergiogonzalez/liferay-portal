@@ -42,6 +42,10 @@ public class ManagementBarButtonTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getId() {
+		return _id;
+	}
+
 	public void setActive(boolean active) {
 		_active = active;
 	}
@@ -83,10 +87,6 @@ public class ManagementBarButtonTag extends IncludeTag {
 		super.setPageContext(pageContext);
 
 		servletContext = ServletContextUtil.getServletContext();
-	}
-
-	public String getId() {
-		return _id;
 	}
 
 	@Override

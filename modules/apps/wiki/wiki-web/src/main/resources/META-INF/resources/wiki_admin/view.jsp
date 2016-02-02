@@ -83,7 +83,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			href="javascript:;"
 			icon="info-circle"
 			label="info"
-			togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+			sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 		/>
 
 		<liferay-frontend:management-bar-display-buttons

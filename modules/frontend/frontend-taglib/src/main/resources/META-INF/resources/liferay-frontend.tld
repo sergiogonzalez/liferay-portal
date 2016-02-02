@@ -725,7 +725,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>togglerSelector</name>
+			<name>sidenavSelector</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

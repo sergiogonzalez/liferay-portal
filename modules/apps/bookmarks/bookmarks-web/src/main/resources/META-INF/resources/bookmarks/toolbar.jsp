@@ -38,7 +38,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 			href="javascript:;"
 			icon="info-circle"
 			label="info"
-			togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+			sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 		/>
 
 		<liferay-util:include page="/bookmarks/display_style_buttons.jsp" servletContext="<%= application %>" />

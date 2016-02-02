@@ -42,7 +42,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			href="javascript:;"
 			icon="info-circle"
 			label="info"
-			togglerSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+			sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 		/>
 
 		<c:if test="<%= !search %>">
