@@ -35,7 +35,7 @@
 		{
 			gutter: 15,
 			position: 'right',
-			toggler: '.infoPanelToggler',
+			toggler: '#<portlet:namespace /><%= id %>',
 			type: 'relative',
 			typeMobile: 'fixed',
 			width: 320

@@ -85,6 +85,10 @@ public class ManagementBarButtonTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public String getId() {
+		return _id;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_active = false;

@@ -79,7 +79,6 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-toggler-button
-			cssClass="infoPanelToggler"
 			disabled="<%= false %>"
 			href="javascript:;"
 			icon="info-circle"

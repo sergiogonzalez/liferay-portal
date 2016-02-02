@@ -14,6 +14,9 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -40,6 +43,10 @@ public class ManagementBarTogglerButtonTag extends ManagementBarButtonTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		if (Validator.isNull(getId())) {
+			setId(StringUtil.randomId());
+		}
 
 		setNamespacedAttribute(request, "togglerSelector", _togglerSelector);
 

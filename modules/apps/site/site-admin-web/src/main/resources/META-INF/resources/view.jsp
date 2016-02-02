@@ -59,7 +59,6 @@ if (group != null) {
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
 			<liferay-frontend:management-bar-toggler-button
-				cssClass="infoPanelToggler"
 				disabled="<%= false %>"
 				href="javascript:;"
 				icon="info-circle"

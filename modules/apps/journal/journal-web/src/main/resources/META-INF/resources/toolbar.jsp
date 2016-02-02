@@ -28,7 +28,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-toggler-button
-				cssClass="infoPanelToggler"
 				disabled="<%= false %>"
 				href="javascript:;"
 				icon="info-circle"
@@ -99,7 +98,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-toggler-button
-				cssClass="infoPanelToggler"
 				disabled="<%= false %>"
 				href="javascript:;"
 				icon="info-circle"

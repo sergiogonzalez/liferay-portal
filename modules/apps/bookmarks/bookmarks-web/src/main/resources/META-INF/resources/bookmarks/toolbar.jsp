@@ -34,7 +34,6 @@ portletURL.setParameter("tag", StringPool.BLANK);
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-toggler-button
-			cssClass="infoPanelToggler"
 			disabled="<%= false %>"
 			href="javascript:;"
 			icon="info-circle"
