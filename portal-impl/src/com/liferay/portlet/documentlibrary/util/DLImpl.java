@@ -1114,6 +1114,8 @@ public class DLImpl implements DL {
 
 				portletId = result.getPortletId();
 				plid = result.getPlid();
+
+				break;
 			}
 			catch (PortalException pe) {
 			}
