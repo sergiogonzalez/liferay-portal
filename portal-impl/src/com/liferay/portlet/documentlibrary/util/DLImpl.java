@@ -1199,7 +1199,7 @@ public class DLImpl implements DL {
 		new TreeSet<>();
 	private static final Set<String> _fileIcons = new HashSet<>();
 	private static final Map<String, String> _genericNames = new HashMap<>();
-	private static final ServiceTrackerList<PortletLayoutFinder>
+	private final ServiceTrackerList<PortletLayoutFinder>
 		_serviceTrackerList = ServiceTrackerCollections.openList(
 			PortletLayoutFinder.class,
 			"(model.class.name=" + FileEntry.class.getName() + ")");
@@ -1255,6 +1255,10 @@ public class DLImpl implements DL {
 		for (String genericName : genericNames) {
 			_populateGenericNamesMap(genericName);
 		}
+	}
+
+	public void destroy() {
+		_serviceTrackerList.close();
 	}
 
 }
