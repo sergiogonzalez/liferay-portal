@@ -79,7 +79,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(83);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -119,6 +119,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		sb.append(emailAddress);
 		sb.append(", facebookId=");
 		sb.append(facebookId);
+		sb.append(", googleUserId=");
+		sb.append(googleUserId);
 		sb.append(", ldapServerId=");
 		sb.append(ldapServerId);
 		sb.append(", openId=");
@@ -256,6 +258,14 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 
 		userImpl.setFacebookId(facebookId);
+
+		if (googleUserId == null) {
+			userImpl.setGoogleUserId(StringPool.BLANK);
+		}
+		else {
+			userImpl.setGoogleUserId(googleUserId);
+		}
+
 		userImpl.setLdapServerId(ldapServerId);
 
 		if (openId == null) {
@@ -406,6 +416,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		emailAddress = objectInput.readUTF();
 
 		facebookId = objectInput.readLong();
+		googleUserId = objectInput.readUTF();
 
 		ldapServerId = objectInput.readLong();
 		openId = objectInput.readUTF();
@@ -509,6 +520,13 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 
 		objectOutput.writeLong(facebookId);
+
+		if (googleUserId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(googleUserId);
+		}
 
 		objectOutput.writeLong(ldapServerId);
 
@@ -628,6 +646,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	public String screenName;
 	public String emailAddress;
 	public long facebookId;
+	public String googleUserId;
 	public long ldapServerId;
 	public String openId;
 	public long portraitId;

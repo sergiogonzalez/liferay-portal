@@ -68,6 +68,7 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.nested.portlets.web:1.0.0,\
 	com.liferay.portal.portlet.configuration.icon.locator:1.0.0,\
 	com.liferay.portal.portlet.toolbar.contributor.locator:1.0.0,\
+	com.liferay.portlet.configuration.css.web:1.0.0,\
 	com.liferay.portlet.configuration.icon.close:1.0.0,\
 	com.liferay.portlet.configuration.icon.edit.defaults:1.0.0,\
 	com.liferay.portlet.configuration.icon.edit.guest:1.0.0,\
@@ -82,7 +83,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portlet.configuration.icon.refresh:1.0.0,\
 	com.liferay.portlet.configuration.icon.widget:1.0.0,\
 	com.liferay.portlet.configuration.web:1.0.0,\
-	com.liferay.portlet.css.web:1.0.0,\
 	com.liferay.portlet.display.template.web:1.0.0,\
 	com.liferay.portlet.display.template:1.0.0,\
 	com.liferay.portlet.sharing.web:1.0.0,\

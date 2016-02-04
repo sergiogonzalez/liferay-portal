@@ -3471,6 +3471,18 @@ else.
 
 - `com.liferay.portlet.announcements` &rarr; `com.liferay.announcements.kernel`
 
+- `com.liferay.portlet.blogs` &rarr; `com.liferay.blogs.kernel`
+
+- `com.liferay.portlet.blogs.exception` &rarr; `com.liferay.blogs.kernel.exception`
+
+- `com.liferay.portlet.blogs.model` &rarr; `com.liferay.blogs.kernel.model`
+
+- `com.liferay.portlet.blogs.service` &rarr; `com.liferay.blogs.kernel.service`
+
+- `com.liferay.portlet.blogs.service.persistence` &rarr; `com.liferay.blogs.service.persistence`
+
+- `com.liferay.portlet.blogs.util.comparator` &rarr; `com.liferay.blogs.kernel.util.comparator`
+
 - `com.liferay.portlet.backgroundtask` &rarr; `com.liferay.background.task.kernel`
 
 - `com.liferay.portlet.dynamicdatamapping` &rarr; `com.liferay.dynamic.data.mapping.kernel`
@@ -3480,6 +3492,22 @@ else.
 - `com.liferay.portlet.journal.util` &rarr; `com.liferay.journal.kernel.util`
 
 - `com.liferay.portlet.layoutsadmin.util` &rarr; `com.liferay.layouts.admin.kernel.util`
+
+- `com.liferay.portlet.messageboards` &rarr; `com.liferay.message.boards.kernel`
+
+- `com.liferay.portlet.messageboards.constants` &rarr; `com.liferay.message.boards.kernel.constants`
+
+- `com.liferay.portlet.messageboards.exception` &rarr; `com.liferay.message.boards.kernel.exception`
+
+- `com.liferay.portlet.messageboards.model` &rarr; `com.liferay.message.boards.kernel.model`
+
+- `com.liferay.portlet.messageboards.service` &rarr; `com.liferay.message.boards.kernel.service`
+
+- `com.liferay.portlet.messageboards.service.persistence` &rarr; `com.liferay.message.boards.kernel.service.persistence`
+
+- `com.liferay.portlet.messageboards.util` &rarr; `com.liferay.message.boards.kernel.util`
+
+- `com.liferay.portlet.messageboards.util.comparator` &rarr; `com.liferay.message.boards.kernel.util.comparator`
 
 - `com.liferay.portlet.mobiledevicerules` &rarr; `com.liferay.mobile.device.rules`
 
@@ -3494,6 +3522,22 @@ else.
 - `com.liferay.portlet.trash` &rarr; `com.liferay.trash.kernel`
 
 - `com.liferay.portlet.useradmin.util` &rarr; `com.liferay.users.admin.kernel.util`
+
+- `com.liferay.portlet.ratings` &rarr; `com.liferay.ratings.kernel`
+
+- `com.liferay.portlet.ratings.definition` &rarr; `com.liferay.ratings.kernel.definition`
+
+- `com.liferay.portlet.ratings.display.context` &rarr; `com.liferay.ratings.kernel.display.context`
+
+- `com.liferay.portlet.ratings.exception` &rarr; `com.liferay.ratings.kernel.exception`
+
+- `com.liferay.portlet.ratings.model` &rarr; `com.liferay.ratings.kernel.model`
+
+- `com.liferay.portlet.ratings.service` &rarr; `com.liferay.ratings.kernel.service`
+
+- `com.liferay.portlet.ratings.service.persistence` &rarr; `com.liferay.ratings.kernel.service.persistence`
+
+- `com.liferay.portlet.ratings.transformer` &rarr; `com.liferay.ratings.kernel.transformer`
 
 #### Why was this change made?
 
@@ -3530,6 +3574,32 @@ file name automatically. This was considered confusing from a UX perspective.
 
 ---------------------------------------
 
+### The liferay-ui:flags has been deprecated and replaced with liferay-flags:flags
+- **Date:** 2015-Dec-2
+- **JIRA Ticket:** LPS-60967
+
+#### What changed?
+
+The `liferay-ui:flags` taglib has been deprecated and replaced with
+`liferay-flags:flags` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:flags` tag need to update
+their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-flags` tag library if it isn't already and
+update the tag namespace from `liferay-ui:flags` to `liferay-flags:flags`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc can return blank
 - **Date:** 2016-Jan-28
 - **JIRA Ticket:** LPS-62643
@@ -3557,3 +3627,4 @@ icon instead.
 
 In order to display the `documents-and-media` lexicon icon in Documents and
 Media this change was necessary.
+

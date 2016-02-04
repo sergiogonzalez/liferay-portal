@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/flags" prefix="liferay-flags" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -30,6 +31,17 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration" %><%@
+page import="com.liferay.blogs.kernel.exception.EntryContentException" %><%@
+page import="com.liferay.blogs.kernel.exception.EntryCoverImageCropException" %><%@
+page import="com.liferay.blogs.kernel.exception.EntryDescriptionException" %><%@
+page import="com.liferay.blogs.kernel.exception.EntrySmallImageNameException" %><%@
+page import="com.liferay.blogs.kernel.exception.EntrySmallImageScaleException" %><%@
+page import="com.liferay.blogs.kernel.exception.EntryTitleException" %><%@
+page import="com.liferay.blogs.kernel.exception.NoSuchEntryException" %><%@
+page import="com.liferay.blogs.kernel.model.BlogsEntry" %><%@
+page import="com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil" %><%@
+page import="com.liferay.blogs.kernel.service.BlogsEntryServiceUtil" %><%@
+page import="com.liferay.blogs.kernel.util.comparator.EntryModifiedDateComparator" %><%@
 page import="com.liferay.blogs.web.BlogsItemSelectorHelper" %><%@
 page import="com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration" %><%@
 page import="com.liferay.blogs.web.constants.BlogsPortletKeys" %><%@
@@ -115,20 +127,9 @@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.blogs.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.portlet.blogs.constants.BlogsConstants" %><%@
-page import="com.liferay.portlet.blogs.exception.EntryContentException" %><%@
-page import="com.liferay.portlet.blogs.exception.EntryCoverImageCropException" %><%@
-page import="com.liferay.portlet.blogs.exception.EntryDescriptionException" %><%@
-page import="com.liferay.portlet.blogs.exception.EntrySmallImageNameException" %><%@
-page import="com.liferay.portlet.blogs.exception.EntrySmallImageScaleException" %><%@
-page import="com.liferay.portlet.blogs.exception.EntryTitleException" %><%@
-page import="com.liferay.portlet.blogs.exception.NoSuchEntryException" %><%@
-page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
-page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsPermission" %><%@
 page import="com.liferay.portlet.blogs.util.BlogsUtil" %><%@
-page import="com.liferay.portlet.blogs.util.comparator.EntryModifiedDateComparator" %><%@
 page import="com.liferay.portlet.documentlibrary.exception.FileSizeException" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@

@@ -1513,6 +1513,71 @@ public class UserUtil {
 	}
 
 	/**
+	* Returns the user where companyId = &#63; and googleUserId = &#63; or throws a {@link NoSuchUserException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param googleUserId the google user ID
+	* @return the matching user
+	* @throws NoSuchUserException if a matching user could not be found
+	*/
+	public static User findByC_GUID(long companyId,
+		java.lang.String googleUserId)
+		throws com.liferay.portal.exception.NoSuchUserException {
+		return getPersistence().findByC_GUID(companyId, googleUserId);
+	}
+
+	/**
+	* Returns the user where companyId = &#63; and googleUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param googleUserId the google user ID
+	* @return the matching user, or <code>null</code> if a matching user could not be found
+	*/
+	public static User fetchByC_GUID(long companyId,
+		java.lang.String googleUserId) {
+		return getPersistence().fetchByC_GUID(companyId, googleUserId);
+	}
+
+	/**
+	* Returns the user where companyId = &#63; and googleUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param googleUserId the google user ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching user, or <code>null</code> if a matching user could not be found
+	*/
+	public static User fetchByC_GUID(long companyId,
+		java.lang.String googleUserId, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_GUID(companyId, googleUserId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the user where companyId = &#63; and googleUserId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param googleUserId the google user ID
+	* @return the user that was removed
+	*/
+	public static User removeByC_GUID(long companyId,
+		java.lang.String googleUserId)
+		throws com.liferay.portal.exception.NoSuchUserException {
+		return getPersistence().removeByC_GUID(companyId, googleUserId);
+	}
+
+	/**
+	* Returns the number of users where companyId = &#63; and googleUserId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param googleUserId the google user ID
+	* @return the number of matching users
+	*/
+	public static int countByC_GUID(long companyId,
+		java.lang.String googleUserId) {
+		return getPersistence().countByC_GUID(companyId, googleUserId);
+	}
+
+	/**
 	* Returns the user where companyId = &#63; and openId = &#63; or throws a {@link NoSuchUserException} if it could not be found.
 	*
 	* @param companyId the company ID

@@ -53,6 +53,7 @@ public class UserSoap implements Serializable {
 		soapModel.setScreenName(model.getScreenName());
 		soapModel.setEmailAddress(model.getEmailAddress());
 		soapModel.setFacebookId(model.getFacebookId());
+		soapModel.setGoogleUserId(model.getGoogleUserId());
 		soapModel.setLdapServerId(model.getLdapServerId());
 		soapModel.setOpenId(model.getOpenId());
 		soapModel.setPortraitId(model.getPortraitId());
@@ -291,6 +292,14 @@ public class UserSoap implements Serializable {
 		_facebookId = facebookId;
 	}
 
+	public String getGoogleUserId() {
+		return _googleUserId;
+	}
+
+	public void setGoogleUserId(String googleUserId) {
+		_googleUserId = googleUserId;
+	}
+
 	public long getLdapServerId() {
 		return _ldapServerId;
 	}
@@ -498,6 +507,7 @@ public class UserSoap implements Serializable {
 	private String _screenName;
 	private String _emailAddress;
 	private long _facebookId;
+	private String _googleUserId;
 	private long _ldapServerId;
 	private String _openId;
 	private long _portraitId;

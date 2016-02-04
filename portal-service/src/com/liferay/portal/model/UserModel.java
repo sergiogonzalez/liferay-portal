@@ -380,6 +380,21 @@ public interface UserModel extends BaseModel<User>, MVCCModel, ShardedModel,
 	public void setFacebookId(long facebookId);
 
 	/**
+	 * Returns the google user ID of this user.
+	 *
+	 * @return the google user ID of this user
+	 */
+	@AutoEscape
+	public String getGoogleUserId();
+
+	/**
+	 * Sets the google user ID of this user.
+	 *
+	 * @param googleUserId the google user ID of this user
+	 */
+	public void setGoogleUserId(String googleUserId);
+
+	/**
 	 * Returns the ldap server ID of this user.
 	 *
 	 * @return the ldap server ID of this user

@@ -1035,6 +1035,20 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	/**
+	* Returns the user with the Google user ID.
+	*
+	* @param companyId the primary key of the user's company
+	* @param googleUserId the user's Google user ID
+	* @return the user with the Google user ID, or <code>null</code> if a user
+	with the Google user ID could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.User fetchUserByGoogleUserId(
+		long companyId, java.lang.String googleUserId) {
+		return _userLocalService.fetchUserByGoogleUserId(companyId, googleUserId);
+	}
+
+	/**
 	* Returns the user with the primary key.
 	*
 	* @param userId the primary key of the user
@@ -1725,6 +1739,20 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		long facebookId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userLocalService.getUserByFacebookId(companyId, facebookId);
+	}
+
+	/**
+	* Returns the user with the Google user ID.
+	*
+	* @param companyId the primary key of the user's company
+	* @param googleUserId the user's Google user ID
+	* @return the user with the Google user ID
+	*/
+	@Override
+	public com.liferay.portal.model.User getUserByGoogleUserId(long companyId,
+		java.lang.String googleUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLocalService.getUserByGoogleUserId(companyId, googleUserId);
 	}
 
 	/**
@@ -2735,6 +2763,20 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		long facebookId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userLocalService.updateFacebookId(userId, facebookId);
+	}
+
+	/**
+	* Updates the user's Google user ID.
+	*
+	* @param userId the primary key of the user
+	* @param googleUserId the new Google user ID
+	* @return the user
+	*/
+	@Override
+	public com.liferay.portal.model.User updateGoogleUserId(long userId,
+		java.lang.String googleUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLocalService.updateGoogleUserId(userId, googleUserId);
 	}
 
 	/**

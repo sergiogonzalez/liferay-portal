@@ -15,9 +15,11 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.mail.service.MailService;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.exception.CompanyMaxUsersException;
 import com.liferay.portal.exception.ContactBirthdayException;
 import com.liferay.portal.exception.ContactNameException;
+import com.liferay.portal.exception.DuplicateGoogleUserIdException;
 import com.liferay.portal.exception.DuplicateOpenIdException;
 import com.liferay.portal.exception.GroupFriendlyURLException;
 import com.liferay.portal.exception.ModelListenerException;
@@ -139,7 +141,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.social.kernel.model.SocialRelation;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -1930,6 +1931,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the user with the Google user ID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  googleUserId the user's Google user ID
+	 * @return the user with the Google user ID, or <code>null</code> if a user
+	 *         with the Google user ID could not be found
+	 */
+	@Override
+	public User fetchUserByGoogleUserId(long companyId, String googleUserId) {
+		return userPersistence.fetchByC_GUID(companyId, googleUserId);
+	}
+
+	/**
 	 * Returns the user with the primary key.
 	 *
 	 * @param  userId the primary key of the user
@@ -2566,6 +2580,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		return userPersistence.findByC_FID(companyId, facebookId);
+	}
+
+	/**
+	 * Returns the user with the Google user ID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  googleUserId the user's Google user ID
+	 * @return the user with the Google user ID
+	 */
+	@Override
+	public User getUserByGoogleUserId(long companyId, String googleUserId)
+		throws PortalException {
+
+		return userPersistence.findByC_GUID(companyId, googleUserId);
 	}
 
 	/**
@@ -4192,6 +4220,30 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		user.setFacebookId(facebookId);
+
+		userPersistence.update(user);
+
+		return user;
+	}
+
+	/**
+	 * Updates the user's Google user ID.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  googleUserId the new Google user ID
+	 * @return the user
+	 */
+	@Override
+	public User updateGoogleUserId(long userId, String googleUserId)
+		throws PortalException {
+
+		googleUserId = googleUserId.trim();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		validateGoogleUserId(user.getCompanyId(), userId, googleUserId);
+
+		user.setGoogleUserId(googleUserId);
 
 		userPersistence.update(user);
 
@@ -6438,6 +6490,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			throw new ContactNameException.MustHaveValidFullName(
 				fullNameValidator);
+		}
+	}
+
+	protected void validateGoogleUserId(
+			long companyId, long userId, String googleUserId)
+		throws PortalException {
+
+		if (Validator.isNull(googleUserId)) {
+			return;
+		}
+
+		User user = userPersistence.fetchByC_GUID(companyId, googleUserId);
+
+		if ((user != null) && (user.getUserId() != userId)) {
+			throw new DuplicateGoogleUserIdException(
+				"New user " + userId + " conflicts with existing user " +
+					userId + " who is already associated with Google user ID " +
+						googleUserId);
 		}
 	}
 

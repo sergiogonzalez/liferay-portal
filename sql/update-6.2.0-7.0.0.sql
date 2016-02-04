@@ -125,5 +125,7 @@ alter table Subscription add groupId LONG;
 
 alter table Team add uuid_ VARCHAR(75);
 
+alter table User_ add googleUserId VARCHAR(75) null;
+
 alter table UserNotificationEvent add deliveryType INTEGER;
 alter table UserNotificationEvent add actionRequired BOOLEAN;

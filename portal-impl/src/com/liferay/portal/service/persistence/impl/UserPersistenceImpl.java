@@ -5007,6 +5007,267 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	private static final String _FINDER_COLUMN_C_FID_COMPANYID_2 = "user.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_FID_FACEBOOKID_2 = "user.facebookId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_GUID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_GUID",
+			new String[] { Long.class.getName(), String.class.getName() },
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.GOOGLEUSERID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_GUID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_GUID",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the user where companyId = &#63; and googleUserId = &#63; or throws a {@link NoSuchUserException} if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param googleUserId the google user ID
+	 * @return the matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByC_GUID(long companyId, String googleUserId)
+		throws NoSuchUserException {
+		User user = fetchByC_GUID(companyId, googleUserId);
+
+		if (user == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", googleUserId=");
+			msg.append(googleUserId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchUserException(msg.toString());
+		}
+
+		return user;
+	}
+
+	/**
+	 * Returns the user where companyId = &#63; and googleUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param googleUserId the google user ID
+	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByC_GUID(long companyId, String googleUserId) {
+		return fetchByC_GUID(companyId, googleUserId, true);
+	}
+
+	/**
+	 * Returns the user where companyId = &#63; and googleUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param googleUserId the google user ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByC_GUID(long companyId, String googleUserId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { companyId, googleUserId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_GUID,
+					finderArgs, this);
+		}
+
+		if (result instanceof User) {
+			User user = (User)result;
+
+			if ((companyId != user.getCompanyId()) ||
+					!Validator.equals(googleUserId, user.getGoogleUserId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_USER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_GUID_COMPANYID_2);
+
+			boolean bindGoogleUserId = false;
+
+			if (googleUserId == null) {
+				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_1);
+			}
+			else if (googleUserId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_3);
+			}
+			else {
+				bindGoogleUserId = true;
+
+				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindGoogleUserId) {
+					qPos.add(googleUserId);
+				}
+
+				List<User> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_GUID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"UserPersistenceImpl.fetchByC_GUID(long, String, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					User user = list.get(0);
+
+					result = user;
+
+					cacheResult(user);
+
+					if ((user.getCompanyId() != companyId) ||
+							(user.getGoogleUserId() == null) ||
+							!user.getGoogleUserId().equals(googleUserId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_GUID,
+							finderArgs, user);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_GUID, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (User)result;
+		}
+	}
+
+	/**
+	 * Removes the user where companyId = &#63; and googleUserId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param googleUserId the google user ID
+	 * @return the user that was removed
+	 */
+	@Override
+	public User removeByC_GUID(long companyId, String googleUserId)
+		throws NoSuchUserException {
+		User user = findByC_GUID(companyId, googleUserId);
+
+		return remove(user);
+	}
+
+	/**
+	 * Returns the number of users where companyId = &#63; and googleUserId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param googleUserId the google user ID
+	 * @return the number of matching users
+	 */
+	@Override
+	public int countByC_GUID(long companyId, String googleUserId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_GUID;
+
+		Object[] finderArgs = new Object[] { companyId, googleUserId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_USER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_GUID_COMPANYID_2);
+
+			boolean bindGoogleUserId = false;
+
+			if (googleUserId == null) {
+				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_1);
+			}
+			else if (googleUserId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_3);
+			}
+			else {
+				bindGoogleUserId = true;
+
+				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindGoogleUserId) {
+					qPos.add(googleUserId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_GUID_COMPANYID_2 = "user.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_1 = "user.googleUserId IS NULL";
+	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_2 = "user.googleUserId = ?";
+	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_3 = "(user.googleUserId IS NULL OR user.googleUserId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_O = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
@@ -7071,6 +7332,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_FID,
 			new Object[] { user.getCompanyId(), user.getFacebookId() }, user);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_GUID,
+			new Object[] { user.getCompanyId(), user.getGoogleUserId() }, user);
+
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_O,
 			new Object[] { user.getCompanyId(), user.getOpenId() }, user);
 
@@ -7202,6 +7466,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				userModelImpl);
 
 			args = new Object[] {
+					userModelImpl.getCompanyId(),
+					userModelImpl.getGoogleUserId()
+				};
+
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_GUID, args,
+				Long.valueOf(1));
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_GUID, args,
+				userModelImpl);
+
+			args = new Object[] {
 					userModelImpl.getCompanyId(), userModelImpl.getOpenId()
 				};
 
@@ -7291,6 +7565,19 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				finderCache.putResult(FINDER_PATH_COUNT_BY_C_FID, args,
 					Long.valueOf(1));
 				finderCache.putResult(FINDER_PATH_FETCH_BY_C_FID, args,
+					userModelImpl);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_GUID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						userModelImpl.getCompanyId(),
+						userModelImpl.getGoogleUserId()
+					};
+
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_GUID, args,
+					Long.valueOf(1));
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_GUID, args,
 					userModelImpl);
 			}
 
@@ -7423,6 +7710,24 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_FID, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_FID, args);
+		}
+
+		args = new Object[] {
+				userModelImpl.getCompanyId(), userModelImpl.getGoogleUserId()
+			};
+
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_GUID, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_GUID, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_GUID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					userModelImpl.getOriginalCompanyId(),
+					userModelImpl.getOriginalGoogleUserId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_GUID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_GUID, args);
 		}
 
 		args = new Object[] {
@@ -7839,6 +8144,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		userImpl.setScreenName(user.getScreenName());
 		userImpl.setEmailAddress(user.getEmailAddress());
 		userImpl.setFacebookId(user.getFacebookId());
+		userImpl.setGoogleUserId(user.getGoogleUserId());
 		userImpl.setLdapServerId(user.getLdapServerId());
 		userImpl.setOpenId(user.getOpenId());
 		userImpl.setPortraitId(user.getPortraitId());
