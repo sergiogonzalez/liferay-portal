@@ -78,12 +78,13 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		long companyId = serviceContext.getCompanyId();
 
-		Company company = _companyLocalService.getCompany(
-			serviceContext.getCompanyId());
+		Company company = FlagsRequestMessageListenerHelper.getCompany(
+			_companyLocalService, serviceContext.getCompanyId());
 
 		// Group
 
-		Layout layout = _layoutLocalService.getLayout(serviceContext.getPlid());
+		Layout layout = FlagsRequestMessageListenerHelper.getLayout(
+			_layoutLocalService, serviceContext.getPlid());
 
 		Group group = layout.getGroup();
 
@@ -94,8 +95,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		String reporterUserName = null;
 		String reporterEmailAddress = null;
 
-		User reporterUser = _userLocalService.getUserById(
-			serviceContext.getUserId());
+		User reporterUser = FlagsRequestMessageListenerHelper.getUserById(
+			_userLocalService, serviceContext.getUserId());
 
 		Locale locale = LocaleUtil.getDefault();
 
@@ -113,8 +114,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		String reportedEmailAddress = StringPool.BLANK;
 		String reportedURL = StringPool.BLANK;
 
-		User reportedUser = _userLocalService.getUserById(
-			flagsRequest.getReportedUserId());
+		User reportedUser = FlagsRequestMessageListenerHelper.getUserById(
+			_userLocalService, flagsRequest.getReportedUserId());
 
 		if (reportedUser.isDefaultUser()) {
 			reportedUserName = group.getDescriptiveName();
@@ -186,7 +187,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		List<String> roleNames = new ArrayList<>();
 
-		Group group = _groupLocalService.getGroup(groupId);
+		Group group = FlagsRequestMessageListenerHelper.getGroup(
+			_groupLocalService, groupId);
 
 		if (group.isSite()) {
 			roleNames.add(RoleConstants.SITE_ADMINISTRATOR);
@@ -202,11 +204,13 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		}
 
 		for (String roleName : roleNames) {
-			Role role = _roleLocalService.getRole(companyId, roleName);
+			Role role = FlagsRequestMessageListenerHelper.getRole(
+				_roleLocalService, companyId, roleName);
 
 			List<UserGroupRole> userGroupRoles =
-				_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
-					groupId, role.getRoleId());
+				FlagsRequestMessageListenerHelper.
+					getUserGroupRolesByGroupAndRole(
+						_userGroupRoleLocalService, groupId, role.getRoleId());
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
 				recipients.add(userGroupRole.getUser());
@@ -214,10 +218,12 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		}
 
 		if (recipients.isEmpty()) {
-			Role role = _roleLocalService.getRole(
-				companyId, RoleConstants.ADMINISTRATOR);
+			Role role = FlagsRequestMessageListenerHelper.getRole(
+				_roleLocalService, companyId, RoleConstants.ADMINISTRATOR);
 
-			recipients.addAll(_userLocalService.getRoleUsers(role.getRoleId()));
+			recipients.addAll(
+				FlagsRequestMessageListenerHelper.getRoleUsers(
+					_userLocalService, role.getRoleId()));
 		}
 
 		return recipients;
