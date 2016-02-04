@@ -1252,7 +1252,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBThread previousThread = null;
 		MBThread nextThread = null;
 
-		if (message.isApproved() && includePrevAndNext) {
+		if (includePrevAndNext) {
 			ThreadLastPostDateComparator threadLastPostDateComparator =
 				new ThreadLastPostDateComparator(false);
 
@@ -1260,7 +1260,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				prevAndNextThreads =
-					mbThreadPersistence.filterFindByG_C_NotS_PrevAndNext(
+					mbThreadFinder.filterFindByG_C_NotS_PrevAndNext(
 						message.getThreadId(), message.getGroupId(),
 						message.getCategoryId(),
 						WorkflowConstants.STATUS_IN_TRASH,
@@ -1268,7 +1268,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 			else {
 				prevAndNextThreads =
-					mbThreadPersistence.filterFindByG_C_S_PrevAndNext(
+					mbThreadFinder.filterFindByG_C_S_PrevAndNext(
 						message.getThreadId(), message.getGroupId(),
 						message.getCategoryId(), status,
 						threadLastPostDateComparator);

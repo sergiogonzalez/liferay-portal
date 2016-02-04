@@ -105,6 +105,24 @@ public class MBThreadFinderUtil {
 		return getFinder().filterFindByG_C(groupId, categoryId, queryDefinition);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_C_S_PrevAndNext(
+		long threadId, long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThread> orderByComparator)
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
+		return getFinder()
+				   .filterFindByG_C_S_PrevAndNext(threadId, groupId,
+			categoryId, status, orderByComparator);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_C_NotS_PrevAndNext(
+		long threadId, long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThread> orderByComparator)
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
+		return getFinder()
+				   .filterFindByG_C_NotS_PrevAndNext(threadId, groupId,
+			categoryId, status, orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByS_G_U_C(
 		long groupId, long userId, long[] categoryIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBThread> queryDefinition) {
