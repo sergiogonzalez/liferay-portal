@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model;
-
-import com.liferay.message.boards.kernel.model.MBMessage;
+package com.liferay.message.boards.kernel.model;
 
 import java.util.Iterator;
 
