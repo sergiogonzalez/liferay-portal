@@ -12,36 +12,23 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib;
+package com.liferay.wiki.display.context;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseBarTag;
-
-import javax.servlet.jsp.JspException;
+import com.liferay.wiki.model.WikiNode;
 
 /**
  * @author Roberto Díaz
  */
-public class InfoBarTag extends BaseBarTag {
+public interface WikiNodeInfoPanelDisplayContext extends WikiDisplayContext {
 
-	@Override
-	public int doEndTag() throws JspException {
-		request.setAttribute("liferay-frontend:info-bar:buttons", buttons);
+	public WikiNode getFirstNode();
 
-		return super.doEndTag();
-	}
+	public int getNodesCount();
 
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
+	public int getSelectedNodesCount();
 
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
+	public boolean isMultipleNodeSelection();
 
-	private static final String _END_PAGE = "/info_bar/end.jsp";
-
-	private static final String _START_PAGE = "/info_bar/start.jsp";
+	public boolean isSingleNodeSelection();
 
 }
