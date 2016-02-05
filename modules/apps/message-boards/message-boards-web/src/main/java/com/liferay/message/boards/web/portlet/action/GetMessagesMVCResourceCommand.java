@@ -14,12 +14,12 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;

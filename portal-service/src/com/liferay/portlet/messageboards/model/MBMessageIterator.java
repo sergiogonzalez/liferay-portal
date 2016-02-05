@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
+
 import java.util.Iterator;
 
 /**
