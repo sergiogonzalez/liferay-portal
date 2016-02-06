@@ -894,12 +894,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-		long assetClassPK = fileEntry.getFileEntryId();
-
 		List<AssetCategory> categories = _assetCategoryService.getCategories(
-			DLFileEntry.class.getName(), assetClassPK);
+			DLFileEntry.class.getName(), fileEntryId);
 
 		List<Long> categoryIds = ListUtil.toList(
 			categories, AssetCategory.CATEGORY_ID_ACCESSOR);
