@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class I18nServlet extends HttpServlet {
 				request.setAttribute(WebKeys.I18N_PATH, i18nData.getI18nPath());
 
 				Locale locale = LocaleUtil.fromLanguageId(
-					i18nData.getLanguageId());
+					i18nData.getLanguageId(), true, false);
 
 				HttpSession session = request.getSession();
 
@@ -148,23 +148,21 @@ public class I18nServlet extends HttpServlet {
 
 		String i18nPath = StringPool.SLASH + i18nLanguageId;
 
-		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId, true, false);
 
-		String i18nLanguageCode = locale.getLanguage();
+		String i18nLanguageCode = i18nLanguageId;
 
-		if (Validator.isNull(locale.getCountry())) {
+		if ((locale == null) || Validator.isNull(locale.getCountry())) {
 
 			// Locales must contain the country code
 
 			locale = LanguageUtil.getLocale(i18nLanguageCode);
+		}
 
-			if (locale == null) {
-				i18nLanguageId = null;
-				i18nLanguageCode = null;
-			}
-			else {
-				i18nLanguageId = LocaleUtil.toLanguageId(locale);
-			}
+		if (locale != null) {
+			i18nLanguageId = LocaleUtil.toLanguageId(locale);
+
+			i18nLanguageCode = locale.getLanguage();
 		}
 
 		if (!PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE &&

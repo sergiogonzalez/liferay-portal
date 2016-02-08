@@ -1147,10 +1147,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<replace file="test/integration/com/liferay/portal/security/pacl/test/messaging/TestPACLMessageListener.java">
 			<replacetoken><![CDATA[import com.liferay.portal.security.pacl.test.util.TestPACLUtil;]]></replacetoken>
-			<replacevalue><![CDATA[import com.liferay.portal.model.User;
+			<replacevalue><![CDATA[import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.TestPropsValues;
 
 import java.util.HashMap;]]></replacevalue>
 		</replace>
@@ -1269,7 +1269,7 @@ security-manager-awt-operations=\
 		<replaceregexp
 			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="(security-manager-get-bean-property=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.util.PortalUtil)"
+			match="(security-manager-get-bean-property=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.kernel.util.PortalUtil)"
 			replace="\1\2\3com.liferay.portal.kernel.util.InfrastructureUtil\3"
 		/>
 

@@ -304,6 +304,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DM_DOCUMENT_TYPE</td>
+	<td>//a[contains(.,'Document Type')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_TYPE</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'${key_dmDocumentTypeName}')]</td>
 	<td></td>
@@ -335,7 +340,7 @@
 </tr>
 <tr>
 	<td>EXPORT</td>
-	<td>//div[contains(@class,'dropdown  open')]//a[@role='menuitem' and contains(.,'Export')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Export') and not(contains(.,'Import'))]</td>
 	<td></td>
 </tr>
 <tr>

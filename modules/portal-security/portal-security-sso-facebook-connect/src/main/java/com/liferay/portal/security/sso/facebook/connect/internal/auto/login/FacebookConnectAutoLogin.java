@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +34,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Participates in every unauthenticated HTTP request to Liferay Portal.
+ *
+ * <p>
+ * This class looks for one of two HTTP session attributes:
+ * <code>FACEBOOK_USER_ID</code> or <code>FACEBOOK_USER_EMAIL_ADDRESS</code>. If
+ * either is found and can be matched with a Liferay Portal user on the
+ * corresponding field, then the user is logged in without any further
+ * challenge.
+ * <p>
+ *
  * @author Wilson Man
  */
 @Component(immediate = true, service = AutoLogin.class)

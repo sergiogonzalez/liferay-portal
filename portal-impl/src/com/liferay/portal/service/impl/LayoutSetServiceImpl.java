@@ -16,11 +16,11 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Plugin;
 import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
-import com.liferay.portal.service.permission.PortalPermissionUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -120,7 +120,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 	@Override
 	public LayoutSet updateLookAndFeel(
 			long groupId, boolean privateLayout, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			String colorSchemeId, String css)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
@@ -130,7 +130,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			getUserId(), themeId, Plugin.TYPE_THEME);
 
 		return layoutSetLocalService.updateLookAndFeel(
-			groupId, privateLayout, themeId, colorSchemeId, css, wapTheme);
+			groupId, privateLayout, themeId, colorSchemeId, css);
 	}
 
 	@Override
