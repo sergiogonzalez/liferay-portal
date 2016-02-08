@@ -17,14 +17,14 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
+String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");
 %>
 
 <div id="productMenuSidebar">
 	<h4 class="sidebar-header">
 		<a href="<%= themeDisplay.getURLPortal() %>">
 			<span class="company-details">
-				<img alt="" class="company-logo" src="<%= themeDisplay.getCompanyLogo() %>" />
+				<img alt="" class="company-logo" src="<%= themeDisplay.getRealCompanyLogo() %>" />
 				<span class="company-name"><%= company.getName() %></span>
 			</span>
 
@@ -52,14 +52,14 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 	sidenavSlider.on(
 		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.control.menu.web_productMenuState', 'closed');
+			Liferay.Store('<%= ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE %>', 'closed');
 		}
 	);
 
 	sidenavSlider.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.control.menu.web_productMenuState', 'open');
+			Liferay.Store('<%= ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE %>', 'open');
 		}
 	);
 

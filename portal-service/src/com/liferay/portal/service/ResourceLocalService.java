@@ -18,12 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.Resource;
-import com.liferay.portal.service.permission.ModelPermissions;
 
 import java.util.List;
 
@@ -330,21 +330,6 @@ public interface ResourceLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* Updates resources matching the group, name, and primary key at the
-	* individual scope, setting new permissions.
-	*
-	* @param companyId the primary key of the portal instance
-	* @param groupId the primary key of the group
-	* @param name the resource's name, which should be a portlet ID if the
-	resource is a portlet or the resource's class name otherwise
-	* @param primKey the primary key of the resource instance
-	* @param modelPermissions the model permissions to be applied
-	*/
-	public void updateResources(long companyId, long groupId,
-		java.lang.String name, long primKey, ModelPermissions modelPermissions)
-		throws PortalException;
-
-	/**
 	* Updates resources matching the group, name, and primary key string at the
 	* individual scope, setting new permissions.
 	*
@@ -358,6 +343,21 @@ public interface ResourceLocalService extends BaseLocalService {
 	public void updateResources(long companyId, long groupId,
 		java.lang.String name, java.lang.String primKey,
 		ModelPermissions modelPermissions) throws PortalException;
+
+	/**
+	* Updates resources matching the group, name, and primary key at the
+	* individual scope, setting new permissions.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param name the resource's name, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key of the resource instance
+	* @param modelPermissions the model permissions to be applied
+	*/
+	public void updateResources(long companyId, long groupId,
+		java.lang.String name, long primKey, ModelPermissions modelPermissions)
+		throws PortalException;
 
 	/**
 	* Updates resources matching the name, primary key string and scope,

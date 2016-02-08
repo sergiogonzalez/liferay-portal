@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -8742,8 +8743,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		layoutImpl.setIconImageId(layout.getIconImageId());
 		layoutImpl.setThemeId(layout.getThemeId());
 		layoutImpl.setColorSchemeId(layout.getColorSchemeId());
-		layoutImpl.setWapThemeId(layout.getWapThemeId());
-		layoutImpl.setWapColorSchemeId(layout.getWapColorSchemeId());
 		layoutImpl.setCss(layout.getCss());
 		layoutImpl.setPriority(layout.getPriority());
 		layoutImpl.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());

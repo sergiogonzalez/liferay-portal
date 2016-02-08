@@ -14,19 +14,19 @@
 
 package com.liferay.layout.admin.web.control.menu;
 
-import com.liferay.control.menu.BaseJSPControlMenuEntry;
-import com.liferay.control.menu.ControlMenuEntry;
-import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.layout.admin.web.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -6405,8 +6406,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevisionImpl.setIconImageId(layoutRevision.getIconImageId());
 		layoutRevisionImpl.setThemeId(layoutRevision.getThemeId());
 		layoutRevisionImpl.setColorSchemeId(layoutRevision.getColorSchemeId());
-		layoutRevisionImpl.setWapThemeId(layoutRevision.getWapThemeId());
-		layoutRevisionImpl.setWapColorSchemeId(layoutRevision.getWapColorSchemeId());
 		layoutRevisionImpl.setCss(layoutRevision.getCss());
 		layoutRevisionImpl.setStatus(layoutRevision.getStatus());
 		layoutRevisionImpl.setStatusByUserId(layoutRevision.getStatusByUserId());

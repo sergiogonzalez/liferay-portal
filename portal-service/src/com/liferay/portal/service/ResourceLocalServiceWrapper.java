@@ -132,7 +132,7 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	@Override
 	public void addModelResources(long companyId, long groupId, long userId,
 		java.lang.String name, long primKey,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceLocalService.addModelResources(companyId, groupId, userId,
 			name, primKey, modelPermissions);
@@ -141,7 +141,7 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	@Override
 	public void addModelResources(long companyId, long groupId, long userId,
 		java.lang.String name, java.lang.String primKey,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceLocalService.addModelResources(companyId, groupId, userId,
 			name, primKey, modelPermissions);
@@ -380,26 +380,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	}
 
 	/**
-	* Updates resources matching the group, name, and primary key at the
-	* individual scope, setting new permissions.
-	*
-	* @param companyId the primary key of the portal instance
-	* @param groupId the primary key of the group
-	* @param name the resource's name, which should be a portlet ID if the
-	resource is a portlet or the resource's class name otherwise
-	* @param primKey the primary key of the resource instance
-	* @param modelPermissions the model permissions to be applied
-	*/
-	@Override
-	public void updateResources(long companyId, long groupId,
-		java.lang.String name, long primKey,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_resourceLocalService.updateResources(companyId, groupId, name,
-			primKey, modelPermissions);
-	}
-
-	/**
 	* Updates resources matching the group, name, and primary key string at the
 	* individual scope, setting new permissions.
 	*
@@ -413,7 +393,27 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	@Override
 	public void updateResources(long companyId, long groupId,
 		java.lang.String name, java.lang.String primKey,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourceLocalService.updateResources(companyId, groupId, name,
+			primKey, modelPermissions);
+	}
+
+	/**
+	* Updates resources matching the group, name, and primary key at the
+	* individual scope, setting new permissions.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param name the resource's name, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key of the resource instance
+	* @param modelPermissions the model permissions to be applied
+	*/
+	@Override
+	public void updateResources(long companyId, long groupId,
+		java.lang.String name, long primKey,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceLocalService.updateResources(companyId, groupId, name,
 			primKey, modelPermissions);

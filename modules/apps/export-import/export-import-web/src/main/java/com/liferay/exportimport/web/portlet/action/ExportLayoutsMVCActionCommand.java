@@ -33,11 +33,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.ui.util.SessionTreeJSClicks;
 
 import java.io.Serializable;
@@ -89,7 +89,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		setLayoutIds(actionRequest);
+		setLayoutIdMap(actionRequest);
 
 		try {
 			ThemeDisplay themeDisplay =
@@ -184,7 +184,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		_exportImportService = exportImportService;
 	}
 
-	protected void setLayoutIds(ActionRequest actionRequest) {
+	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest portletRequest = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
@@ -201,7 +201,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
 				groupId, privateLayout, openNodes);
 
-		actionRequest.setAttribute("layoutIds", selectedLayoutsJSON);
+		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
 
 	@Reference(unbind = "-")

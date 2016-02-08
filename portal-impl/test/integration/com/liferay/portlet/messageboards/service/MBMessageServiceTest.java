@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -38,7 +39,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -133,12 +133,12 @@ public class MBMessageServiceTest {
 		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					BasePersistenceImpl.class.getName(), Level.ERROR);
-				CaptureAppender captureAppender2 =
-					Log4JLoggerTestUtil.configureLog4JLogger(
-						DoAsUserThread.class.getName(), Level.ERROR);
-				CaptureAppender captureAppender3 =
-					Log4JLoggerTestUtil.configureLog4JLogger(
-						JDBCExceptionReporter.class.getName(), Level.ERROR)) {
+			CaptureAppender captureAppender2 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					DoAsUserThread.class.getName(), Level.ERROR);
+			CaptureAppender captureAppender3 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					JDBCExceptionReporter.class.getName(), Level.ERROR)) {
 
 			for (DoAsUserThread doAsUserThread : doAsUserThreads) {
 				doAsUserThread.start();
