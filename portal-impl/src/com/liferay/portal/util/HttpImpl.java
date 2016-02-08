@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1334,13 +1335,13 @@ public class HttpImpl implements Http {
 		}
 
 		try (InputStream inputStream = urlConnection.getInputStream();
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream()) {
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream()) {
 
 			byte[] bytes = new byte[512];
 
 			for (int i = inputStream.read(bytes, 0, 512); i != -1;
-					i = inputStream.read(bytes, 0, 512)) {
+				i = inputStream.read(bytes, 0, 512)) {
 
 				unsyncByteArrayOutputStream.write(bytes, 0, i);
 			}

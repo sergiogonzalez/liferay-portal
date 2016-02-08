@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -142,10 +142,9 @@ public class UpgradeRatings extends UpgradeProcess {
 				"averageScore = ? where classNameId = ? and classPK = ?";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
-				ResultSet rs = ps1.executeQuery();
-					PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.autoBatch(
-							connection.prepareStatement(updateSQL))) {
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(updateSQL))) {
 
 			while (rs.next()) {
 				ps2.setInt(1, rs.getInt("totalEntries"));

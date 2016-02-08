@@ -16,6 +16,10 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.exception.NoSuchContentException;
+import com.liferay.document.library.kernel.model.DLContent;
+import com.liferay.document.library.kernel.service.persistence.DLContentPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -28,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -38,13 +43,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
-import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.model.impl.DLContentImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl;
-import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence;
 
 import java.io.Serializable;
 
@@ -65,7 +66,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DLContentPersistence
- * @see com.liferay.portlet.documentlibrary.service.persistence.DLContentUtil
+ * @see com.liferay.document.library.kernel.service.persistence.DLContentUtil
  * @generated
  */
 @ProviderType

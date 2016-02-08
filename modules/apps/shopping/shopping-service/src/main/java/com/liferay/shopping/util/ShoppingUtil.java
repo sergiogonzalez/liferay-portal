@@ -30,12 +30,12 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.exception.NoSuchCartException;
@@ -855,7 +855,7 @@ public class ShoppingUtil {
 				int arrayPos = 0;
 
 				for (arrayPos = i / numOfRepeats; arrayPos >= vArray.length;
-						arrayPos = arrayPos - vArray.length) {
+					arrayPos = arrayPos - vArray.length) {
 				}
 
 				if (!fieldsValues.contains(vArray[arrayPos].trim())) {
