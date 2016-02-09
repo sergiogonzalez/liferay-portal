@@ -119,13 +119,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 		<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY) %>">
 
 			<%
-			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
-			%>
-
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="times" label="cancel-checkout[document]" />
-
-			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
+			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
 			%>
 
 			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unlock" />
