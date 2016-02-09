@@ -14,24 +14,33 @@
 
 package com.liferay.message.boards.display.context;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.portal.kernel.display.context.DisplayContextFactory;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public interface MBDisplayContextFactory extends DisplayContextFactory {
+public class BaseMBListDisplayContext
+	extends BaseMBDisplayContext<MBListDisplayContext>
+	implements MBListDisplayContext {
 
-	public MBHomeDisplayContext getMBHomeDisplayContext(
-		MBHomeDisplayContext parentMBHomeDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
+	public BaseMBListDisplayContext(
+		UUID uuid, MBListDisplayContext parentDisplayContext,
+		HttpServletRequest request, HttpServletResponse response) {
 
-	public MBListDisplayContext getMBListDisplayContext(
-		MBListDisplayContext parentMBListDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId);
+		super(uuid, parentDisplayContext, request, response);
+	}
+
+	@Override
+	public void populateResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
+
+		parentDisplayContext.populateResultsAndTotal(searchContainer);
+	}
 
 }
