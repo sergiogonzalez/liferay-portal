@@ -16,7 +16,9 @@ package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
@@ -64,10 +66,12 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -890,7 +894,22 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
+		List<AssetCategory> categories = _assetCategoryService.getCategories(
+			DLFileEntry.class.getName(), fileEntryId);
+
+		List<Long> categoryIds = ListUtil.toList(
+			categories, AssetCategory.CATEGORY_ID_ACCESSOR);
+
+		serviceContext.setAssetCategoryIds(ArrayUtil.toLongArray(categoryIds));
+
 		_dlAppService.revertFileEntry(fileEntryId, version, serviceContext);
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetCategoryService(
+		AssetCategoryService assetCategoryService) {
+
+		_assetCategoryService = assetCategoryService;
 	}
 
 	@Reference(unbind = "-")
@@ -1037,6 +1056,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFileEntryMVCActionCommand.class);
 
+	private AssetCategoryService _assetCategoryService;
 	private DLAppService _dlAppService;
 	private DLTrashService _dlTrashService;
 	private TrashEntryService _trashEntryService;
