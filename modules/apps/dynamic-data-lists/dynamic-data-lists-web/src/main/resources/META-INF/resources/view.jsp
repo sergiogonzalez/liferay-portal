@@ -25,14 +25,11 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 
 RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+OrderByComparator<DDLRecordSet> orderByComparator = DDLPortletUtil.getDDLRecordSetOrderByComparator(ddlDisplayContext.getOrderByCol(), ddlDisplayContext.getOrderByType());
 
-OrderByComparator<DDLRecordSet> orderByComparator = DDLPortletUtil.getDDLRecordSetOrderByComparator(orderByCol, orderByType);
-
-recordSetSearch.setOrderByCol(orderByCol);
+recordSetSearch.setOrderByCol(ddlDisplayContext.getOrderByCol());
 recordSetSearch.setOrderByComparator(orderByComparator);
-recordSetSearch.setOrderByType(orderByType);
+recordSetSearch.setOrderByType(ddlDisplayContext.getOrderByType());
 %>
 
 <liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
@@ -42,8 +39,11 @@ recordSetSearch.setOrderByType(orderByType);
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="recordSetIds" type="hidden" />
 
 		<liferay-ui:search-container
+			id="ddlRecordSet"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= recordSetSearch %>"
 		>
 
@@ -79,10 +79,12 @@ recordSetSearch.setOrderByType(orderByType);
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-image
-							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-text>
+							<liferay-ui:user-portrait
+								cssClass="user-icon-lg"
+								userId="<%= recordSet.getUserId() %>"
+							/>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
 							colspan="2"

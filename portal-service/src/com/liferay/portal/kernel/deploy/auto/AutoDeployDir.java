@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -43,33 +44,43 @@ public class AutoDeployDir {
 			List<AutoDeployListener> autoDeployListeners)
 		throws AutoDeployException {
 
-		List<String> duplicateApplicableAutoDeployListenerClassNames =
+		List<AutoDeployListener> deployableAutoDeployListeners =
 			new ArrayList<>();
 
 		for (AutoDeployListener autoDeployListener : autoDeployListeners) {
-			if (autoDeployListener.deploy(autoDeploymentContext) !=
-					AutoDeployer.CODE_NOT_APPLICABLE) {
-
-				Class<?> autoDeployListenerClass =
-					autoDeployListener.getClass();
-
-				duplicateApplicableAutoDeployListenerClassNames.add(
-					autoDeployListenerClass.getName());
+			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
+				deployableAutoDeployListeners.add(autoDeployListener);
 			}
 		}
 
-		if (duplicateApplicableAutoDeployListenerClassNames.size() > 1) {
-			StringBundler sb = new StringBundler(5);
+		if (deployableAutoDeployListeners.size() > 1) {
+			StringBundler sb = new StringBundler(
+				3 + (deployableAutoDeployListeners.size() * 2) - 1);
 
-			sb.append("The auto deploy listeners ");
-			sb.append(
-				StringUtil.merge(
-					duplicateApplicableAutoDeployListenerClassNames, ", "));
-			sb.append(" all deployed ");
+			sb.append("More than one auto deploy listener is available for ");
 			sb.append(autoDeploymentContext.getFile());
-			sb.append(", but only one should have.");
+			sb.append(": ");
+
+			for (int i = 0; i < deployableAutoDeployListeners.size(); i++) {
+				AutoDeployListener deployableAutoDeployListener =
+					deployableAutoDeployListeners.get(i);
+
+				Class<?> clazz = deployableAutoDeployListener.getClass();
+
+				if (i != 0) {
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				sb.append(clazz.getName());
+			}
 
 			throw new AutoDeployException(sb.toString());
+		}
+
+		for (AutoDeployListener deployableAutoDeployListener :
+				deployableAutoDeployListeners) {
+
+			deployableAutoDeployListener.deploy(autoDeploymentContext);
 		}
 	}
 

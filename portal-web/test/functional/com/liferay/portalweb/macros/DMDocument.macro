@@ -498,7 +498,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetType}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetType}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -1154,7 +1154,9 @@
 				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="DocumentsAndMediaSelectFolder#CHOOSE_BUTTON_GENERIC" value1="Choose" />
+				<var name="key_dmFolderName" value="${dmFolderName}" />
+
+				<execute function="AssertClick" locator1="DocumentsAndMedia#CHOOSE_FOLDER_BUTTON" value1="Choose" />
 			</else>
 		</if>
 
@@ -1481,9 +1483,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
 
-		<var name="key_rowEntry" value="Version ${dmDocumentVersionNumber}" />
+		<var name="key_dmDocumentVersionNumber" value="Version ${dmDocumentVersionNumber}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#REVERT" value1="Revert" />
 
@@ -1517,52 +1519,6 @@
 		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#SEARCH_TITLE" value1="${dmDocumentTitle}" />
-	</command>
-
-	<command name="searchPGviaMG">
-		<if>
-			<equals arg1="${mediaGallerySearch}" arg2="Entry" />
-			<then>
-				<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
-				<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${mgDocumentTitle}" />
-
-				<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
-
-				<execute macro="Search#viewSearchResultsPG">
-					<var name="searchAssetTitle1" value="${mgDocumentTitle}" />
-					<var name="searchAssetType1" value="Document" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${mediaGallerySearch}" arg2="Null" />
-				<then>
-					<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
-					<execute function="Type" locator1="Search#SEARCH_FIELD" value1="asdf" />
-
-					<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
-
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No results were found that matched the keywords: asdf." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${mediaGallerySearch}" arg2="Quotes" />
-				<then>
-					<var name="quotes"><![CDATA["${mgDocumentTitle}"]]></var>
-					<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
-					<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${quotes}" />
-
-					<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
-
-					<execute macro="Search#viewSearchResultsPG">
-						<var name="searchAssetTitle1" value="${mgDocumentTitle}" />
-						<var name="searchAssetType1" value="Document" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
 	</command>
 
 	<command name="tearDownCP">
@@ -2120,6 +2076,8 @@
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
 
+		<execute function="MakeVisible" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL_GENERIC" />
+
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 
 		<var method="StringUtil#upperCase('${key_dmFolderName}')" name="dmFolderName" />
@@ -2134,9 +2092,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
 
-		<var name="key_rowEntry" value="Version ${dmDocumentVersionNumber}" />
+		<var name="key_dmDocumentVersionNumber" value="Version ${dmDocumentVersionNumber}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 
@@ -2189,7 +2147,7 @@
 	<command name="viewPGDetails">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${dmDocumentTitle}" />
 		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
 

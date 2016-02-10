@@ -14,16 +14,14 @@
 
 package com.liferay.sync.engine.upgrade.v3_0_8;
 
-import com.liferay.sync.engine.service.SyncFileService;
-import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
-import com.liferay.sync.engine.upgrade.UpgradeProcess;
+import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 
 /**
  * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_0_8 extends UpgradeProcess {
+public class UpgradeProcess_3_0_8 extends BaseUpgradeProcess {
 
 	@Override
 	public int getThreshold() {
@@ -33,16 +31,11 @@ public class UpgradeProcess_3_0_8 extends UpgradeProcess {
 	@Override
 	public void upgrade() throws Exception {
 		UpgradeUtil.copyLoggerConfiguration();
-
-		upgradeSchema();
 	}
 
-	protected void upgradeSchema() throws Exception {
-		SyncFilePersistence syncFilePersistence =
-			SyncFileService.getSyncFilePersistence();
-
-		syncFilePersistence.executeRaw(
-			"CREATE INDEX syncfile_checksum_idx ON SyncFile(checksum);");
+	@Override
+	public void upgradeSchema() throws Exception {
+		runSQL("CREATE INDEX syncfile_checksum_idx ON SyncFile(checksum);");
 	}
 
 }

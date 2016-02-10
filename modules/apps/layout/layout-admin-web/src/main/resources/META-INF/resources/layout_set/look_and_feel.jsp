@@ -16,20 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long groupId = layoutsAdminDisplayContext.getGroupId();
-long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
-LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-Theme selTheme = layoutSet.getTheme();
-ColorScheme selColorScheme = layoutSet.getColorScheme();
-%>
-
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
 
-<aui:model-context bean="<%= layoutSet %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />
 
 <aui:input name="devices" type="hidden" value="regular" />
 
-<%@ include file="/layout_set/look_and_feel_regular_browser.jspf" %>
+<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
