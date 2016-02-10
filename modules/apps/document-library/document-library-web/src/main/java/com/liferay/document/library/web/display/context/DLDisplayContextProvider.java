@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
 
@@ -93,7 +94,8 @@ public class DLDisplayContextProvider {
 		try {
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
-					request, response, fileShortcut, _dlMimeTypeDisplayContext);
+					request, response, fileShortcut, _dlMimeTypeDisplayContext,
+					_resourceBundleLoader);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -122,7 +124,8 @@ public class DLDisplayContextProvider {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
-				request, response, fileVersion, _dlMimeTypeDisplayContext);
+				request, response, fileVersion, _dlMimeTypeDisplayContext,
+				_resourceBundleLoader);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -160,8 +163,19 @@ public class DLDisplayContextProvider {
 		_dlDisplayContextFactories.close();
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }
