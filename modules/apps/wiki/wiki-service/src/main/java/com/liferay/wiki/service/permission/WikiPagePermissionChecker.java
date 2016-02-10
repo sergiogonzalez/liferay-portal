@@ -48,7 +48,13 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		WikiPage page = _wikiPageLocalService.fetchPage(resourcePrimKey);
 
 		if (page == null) {
-			page = _wikiPageLocalService.getPageByPageId(resourcePrimKey);
+			try {
+				page = _wikiPageLocalService.getPageByPageId(resourcePrimKey);
+			}
+			catch (NoSuchPageException nspe) {
+				page = _wikiPageLocalService.getPage(
+					resourcePrimKey, (Boolean)null);
+			}
 		}
 
 		check(permissionChecker, page, actionId);
