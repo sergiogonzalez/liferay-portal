@@ -187,25 +187,37 @@ if (groupThreadsUserId > 0) {
 								<c:when test="<%= thread.getMessageCount() == 1 %>">
 
 									<%
+									String messageUserName = "anonymous";
+
+									if (!message.isAnonymous()) {
+										messageUserName = message.getUserName();
+									}
+
 									Date modifiedDate = message.getModifiedDate();
 
 									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 									%>
 
 									<h5 class="text-default">
-										<liferay-ui:message arguments="<%= new String[] {message.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+										<liferay-ui:message arguments="<%= new String[] {messageUserName, modifiedDateDescription} %>" key="x-modified-x-ago" />
 									</h5>
 								</c:when>
 								<c:otherwise>
 
 									<%
+									String messageUserName = "anonymous";
+
+									if (thread.getLastPostByUserId() != 0) {
+										messageUserName = PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK);
+									}
+
 									Date lastPostDate = thread.getLastPostDate();
 
 									String lastPostDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true);
 									%>
 
 									<h5 class="text-default">
-										<liferay-ui:message arguments="<%= new String[] {PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK), lastPostDateDescription} %>" key="x-replied-x-ago" />
+										<liferay-ui:message arguments="<%= new String[] {messageUserName, lastPostDateDescription} %>" key="x-replied-x-ago" />
 									</h5>
 								</c:otherwise>
 							</c:choose>
