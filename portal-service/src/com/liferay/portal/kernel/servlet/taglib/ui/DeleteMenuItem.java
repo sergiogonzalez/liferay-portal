@@ -19,12 +19,22 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
  */
 public class DeleteMenuItem extends MenuItem {
 
+	@Override
+	public String getId() {
+		return _id;
+	}
+
 	public String getURL() {
 		return _url;
 	}
 
 	public boolean isTrash() {
 		return _trash;
+	}
+
+	@Override
+	public void setId(String id) {
+		_id = id;
 	}
 
 	public void setTrash(boolean trash) {
@@ -35,6 +45,7 @@ public class DeleteMenuItem extends MenuItem {
 		_url = url;
 	}
 
+	private String _id;
 	private boolean _trash;
 	private String _url;
 

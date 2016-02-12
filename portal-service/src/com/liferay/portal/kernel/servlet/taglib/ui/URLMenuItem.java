@@ -30,6 +30,11 @@ public class URLMenuItem extends MenuItem implements URLUIItem {
 		return _data;
 	}
 
+	@Override
+	public String getId() {
+		return _id;
+	}
+
 	public String getMethod() {
 		return _method;
 	}
@@ -50,6 +55,11 @@ public class URLMenuItem extends MenuItem implements URLUIItem {
 
 	public void setData(Map<String, Object> data) {
 		_data = data;
+	}
+
+	@Override
+	public void setId(String id) {
+		_id = id;
 	}
 
 	public void setMethod(String method) {
@@ -73,6 +83,7 @@ public class URLMenuItem extends MenuItem implements URLUIItem {
 	private static final String _TARGET_DEFAULT = "_self";
 
 	private Map<String, Object> _data;
+	private String _id;
 	private String _method;
 	private String _target = _TARGET_DEFAULT;
 	private String _url;

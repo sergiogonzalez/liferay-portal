@@ -99,8 +99,9 @@ public class UIItemsBuilder {
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.CANCEL_CHECKOUT,
-			"cancel-checkout[document]", portletURL.toString());
+			new URLMenuItem(), menuItems, "cancelCheckout",
+			DLUIItemKeys.CANCEL_CHECKOUT, "cancel-checkout[document]",
+			portletURL.toString());
 	}
 
 	public void addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -113,7 +114,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
+			new JavaScriptToolbarItem(), toolbarItems, "cancelCheckout",
 			DLUIItemKeys.CANCEL_CHECKOUT,
 			LanguageUtil.get(_request, "cancel-checkout[document]"),
 			getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
@@ -143,8 +144,8 @@ public class UIItemsBuilder {
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
-			LanguageUtil.get(_request, "checkin"),
+			new JavaScriptToolbarItem(), toolbarItems, "checkin",
+			DLUIItemKeys.CHECKIN, LanguageUtil.get(_request, "checkin"),
 			getNamespace() + "showVersionDetailsDialog('" + portletURL + "');");
 
 		String javaScript =
@@ -187,7 +188,7 @@ public class UIItemsBuilder {
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.CHECKOUT,
+			new URLMenuItem(), menuItems, "checkout", DLUIItemKeys.CHECKOUT,
 			"checkout[document]", portletURL.toString());
 	}
 
@@ -201,7 +202,8 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKOUT,
+			new JavaScriptToolbarItem(), toolbarItems, "checkout",
+			DLUIItemKeys.CHECKOUT,
 			LanguageUtil.get(_request, "checkout[document]"),
 			getSubmitFormJavaScript(Constants.CHECKOUT, null));
 	}
@@ -223,6 +225,7 @@ public class UIItemsBuilder {
 
 		DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
+		deleteMenuItem.setId("delete");
 		deleteMenuItem.setKey(DLUIItemKeys.DELETE);
 
 		if (cmd.equals(Constants.MOVE_TO_TRASH)) {
@@ -289,8 +292,9 @@ public class UIItemsBuilder {
 		sb.append("}");
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.DELETE,
-			LanguageUtil.get(_request, "delete"), sb.toString());
+			new JavaScriptToolbarItem(), toolbarItems, "delete",
+			DLUIItemKeys.DELETE, LanguageUtil.get(_request, "delete"),
+			sb.toString());
 	}
 
 	public void addDownloadMenuItem(List<MenuItem> menuItems)
@@ -310,7 +314,8 @@ public class UIItemsBuilder {
 			true);
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.DOWNLOAD, label, url);
+			new URLMenuItem(), menuItems, "download", DLUIItemKeys.DOWNLOAD,
+			label, url);
 
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setTarget("_blank");
@@ -324,8 +329,8 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,
-			LanguageUtil.get(_request, "download"),
+			new URLToolbarItem(), toolbarItems, "download",
+			DLUIItemKeys.DOWNLOAD, LanguageUtil.get(_request, "download"),
 			DLUtil.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}
@@ -349,7 +354,7 @@ public class UIItemsBuilder {
 		portletURL.setParameter("backURL", _getCurrentURL());
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.EDIT, "edit",
+			new URLMenuItem(), menuItems, "edit", DLUIItemKeys.EDIT, "edit",
 			portletURL.toString());
 	}
 
@@ -364,7 +369,7 @@ public class UIItemsBuilder {
 			"/document_library/edit_file_entry");
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLUIItemKeys.EDIT,
+			new URLToolbarItem(), toolbarItems, "edit", DLUIItemKeys.EDIT,
 			LanguageUtil.get(_request, "edit"), portletURL.toString());
 	}
 
@@ -404,7 +409,7 @@ public class UIItemsBuilder {
 			"rowIdsFileEntry", String.valueOf(_fileEntry.getFileEntryId()));
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.MOVE, "move",
+			new URLMenuItem(), menuItems, "move", DLUIItemKeys.MOVE, "move",
 			portletURL.toString());
 	}
 
@@ -418,7 +423,7 @@ public class UIItemsBuilder {
 		PortletURL portletURL = _getRenderURL("/document_library/move_entry");
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLUIItemKeys.MOVE,
+			new URLToolbarItem(), toolbarItems, "move", DLUIItemKeys.MOVE,
 			LanguageUtil.get(_request, "move"), portletURL.toString());
 	}
 
@@ -451,7 +456,7 @@ public class UIItemsBuilder {
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
+			new JavaScriptToolbarItem(), toolbarItems, "moveToTheRecycleBin",
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
 			LanguageUtil.get(_request, "move-to-the-recycle-bin"),
 			getSubmitFormJavaScript(
@@ -474,8 +479,8 @@ public class UIItemsBuilder {
 		String onClick = getNamespace() + "openDocument('" + webDavURL + "');";
 
 		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.OPEN_IN_MS_OFFICE,
-			"open-in-ms-office", onClick);
+			new JavaScriptMenuItem(), menuItems, "openInMSOffice",
+			DLUIItemKeys.OPEN_IN_MS_OFFICE, "open-in-ms-office", onClick);
 
 		String javaScript =
 			"/com/liferay/document/library/web/display/context/dependencies" +
@@ -524,7 +529,7 @@ public class UIItemsBuilder {
 		sb.append("');");
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
+			new JavaScriptToolbarItem(), toolbarItems, "openInMSOffice",
 			DLUIItemKeys.OPEN_IN_MS_OFFICE,
 			LanguageUtil.get(_request, "open-in-ms-office"), sb.toString());
 	}
@@ -550,8 +555,8 @@ public class UIItemsBuilder {
 		}
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.PERMISSIONS,
-			"permissions", url);
+			new URLMenuItem(), menuItems, "permissions",
+			DLUIItemKeys.PERMISSIONS, "permissions", url);
 
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setUseDialog(true);
@@ -588,8 +593,9 @@ public class UIItemsBuilder {
 		sb.append("'});");
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.PERMISSIONS,
-			LanguageUtil.get(_request, "permissions"), sb.toString());
+			new JavaScriptToolbarItem(), toolbarItems, "permissions",
+			DLUIItemKeys.PERMISSIONS, LanguageUtil.get(_request, "permissions"),
+			sb.toString());
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {
@@ -605,8 +611,9 @@ public class UIItemsBuilder {
 			"fileEntryId", String.valueOf(_fileShortcut.getToFileEntryId()));
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_ORIGINAL_FILE,
-			"view-original-file", portletURL.toString());
+			new URLMenuItem(), menuItems, "viewOriginalFile",
+			DLUIItemKeys.VIEW_ORIGINAL_FILE, "view-original-file",
+			portletURL.toString());
 	}
 
 	public JavaScriptMenuItem getJavacriptCheckinMenuItem()
@@ -620,6 +627,7 @@ public class UIItemsBuilder {
 
 		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
 
+		javascriptMenuItem.setId("checkin");
 		javascriptMenuItem.setKey(DLUIItemKeys.CHECKIN);
 		javascriptMenuItem.setLabel("checkin");
 		javascriptMenuItem.setOnClick(
@@ -756,9 +764,10 @@ public class UIItemsBuilder {
 	}
 
 	private <T extends JavaScriptUIItem> T _addJavaScriptUIItem(
-		T javascriptUIItem, List<? super T> javascriptUIItems, String key,
-		String label, String onClick) {
+		T javascriptUIItem, List<? super T> javascriptUIItems, String id,
+		String key, String label, String onClick) {
 
+		javascriptUIItem.setId(id);
 		javascriptUIItem.setKey(key);
 		javascriptUIItem.setLabel(label);
 		javascriptUIItem.setOnClick(onClick);
@@ -769,9 +778,10 @@ public class UIItemsBuilder {
 	}
 
 	private <T extends URLUIItem> T _addURLUIItem(
-		T urlUIItem, List<? super T> urlUIItems, String key, String label,
-		String url) {
+		T urlUIItem, List<? super T> urlUIItems, String id, String key,
+		String label, String url) {
 
+		urlUIItem.setId(id);
 		urlUIItem.setKey(key);
 		urlUIItem.setLabel(label);
 		urlUIItem.setURL(url);
