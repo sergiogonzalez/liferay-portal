@@ -25,6 +25,11 @@ public abstract class ToolbarItem extends BaseUIItem implements UIActionItem {
 	}
 
 	@Override
+	public String getId() {
+		return _id;
+	}
+
+	@Override
 	public String getLabel() {
 		return _label;
 	}
@@ -35,11 +40,17 @@ public abstract class ToolbarItem extends BaseUIItem implements UIActionItem {
 	}
 
 	@Override
+	public void setId(String id) {
+		_id = id;
+	}
+
+	@Override
 	public void setLabel(String label) {
 		_label = label;
 	}
 
 	private String _icon;
+	private String _id;
 	private String _label;
 
 }

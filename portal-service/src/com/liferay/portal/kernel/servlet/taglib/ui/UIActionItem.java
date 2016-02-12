@@ -21,9 +21,13 @@ public interface UIActionItem extends UIItem {
 
 	public String getIcon();
 
+	public String getId();
+
 	public String getLabel();
 
 	public void setIcon(String icon);
+
+	public void setId(String id);
 
 	public void setLabel(String label);
 
