@@ -176,12 +176,12 @@ if (groupThreadsUserId > 0) {
 							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 						</liferay-portlet:renderURL>
 
-						<liferay-ui:search-container-column-user
-							cssClass="user-icon-lg"
-							property="lastPostByUserId"
-							showDetails="<%= false %>"
-							userId="<%= thread.getLastPostByUserId() %>"
-						/>
+						<liferay-ui:search-container-column-text>
+							<liferay-ui:user-portrait
+								cssClass="user-icon-lg"
+								userId="<%= thread.getLastPostByUserId() %>"
+							/>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 							<c:choose>
