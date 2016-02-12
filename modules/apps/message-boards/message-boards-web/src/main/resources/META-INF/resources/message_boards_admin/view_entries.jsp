@@ -178,6 +178,7 @@ if (groupThreadsUserId > 0) {
 
 						<liferay-ui:search-container-column-user
 							cssClass="user-icon-lg"
+							property="lastPostByUserId"
 							showDetails="<%= false %>"
 							userId="<%= thread.getLastPostByUserId() %>"
 						/>
