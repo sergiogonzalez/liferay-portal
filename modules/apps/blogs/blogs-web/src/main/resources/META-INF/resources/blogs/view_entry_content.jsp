@@ -89,39 +89,15 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<div class="<%= colCssClass %>">
 					<div class="entry-title">
-						<c:choose>
-							<c:when test="<%= !viewSingleEntry %>">
-								<h2>
-									<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
-								</h2>
-								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-									<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-									<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-										<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="backURL" value="<%= currentURL %>" />
-										<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-									</portlet:renderURL>
+						<c:if test="<%= !viewSingleEntry %>">
+							<h2>
+								<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
+							</h2>
 
-									<div class="entry-options">
-										<div class="status">
-											<small class="text-capitalize text-muted">
-												<%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>
-
-												<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-											</small>
-										</div>
-										<aui:button cssClass="icon-monospaced" href="<%= editEntryURL %>" icon="icon-pencil" />
-									</div>
-								</c:if>
-
-								<h1><%= HtmlUtil.escape(entry.getTitle()) %></h1>
-							</c:otherwise>
-						</c:choose>
+							<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+								<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
+							</c:if>
+						</c:if>
 					</div>
 
 					<%
