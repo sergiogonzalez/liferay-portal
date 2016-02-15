@@ -115,9 +115,19 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && !portletTitleBasedNavigation %>">
-		<liferay-ui:app-view-toolbar>
-			<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
-		</liferay-ui:app-view-toolbar>
+		<div class="btn-group">
+
+			<%
+			for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
+			%>
+
+				<liferay-ui:toolbar-item toolbarItem="<%= toolbarItem %>" />
+
+			<%
+			}
+			%>
+
+		</div>
 	</c:if>
 
 	<div class="sidenav-menu-slider">
@@ -574,33 +584,6 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
 	<%@ include file="/document_library/action/open_document_js.jspf" %>
-</c:if>
-
-<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && !portletTitleBasedNavigation %>">
-	<aui:script use="aui-toolbar">
-		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
-
-		var fileEntryButtonGroup = [];
-
-		<%
-		for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
-		%>
-
-			<liferay-ui:toolbar-item toolbarItem="<%= toolbarItem %>" var="fileEntryButtonGroup" />
-
-		<%
-		}
-		%>
-
-		var fileEntryToolbar = new A.Toolbar(
-			{
-				boundingBox: buttonRow,
-				children: [fileEntryButtonGroup]
-			}
-		).render();
-
-		buttonRow.setData('fileEntryToolbar', fileEntryToolbar);
-	</aui:script>
 </c:if>
 
 <aui:script sandbox="<%= true %>">
