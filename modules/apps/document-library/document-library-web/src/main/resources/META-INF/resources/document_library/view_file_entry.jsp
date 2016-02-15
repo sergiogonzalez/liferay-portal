@@ -157,7 +157,7 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
 
 			<%
-				showCustomFieldsTab = true;
+			showCustomFieldsTab = true;
 			%>
 
 		</liferay-ui:custom-attributes-available>
@@ -199,7 +199,6 @@ if (portletTitleBasedNavigation) {
 						<h5><strong><liferay-ui:message key="created" /></strong></h5>
 
 						<p>
-
 							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 						</p>
 					</div>
