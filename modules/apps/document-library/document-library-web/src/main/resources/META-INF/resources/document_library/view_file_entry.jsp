@@ -151,24 +151,18 @@ if (portletTitleBasedNavigation) {
 	<liferay-frontend:sidebar-panel>
 
 		<%
-		boolean showCustomFieldsTab = false;
+		String tabsNames = "details";
 		%>
 
 		<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
 
 			<%
-				showCustomFieldsTab = true;
+			tabsNames += ",custom-fields";
 			%>
 
 		</liferay-ui:custom-attributes-available>
 
 		<%
-		String tabsNames = "details";
-
-		if (showCustomFieldsTab) {
-			tabsNames += ",custom-fields";
-		}
-
 		if (dlViewFileVersionDisplayContext.getDDMStructuresCount() > 0) {
 			tabsNames += ",document-type";
 		}
@@ -199,7 +193,6 @@ if (portletTitleBasedNavigation) {
 						<h5><strong><liferay-ui:message key="created" /></strong></h5>
 
 						<p>
-
 							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 						</p>
 					</div>
