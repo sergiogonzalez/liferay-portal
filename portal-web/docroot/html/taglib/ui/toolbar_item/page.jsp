@@ -18,7 +18,6 @@
 
 <%
 ToolbarItem toolbarItem = (ToolbarItem)request.getAttribute("liferay-ui:toolbar-item:toolbarItem");
-String var = (String)request.getAttribute("liferay-ui:toolbar-item:var");
 %>
 
 <c:choose>
@@ -28,17 +27,7 @@ String var = (String)request.getAttribute("liferay-ui:toolbar-item:var");
 		JavaScriptToolbarItem javaScriptToolbarItem = (JavaScriptToolbarItem)toolbarItem;
 		%>
 
-		<%= var %>.push(
-			{
-				icon: '<%= javaScriptToolbarItem.getIcon() %>',
-				label: '<%= UnicodeFormatter.toString(javaScriptToolbarItem.getLabel()) %>',
-				on: {
-					click: function(event) {
-						<%= javaScriptToolbarItem.getOnClick() %>
-					}
-				}
-			}
-		);
+		<aui:button cssClass="btn btn-default" icon="<%= javaScriptToolbarItem.getIcon() %>" id="<%= javaScriptToolbarItem.getId() %>" onClick="<%= javaScriptToolbarItem.getOnClick() %>" value="<%= javaScriptToolbarItem.getLabel() %>" />
 
 		<c:if test="<%= Validator.isNotNull(javaScriptToolbarItem.getJavaScript()) %>">
 			<%= javaScriptToolbarItem.getJavaScript() %>
@@ -48,18 +37,17 @@ String var = (String)request.getAttribute("liferay-ui:toolbar-item:var");
 
 		<%
 		URLToolbarItem urlToolbarItem = (URLToolbarItem)toolbarItem;
+
+		String taglibOnClick = "javascript:;";
+
+		String url = urlToolbarItem.getURL();
+
+		if (Validator.isNotNull(url) || !url.equals("javascript:;")) {
+			taglibOnClick = "window.open('" + url + "', '" + urlToolbarItem.getTarget() + "')";
+		}
 		%>
 
-		<%= var %>.push(
-			{
-				icon: '<%= urlToolbarItem.getIcon() %>',
-				label: '<%= UnicodeFormatter.toString(urlToolbarItem.getLabel()) %>',
-				on: {
-					click: function(event) {
-						window.open('<%= urlToolbarItem.getURL() %>', '<%= urlToolbarItem.getTarget() %>');
-					}
-				}
-			}
-		);
+		<aui:button cssClass="btn btn-default" icon="<%= urlToolbarItem.getIcon() %>" id="<%= urlToolbarItem.getId() %>" onClick="<%= taglibOnClick %>" value="<%= urlToolbarItem.getLabel() %>" />
+
 	</c:when>
 </c:choose>

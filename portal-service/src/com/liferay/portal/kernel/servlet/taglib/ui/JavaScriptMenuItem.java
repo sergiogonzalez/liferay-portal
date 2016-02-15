@@ -30,6 +30,11 @@ public class JavaScriptMenuItem extends MenuItem implements JavaScriptUIItem {
 		return _data;
 	}
 
+	@Override
+	public String getId() {
+		return _id;
+	}
+
 	public String getJavaScript() {
 		return _javaScript;
 	}
@@ -43,6 +48,11 @@ public class JavaScriptMenuItem extends MenuItem implements JavaScriptUIItem {
 		_data = data;
 	}
 
+	@Override
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setJavaScript(String javaScript) {
 		_javaScript = javaScript;
 	}
@@ -53,6 +63,7 @@ public class JavaScriptMenuItem extends MenuItem implements JavaScriptUIItem {
 	}
 
 	private Map<String, Object> _data;
+	private String _id;
 	private String _javaScript;
 	private String _onClick;
 
