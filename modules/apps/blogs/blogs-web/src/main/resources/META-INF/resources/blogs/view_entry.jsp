@@ -90,7 +90,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					<aui:col cssClass="entry-navigation-item" md="4" sm="6">
 						<portlet:renderURL var="previousEntryURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-							<portlet:param name="entryId" value="<%= String.valueOf(previousEntry.getEntryId()) %>" />
+							<portlet:param name="urlTitle" value="<%= previousEntry.getUrlTitle() %>" />
 						</portlet:renderURL>
 
 						<%
@@ -128,7 +128,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					<aui:col cssClass="entry-navigation-item" md="4" sm="6">
 						<portlet:renderURL var="nextEntryURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-							<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
+							<portlet:param name="urlTitle" value="<%= nextEntry.getUrlTitle() %>" />
 						</portlet:renderURL>
 
 						<%
