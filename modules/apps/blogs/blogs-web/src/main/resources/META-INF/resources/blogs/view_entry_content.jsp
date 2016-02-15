@@ -82,7 +82,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</c:if>
 
-				<portlet:renderURL var="viewEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+				<portlet:renderURL var="viewEntryURL">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
@@ -242,7 +242,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						int messagesCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
 						%>
 
-						<portlet:renderURL var="viewEntryCommentsURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:renderURL var="viewEntryCommentsURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />
