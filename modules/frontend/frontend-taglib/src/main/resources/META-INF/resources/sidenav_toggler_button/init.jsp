@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,24 +12,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Iván Zaera
- */
-public interface UIActionItem extends UIItem {
-
-	public String getIcon();
-
-	public String getId();
-
-	public String getLabel();
-
-	public void setIcon(String icon);
-
-	public void setId(String id);
-
-	public void setLabel(String label);
-
-}
+<%
+String icon = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:icon");
+String id = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:id");
+String label = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:label");
+String sidenavId = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:sidenavId");
+%>

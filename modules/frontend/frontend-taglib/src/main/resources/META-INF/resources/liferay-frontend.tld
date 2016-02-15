@@ -847,6 +847,31 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>sidenav-toggler-button</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.SideNavTogglerButtonTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sidenavId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>user-vertical-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.UserVerticalCardTag</tag-class>
