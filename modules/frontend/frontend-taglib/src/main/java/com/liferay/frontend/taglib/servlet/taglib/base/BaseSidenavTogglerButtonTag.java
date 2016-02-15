@@ -12,35 +12,42 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib;
+package com.liferay.frontend.taglib.servlet.taglib.base;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseSidenavTogglerButtonTag;
+import com.liferay.frontend.taglib.servlet.taglib.ManagementBarButtonTag;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Lancha
  * @author Roberto Díaz
  */
-public class ManagementBarSidenavTogglerButtonTag
-	extends BaseSidenavTogglerButtonTag {
+public abstract class BaseSidenavTogglerButtonTag
+	extends ManagementBarButtonTag {
+
+	public void setSidenavId(String sidenavId) {
+		_sidenavId = sidenavId;
+	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
+	protected void cleanUp() {
+		_sidenavId = null;
+
+		super.cleanUp();
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+		if (Validator.isNull(getId())) {
+			setId(StringUtil.randomId());
+		}
+
+		setNamespacedAttribute(request, "sidenavId", _sidenavId);
 
 		super.setAttributes(request);
 	}
 
-	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:management-bar-sidenav-toggler-button:";
-
-	private static final String _PAGE =
-		"/management_bar_sidenav_toggler_button/page.jsp";
+	private String _sidenavId;
 
 }

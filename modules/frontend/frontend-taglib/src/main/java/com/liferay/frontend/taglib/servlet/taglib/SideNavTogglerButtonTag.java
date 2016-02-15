@@ -19,11 +19,9 @@ import com.liferay.frontend.taglib.servlet.taglib.base.BaseSidenavTogglerButtonT
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Lancha
  * @author Roberto Díaz
  */
-public class ManagementBarSidenavTogglerButtonTag
-	extends BaseSidenavTogglerButtonTag {
+public class SideNavTogglerButtonTag extends BaseSidenavTogglerButtonTag {
 
 	@Override
 	protected String getPage() {
@@ -38,9 +36,8 @@ public class ManagementBarSidenavTogglerButtonTag
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:management-bar-sidenav-toggler-button:";
+		"liferay-frontend:sidenav-toggler-button:";
 
-	private static final String _PAGE =
-		"/management_bar_sidenav_toggler_button/page.jsp";
+	private static final String _PAGE = "/sidenav_toggler_button/page.jsp";
 
 }

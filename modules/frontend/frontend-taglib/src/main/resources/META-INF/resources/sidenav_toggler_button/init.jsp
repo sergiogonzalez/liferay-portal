@@ -16,13 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.diff.DiffVersion" %><%@
-page import="com.liferay.portal.kernel.diff.DiffVersionsInfo" %><%@
-page import="com.liferay.portal.kernel.model.User" %><%@
-page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %>
-
-<%@ page import="java.util.Locale" %><%@
-page import="java.util.Set" %>
-
-<portlet:defineObjects />
+<%
+String icon = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:icon");
+String id = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:id");
+String label = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:label");
+String sidenavId = (String)request.getAttribute("liferay-frontend:sidenav-toggler-button:sidenavId");
+%>
