@@ -100,7 +100,7 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			className);
 
 		if (!resourceActions.contains(actionId)) {
-			return true;
+			return false;
 		}
 
 		MBDiscussion mbDiscussion =

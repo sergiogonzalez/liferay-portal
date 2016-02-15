@@ -876,8 +876,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public WikiPage fetchPage(long nodeId, String title) {
-		return wikiPagePersistence.fetchByN_T_H_First(
-			nodeId, title, true, null);
+		return wikiPagePersistence.fetchByN_T_First(nodeId, title, null);
 	}
 
 	@Override
