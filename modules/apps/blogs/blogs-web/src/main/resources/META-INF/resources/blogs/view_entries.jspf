@@ -19,6 +19,8 @@
 		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="categoryId" value="0" />
+		<portlet:param name="tag" value="" />
 	</portlet:renderURL>
 
 	<aui:button href="<%= editEntryURL %>" icon="icon-plus" value="add-blog-entry" />
