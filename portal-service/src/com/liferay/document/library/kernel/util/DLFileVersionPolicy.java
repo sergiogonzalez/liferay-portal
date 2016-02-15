@@ -12,33 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.kernel.util;
 
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * @author Iván Zaera
+ * @author Adolfo Pérez
  */
-public interface WorkflowSupport {
+public interface DLFileVersionPolicy {
 
-	public void addFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, boolean majorVersion,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public void revertFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateFileEntry(
-			long userId, FileEntry fileEntry, boolean majorVersion,
-			ServiceContext serviceContext)
+	public boolean isKeepFileVersionLabel(
+			DLFileVersion lastDLFileVersion, DLFileVersion latestDLFileVersion,
+			boolean majorVersion, ServiceContext serviceContext)
 		throws PortalException;
 
 }
