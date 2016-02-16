@@ -89,15 +89,20 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<div class="<%= colCssClass %>">
 					<div class="entry-title">
-						<c:if test="<%= !viewSingleEntry %>">
-							<h2>
-								<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
-							</h2>
+						<c:choose>
+							<c:when test="<%= !viewSingleEntry %>">
+								<h2>
+									<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
+								</h2>
 
-							<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-								<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
-							</c:if>
-						</c:if>
+								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+									<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
+								</c:if>
+							</c:when>
+							<c:otherwise>
+								<h1><%= HtmlUtil.escape(entry.getTitle()) %></h1>
+							</c:otherwise>
+						</c:choose>
 					</div>
 
 					<%
