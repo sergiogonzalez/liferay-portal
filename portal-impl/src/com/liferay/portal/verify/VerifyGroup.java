@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.RobotsUtil;
@@ -143,7 +144,22 @@ public class VerifyGroup extends VerifyProcess {
 					group.getGroupId(), friendlyURL);
 			}
 			catch (GroupFriendlyURLException gfurle) {
-				if (user != null) {
+				if (Validator.equals(
+						friendlyURL, GroupConstants.GLOBAL_FRIENDLY_URL)) {
+
+					if (_log.isWarnEnabled()) {
+						StringBuilder sb = new StringBuilder(5);
+
+						sb.append("Not updating the friendly URL ");
+						sb.append(GroupConstants.GLOBAL_FRIENDLY_URL);
+						sb.append(" for the groupId ");
+						sb.append(group.getGroupId());
+						sb.append(" because it already exits");
+
+						_log.warn(sb.toString());
+					}
+				}
+				else if (user != null) {
 					long userId = user.getUserId();
 					String screenName = user.getScreenName();
 
