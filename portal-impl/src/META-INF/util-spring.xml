@@ -576,6 +576,7 @@
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.document.library.kernel.util.DLFileVersionPolicy" class="com.liferay.portlet.documentlibrary.util.DLFileVersionPolicyImpl" destroy-method="destroy" />
 	<bean id="com.liferay.portlet.trash.util.TrashIndexer" class="com.liferay.portlet.trash.util.TrashIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.ContactIndexer" class="com.liferay.portlet.usersadmin.util.ContactIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />

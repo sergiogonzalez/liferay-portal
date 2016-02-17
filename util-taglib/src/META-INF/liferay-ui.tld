@@ -700,6 +700,11 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>showRequiredLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>asset-categories-summary</name>
@@ -5227,11 +5232,6 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>toolbarItem</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>var</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
