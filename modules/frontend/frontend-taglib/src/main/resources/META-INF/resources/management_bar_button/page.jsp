@@ -25,5 +25,5 @@ String taglibOnmouseover = "Liferay.Portal.ToolTip.show(this, '" + LanguageUtil.
 		<aui:icon cssClass="icon-monospaced" image="<%= icon %>" markupView="lexicon" />
 	</c:if>
 
-	<span class="<%= labelCssClass %>"><%= label %></span>
+	<span class="<%= labelCssClass %>"><liferay-ui:message key="<%= label %>" /></span>
 </aui:a>
