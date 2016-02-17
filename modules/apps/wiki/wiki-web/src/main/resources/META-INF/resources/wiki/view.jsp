@@ -143,8 +143,6 @@ if (portletTitleBasedNavigation) {
 
 		<liferay-frontend:info-bar-buttons>
 			<liferay-frontend:info-bar-sidenav-toggler-button
-				cssClass="infoPanelToggler"
-				disabled="<%= false %>"
 				href="javascript:;"
 				icon="info-circle"
 				label="info"
