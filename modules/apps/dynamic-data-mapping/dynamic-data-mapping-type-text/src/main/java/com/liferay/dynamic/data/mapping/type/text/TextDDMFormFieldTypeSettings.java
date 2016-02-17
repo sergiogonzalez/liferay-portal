@@ -78,13 +78,13 @@ public interface TextDDMFormFieldTypeSettings
 		dataType = "string", label = "%placeholder-text",
 		properties = {
 			"placeholder=%enter-placeholder-text",
-			"tooltip=%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-vaue"
+			"tooltip=%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-value"
 		},
 		type = "text"
 	)
 	public LocalizedValue placeholder();
 
-	@DDMFormField(visibilityExpression = "false")
+	@DDMFormField(visibilityExpression = "FALSE")
 	public LocalizedValue tooltip();
 
 }

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Spring Extender
 Bundle-SymbolicName: com.liferay.portal.spring.extender
-Bundle-Version: 1.0.4
+Bundle-Version: 1.0.5
 Export-Package:\
 	com.liferay.portal.spring.extender.loader,\
 	com.liferay.portal.spring.extender.service
@@ -35,7 +35,6 @@ Import-Package:\
 	com.liferay.portal.systemevent,\
 	\
 	javax.servlet,\
-	\
 	javax.servlet.http,\
 	\
 	javax.sql,\
