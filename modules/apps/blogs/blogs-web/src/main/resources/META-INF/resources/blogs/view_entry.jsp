@@ -55,14 +55,6 @@ request.setAttribute("view_entry_content.jsp-entry", entry);
 request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 %>
 
-<c:if test="<%= portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= false %>"
-		title="<%= entry.getTitle() %>"
-	/>
-</c:if>
-
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <aui:form action="<%= editEntryURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
@@ -72,7 +64,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
 </aui:form>
 
-<c:if test="<%= !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) && PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
+<c:if test="<%= PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
 
 	<%
 	BlogsEntry[] prevAndNext = BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(entryId);
@@ -176,7 +168,7 @@ Discussion discussion = CommentManagerUtil.getDiscussion(user.getUserId(), scope
 			<strong><liferay-ui:message arguments="<%= CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId()) %>" key="x-comments" /></strong>
 		</h2>
 
-		<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
+		<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() %>">
 			<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
 		</c:if>
 
