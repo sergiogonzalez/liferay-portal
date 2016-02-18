@@ -59,7 +59,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						%>
 
 						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 					</portlet:renderURL>
 

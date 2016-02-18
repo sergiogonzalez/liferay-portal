@@ -45,7 +45,6 @@ if (mvcRenderCommandName.equals("/blogs/view_my_pending_entries")) {
 		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:renderURL>
 
