@@ -53,7 +53,7 @@ public class UpgradeSearch extends BaseUpgradePortletPreferences {
 				hasBookmarksEntry = true;
 			}
 
-			if (value.equals(DLFileEntryConstants.getClassName())) {
+			if (value.equals("com.liferay.portlet.documentlibrary.model")) {
 				hasDLFileEntry = true;
 			}
 
@@ -74,7 +74,7 @@ public class UpgradeSearch extends BaseUpgradePortletPreferences {
 		}
 
 		if (hasDLFileEntry) {
-			valuesJSONArray.put(DLFolderConstants.getClassName());
+			valuesJSONArray.put("com.liferay.portlet.documentlibrary.model");
 		}
 
 		if (hasJournalArticle) {

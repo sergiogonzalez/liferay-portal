@@ -182,8 +182,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"update DDMStructure set classNameId = ? where " +
 					"classNameId = ?");
 
-			ps.setLong(1, PortalUtil.getClassNameId(DLFileEntryMetadata.class));
-			ps.setLong(2, PortalUtil.getClassNameId(DLFileEntry.class));
+			ps.setLong(
+				1,
+				PortalUtil.getClassNameId(
+					"com.liferay.portlet.documentlibrary.model." +
+						"DLFileEntryMetadata"));
+			ps.setLong(
+				2,
+				PortalUtil.getClassNameId(
+					"com.liferay.portlet.documentlibrary.model.DLFileEntry"));
 
 			ps.executeUpdate();
 		}

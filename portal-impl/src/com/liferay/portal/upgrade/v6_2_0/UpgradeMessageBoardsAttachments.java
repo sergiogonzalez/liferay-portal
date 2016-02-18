@@ -31,7 +31,7 @@ public class UpgradeMessageBoardsAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected String getClassName() {
-		return MBMessage.class.getName();
+		return "com.liferay.portlet.messageboards.model.MBMessage";
 	}
 
 	@Override
