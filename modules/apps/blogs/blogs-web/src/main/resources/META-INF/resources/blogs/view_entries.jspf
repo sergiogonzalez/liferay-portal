@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+<c:if test='<%= !mvcRenderCommandName.equals("/blogs/view_my_pending_entries") && BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>'>
 	<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -70,8 +70,6 @@
 	assetType="entries"
 	portletURL="<%= portletURL %>"
 />
-
-<liferay-util:include page="/blogs/my_pending_entries.jsp" servletContext="<%= application %>" />
 
 <%
 Map<String, Object> contextObjects = new HashMap<String, Object>();

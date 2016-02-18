@@ -19,10 +19,24 @@
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 
+int pendingEntriesCount = GetterUtil.getInteger(request.getAttribute("view.jsp-pendingEntriesCount"));
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 if (row != null) {
 	entry = (BlogsEntry)row.getObject();
+}
+
+String redirect = currentURL;
+
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+
+if (mvcRenderCommandName.equals("/blogs/view_my_pending_entries")) {
+	PortletURL viewURL = liferayPortletResponse.createRenderURL(BlogsPortletKeys.BLOGS);
+
+	viewURL.setParameter("mvcRenderCommandName", "/blogs/view");
+
+	redirect = viewURL.toString();
 }
 %>
 
@@ -30,8 +44,7 @@ if (row != null) {
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:renderURL>
 
@@ -62,13 +75,9 @@ if (row != null) {
 	</c:if>
 
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
-		<portlet:renderURL var="viewURL">
-			<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
-		</portlet:renderURL>
-
 		<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= viewURL %>" />
+			<portlet:param name="redirect" value="<%= (pendingEntriesCount > 1) ? currentURL : redirect %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
