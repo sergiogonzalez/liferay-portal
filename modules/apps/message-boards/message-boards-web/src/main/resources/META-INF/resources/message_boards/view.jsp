@@ -116,7 +116,7 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 				%>
 
 				<c:if test="<%= showAddCategoryButton || showAddMessageButton || showPermissionsButton %>">
-					<div class="category-buttons">
+					<div class="button-group button-holder">
 						<c:if test="<%= showAddCategoryButton %>">
 							<portlet:renderURL var="editCategoryURL">
 								<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
