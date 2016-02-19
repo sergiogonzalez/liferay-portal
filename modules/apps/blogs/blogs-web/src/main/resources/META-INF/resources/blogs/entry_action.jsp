@@ -19,7 +19,7 @@
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 
-int pendingEntriesCount = GetterUtil.getInteger(request.getAttribute("view.jsp-pendingEntriesCount"));
+int notPublishedEntriesCount = GetterUtil.getInteger(request.getAttribute("view.jsp-notPublishedEntriesCount"));
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -31,7 +31,7 @@ String redirect = currentURL;
 
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-if (mvcRenderCommandName.equals("/blogs/view_my_pending_entries")) {
+if (mvcRenderCommandName.equals("/blogs/view_not_published_entries")) {
 	PortletURL viewURL = liferayPortletResponse.createRenderURL(BlogsPortletKeys.BLOGS);
 
 	viewURL.setParameter("mvcRenderCommandName", "/blogs/view");
@@ -77,7 +77,7 @@ if (mvcRenderCommandName.equals("/blogs/view_my_pending_entries")) {
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= (pendingEntriesCount > 1) ? currentURL : redirect %>" />
+			<portlet:param name="redirect" value="<%= (notPublishedEntriesCount > 1) ? currentURL : redirect %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 

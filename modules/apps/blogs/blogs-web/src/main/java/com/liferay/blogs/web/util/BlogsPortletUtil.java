@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
  */
 public class BlogsPortletUtil {
 
-	public static int[] getPendingStatuses() {
+	public static int[] getNotPublishedStatuses() {
 		return new int[] {
 			WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_SCHEDULED
 		};

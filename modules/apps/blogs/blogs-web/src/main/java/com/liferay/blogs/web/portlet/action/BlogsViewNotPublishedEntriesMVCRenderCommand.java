@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"mvc.command.name=/blogs/view_my_pending_entries"
+		"mvc.command.name=/blogs/view_not_published_entries"
 	},
 	service = MVCRenderCommand.class
 )
-public class BlogsViewMyPendingEntriesMVCRenderCommand
+public class BlogsViewNotPublishedEntriesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override

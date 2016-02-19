@@ -51,7 +51,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<%
 						String redirect = currentURL;
 
-						if (mvcRenderCommandName.equals("/blogs/view_my_pending_entries")) {
+						if (mvcRenderCommandName.equals("/blogs/view_not_published_entries")) {
 							PortletURL redirectURL = liferayPortletResponse.createRenderURL(BlogsPortletKeys.BLOGS);
 
 							redirect = redirectURL.toString();
