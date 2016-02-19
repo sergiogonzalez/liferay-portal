@@ -48,9 +48,9 @@ searchContainer.setDeltaConfigurable(false);
 int total = 0;
 List results = null;
 
-int pendingEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), BlogsPortletUtil.getPendingStatuses());
+int notPublishedEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), BlogsPortletUtil.getNotPublishedStatuses());
 
-request.setAttribute("view.jsp-pendingEntriesCount", pendingEntriesCount);
+request.setAttribute("view.jsp-notPublishedEntriesCount", notPublishedEntriesCount);
 
 if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 	SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResults(searchContainer);
@@ -59,12 +59,12 @@ if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 
 	results = searchContainerResults.getResults();
 }
-else if (mvcRenderCommandName.equals("/blogs/view_my_pending_entries")) {
-	total = pendingEntriesCount;
+else if (mvcRenderCommandName.equals("/blogs/view_not_published_entries")) {
+	total = notPublishedEntriesCount;
 
 	searchContainer.setTotal(total);
 
-	results = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), BlogsPortletUtil.getPendingStatuses(), searchContainer.getStart(), searchContainer.getEnd(), new EntryModifiedDateComparator());
+	results = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), BlogsPortletUtil.getNotPublishedStatuses(), searchContainer.getStart(), searchContainer.getEnd(), new EntryModifiedDateComparator());
 
 	searchContainer.setResults(results);
 }
@@ -81,25 +81,25 @@ else {
 searchContainer.setResults(results);
 %>
 
-<c:if test="<%= pendingEntriesCount > 0 %>">
+<c:if test="<%= notPublishedEntriesCount > 0 %>">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 			<portlet:renderURL var="viewEntriesURL" />
 
 			<aui:nav-item
 				href="<%= viewEntriesURL %>"
-				label="entries"
-				selected='<%= !mvcRenderCommandName.equals("/blogs/view_my_pending_entries") %>'
+				label="published"
+				selected='<%= !mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>'
 			/>
 
-			<portlet:renderURL var="viewMyPendingEntriesURL">
-				<portlet:param name="mvcRenderCommandName" value="/blogs/view_my_pending_entries" />
+			<portlet:renderURL var="viewNotPublishedEntriesURL">
+				<portlet:param name="mvcRenderCommandName" value="/blogs/view_not_published_entries" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewMyPendingEntriesURL %>"
-				label='<%= LanguageUtil.format(resourceBundle, "my-pending-entries-x", pendingEntriesCount, false) %>'
-				selected='<%= mvcRenderCommandName.equals("/blogs/view_my_pending_entries") %>'
+				href="<%= viewNotPublishedEntriesURL %>"
+				label='<%= LanguageUtil.format(resourceBundle, "not-published-x", notPublishedEntriesCount, false) %>'
+				selected='<%= mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>'
 			/>
 		</aui:nav>
 	</aui:nav-bar>
