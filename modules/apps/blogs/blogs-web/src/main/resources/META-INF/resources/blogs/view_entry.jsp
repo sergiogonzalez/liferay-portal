@@ -163,6 +163,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				</c:if>
 			</aui:row>
 		</aui:container>
+		<div class="clearfix">
 	</c:if>
 </c:if>
 
