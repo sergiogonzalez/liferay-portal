@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.display.context;
+package com.liferay.document.library.display.context;
 
 import com.liferay.portal.kernel.display.context.BaseDisplayContext;
 
