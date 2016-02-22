@@ -14,12 +14,14 @@
 
 package com.liferay.wiki.exportimport.portlet.preferences.processor;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
@@ -68,6 +70,15 @@ public class WikiExportImportPortletPreferencesProcessor
 
 		String portletId = portletDataContext.getPortletId();
 
+		Group liveGroup = _groupLocalService.fetchGroup(
+			portletDataContext.getGroupId());
+
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			(liveGroup != null) && !liveGroup.isStagedPortlet(portletId)) {
+
+			return portletPreferences;
+		}
+
 		String hiddenNodeNames = portletPreferences.getValue(
 			"hiddenNodes", null);
 
@@ -100,6 +111,11 @@ public class WikiExportImportPortletPreferencesProcessor
 		throws PortletDataException {
 
 		return portletPreferences;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -136,6 +152,7 @@ public class WikiExportImportPortletPreferencesProcessor
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 
+	private GroupLocalService _groupLocalService;
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability
