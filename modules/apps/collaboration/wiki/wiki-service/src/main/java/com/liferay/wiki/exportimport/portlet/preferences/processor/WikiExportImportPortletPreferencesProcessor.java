@@ -22,7 +22,6 @@ import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
@@ -71,11 +70,11 @@ public class WikiExportImportPortletPreferencesProcessor
 
 		String portletId = portletDataContext.getPortletId();
 
-		Group liveGroup = GroupLocalServiceUtil.fetchGroup(
-				portletDataContext.getGroupId());
+		Group liveGroup = _groupLocalService.fetchGroup(
+			portletDataContext.getGroupId());
 
 		if (ExportImportThreadLocal.isStagingInProcess() &&
-				liveGroup != null && !liveGroup.isStagedPortlet(portletId)) {
+			(liveGroup != null) && !liveGroup.isStagedPortlet(portletId)) {
 
 			return portletPreferences;
 		}
@@ -115,6 +114,11 @@ public class WikiExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletDisplayTemplateExportCapability(
 		PortletDisplayTemplateExportCapability
 			portletDisplayTemplateExportCapability) {
@@ -148,6 +152,7 @@ public class WikiExportImportPortletPreferencesProcessor
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 
+	private GroupLocalService _groupLocalService;
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability
