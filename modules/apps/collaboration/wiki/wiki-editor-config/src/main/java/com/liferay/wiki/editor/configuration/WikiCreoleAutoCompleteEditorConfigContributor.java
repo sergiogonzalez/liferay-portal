@@ -66,7 +66,7 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 			"resultFilters", "function(query, results) {return results;}");
 		triggerJSONObject.put("resultTextLocator", "title");
 		triggerJSONObject.put("term", "[");
-		triggerJSONObject.put("tplReplace", "<a href=\"{title}\" >{title}</a>");
+		triggerJSONObject.put("tplReplace", "<a href=\"{title}\">{title}</a>");
 		triggerJSONObject.put("tplResults", "{title}");
 
 		ResourceURL autoCompletePageTitleURL =
