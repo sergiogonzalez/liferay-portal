@@ -22,22 +22,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.SearchResult;
-import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.search.WikiPageTitleSearcher;
-import com.liferay.wiki.service.WikiPageService;
-
-import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -47,7 +43,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -98,21 +93,17 @@ public class AutocompletePageTitleMVCResourceCommand
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		WikiPageTitleSearcher wikiPageSearcher = new WikiPageTitleSearcher();
+		WikiPageTitleSearcher wikiPageTitleSearcher =
+			new WikiPageTitleSearcher();
 
 		searchContext.setKeywords(StringUtil.toLowerCase(query));
 
-		Hits hits = wikiPageSearcher.search(searchContext);
+		Hits hits = wikiPageTitleSearcher.search(searchContext);
 
-		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
-			hits, resourceRequest.getLocale());
-
-		for (SearchResult searchResult : searchResults) {
-			WikiPage page = _wikiPageService.getPage(searchResult.getClassPK());
-
+		for (Document document : hits.getDocs()) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("title", page.getTitle());
+			jsonObject.put("title", document.get(Field.TITLE));
 
 			jsonArray.put(jsonObject);
 		}
@@ -120,14 +111,7 @@ public class AutocompletePageTitleMVCResourceCommand
 		return jsonArray;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageService(WikiPageService wikiPageService) {
-		_wikiPageService = wikiPageService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutocompletePageTitleMVCResourceCommand.class);
-
-	private WikiPageService _wikiPageService;
 
 }
