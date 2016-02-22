@@ -17,6 +17,8 @@ package com.liferay.wiki.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -96,6 +98,9 @@ public class WikiPageTitleSearcherTest {
 		assertSearch("Asturias", 1);
 		assertSearch("Gijon", 2);
 		assertSearch("Madrid", 1);
+
+		assertSearchTitle("Asturias", "Gijon (Asturias)");
+		assertSearchTitle("Madrid", "Madrid");
 	}
 
 	@Test
@@ -119,6 +124,8 @@ public class WikiPageTitleSearcherTest {
 		assertSearch("Gij", 3);
 		assertSearch("Gijo", 2);
 		assertSearch("Gijon", 1);
+
+		assertSearchTitle("Gijon", "Gijon");
 	}
 
 	protected void assertSearch(final String keywords, final int length)
@@ -138,6 +145,32 @@ public class WikiPageTitleSearcherTest {
 					Hits hits = indexer.search(_searchContext);
 
 					Assert.assertEquals(length, hits.getLength());
+
+					return null;
+				}
+
+			});
+	}
+
+	protected void assertSearchTitle(final String keywords, final String title)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_searchContext.setKeywords(
+						StringUtil.toLowerCase(keywords));
+
+					Indexer<?> indexer = WikiPageTitleSearcher.getInstance();
+
+					Hits hits = indexer.search(_searchContext);
+
+					for (Document document : hits.getDocs()) {
+						Assert.assertEquals(title, document.get(Field.TITLE));
+					}
 
 					return null;
 				}
