@@ -12,16 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.display.context.bundle.basedisplaycontextfactory;
-
-import com.liferay.portal.kernel.display.context.TestDisplayContextFactory;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.portal.kernel.display.context;
 
 /**
- * @author Manuel de la Peña
+ * @author Marcellus Tavares
  */
-@Component(immediate = true, service = TestDisplayContextFactory.class)
-public class TestBaseDisplayContextFactoryImpl
-	implements TestDisplayContextFactory {
+public interface TestDisplayContextFactory extends DisplayContextFactory {
 }
