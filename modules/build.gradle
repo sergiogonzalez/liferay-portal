@@ -17,7 +17,7 @@ gradle.beforeProject {
 	}
 
 	configure(project) {
-		if (project.path.startsWith(":frontend:frontend-theme:") && FileUtil.exists(project, "gulpfile.js")) {
+		if (project.path.startsWith(":apps:platform:frontend:frontend-theme:") && FileUtil.exists(project, "gulpfile.js")) {
 			apply from: rootProject.file("build-theme.gradle")
 		}
 		else if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle")) {
@@ -109,14 +109,6 @@ gradle.beforeProject {
 					doFirst {
 						throw new GradleException("Unable to use Node.js on CI, please configure com.liferay.cache or update the cache")
 					}
-				}
-			}
-		}
-
-		if (System.getenv("JENKINS_HOME")) {
-			pluginManager.withPlugin("com.liferay.cache") {
-				cache {
-					forcedCache = true
 				}
 			}
 		}

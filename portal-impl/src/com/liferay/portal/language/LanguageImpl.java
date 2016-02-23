@@ -1134,6 +1134,7 @@ public class LanguageImpl implements Language, Serializable {
 		return companyLocalesBag.getByLanguageCode(languageCode);
 	}
 
+	@Override
 	public ResourceBundleLoader getPortalResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}

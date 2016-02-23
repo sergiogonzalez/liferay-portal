@@ -58,14 +58,17 @@ public interface TransactionAttribute {
 	public static class DefaultTransactionAttribute
 		implements TransactionAttribute {
 
+		@Override
 		public Isolation getIsolation() {
 			return _isolation;
 		}
 
+		@Override
 		public Propagation getPropagation() {
 			return _propagation;
 		}
 
+		@Override
 		public boolean isReadOnly() {
 			return _readOnly;
 		}
