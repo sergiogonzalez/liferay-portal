@@ -185,6 +185,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		}
 	}
 
+	@Override
 	protected String[][] getClassNames() {
 		return new String[][] {{_OLD_CLASS_NAME, _NEW_CLASS_NAME}};
 	}
