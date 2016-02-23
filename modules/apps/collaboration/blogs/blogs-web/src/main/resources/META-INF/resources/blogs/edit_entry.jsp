@@ -44,11 +44,23 @@ String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCa
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
+}
 %>
+
+<c:if test="<%= portletTitleBasedNavigation && (entry != null) %>">
+	<liferay-frontend:info-bar>
+		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+
+		<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+	</liferay-frontend:info-bar>
+</c:if>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
@@ -61,21 +73,23 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-		<div class="entry-options">
-			<c:if test="<%= (entry != null) && entry.isApproved() %>">
-				<div class="status">
-					<small class="text-capitalize text-muted">
-						<%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>
+		<c:if test="<%= !portletTitleBasedNavigation && (entry != null) %>">
+			<div class="entry-options">
+				<c:if test="<%= (entry != null) && entry.isApproved() %>">
+					<div class="status">
+						<small class="text-capitalize text-muted">
+							<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</small>
-				</div>
-			</c:if>
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</small>
+					</div>
+				</c:if>
 
-			<c:if test="<%= (entry == null) || !entry.isApproved() %>">
-				<div class="save-status" id="<portlet:namespace />saveStatus"></div>
-			</c:if>
-		</div>
+				<c:if test="<%= (entry == null) || !entry.isApproved() %>">
+					<div class="save-status" id="<portlet:namespace />saveStatus"></div>
+				</c:if>
+			</div>
+		</c:if>
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 		<liferay-ui:error exception="<%= EntryCoverImageCropException.class %>" message="an-error-occurred-while-cropping-the-cover-image" />
@@ -177,7 +191,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-				<div class="form-group clearfix">
+				<div class="clearfix form-group">
 					<aui:field-wrapper helpMessage="an-abstract-is-a-brief-summary-of-a-blog-entry" label="abstract">
 						<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
 							<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
