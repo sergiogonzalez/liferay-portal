@@ -103,4 +103,13 @@ searchContainer.setResults(results);
 	</aui:nav-bar>
 </c:if>
 
-<%@ include file="/blogs/view_entries.jspf" %>
+<c:choose>
+	<c:when test="<%= total == 0 %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-are-no-entries" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="/blogs/view_entries.jspf" %>
+	</c:otherwise>
+</c:choose>
