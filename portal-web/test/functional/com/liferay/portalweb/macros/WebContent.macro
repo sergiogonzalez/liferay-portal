@@ -838,7 +838,7 @@
 	<command name="editDisplayPagePGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="Click" locator1="Icon#EDIT" />
+		<execute function="Click#makeVisibleClickAt" locator1="Icon#EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -895,7 +895,7 @@
 	<command name="editPGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="Click" locator1="AP#ASSET_ABSTRACT_EDIT" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ASSET_ABSTRACT_EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitleEdit}" />
@@ -1357,7 +1357,8 @@
 	</command>
 
 	<command name="viewDefaultPGViaWCD">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Select existing web content or add some web content to be displayed in this portlet." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="This application is not visible to users yet" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="Select Web Content to make it visible" />
 	</command>
 
 	<command name="viewDisplayPagePGViaAP">
@@ -1443,7 +1444,7 @@
 	<command name="viewLinkToPagePGViaWCD">
 		<execute function="AssertClick" locator1="WCD#WEB_CONTENT_LINK_TO_PAGE" value1="Link to Page" />
 
-		<execute macro="Page#viewChildPG">
+		<execute macro="Page#viewChildPageDropdown">
 			<var name="childPageName" value="${childPageName}" />
 			<var name="javaScriptPage" value="${javaScriptPage}" />
 			<var name="viewChildPageDropdown" value="${viewChildPageDropdown}" />

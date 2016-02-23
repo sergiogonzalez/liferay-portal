@@ -44,11 +44,23 @@ String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCa
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
+}
 %>
+
+<c:if test="<%= portletTitleBasedNavigation && (entry != null) %>">
+	<liferay-frontend:info-bar>
+		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+
+		<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+	</liferay-frontend:info-bar>
+</c:if>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
@@ -61,25 +73,23 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-		<div class="entry-options">
-			<c:if test="<%= (entry != null) && entry.isApproved() %>">
-				<div class="status">
-					<small class="text-capitalize text-muted">
-						<%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>
+		<c:if test="<%= !portletTitleBasedNavigation && (entry != null) %>">
+			<div class="entry-options">
+				<c:if test="<%= (entry != null) && entry.isApproved() %>">
+					<div class="status">
+						<small class="text-capitalize text-muted">
+							<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</small>
-				</div>
-			</c:if>
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</small>
+					</div>
+				</c:if>
 
-			<c:if test="<%= (entry == null) || !entry.isApproved() %>">
-				<div class="save-status" id="<portlet:namespace />saveStatus"></div>
-			</c:if>
-
-			<aui:button cssClass="hide icon-monospaced" icon="icon-pencil" id="editIcon" />
-
-			<aui:button cssClass="icon-monospaced" icon="icon-cog" id="settingsIcon" />
-		</div>
+				<c:if test="<%= (entry == null) || !entry.isApproved() %>">
+					<div class="save-status" id="<portlet:namespace />saveStatus"></div>
+				</c:if>
+			</div>
+		</c:if>
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 		<liferay-ui:error exception="<%= EntryCoverImageCropException.class %>" message="an-error-occurred-while-cropping-the-cover-image" />
@@ -118,19 +128,19 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
 
 		<%
+		BlogsItemSelectorHelper blogsItemSelectorHelper = (BlogsItemSelectorHelper)request.getAttribute(BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER);
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest);
 		%>
 
-		<div class="<%= (entry != null) ? "entry-body " : StringPool.BLANK %> row">
-			<div id="<portlet:namespace />editSection">
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
 				<portlet:actionURL name="/blogs/upload_cover_image" var="uploadCoverImageURL" />
 
 				<div class="lfr-blogs-cover-image-selector">
 
 					<%
 					String coverImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "coverImageSelectedItem";
-					BlogsItemSelectorHelper blogsItemSelectorHelper = (BlogsItemSelectorHelper)request.getAttribute(BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER);
-					RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest);
 					%>
 
 					<liferay-item-selector:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, coverImageSelectedItemEventName) %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
@@ -143,7 +153,9 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 						<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
 					</small>
 				</div>
+			</aui:fieldset>
 
+			<aui:fieldset>
 				<div class="col-md-8 col-md-offset-2">
 					<div class="entry-title">
 						<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
@@ -163,37 +175,42 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 
 					<aui:input name="content" type="hidden" />
 				</div>
-			</div>
+			</aui:fieldset>
 
-			<div class="col-md-8 col-md-offset-2 hide" id="<portlet:namespace />settingsSection">
-				<div class="display-date-wrapper">
-					<h3><liferay-ui:message key="display-date" /></h3>
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+				<aui:input name="categories" type="assetCategories" />
 
-					<aui:input label="" name="displayDate" />
-				</div>
+				<aui:input name="tags" type="assetTags" />
+			</aui:fieldset>
 
-				<div class="entry-abstract-wrapper">
-					<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
-						<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
-					</liferay-ui:error>
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+				<liferay-ui:input-asset-links
+					className="<%= BlogsEntry.class.getName() %>"
+					classPK="<%= entryId %>"
+				/>
+			</aui:fieldset>
 
-					<liferay-ui:error exception="<%= EntrySmallImageScaleException.class %>">
-						<liferay-ui:message key="an-error-occurred-while-scaling-the-abstract-image" />
-					</liferay-ui:error>
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+				<div class="clearfix form-group">
+					<aui:field-wrapper helpMessage="an-abstract-is-a-brief-summary-of-a-blog-entry" label="abstract">
+						<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
+							<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+						</liferay-ui:error>
 
-					<h3><liferay-ui:message key="abstract" /></h3>
+						<liferay-ui:error exception="<%= EntrySmallImageScaleException.class %>">
+							<liferay-ui:message key="an-error-occurred-while-scaling-the-abstract-image" />
+						</liferay-ui:error>
 
-					<p class="explanation">
-						<liferay-ui:message key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
-					</p>
+						<div class="form-group" id="<portlet:namespace />entryAbstractOptions">
+							<div class="radio">
+								<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-the-first-x-characters-of-the-entry-content", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+							</div>
 
-					<div class="entry-abstract-options" id="<portlet:namespace />entryAbstractOptions">
-						<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-the-first-x-characters-of-the-entry-content", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+							<div class="radio">
+								<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
+							</div>
+						</div>
 
-						<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
-					</div>
-
-					<aui:fieldset cssClass="entry-abstract">
 						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
 						<div class="lfr-blogs-small-image-selector">
@@ -205,100 +222,53 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 							<liferay-item-selector:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, smallImageSelectedItemEventName) %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 						</div>
 
-						<div class="entry-description">
+						<div>
 							<liferay-ui:input-editor contents="<%= HtmlUtil.escape(description) %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
 						</div>
 
 						<aui:input name="description" type="hidden" />
-					</aui:fieldset>
+					</aui:field-wrapper>
 				</div>
+
+				<aui:input label="display-date" name="displayDate" />
 
 				<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
-					<div class="email-entry-updated-wrapper">
-						<h3><liferay-ui:message key="email-notifications" /></h3>
+					<aui:field-wrapper helpMessage="comments-regarding-the-blog-entry-update" label="send-email-entry-updated">
+						<div>
 
-						<p class="explanation">
-							<liferay-ui:message key="comments-regarding-the-blog-entry-update" />
-						</p>
+							<%
+							boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
+							%>
 
-						<%
-						boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
-						%>
+							<aui:input label="" name="sendEmailEntryUpdated" type="toggle-switch" value="<%= sendEmailEntryUpdated %>" />
 
-						<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
+							<%
+							String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
+							%>
 
-						<%
-						String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
-						%>
-
-						<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
-							<aui:input label="" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+							<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
+								<aui:input label="" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+							</div>
 						</div>
-					</div>
-				</c:if>
-
-				<div class="categorization-wrapper">
-					<h3><liferay-ui:message key="categorization" /></h3>
-
-					<aui:input name="categories" type="assetCategories" />
-
-					<aui:input name="tags" type="assetTags" />
-				</div>
-
-				<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
-					<aui:field-wrapper cssClass="permissions-wrapper">
-						<h3><liferay-ui:message key="permissions" /></h3>
-
-						<liferay-ui:input-permissions
-							modelName="<%= BlogsEntry.class.getName() %>"
-						/>
 					</aui:field-wrapper>
 				</c:if>
 
-				<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-					<div class="custom-attributes-wrapper">
-						<h3><liferay-ui:message key="custom-fields" /></h3>
-
-						<liferay-ui:custom-attribute-list
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entryId %>"
-							editable="<%= true %>"
-							label="<%= true %>"
-						/>
-					</div>
-				</liferay-ui:custom-attributes-available>
-
-				<div class="related-assets-wrapper">
-					<h3><liferay-ui:message key="related-assets" /></h3>
-
-					<liferay-ui:input-asset-links
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
-				</div>
-
 				<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
-					<div class="pingback-enabled-wrapper">
-						<h3><liferay-ui:message key="pingback" /></h3>
-
-						<p class="explanation">
-							<liferay-ui:message key="a-pingback-is-a-comment-that-is-created-when-you-link-to-another-blog-post-where-pingbacks-are-enabled" />
-						</p>
-
-						<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="enabled" name="allowPingbacks" value="<%= allowPingbacks %>" />
-					</div>
+					<aui:field-wrapper helpMessage="a-pingback-is-a-comment-that-is-created-when-you-link-to-another-blog-post-where-pingbacks-are-enabled.-to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-pingbacks">
+						<div>
+							<aui:input label="" name="allowPingbacks" type="toggle-switch" value="<%= allowPingbacks %>" />
+						</div>
+					</aui:field-wrapper>
 				</c:if>
 
 				<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
-					<div class="trackback-enabled-wrapper">
-						<h3><liferay-ui:message key="trackbacks" /></h3>
+					<aui:field-wrapper helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-trackbacks">
+						<div>
+							<aui:input label="" name="allowTrackbacks" type="toggle-switch" value="<%= allowTrackbacks %>" />
 
-						<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowTrackbacks" value="<%= allowTrackbacks %>" />
+							<aui:input label="trackbacks-to-send" name="trackbacks" />
 
-						<aui:input label="trackbacks-to-send" name="trackbacks" />
-
-						<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
-							<aui:fieldset label="trackbacks-already-sent">
+							<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
 
 								<%
 								int i = 0;
@@ -312,58 +282,74 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 								}
 								%>
 
-							</aui:fieldset>
-						</c:if>
-					</div>
+							</c:if>
+						</div>
+					</aui:field-wrapper>
 				</c:if>
-			</div>
-		</div>
+			</aui:fieldset>
 
-		<aui:fieldset cssClass="col-md-8 col-md-offset-2 entry-footer">
+			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+					<liferay-ui:custom-attribute-list
+						className="<%= BlogsEntry.class.getName() %>"
+						classPK="<%= entryId %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</aui:fieldset>
+			</liferay-ui:custom-attributes-available>
+
+			<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= BlogsEntry.class.getName() %>"
+					/>
+				</aui:fieldset>
+			</c:if>
+		</aui:fieldset-group>
+
+		<%
+		boolean pending = false;
+
+		if (entry != null) {
+			pending = entry.isPending();
+		}
+		%>
+
+		<c:if test="<%= pending %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+			</div>
+		</c:if>
+
+		<aui:button-row>
 
 			<%
-			boolean pending = false;
+			String saveButtonLabel = "save";
 
-			if (entry != null) {
-				pending = entry.isPending();
+			if ((entry == null) || entry.isDraft() || entry.isApproved()) {
+				saveButtonLabel = "save-as-draft";
+			}
+
+			String publishButtonLabel = "publish";
+
+			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName())) {
+				publishButtonLabel = "submit-for-publication";
 			}
 			%>
 
-			<c:if test="<%= pending %>">
+			<c:if test="<%= (entry != null) && entry.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class.getName()) %>">
 				<div class="alert alert-info">
-					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+					<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
 				</div>
 			</c:if>
 
-			<aui:button-row>
+			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
-				<%
-				String saveButtonLabel = "save";
+			<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-				if ((entry == null) || entry.isDraft() || entry.isApproved()) {
-					saveButtonLabel = "save-as-draft";
-				}
-
-				String publishButtonLabel = "publish";
-
-				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName())) {
-					publishButtonLabel = "submit-for-publication";
-				}
-				%>
-
-				<c:if test="<%= (entry != null) && entry.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class.getName()) %>">
-					<div class="alert alert-info">
-						<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
-					</div>
-				</c:if>
-
-				<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-				<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
-			</aui:button-row>
-		</aui:fieldset>
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+		</aui:button-row>
 	</aui:form>
 </div>
 

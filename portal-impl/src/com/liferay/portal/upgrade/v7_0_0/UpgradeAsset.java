@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -83,32 +84,42 @@ public class UpgradeAsset extends UpgradeProcess {
 		long classNameId = PortalUtil.getClassNameId(
 			"com.liferay.journal.model.JournalArticle");
 
-		PreparedStatement ps = null;
+		PreparedStatement ps1 = null;
 		ResultSet rs = null;
 
 		try {
 			connection = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = connection.prepareStatement(
+			ps1 = connection.prepareStatement(
 				"select resourcePrimKey, structureId from JournalArticle " +
 					"where structureId != ''");
 
-			rs = ps.executeQuery();
+			rs = ps1.executeQuery();
 
-			while (rs.next()) {
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-				String structureId = rs.getString("structureId");
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update AssetEntry set classTypeId = ? where " +
+								"classNameId = ? and classPK = ?"))) {
 
-				long ddmStructureId = getDDMStructureId(structureId);
+				while (rs.next()) {
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					String structureId = rs.getString("structureId");
 
-				runSQL(
-					"update AssetEntry set classTypeId = " + ddmStructureId +
-						" where classNameId = " + classNameId +
-							" and classPK = " + resourcePrimKey);
+					long ddmStructureId = getDDMStructureId(structureId);
+
+					ps2.setLong(1, ddmStructureId);
+					ps2.setLong(2, classNameId);
+					ps2.setLong(3, resourcePrimKey);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
 			}
 		}
 		finally {
-			DataAccess.cleanUp(ps, rs);
+			DataAccess.cleanUp(ps1, rs);
 		}
 
 		try {
@@ -124,23 +135,33 @@ public class UpgradeAsset extends UpgradeProcess {
 			sb.append("(JournalArticle.resourcePrimkey = temp_table.primKey) ");
 			sb.append("and (JournalArticle.version = temp_table.maxVersion)");
 
-			ps = connection.prepareStatement(sb.toString());
+			ps1 = connection.prepareStatement(sb.toString());
 
-			ps.setBoolean(1, false);
+			ps1.setBoolean(1, false);
 
-			rs = ps.executeQuery();
+			rs = ps1.executeQuery();
 
-			while (rs.next()) {
-				long classPK = rs.getLong("resourcePrimKey");
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update AssetEntry set listable = ? where " +
+								"classNameId = ? and classPK = ?"))) {
 
-				runSQL(
-					"update AssetEntry set listable = [$FALSE$] where " +
-						"classNameId = " + classNameId + " and classPK = " +
-							classPK);
+				while (rs.next()) {
+					long classPK = rs.getLong("resourcePrimKey");
+
+					ps2.setBoolean(1, false);
+					ps2.setLong(2, classNameId);
+					ps2.setLong(3, classPK);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
 			}
 		}
 		finally {
-			DataAccess.cleanUp(ps, rs);
+			DataAccess.cleanUp(ps1, rs);
 		}
 	}
 
