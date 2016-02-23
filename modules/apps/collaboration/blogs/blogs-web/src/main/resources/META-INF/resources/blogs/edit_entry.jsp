@@ -163,10 +163,6 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 				</div>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-date">
-				<aui:input label="" name="displayDate" />
-			</aui:fieldset>
-
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="abstract">
 				<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
 					<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
@@ -206,6 +202,23 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 				</div>
 			</aui:fieldset>
 
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-date">
+				<aui:input label="" name="displayDate" />
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+				<aui:input name="categories" type="assetCategories" />
+
+				<aui:input name="tags" type="assetTags" />
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+				<liferay-ui:input-asset-links
+					className="<%= BlogsEntry.class.getName() %>"
+					classPK="<%= entryId %>"
+				/>
+			</aui:fieldset>
+
 			<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="email-notifications">
 
@@ -228,38 +241,6 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 					</div>
 				</aui:fieldset>
 			</c:if>
-
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-				<aui:input name="categories" type="assetCategories" />
-
-				<aui:input name="tags" type="assetTags" />
-			</aui:fieldset>
-
-			<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= BlogsEntry.class.getName() %>"
-					/>
-				</aui:fieldset>
-			</c:if>
-
-			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-					<liferay-ui:custom-attribute-list
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</aui:fieldset>
-			</liferay-ui:custom-attributes-available>
-
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-				<liferay-ui:input-asset-links
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entryId %>"
-				/>
-			</aui:fieldset>
 
 			<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="pingback">
@@ -293,6 +274,25 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 
 					</c:if>
 				</aui:fieldset>
+
+				<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+						<liferay-ui:custom-attribute-list
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= entryId %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</aui:fieldset>
+				</liferay-ui:custom-attributes-available>
+
+				<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= BlogsEntry.class.getName() %>"
+						/>
+					</aui:fieldset>
+				</c:if>
 			</c:if>
 		</aui:fieldset-group>
 
