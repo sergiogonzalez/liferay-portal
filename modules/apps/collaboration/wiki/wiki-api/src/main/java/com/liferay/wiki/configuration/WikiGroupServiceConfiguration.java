@@ -141,7 +141,7 @@ public interface WikiGroupServiceConfiguration {
 	 * are forbidden in the regexp specified in the property
 	 * "wiki.page.titles.regexp".
 	 */
-	@Meta.AD(deflt = "[^\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+", required = false)
+	@Meta.AD(deflt = "[\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+", required = false)
 	public String pageTitlesRemoveRegexp();
 
 	/**
