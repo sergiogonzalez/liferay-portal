@@ -34,6 +34,8 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "compare-versions"));
 }
+
+WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation && !windowState.equals(LiferayWindowState.POP_UP) %>">
