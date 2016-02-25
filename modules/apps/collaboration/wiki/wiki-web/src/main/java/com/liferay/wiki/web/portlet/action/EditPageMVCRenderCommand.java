@@ -166,9 +166,9 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference(unbind = "-")
 	protected void setWikiEngineRenderer(
-		WikiEngineRenderer _wikiEngineRenderer) {
+		WikiEngineRenderer wikiEngineRenderer) {
 
-		_wikiEngineRenderer = _wikiEngineRenderer;
+		_wikiEngineRenderer = wikiEngineRenderer;
 	}
 
 	@Reference(unbind = "-")
