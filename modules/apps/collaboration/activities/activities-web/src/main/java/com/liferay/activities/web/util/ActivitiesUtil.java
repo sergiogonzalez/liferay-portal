@@ -14,8 +14,9 @@
 
 package com.liferay.activities.web.util;
 
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.social.model.SocialActivitySet;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
+import com.liferay.social.kernel.model.SocialActivitySet;
 
 /**
  * @author Matthew Kong
@@ -31,8 +32,7 @@ public class ActivitiesUtil {
 
 		if (className.equals(DLFileEntry.class.getName()) &&
 			(activitySet.getActivityCount() > 1) &&
-			(activitySet.getType() ==
-				SocialActivityKeyConstants.DL_ADD_FILE_ENTRY)) {
+			(activitySet.getType() == DLActivityKeys.ADD_FILE_ENTRY)) {
 
 			className = SocialActivitySet.class.getName();
 			classPK = activitySet.getActivitySetId();
