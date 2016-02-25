@@ -81,6 +81,7 @@ import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.escape.WikiEscapeUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -1098,7 +1099,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.findByN_H_S(
 			nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
-		return WikiUtil.filterOrphans(pages);
+		return wikiEngineRenderer.filterOrphans(pages);
 	}
 
 	@Override
@@ -1243,7 +1244,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String attachmentURLPrefix)
 		throws PortalException {
 
-		String formattedContent = WikiUtil.convert(
+		String formattedContent = wikiEngineRenderer.convert(
 			page, viewPageURL, editPageURL, attachmentURLPrefix);
 
 		return new WikiPageDisplayImpl(
@@ -2898,7 +2899,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String pageDiffs = StringPool.BLANK;
 
 		try {
-			pageDiffs = WikiUtil.diffHtml(
+			pageDiffs = wikiEngineRenderer.diffHtml(
 				previousVersionPage, page, null, null, attachmentURLPrefix);
 		}
 		catch (Exception e) {
@@ -2907,7 +2908,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String pageContent = null;
 
 		if (Validator.equals(page.getFormat(), "creole")) {
-			pageContent = WikiUtil.convert(
+			pageContent = wikiEngineRenderer.convert(
 				page, null, null, attachmentURLPrefix);
 		}
 		else {
@@ -3166,7 +3167,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	protected void validate(long nodeId, String content, String format)
 		throws PortalException {
 
-		if (!WikiUtil.validate(nodeId, content, format)) {
+		if (!wikiEngineRenderer.validate(nodeId, content, format)) {
 			throw new PageContentException();
 		}
 	}
@@ -3190,6 +3191,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
+
+	@ServiceReference(type = WikiEngineRenderer.class)
+	protected WikiEngineRenderer wikiEngineRenderer;
 
 	@ServiceReference(type = WikiPageTitleValidator.class)
 	protected WikiPageTitleValidator wikiPageTitleValidator;
