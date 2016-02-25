@@ -62,9 +62,6 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 
 			ActionUtil.compareVersions(
 				renderRequest, renderResponse, _wikiEngineRenderer);
-
-			renderRequest.setAttribute(
-				WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchPageException) {
