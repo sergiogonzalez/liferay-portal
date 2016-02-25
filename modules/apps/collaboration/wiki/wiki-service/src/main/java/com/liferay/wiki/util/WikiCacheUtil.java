@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.engine.WikiEngine;
-import com.liferay.wiki.engine.WikiEngineRenderer;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;

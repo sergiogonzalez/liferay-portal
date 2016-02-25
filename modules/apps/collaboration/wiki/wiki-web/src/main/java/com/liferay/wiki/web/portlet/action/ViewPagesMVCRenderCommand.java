@@ -17,7 +17,7 @@ package com.liferay.wiki.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
-import com.liferay.wiki.engine.WikiEngineRenderer;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.web.portlet.toolbar.item.WikiPortletToolbarContributor;
 
 import javax.portlet.PortletException;

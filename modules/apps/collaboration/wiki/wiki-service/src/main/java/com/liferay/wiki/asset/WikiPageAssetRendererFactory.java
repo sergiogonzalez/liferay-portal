@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.engine.WikiEngineRenderer;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
