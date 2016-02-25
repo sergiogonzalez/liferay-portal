@@ -16,7 +16,7 @@
 
 <%
 for (SocialActivitySet activitySet : results) {
-	SocialActivityFeedEntry activityFeedEntry = SocialActivityInterpreterLocalServiceUtil.interpret("SO", activitySet, ServiceContextFactory.getInstance(request));
+	SocialActivityFeedEntry activityFeedEntry = SocialActivityInterpreterLocalServiceUtil.interpret(StringPool.BLANK, activitySet, ServiceContextFactory.getInstance(request));
 
 	start++;
 
