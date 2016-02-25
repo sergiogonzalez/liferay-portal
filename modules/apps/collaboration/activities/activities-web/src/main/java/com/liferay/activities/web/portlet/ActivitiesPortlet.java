@@ -15,17 +15,14 @@
 package com.liferay.activities.web.portlet;
 
 import com.liferay.activities.web.util.ActivitiesUtil;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBTreeWalker;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
-import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.microblogs.service.MicroblogsEntryServiceUtil;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,17 +31,16 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
 
@@ -81,25 +77,22 @@ public class ActivitiesPortlet extends MVCPortlet {
 		String className = (String)commentsClassNameAndClassPK[0];
 		long classPK = (Long)commentsClassNameAndClassPK[1];
 
-		MBMessageDisplay mbMessageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				themeDisplay.getUserId(), activitySet.getGroupId(), className,
-				classPK, WorkflowConstants.STATUS_APPROVED);
+		Discussion discussion = CommentManagerUtil.getDiscussion(
+			themeDisplay.getUserId(), activitySet.getGroupId(), className,
+			classPK, new ServiceContextFunction(resourceRequest));
 
-		MBTreeWalker mbTeeWalker = mbMessageDisplay.getTreeWalker();
-
-		List<MBMessage> mbMessages = mbTeeWalker.getMessages();
-
-		mbMessages = ListUtil.sort(
-			mbMessages, new MessageCreateDateComparator(true));
+		DiscussionComment discussionComment =
+			discussion.getRootDiscussionComment();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (MBMessage mbMessage : mbMessages) {
+		for (DiscussionComment comment :
+				discussionComment.getThreadComments()) {
+
 			JSONObject messageJSONObject = getJSONObject(
-				mbMessage.getMessageId(), mbMessage.getBody(),
-				mbMessage.getModifiedDate(), mbMessage.getUserId(),
-				mbMessage.getUserName(), themeDisplay);
+				comment.getCommentId(), comment.getBody(),
+				comment.getModifiedDate(), comment.getUserId(),
+				comment.getUserName(), themeDisplay);
 
 			jsonArray.put(messageJSONObject);
 		}
@@ -259,44 +252,32 @@ public class ActivitiesPortlet extends MVCPortlet {
 
 			long groupId = themeDisplay.getScopeGroupId();
 
-			MBMessage mbMessage = null;
+			ServiceContextFunction serviceContextFunction =
+				new ServiceContextFunction(actionRequest);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				MBMessage.class.getName(), actionRequest);
+			long commentId = 0;
 
 			if (cmd.equals(Constants.DELETE)) {
-				MBMessageServiceUtil.deleteDiscussionMessage(
-					groupId, className, classPK, className, classPK,
-					themeDisplay.getUserId(), mbMessageId);
+				CommentManagerUtil.deleteComment(mbMessageId);
 			}
 			else if (cmd.equals(Constants.EDIT) && (mbMessageId > 0)) {
-				mbMessage = MBMessageServiceUtil.updateDiscussionMessage(
-					className, classPK, mbMessageId, StringPool.BLANK, body,
-					serviceContext);
+				commentId = CommentManagerUtil.updateComment(
+					themeDisplay.getUserId(), className, classPK, mbMessageId,
+					StringPool.BLANK, body, serviceContextFunction);
 			}
 			else {
-				MBMessageDisplay mbMessageDisplay =
-					MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-						themeDisplay.getUserId(), groupId, className, classPK,
-						WorkflowConstants.STATUS_APPROVED);
-
-				MBThread mbThread = mbMessageDisplay.getThread();
-
-				MBTreeWalker mbTreeWalker = mbMessageDisplay.getTreeWalker();
-
-				MBMessage rootMBMessage = mbTreeWalker.getRoot();
-
-				mbMessage = MBMessageServiceUtil.addDiscussionMessage(
-					groupId, className, classPK, mbThread.getThreadId(),
-					rootMBMessage.getMessageId(), StringPool.BLANK, body,
-					serviceContext);
+				commentId = CommentManagerUtil.addComment(
+					themeDisplay.getUserId(), groupId, className, classPK, body,
+					serviceContextFunction);
 			}
 
-			if (mbMessage != null) {
+			if (commentId != 0) {
+				Comment comment = CommentManagerUtil.fetchComment(commentId);
+
 				jsonObject = getJSONObject(
-					mbMessage.getMessageId(), mbMessage.getBody(),
-					mbMessage.getModifiedDate(), mbMessage.getUserId(),
-					mbMessage.getUserName(), themeDisplay);
+					comment.getCommentId(), comment.getBody(),
+					comment.getModifiedDate(), comment.getUserId(),
+					comment.getUserName(), themeDisplay);
 			}
 
 			jsonObject.put("success", Boolean.TRUE);
