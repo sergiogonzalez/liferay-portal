@@ -14,6 +14,7 @@
 
 package com.liferay.activities.web.portlet;
 
+import com.liferay.activities.web.constants.ActivitiesPortletKeys;
 import com.liferay.activities.web.util.ActivitiesUtil;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
@@ -54,13 +55,33 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Matthew Kong
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=so-portlet-activities",
+		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.footer-portlet-javascript=/activities/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/activities/css/main.css",
+		"javax.portlet.display-name=Activities",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.view-template=/activities/view.jsp",
+		"javax.portlet.name=" + ActivitiesPortletKeys.ACTIVITIES,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class ActivitiesPortlet extends MVCPortlet {
 
 	public void getMBComments(
