@@ -18,10 +18,10 @@ import com.liferay.activities.web.constants.ActivitiesPortletKeys;
 import com.liferay.activities.web.util.ActivitiesUtil;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
-import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
-import com.liferay.microblogs.service.MicroblogsEntryServiceUtil;
+import com.liferay.microblogs.service.MicroblogsEntryLocalService;
+import com.liferay.microblogs.service.MicroblogsEntryService;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextFunction;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.kernel.model.SocialActivitySet;
-import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
+import com.liferay.social.kernel.service.SocialActivitySetLocalService;
 
 import java.io.IOException;
 
@@ -61,6 +61,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matthew Kong
@@ -98,7 +99,7 @@ public class ActivitiesPortlet extends MVCPortlet {
 		String className = (String)commentsClassNameAndClassPK[0];
 		long classPK = (Long)commentsClassNameAndClassPK[1];
 
-		Discussion discussion = CommentManagerUtil.getDiscussion(
+		Discussion discussion = _commentManager.getDiscussion(
 			themeDisplay.getUserId(), activitySet.getGroupId(), className,
 			classPK, new ServiceContextFunction(resourceRequest));
 
@@ -131,7 +132,7 @@ public class ActivitiesPortlet extends MVCPortlet {
 		throws Exception {
 
 		List<MicroblogsEntry> microblogsEntries =
-			MicroblogsEntryLocalServiceUtil.
+			_microBlogsEntryLocalService.
 				getParentMicroblogsEntryMicroblogsEntries(
 					MicroblogsEntryConstants.TYPE_REPLY,
 					activitySet.getClassPK(), QueryUtil.ALL_POS,
@@ -197,8 +198,7 @@ public class ActivitiesPortlet extends MVCPortlet {
 			actionRequest, "microblogsEntryId");
 
 		MicroblogsEntry microblogsEntry =
-			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(
-				microblogsEntryId);
+			_microBlogsEntryLocalService.getMicroblogsEntry(microblogsEntryId);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -206,7 +206,7 @@ public class ActivitiesPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MicroblogsEntry.class.getName(), actionRequest);
 
-		MicroblogsEntryServiceUtil.addMicroblogsEntry(
+		_microBlogsEntryService.addMicroblogsEntry(
 			themeDisplay.getUserId(), microblogsEntry.getContent(),
 			MicroblogsEntryConstants.TYPE_REPOST,
 			microblogsEntry.getMicroblogsEntryId(),
@@ -226,7 +226,7 @@ public class ActivitiesPortlet extends MVCPortlet {
 					resourceRequest, "activitySetId");
 
 				SocialActivitySet activitySet =
-					SocialActivitySetLocalServiceUtil.fetchSocialActivitySet(
+					_socialActivitySetLocalService.fetchSocialActivitySet(
 						activitySetId);
 
 				if (activitySet == null) {
@@ -279,21 +279,21 @@ public class ActivitiesPortlet extends MVCPortlet {
 			long commentId = 0;
 
 			if (cmd.equals(Constants.DELETE)) {
-				CommentManagerUtil.deleteComment(mbMessageId);
+				_commentManager.deleteComment(mbMessageId);
 			}
 			else if (cmd.equals(Constants.EDIT) && (mbMessageId > 0)) {
-				commentId = CommentManagerUtil.updateComment(
+				commentId = _commentManager.updateComment(
 					themeDisplay.getUserId(), className, classPK, mbMessageId,
 					StringPool.BLANK, body, serviceContextFunction);
 			}
 			else {
-				commentId = CommentManagerUtil.addComment(
+				commentId = _commentManager.addComment(
 					themeDisplay.getUserId(), groupId, className, classPK, body,
 					serviceContextFunction);
 			}
 
 			if (commentId != 0) {
-				Comment comment = CommentManagerUtil.fetchComment(commentId);
+				Comment comment = _commentManager.fetchComment(commentId);
 
 				jsonObject = getJSONObject(
 					comment.getCommentId(), comment.getBody(),
@@ -330,12 +330,12 @@ public class ActivitiesPortlet extends MVCPortlet {
 			MicroblogsEntry microblogsEntry = null;
 
 			if (cmd.equals(Constants.DELETE)) {
-				MicroblogsEntryServiceUtil.deleteMicroblogsEntry(
+				_microBlogsEntryService.deleteMicroblogsEntry(
 					microblogsEntryId);
 			}
 			else if (classPK > 0) {
 				MicroblogsEntry currentMicroblogsEntry =
-					MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(classPK);
+					_microBlogsEntryLocalService.getMicroblogsEntry(classPK);
 
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(
@@ -343,14 +343,14 @@ public class ActivitiesPortlet extends MVCPortlet {
 
 				if (cmd.equals(Constants.EDIT) && (microblogsEntryId > 0)) {
 					microblogsEntry =
-						MicroblogsEntryServiceUtil.updateMicroblogsEntry(
+						_microBlogsEntryService.updateMicroblogsEntry(
 							microblogsEntryId, body,
 							currentMicroblogsEntry.getSocialRelationType(),
 							serviceContext);
 				}
 				else {
 					microblogsEntry =
-						MicroblogsEntryServiceUtil.addMicroblogsEntry(
+						_microBlogsEntryService.addMicroblogsEntry(
 							themeDisplay.getUserId(), body,
 							MicroblogsEntryConstants.TYPE_REPLY, classPK,
 							currentMicroblogsEntry.getSocialRelationType(),
@@ -402,7 +402,7 @@ public class ActivitiesPortlet extends MVCPortlet {
 				modifiedDate.getTime(), themeDisplay.getLocale(),
 				themeDisplay.getTimeZone(), dateFormat));
 
-		User user = UserLocalServiceUtil.fetchUser(userId);
+		User user = _userLocalService.fetchUser(userId);
 
 		if (user != null) {
 			jsonObject.put("userDisplayURL", user.getDisplayURL(themeDisplay));
@@ -415,5 +415,42 @@ public class ActivitiesPortlet extends MVCPortlet {
 
 		return jsonObject;
 	}
+
+	@Reference(unbind = "-")
+	protected void setCommentManager(CommentManager commentManager) {
+		_commentManager = commentManager;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMicroBlogsEntryLocalService(
+		MicroblogsEntryLocalService microBlogsEntryLocalService) {
+
+		_microBlogsEntryLocalService = microBlogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMicroBlogsEntryService(
+		MicroblogsEntryService microBlogsEntryService) {
+
+		_microBlogsEntryService = microBlogsEntryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivitySetLocalService(
+		SocialActivitySetLocalService socialActivitySetLocalService) {
+
+		_socialActivitySetLocalService = socialActivitySetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private CommentManager _commentManager;
+	private MicroblogsEntryLocalService _microBlogsEntryLocalService;
+	private MicroblogsEntryService _microBlogsEntryService;
+	private SocialActivitySetLocalService _socialActivitySetLocalService;
+	private UserLocalService _userLocalService;
 
 }
