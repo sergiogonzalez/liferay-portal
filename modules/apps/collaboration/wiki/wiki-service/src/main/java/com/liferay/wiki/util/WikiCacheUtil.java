@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
@@ -76,7 +77,8 @@ public class WikiCacheUtil {
 		return pageDisplay;
 	}
 
-	public static Map<String, Boolean> getOutgoingLinks(WikiPage page)
+	public static Map<String, Boolean> getOutgoingLinks(
+			WikiPage page, WikiEngineRenderer wikiEngineRenderer)
 		throws PageContentException {
 
 		String key = _encodeKey(
@@ -86,7 +88,7 @@ public class WikiCacheUtil {
 			key);
 
 		if (links == null) {
-			links = WikiUtil.getLinks(page);
+			links = wikiEngineRenderer.getLinks(page);
 
 			_portalCache.put(key, (Serializable)links);
 		}

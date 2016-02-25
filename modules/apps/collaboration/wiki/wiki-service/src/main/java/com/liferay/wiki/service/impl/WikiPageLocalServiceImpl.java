@@ -1110,7 +1110,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Map<String, WikiPage> pages = new LinkedHashMap<>();
 
-		Map<String, Boolean> links = WikiCacheUtil.getOutgoingLinks(page);
+		Map<String, Boolean> links = WikiCacheUtil.getOutgoingLinks(
+			page, wikiEngineRenderer);
 
 		for (Map.Entry<String, Boolean> entry : links.entrySet()) {
 			String curTitle = entry.getKey();
@@ -2380,7 +2381,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	protected boolean isLinkedTo(WikiPage page, String targetTitle)
 		throws PortalException {
 
-		Map<String, Boolean> links = WikiCacheUtil.getOutgoingLinks(page);
+		Map<String, Boolean> links = WikiCacheUtil.getOutgoingLinks(
+			page, wikiEngineRenderer);
 
 		Boolean link = links.get(StringUtil.toLowerCase(targetTitle));
 
