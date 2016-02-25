@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.engine.impl;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -32,11 +31,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
+import com.liferay.wiki.util.WikiCacheUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -60,186 +61,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import com.liferay.wiki.util.WikiCacheUtil;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class DefaultWikiEngineRenderer {
+@Component(immediate = true)
+public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 
-	public static String convert(
-			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
-			String attachmentURLPrefix)
-		throws PageContentException, WikiFormatException {
-
-		return _instance._convert(
-			page, viewPageURL, editPageURL, attachmentURLPrefix);
-	}
-
-	public static String diffHtml(
-			WikiPage sourcePage, WikiPage targetPage, PortletURL viewPageURL,
-			PortletURL editPageURL, String attachmentURLPrefix)
-		throws Exception {
-
-		String sourceContent = StringPool.BLANK;
-		String targetContent = StringPool.BLANK;
-
-		if (sourcePage != null) {
-			sourceContent = convert(
-				sourcePage, viewPageURL, editPageURL, attachmentURLPrefix);
-		}
-
-		if (targetPage != null) {
-			targetContent = convert(
-				targetPage, viewPageURL, editPageURL, attachmentURLPrefix);
-		}
-
-		return DiffHtmlUtil.diff(
-			new UnsyncStringReader(sourceContent),
-			new UnsyncStringReader(targetContent));
-	}
-
-	public static List<WikiPage> filterOrphans(List<WikiPage> pages)
-		throws PortalException {
-
-		List<Map<String, Boolean>> pageTitles = new ArrayList<>();
-
-		for (WikiPage page : pages) {
-			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page));
-		}
-
-		Set<WikiPage> notOrphans = new HashSet<>();
-
-		for (WikiPage page : pages) {
-			for (Map<String, Boolean> pageTitle : pageTitles) {
-				String pageTitleLowerCase = page.getTitle();
-
-				pageTitleLowerCase = StringUtil.toLowerCase(pageTitleLowerCase);
-
-				if (pageTitle.get(pageTitleLowerCase) != null) {
-					notOrphans.add(page);
-
-					break;
-				}
-			}
-		}
-
-		List<WikiPage> orphans = new ArrayList<>();
-
-		for (WikiPage page : pages) {
-			if (!notOrphans.contains(page)) {
-				orphans.add(page);
-			}
-		}
-
-		orphans = ListUtil.sort(orphans);
-
-		return orphans;
-	}
-
-	public static String getFormatLabel(String format, Locale locale)
-		throws WikiFormatException {
-
-		return _instance._getFormatLabel(format, locale);
-	}
-
-	public static Collection<String> getFormats() {
-		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
-
-		return wikiEngineTracker.getFormats();
-	}
-
-	public static String getFormattedContent(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
-			String title, boolean preview)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		double version = ParamUtil.getDouble(renderRequest, "version");
-
-		PortletURL curViewPageURL = PortletURLUtil.clone(
-			viewPageURL, renderResponse);
-		PortletURL curEditPageURL = PortletURLUtil.clone(
-			editPageURL, renderResponse);
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(themeDisplay.getPathMain());
-		sb.append("/wiki/get_page_attachment?p_l_id=");
-		sb.append(themeDisplay.getPlid());
-		sb.append("&nodeId=");
-		sb.append(page.getNodeId());
-		sb.append("&title=");
-		sb.append(HttpUtil.encodeURL(page.getTitle()));
-		sb.append("&fileName=");
-
-		String attachmentURLPrefix = sb.toString();
-
-		if (!preview && (version == 0)) {
-			WikiPageDisplay pageDisplay = WikiCacheUtil.getDisplay(
-				page.getNodeId(), title, curViewPageURL, curEditPageURL,
-				attachmentURLPrefix);
-
-			if (pageDisplay != null) {
-				return pageDisplay.getFormattedContent();
-			}
-		}
-
-		return convert(
-			page, curViewPageURL, curEditPageURL, attachmentURLPrefix);
-	}
-
-	public static Map<String, Boolean> getLinks(WikiPage page)
-		throws PageContentException {
-
-		return _instance._getLinks(page);
-	}
-
-	public static void renderEditPageHTML(
-			String format, PageContext pageContext, WikiNode node,
-			WikiPage page)
-		throws IOException, ServletException {
-
-		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
-
-		WikiEngine wikiEngine = wikiEngineTracker.getWikiEngine(format);
-
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
-
-		wikiEngine.renderEditPage(
-			pageContext.getRequest(), pipingServletResponse, node, page);
-
-		Writer writer = pageContext.getOut();
-
-		StringBundler sb = unsyncStringWriter.getStringBundler();
-
-		writer.write(sb.toString());
-	}
-
-	public static boolean validate(long nodeId, String content, String format)
-		throws WikiFormatException {
-
-		return _instance._validate(nodeId, content, format);
-	}
-
-	private static WikiEngineTracker _getWikiEngineTracker() {
-		return _wikiEngineServiceTracker.getService();
-	}
-
-	private String _convert(
+	@Override
+	public String convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
 			String attachmentURLPrefix)
 		throws PageContentException, WikiFormatException {
@@ -288,6 +121,181 @@ public class DefaultWikiEngineRenderer {
 		return content;
 	}
 
+	@Override
+	public String diffHtml(
+			WikiPage sourcePage, WikiPage targetPage, PortletURL viewPageURL,
+			PortletURL editPageURL, String attachmentURLPrefix)
+		throws Exception {
+
+		String sourceContent = StringPool.BLANK;
+		String targetContent = StringPool.BLANK;
+
+		if (sourcePage != null) {
+			sourceContent = convert(
+				sourcePage, viewPageURL, editPageURL, attachmentURLPrefix);
+		}
+
+		if (targetPage != null) {
+			targetContent = convert(
+				targetPage, viewPageURL, editPageURL, attachmentURLPrefix);
+		}
+
+		return DiffHtmlUtil.diff(
+			new UnsyncStringReader(sourceContent),
+			new UnsyncStringReader(targetContent));
+	}
+
+	@Override
+	public List<WikiPage> filterOrphans(List<WikiPage> pages)
+		throws PortalException {
+
+		List<Map<String, Boolean>> pageTitles = new ArrayList<>();
+
+		for (WikiPage page : pages) {
+			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page));
+		}
+
+		Set<WikiPage> notOrphans = new HashSet<>();
+
+		for (WikiPage page : pages) {
+			for (Map<String, Boolean> pageTitle : pageTitles) {
+				String pageTitleLowerCase = page.getTitle();
+
+				pageTitleLowerCase = StringUtil.toLowerCase(pageTitleLowerCase);
+
+				if (pageTitle.get(pageTitleLowerCase) != null) {
+					notOrphans.add(page);
+
+					break;
+				}
+			}
+		}
+
+		List<WikiPage> orphans = new ArrayList<>();
+
+		for (WikiPage page : pages) {
+			if (!notOrphans.contains(page)) {
+				orphans.add(page);
+			}
+		}
+
+		orphans = ListUtil.sort(orphans);
+
+		return orphans;
+	}
+
+	@Override
+	public String getFormatLabel(String format, Locale locale)
+		throws WikiFormatException {
+
+		WikiEngine wikiEngine = _getWikiEngine(format);
+
+		return wikiEngine.getFormatLabel(locale);
+	}
+
+	@Override
+	public Collection<String> getFormats() {
+		return _wikiEngineTracker.getFormats();
+	}
+
+	@Override
+	public String getFormattedContent(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
+			String title, boolean preview)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		double version = ParamUtil.getDouble(renderRequest, "version");
+
+		PortletURL curViewPageURL = PortletURLUtil.clone(
+			viewPageURL, renderResponse);
+		PortletURL curEditPageURL = PortletURLUtil.clone(
+			editPageURL, renderResponse);
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/wiki/get_page_attachment?p_l_id=");
+		sb.append(themeDisplay.getPlid());
+		sb.append("&nodeId=");
+		sb.append(page.getNodeId());
+		sb.append("&title=");
+		sb.append(HttpUtil.encodeURL(page.getTitle()));
+		sb.append("&fileName=");
+
+		String attachmentURLPrefix = sb.toString();
+
+		if (!preview && (version == 0)) {
+			WikiPageDisplay pageDisplay = WikiCacheUtil.getDisplay(
+				page.getNodeId(), title, curViewPageURL, curEditPageURL,
+				attachmentURLPrefix);
+
+			if (pageDisplay != null) {
+				return pageDisplay.getFormattedContent();
+			}
+		}
+
+		return convert(
+			page, curViewPageURL, curEditPageURL, attachmentURLPrefix);
+	}
+
+	@Override
+	public Map<String, Boolean> getLinks(WikiPage page)
+		throws PageContentException {
+
+		try {
+			WikiEngine wikiEngine = _getWikiEngine(page.getFormat());
+
+			return wikiEngine.getOutgoingLinks(page);
+		}
+		catch (WikiFormatException wfe) {
+			return Collections.emptyMap();
+		}
+	}
+
+	@Override
+	public void renderEditPageHTML(
+			String format, PageContext pageContext, WikiNode node,
+			WikiPage page)
+		throws IOException, ServletException {
+
+		WikiEngine wikiEngine = _wikiEngineTracker.getWikiEngine(format);
+
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			response, unsyncStringWriter);
+
+		wikiEngine.renderEditPage(
+			pageContext.getRequest(), pipingServletResponse, node, page);
+
+		Writer writer = pageContext.getOut();
+
+		StringBundler sb = unsyncStringWriter.getStringBundler();
+
+		writer.write(sb.toString());
+	}
+
+	@Override
+	public boolean validate(long nodeId, String content, String format)
+		throws WikiFormatException {
+
+		WikiEngine wikiEngine = _getWikiEngine(format);
+
+		return wikiEngine.validate(nodeId, content);
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiEngineTracker(WikiEngineTracker wikiEngineTracker) {
+		_wikiEngineTracker = wikiEngineTracker;
+	}
+
 	private String _convertURLs(String url, Matcher matcher) {
 		StringBuffer sb = new StringBuffer();
 
@@ -310,33 +318,10 @@ public class DefaultWikiEngineRenderer {
 		return matcher.appendTail(sb).toString();
 	}
 
-	private String _getFormatLabel(String format, Locale locale)
-		throws WikiFormatException {
-
-		WikiEngine wikiEngine = _getWikiEngine(format);
-
-		return wikiEngine.getFormatLabel(locale);
-	}
-
-	private Map<String, Boolean> _getLinks(WikiPage page)
-		throws PageContentException {
-
-		try {
-			WikiEngine wikiEngine = _getWikiEngine(page.getFormat());
-
-			return wikiEngine.getOutgoingLinks(page);
-		}
-		catch (WikiFormatException wfe) {
-			return Collections.emptyMap();
-		}
-	}
-
 	private WikiEngine _getWikiEngine(String format)
 		throws WikiFormatException {
 
-		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
-
-		WikiEngine wikiEngine = wikiEngineTracker.getWikiEngine(format);
+		WikiEngine wikiEngine = _wikiEngineTracker.getWikiEngine(format);
 
 		if (wikiEngine == null) {
 			throw new WikiFormatException("Unknown wiki format " + format);
@@ -356,29 +341,12 @@ public class DefaultWikiEngineRenderer {
 		return content;
 	}
 
-	private boolean _validate(long nodeId, String content, String format)
-		throws WikiFormatException {
-
-		return _getWikiEngine(format).validate(nodeId, content);
-	}
-
-	private static final DefaultWikiEngineRenderer _instance =
-		new DefaultWikiEngineRenderer();
-
 	private static final Pattern _editPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE_EDIT\\$\\](.*?)" +
 			"\\[\\$END_PAGE_TITLE_EDIT\\$\\]");
 	private static final Pattern _viewPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
-	private static final ServiceTracker<WikiEngineTracker, WikiEngineTracker>
-		_wikiEngineServiceTracker;
 
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DefaultWikiEngineRenderer.class);
-
-		_wikiEngineServiceTracker = ServiceTrackerFactory.open(
-			bundle, WikiEngineTracker.class);
-	}
+	private WikiEngineTracker _wikiEngineTracker;
 
 }
