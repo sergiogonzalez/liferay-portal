@@ -40,7 +40,7 @@ import com.liferay.trash.kernel.model.TrashEntryConstants;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.engine.WikiEngineRenderer;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;

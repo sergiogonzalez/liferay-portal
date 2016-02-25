@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.wiki.engine.WikiEngine;
-import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
@@ -67,10 +66,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-@Component(immediate = true)
-public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
+@Component(immediate = true, service = WikiEngineRenderer.class)
+public class WikiEngineRenderer {
 
-	@Override
 	public String convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
 			String attachmentURLPrefix)
@@ -124,7 +122,6 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		return content;
 	}
 
-	@Override
 	public String diffHtml(
 			WikiPage sourcePage, WikiPage targetPage, PortletURL viewPageURL,
 			PortletURL editPageURL, String attachmentURLPrefix)
@@ -152,7 +149,6 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		return _wikiEngineTracker.getWikiEngine(format);
 	}
 
-	@Override
 	public List<WikiPage> filterOrphans(List<WikiPage> pages)
 		throws PortalException {
 
@@ -191,7 +187,6 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		return orphans;
 	}
 
-	@Override
 	public String getFormatLabel(String format, Locale locale) {
 		WikiEngine wikiEngine = fetchWikiEngine(format);
 
@@ -203,12 +198,10 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		}
 	}
 
-	@Override
 	public Collection<String> getFormats() {
 		return _wikiEngineTracker.getFormats();
 	}
 
-	@Override
 	public String getFormattedContent(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
@@ -252,7 +245,6 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 			page, curViewPageURL, curEditPageURL, attachmentURLPrefix);
 	}
 
-	@Override
 	public void renderEditPageHTML(
 			String format, PageContext pageContext, WikiNode node,
 			WikiPage page)
