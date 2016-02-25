@@ -43,13 +43,13 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Locale;
 
@@ -195,7 +195,7 @@ public class WikiPageIndexer
 		document.addUID(CLASS_NAME, wikiPage.getResourcePrimKey());
 
 		String content = HtmlUtil.extractText(
-			WikiUtil.convert(wikiPage, null, null, null));
+			_wikiEngineRenderer.convert(wikiPage, null, null, null));
 
 		document.addText(Field.CONTENT, content);
 
@@ -325,6 +325,13 @@ public class WikiPageIndexer
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 
@@ -348,6 +355,7 @@ public class WikiPageIndexer
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiNodeService _wikiNodeService;
 	private WikiPageLocalService _wikiPageLocalService;
