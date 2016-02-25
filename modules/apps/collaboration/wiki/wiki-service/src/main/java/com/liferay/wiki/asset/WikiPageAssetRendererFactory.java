@@ -145,7 +145,7 @@ public class WikiPageAssetRendererFactory
 		_servletContext = servletContext;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiEngineRenderer(
 		WikiEngineRenderer wikiEngineRenderer) {
 
