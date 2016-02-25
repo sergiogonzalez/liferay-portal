@@ -152,7 +152,7 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		List<Map<String, Boolean>> pageTitles = new ArrayList<>();
 
 		for (WikiPage page : pages) {
-			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page));
+			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page, this));
 		}
 
 		Set<WikiPage> notOrphans = new HashSet<>();
