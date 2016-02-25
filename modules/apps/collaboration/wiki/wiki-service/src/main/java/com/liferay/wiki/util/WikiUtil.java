@@ -20,12 +20,9 @@ import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -45,8 +42,6 @@ import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.impl.WikiEngineTracker;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
-import com.liferay.wiki.importer.WikiImporter;
-import com.liferay.wiki.importer.impl.WikiImporterTracker;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
@@ -275,12 +270,6 @@ public class WikiUtil {
 			page, curViewPageURL, curEditPageURL, attachmentURLPrefix);
 	}
 
-	public static Collection<String> getImporters() {
-		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
-
-		return wikiImporterTracker.getImporters();
-	}
-
 	public static Map<String, Boolean> getLinks(WikiPage page)
 		throws PageContentException {
 
@@ -319,26 +308,6 @@ public class WikiUtil {
 		}
 
 		return nodes;
-	}
-
-	public static WikiImporter getWikiImporter(String importer) {
-		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
-
-		WikiImporter wikiImporter = wikiImporterTracker.getWikiImporter(
-			importer);
-
-		if (wikiImporter == null) {
-			throw new SystemException(
-				"Unable to instantiate wiki importer with name " + importer);
-		}
-
-		return wikiImporter;
-	}
-
-	public static String getWikiImporterPage(String format) {
-		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
-
-		return wikiImporterTracker.getProperty(format, "page");
 	}
 
 	public static List<WikiNode> orderNodes(
@@ -412,10 +381,6 @@ public class WikiUtil {
 
 	private static WikiEngineTracker _getWikiEngineTracker() {
 		return _wikiEngineServiceTracker.getService();
-	}
-
-	private static WikiImporterTracker _getWikiImporterTracker() {
-		return _wikiImporterServiceTracker.getService();
 	}
 
 	private String _convert(
@@ -541,8 +506,6 @@ public class WikiUtil {
 		return _getWikiEngine(format).validate(nodeId, content);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(WikiUtil.class);
-
 	private static final WikiUtil _instance = new WikiUtil();
 
 	private static final Pattern _editPageURLPattern = Pattern.compile(
@@ -552,16 +515,12 @@ public class WikiUtil {
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 	private static final ServiceTracker<WikiEngineTracker, WikiEngineTracker>
 		_wikiEngineServiceTracker;
-	private static final ServiceTracker
-		<WikiImporterTracker, WikiImporterTracker> _wikiImporterServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(WikiUtil.class);
 
 		_wikiEngineServiceTracker = ServiceTrackerFactory.open(
 			bundle, WikiEngineTracker.class);
-		_wikiImporterServiceTracker = ServiceTrackerFactory.open(
-			bundle, WikiImporterTracker.class);
 	}
 
 }
