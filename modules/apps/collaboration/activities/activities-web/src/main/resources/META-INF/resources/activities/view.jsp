@@ -201,7 +201,7 @@ portletURL.setParameter("tabs1", tabs1);
 	socialActivities.delegate(
 		'click',
 		function(event) {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entry") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-the-selected-entry") %>')) {
 				var currentTarget = event.currentTarget;
 
 				var activityFooter = currentTarget.ancestor('.activity-footer');
@@ -243,10 +243,10 @@ portletURL.setParameter("tabs1", tabs1);
 									}
 
 									if (messagesCount > 1) {
-										commentText += ' <%= UnicodeLanguageUtil.get(pageContext, "comments") %>';
+										commentText += ' <%= UnicodeLanguageUtil.get(resourceBundle, "comments") %>';
 									}
 									else {
-										commentText += ' <%= UnicodeLanguageUtil.get(pageContext, "comment") %>';
+										commentText += ' <%= UnicodeLanguageUtil.get(resourceBundle, "comment") %>';
 									}
 
 									viewComments.html(commentText);
@@ -375,7 +375,7 @@ portletURL.setParameter("tabs1", tabs1);
 						width: 400
 					},
 					id: '<portlet:namespace />Dialog',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "repost") %>',
+					title: '<%= UnicodeLanguageUtil.get(resourceBundle, "repost") %>',
 					uri: uri
 				}
 			);
