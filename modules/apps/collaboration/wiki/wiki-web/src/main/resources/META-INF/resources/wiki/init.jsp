@@ -40,6 +40,7 @@ page import="com.liferay.wiki.exception.PageVersionException" %><%@
 page import="com.liferay.wiki.exception.RequiredNodeException" %><%@
 page import="com.liferay.wiki.exception.WikiFormatException" %><%@
 page import="com.liferay.wiki.importer.impl.WikiImporterKeys" %><%@
+page import="com.liferay.wiki.importer.impl.WikiImporterTracker" %><%@
 page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageConstants" %><%@
