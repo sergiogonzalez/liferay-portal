@@ -495,7 +495,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiEngineRenderer(
 		WikiEngineRenderer wikiEngineRenderer) {
 
