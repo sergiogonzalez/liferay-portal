@@ -54,29 +54,25 @@ public class WikiSubscriptionContainerModelTest
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInRootContainerModel(
-	) {
+	public void testSubscriptionContainerModelWhenAddingBaseModelInRootContainerModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInSubcontainerModel(
-	) {
+	public void testSubscriptionContainerModelWhenAddingBaseModelInSubcontainerModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInRootContainerModel(
-	) {
+	public void testSubscriptionContainerModelWhenUpdatingBaseModelInRootContainerModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInSubcontainerModel(
-	) {
+	public void testSubscriptionContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
 	}
 
 	@Override
