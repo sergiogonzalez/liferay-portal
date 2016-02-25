@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -49,11 +48,12 @@ public interface WikiEngineRenderer {
 			PortletURL editPageURL, String attachmentURLPrefix)
 		throws Exception;
 
+	public WikiEngine fetchWikiEngine(String format);
+
 	public List<WikiPage> filterOrphans(List<WikiPage> pages)
 		throws PortalException;
 
-	public String getFormatLabel(String format, Locale locale)
-		throws WikiFormatException;
+	public String getFormatLabel(String format, Locale locale);
 
 	public Collection<String> getFormats();
 
@@ -63,15 +63,9 @@ public interface WikiEngineRenderer {
 			String title, boolean preview)
 		throws Exception;
 
-	public Map<String, Boolean> getLinks(WikiPage page)
-		throws PageContentException;
-
 	public void renderEditPageHTML(
 			String format, PageContext pageContext, WikiNode node,
 			WikiPage page)
 		throws IOException, ServletException;
-
-	public boolean validate(long nodeId, String content, String format)
-		throws WikiFormatException;
 
 }

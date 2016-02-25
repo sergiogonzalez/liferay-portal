@@ -81,6 +81,7 @@ import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.escape.WikiEscapeUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
@@ -3169,7 +3170,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	protected void validate(long nodeId, String content, String format)
 		throws PortalException {
 
-		if (!wikiEngineRenderer.validate(nodeId, content, format)) {
+		WikiEngine wikiEngine = wikiEngineRenderer.fetchWikiEngine(format);
+
+		if (!wikiEngine.validate(nodeId, content)) {
 			throw new PageContentException();
 		}
 	}
