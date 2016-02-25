@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.ImportFilesException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importer.WikiImporter;
@@ -55,7 +56,6 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
-import com.liferay.wiki.util.WikiUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -197,7 +197,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 			String format = FORMAT_MEDIAWIKI;
 
-			Collection<String> supportedFormats = WikiUtil.getFormats();
+			Collection<String> supportedFormats =
+				_wikiEngineRenderer.getFormats();
 
 			if (Validator.isNotNull(redirectTitle)) {
 				content = getCreoleRedirectContent(redirectTitle);
@@ -709,6 +710,13 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
@@ -758,6 +766,7 @@ public class MediaWikiImporter implements WikiImporter {
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
 	private UserLocalService _userLocalService;
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private WikiPageLocalService _wikiPageLocalService;
 	private Pattern _wikiPageTitlesRemovePattern;
