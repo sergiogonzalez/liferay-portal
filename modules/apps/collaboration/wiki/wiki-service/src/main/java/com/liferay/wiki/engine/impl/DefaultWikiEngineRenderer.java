@@ -44,7 +44,6 @@ import java.io.Writer;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -80,7 +79,11 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		LiferayPortletURL liferayViewPageURL = (LiferayPortletURL)viewPageURL;
 		LiferayPortletURL liferayEditPageURL = (LiferayPortletURL)editPageURL;
 
-		WikiEngine wikiEngine = _getWikiEngine(page.getFormat());
+		WikiEngine wikiEngine = fetchWikiEngine(page.getFormat());
+
+		if (wikiEngine == null) {
+			throw new WikiFormatException();
+		}
 
 		String content = wikiEngine.convert(
 			page, viewPageURL, editPageURL, attachmentURLPrefix);
@@ -145,6 +148,10 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 			new UnsyncStringReader(targetContent));
 	}
 
+	public WikiEngine fetchWikiEngine(String format) {
+		return _wikiEngineTracker.getWikiEngine(format);
+	}
+
 	@Override
 	public List<WikiPage> filterOrphans(List<WikiPage> pages)
 		throws PortalException {
@@ -185,12 +192,15 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 	}
 
 	@Override
-	public String getFormatLabel(String format, Locale locale)
-		throws WikiFormatException {
+	public String getFormatLabel(String format, Locale locale) {
+		WikiEngine wikiEngine = fetchWikiEngine(format);
 
-		WikiEngine wikiEngine = _getWikiEngine(format);
-
-		return wikiEngine.getFormatLabel(locale);
+		if (wikiEngine != null) {
+			return wikiEngine.getFormatLabel(locale);
+		}
+		else {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -243,20 +253,6 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 	}
 
 	@Override
-	public Map<String, Boolean> getLinks(WikiPage page)
-		throws PageContentException {
-
-		try {
-			WikiEngine wikiEngine = _getWikiEngine(page.getFormat());
-
-			return wikiEngine.getOutgoingLinks(page);
-		}
-		catch (WikiFormatException wfe) {
-			return Collections.emptyMap();
-		}
-	}
-
-	@Override
 	public void renderEditPageHTML(
 			String format, PageContext pageContext, WikiNode node,
 			WikiPage page)
@@ -280,15 +276,6 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		StringBundler sb = unsyncStringWriter.getStringBundler();
 
 		writer.write(sb.toString());
-	}
-
-	@Override
-	public boolean validate(long nodeId, String content, String format)
-		throws WikiFormatException {
-
-		WikiEngine wikiEngine = _getWikiEngine(format);
-
-		return wikiEngine.validate(nodeId, content);
 	}
 
 	@Reference(unbind = "-")
@@ -316,18 +303,6 @@ public class DefaultWikiEngineRenderer implements WikiEngineRenderer {
 		}
 
 		return matcher.appendTail(sb).toString();
-	}
-
-	private WikiEngine _getWikiEngine(String format)
-		throws WikiFormatException {
-
-		WikiEngine wikiEngine = _wikiEngineTracker.getWikiEngine(format);
-
-		if (wikiEngine == null) {
-			throw new WikiFormatException("Unknown wiki format " + format);
-		}
-
-		return wikiEngine;
 	}
 
 	private String _replaceAttachments(

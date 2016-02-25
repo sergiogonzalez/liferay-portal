@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.engine.WikiEngineRenderer;
+import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
@@ -194,10 +195,18 @@ public class WikiPageIndexer
 
 		document.addUID(CLASS_NAME, wikiPage.getResourcePrimKey());
 
-		String content = HtmlUtil.extractText(
-			_wikiEngineRenderer.convert(wikiPage, null, null, null));
+		try {
+			String content = HtmlUtil.extractText(
+				_wikiEngineRenderer.convert(wikiPage, null, null, null));
 
-		document.addText(Field.CONTENT, content);
+			document.addText(Field.CONTENT, content);
+		}
+		catch (WikiFormatException wfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get wiki engine for " + wikiPage.getFormat());
+			}
+		}
 
 		document.addKeyword(Field.NODE_ID, wikiPage.getNodeId());
 		document.addText(Field.TITLE, wikiPage.getTitle());
