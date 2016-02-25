@@ -75,10 +75,6 @@ public class ActivitiesPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		Object[] commentsClassNameAndClassPK =
 			ActivitiesUtil.getCommentsClassNameAndClassPK(activitySet);
 
@@ -97,9 +93,9 @@ public class ActivitiesPortlet extends MVCPortlet {
 		mbMessages = ListUtil.sort(
 			mbMessages, new MessageCreateDateComparator(true));
 
-		for (int i = 1; i < mbMessages.size(); i++) {
-			MBMessage mbMessage = mbMessages.get(i);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		for (MBMessage mbMessage : mbMessages) {
 			JSONObject messageJSONObject = getJSONObject(
 				mbMessage.getMessageId(), mbMessage.getBody(),
 				mbMessage.getModifiedDate(), mbMessage.getUserId(),
@@ -107,6 +103,8 @@ public class ActivitiesPortlet extends MVCPortlet {
 
 			jsonArray.put(messageJSONObject);
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("comments", jsonArray);
 
@@ -118,19 +116,17 @@ public class ActivitiesPortlet extends MVCPortlet {
 			ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		List<MicroblogsEntry> microblogsEntries =
 			MicroblogsEntryLocalServiceUtil.
 				getParentMicroblogsEntryMicroblogsEntries(
 					MicroblogsEntryConstants.TYPE_REPLY,
 					activitySet.getClassPK(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (MicroblogsEntry microblogsEntry : microblogsEntries) {
 			JSONObject microblogsEntryJSONObject = getJSONObject(
@@ -141,6 +137,8 @@ public class ActivitiesPortlet extends MVCPortlet {
 
 			jsonArray.put(microblogsEntryJSONObject);
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("comments", jsonArray);
 		jsonObject.put("commentsCount", microblogsEntries.size());
@@ -181,15 +179,15 @@ public class ActivitiesPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long microblogsEntryId = ParamUtil.getLong(
 			actionRequest, "microblogsEntryId");
 
 		MicroblogsEntry microblogsEntry =
 			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(
 				microblogsEntryId);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MicroblogsEntry.class.getName(), actionRequest);
@@ -245,9 +243,6 @@ public class ActivitiesPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String className = ParamUtil.getString(actionRequest, "className");
@@ -259,9 +254,12 @@ public class ActivitiesPortlet extends MVCPortlet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			MBMessage mbMessage = null;
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			long groupId = themeDisplay.getScopeGroupId();
+
+			MBMessage mbMessage = null;
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				MBMessage.class.getName(), actionRequest);
@@ -314,9 +312,6 @@ public class ActivitiesPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
@@ -327,6 +322,9 @@ public class ActivitiesPortlet extends MVCPortlet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			MicroblogsEntry microblogsEntry = null;
 
 			if (cmd.equals(Constants.DELETE)) {

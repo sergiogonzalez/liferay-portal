@@ -24,8 +24,7 @@ import com.liferay.social.kernel.model.SocialActivitySet;
 public class ActivitiesUtil {
 
 	public static Object[] getCommentsClassNameAndClassPK(
-			SocialActivitySet activitySet)
-		throws Exception {
+		SocialActivitySet activitySet) {
 
 		String className = activitySet.getClassName();
 		long classPK = activitySet.getClassPK();
@@ -34,8 +33,10 @@ public class ActivitiesUtil {
 			(activitySet.getActivityCount() > 1) &&
 			(activitySet.getType() == DLActivityKeys.ADD_FILE_ENTRY)) {
 
-			className = SocialActivitySet.class.getName();
-			classPK = activitySet.getActivitySetId();
+			return new Object[] {
+				SocialActivitySet.class.getName(),
+				activitySet.getActivitySetId()
+			};
 		}
 
 		return new Object[] {className, classPK};
