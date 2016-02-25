@@ -80,7 +80,7 @@ for (SocialActivitySet activitySet : results) {
 							commentsCount = MicroblogsEntryLocalServiceUtil.getParentMicroblogsEntryMicroblogsEntriesCount(MicroblogsEntryConstants.TYPE_REPLY, classPK);
 						}
 						else {
-							commentsCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(className, classPK, WorkflowConstants.STATUS_APPROVED);
+							commentsCount = CommentManagerUtil.getCommentsCount(className, classPK);
 						}
 						%>
 
