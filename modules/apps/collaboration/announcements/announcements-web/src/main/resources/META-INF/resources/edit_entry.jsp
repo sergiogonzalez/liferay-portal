@@ -30,6 +30,13 @@ boolean displayImmediately = false;
 if (entry == null) {
 	displayImmediately = true;
 }
+else {
+	Date displayDate = entry.getDisplayDate();
+
+	if (DateUtil.compareTo(displayDate, new Date()) <= 0) {
+		displayImmediately = true;
+	}
+}
 %>
 
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
