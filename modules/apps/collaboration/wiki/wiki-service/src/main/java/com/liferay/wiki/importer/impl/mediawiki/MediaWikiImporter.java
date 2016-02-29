@@ -56,7 +56,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
-import com.liferay.wiki.util.WikiPageTitleValidator;
+import com.liferay.wiki.validator.WikiPageTitleValidator;
 
 import java.io.IOException;
 import java.io.InputStream;
