@@ -61,6 +61,7 @@ page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.DateUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
@@ -77,6 +78,7 @@ page import="com.liferay.portlet.announcements.service.permission.AnnouncementsE
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@

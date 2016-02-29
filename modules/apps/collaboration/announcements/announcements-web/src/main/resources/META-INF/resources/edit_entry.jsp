@@ -25,10 +25,17 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 String content = BeanParamUtil.getString(entry, request, "content");
 
-boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately");
+boolean displayImmediately = false;
 
 if (entry == null) {
 	displayImmediately = true;
+}
+else {
+	Date displayDate = entry.getDisplayDate();
+
+	if (DateUtil.compareTo(displayDate, new Date()) <= 0) {
+		displayImmediately = true;
+	}
 }
 %>
 
