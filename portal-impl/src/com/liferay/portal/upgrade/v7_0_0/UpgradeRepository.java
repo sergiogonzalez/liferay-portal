@@ -34,7 +34,8 @@ public class UpgradeRepository extends UpgradeProcess {
 	protected String[][] getRenamePortletNamesArray() {
 		return new String[][] {
 			new String[] {"19", MBConstants.SERVICE_NAME},
-			new String[] {"33", BlogsConstants.SERVICE_NAME}
+			new String[] {"33", BlogsConstants.SERVICE_NAME},
+			new String[] {"36", "com.liferay.wiki"}
 		};
 	}
 
