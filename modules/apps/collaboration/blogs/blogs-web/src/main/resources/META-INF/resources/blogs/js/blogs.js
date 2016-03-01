@@ -137,17 +137,6 @@ AUI.add(
 							);
 						}
 
-						instance._editIcon = instance.one('#editIcon');
-						instance._settingsIcon = instance.one('#settingsIcon');
-
-						eventHandles.push(
-							instance._editIcon.on(STR_CLICK, instance._switchView, instance),
-							instance._settingsIcon.on(STR_CLICK, instance._switchView, instance)
-						);
-
-						instance._editSection = instance.one('#editSection');
-						instance._settingsSection = instance.one('#settingsSection');
-
 						instance._eventHandles = eventHandles;
 					},
 
@@ -308,12 +297,12 @@ AUI.add(
 										dataType: 'JSON',
 										on: {
 											failure: function() {
-												instance._updateStatus(strings.saveDraftError, 'alert alert-danger save-status');
+												instance._updateStatus(strings.saveDraftError);
 											},
 											start: function() {
 												Liferay.Util.toggleDisabled(instance.one('#publishButton'), true);
 
-												instance._updateStatus(strings.saveDraftMessage, 'alert alert-info save-status pending');
+												instance._updateStatus(strings.saveDraftMessage);
 											},
 											success: function(event, id, obj) {
 												instance._oldContent = content;
@@ -354,7 +343,7 @@ AUI.add(
 
 														var now = saveText.replace(/\{0\}/gim, (new Date()).toString());
 
-														instance._updateStatus(now, 'alert alert-success save-status');
+														instance._updateStatus(now);
 													}
 												}
 												else {
@@ -419,16 +408,6 @@ AUI.add(
 						}
 					},
 
-					_switchView: function() {
-						var instance = this;
-
-						instance._editSection.toggle();
-						instance._settingsSection.toggle();
-
-						instance._editIcon.toggle();
-						instance._settingsIcon.toggle();
-					},
-
 					_updateImages: function(persistentImages) {
 						var instance = this;
 
@@ -445,15 +424,13 @@ AUI.add(
 						);
 					},
 
-					_updateStatus: function(text, className) {
+					_updateStatus: function(text) {
 						var instance = this;
 
 						var saveStatus = instance.one('#saveStatus');
 
 						if (saveStatus) {
 							saveStatus.html(text);
-
-							saveStatus.attr('className', className);
 						}
 					}
 				}
