@@ -651,7 +651,11 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH = "dl.file.entry.preview.video.width";
 
+	public static final String DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_HEIGHT = "dl.file.entry.previewable.processor.max.height";
+
 	public static final String DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE = "dl.file.entry.previewable.processor.max.size";
+
+	public static final String DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_WIDTH = "dl.file.entry.previewable.processor.max.width";
 
 	public static final String DL_FILE_ENTRY_PROCESSORS = "dl.file.entry.processors";
 
