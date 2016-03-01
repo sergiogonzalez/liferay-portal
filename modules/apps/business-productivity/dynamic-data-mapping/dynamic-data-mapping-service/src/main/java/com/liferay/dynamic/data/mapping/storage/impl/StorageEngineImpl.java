@@ -18,19 +18,21 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
  */
-@OSGiBeanProperties(service = StorageEngine.class)
+@Component(immediate = true)
 public class StorageEngineImpl implements StorageEngine {
 
 	@Override
@@ -93,7 +95,7 @@ public class StorageEngineImpl implements StorageEngine {
 
 		try {
 			DDMStorageLink ddmStorageLink =
-				DDMStorageLinkLocalServiceUtil.getClassStorageLink(classPK);
+				_ddmStorageLinkLocalService.getClassStorageLink(classPK);
 
 			return getStorageAdapter(ddmStorageLink.getStorageType());
 		}
@@ -124,7 +126,7 @@ public class StorageEngineImpl implements StorageEngine {
 
 		try {
 			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
+				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			return getStorageAdapter(ddmStructure.getStorageType());
 		}
@@ -138,5 +140,22 @@ public class StorageEngineImpl implements StorageEngine {
 			throw new StorageException(e);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStorageLinkLocalService(
+		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
+
+		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }
