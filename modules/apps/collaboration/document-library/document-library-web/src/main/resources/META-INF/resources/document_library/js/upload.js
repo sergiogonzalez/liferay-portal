@@ -457,9 +457,9 @@ AUI.add(
 
 						var entriesContainer = instance.get('entriesContainer');
 
-						if (displayStyle === STR_LIST) {
-							var searchContainer = entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
+						var searchContainer = entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
+						if (displayStyle === STR_LIST) {
 							entriesContainer = searchContainer.one('tbody');
 
 							entryNode = instance._createEntryRow(name, size);
@@ -471,7 +471,7 @@ AUI.add(
 								entriesContainerSelector = 'ul.list-unstyled:last-of-type';
 							}
 
-							entriesContainer = entriesContainer.one(entriesContainerSelector) || entriesContainer.one('.taglib-empty-result-message');
+							entriesContainer = entriesContainer.one(entriesContainerSelector) || searchContainer.one('.searchcontainer-content');
 
 							var invisibleEntry = instance._invisibleDescriptiveEntry;
 
@@ -496,6 +496,14 @@ AUI.add(
 							entryLink.attr('title', name);
 
 							entryTitle.setContent(name);
+
+							instance._removeEmptyResultsMessage(searchContainer);
+
+							var searchContainerWrapper = A.one('div.lfr-search-container-wrapper.main-content-body');
+
+							if (searchContainerWrapper) {
+								searchContainerWrapper.show();
+							}
 						}
 
 						entryNode.attr(
@@ -506,7 +514,7 @@ AUI.add(
 						);
 
 						if (displayStyle == CSS_ICON) {
-							wrapperTpl = '<li class="col-md-2 col-sm-4 col-xs-6" data-title="{title}"></li>';
+							wrapperTpl = '<div class="col-md-2 col-sm-4 col-xs-6" data-title="{title}"></div>';
 
 							var entryNodeWrapper = A.Node.create(
 								Lang.sub(
@@ -1080,6 +1088,18 @@ AUI.add(
 
 						if (!instance._isUploading()) {
 							instance._startUpload();
+						}
+					},
+
+					_removeEmptyResultsMessage: function(searchContainer) {
+						var instance = this;
+
+						var id = searchContainer.getAttribute('id');
+
+						var emptyResultsMessage = A.one('#' + id + 'EmptyResultsMessage')
+
+						if (emptyResultsMessage) {
+							emptyResultsMessage.hide();
 						}
 					},
 
