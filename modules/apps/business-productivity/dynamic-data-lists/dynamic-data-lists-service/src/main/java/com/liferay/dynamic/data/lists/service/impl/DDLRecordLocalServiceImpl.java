@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.lists.util.DDL;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
@@ -283,6 +284,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public int getCompanyRecordsCount(long companyId, int status, int scope) {
 		return ddlRecordFinder.countByC_S_S(companyId, status, scope);
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues(long classPK)
+		throws StorageException {
+
+		return storageEngine.getDDMFormValues(classPK);
 	}
 
 	/**
