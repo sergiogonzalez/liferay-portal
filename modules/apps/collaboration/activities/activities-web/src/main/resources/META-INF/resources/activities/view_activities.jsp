@@ -20,7 +20,44 @@
 List<SocialActivity> results = activitiesDisplayContext.getSocialActivities();
 %>
 
-<%@ include file="/activities/view_activities_feed.jspf" %>
+<%
+for (SocialActivity activity : results) {
+	SocialActivityFeedEntry activityFeedEntry = activitiesDisplayContext.getSocialActivityFeedEntry(activity);
+
+	if (activityFeedEntry == null) {
+		continue;
+	}
+%>
+
+	<h3><liferay-ui:message key="<%= dateFormatDate.format(activity.getCreateDate()) %>" /></h3>
+
+	<div class="activity-item clearfix">
+		<liferay-ui:user-display
+			showUserDetails="<%= false %>"
+			showUserName="<%= false %>"
+			userId="<%= activity.getUserId() %>"
+		>
+			<liferay-portlet:icon-portlet portlet="<%= activitiesDisplayContext.getSocialActivityFeedEntryPortlet(activityFeedEntry) %>" />
+		</liferay-ui:user-display>
+
+		<div class="activity-title">
+			<%= activityFeedEntry.getTitle() %>
+		</div>
+
+		<div class="activity-block">
+			<div class="activity-body">
+				<span class="time">
+					<%= timeFormatDate.format(activity.getCreateDate()) %>
+				</span>
+
+				<%= activityFeedEntry.getBody() %>
+			</div>
+		</div>
+	</div>
+
+<%
+}
+%>
 
 <aui:script>
 	<portlet:namespace />start = <%= activitiesRequestHelper.getStart() + results.size() %>;
