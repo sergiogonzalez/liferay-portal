@@ -20,7 +20,6 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -47,20 +46,6 @@ public class DefaultActivitiesDisplayContext
 		ActivitiesRequestHelper activitiesRequestHelper) {
 
 		_activitiesRequestHelper = activitiesRequestHelper;
-	}
-
-	@Override
-	public int getCommentsCount(SocialActivitySet socialActivitySet) {
-		String className = getDiscussionClassName(socialActivitySet);
-		long classPK = getDiscussionClassPK(socialActivitySet);
-
-		if (className.equals(MicroblogsEntry.class.getName())) {
-			return MicroblogsEntryLocalServiceUtil.
-				getParentMicroblogsEntryMicroblogsEntriesCount(
-					MicroblogsEntryConstants.TYPE_REPLY, classPK);
-		}
-
-		return CommentManagerUtil.getCommentsCount(className, classPK);
 	}
 
 	@Override

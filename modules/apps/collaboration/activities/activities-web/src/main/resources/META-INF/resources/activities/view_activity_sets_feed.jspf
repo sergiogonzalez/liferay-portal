@@ -56,22 +56,6 @@ for (SocialActivitySet activitySet : results) {
 								<a data-microblogsEntryId="<%= activitySet.getClassPK() %>" href="javascript:;"><liferay-ui:message key="repost" /></a>
 							</span>
 						</c:if>
-
-						<%
-						int commentsCount = activitiesDisplayContext.getCommentsCount(activitySet);
-						%>
-
-						<span class="action view-comments">
-							<a data-activitySetId="<%= activitySet.getActivitySetId() %>" href="javascript:;"><%= commentsCount > 0 ? commentsCount : StringPool.BLANK %> <liferay-ui:message key='<%= commentsCount > 1 ? "comments" : "comment" %>' /></a>
-						</span>
-
-						<span class="action hide toggle">
-							<a class="toggle-entry" data-entryId="<%= activitySet.getActivitySetId() %>" href="javascript:;">
-								<i class="icon-expand-alt"></i>
-
-								<span><liferay-ui:message key="view-more" /></span>
-							</a>
-						</span>
 					</div>
 
 					<liferay-ui:discussion

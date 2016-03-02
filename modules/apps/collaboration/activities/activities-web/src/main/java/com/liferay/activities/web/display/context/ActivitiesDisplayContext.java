@@ -26,8 +26,6 @@ import javax.portlet.PortletException;
  */
 public interface ActivitiesDisplayContext {
 
-	public int getCommentsCount(SocialActivitySet socialActivitySet);
-
 	public String getDiscussionClassName(SocialActivitySet socialActivitySet);
 
 	public long getDiscussionClassPK(SocialActivitySet socialActivitySet);
