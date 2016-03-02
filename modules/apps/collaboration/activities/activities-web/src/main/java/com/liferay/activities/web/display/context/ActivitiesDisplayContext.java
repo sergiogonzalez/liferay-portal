@@ -15,6 +15,7 @@
 package com.liferay.activities.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
@@ -44,8 +45,15 @@ public interface ActivitiesDisplayContext {
 	public int getSocialActivitiesCount();
 
 	public SocialActivityFeedEntry getSocialActivityFeedEntry(
+			SocialActivity socialActivity)
+		throws PortalException;
+
+	public SocialActivityFeedEntry getSocialActivityFeedEntry(
 			SocialActivitySet socialActivitySet)
 		throws PortalException;
+
+	public Portlet getSocialActivityFeedEntryPortlet(
+		SocialActivityFeedEntry socialActivityFeedEntry);
 
 	public List<SocialActivitySet> getSocialActivitySets();
 

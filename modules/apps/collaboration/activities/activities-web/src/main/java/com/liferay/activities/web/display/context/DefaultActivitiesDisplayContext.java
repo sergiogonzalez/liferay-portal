@@ -60,8 +60,8 @@ public class DefaultActivitiesDisplayContext
 	public String getActivityItemCssClassWrapper(
 		SocialActivityFeedEntry socialActivityFeedEntry) {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			socialActivityFeedEntry.getPortletId());
+		Portlet portlet = getSocialActivityFeedEntryPortlet(
+			socialActivityFeedEntry);
 
 		return portlet.getCssClassWrapper();
 	}
@@ -185,6 +185,17 @@ public class DefaultActivitiesDisplayContext
 
 	@Override
 	public SocialActivityFeedEntry getSocialActivityFeedEntry(
+			SocialActivity socialActivity)
+		throws PortalException {
+
+		return SocialActivityInterpreterLocalServiceUtil.interpret(
+			StringPool.BLANK, socialActivity,
+			ServiceContextFactory.getInstance(
+				_activitiesRequestHelper.getRequest()));
+	}
+
+	@Override
+	public SocialActivityFeedEntry getSocialActivityFeedEntry(
 			SocialActivitySet socialActivitySet)
 		throws PortalException {
 
@@ -192,6 +203,15 @@ public class DefaultActivitiesDisplayContext
 			StringPool.BLANK, socialActivitySet,
 			ServiceContextFactory.getInstance(
 				_activitiesRequestHelper.getRequest()));
+	}
+
+	@Override
+	public Portlet getSocialActivityFeedEntryPortlet(
+		SocialActivityFeedEntry socialActivityFeedEntry) {
+
+		return PortletLocalServiceUtil.getPortletById(
+			_activitiesRequestHelper.getCompanyId(),
+			socialActivityFeedEntry.getPortletId());
 	}
 
 	@Override

@@ -28,22 +28,18 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
-page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.DateUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.social.kernel.model.SocialActivityFeedEntry" %><%@
-page import="com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil" %>
+page import="com.liferay.portal.kernel.util.PrettyDateFormat" %><%@
+page import="com.liferay.social.kernel.model.SocialActivityFeedEntry" %>
 
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.Format" %>
 
-<%@ page import="java.util.Date" %><%@
-page import="java.util.List" %>
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 
@@ -52,6 +48,6 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
-Format dateFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("dd MMM yyyy", locale, timeZone);
+Format dateFormatDate = new PrettyDateFormat(locale, timeZone);
 Format timeFormatDate = FastDateFormatFactoryUtil.getTime(locale, timeZone);
 %>

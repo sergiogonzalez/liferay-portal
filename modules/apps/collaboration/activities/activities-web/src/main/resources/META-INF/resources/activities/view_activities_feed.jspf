@@ -15,63 +15,24 @@
 --%>
 
 <%
-Date now = new Date();
-
-int daysBetween = -1;
-
 for (SocialActivity activity : results) {
-	SocialActivityFeedEntry activityFeedEntry = SocialActivityInterpreterLocalServiceUtil.interpret(StringPool.BLANK, activity, ServiceContextFactory.getInstance(request));
+	SocialActivityFeedEntry activityFeedEntry = activitiesDisplayContext.getSocialActivityFeedEntry(activity);
 
 	if (activityFeedEntry == null) {
 		continue;
 	}
-
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), activityFeedEntry.getPortletId());
-
-	int curDaysBetween = DateUtil.getDaysBetween(new Date(activity.getCreateDate()), now, timeZone);
 %>
 
-	<c:if test="<%= curDaysBetween > daysBetween %>">
-
-		<%
-		daysBetween = curDaysBetween;
-		String message = null;
-
-		if (curDaysBetween == 0) {
-			message = "today";
-		}
-		else if (curDaysBetween == 1) {
-			message = "yesterday";
-		}
-		else {
-			message = dateFormatDate.format(activity.getCreateDate());
-		}
-		%>
-
-		<h3><liferay-ui:message key="<%= message %>" /></h3>
-	</c:if>
+	<h3><liferay-ui:message key="<%= dateFormatDate.format(activity.getCreateDate()) %>" /></h3>
 
 	<div class="activity-item clearfix">
-
-		<%
-		User curUser = null;
-
-		try {
-			curUser = UserLocalServiceUtil.getUserById(activity.getUserId());
-		}
-		catch (Exception e) {
-		}
-		%>
-
-		<div class="user-portrait">
-			<span class="avatar">
-				<img alt="<%= HtmlUtil.escape(curUser.getFullName()) %>" src="<%= curUser.getPortraitURL(themeDisplay) %>" />
-			</span>
-
-			<span class="icon">
-				<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
-			</span>
-		</div>
+		<liferay-ui:user-display
+			showUserDetails="<%= false %>"
+			showUserName="<%= false %>"
+			userId="<%= activity.getUserId() %>"
+		>
+			<liferay-portlet:icon-portlet portlet="<%= activitiesDisplayContext.getSocialActivityFeedEntryPortlet(activityFeedEntry) %>" />
+		</liferay-ui:user-display>
 
 		<div class="activity-title">
 			<%= activityFeedEntry.getTitle() %>

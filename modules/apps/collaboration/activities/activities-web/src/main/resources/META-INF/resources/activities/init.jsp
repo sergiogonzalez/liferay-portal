@@ -21,7 +21,6 @@ page import="com.liferay.activities.web.display.context.DefaultActivitiesDisplay
 page import="com.liferay.activities.web.display.context.util.ActivitiesRequestHelper" %><%@
 page import="com.liferay.microblogs.model.MicroblogsEntry" %><%@
 page import="com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.social.kernel.model.SocialActivity" %><%@
 page import="com.liferay.social.kernel.model.SocialActivitySet" %>
