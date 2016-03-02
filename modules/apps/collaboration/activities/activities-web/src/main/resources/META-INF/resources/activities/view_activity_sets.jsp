@@ -17,38 +17,23 @@
 <%@ include file="/activities/init.jsp" %>
 
 <%
-Group group = themeDisplay.getScopeGroup();
-
-List<SocialActivitySet> results = null;
-
-int count = 0;
-
-int start = ParamUtil.getInteger(request, "start");
-int end = start + _DELTA;
-
-while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
-	results = activitiesDisplayContext.getSocialActivitySets(start, end);
+List<SocialActivitySet> results = activitiesDisplayContext.getSocialActivitySets();
 %>
 
-	<%@ include file="/activities/view_activity_sets_feed.jspf" %>
-
-<%
-	end = start + _DELTA;
-}
-%>
+<%@ include file ="/activities/view_activity_sets_feed.jspf" %>
 
 <aui:script>
-	<portlet:namespace />start = <%= start %>;
+	<portlet:namespace />start = <%= activitiesRequestHelper.getStart() + results.size() %>;
 </aui:script>
 
-<c:if test="<%= results.isEmpty() %>">
-	<div class="no-activities">
+<c:if test ="<%= results.isEmpty() %>">
+	<div class ="no-activities">
 		<c:choose>
-			<c:when test="<%= activitiesDisplayContext.getSocialActivitySetsCount() == 0 %>">
-				<liferay-ui:message key="there-are-no-activities" />
+			<c:when test ="<%= activitiesDisplayContext.getSocialActivitySetsCount() == 0 %>">
+				<liferay-ui:message key ="there-are-no-activities" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="there-are-no-more-activities" />
+				<liferay-ui:message key ="there-are-no-more-activities" />
 			</c:otherwise>
 		</c:choose>
 	</div>

@@ -18,14 +18,8 @@
 for (SocialActivitySet activitySet : results) {
 	SocialActivityFeedEntry activityFeedEntry = SocialActivityInterpreterLocalServiceUtil.interpret(StringPool.BLANK, activitySet, ServiceContextFactory.getInstance(request));
 
-	start++;
-
 	if (activityFeedEntry == null) {
 		continue;
-	}
-
-	if (count >= _DELTA) {
-		break;
 	}
 
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(activityFeedEntry.getPortletId());
@@ -92,6 +86,5 @@ for (SocialActivitySet activitySet : results) {
 	</aui:script>
 
 <%
-	count++;
 }
 %>

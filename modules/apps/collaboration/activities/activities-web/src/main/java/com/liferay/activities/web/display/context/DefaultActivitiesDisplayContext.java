@@ -81,7 +81,10 @@ public class DefaultActivitiesDisplayContext
 	}
 
 	@Override
-	public List<SocialActivitySet> getSocialActivitySets(int start, int end) {
+	public List<SocialActivitySet> getSocialActivitySets() {
+		int start = _activitiesRequestHelper.getStart();
+		int end = start + _DELTA;
+
 		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
 		Group group = themeDisplay.getScopeGroup();
 

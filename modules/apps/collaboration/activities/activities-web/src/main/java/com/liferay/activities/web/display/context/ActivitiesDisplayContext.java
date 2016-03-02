@@ -34,7 +34,7 @@ public interface ActivitiesDisplayContext {
 
 	public String getSelectedTabName();
 
-	public List<SocialActivitySet> getSocialActivitySets(int start, int end);
+	public List<SocialActivitySet> getSocialActivitySets();
 
 	public int getSocialActivitySetsCount();
 
