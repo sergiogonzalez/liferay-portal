@@ -16,19 +16,11 @@
 
 <%@ include file="/activities/init.jsp" %>
 
-<%
-Group group = themeDisplay.getScopeGroup();
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("tabs1", tabs1);
-%>
-
-<c:if test="<%= group.isUser() && layout.isPrivateLayout() %>">
+<c:if test="<%= activitiesDisplayContext.isTabsVisible() %>">
 	<liferay-ui:tabs
-		names="all,connections,following,my-sites,me"
-		url="<%= portletURL.toString() %>"
-		value="<%= tabs1 %>"
+		names="<%= activitiesDisplayContext.getTabsNames() %>"
+		url="<%= activitiesDisplayContext.getTabsURL() %>"
+		value="<%= activitiesDisplayContext.getSelectedTabName() %>"
 	/>
 </c:if>
 
@@ -65,20 +57,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		setTimeout(
 			function() {
-				<portlet:renderURL var="viewActivitySetsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-					<c:choose>
-						<c:when test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_ENABLED)) %>">
-							<portlet:param name="mvcPath" value="/activities/view_activity_sets.jsp" />
-						</c:when>
-						<c:otherwise>
-							<portlet:param name="mvcPath" value="/activities/view_activities.jsp" />
-						</c:otherwise>
-					</c:choose>
-
-					<portlet:param name="tabs1" value="<%= tabs1 %>" />
-				</portlet:renderURL>
-
-				var uri = '<%= viewActivitySetsURL %>';
+				var uri = '<%= activitiesDisplayContext.getViewActivitySetURL() %>';
 
 				uri = Liferay.Util.addParams('<portlet:namespace />start=' + <portlet:namespace />start, uri) || uri;
 
@@ -163,7 +142,7 @@ portletURL.setParameter("tabs1", tabs1);
 				commentsList.toggle();
 			}
 			else {
-				var uri = '<liferay-portlet:resourceURL id="getComments"></liferay-portlet:resourceURL>';
+				var uri = '<%= activitiesDisplayContext.getViewCommentsURL() %>';
 
 				uri = Liferay.Util.addParams('<portlet:namespace />activitySetId=' + currentTarget.getAttribute('data-activitySetId'), uri) || uri;
 
@@ -362,7 +341,7 @@ portletURL.setParameter("tabs1", tabs1);
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			var uri = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/activities/repost_microblogs_entry.jsp" /><portlet:param name="mvcPath" value="/activities/repost_microblogs_entry.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
+			var uri = '<%= activitiesDisplayContext.getRepostMicroblogsEntryURL() %>';
 
 			uri = Liferay.Util.addParams('<portlet:namespace />microblogsEntryId=' + currentTarget.getAttribute('data-microblogsEntryId'), uri) || uri;
 

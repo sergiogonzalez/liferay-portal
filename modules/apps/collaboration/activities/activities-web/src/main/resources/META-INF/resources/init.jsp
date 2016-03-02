@@ -30,13 +30,11 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.DateUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
@@ -50,8 +48,6 @@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.List" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

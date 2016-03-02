@@ -30,6 +30,8 @@ int end = start + _DELTA;
 while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
 	if (group.isUser()) {
 		if (layout.isPrivateLayout()) {
+			String tabs1 = activitiesRequestHelper.getTabs1();
+
 			if (tabs1.equals("connections")) {
 				results = SocialActivitySetLocalServiceUtil.getRelationActivitySets(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, start, end);
 				total = SocialActivitySetLocalServiceUtil.getRelationActivitySetsCount(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION);
