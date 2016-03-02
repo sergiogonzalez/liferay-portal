@@ -27,33 +27,7 @@ int start = ParamUtil.getInteger(request, "start");
 int end = start + _DELTA;
 
 while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
-	if (group.isUser()) {
-		if (layout.isPrivateLayout()) {
-			String tabs1 = activitiesRequestHelper.getTabs1();
-
-			if (tabs1.equals("connections")) {
-				results = SocialActivitySetLocalServiceUtil.getRelationActivitySets(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, start, end);
-			}
-			else if (tabs1.equals("following")) {
-				results = SocialActivitySetLocalServiceUtil.getRelationActivitySets(group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER, start, end);
-			}
-			else if (tabs1.equals("me")) {
-				results = SocialActivitySetLocalServiceUtil.getUserActivitySets(group.getClassPK(), start, end);
-			}
-			else if (tabs1.equals("my-sites")) {
-				results = SocialActivitySetLocalServiceUtil.getUserGroupsActivitySets(group.getClassPK(), start, end);
-			}
-			else {
-				results = SocialActivitySetLocalServiceUtil.getUserViewableActivitySets(group.getClassPK(), start, end);
-			}
-		}
-		else {
-			results = SocialActivitySetLocalServiceUtil.getUserActivitySets(group.getClassPK(), start, end);
-		}
-	}
-	else {
-		results = SocialActivitySetLocalServiceUtil.getGroupActivitySets(group.getGroupId(), start, end);
-	}
+	results = activitiesDisplayContext.getSocialActivitySets(start, end);
 %>
 
 	<%@ include file="/activities/view_activity_sets_feed.jspf" %>

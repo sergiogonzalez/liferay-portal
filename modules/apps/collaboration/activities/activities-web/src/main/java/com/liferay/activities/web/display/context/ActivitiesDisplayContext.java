@@ -14,6 +14,10 @@
 
 package com.liferay.activities.web.display.context;
 
+import com.liferay.social.kernel.model.SocialActivitySet;
+
+import java.util.List;
+
 import javax.portlet.PortletException;
 
 /**
@@ -26,6 +30,8 @@ public interface ActivitiesDisplayContext {
 	public String getRepostMicroblogsEntryURL() throws PortletException;
 
 	public String getSelectedTabName();
+
+	public List<SocialActivitySet> getSocialActivitySets(int start, int end);
 
 	public String getTabsNames();
 

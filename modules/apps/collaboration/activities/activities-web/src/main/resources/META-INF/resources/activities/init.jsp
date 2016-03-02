@@ -29,8 +29,7 @@ page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.social.kernel.model.SocialActivity" %><%@
 page import="com.liferay.social.kernel.model.SocialActivitySet" %><%@
-page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %><%@
-page import="com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil" %>
+page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %>
 
 <%
 ActivitiesRequestHelper activitiesRequestHelper = new ActivitiesRequestHelper(request);

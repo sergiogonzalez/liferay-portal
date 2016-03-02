@@ -31,6 +31,10 @@ public class ActivitiesRequestHelper extends BaseRequestHelper {
 		super(request);
 	}
 
+	public int getStart() {
+		return ParamUtil.getInteger(getRequest(), "start");
+	}
+
 	public String getTabs1() {
 		return ParamUtil.getString(getRequest(), "tabs1", "all");
 	}

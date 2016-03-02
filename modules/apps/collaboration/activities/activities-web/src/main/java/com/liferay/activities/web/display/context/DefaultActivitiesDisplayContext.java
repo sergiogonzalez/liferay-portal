@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
+
+import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -105,6 +108,56 @@ public class DefaultActivitiesDisplayContext
 	}
 
 	@Override
+	public List<SocialActivitySet> getSocialActivitySets(int start, int end) {
+		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
+		Group group = themeDisplay.getScopeGroup();
+		Layout layout = _activitiesRequestHelper.getLayout();
+
+		if (group.isUser()) {
+			if (layout.isPrivateLayout()) {
+				String tabs1 = _activitiesRequestHelper.getTabs1();
+
+				if (tabs1.equals("connections")) {
+					return SocialActivitySetLocalServiceUtil.
+						getRelationActivitySets(
+							group.getClassPK(),
+							SocialRelationConstants.TYPE_BI_CONNECTION, start,
+							end);
+				}
+				else if (tabs1.equals("following")) {
+					return SocialActivitySetLocalServiceUtil.
+						getRelationActivitySets(
+							group.getClassPK(),
+							SocialRelationConstants.TYPE_UNI_FOLLOWER, start,
+							end);
+				}
+				else if (tabs1.equals("me")) {
+					return SocialActivitySetLocalServiceUtil.
+						getUserActivitySets(group.getClassPK(), start, end);
+				}
+				else if (tabs1.equals("my-sites")) {
+					return SocialActivitySetLocalServiceUtil.
+						getUserGroupsActivitySets(
+							group.getClassPK(), start, end);
+				}
+				else {
+					return SocialActivitySetLocalServiceUtil.
+						getUserViewableActivitySets(
+							group.getClassPK(), start, end);
+				}
+			}
+			else {
+				return SocialActivitySetLocalServiceUtil.getUserActivitySets(
+					group.getClassPK(), start, end);
+			}
+		}
+		else {
+			return SocialActivitySetLocalServiceUtil.getGroupActivitySets(
+				group.getGroupId(), start, end);
+		}
+	}
+
+	@Override
 	public String getTabsNames() {
 		return "all,connections,following,my-sites,me";
 	}
@@ -169,6 +222,8 @@ public class DefaultActivitiesDisplayContext
 			return false;
 		}
 	}
+
+	private static final int _DELTA = 10;
 
 	private final ActivitiesRequestHelper _activitiesRequestHelper;
 
