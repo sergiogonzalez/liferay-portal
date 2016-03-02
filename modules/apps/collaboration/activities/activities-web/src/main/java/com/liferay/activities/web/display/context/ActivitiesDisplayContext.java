@@ -25,6 +25,8 @@ import javax.portlet.PortletException;
  */
 public interface ActivitiesDisplayContext {
 
+	public int getCommentsCount(SocialActivitySet socialActivitySet);
+
 	public String getRepostMicroblogsEntryURL() throws PortletException;
 
 	public String getSelectedTabName();
@@ -40,6 +42,9 @@ public interface ActivitiesDisplayContext {
 	public String getViewActivitySetURL() throws PortletException;
 
 	public String getViewCommentsURL();
+
+	public boolean isMicroblogsRepostActionVisible(
+		SocialActivitySet socialActivitySet);
 
 	public boolean isTabsVisible();
 

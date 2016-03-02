@@ -52,32 +52,13 @@ for (SocialActivitySet activitySet : results) {
 						</c:if>
 
 						<%
-						int commentsCount = 0;
-
-						Object[] commentsClassNameAndClassPK = ActivitiesUtil.getCommentsClassNameAndClassPK(activitySet);
-
-						String className = (String)commentsClassNameAndClassPK[0];
-						long classPK = (Long)commentsClassNameAndClassPK[1];
-
-						if (className.equals(MicroblogsEntry.class.getName())) {
-							commentsCount = MicroblogsEntryLocalServiceUtil.getParentMicroblogsEntryMicroblogsEntriesCount(MicroblogsEntryConstants.TYPE_REPLY, classPK);
-						}
-						else {
-							commentsCount = CommentManagerUtil.getCommentsCount(className, classPK);
-						}
+						int commentsCount = activitiesDisplayContext.getCommentsCount(activitySet);
 						%>
 
-						<c:if test="<%= className.equals(MicroblogsEntry.class.getName()) && (activitySet.getUserId() != user.getUserId()) %>">
-
-							<%
-							MicroblogsEntry microblogsEntry = MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(classPK);
-							%>
-
-							<c:if test="<%= (microblogsEntry != null) && (microblogsEntry.getSocialRelationType() == MicroblogsEntryConstants.TYPE_EVERYONE) %>">
-								<span class="action repost">
-									<a data-microblogsEntryId="<%= classPK %>" href="javascript:;"><liferay-ui:message key="repost" /></a>
-								</span>
-							</c:if>
+						<c:if test="<%= activitiesDisplayContext.isMicroblogsRepostActionVisible(activitySet) %>">
+							<span class="action repost">
+								<a data-microblogsEntryId="<%= activitySet.getClassPK() %>" href="javascript:;"><liferay-ui:message key="repost" /></a>
+							</span>
 						</c:if>
 
 						<span class="action view-comments">

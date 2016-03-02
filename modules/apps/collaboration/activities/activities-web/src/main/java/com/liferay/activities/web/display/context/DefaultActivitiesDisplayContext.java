@@ -15,6 +15,11 @@
 package com.liferay.activities.web.display.context;
 
 import com.liferay.activities.web.display.context.util.ActivitiesRequestHelper;
+import com.liferay.activities.web.util.ActivitiesUtil;
+import com.liferay.microblogs.model.MicroblogsEntry;
+import com.liferay.microblogs.model.MicroblogsEntryConstants;
+import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -39,6 +44,23 @@ public class DefaultActivitiesDisplayContext
 		ActivitiesRequestHelper activitiesRequestHelper) {
 
 		_activitiesRequestHelper = activitiesRequestHelper;
+	}
+
+	@Override
+	public int getCommentsCount(SocialActivitySet socialActivitySet) {
+		Object[] commentsClassNameAndClassPK = ActivitiesUtil.
+			getCommentsClassNameAndClassPK(socialActivitySet);
+
+		String className = (String)commentsClassNameAndClassPK[0];
+		long classPK = (Long)commentsClassNameAndClassPK[1];
+
+		if (className.equals(MicroblogsEntry.class.getName())) {
+			return MicroblogsEntryLocalServiceUtil.
+				getParentMicroblogsEntryMicroblogsEntriesCount(
+					MicroblogsEntryConstants.TYPE_REPLY, classPK);
+		}
+
+		return CommentManagerUtil.getCommentsCount(className, classPK);
 	}
 
 	@Override
@@ -199,6 +221,34 @@ public class DefaultActivitiesDisplayContext
 			"getComments");
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public boolean isMicroblogsRepostActionVisible(
+		SocialActivitySet socialActivitySet) {
+
+		Object[] commentsClassNameAndClassPK = ActivitiesUtil.
+			getCommentsClassNameAndClassPK(socialActivitySet);
+
+		String className = (String)commentsClassNameAndClassPK[0];
+		long classPK = (Long)commentsClassNameAndClassPK[1];
+
+		if (className.equals(MicroblogsEntry.class.getName()) &&
+			(socialActivitySet.getUserId() !=
+				_activitiesRequestHelper.getUserId())) {
+
+			MicroblogsEntry microblogsEntry =
+				MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(classPK);
+
+			if ((microblogsEntry != null) &&
+				(microblogsEntry.getSocialRelationType() ==
+					MicroblogsEntryConstants.TYPE_EVERYONE)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
