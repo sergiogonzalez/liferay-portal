@@ -111,49 +111,44 @@ public class DefaultActivitiesDisplayContext
 	public List<SocialActivitySet> getSocialActivitySets(int start, int end) {
 		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
 		Group group = themeDisplay.getScopeGroup();
-		Layout layout = _activitiesRequestHelper.getLayout();
 
-		if (group.isUser()) {
-			if (layout.isPrivateLayout()) {
-				String tabs1 = _activitiesRequestHelper.getTabs1();
-
-				if (tabs1.equals("connections")) {
-					return SocialActivitySetLocalServiceUtil.
-						getRelationActivitySets(
-							group.getClassPK(),
-							SocialRelationConstants.TYPE_BI_CONNECTION, start,
-							end);
-				}
-				else if (tabs1.equals("following")) {
-					return SocialActivitySetLocalServiceUtil.
-						getRelationActivitySets(
-							group.getClassPK(),
-							SocialRelationConstants.TYPE_UNI_FOLLOWER, start,
-							end);
-				}
-				else if (tabs1.equals("me")) {
-					return SocialActivitySetLocalServiceUtil.
-						getUserActivitySets(group.getClassPK(), start, end);
-				}
-				else if (tabs1.equals("my-sites")) {
-					return SocialActivitySetLocalServiceUtil.
-						getUserGroupsActivitySets(
-							group.getClassPK(), start, end);
-				}
-				else {
-					return SocialActivitySetLocalServiceUtil.
-						getUserViewableActivitySets(
-							group.getClassPK(), start, end);
-				}
-			}
-			else {
-				return SocialActivitySetLocalServiceUtil.getUserActivitySets(
-					group.getClassPK(), start, end);
-			}
-		}
-		else {
+		if (!group.isUser()) {
 			return SocialActivitySetLocalServiceUtil.getGroupActivitySets(
 				group.getGroupId(), start, end);
+		}
+
+		Layout layout = _activitiesRequestHelper.getLayout();
+
+		if (!layout.isPrivateLayout()) {
+			return SocialActivitySetLocalServiceUtil.getUserActivitySets(
+				group.getClassPK(), start, end);
+		}
+
+		String tabs1 = _activitiesRequestHelper.getTabs1();
+
+		if (tabs1.equals("connections")) {
+			return SocialActivitySetLocalServiceUtil.
+				getRelationActivitySets(
+					group.getClassPK(),
+					SocialRelationConstants.TYPE_BI_CONNECTION, start, end);
+		}
+		else if (tabs1.equals("following")) {
+			return SocialActivitySetLocalServiceUtil.
+				getRelationActivitySets(
+					group.getClassPK(),
+					SocialRelationConstants.TYPE_UNI_FOLLOWER, start, end);
+		}
+		else if (tabs1.equals("me")) {
+			return SocialActivitySetLocalServiceUtil.
+				getUserActivitySets(group.getClassPK(), start, end);
+		}
+		else if (tabs1.equals("my-sites")) {
+			return SocialActivitySetLocalServiceUtil.
+				getUserGroupsActivitySets(group.getClassPK(), start, end);
+		}
+		else {
+			return SocialActivitySetLocalServiceUtil.
+				getUserViewableActivitySets(group.getClassPK(), start, end);
 		}
 	}
 
