@@ -24,8 +24,7 @@ page import="com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil" %><
 page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.social.kernel.model.SocialActivity" %><%@
-page import="com.liferay.social.kernel.model.SocialActivitySet" %><%@
-page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %>
+page import="com.liferay.social.kernel.model.SocialActivitySet" %>
 
 <%
 ActivitiesRequestHelper activitiesRequestHelper = new ActivitiesRequestHelper(request);

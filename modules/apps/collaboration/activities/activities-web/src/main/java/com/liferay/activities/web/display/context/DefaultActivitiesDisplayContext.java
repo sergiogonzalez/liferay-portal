@@ -31,10 +31,12 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil;
+import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
 
 import java.util.List;
@@ -94,6 +96,91 @@ public class DefaultActivitiesDisplayContext
 	@Override
 	public String getSelectedTabName() {
 		return _activitiesRequestHelper.getTabs1();
+	}
+
+	@Override
+	public List<SocialActivity> getSocialActivities() {
+		int start = _activitiesRequestHelper.getStart();
+		int end = start + _DELTA;
+
+		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
+		Group group = themeDisplay.getScopeGroup();
+		Layout layout = _activitiesRequestHelper.getLayout();
+
+		if (group.isUser()) {
+			if (!layout.isPublicLayout()) {
+				String tabs1 = _activitiesRequestHelper.getTabs1();
+
+				if (tabs1.equals("connections")) {
+					return SocialActivityLocalServiceUtil.getRelationActivities(
+						group.getClassPK(),
+						SocialRelationConstants.TYPE_BI_CONNECTION, start, end);
+				}
+				else if (tabs1.equals("following")) {
+					return SocialActivityLocalServiceUtil.getRelationActivities(
+						group.getClassPK(),
+						SocialRelationConstants.TYPE_UNI_FOLLOWER, start, end);
+				}
+				else if (tabs1.equals("my-sites")) {
+					return SocialActivityLocalServiceUtil.
+						getUserGroupsActivities(group.getClassPK(), start, end);
+				}
+				else {
+					return SocialActivityLocalServiceUtil.getUserActivities(
+						group.getClassPK(), start, end);
+				}
+			}
+			else {
+				return SocialActivityLocalServiceUtil.getUserActivities(
+					group.getClassPK(), start, end);
+			}
+		}
+		else {
+			return SocialActivityLocalServiceUtil.getGroupActivities(
+				group.getGroupId(), start, end);
+		}
+	}
+
+	@Override
+	public int getSocialActivitiesCount() {
+		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
+		Group group = themeDisplay.getScopeGroup();
+		Layout layout = _activitiesRequestHelper.getLayout();
+
+		if (group.isUser()) {
+			if (!layout.isPublicLayout()) {
+				String tabs1 = _activitiesRequestHelper.getTabs1();
+
+				if (tabs1.equals("connections")) {
+					return SocialActivityLocalServiceUtil.
+						getRelationActivitiesCount(
+							group.getClassPK(),
+							SocialRelationConstants.TYPE_BI_CONNECTION);
+				}
+				else if (tabs1.equals("following")) {
+					return SocialActivityLocalServiceUtil.
+						getRelationActivitiesCount(
+							group.getClassPK(),
+							SocialRelationConstants.TYPE_UNI_FOLLOWER);
+				}
+				else if (tabs1.equals("my-sites")) {
+					return SocialActivityLocalServiceUtil.
+						getUserGroupsActivitiesCount(group.getClassPK());
+				}
+				else {
+					return SocialActivityLocalServiceUtil.
+						getUserActivitiesCount(group.getClassPK());
+				}
+			}
+			else {
+				return SocialActivityLocalServiceUtil.getUserActivitiesCount(
+					group.getClassPK());
+			}
+		}
+		else {
+			return SocialActivityLocalServiceUtil.getGroupActivitiesCount(
+				group.getGroupId());
+		}
 	}
 
 	@Override

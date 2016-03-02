@@ -17,47 +17,15 @@
 <%@ include file="/activities/init.jsp" %>
 
 <%
-Group group = themeDisplay.getScopeGroup();
-
 List<SocialActivity> results = null;
 
 int count = 0;
-int total = 0;
 
 int start = ParamUtil.getInteger(request, "start");
 int end = start + _DELTA;
 
 while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
-	if (group.isUser()) {
-		if (!layout.isPublicLayout()) {
-			String tabs1 = activitiesRequestHelper.getTabs1();
-
-			if (tabs1.equals("connections")) {
-				results = SocialActivityLocalServiceUtil.getRelationActivities(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, start, end);
-				total = SocialActivityLocalServiceUtil.getRelationActivitiesCount(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION);
-			}
-			else if (tabs1.equals("following")) {
-				results = SocialActivityLocalServiceUtil.getRelationActivities(group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER, start, end);
-				total = SocialActivityLocalServiceUtil.getRelationActivitiesCount(group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
-			}
-			else if (tabs1.equals("my-sites")) {
-				results = SocialActivityLocalServiceUtil.getUserGroupsActivities(group.getClassPK(), start, end);
-				total = SocialActivityLocalServiceUtil.getUserGroupsActivitiesCount(group.getClassPK());
-			}
-			else {
-				results = SocialActivityLocalServiceUtil.getUserActivities(group.getClassPK(), start, end);
-				total = SocialActivityLocalServiceUtil.getUserActivitiesCount(group.getClassPK());
-			}
-		}
-		else {
-			results = SocialActivityLocalServiceUtil.getUserActivities(group.getClassPK(), start, end);
-			total = SocialActivityLocalServiceUtil.getUserActivitiesCount(group.getClassPK());
-		}
-	}
-	else {
-		results = SocialActivityLocalServiceUtil.getGroupActivities(group.getGroupId(), start, end);
-		total = SocialActivityLocalServiceUtil.getGroupActivitiesCount(group.getGroupId());
-	}
+	results = activitiesDisplayContext.getSocialActivities();
 %>
 
 	<%@ include file="/activities/view_activities_feed.jspf" %>
@@ -68,13 +36,13 @@ while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
 %>
 
 <aui:script>
-	<portlet:namespace />start = <%= start %>;
+	<portlet:namespace />start = <%= activitiesRequestHelper.getStart() + results.size() %>;
 </aui:script>
 
 <c:if test="<%= results.isEmpty() %>">
 	<div class="no-activities">
 		<c:choose>
-			<c:when test="<%= total == 0 %>">
+			<c:when test="<%= activitiesDisplayContext.getSocialActivitiesCount() == 0 %>">
 				<liferay-ui:message key="there-are-no-activities" />
 			</c:when>
 			<c:otherwise>
