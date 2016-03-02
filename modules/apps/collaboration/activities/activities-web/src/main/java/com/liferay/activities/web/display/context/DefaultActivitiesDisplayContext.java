@@ -16,6 +16,7 @@ package com.liferay.activities.web.display.context;
 
 import com.liferay.activities.web.display.context.util.ActivitiesRequestHelper;
 import com.liferay.activities.web.util.ActivitiesUtil;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
@@ -228,6 +231,30 @@ public class DefaultActivitiesDisplayContext
 			"getComments");
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public boolean isActivityFooterVisible(
+		SocialActivitySet socialActivitySet) {
+
+		if (Validator.equals(
+				socialActivitySet.getClassName(), MBMessage.class.getName())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isActivityLinkVisible(
+		SocialActivityFeedEntry socialActivityFeedEntry) {
+
+		if (Validator.isNull(socialActivityFeedEntry.getLink())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

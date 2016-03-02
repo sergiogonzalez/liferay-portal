@@ -19,7 +19,6 @@
 <%@ page import="com.liferay.activities.web.display.context.ActivitiesDisplayContext" %><%@
 page import="com.liferay.activities.web.display.context.DefaultActivitiesDisplayContext" %><%@
 page import="com.liferay.activities.web.display.context.util.ActivitiesRequestHelper" %><%@
-page import="com.liferay.message.boards.kernel.model.MBMessage" %><%@
 page import="com.liferay.microblogs.model.MicroblogsEntry" %><%@
 page import="com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@

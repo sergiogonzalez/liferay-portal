@@ -14,6 +14,7 @@
 
 package com.liferay.activities.web.display.context;
 
+import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
 import java.util.List;
@@ -46,6 +47,11 @@ public interface ActivitiesDisplayContext {
 	public String getViewActivitySetURL() throws PortletException;
 
 	public String getViewCommentsURL();
+
+	public boolean isActivityFooterVisible(SocialActivitySet socialActivitySet);
+
+	public boolean isActivityLinkVisible(
+		SocialActivityFeedEntry socialActivityFeedEntry);
 
 	public boolean isMicroblogsRepostActionVisible(
 		SocialActivitySet socialActivitySet);
