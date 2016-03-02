@@ -17,23 +17,10 @@
 <%@ include file="/activities/init.jsp" %>
 
 <%
-List<SocialActivity> results = null;
-
-int count = 0;
-
-int start = ParamUtil.getInteger(request, "start");
-int end = start + _DELTA;
-
-while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
-	results = activitiesDisplayContext.getSocialActivities();
+List<SocialActivity> results = activitiesDisplayContext.getSocialActivities();
 %>
 
-	<%@ include file="/activities/view_activities_feed.jspf" %>
-
-<%
-	end = start + _DELTA;
-}
-%>
+<%@ include file="/activities/view_activities_feed.jspf" %>
 
 <aui:script>
 	<portlet:namespace />start = <%= activitiesRequestHelper.getStart() + results.size() %>;
