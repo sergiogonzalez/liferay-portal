@@ -51,15 +51,15 @@ for (SocialActivitySet activitySet : results) {
 							<span class="action"><%= activityFeedEntry.getLink() %></span>
 						</c:if>
 
-						<%
-						int commentsCount = activitiesDisplayContext.getCommentsCount(activitySet);
-						%>
-
 						<c:if test="<%= activitiesDisplayContext.isMicroblogsRepostActionVisible(activitySet) %>">
 							<span class="action repost">
 								<a data-microblogsEntryId="<%= activitySet.getClassPK() %>" href="javascript:;"><liferay-ui:message key="repost" /></a>
 							</span>
 						</c:if>
+
+						<%
+						int commentsCount = activitiesDisplayContext.getCommentsCount(activitySet);
+						%>
 
 						<span class="action view-comments">
 							<a data-activitySetId="<%= activitySet.getActivitySetId() %>" href="javascript:;"><%= commentsCount > 0 ? commentsCount : StringPool.BLANK %> <liferay-ui:message key='<%= commentsCount > 1 ? "comments" : "comment" %>' /></a>

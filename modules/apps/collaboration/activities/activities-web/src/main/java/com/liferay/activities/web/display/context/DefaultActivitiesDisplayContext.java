@@ -48,8 +48,8 @@ public class DefaultActivitiesDisplayContext
 
 	@Override
 	public int getCommentsCount(SocialActivitySet socialActivitySet) {
-		Object[] commentsClassNameAndClassPK = ActivitiesUtil.
-			getCommentsClassNameAndClassPK(socialActivitySet);
+		Object[] commentsClassNameAndClassPK =
+			ActivitiesUtil.getCommentsClassNameAndClassPK(socialActivitySet);
 
 		String className = (String)commentsClassNameAndClassPK[0];
 		long classPK = (Long)commentsClassNameAndClassPK[1];
@@ -227,18 +227,15 @@ public class DefaultActivitiesDisplayContext
 	public boolean isMicroblogsRepostActionVisible(
 		SocialActivitySet socialActivitySet) {
 
-		Object[] commentsClassNameAndClassPK = ActivitiesUtil.
-			getCommentsClassNameAndClassPK(socialActivitySet);
-
-		String className = (String)commentsClassNameAndClassPK[0];
-		long classPK = (Long)commentsClassNameAndClassPK[1];
+		String className = socialActivitySet.getClassName();
 
 		if (className.equals(MicroblogsEntry.class.getName()) &&
 			(socialActivitySet.getUserId() !=
 				_activitiesRequestHelper.getUserId())) {
 
 			MicroblogsEntry microblogsEntry =
-				MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(classPK);
+				MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
+					socialActivitySet.getClassPK());
 
 			if ((microblogsEntry != null) &&
 				(microblogsEntry.getSocialRelationType() ==
