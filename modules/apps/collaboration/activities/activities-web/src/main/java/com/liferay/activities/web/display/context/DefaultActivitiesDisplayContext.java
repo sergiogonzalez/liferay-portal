@@ -48,11 +48,8 @@ public class DefaultActivitiesDisplayContext
 
 	@Override
 	public int getCommentsCount(SocialActivitySet socialActivitySet) {
-		Object[] commentsClassNameAndClassPK =
-			ActivitiesUtil.getCommentsClassNameAndClassPK(socialActivitySet);
-
-		String className = (String)commentsClassNameAndClassPK[0];
-		long classPK = (Long)commentsClassNameAndClassPK[1];
+		String className = getDiscussionClassName(socialActivitySet);
+		long classPK = getDiscussionClassPK(socialActivitySet);
 
 		if (className.equals(MicroblogsEntry.class.getName())) {
 			return MicroblogsEntryLocalServiceUtil.
@@ -61,6 +58,22 @@ public class DefaultActivitiesDisplayContext
 		}
 
 		return CommentManagerUtil.getCommentsCount(className, classPK);
+	}
+
+	@Override
+	public String getDiscussionClassName(SocialActivitySet socialActivitySet) {
+		Object[] commentsClassNameAndClassPK =
+			ActivitiesUtil.getCommentsClassNameAndClassPK(socialActivitySet);
+
+		return (String)commentsClassNameAndClassPK[0];
+	}
+
+	@Override
+	public long getDiscussionClassPK(SocialActivitySet socialActivitySet) {
+		Object[] commentsClassNameAndClassPK =
+			ActivitiesUtil.getCommentsClassNameAndClassPK(socialActivitySet);
+
+		return (Long)commentsClassNameAndClassPK[1];
 	}
 
 	@Override

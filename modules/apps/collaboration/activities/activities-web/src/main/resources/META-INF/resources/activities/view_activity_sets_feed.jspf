@@ -74,7 +74,11 @@ for (SocialActivitySet activitySet : results) {
 						</span>
 					</div>
 
-					<%@ include file="/activities/view_comments.jspf" %>
+					<liferay-ui:discussion
+						className="<%= activitiesDisplayContext.getDiscussionClassName(activitySet) %>"
+						classPK="<%= activitiesDisplayContext.getDiscussionClassPK(activitySet) %>"
+						userId="<%= user.getUserId() %>"
+					/>
 				</c:if>
 			</div>
 		</div>
