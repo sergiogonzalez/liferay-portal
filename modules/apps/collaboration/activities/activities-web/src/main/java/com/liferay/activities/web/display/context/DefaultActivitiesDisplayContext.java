@@ -42,50 +42,6 @@ public class DefaultActivitiesDisplayContext
 	}
 
 	@Override
-	public int getSocialActivitySetsCount() {
-		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
-		Group group = themeDisplay.getScopeGroup();
-		Layout layout = _activitiesRequestHelper.getLayout();
-
-		if (!group.isUser()) {
-			return SocialActivitySetLocalServiceUtil.getGroupActivitySetsCount(
-				group.getGroupId());
-		}
-
-		if (!layout.isPrivateLayout()) {
-			return SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(
-				group.getClassPK());
-		}
-
-		String tabs1 = _activitiesRequestHelper.getTabs1();
-
-		if (tabs1.equals("connections")) {
-			return SocialActivitySetLocalServiceUtil.
-				getRelationActivitySetsCount(
-					group.getClassPK(),
-					SocialRelationConstants.TYPE_BI_CONNECTION);
-		}
-		else if (tabs1.equals("following")) {
-			return SocialActivitySetLocalServiceUtil.
-				getRelationActivitySetsCount(
-					group.getClassPK(),
-					SocialRelationConstants.TYPE_UNI_FOLLOWER);
-		}
-		else if (tabs1.equals("me")) {
-			return SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(
-				group.getClassPK());
-		}
-		else if (tabs1.equals("my-sites")) {
-			return SocialActivitySetLocalServiceUtil.
-				getUserGroupsActivitySetsCount(group.getClassPK());
-		}
-		else {
-			return SocialActivitySetLocalServiceUtil.
-				getUserViewableActivitySetsCount(group.getClassPK());
-		}
-	}
-
-	@Override
 	public String getRepostMicroblogsEntryURL() throws PortletException {
 		LiferayPortletResponse liferayPortletResponse =
 			_activitiesRequestHelper.getLiferayPortletResponse();
@@ -127,28 +83,70 @@ public class DefaultActivitiesDisplayContext
 		String tabs1 = _activitiesRequestHelper.getTabs1();
 
 		if (tabs1.equals("connections")) {
-			return SocialActivitySetLocalServiceUtil.
-				getRelationActivitySets(
-					group.getClassPK(),
-					SocialRelationConstants.TYPE_BI_CONNECTION, start, end);
+			return SocialActivitySetLocalServiceUtil.getRelationActivitySets(
+				group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION,
+				start, end);
 		}
 		else if (tabs1.equals("following")) {
-			return SocialActivitySetLocalServiceUtil.
-				getRelationActivitySets(
-					group.getClassPK(),
-					SocialRelationConstants.TYPE_UNI_FOLLOWER, start, end);
+			return SocialActivitySetLocalServiceUtil.getRelationActivitySets(
+				group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER,
+				start, end);
 		}
 		else if (tabs1.equals("me")) {
-			return SocialActivitySetLocalServiceUtil.
-				getUserActivitySets(group.getClassPK(), start, end);
+			return SocialActivitySetLocalServiceUtil.getUserActivitySets(
+				group.getClassPK(), start, end);
 		}
 		else if (tabs1.equals("my-sites")) {
-			return SocialActivitySetLocalServiceUtil.
-				getUserGroupsActivitySets(group.getClassPK(), start, end);
+			return SocialActivitySetLocalServiceUtil.getUserGroupsActivitySets(
+				group.getClassPK(), start, end);
 		}
 		else {
 			return SocialActivitySetLocalServiceUtil.
 				getUserViewableActivitySets(group.getClassPK(), start, end);
+		}
+	}
+
+	@Override
+	public int getSocialActivitySetsCount() {
+		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
+		Group group = themeDisplay.getScopeGroup();
+		Layout layout = _activitiesRequestHelper.getLayout();
+
+		if (!group.isUser()) {
+			return SocialActivitySetLocalServiceUtil.getGroupActivitySetsCount(
+				group.getGroupId());
+		}
+
+		if (!layout.isPrivateLayout()) {
+			return SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(
+				group.getClassPK());
+		}
+
+		String tabs1 = _activitiesRequestHelper.getTabs1();
+
+		if (tabs1.equals("connections")) {
+			return SocialActivitySetLocalServiceUtil.
+				getRelationActivitySetsCount(
+					group.getClassPK(),
+					SocialRelationConstants.TYPE_BI_CONNECTION);
+		}
+		else if (tabs1.equals("following")) {
+			return SocialActivitySetLocalServiceUtil.
+				getRelationActivitySetsCount(
+					group.getClassPK(),
+					SocialRelationConstants.TYPE_UNI_FOLLOWER);
+		}
+		else if (tabs1.equals("me")) {
+			return SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(
+				group.getClassPK());
+		}
+		else if (tabs1.equals("my-sites")) {
+			return SocialActivitySetLocalServiceUtil.
+				getUserGroupsActivitySetsCount(group.getClassPK());
+		}
+		else {
+			return SocialActivitySetLocalServiceUtil.
+				getUserViewableActivitySetsCount(group.getClassPK());
 		}
 	}
 

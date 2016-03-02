@@ -25,13 +25,13 @@ import javax.portlet.PortletException;
  */
 public interface ActivitiesDisplayContext {
 
-	public int getSocialActivitySetsCount();
-
 	public String getRepostMicroblogsEntryURL() throws PortletException;
 
 	public String getSelectedTabName();
 
 	public List<SocialActivitySet> getSocialActivitySets(int start, int end);
+
+	public int getSocialActivitySetsCount();
 
 	public String getTabsNames();
 
