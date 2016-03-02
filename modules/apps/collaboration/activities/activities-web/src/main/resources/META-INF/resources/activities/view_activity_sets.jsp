@@ -22,7 +22,6 @@ Group group = themeDisplay.getScopeGroup();
 List<SocialActivitySet> results = null;
 
 int count = 0;
-int total = 0;
 
 int start = ParamUtil.getInteger(request, "start");
 int end = start + _DELTA;
@@ -34,33 +33,26 @@ while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
 
 			if (tabs1.equals("connections")) {
 				results = SocialActivitySetLocalServiceUtil.getRelationActivitySets(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, start, end);
-				total = SocialActivitySetLocalServiceUtil.getRelationActivitySetsCount(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION);
 			}
 			else if (tabs1.equals("following")) {
 				results = SocialActivitySetLocalServiceUtil.getRelationActivitySets(group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER, start, end);
-				total = SocialActivitySetLocalServiceUtil.getRelationActivitySetsCount(group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
 			}
 			else if (tabs1.equals("me")) {
 				results = SocialActivitySetLocalServiceUtil.getUserActivitySets(group.getClassPK(), start, end);
-				total = SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(group.getClassPK());
 			}
 			else if (tabs1.equals("my-sites")) {
 				results = SocialActivitySetLocalServiceUtil.getUserGroupsActivitySets(group.getClassPK(), start, end);
-				total = SocialActivitySetLocalServiceUtil.getUserGroupsActivitySetsCount(group.getClassPK());
 			}
 			else {
 				results = SocialActivitySetLocalServiceUtil.getUserViewableActivitySets(group.getClassPK(), start, end);
-				total = SocialActivitySetLocalServiceUtil.getUserViewableActivitySetsCount(group.getClassPK());
 			}
 		}
 		else {
 			results = SocialActivitySetLocalServiceUtil.getUserActivitySets(group.getClassPK(), start, end);
-			total = SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(group.getClassPK());
 		}
 	}
 	else {
 		results = SocialActivitySetLocalServiceUtil.getGroupActivitySets(group.getGroupId(), start, end);
-		total = SocialActivitySetLocalServiceUtil.getGroupActivitySetsCount(group.getGroupId());
 	}
 %>
 
@@ -78,7 +70,7 @@ while ((count < _DELTA) && ((results == null) || !results.isEmpty())) {
 <c:if test="<%= results.isEmpty() %>">
 	<div class="no-activities">
 		<c:choose>
-			<c:when test="<%= total == 0 %>">
+			<c:when test="<%= activitiesDisplayContext.getSocialActivitySetsCount() == 0 %>">
 				<liferay-ui:message key="there-are-no-activities" />
 			</c:when>
 			<c:otherwise>

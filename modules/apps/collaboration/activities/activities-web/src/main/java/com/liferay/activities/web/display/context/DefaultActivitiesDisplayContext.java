@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.social.kernel.model.SocialRelationConstants;
+import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -34,6 +36,50 @@ public class DefaultActivitiesDisplayContext
 		ActivitiesRequestHelper activitiesRequestHelper) {
 
 		_activitiesRequestHelper = activitiesRequestHelper;
+	}
+
+	@Override
+	public int getSocialActivitySetsCount() {
+		ThemeDisplay themeDisplay = _activitiesRequestHelper.getThemeDisplay();
+		Group group = themeDisplay.getScopeGroup();
+		Layout layout = _activitiesRequestHelper.getLayout();
+
+		if (group.isUser()) {
+			if (layout.isPrivateLayout()) {
+				String tabs1 = _activitiesRequestHelper.getTabs1();
+
+				if (tabs1.equals("connections")) {
+					return SocialActivitySetLocalServiceUtil.
+						getRelationActivitySetsCount(
+							group.getClassPK(),
+							SocialRelationConstants.TYPE_BI_CONNECTION);
+				}
+				else if (tabs1.equals("following")) {
+					return SocialActivitySetLocalServiceUtil.
+						getRelationActivitySetsCount(
+							group.getClassPK(),
+							SocialRelationConstants.TYPE_UNI_FOLLOWER);
+				}
+				else if (tabs1.equals("me")) {
+					return SocialActivitySetLocalServiceUtil.
+						getUserActivitySetsCount(group.getClassPK());
+				}
+				else if (tabs1.equals("my-sites")) {
+					return SocialActivitySetLocalServiceUtil.
+						getUserGroupsActivitySetsCount(group.getClassPK());
+				}
+				else {
+					return SocialActivitySetLocalServiceUtil.
+						getUserViewableActivitySetsCount(group.getClassPK());
+				}
+			}
+
+			return SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(
+				group.getClassPK());
+		}
+
+		return SocialActivitySetLocalServiceUtil.getGroupActivitySetsCount(
+			group.getGroupId());
 	}
 
 	@Override
