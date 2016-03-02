@@ -18,9 +18,80 @@
 
 <%
 List<SocialActivitySet> results = activitiesDisplayContext.getSocialActivitySets();
+
+for (SocialActivitySet activitySet : results) {
+	SocialActivityFeedEntry activityFeedEntry = SocialActivityInterpreterLocalServiceUtil.interpret(StringPool.BLANK, activitySet, ServiceContextFactory.getInstance(request));
+
+	if (activityFeedEntry == null) {
+		continue;
+	}
+
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(activityFeedEntry.getPortletId());
 %>
 
-<%@ include file ="/activities/view_activity_sets_feed.jspf" %>
+	<div class="activity-item clearfix <%= portlet.getCssClassWrapper() %>-activity" id="<portlet:namespace /><%= activitySet.getActivitySetId() %>">
+		<liferay-ui:user-display
+			showUserDetails="<%= false %>"
+			showUserName="<%= false %>"
+			userId="<%= activitySet.getUserId() %>"
+		/>
+
+		<%= activityFeedEntry.getTitle() %>
+
+		<div class="activity-block">
+
+			<%= activityFeedEntry.getBody() %>
+
+			<div class="activity-footer">
+				<c:if test="<%= activitiesDisplayContext.isActivityFooterVisible(activitySet) %>">
+					<div class="activity-footer-toolbar">
+						<c:if test="<%= activitiesDisplayContext.isActivityLinkVisible(activityFeedEntry) %>">
+							<span class="action"><%= activityFeedEntry.getLink() %></span>
+						</c:if>
+
+						<c:if test="<%= activitiesDisplayContext.isMicroblogsRepostActionVisible(activitySet) %>">
+							<span class="action repost">
+								<a data-microblogsEntryId="<%= activitySet.getClassPK() %>" href="javascript:;"><liferay-ui:message key="repost" /></a>
+							</span>
+						</c:if>
+					</div>
+
+					<liferay-ui:discussion
+						className="<%= activitiesDisplayContext.getDiscussionClassName(activitySet) %>"
+						classPK="<%= activitiesDisplayContext.getDiscussionClassPK(activitySet) %>"
+						userId="<%= user.getUserId() %>"
+					/>
+				</c:if>
+			</div>
+		</div>
+	</div>
+
+	<aui:script use="aui-base">
+		var entry = A.one('#<portlet:namespace /><%= activitySet.getActivitySetId() %>');
+
+		var subentry = entry.one('.activity-subentry');
+
+		if (subentry != null) {
+			var body = entry.one('.grouped-activity-body');
+
+			if (body.outerHeight() > (subentry.outerHeight() * 3)) {
+				var toggle = entry.one('.toggle');
+
+				toggle.removeClass('hide');
+
+				entry.addClass('toggler-content-collapsed')
+			}
+			else {
+				var bodyContainer = entry.one('.grouped-activity-body-container');
+
+				bodyContainer.setStyle('height', 'auto');
+			}
+		}
+	</aui:script>
+
+<%
+}
+%>
 
 <aui:script>
 	<portlet:namespace />start = <%= activitiesRequestHelper.getStart() + results.size() %>;
