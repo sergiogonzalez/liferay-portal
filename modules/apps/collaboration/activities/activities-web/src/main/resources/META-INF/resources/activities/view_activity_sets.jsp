@@ -20,16 +20,14 @@
 List<SocialActivitySet> results = activitiesDisplayContext.getSocialActivitySets();
 
 for (SocialActivitySet activitySet : results) {
-	SocialActivityFeedEntry activityFeedEntry = SocialActivityInterpreterLocalServiceUtil.interpret(StringPool.BLANK, activitySet, ServiceContextFactory.getInstance(request));
+	SocialActivityFeedEntry activityFeedEntry = activitiesDisplayContext.getSocialActivityFeedEntry(activitySet);
 
 	if (activityFeedEntry == null) {
 		continue;
 	}
-
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(activityFeedEntry.getPortletId());
 %>
 
-	<div class="activity-item clearfix <%= portlet.getCssClassWrapper() %>-activity" id="<portlet:namespace /><%= activitySet.getActivitySetId() %>">
+	<div class="activity-item clearfix <%= activitiesDisplayContext.getActivityItemCssClassWrapper(activityFeedEntry) %>-activity" id="<portlet:namespace /><%= activitySet.getActivitySetId() %>">
 		<liferay-ui:user-display
 			showUserDetails="<%= false %>"
 			showUserName="<%= false %>"

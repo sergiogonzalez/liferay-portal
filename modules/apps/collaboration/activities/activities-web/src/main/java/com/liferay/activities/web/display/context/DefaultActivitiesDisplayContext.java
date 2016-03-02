@@ -20,15 +20,21 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.model.SocialRelationConstants;
+import com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
 
 import java.util.List;
@@ -46,6 +52,16 @@ public class DefaultActivitiesDisplayContext
 		ActivitiesRequestHelper activitiesRequestHelper) {
 
 		_activitiesRequestHelper = activitiesRequestHelper;
+	}
+
+	@Override
+	public String getActivityItemCssClassWrapper(
+		SocialActivityFeedEntry socialActivityFeedEntry) {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			socialActivityFeedEntry.getPortletId());
+
+		return portlet.getCssClassWrapper();
 	}
 
 	@Override
@@ -78,6 +94,17 @@ public class DefaultActivitiesDisplayContext
 	@Override
 	public String getSelectedTabName() {
 		return _activitiesRequestHelper.getTabs1();
+	}
+
+	@Override
+	public SocialActivityFeedEntry getSocialActivityFeedEntry(
+			SocialActivitySet socialActivitySet)
+		throws PortalException {
+
+		return SocialActivityInterpreterLocalServiceUtil.interpret(
+			StringPool.BLANK, socialActivitySet,
+			ServiceContextFactory.getInstance(
+				_activitiesRequestHelper.getRequest()));
 	}
 
 	@Override

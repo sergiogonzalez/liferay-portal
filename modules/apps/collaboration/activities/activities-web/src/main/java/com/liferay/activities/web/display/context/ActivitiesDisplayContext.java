@@ -14,6 +14,7 @@
 
 package com.liferay.activities.web.display.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
@@ -26,6 +27,9 @@ import javax.portlet.PortletException;
  */
 public interface ActivitiesDisplayContext {
 
+	public String getActivityItemCssClassWrapper(
+		SocialActivityFeedEntry socialActivityFeedEntry);
+
 	public String getDiscussionClassName(SocialActivitySet socialActivitySet);
 
 	public long getDiscussionClassPK(SocialActivitySet socialActivitySet);
@@ -33,6 +37,10 @@ public interface ActivitiesDisplayContext {
 	public String getRepostMicroblogsEntryURL() throws PortletException;
 
 	public String getSelectedTabName();
+
+	public SocialActivityFeedEntry getSocialActivityFeedEntry(
+			SocialActivitySet socialActivitySet)
+		throws PortalException;
 
 	public List<SocialActivitySet> getSocialActivitySets();
 
