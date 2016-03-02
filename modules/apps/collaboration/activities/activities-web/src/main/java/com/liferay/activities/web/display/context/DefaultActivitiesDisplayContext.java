@@ -44,42 +44,42 @@ public class DefaultActivitiesDisplayContext
 		Group group = themeDisplay.getScopeGroup();
 		Layout layout = _activitiesRequestHelper.getLayout();
 
-		if (group.isUser()) {
-			if (layout.isPrivateLayout()) {
-				String tabs1 = _activitiesRequestHelper.getTabs1();
+		if (!group.isUser()) {
+			return SocialActivitySetLocalServiceUtil.getGroupActivitySetsCount(
+				group.getGroupId());
+		}
 
-				if (tabs1.equals("connections")) {
-					return SocialActivitySetLocalServiceUtil.
-						getRelationActivitySetsCount(
-							group.getClassPK(),
-							SocialRelationConstants.TYPE_BI_CONNECTION);
-				}
-				else if (tabs1.equals("following")) {
-					return SocialActivitySetLocalServiceUtil.
-						getRelationActivitySetsCount(
-							group.getClassPK(),
-							SocialRelationConstants.TYPE_UNI_FOLLOWER);
-				}
-				else if (tabs1.equals("me")) {
-					return SocialActivitySetLocalServiceUtil.
-						getUserActivitySetsCount(group.getClassPK());
-				}
-				else if (tabs1.equals("my-sites")) {
-					return SocialActivitySetLocalServiceUtil.
-						getUserGroupsActivitySetsCount(group.getClassPK());
-				}
-				else {
-					return SocialActivitySetLocalServiceUtil.
-						getUserViewableActivitySetsCount(group.getClassPK());
-				}
-			}
-
+		if (!layout.isPrivateLayout()) {
 			return SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(
 				group.getClassPK());
 		}
 
-		return SocialActivitySetLocalServiceUtil.getGroupActivitySetsCount(
-			group.getGroupId());
+		String tabs1 = _activitiesRequestHelper.getTabs1();
+
+		if (tabs1.equals("connections")) {
+			return SocialActivitySetLocalServiceUtil.
+				getRelationActivitySetsCount(
+					group.getClassPK(),
+					SocialRelationConstants.TYPE_BI_CONNECTION);
+		}
+		else if (tabs1.equals("following")) {
+			return SocialActivitySetLocalServiceUtil.
+				getRelationActivitySetsCount(
+					group.getClassPK(),
+					SocialRelationConstants.TYPE_UNI_FOLLOWER);
+		}
+		else if (tabs1.equals("me")) {
+			return SocialActivitySetLocalServiceUtil.getUserActivitySetsCount(
+				group.getClassPK());
+		}
+		else if (tabs1.equals("my-sites")) {
+			return SocialActivitySetLocalServiceUtil.
+				getUserGroupsActivitySetsCount(group.getClassPK());
+		}
+		else {
+			return SocialActivitySetLocalServiceUtil.
+				getUserViewableActivitySetsCount(group.getClassPK());
+		}
 	}
 
 	@Override
