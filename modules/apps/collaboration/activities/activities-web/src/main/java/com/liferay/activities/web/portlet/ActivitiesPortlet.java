@@ -93,11 +93,8 @@ public class ActivitiesPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Object[] commentsClassNameAndClassPK =
-			ActivitiesUtil.getCommentsClassNameAndClassPK(activitySet);
-
-		String className = (String)commentsClassNameAndClassPK[0];
-		long classPK = (Long)commentsClassNameAndClassPK[1];
+		String className = ActivitiesUtil.getDiscussionClassName(activitySet);
+		long classPK = ActivitiesUtil.getDiscussionClassPK(activitySet);
 
 		Discussion discussion = _commentManager.getDiscussion(
 			themeDisplay.getUserId(), activitySet.getGroupId(), className,

@@ -62,18 +62,12 @@ public class DefaultActivitiesDisplayContext
 
 	@Override
 	public String getDiscussionClassName(SocialActivitySet socialActivitySet) {
-		Object[] commentsClassNameAndClassPK =
-			ActivitiesUtil.getCommentsClassNameAndClassPK(socialActivitySet);
-
-		return (String)commentsClassNameAndClassPK[0];
+		return ActivitiesUtil.getDiscussionClassName(socialActivitySet);
 	}
 
 	@Override
 	public long getDiscussionClassPK(SocialActivitySet socialActivitySet) {
-		Object[] commentsClassNameAndClassPK =
-			ActivitiesUtil.getCommentsClassNameAndClassPK(socialActivitySet);
-
-		return (Long)commentsClassNameAndClassPK[1];
+		return ActivitiesUtil.getDiscussionClassPK(socialActivitySet);
 	}
 
 	@Override

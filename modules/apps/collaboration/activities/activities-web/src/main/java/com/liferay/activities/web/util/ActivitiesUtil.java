@@ -14,7 +14,7 @@
 
 package com.liferay.activities.web.util;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
@@ -23,23 +23,39 @@ import com.liferay.social.kernel.model.SocialActivitySet;
  */
 public class ActivitiesUtil {
 
-	public static Object[] getCommentsClassNameAndClassPK(
-		SocialActivitySet activitySet) {
+	public static String getDiscussionClassName(
+		SocialActivitySet socialActivitySet) {
 
-		String className = activitySet.getClassName();
-		long classPK = activitySet.getClassPK();
-
-		if (className.equals(DLFileEntry.class.getName()) &&
-			(activitySet.getActivityCount() > 1) &&
-			(activitySet.getType() == DLActivityKeys.ADD_FILE_ENTRY)) {
-
-			return new Object[] {
-				SocialActivitySet.class.getName(),
-				activitySet.getActivitySetId()
-			};
+		if (isMultipleAddFileEntryActivitySet(socialActivitySet)) {
+			return SocialActivitySet.class.getName();
 		}
 
-		return new Object[] {className, classPK};
+		return socialActivitySet.getClassName();
+	}
+
+	public static long getDiscussionClassPK(
+		SocialActivitySet socialActivitySet) {
+
+		if (isMultipleAddFileEntryActivitySet(socialActivitySet)) {
+			return socialActivitySet.getActivitySetId();
+		}
+
+		return socialActivitySet.getClassPK();
+	}
+
+	private static boolean isMultipleAddFileEntryActivitySet(
+		SocialActivitySet socialActivitySet) {
+
+		String className = socialActivitySet.getClassName();
+
+		if (className.equals(DLFileEntryConstants.getClassName()) &&
+			(socialActivitySet.getActivityCount() > 1) &&
+			(socialActivitySet.getType() == DLActivityKeys.ADD_FILE_ENTRY)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }
