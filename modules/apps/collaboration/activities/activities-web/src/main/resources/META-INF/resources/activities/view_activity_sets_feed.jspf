@@ -32,28 +32,11 @@ for (SocialActivitySet activitySet : results) {
 %>
 
 	<div class="activity-item clearfix <%= portlet.getCssClassWrapper() %>-activity" id="<portlet:namespace /><%= activitySet.getActivitySetId() %>">
-
-		<%
-		User activitySetUser = UserLocalServiceUtil.fetchUser(activitySet.getUserId());
-
-		String userDisplayURL = StringPool.BLANK;
-		String userFullName = StringPool.BLANK;
-		String userPortraitURL = StringPool.BLANK;
-
-		if (activitySetUser != null) {
-			userDisplayURL = activitySetUser.getDisplayURL(themeDisplay);
-			userFullName = activitySetUser.getFullName();
-			userPortraitURL = activitySetUser.getPortraitURL(themeDisplay);
-		}
-		%>
-
-		<div class="user-portrait">
-			<span class="avatar">
-				<a href="<%= userDisplayURL %>">
-					<img alt="<%= HtmlUtil.escape(userFullName) %>" src="<%= userPortraitURL %>" />
-				</a>
-			</span>
-		</div>
+		<liferay-ui:user-display
+			showUserDetails="<%= false %>"
+			showUserName="<%= false %>"
+			userId="<%= activitySet.getUserId() %>"
+		/>
 
 		<%= activityFeedEntry.getTitle() %>
 
