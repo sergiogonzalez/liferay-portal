@@ -31,5 +31,4 @@ ActivitiesDisplayContext activitiesDisplayContext = new DefaultActivitiesDisplay
 %>
 
 <%!
-private static final int _DELTA = 10;
 %>
