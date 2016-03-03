@@ -349,6 +349,9 @@ public class ComboServlet extends HttpServlet {
 				else if (minifierType.equals("js")) {
 					stringFileContent = MinifierUtil.minifyJavaScript(
 						resourcePath, stringFileContent);
+
+					stringFileContent = stringFileContent.concat(
+						StringPool.NEW_LINE);
 				}
 			}
 

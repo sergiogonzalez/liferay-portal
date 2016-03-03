@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Activities Web
+Bundle-SymbolicName: com.liferay.activities.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /activities-web
+-include: ../../../../../marketplace/collaboration/bnd.bnd
