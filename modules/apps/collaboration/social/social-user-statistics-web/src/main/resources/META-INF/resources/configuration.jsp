@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-socialUserStatisticsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialUserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
+socialUserStatisticsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(SocialUserStatisticsPortletInstanceConfiguration.class, socialUserStatisticsPortletInstanceConfiguration, request.getParameterMap(), "preferences--", StringPool.DOUBLE_DASH);
 
 int displayActivityCounterNameCount = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
 

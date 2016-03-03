@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-shoppingGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfiguration(ShoppingGroupServiceOverriddenConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME)));
+shoppingGroupServiceOverriddenConfiguration = ParameterMapUtil.setParameterMap(ShoppingGroupServiceOverriddenConfiguration.class, shoppingGroupServiceOverriddenConfiguration, request.getParameterMap(), "preferences--", StringPool.DOUBLE_DASH);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">

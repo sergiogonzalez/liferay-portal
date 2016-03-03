@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-socialGroupStatisticsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialGroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
+socialGroupStatisticsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(SocialGroupStatisticsPortletInstanceConfiguration.class, socialGroupStatisticsPortletInstanceConfiguration, request.getParameterMap(), "preferences--", StringPool.DOUBLE_DASH);
 
 String[] displayActivityCounterNames = socialGroupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 

@@ -23,7 +23,7 @@ String portletResourceNamespace = PortalUtil.getPortletNamespace(portletResource
 
 int index = ParamUtil.getInteger(request, "index");
 
-socialGroupStatisticsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialGroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
+socialGroupStatisticsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(SocialGroupStatisticsPortletInstanceConfiguration.class, socialGroupStatisticsPortletInstanceConfiguration, request.getParameterMap(), "preferences--", StringPool.DOUBLE_DASH);
 
 String displayActivityCounterName = "";
 String chartType = "";
