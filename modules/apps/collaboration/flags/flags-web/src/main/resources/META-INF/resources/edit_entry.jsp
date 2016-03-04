@@ -104,6 +104,14 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 			dialog.setStdModContent('body', message);
 		};
 
+		var formValidator = Liferay.Form.get('<portlet:namespace />flagsForm').formValidator;
+
+		formValidator.validate();
+
+		if (formValidator.hasErrors()) {
+			return;
+		}
+
 		var reporterEmailAddressNode = A.one('#<portlet:namespace />reporterEmailAddress');
 
 		var reporterEmailAddress = (reporterEmailAddressNode && reporterEmailAddressNode.val()) || '';
