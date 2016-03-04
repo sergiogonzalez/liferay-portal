@@ -58,6 +58,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 			modelVar="fileEntryType"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="name"
 				value="<%= fileEntryType.getName(locale) %>"
 			/>
