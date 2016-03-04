@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + PageFlagsPortletKeys.FLAGS,
-		"javax.portlet.name=" + PageFlagsPortletKeys.PAGE_FLAGS,
 		"mvc.command.name=/flags/edit_entry"
 	},
 	service = MVCActionCommand.class
