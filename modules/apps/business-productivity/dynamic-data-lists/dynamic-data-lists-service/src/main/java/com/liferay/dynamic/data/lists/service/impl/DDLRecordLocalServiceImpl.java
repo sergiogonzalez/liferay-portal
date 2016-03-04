@@ -287,10 +287,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(long classPK)
+	public DDMFormValues getDDMFormValues(long ddmStorageId)
 		throws StorageException {
 
-		return storageEngine.getDDMFormValues(classPK);
+		return storageEngine.getDDMFormValues(ddmStorageId);
 	}
 
 	/**
