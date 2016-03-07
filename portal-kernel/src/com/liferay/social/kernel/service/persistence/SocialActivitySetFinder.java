@@ -22,13 +22,16 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface SocialActivitySetFinder {
+	public int countByUserGroups(long userId);
+
 	public int countByRelation(long userId);
 
 	public int countByRelationType(long userId, int type);
 
 	public int countByUser(long userId);
 
-	public int countByUserGroups(long userId);
+	public java.util.List<com.liferay.social.kernel.model.SocialActivitySet> findByOrganizationId(
+		long organizationId, int start, int end);
 
 	public java.util.List<com.liferay.social.kernel.model.SocialActivitySet> findByRelation(
 		long userId, int start, int end);
