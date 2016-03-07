@@ -376,6 +376,7 @@
 					'liferay-item-selector-url': {
 						path: 'item_selector_url.js',
 						requires: [
+							'aui-event-input',
 							'liferay-item-viewer',
 							'liferay-portlet-base'
 						]
