@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.util;
+package com.liferay.invitation.invite.members.web.util;
 
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.model.User;
