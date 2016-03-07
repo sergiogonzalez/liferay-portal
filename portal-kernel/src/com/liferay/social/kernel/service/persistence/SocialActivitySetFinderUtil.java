@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class SocialActivitySetFinderUtil {
+	public static int countByUserGroups(long userId) {
+		return getFinder().countByUserGroups(userId);
+	}
+
 	public static int countByRelation(long userId) {
 		return getFinder().countByRelation(userId);
 	}
@@ -37,8 +41,9 @@ public class SocialActivitySetFinderUtil {
 		return getFinder().countByUser(userId);
 	}
 
-	public static int countByUserGroups(long userId) {
-		return getFinder().countByUserGroups(userId);
+	public static java.util.List<com.liferay.social.kernel.model.SocialActivitySet> findByOrganizationId(
+		long organizationId, int start, int end) {
+		return getFinder().findByOrganizationId(organizationId, start, end);
 	}
 
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivitySet> findByRelation(
