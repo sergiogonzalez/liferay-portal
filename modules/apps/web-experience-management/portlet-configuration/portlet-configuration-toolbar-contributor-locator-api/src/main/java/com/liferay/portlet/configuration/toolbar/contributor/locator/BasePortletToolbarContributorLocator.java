@@ -81,6 +81,8 @@ public abstract class BasePortletToolbarContributorLocator
 				}
 
 			});
+
+		_serviceTrackerMap.open();
 	}
 
 	protected void deactivate() {
