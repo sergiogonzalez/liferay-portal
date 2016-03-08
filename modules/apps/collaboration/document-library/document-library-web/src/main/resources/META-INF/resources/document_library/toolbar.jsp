@@ -30,10 +30,13 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
+
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) > 0 %>"
+	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	includeCheckBox="<%= !user.isDefaultUser() && dlPortletInstanceSettingsHelper.isShowActions() %>"
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
