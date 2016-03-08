@@ -113,7 +113,7 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= portletTitleBasedNavigation && !newPage %>">
 	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		<aui:workflow-status helpMessage='<%= wikiPage.isPending() ? "there-is-a-publication-workflow-in-process" : null %>' markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
 	</liferay-frontend:info-bar>
 </c:if>
 
@@ -153,28 +153,6 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:asset-categories-error />
 
 		<liferay-ui:asset-tags-error />
-
-		<%
-		boolean approved = false;
-		boolean pending = false;
-
-		if (wikiPage != null) {
-			approved = wikiPage.isApproved();
-			pending = wikiPage.isPending();
-		}
-		%>
-
-		<c:if test="<%= !newPage && approved %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-			</div>
-		</c:if>
-
-		<c:if test="<%= pending %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-			</div>
-		</c:if>
 
 		<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
 
@@ -359,7 +337,7 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<aui:button-row>
-					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
+					<aui:button cssClass="btn-lg" disabled="<%= wikiPage.isPending() %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
 
 					<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 

@@ -163,9 +163,28 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
+<%
+boolean pending = false;
+
+long inheritedWorkflowDDMStructuresFolderId = JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(folderId);
+
+boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+
+if ((article != null) && (version > 0) && workflowEnabled) {
+	pending = article.isPending();
+}
+%>
+
 <c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 	<liferay-frontend:info-bar>
-		<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
+		<c:choose>
+			<c:when test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+				<aui:workflow-status helpMessage='<%= pending ? "there-is-a-publication-workflow-in-process" : null %>' id="<%= String.valueOf(article.getArticleId()) %>" markupView="lexicon" showHelpMessage="<%= true %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
+			</c:when>
+			<c:otherwise>
+				<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
+			</c:otherwise>
+		</c:choose>
 	</liferay-frontend:info-bar>
 </c:if>
 
@@ -215,37 +234,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		defaultLanguageId="<%= defaultLanguageId %>"
 		id="translationManager"
 	/>
-
-	<%
-	boolean approved = false;
-	boolean pending = false;
-
-	long inheritedWorkflowDDMStructuresFolderId = JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(folderId);
-
-	boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
-
-	if ((article != null) && (version > 0)) {
-		approved = article.isApproved();
-
-		 if (workflowEnabled) {
-			pending = article.isPending();
-		}
-	}
-	%>
-
-	<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-		<c:if test="<%= approved %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-			</div>
-		</c:if>
-
-		<c:if test="<%= pending %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-			</div>
-		</c:if>
-	</c:if>
 
 	<liferay-ui:form-navigator
 		formModelBean="<%= article %>"

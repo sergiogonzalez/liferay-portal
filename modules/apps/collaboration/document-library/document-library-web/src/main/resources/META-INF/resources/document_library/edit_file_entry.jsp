@@ -146,7 +146,7 @@ if (portletTitleBasedNavigation) {
 	%>
 
 	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
+		<aui:workflow-status helpMessage='<%= pending ? "there-is-a-publication-workflow-in-process" : null %>' markupView="lexicon" model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= true %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
 	</liferay-frontend:info-bar>
 </c:if>
 
@@ -472,12 +472,6 @@ if (portletTitleBasedNavigation) {
 						modelName="<%= DLFileEntryConstants.getClassName() %>"
 					/>
 				</aui:fieldset>
-			</c:if>
-
-			<c:if test="<%= pending %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-				</div>
 			</c:if>
 		</aui:fieldset-group>
 
