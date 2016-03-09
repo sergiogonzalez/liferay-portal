@@ -7,6 +7,8 @@
 </div>
 
 <div style="float: right;">
+	<@getAddChildPageIcon />
+
 	<@getEditIcon />
 
 	<@getPageDetailsIcon />
@@ -25,7 +27,7 @@
 
 	<div class="wiki-content">
 		<@liferay_ui["social-bookmarks"]
-			displayStyle="normal"
+			displayStyle="horizontal"
 			target="_blank"
 			title=entry.getTitle()
 			url=viewURL
@@ -35,48 +37,77 @@
 	</div>
 
 	<div class="page-actions">
-		<div class="article-actions">
-			<@getAddChildPageIcon />
+		<div class="page-categorization">
+			<div class="page-categories">
+				<#assign viewCategorizedPagesURL = renderResponse.createRenderURL() />
 
-			<@getAttatchmentsIcon />
+				${viewCategorizedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages")}
+				${viewCategorizedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
+
+				<@liferay_ui["asset-categories-summary"]
+					className=wikiPageClassName
+					classPK=entry.getResourcePrimKey()
+					portletURL=viewCategorizedPagesURL
+				/>
+			</div>
+
+			<div class="page-tags">
+				<#assign viewTaggedPagesURL = renderResponse.createRenderURL() />
+
+				${viewTaggedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages")}
+				${viewTaggedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
+
+				<@liferay_ui["asset-tags-summary"]
+					className=wikiPageClassName
+					classPK=entry.getResourcePrimKey()
+					portletURL=viewTaggedPagesURL
+				/>
+			</div>
 		</div>
-	</div>
 
-	 <br />
+		<#if wikiPortletInstanceOverriddenConfiguration.enablePageRatings()>
+			<div class="page-attachments">
+				<@liferay_ui["ratings"]
+					className=wikiPageClassName
+					classPK=entry.getResourcePrimKey()
+				/>
+			</div>
+		</#if>
 
-	<@getRatings
-		cssClass="page-ratings"
-		entry=entry
-	/>
+		<div class="page-attachments">
+			<h5><@liferay.language key="attachments" /></h5>
 
-	<@getRelatedAssets />
-</div>
+			<div class="row">
+				<#assign attachments = entry.getAttachmentsFileEntries() />
 
-<div class="page-categorization">
-	<div class="page-categories">
-		<#assign viewCategorizedPagesURL = renderResponse.createRenderURL() />
+				<#list attachments as attachment>
+					<#assign rowURL = portletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, attachment, "status=" + 0) />
 
-		${viewCategorizedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages")}
-		${viewCategorizedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
+					<div class="col-md-4">
+					   <div class="control-label">
+							<div class="card card-horizontal">
+								<div class="card-row card-row-padded">
+									<div class="card-col-field">
+										<span class="icon-monospaced file-icon-color-0">${stringUtil.shorten(stringUtil.upperCase(attachment.getExtension()), 3, "")}</span>
+									</div>
+									<div class="card-col-content card-col-gutters clamp-horizontal">
+										<div class="clamp-container">
+											<span class="h4 truncate-text" title="${htmlUtil.escape(attachment.getTitle())}">
+												<a href="${rowURL}">${htmlUtil.escape(attachment.getTitle())}" </a>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						 </div>
+					</div>
+				</#list>
+			</div>
+		</div>
 
-		<@liferay_ui["asset-categories-summary"]
-			className=wikiPageClassName
-			classPK=entry.getResourcePrimKey()
-			portletURL=viewCategorizedPagesURL
-		/>
-	</div>
-
-	<div class="page-tags">
-		<#assign viewTaggedPagesURL = renderResponse.createRenderURL() />
-
-		${viewTaggedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages")}
-		${viewTaggedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
-
-		<@liferay_ui["asset-tags-summary"]
-			className=wikiPageClassName
-			classPK=entry.getResourcePrimKey()
-			portletURL=viewTaggedPagesURL
-		/>
+		<div class="entry-links">
+			<@getRelatedAssets />
+		</div>
 	</div>
 </div>
 
@@ -150,19 +181,6 @@
 	</#if>
 </#macro>
 
-<#macro getAttatchmentsIcon>
-	<#assign viewPageAttachmentsURL = renderResponse.createRenderURL() />
-
-	${viewPageAttachmentsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments") }
-
-	<@liferay_ui["icon"]
-		iconCssClass="icon-paperclip"
-		label=true
-		message='${entry.getAttachmentsFileEntriesCount() + languageUtil.get(locale, "attachments")}'
-		url=viewPageAttachmentsURL?string
-	/>
-</#macro>
-
 <#macro getDiscussion>
 	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && wikiPortletInstanceOverriddenConfiguration.enableComments()>
 		<br />
@@ -195,7 +213,8 @@
 
 		<@liferay_ui["icon"]
 			iconCssClass="icon-edit"
-			message=entry.getTitle()
+			label=true
+			message="edit"
 			url=editPageURL?string
 		/>
 	</#if>
@@ -209,6 +228,7 @@
 
 	<@liferay_ui["icon"]
 		iconCssClass="icon-file-alt"
+		label=true
 		message="details"
 		url=viewPageDetailsURL?string
 	/>
@@ -225,23 +245,10 @@
 
 	<@liferay_ui["icon"]
 		iconCssClass="icon-print"
+		label=true
 		message="print"
 		url=taglibPrintURL
 	/>
-</#macro>
-
-<#macro getRatings
-	cssClass
-	entry
->
-	<#if wikiPortletInstanceOverriddenConfiguration.enablePageRatings()>
-		<div class="${cssClass}">
-			<@liferay_ui["ratings"]
-				className=wikiPageClassName
-				classPK=entry.getResourcePrimKey()
-			/>
-		</div>
-	</#if>
 </#macro>
 
 <#macro getRelatedAssets>

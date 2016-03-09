@@ -17,11 +17,13 @@ package com.liferay.wiki.web.portlet.template;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
@@ -30,6 +32,7 @@ import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageService;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -49,6 +52,17 @@ public class WikiPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return WikiPage.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<>(2);
+
+		contextObjects.put(
+			"portletFileRepositoryUtil", new PortletFileRepositoryUtil());
+		contextObjects.put("stringUtil", new StringUtil());
+
+		return contextObjects;
 	}
 
 	@Override
