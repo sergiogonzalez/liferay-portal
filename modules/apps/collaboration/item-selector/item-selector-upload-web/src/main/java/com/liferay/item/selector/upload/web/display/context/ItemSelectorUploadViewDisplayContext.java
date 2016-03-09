@@ -54,6 +54,10 @@ public class ItemSelectorUploadViewDisplayContext {
 		return _uploadItemSelectorCriterion.getURL();
 	}
 
+	public String getValidExtensions() {
+		return _uploadItemSelectorCriterion.getValidExtensions();
+	}
+
 	private final String _itemSelectedEventName;
 	private final ItemSelectorUploadView _itemSelectorUploadView;
 	private final UploadItemSelectorCriterion _uploadItemSelectorCriterion;

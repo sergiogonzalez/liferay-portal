@@ -31,6 +31,7 @@ boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-ite
 boolean showDragAndDropZone = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showDragAndDropZone"));
 String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:tabName"));
 PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:uploadURL");
+String validExtensions = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:validExtensions"));
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, emptyResultsMessage);
 
@@ -477,12 +478,14 @@ if (Validator.isNotNull(keywords)) {
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
 				}
 			},
-			rootNode: '#<%= randomNamespace %>ItemSelectorContainer'
+			rootNode: '#<%= randomNamespace %>ItemSelectorContainer',
 
 			<c:if test="<%= uploadURL != null %>">
-				, uploadItemReturnType: '<%= ClassUtil.getClassName(existingFileEntryReturnType) %>',
-				uploadItemUrl: '<%= uploadURL.toString() %>'
+				uploadItemReturnType: '<%= ClassUtil.getClassName(existingFileEntryReturnType) %>',
+				uploadItemUrl: '<%= uploadURL.toString() %>',
 			</c:if>
+
+			validExtensions: '<%= validExtensions %>'
 		}
 	);
 </aui:script>

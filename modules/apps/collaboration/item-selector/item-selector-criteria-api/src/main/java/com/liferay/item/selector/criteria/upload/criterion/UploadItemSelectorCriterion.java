@@ -15,10 +15,12 @@
 package com.liferay.item.selector.criteria.upload.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Ambrín Chaudhary
+ * @author Roberto Díaz
  */
 public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
@@ -28,15 +30,18 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	public UploadItemSelectorCriterion(String url, String repositoryName) {
 		this(
 			url, repositoryName,
-			PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
+			StringUtil.merge(PropsValues.DL_FILE_EXTENSIONS));
 	}
 
 	public UploadItemSelectorCriterion(
-		String url, String repositoryName, long maxFileSize) {
+		String url, String repositoryName, long maxFileSize,
+		String validExtensions) {
 
 		_url = url;
 		_repositoryName = repositoryName;
 		_maxFileSize = maxFileSize;
+		_validExtensions = validExtensions;
 	}
 
 	public long getMaxFileSize() {
@@ -51,6 +56,10 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _url;
 	}
 
+	public String getValidExtensions() {
+		return _validExtensions;
+	}
+
 	public void setMaxFileSize(long maxFileSize) {
 		_maxFileSize = maxFileSize;
 	}
@@ -63,8 +72,13 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_url = url;
 	}
 
+	public void setValidExtensions(String validExtensions) {
+		_validExtensions = validExtensions;
+	}
+
 	private long _maxFileSize;
 	private String _repositoryName;
 	private String _url;
+	private String _validExtensions;
 
 }

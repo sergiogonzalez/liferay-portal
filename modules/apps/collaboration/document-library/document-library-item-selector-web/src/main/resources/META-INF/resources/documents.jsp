@@ -91,4 +91,5 @@ else {
 	showBreadcrumb="<%= true %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= dlItemSelectorViewDisplayContext.getUploadURL(request, liferayPortletResponse) %>"
+	validExtensions="<%= StringUtil.merge(mimeTypes) %>"
 />
