@@ -2033,24 +2033,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				smallImageFileEntryId);
 
-			boolean validSmallImageExtension = false;
+			if (ArrayUtil.contains(
+					PropsValues.BLOGS_IMAGE_EXTENSIONS, StringPool.STAR) ||
+				ArrayUtil.contains(
+					PropsValues.BLOGS_IMAGE_EXTENSIONS,
+					StringPool.PERIOD + fileEntry.getExtension())) {
 
-			for (String _imageExtension : PropsValues.BLOGS_IMAGE_EXTENSIONS) {
-				if (StringPool.STAR.equals(_imageExtension) ||
-					_imageExtension.equals(
-						StringPool.PERIOD + fileEntry.getExtension())) {
-
-					validSmallImageExtension = true;
-
-					break;
-				}
+				return;
 			}
 
-			if (!validSmallImageExtension) {
-				throw new EntrySmallImageNameException(
-					"Invalid small image for file entry " +
-						smallImageFileEntryId);
-			}
+			throw new EntrySmallImageNameException(
+				"Invalid small image for file entry " +
+					smallImageFileEntryId);
 		}
 	}
 
