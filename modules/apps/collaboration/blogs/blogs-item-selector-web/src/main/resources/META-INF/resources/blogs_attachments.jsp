@@ -92,6 +92,7 @@ if (folder != null) {
 	showDragAndDropZone="<%= false %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= blogsItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
+	validExtensions="<%= PropsValues.BLOGS_IMAGE_EXTENSIONS %>"
 />
 
 <%!

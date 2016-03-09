@@ -44,6 +44,9 @@ AUI.add(
 					uploadItemUrl: {
 						validator: Lang.isString,
 						value: ''
+					},
+					validExtensions: {
+						validator: Lang.isString
 					}
 				},
 

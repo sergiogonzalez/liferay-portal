@@ -192,6 +192,8 @@ public class PropsValues {
 
 	public static final long BLOGS_IMAGE_MAX_SIZE = GetterUtil.getLong(PropsUtil.get(PropsKeys.BLOGS_IMAGE_MAX_SIZE));
 
+	public static final String[] BLOGS_IMAGE_EXTENSIONS = PropsUtil.getArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS);
+
 	public static final int BLOGS_LINKBACK_EXCERPT_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.BLOGS_LINKBACK_EXCERPT_LENGTH));
 
 	public static final int BLOGS_PAGE_ABSTRACT_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.BLOGS_PAGE_ABSTRACT_LENGTH));
