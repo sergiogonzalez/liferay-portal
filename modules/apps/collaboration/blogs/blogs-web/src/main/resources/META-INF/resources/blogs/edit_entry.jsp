@@ -136,7 +136,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 					String coverImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "coverImageSelectedItem";
 					%>
 
-					<liferay-item-selector:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, coverImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions="<%= PropsValues.BLOGS_IMAGE_EXTENSIONS %>" />
+					<liferay-item-selector:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, coverImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= PropsValues.BLOGS_IMAGE_EXTENSIONS %>' />
 				</div>
 
 				<aui:input name="coverImageCaption" type="hidden" />
