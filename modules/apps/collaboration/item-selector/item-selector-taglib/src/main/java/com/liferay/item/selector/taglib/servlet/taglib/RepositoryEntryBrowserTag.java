@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
@@ -101,6 +102,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_uploadURL = uploadURL;
 	}
 
+	public void setValidExtensions(String validExtensions) {
+		_validExtensions = validExtensions;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -117,6 +122,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_showDragAndDropZone = true;
 		_tabName = null;
 		_uploadURL = null;
+		_validExtensions = StringUtil.merge(PropsValues.DL_FILE_EXTENSIONS);
 	}
 
 	protected String getDisplayStyle() {
@@ -201,6 +207,9 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:uploadURL",
 			_uploadURL);
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:validExtensions",
+			_validExtensions);
 	}
 
 	private String getEmptyResultsMessage(HttpServletRequest request) {
@@ -224,5 +233,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	private boolean _showDragAndDropZone = true;
 	private String _tabName;
 	private PortletURL _uploadURL;
+	private String _validExtensions =
+		StringUtil.merge(PropsValues.DL_FILE_EXTENSIONS);
 
 }

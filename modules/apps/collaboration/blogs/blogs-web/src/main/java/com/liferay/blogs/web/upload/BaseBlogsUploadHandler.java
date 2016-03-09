@@ -26,9 +26,8 @@ import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUt
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
@@ -53,10 +52,7 @@ public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 
 		String extension = FileUtil.getExtension(fileName);
 
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-
-		for (String imageExtension : imageExtensions) {
+		for (String imageExtension : PropsValues.BLOGS_IMAGE_EXTENSIONS) {
 			if (StringPool.STAR.equals(imageExtension) ||
 				imageExtension.equals(StringPool.PERIOD + extension)) {
 
