@@ -2029,16 +2029,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void validate(long smallImageFileEntryId) throws PortalException {
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-
 		if (smallImageFileEntryId != 0) {
 			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				smallImageFileEntryId);
 
 			boolean validSmallImageExtension = false;
 
-			for (String _imageExtension : imageExtensions) {
+			for (String _imageExtension : PropsValues.BLOGS_IMAGE_EXTENSIONS) {
 				if (StringPool.STAR.equals(_imageExtension) ||
 					_imageExtension.equals(
 						StringPool.PERIOD + fileEntry.getExtension())) {
