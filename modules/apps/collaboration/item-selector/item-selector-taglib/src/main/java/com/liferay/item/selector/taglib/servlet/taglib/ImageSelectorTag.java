@@ -15,6 +15,7 @@
 package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +62,7 @@ public class ImageSelectorTag extends IncludeTag {
 		_uploadURL = uploadURL;
 	}
 
-	public void setValidExtensions(String validExtensions) {
+	public void setValidExtensions(String[] validExtensions) {
 		_validExtensions = validExtensions;
 	}
 
@@ -74,7 +75,7 @@ public class ImageSelectorTag extends IncludeTag {
 		_maxFileSize = 0;
 		_paramName = "imageSelectorFileEntryId";
 		_uploadURL = null;
-		_validExtensions = null;
+		_validExtensions = PropsValues.DL_FILE_EXTENSIONS;
 	}
 
 	@Override
@@ -110,6 +111,6 @@ public class ImageSelectorTag extends IncludeTag {
 	private long _maxFileSize;
 	private String _paramName = "imageSelectorFileEntry";
 	private String _uploadURL;
-	private String _validExtensions;
+	private String[] _validExtensions = PropsValues.DL_FILE_EXTENSIONS;
 
 }
