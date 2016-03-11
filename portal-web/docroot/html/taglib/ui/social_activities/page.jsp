@@ -73,7 +73,7 @@
 			</td>
 			<td class="activity-data">
 				<div class="activity-title">
-					<%= activityFeedEntry.getTitle() %>
+					<%= HtmlUtil.unescape(activityFeedEntry.getTitle()) %>
 				</div>
 				<div class="activity-body">
 					<span class="time"><%= timeFormatDate.format(activity.getCreateDate()) %></span>
