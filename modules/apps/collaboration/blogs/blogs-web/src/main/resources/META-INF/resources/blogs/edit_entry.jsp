@@ -61,7 +61,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 	</small>
 </liferay-util:buffer>
 
-<c:if test="<%= portletTitleBasedNavigation %>">
+<c:if test="<%= portletTitleBasedNavigation && (entry != null) %>">
 	<liferay-frontend:info-bar>
 		<%= saveStatus %>
 	</liferay-frontend:info-bar>
@@ -77,7 +77,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-		<c:if test="<%= !portletTitleBasedNavigation %>">
+		<c:if test="<%= !portletTitleBasedNavigation && (entry != null) %>">
 			<div class="entry-options">
 				<div class="status">
 					<%= saveStatus %>
