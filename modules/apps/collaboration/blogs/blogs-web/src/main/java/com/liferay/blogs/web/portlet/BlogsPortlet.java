@@ -59,6 +59,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BlogsPortlet extends MVCPortlet {
 
+	@Override
+	protected boolean isAlwaysSendRedirect() {
+		return true;
+	}
+
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.web)(release.schema.version=1.0.0))",
 		unbind = "-"
