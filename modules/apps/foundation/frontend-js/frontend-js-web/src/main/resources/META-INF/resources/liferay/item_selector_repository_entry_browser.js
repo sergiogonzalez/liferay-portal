@@ -140,7 +140,7 @@ AUI.add(
 						var notice = new Liferay.Notice(
 							{
 								closeText: false,
-								content: message,
+								content: message + '<button class="close" type="button">&times;</button>',
 								noticeClass: 'hide',
 								toggleText: false,
 								type: 'warning',
@@ -215,14 +215,13 @@ AUI.add(
 
 						var notice = instance._notice;
 
-						var message = instance._getErrorMessage(error) + '<button class="close" type="button">&times;</button>';
-
 						if (notice) {
-
 							notice.remove();
 						}
 
-						instance._notice = instance._createNotice(message);
+						notice = instance._createNotice(instance._getErrorMessage(error));
+
+						instance._notice = notice;
 
 						return instance._notice;
 					},
