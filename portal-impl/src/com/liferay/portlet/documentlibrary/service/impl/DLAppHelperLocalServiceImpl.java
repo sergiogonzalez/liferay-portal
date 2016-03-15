@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
@@ -985,6 +987,21 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
+		}
+
+		String cmd = serviceContext.getCommand();
+
+		if (cmd.equals(Constants.REVERT)) {
+			List<AssetCategory> categories =
+				assetCategoryLocalService.getCategories(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId());
+
+			List<Long> categoryIds = ListUtil.toList(
+				categories, AssetCategory.CATEGORY_ID_ACCESSOR);
+
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(categoryIds));
 		}
 
 		updateAsset(
