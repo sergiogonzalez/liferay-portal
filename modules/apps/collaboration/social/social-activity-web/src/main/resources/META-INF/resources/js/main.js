@@ -112,7 +112,7 @@ AUI.add(
 		var TPL_CONTRIBUTION_INCREMENT = '<span class="contribution-increment"></span>';
 
 		var TPL_FIELD = new A.Template(
-			'<span class="settings-label">{labelText}</span>',
+			'<label>{labelText}</label>',
 
 			'<div class="settings-controls">',
 				'<div class="field-values">',
@@ -174,20 +174,20 @@ AUI.add(
 
 		var TPL_SETTINGS_DISPLAY = new A.Template(
 			'<div class="settings-header yui3-widget-hd">',
-				'<div class="settings-header-label">{headerText}</div>',
+				'<div>',
+					'<label>{headerText}</label>',
+				'</div>',
 
 				'<ul class="settings-actions">',
 					'<li class="actions-conjunction hide">{conjunctionText}</li>',
 				'</ul>',
 			'</div>',
 
-			'<div class="settings-container-label">{containerText}</div>',
+			'<div>',
+				'<label>{containerText}</label>',
+			'</div>',
 
-			'<ul class="container-drop-box yui3-widget-bd"></ul>',
-
-			'<div class="btn-row yui3-widget-ft">',
-				'<button class="btn btn-primary btn-submit">{saveText}</button>',
-			'</div>'
+			'<ul class="container-drop-box yui3-widget-bd"></ul>'
 		);
 
 		var SocialActivityAdmin = A.Component.create(
