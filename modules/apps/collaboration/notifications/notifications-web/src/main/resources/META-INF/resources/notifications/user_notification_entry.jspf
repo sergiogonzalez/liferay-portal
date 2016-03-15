@@ -19,6 +19,8 @@ UserNotificationFeedEntry userNotificationFeedEntry = UserNotificationManagerUti
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), userNotificationEvent.getType());
 
+String portletTitle = PortalUtil.getPortletTitle(portlet, application, themeDisplay.getLocale());
+
 String portletIcon = portlet.getContextPath() + portlet.getIcon();
 
 String timestamp = Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime);
@@ -59,9 +61,9 @@ if (userNotificationEvent.isArchived()) {
 
 				<div class="timestamp">
 					<span class="portlet-icon">
-						<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= portlet.getDisplayName() %>')">
+						<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= portletTitle %>')">
 							<img src="<%= portletIcon %>">
-							<span class="hide-accessible taglib-text"><%= portlet.getDisplayName() %></span>
+							<span class="hide-accessible taglib-text"><%= portletTitle %></span>
 						</span>
 					</span>
 
