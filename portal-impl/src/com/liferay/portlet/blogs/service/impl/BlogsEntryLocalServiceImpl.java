@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -80,7 +79,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.util.LayoutURLUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
@@ -2025,31 +2023,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void validate(long smallImageFileEntryId) throws PortalException {
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-
 		if (smallImageFileEntryId != 0) {
 			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				smallImageFileEntryId);
 
-			boolean validSmallImageExtension = false;
+			if (ArrayUtil.contains(
+					PropsValues.BLOGS_IMAGE_EXTENSIONS, StringPool.STAR) ||
+				ArrayUtil.contains(
+					PropsValues.BLOGS_IMAGE_EXTENSIONS,
+					StringPool.PERIOD + fileEntry.getExtension())) {
 
-			for (String _imageExtension : imageExtensions) {
-				if (StringPool.STAR.equals(_imageExtension) ||
-					_imageExtension.equals(
-						StringPool.PERIOD + fileEntry.getExtension())) {
-
-					validSmallImageExtension = true;
-
-					break;
-				}
+				return;
 			}
 
-			if (!validSmallImageExtension) {
-				throw new EntrySmallImageNameException(
-					"Invalid small image for file entry " +
-						smallImageFileEntryId);
-			}
+			throw new EntrySmallImageNameException(
+				"Invalid small image for file entry " + smallImageFileEntryId);
 		}
 	}
 
