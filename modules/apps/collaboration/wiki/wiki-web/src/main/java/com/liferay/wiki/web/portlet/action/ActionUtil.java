@@ -15,7 +15,6 @@
 package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -146,19 +145,11 @@ public class ActionUtil {
 			themeDisplay.getScopeGroupId());
 
 		if (nodesCount == 0) {
-			Layout layout = themeDisplay.getLayout();
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				WikiNode.class.getName(), portletRequest);
 
+			serviceContext.setAddGuestPermissions(true);
 			serviceContext.setAddGroupPermissions(true);
-
-			if (layout.isPublicLayout()) {
-				serviceContext.setAddGuestPermissions(true);
-			}
-			else {
-				serviceContext.setAddGuestPermissions(false);
-			}
 
 			node = WikiNodeLocalServiceUtil.addDefaultNode(
 				themeDisplay.getDefaultUserId(), serviceContext);
@@ -196,16 +187,8 @@ public class ActionUtil {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				WikiPage.class.getName(), portletRequest);
 
-			Layout layout = themeDisplay.getLayout();
-
+			serviceContext.setAddGuestPermissions(true);
 			serviceContext.setAddGroupPermissions(true);
-
-			if (layout.isPublicLayout()) {
-				serviceContext.setAddGuestPermissions(true);
-			}
-			else {
-				serviceContext.setAddGuestPermissions(false);
-			}
 
 			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
