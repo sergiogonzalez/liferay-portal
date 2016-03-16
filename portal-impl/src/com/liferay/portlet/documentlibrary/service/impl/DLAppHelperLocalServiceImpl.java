@@ -989,19 +989,17 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		String cmd = serviceContext.getCommand();
-
-		if ((cmd != null) && cmd.equals(Constants.REVERT)) {
-			List<AssetCategory> categories =
+		if (Validator.equals(serviceContext.getCommand(), Constants.REVERT)) {
+			List<AssetCategory> assetCategories =
 				assetCategoryLocalService.getCategories(
 					DLFileEntryConstants.getClassName(),
 					fileEntry.getFileEntryId());
 
-			List<Long> categoryIds = ListUtil.toList(
-				categories, AssetCategory.CATEGORY_ID_ACCESSOR);
+			List<Long> assetCategoryIds = ListUtil.toList(
+				assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
 			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toLongArray(categoryIds));
+				ArrayUtil.toLongArray(assetCategoryIds));
 		}
 
 		updateAsset(
