@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1457818068662
+Bnd-LastModified: 1458139299441
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_95 (Oracle Corporation)
+Created-By: 1.7.0_79 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2427,10 +2427,10 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ,com.liferay.portal.kernel.util",com.liferay.mobile.device.rules.kern
  el;version="1.0.0";uses:="com.liferay.expando.kernel.model,com.lifera
  y.exportimport.kernel.lar",com.liferay.osgi.service.tracker.collectio
- ns;version="1.0.1";uses:="org.osgi.framework",com.liferay.osgi.servic
- e.tracker.collections.list;version="1.0.1";uses:="org.osgi.framework,
+ ns;version="1.0.2";uses:="org.osgi.framework",com.liferay.osgi.servic
+ e.tracker.collections.list;version="1.0.2";uses:="org.osgi.framework,
  org.osgi.util.tracker",com.liferay.osgi.service.tracker.collections.m
- ap;version="1.0.1";uses:="com.liferay.osgi.service.tracker.collection
+ ap;version="1.0.2";uses:="com.liferay.osgi.service.tracker.collection
  s,org.osgi.framework,org.osgi.util.tracker",com.liferay.portal;versio
  n="1.0.0",com.liferay.portal.action;uses:="com.liferay.portal.kernel.
  exception,com.liferay.portal.kernel.json,com.liferay.portal.kernel.mo
@@ -3535,7 +3535,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  pringframework.core",com.liferay.portal.spring.bean;version="1.0.2";u
  ses:="org.springframework.beans,org.springframework.beans.factory,org
  .springframework.beans.factory.config",com.liferay.portal.spring.cont
- ext;version="1.0.2";uses:="javax.servlet,org.springframework.beans.fa
+ ext;version="1.1.0";uses:="javax.servlet,org.springframework.beans.fa
  ctory,org.springframework.beans.factory.config,org.springframework.be
  ans.factory.support,org.springframework.beans.factory.xml,org.springf
  ramework.context,org.springframework.context.support,org.springframew
@@ -3635,7 +3635,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  rvlet,com.liferay.portal.kernel.upload,javax.portlet,javax.servlet,ja
  vax.servlet.http,org.apache.commons.fileupload,org.apache.commons.fil
  eupload.disk,org.apache.commons.fileupload.servlet",com.liferay.porta
- l.util;version="1.0.2";uses:="com.liferay.expando.kernel.model,com.li
+ l.util;version="1.1.0";uses:="com.liferay.expando.kernel.model,com.li
  feray.layouts.admin.kernel.util,com.liferay.portal.kernel.configurati
  on,com.liferay.portal.kernel.exception,com.liferay.portal.kernel.json
  ,com.liferay.portal.kernel.model,com.liferay.portal.kernel.openid,com
@@ -3750,7 +3750,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  liferay.portal.kernel.service.persistence,com.liferay.portal.kernel.s
  ervice.persistence.impl,com.liferay.portal.kernel.util,com.liferay.po
  rtlet.announcements.model.impl";version="1.0.0",com.liferay.portlet.a
- sset;version="2.0.0",com.liferay.portlet.asset.action;uses:="com.life
+ sset;version="2.2.0",com.liferay.portlet.asset.action;uses:="com.life
  ray.asset.kernel.model,com.liferay.portal.struts,javax.servlet.http,o
  rg.apache.struts.action";version="1.0.0",com.liferay.portlet.asset.mo
  del;version="1.0.2";uses:="com.liferay.asset.kernel.model,com.liferay
@@ -4187,7 +4187,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  liferay.portal.kernel.service,com.liferay.portal.kernel.theme,com.lif
  eray.portal.kernel.util,com.liferay.social.kernel.model,com.liferay.s
  ocial.kernel.util,javax.servlet.http";version="1.0.0",com.liferay.por
- tlet.trash;version="2.0.0",com.liferay.portlet.trash.model.impl;uses:
+ tlet.trash;version="2.2.0",com.liferay.portlet.trash.model.impl;uses:
  ="com.liferay.expando.kernel.model,com.liferay.portal.kernel.json,com
  .liferay.portal.kernel.model,com.liferay.portal.kernel.model.impl,com
  .liferay.portal.kernel.service,com.liferay.portal.kernel.util,com.lif
@@ -4263,7 +4263,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  s.kernel.model,javax.portlet",com.liferay.registry;version="1.0.0";us
  es:="com.liferay.registry.dependency",com.liferay.registry.collection
  s;version="1.0.0";uses:="com.liferay.registry",com.liferay.registry.d
- ependency;version="1.0.0";uses:="com.liferay.registry",com.liferay.re
+ ependency;version="1.0.1";uses:="com.liferay.registry",com.liferay.re
  gistry.util;version="1.0.0",com.liferay.roles.admin.kernel.util;versi
  on="1.0.0";uses:="com.liferay.portal.kernel.model",com.liferay.sites.
  kernel.util;version="1.0.0";uses:="com.liferay.portal.kernel.exceptio
@@ -4818,7 +4818,7 @@ Import-Package: aQute.bnd.annotation;version="[1.44,2)",aQute.bnd.anno
  let.filters.uploadservletrequest,com.liferay.portal.servlet.taglib.ui
  ,com.liferay.portal.setup,com.liferay.portal.spring.aop;version="[1.0
  ,2)",com.liferay.portal.spring.bean;version="[1.0,2)",com.liferay.por
- tal.spring.context;version="[1.0,2)",com.liferay.portal.spring.hibern
+ tal.spring.context;version="[1.1,2)",com.liferay.portal.spring.hibern
  ate;version="[1.0,2)",com.liferay.portal.spring.transaction;version="
  [1.0,2)",com.liferay.portal.spring.util,com.liferay.portal.struts,com
  .liferay.portal.template;version="[1.0,2)",com.liferay.portal.theme,c
@@ -4838,7 +4838,7 @@ Import-Package: aQute.bnd.annotation;version="[1.44,2)",aQute.bnd.anno
  om.liferay.portal.upgrade.v6_2_0,com.liferay.portal.upgrade.v6_2_0.ut
  il,com.liferay.portal.upgrade.v7_0_0;version="[1.0,2)",com.liferay.po
  rtal.upgrade.v7_0_0.util,com.liferay.portal.upload;version="[1.0,2)",
- com.liferay.portal.util;version="[1.0,2)",com.liferay.portal.verify,c
+ com.liferay.portal.util;version="[1.1,2)",com.liferay.portal.verify,c
  om.liferay.portal.webdav,com.liferay.portal.webserver,com.liferay.por
  tal.xml;version="[1.0,2)",com.liferay.portal.xml.xpath,com.liferay.po
  rtal.zip,com.liferay.portlet;version="[1.0,2)",com.liferay.portlet.ad
