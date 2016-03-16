@@ -165,13 +165,15 @@
 			form.on(
 				'submit',
 				function(event) {
-					var redirect = form.fm('redirect');
+					<c:if test="<%= Validator.isNotNull(redirect) %>">
+						var redirect = form.fm('redirect');
 
-					if (redirect) {
-						var redirectVal = redirect.val();
+						if (redirect) {
+							var redirectVal = redirect.val();
 
-						redirect.val(redirectVal + window.location.hash);
-					}
+							redirect.val(redirectVal + window.location.hash);
+						}
+					</c:if>
 
 					submitForm(form);
 				}
