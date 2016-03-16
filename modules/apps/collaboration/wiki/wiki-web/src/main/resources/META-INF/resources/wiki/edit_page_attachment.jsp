@@ -109,7 +109,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 				deleteURL.setParameter('fileName', event.name);
 
 				rowColumns.push(event.name);
-				rowColumns.push(event.size);
+				rowColumns.push(this.formatStorage(event.size));
 				rowColumns.push('<a href="' + deleteURL + '"><%= TrashUtil.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-the-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
 
 				searchContainer.addRow(rowColumns, event.id);
