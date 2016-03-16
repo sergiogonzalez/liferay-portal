@@ -26,7 +26,7 @@ String itemSelectorURL = GetterUtil.getString((String)request.getAttribute("life
 long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:maxFileSize"));
 String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:paramName"));
 String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:uploadURL"));
-String validExtensions = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:validExtensions"));
+String[] validExtensions = GetterUtil.getStringValues(request.getAttribute("liferay-ui:image-selector:validExtensions"));
 
 String cropRegion = ParamUtil.getString(request, paramName + "CropRegion");
 
@@ -64,8 +64,8 @@ if (fileEntryId != 0) {
 		</div>
 
 		<div class="file-validation-info">
-			<c:if test="<%= Validator.isNotNull(validExtensions) %>">
-				<strong><%= validExtensions %></strong>
+			<c:if test="<%= ArrayUtil.isNotEmpty(validExtensions) %>">
+				<strong><%= StringUtil.merge(validExtensions) %></strong>
 			</c:if>
 
 			<c:if test="<%= maxFileSize != 0 %>">
@@ -125,7 +125,7 @@ if (!draggableImage.equals("none")) {
 			paramName: '<portlet:namespace /><%= paramName %>',
 			rootNode: '#<%= randomNamespace %>taglibImageSelector',
 			uploadURL: '<%= uploadURL %>',
-			validExtensions: '<%= validExtensions %>'
+			validExtensions: '<%= StringUtil.merge(validExtensions) %>'
 		}
 	);
 

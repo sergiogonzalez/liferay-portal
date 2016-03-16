@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.liferay.portal.kernel.util.StringUtil" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -50,7 +50,8 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 			},
 			rootNode: '#itemSelectorUploadContainer',
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(UploadableFileReturnType.class.getName()) %>',
-			uploadItemUrl: '<%= itemSelectorUploadViewDisplayContext.getURL() %>'
+			uploadItemUrl: '<%= itemSelectorUploadViewDisplayContext.getURL() %>',
+			validExtensions: '<%= StringUtil.merge(itemSelectorUploadViewDisplayContext.getValidExtensions()) %>'
 		}
 	);
 </aui:script>
