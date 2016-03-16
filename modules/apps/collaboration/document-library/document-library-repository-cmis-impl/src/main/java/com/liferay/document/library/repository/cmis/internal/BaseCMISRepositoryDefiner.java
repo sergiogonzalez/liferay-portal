@@ -15,7 +15,11 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
+import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
+import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -38,6 +42,22 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 		return ResourceBundleUtil.getString(
 			resourceBundle, _MODEL_RESOURCE_NAME_PREFIX + getClassName());
 	}
+
+	@Override
+	public void registerCapabilities(
+		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
+
+		DocumentRepository documentRepository = capabilityRegistry.getTarget();
+
+		PortalCapabilityLocator portalCapabilityLocator =
+			getPortalCapabilityLocator();
+
+		capabilityRegistry.addSupportedCapability(
+			ProcessorCapability.class,
+			portalCapabilityLocator.getProcessorCapability(documentRepository));
+	}
+
+	protected abstract PortalCapabilityLocator getPortalCapabilityLocator();
 
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return _resourceBundleLoader;
