@@ -64,7 +64,7 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 	}
 
 	@Reference(
-		target = "(repository.targetClassName=" + CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_CLASSNAME + ")",
+		target = "(repository.target.class.name=" + CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_CLASSNAME + ")",
 		unbind = "-"
 	)
 	protected void setRepositoryFactory(RepositoryFactory repositoryFactory) {
