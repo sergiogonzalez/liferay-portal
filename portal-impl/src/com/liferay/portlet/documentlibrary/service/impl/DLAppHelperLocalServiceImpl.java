@@ -991,7 +991,7 @@ public class DLAppHelperLocalServiceImpl
 
 		String cmd = serviceContext.getCommand();
 
-		if (cmd.equals(Constants.REVERT)) {
+		if ((cmd != null) && cmd.equals(Constants.REVERT)) {
 			List<AssetCategory> categories =
 				assetCategoryLocalService.getCategories(
 					DLFileEntryConstants.getClassName(),
