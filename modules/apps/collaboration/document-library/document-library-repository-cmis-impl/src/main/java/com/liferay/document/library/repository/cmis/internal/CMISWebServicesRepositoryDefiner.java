@@ -81,7 +81,7 @@ public class CMISWebServicesRepositoryDefiner
 	}
 
 	@Reference(
-		target = "(repository.targetClassName=" + CMISRepositoryConstants.CMIS_WEB_SERVICES_REPOSITORY_CLASSNAME + ")",
+		target = "(repository.target.class.name=" + CMISRepositoryConstants.CMIS_WEB_SERVICES_REPOSITORY_CLASSNAME + ")",
 		unbind = "-"
 	)
 	protected void setRepositoryFactory(RepositoryFactory repositoryFactory) {
