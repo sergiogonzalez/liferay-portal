@@ -16,300 +16,124 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
-	<div class="portlet-msg-success">
-		<liferay-ui:message key="your-request-processed-successfully" />
-	</div>
-</c:if>
-
 <%
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 %>
 
-<div id="<portlet:namespace />inviteMembersContainer">
-	<div class="user-search-wrapper">
-		<h2>
-			<liferay-ui:message key="find-members" />
-		</h2>
+<div class="container-fluid main-content-body" id="<portlet:namespace />inviteMembersContainer">
 
-		<input class="invite-user-search" id="<portlet:namespace />inviteUserSearch" name="<portlet:namespace />userName" type="text" />
+	<portlet:actionURL name="sendInvites" var="sendInvitesURL" />
 
-		<div class="search">
-			<div class="list"></div>
-		</div>
+	<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/invite_members/view_invite.jsp" />
+	</portlet:renderURL>
 
-		<liferay-ui:icon
-			cssClass="footnote"
-			image="check"
-			label="<%= true %>"
-			message="previous-invitation-was-sent"
-		/>
-	</div>
+	<aui:form action="<%= sendInvitesURL %>" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+		<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
+		<aui:input name="receiverUserIds" type="hidden" value="" />
+		<aui:input name="receiverEmailAddresses" type="hidden" value="" />
+		<aui:input name="invitedRoleId" type="hidden" value="" />
+		<aui:input name="invitedTeamId" type="hidden" value="" />
 
-	<div class="invited-users-wrapper">
-		<div class="user-invited">
-			<h2>
-				<liferay-ui:message key="members-to-invite" />
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<label><liferay-ui:message key="find-members" /></label>
 
-				<span>
-					<liferay-ui:message key="to-add,-click-members-on-the-left" />
-				</span>
-			</h2>
+				<small class="text-capitalize text-muted">
+					<liferay-ui:icon
+						cssClass="footnote"
+						icon="check"
+						label="<%= true %>"
+						markupView="lexicon"
+						message="previous-invitation-was-sent"
+					/>
+				</small>
 
-			<div class="list">
-			</div>
-		</div>
+				<aui:input id="inviteUserSearch" label="" name="userName" placeholder="search" />
 
-		<div class="email-invited">
-			<h2>
-				<liferay-ui:message key="invite-by-email" />
-			</h2>
+				<div class="search" id="<portlet:namespace />membersList"></div>
 
-			<div class="list">
-			</div>
+				<label><liferay-ui:message key="members-to-invite" /><liferay-ui:icon-help message="to-add,-click-members-on-the-top-list" /></label>
 
-			<div class="controls">
-				<input id="new-member-email-address" name="<portlet:namespace />emailAddress" size="50" type="text" />
+				<div class="user-invited" id="<portlet:namespace />invitedMembersList"></div>
 
-				<input id="so-add-email-address" type="button" value="<liferay-ui:message key="add-email-address" />" />
-			</div>
-		</div>
+				<div class="button-holder controls">
+					<aui:input label="invite-by-email" name="emailAddress" />
 
-		<%
-		List<Role> roles = RoleLocalServiceUtil.search(layout.getCompanyId(), null, null, new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleNameComparator(false));
+					<aui:button name="emailButton" value="add-email-address" />
+				</div>
 
-		roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
-		%>
+				<label><liferay-ui:message key="emails-to-invite" /></label>
 
-		<c:if test="<%= !roles.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
-			<div class="invite-to">
-				<h2>
-					<liferay-ui:message key="invite-to-role" />
-				</h2>
+				<div class="email-invited" id="<portlet:namespace />invitedEmailList"></div>
 
-				<select name="<portlet:namespace />roleId">
-					<option selected value="0"></option>
+				<%
+				List<Role> roles = RoleLocalServiceUtil.search(layout.getCompanyId(), null, null, new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleNameComparator(false));
 
-					<%
-					for (Role role : roles) {
-					%>
+				roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
+				%>
 
-						<option value="<%= role.getRoleId() %>"><%= HtmlUtil.escape(role.getTitle(locale)) %></option>
+				<c:if test="<%= !roles.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
+					<div class="invite-to">
+						<aui:select label="invite-to-role" name="roleId">
+							<aui:option value="0" />
 
-					<%
-					}
-					%>
+							<%
+							for (Role role : roles) {
+							%>
 
-				</select>
-			</div>
-		</c:if>
+								<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" value="<%= role.getRoleId() %>" />
 
-		<%
-		List<Team> teams = TeamLocalServiceUtil.getGroupTeams(group.getGroupId());
-		%>
+							<%
+							}
+							%>
 
-		<c:if test="<%= !teams.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
-			<div class="invite-to">
-				<h2>
-					<liferay-ui:message key="invite-to-team" />
-				</h2>
+						</aui:select>
+					</div>
+				</c:if>
 
-				<select name="<portlet:namespace />teamId">
-					<option selected value="0"></option>
+				<%
+				List<Team> teams = TeamLocalServiceUtil.getGroupTeams(group.getGroupId());
+				%>
 
-					<%
-					for (Team team : teams) {
-					%>
+				<c:if test="<%= !teams.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
+					<div class="invite-to">
+						<aui:select label="invite-to-team" name="teamId">
+							<aui:option value="0" />
 
-						<option value="<%= team.getTeamId() %>"><%= HtmlUtil.escape(team.getName()) %></option>
+							<%
+							for (Team team : teams) {
+							%>
 
-					<%
-					}
-					%>
+								<aui:option label="<%= HtmlUtil.escape(team.getName()) %>" value="<%= team.getTeamId() %>" />
 
-				</select>
-			</div>
-		</c:if>
+							<%
+							}
+							%>
 
-		<div class="invite-actions">
-			<portlet:actionURL name="sendInvites" var="sentIvitesURL" />
+						</aui:select>
+					</div>
+				</c:if>
+			</aui:fieldset>
+		</aui:fieldset-group>
 
-			<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-				<portlet:param name="mvcPath" value="/invite_members/view_invite.jsp" />
-			</portlet:renderURL>
-
-			<aui:form action="<%= sentIvitesURL %>" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">
-				<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-				<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
-				<aui:input name="receiverUserIds" type="hidden" value="" />
-				<aui:input name="receiverEmailAddresses" type="hidden" value="" />
-				<aui:input name="invitedRoleId" type="hidden" value="" />
-				<aui:input name="invitedTeamId" type="hidden" value="" />
-
-				<aui:button id="submit" type="submit" value="send-invitations" />
-			</aui:form>
-		</div>
-	</div>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" value="send-invitations" />
+		</aui:button-row>
+	</aui:form>
 </div>
 
-<aui:script use="aui-base,datasource-io,datatype-number,liferay-so-invite-members-list">
-	var inviteMembersContainer = A.one('#<portlet:namespace />inviteMembersContainer');
-
-	var invitedMembersList = inviteMembersContainer.one('.user-invited .list');
-	var searchList = inviteMembersContainer.one('.search .list');
-
-	var pageDelta = 50;
-
-	var createDataSource = function(url) {
-		return new A.DataSource.IO(
-			{
-				ioConfig: {
-					method: "post"
-				},
-				on: {
-					request: function(event) {
-						var data = event.request;
-
-						event.cfg.data = {
-							<portlet:namespace />end: data.<portlet:namespace />end || pageDelta,
-							<portlet:namespace />keywords: data.<portlet:namespace />keywords || '',
-							<portlet:namespace />start: data.<portlet:namespace />start || 0
-						}
-					}
-				},
-				source: url
-			}
-		);
-	}
-
-	var inviteMembersList = new Liferay.SO.InviteMembersList(
+<aui:script use="liferay-portlet-invite-members">
+	new Liferay.Portlet.InviteMembers(
 		{
-			inputNode: '#<portlet:namespace />inviteMembersContainer #<portlet:namespace />inviteUserSearch',
-			listNode: '#<portlet:namespace />inviteMembersContainer .search .list',
-			minQueryLength: 0,
-			requestTemplate: function(query) {
-				return {
-					<portlet:namespace />end: pageDelta,
-					<portlet:namespace />keywords: query,
-					<portlet:namespace />start: 0
-				}
+			availableUsersURL: '<portlet:resourceURL id="getAvailableUsers" />',
+			form: {
+				method: 'POST',
+				node: A.one(document.<portlet:namespace />fm)
 			},
-			resultTextLocator: function(response) {
-				var result = '';
-
-				if (typeof response.toString != 'undefined') {
-					result = response.toString();
-				}
-				else if (typeof response.responseText != 'undefined') {
-					result = response.responseText;
-				}
-
-				return result;
-			},
-			source: createDataSource('<portlet:resourceURL id="getAvailableUsers" />')
+			namespace: '<portlet:namespace />',
+			rootNode: '#<portlet:namespace/>inviteMembersContainer'
 		}
 	);
-
-	var renderResults = function(responseData) {
-		var count = responseData.count;
-		var options = responseData.options;
-		var results = responseData.users;
-
-		var buffer = [];
-
-		if (results.length == 0) {
-			if (options.start == 0) {
-				buffer.push(
-					'<div class="empty"><liferay-ui:message key="there-are-no-users-to-invite" unicode="<%= true %>" /></div>'
-				);
-			}
-		}
-		else {
-			buffer.push(
-				A.Array.map(
-					results,
-					function(result) {
-						var userTemplate =
-							'<div class="{cssClass}" data-userId="{userId}">' +
-								'<span class="name">{userFullName}</span>'+
-								'<span class="email">{userEmailAddress}</span>' +
-							'</div>';
-
-						var invited = invitedMembersList.one('[data-userId="' + result.userId + '"]');
-
-						return A.Lang.sub(
-							userTemplate,
-							{
-								cssClass: result.hasPendingMemberRequest ? "pending-member-request user" : (invited ? "invited user" : "user"),
-								userEmailAddress: result.userEmailAddress,
-								userFullName: result.userFullName,
-								userId: result.userId
-							}
-						);
-					}
-				).join('')
-			);
-
-			if (count > results.length) {
-				buffer.push(
-					'<div class="more-results">' +
-						'<a href="javascript:;" data-end="' + options.end + '"><liferay-ui:message key="view-more" unicode="<%= true %>" /></a>' +
-					'</div>'
-				);
-			}
-		}
-
-		return buffer;
-	}
-
-	var showMoreResults = function(responseData) {
-		var moreResults = searchList.one('.more-results');
-
-		moreResults.remove();
-
-		searchList.append(renderResults(responseData).join(''));
-	}
-
-	var updateInviteMembersList = function(event) {
-		var responseData = A.JSON.parse(event.data.responseText);
-
-		searchList.html(renderResults(responseData).join(''));
-	}
-
-	inviteMembersList.on('results', updateInviteMembersList);
-
-	searchList.delegate(
-		'click',
-		function(event) {
-			var node = event.currentTarget;
-
-			var start = A.DataType.Number.parse(node.getAttribute('data-end'));
-
-			var end = start + pageDelta;
-
-			var inviteUserSearch = inviteMembersContainer.one('#<portlet:namespace />inviteUserSearch');
-
-			A.io.request(
-				'<portlet:resourceURL id="getAvailableUsers" />',
-				{
-					after: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
-
-							showMoreResults(responseData);
-						}
-					},
-					data: {
-						<portlet:namespace />end: end,
-						<portlet:namespace />keywords: inviteUserSearch.get('value'),
-						<portlet:namespace />start: start
-					},
-					dataType: 'json'
-				}
-			);
-		},
-		'.more-results a'
-	);
-
-	inviteMembersList.sendRequest();
 </aui:script>
