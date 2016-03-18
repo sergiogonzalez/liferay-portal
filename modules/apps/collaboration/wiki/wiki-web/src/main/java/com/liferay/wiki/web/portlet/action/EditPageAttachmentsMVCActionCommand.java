@@ -162,9 +162,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteAttachment(actionRequest, true);
 			}
-			else if (cmd.equals(Constants.RENAME)) {
-				_wikiAttachmentsHelper.restoreRename(actionRequest);
-			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				_wikiAttachmentsHelper.restoreEntries(actionRequest);
 
