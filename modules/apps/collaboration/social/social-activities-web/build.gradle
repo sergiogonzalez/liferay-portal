@@ -10,8 +10,5 @@ dependencies {
 	provided group: "rome", name: "rome", version: "1.0"
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
+	provided project(":apps:foundation:rss:rss-util")
 }

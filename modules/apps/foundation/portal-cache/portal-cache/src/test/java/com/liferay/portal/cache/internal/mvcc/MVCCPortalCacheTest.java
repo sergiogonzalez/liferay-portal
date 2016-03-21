@@ -15,9 +15,9 @@
 package com.liferay.portal.cache.internal.mvcc;
 
 import com.liferay.portal.cache.LowLevelCache;
-import com.liferay.portal.cache.test.TestPortalCache;
-import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestPortalCacheReplicator;
+import com.liferay.portal.cache.test.util.TestPortalCache;
+import com.liferay.portal.cache.test.util.TestPortalCacheListener;
+import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -222,7 +222,7 @@ public class MVCCPortalCacheTest {
 		}
 
 		@Around(
-			"execution(protected * com.liferay.portal.cache.test." +
+			"execution(protected * com.liferay.portal.cache.test.util." +
 				"TestPortalCache.doPutIfAbsent(..))"
 		)
 		public Object doPutIfAbsent(ProceedingJoinPoint proceedingJoinPoint)
@@ -238,7 +238,7 @@ public class MVCCPortalCacheTest {
 		}
 
 		@Around(
-			"execution(protected * com.liferay.portal.cache.test." +
+			"execution(protected * com.liferay.portal.cache.test.util." +
 				"TestPortalCache.doReplace(..))"
 		)
 		public Object doReplace(ProceedingJoinPoint proceedingJoinPoint)

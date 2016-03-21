@@ -1232,6 +1232,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="osgi.logging.org_eclipse_osgi">
+		<priority value="WARN" />
+	</category>
+
 	<category name="portal-web.docroot.errors.404.jsp">
 		<priority value="WARN" />
 	</category>

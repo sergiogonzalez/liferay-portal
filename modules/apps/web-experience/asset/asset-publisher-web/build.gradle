@@ -13,12 +13,9 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":apps:foundation:rss:rss-util")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")
 	provided project(":apps:web-experience:journal:journal-api")
 	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
 }
