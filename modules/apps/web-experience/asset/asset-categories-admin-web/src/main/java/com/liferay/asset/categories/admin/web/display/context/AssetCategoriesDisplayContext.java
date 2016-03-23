@@ -14,10 +14,15 @@
 
 package com.liferay.asset.categories.admin.web.display.context;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryDisplay;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
@@ -25,11 +30,16 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
@@ -56,6 +66,59 @@ public class AssetCategoriesDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+	}
+
+	public String getAssetType(AssetVocabulary vocabulary)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] selectedClassNameIds = vocabulary.getSelectedClassNameIds();
+		long[] selectedClassTypePKs = vocabulary.getSelectedClassTypePKs();
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < selectedClassNameIds.length; i++) {
+			long classNameId = selectedClassNameIds[i];
+			long classTypePK = selectedClassTypePKs[i];
+
+			String name = LanguageUtil.get(_request, "all-asset-types");
+
+			if (classNameId != AssetCategoryConstants.ALL_CLASS_NAME_ID) {
+				if (classTypePK != -1) {
+					AssetRendererFactory<?> assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassNameId(classNameId);
+
+					ClassTypeReader classTypeReader =
+						assetRendererFactory.getClassTypeReader();
+
+					ClassType classType = classTypeReader.getClassType(
+						classTypePK, themeDisplay.getLocale());
+
+					name = classType.getName();
+				}
+				else {
+					name = ResourceActionsUtil.getModelResource(
+						themeDisplay.getLocale(),
+						PortalUtil.getClassName(classNameId));
+				}
+			}
+
+			sb.append(name);
+
+			if (vocabulary.isRequired(classNameId, classTypePK)) {
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.STAR);
+			}
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	public String getCategoriesRedirect() {
@@ -116,8 +179,23 @@ public class AssetCategoriesDisplayContext {
 		categoriesSearchContainer.setOrderByComparator(orderByComparator);
 
 		categoriesSearchContainer.setOrderByType(orderByType);
-		categoriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_renderResponse);
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("^(?!.*");
+		sb.append(_renderResponse.getNamespace());
+		sb.append("redirect).*(/vocabulary/");
+		sb.append(getVocabularyId());
+		sb.append("/category/");
+		sb.append(getCategoryId());
+		sb.append(")");
+
+		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
+
+		categoriesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
 		List<AssetCategory> categories = null;
 		int categoriesCount = 0;
@@ -294,8 +372,21 @@ public class AssetCategoriesDisplayContext {
 		vocabulariesSearchContainer.setOrderByComparator(orderByComparator);
 
 		vocabulariesSearchContainer.setOrderByType(orderByType);
-		vocabulariesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_renderResponse);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("^(?!.*");
+		sb.append(_renderResponse.getNamespace());
+		sb.append("redirect).*(/vocabulary/");
+		sb.append(getVocabularyId());
+		sb.append(")");
+
+		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
+
+		vocabulariesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
 		List<AssetVocabulary> vocabularies = null;
 		int vocabulariesCount = 0;
@@ -331,6 +422,14 @@ public class AssetCategoriesDisplayContext {
 				scopeGroupId, true, vocabulariesSearchContainer.getStart(),
 				vocabulariesSearchContainer.getEnd(),
 				vocabulariesSearchContainer.getOrderByComparator());
+
+			if (vocabulariesCount == 0) {
+				vocabulariesCount =
+					AssetVocabularyServiceUtil.getGroupVocabulariesCount(
+						scopeGroupId);
+
+				vocabulariesSearchContainer.setTotal(vocabulariesCount);
+			}
 		}
 
 		vocabulariesSearchContainer.setResults(vocabularies);

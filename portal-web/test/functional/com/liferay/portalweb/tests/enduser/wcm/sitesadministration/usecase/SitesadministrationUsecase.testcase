@@ -419,7 +419,7 @@
 
 		<execute macro="Role#definePermissionCmdCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Go to Control Panel" />
+			<var name="permissionDefinitionValue" value="View Control Panel Menu" />
 			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 
@@ -1128,11 +1128,11 @@
 			<var name="displayStyle" value="List" />
 		</execute>
 
-		<var method="selenium#getText('//tr/td[7]/span/a')" name="valueName" />
+		<var method="selenium#getText('//tr/td[7]//span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
 
 		<echo message="import file name ${larFileName}" />
 

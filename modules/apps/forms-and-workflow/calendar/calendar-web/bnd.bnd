@@ -1,10 +1,8 @@
 Bundle-Name: Liferay Calendar Web
 Bundle-SymbolicName: com.liferay.calendar.web
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
 Web-ContextPath: /calendar-web
--liferay-includeresource:\
-	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
+-liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class

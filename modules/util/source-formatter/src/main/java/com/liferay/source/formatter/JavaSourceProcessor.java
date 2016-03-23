@@ -800,6 +800,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, languageKeyPattern);
 
+		newContent = formatJSONObject(newContent);
+
 		newContent = formatStringBundler(
 			fileName, newContent, _MAX_LINE_LENGTH);
 
@@ -2578,6 +2580,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"Specify category using @ExtendedObjectClassDefinition: " +
 					fileName);
+		}
+
+		// LPS-64238
+
+		if (content.contains("import com.liferay.util.dao.orm.CustomSQLUtil")) {
+			processErrorMessage(
+				fileName,
+				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in " +
+					"modules: " + fileName);
 		}
 
 		return content;
