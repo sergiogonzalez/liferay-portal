@@ -21,14 +21,19 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.ResourceBundle;
 
 /**
  * @author Brian Wing Shun Chan
@@ -102,15 +107,15 @@ public abstract class BaseModelUserNotificationHandler
 		JSONObject jsonObject, ServiceContext serviceContext, String message,
 		String typeName) {
 
-		return LanguageUtil.format(
-			serviceContext.getLocale(), message,
+		return translate(
+			message,
 			new String[] {
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
 						jsonObject.getLong("userId"), StringPool.BLANK)),
 				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
 			},
-			false);
+			serviceContext);
 	}
 
 	@Override
@@ -123,6 +128,17 @@ public abstract class BaseModelUserNotificationHandler
 			userNotificationEvent.getPayload());
 
 		return jsonObject.getString("entryURL");
+	}
+
+	protected ResourceBundle getResourceBundle(ServiceContext serviceContext) {
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+
+		return resourceBundleLoader.loadResourceBundle(
+			LocaleUtil.toLanguageId(serviceContext.getLocale()));
+	}
+
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 	}
 
 	protected String getTitle(
@@ -154,6 +170,14 @@ public abstract class BaseModelUserNotificationHandler
 
 		return getFormattedMessage(
 			jsonObject, serviceContext, message, typeName);
+	}
+
+	protected String translate(
+		String message, String[] arguments, ServiceContext serviceContext) {
+
+		return ResourceBundleUtil.getString(
+			getResourceBundle(serviceContext), serviceContext.getLocale(),
+			message, arguments);
 	}
 
 }
