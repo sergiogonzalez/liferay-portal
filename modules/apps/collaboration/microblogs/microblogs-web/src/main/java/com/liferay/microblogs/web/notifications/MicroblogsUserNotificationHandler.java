@@ -77,7 +77,7 @@ public class MicroblogsUserNotificationHandler
 		if (notificationType ==
 				MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY) {
 
-			message = "x-commented-on-your-post";
+			message = "x-commented-on-your-microblogs-entry";
 			arguments = new String[] {userFullName};
 		}
 		else if (notificationType ==
@@ -91,7 +91,7 @@ public class MicroblogsUserNotificationHandler
 				parentMicroblogsEntryUserId);
 
 			if (user != null) {
-				message = "x-also-commented-on-x's-post";
+				message = "x-also-commented-on-x's-microblogs-entry";
 				arguments = new String[] {userFullName, user.getFullName()};
 			}
 			else {
@@ -102,13 +102,13 @@ public class MicroblogsUserNotificationHandler
 					MicroblogsEntryConstants.
 						NOTIFICATION_TYPE_REPLY_TO_TAGGED) {
 
-			message = "x-commented-on-a-post-you-are-tagged-in";
+			message = "x-commented-on-a-microblogs-entry-you-are-tagged-in";
 			arguments = new String[] {userFullName};
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG) {
 
-			message = "x-tagged-you-in-a-post";
+			message = "x-tagged-you-in-a-microblogs-entry";
 			arguments = new String[] {userFullName};
 		}
 		else {
