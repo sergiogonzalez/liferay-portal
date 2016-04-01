@@ -24,7 +24,7 @@ if (Validator.isNull(label)) {
 else if (collapsible) {
 	boolean defaultState = collapsed;
 
-	collapsed = GetterUtil.getBoolean(SessionClicks.get(request, panelId, null), defaultState);
+	collapsed = GetterUtil.getBoolean(SessionClicks.get(request, id, null), defaultState);
 }
 %>
 
