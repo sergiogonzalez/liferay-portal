@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -60,6 +62,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -766,6 +769,25 @@ public class WebServerServlet extends HttpServlet {
 		String currentURL = PortalUtil.getCurrentURL(request);
 
 		redirect = HttpUtil.addParameter(redirect, "redirect", currentURL);
+
+		try {
+			String[] urlArray = StringUtil.split(currentURL, CharPool.SLASH);
+
+			long groupId = GetterUtil.getLong(urlArray[2]);
+
+			Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
+				groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (layout != null) {
+				redirect = HttpUtil.addParameter(
+					redirect, "p_l_id", layout.getPlid());
+			}
+		}
+		catch (SystemException se) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(se, se);
+			}
+		}
 
 		response.sendRedirect(redirect);
 	}
