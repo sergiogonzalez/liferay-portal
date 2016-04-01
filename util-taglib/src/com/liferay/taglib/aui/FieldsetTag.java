@@ -46,6 +46,13 @@ public class FieldsetTag extends BaseFieldsetTag {
 	}
 
 	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_uniqueId = null;
+	}
+
+	@Override
 	protected String getEndPage() {
 		if (Validator.isNotNull(getMarkupView())) {
 			return "/html/taglib/aui/fieldset/" + getMarkupView() + "/end.jsp";
@@ -73,6 +80,12 @@ public class FieldsetTag extends BaseFieldsetTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
+		if (Validator.isNotNull(_uniqueId)) {
+			setNamespacedAttribute(request, "id", _uniqueId);
+
+			return;
+		}
+
 		if (Validator.isNotNull(getId())) {
 			return;
 		}
@@ -81,10 +94,10 @@ public class FieldsetTag extends BaseFieldsetTag {
 			return;
 		}
 
-		String id = PortalUtil.getUniqueElementId(
+		_uniqueId = PortalUtil.getUniqueElementId(
 			request, _getNamespace(), AUIUtil.normalizeId(getLabel()));
 
-		setNamespacedAttribute(request, "id", id);
+		setNamespacedAttribute(request, "id", _uniqueId);
 	}
 
 	private String _getNamespace() {
@@ -102,5 +115,7 @@ public class FieldsetTag extends BaseFieldsetTag {
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private String _uniqueId;
 
 }
