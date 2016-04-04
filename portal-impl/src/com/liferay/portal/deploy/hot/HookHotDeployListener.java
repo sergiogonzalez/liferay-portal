@@ -611,11 +611,15 @@ public class HookHotDeployListener
 
 			locale = LocaleUtil.fromLanguageId(localeKey, true, false);
 
+			System.out.printf("localeKey: %s; locale: %s", localeKey, locale);
+
 			if (locale == null) {
 				Set<Locale> availableLocales =
 					LanguageUtil.getAvailableLocales();
 
 				for (Locale availableLocale : availableLocales) {
+					System.out.printf("availableLocale: %s", availableLocale);
+
 					if (localeKey.equals(availableLocale.getLanguage())) {
 						return availableLocale;
 					}
