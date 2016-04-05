@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Users Admin Data Creator Impl
+Bundle-SymbolicName: com.liferay.users.admin.data.creator.impl
+Bundle-Version: 1.0.0

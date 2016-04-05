@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Users Admin Data Creator API
+Bundle-SymbolicName: com.liferay.users.admin.data.creator.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.users.admin.data.creator
