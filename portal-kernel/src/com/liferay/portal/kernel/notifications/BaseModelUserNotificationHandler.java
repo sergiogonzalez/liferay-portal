@@ -108,8 +108,11 @@ public abstract class BaseModelUserNotificationHandler
 		JSONObject jsonObject, ServiceContext serviceContext, String message,
 		String typeName) {
 
-		return translate(
-			serviceContext.getLocale(), message,
+		ResourceBundle resourceBundle = getResourceBundle(
+			serviceContext.getLocale());
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, message,
 			new String[] {
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
@@ -170,15 +173,6 @@ public abstract class BaseModelUserNotificationHandler
 
 		return getFormattedMessage(
 			jsonObject, serviceContext, message, typeName);
-	}
-
-	protected String translate(
-		Locale locale, String message, String[] arguments) {
-
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return ResourceBundleUtil.getString(
-			resourceBundle, locale, message, arguments);
 	}
 
 }
