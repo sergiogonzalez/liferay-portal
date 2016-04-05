@@ -28,8 +28,11 @@ import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.language.LanguageResources;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -139,7 +142,10 @@ public class CommentUserNotificationHandler
 			};
 		}
 
-		return translate(serviceContext.getLocale(), message, arguments);
+		ResourceBundle resourceBundle = getResourceBundle(
+			serviceContext.getLocale());
+
+		return ResourceBundleUtil.getString(resourceBundle, message, arguments);
 	}
 
 	@Reference(unbind = "-")
