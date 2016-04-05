@@ -169,7 +169,7 @@ if (Validator.isNotNull(keywords)) {
 	}
 	%>
 
-	<c:if test="<%= showDragAndDropZone && !showSearchInfo %>">
+	<c:if test="<%= showDragAndDropZone && !showSearchInfo && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 		<liferay-util:buffer var="selectFileHTML">
 			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 
