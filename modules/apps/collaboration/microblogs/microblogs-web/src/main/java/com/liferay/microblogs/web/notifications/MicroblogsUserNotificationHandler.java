@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
 
 import org.osgi.service.component.annotations.Component;
@@ -94,9 +95,6 @@ public class MicroblogsUserNotificationHandler
 				message = "x-also-commented-on-x's-microblogs-entry";
 				arguments = new String[] {userFullName, user.getFullName()};
 			}
-			else {
-				return StringPool.BLANK;
-			}
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.
@@ -111,7 +109,8 @@ public class MicroblogsUserNotificationHandler
 			message = "x-tagged-you-in-a-microblogs-entry";
 			arguments = new String[] {userFullName};
 		}
-		else {
+
+		if (Validator.isNull(message)) {
 			return StringPool.BLANK;
 		}
 
