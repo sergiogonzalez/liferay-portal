@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -108,14 +109,13 @@ public abstract class BaseModelUserNotificationHandler
 		String typeName) {
 
 		return translate(
-			message,
+			serviceContext.getLocale(), message,
 			new String[] {
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
 						jsonObject.getLong("userId"), StringPool.BLANK)),
 				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
-			},
-			serviceContext);
+			});
 	}
 
 	@Override
@@ -130,11 +130,11 @@ public abstract class BaseModelUserNotificationHandler
 		return jsonObject.getString("entryURL");
 	}
 
-	protected ResourceBundle getResourceBundle(ServiceContext serviceContext) {
+	protected ResourceBundle getResourceBundle(Locale locale) {
 		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
 
 		return resourceBundleLoader.loadResourceBundle(
-			LocaleUtil.toLanguageId(serviceContext.getLocale()));
+			LocaleUtil.toLanguageId(locale));
 	}
 
 	protected ResourceBundleLoader getResourceBundleLoader() {
@@ -173,11 +173,12 @@ public abstract class BaseModelUserNotificationHandler
 	}
 
 	protected String translate(
-		String message, String[] arguments, ServiceContext serviceContext) {
+		Locale locale, String message, String[] arguments) {
+
+		ResourceBundle resourceBundle = getResourceBundle(locale);
 
 		return ResourceBundleUtil.getString(
-			getResourceBundle(serviceContext), serviceContext.getLocale(),
-			message, arguments);
+			resourceBundle, locale, message, arguments);
 	}
 
 }
