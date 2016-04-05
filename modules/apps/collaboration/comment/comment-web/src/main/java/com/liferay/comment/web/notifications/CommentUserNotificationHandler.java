@@ -95,7 +95,6 @@ public class CommentUserNotificationHandler
 		}
 
 		String message = StringPool.BLANK;
-		String[] arguments = null;
 
 		int notificationType = jsonObject.getInt("notificationType");
 
@@ -104,21 +103,9 @@ public class CommentUserNotificationHandler
 
 			if (assetRenderer != null) {
 				message = "x-added-a-new-comment-to-x";
-				arguments = new String[] {
-					HtmlUtil.escape(
-						PortalUtil.getUserName(
-							jsonObject.getLong("userId"), StringPool.BLANK)),
-					HtmlUtil.escape(
-						assetRenderer.getTitle(serviceContext.getLocale()))
-				};
 			}
 			else {
 				message = "x-added-a-new-comment";
-				arguments = new String[] {
-					HtmlUtil.escape(
-						PortalUtil.getUserName(
-							jsonObject.getLong("userId"), StringPool.BLANK))
-				};
 			}
 		}
 		else if (notificationType ==
@@ -126,23 +113,30 @@ public class CommentUserNotificationHandler
 
 			if (assetRenderer != null) {
 				message = "x-updated-a-comment-to-x";
-				arguments = new String[] {
-					HtmlUtil.escape(
-						PortalUtil.getUserName(
-							jsonObject.getLong("userId"),
-							StringPool.BLANK)),
-					HtmlUtil.escape(
-						assetRenderer.getTitle(serviceContext.getLocale()))
-				};
 			}
 			else {
 				message = "x-updated-a-comment";
-				arguments = new String[] {
-					HtmlUtil.escape(
-						PortalUtil.getUserName(
-							jsonObject.getLong("userId"), StringPool.BLANK))
-				};
 			}
+		}
+
+		String[] arguments = null;
+
+		if (assetRenderer != null) {
+			arguments = new String[] {
+				HtmlUtil.escape(
+					PortalUtil.getUserName(
+						jsonObject.getLong("userId"),
+						StringPool.BLANK)),
+				HtmlUtil.escape(
+					assetRenderer.getTitle(serviceContext.getLocale()))
+			};
+		}
+		else {
+			arguments = new String[] {
+				HtmlUtil.escape(
+					PortalUtil.getUserName(
+						jsonObject.getLong("userId"), StringPool.BLANK))
+			};
 		}
 
 		return translate(message, arguments, serviceContext);
