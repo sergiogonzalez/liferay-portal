@@ -114,7 +114,7 @@ public class MicroblogsUserNotificationHandler
 			return StringPool.BLANK;
 		}
 
-		return translate(message, arguments, serviceContext);
+		return translate(serviceContext.getLocale(), message, arguments);
 	}
 
 	@Reference(unbind = "-")

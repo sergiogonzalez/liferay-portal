@@ -46,12 +46,11 @@ public class MBUserNotificationHandler
 		String typeName) {
 
 		return translate(
-			message,
+			serviceContext.getLocale(), message,
 			new String[] {
 				HtmlUtil.escape(jsonObject.getString("fullName")),
 				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
-			},
-			serviceContext);
+			});
 	}
 
 }
