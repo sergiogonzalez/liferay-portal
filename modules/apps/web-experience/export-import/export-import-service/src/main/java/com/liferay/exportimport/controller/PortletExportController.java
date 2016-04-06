@@ -47,6 +47,7 @@ import com.liferay.exportimport.lar.PermissionExporter;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
+import com.liferay.petra.xml.util.DocUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
@@ -94,7 +95,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.util.xml.DocUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -1073,13 +1073,6 @@ public class PortletExportController implements ExportController {
 			Element parentElement)
 		throws Exception {
 
-		String path = ExportImportPathUtil.getServicePortletPreferencesPath(
-			portletDataContext, serviceName, ownerId, ownerType);
-
-		if (portletDataContext.isPathProcessed(path)) {
-			return;
-		}
-
 		String preferencesXML = portletPreferences.getPreferences();
 
 		if (Validator.isNull(preferencesXML)) {
@@ -1088,10 +1081,6 @@ public class PortletExportController implements ExportController {
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
-
-		Element serviceElement = parentElement.addElement("service");
-
-		serviceElement.addAttribute("service-name", serviceName);
 
 		Document document = SAXReaderUtil.read(
 			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
@@ -1129,7 +1118,13 @@ public class PortletExportController implements ExportController {
 			document.remove(node);
 		}
 
+		Element serviceElement = parentElement.addElement("service");
+
+		String path = ExportImportPathUtil.getServicePortletPreferencesPath(
+			portletDataContext, serviceName, ownerId, ownerType);
+
 		serviceElement.addAttribute("path", path);
+		serviceElement.addAttribute("service-name", serviceName);
 
 		portletDataContext.addZipEntry(path, document.formattedString());
 	}

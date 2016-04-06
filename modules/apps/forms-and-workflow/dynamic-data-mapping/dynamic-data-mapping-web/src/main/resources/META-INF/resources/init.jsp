@@ -26,8 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.content.util.ContentUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
@@ -71,6 +70,7 @@ page import="com.liferay.dynamic.data.mapping.validator.DDMFormValidationExcepti
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.web.display.context.DDMDisplayContext" %><%@
+page import="com.liferay.petra.content.util.ContentUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
@@ -217,7 +217,7 @@ private JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fie
 }
 
 private JSONArray _getFormTemplateFieldsJSONArray(DDMStructure structure, String script) throws Exception {
-	JSONArray jsonArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
+	JSONArray jsonArray = DDMUtil.getDDMFormFieldsJSONArray((DDMStructure)null, script);
 
 	_addFormTemplateFieldAttributes(structure, jsonArray);
 
