@@ -78,7 +78,7 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 
 							<c:choose>
 								<c:when test="<%= outgoingLinkPage.isNew() %>">
-									<h4>
+									<h4 class="truncate-text">
 										<a class="text-default" href="<%= outgoingLinkPage.getTitle() %>"><%= outgoingLinkPage.getTitle() %></a>
 									</h4>
 								</c:when>
@@ -95,7 +95,7 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 									portletURL.setParameter("title", outgoingLinkPage.getTitle());
 									%>
 
-									<h4>
+									<h4 class="truncate-text">
 										<a class="text-default" href="<%= portletURL.toString() %>"><%= outgoingLinkPage.getTitle() %></a>
 									</h4>
 
