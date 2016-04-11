@@ -7,3 +7,6 @@ Export-Package:\
 	\
 	org.pegdown.*
 Private-Package: com.liferay.markdown.converter.internal.*
+-liferay-includeresource:\
+	@parboiled-core-*.jar,\
+	@parboiled-java-*.jar
