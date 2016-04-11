@@ -326,7 +326,11 @@ if (portletTitleBasedNavigation) {
 					%>
 
 						<div>
-							<aui:input label="" name='<%= "msgFile" + i %>' size="70" title="message-attachment" type="file" />
+							<aui:input label="" name='<%= "msgFile" + i %>' size="70" title="message-attachment" type="file">
+								<aui:validator name="acceptFiles">
+									'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+								</aui:validator>
+							</aui:input>
 						</div>
 
 					<%
