@@ -19,6 +19,9 @@ package com.liferay.blogs.web.constants;
  */
 public class BlogsWebKeys {
 
+	public static final String BLOGS_IMAGE_SELECTOR_HELPER =
+		"BLOGS_IMAGE_SELECTOR_HELPER";
+
 	public static final String BLOGS_ITEM_SELECTOR_HELPER =
 		"BLOGS_ITEM_SELECTOR_HELPER";
 

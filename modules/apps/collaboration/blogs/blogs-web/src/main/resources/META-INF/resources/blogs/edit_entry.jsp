@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.blogs.web.BlogsImageSelectorHelper" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -122,6 +124,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
 
 		<%
+		BlogsImageSelectorHelper blogsImageSelectorHelper = (BlogsImageSelectorHelper)request.getAttribute(BlogsWebKeys.BLOGS_IMAGE_SELECTOR_HELPER);
 		BlogsItemSelectorHelper blogsItemSelectorHelper = (BlogsItemSelectorHelper)request.getAttribute(BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER);
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest);
@@ -129,16 +132,18 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<portlet:actionURL name="/blogs/upload_cover_image" var="uploadCoverImageURL" />
+				<c:if test="<%= blogsImageSelectorHelper.isAvailable() %>">
+					<portlet:actionURL name="/blogs/upload_cover_image" var="uploadCoverImageURL" />
 
-				<div class="lfr-blogs-cover-image-selector">
+					<div class="lfr-blogs-cover-image-selector">
 
-					<%
-					String coverImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "coverImageSelectedItem";
-					%>
+						<%
+						String coverImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "coverImageSelectedItem";
+						%>
 
-					<liferay-item-selector:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, coverImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
-				</div>
+						<liferay-item-selector:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, coverImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+					</div>
+				</c:if>
 
 				<aui:input name="coverImageCaption" type="hidden" />
 
@@ -200,16 +205,18 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 						<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
 					</div>
 
-					<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
+					<c:if test="<%= blogsImageSelectorHelper.isAvailable() %>">
+						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
-					<div class="lfr-blogs-small-image-selector">
+						<div class="lfr-blogs-small-image-selector">
 
-						<%
-						String smallImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "smallImageSelectedItem";
-						%>
+							<%
+							String smallImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "smallImageSelectedItem";
+							%>
 
-						<liferay-item-selector:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, smallImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
-					</div>
+							<liferay-item-selector:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, smallImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+						</div>
+					</c:if>
 
 					<div class="entry-description">
 						<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
