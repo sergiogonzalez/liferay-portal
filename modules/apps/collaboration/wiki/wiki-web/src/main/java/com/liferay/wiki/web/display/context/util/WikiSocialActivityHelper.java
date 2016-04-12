@@ -132,7 +132,17 @@ public class WikiSocialActivityHelper {
 				false);
 		}
 		else if (type == SocialActivityConstants.TYPE_ADD_COMMENT) {
-			String url = getPageURL(page) + "#wikiCommentsPanel";
+			LiferayPortletResponse liferayPortletResponse =
+				_wikiRequestHelper.getLiferayPortletResponse();
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(getPageURL(page));
+			sb.append("#");
+			sb.append(liferayPortletResponse.getNamespace());
+			sb.append("wikiCommentsPanel");
+
+			String url = sb.toString();
 
 			return LanguageUtil.format(
 				resourceBundle, "x-added-a-comment",
