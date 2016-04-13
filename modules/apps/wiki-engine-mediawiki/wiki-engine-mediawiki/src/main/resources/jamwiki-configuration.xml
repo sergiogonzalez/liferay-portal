@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+<!--
+   ====================================================================
+
+   Parsers that can be used with JAMWiki:
+
+   name  - A human-readable name for the parser.
+   class - The fully qualified class name for the parser class.
+   key   - The ApplicationResources translation key for the parser name.  If
+           this value is not specified then the "name" value is used when
+           displaying the parser name.
+   state - An optional parameter that can be set to "experimental" to warn
+           site administrators that a parser is a work-in-progress.
+
+   ======================================================================
+-->
+<parsers>
+	<parser>
+		<name>JAMWiki Default</name>
+		<class>org.jamwiki.parser.jflex.JFlexParser</class>
+		<key>admin.parsertype.default</key>
+	</parser>
+    <parser>
+		<name>Bliki hand-written Parser</name>
+		<class>org.jamwiki.parser.bliki.BlikiParser</class>
+		<key>admin.parsertype.bliki</key>
+	</parser>
+</parsers>
+
+<!--
+   ====================================================================
+
+   Data handlers that can be used with JAMWiki:
+
+   name  - A human-readable name for the data handler.
+   class - The fully qualified class name for the data handler.
+   key   - The ApplicationResources translation key for the data handler
+           name.  If this value is not specified then the "name" value is
+           used when displaying the data handler name.
+   state - An optional parameter that can be set to "experimental" to warn
+           site administrators that a data handler is a work-in-progress.
+
+   ======================================================================
+-->
+<data-handlers>
+	<data-handler>
+		<name>ansi</name>
+		<class>org.jamwiki.db.AnsiDataHandler</class>
+	</data-handler>
+	<data-handler>
+		<name>h2</name>
+		<class>org.jamwiki.db.H2DataHandler</class>
+	</data-handler>
+	<data-handler>
+		<name>hsql</name>
+		<class>org.jamwiki.db.HSqlDataHandler</class>
+	</data-handler>
+	<data-handler>
+		<name>mssql</name>
+		<class>org.jamwiki.db.MSSqlDataHandler</class>
+	</data-handler>
+	<data-handler>
+		<name>mysql</name>
+		<class>org.jamwiki.db.MySqlDataHandler</class>
+	</data-handler>
+	<data-handler>
+		<name>oracle</name>
+		<class>org.jamwiki.db.OracleDataHandler</class>
+	</data-handler>
+	<data-handler>
+		<name>postgres</name>
+		<class>org.jamwiki.db.PostgresDataHandler</class>
+	</data-handler>
+	<data-handler>
+		<name>asa</name>
+		<class>org.jamwiki.db.SybaseASADataHandler</class>
+		<state>experimental</state>
+	</data-handler>
+	<data-handler>
+		<name>db2</name>
+		<class>org.jamwiki.db.DB2DataHandler</class>
+		<state>experimental</state>
+	</data-handler>
+	<data-handler>
+		<name>db2/400</name>
+		<class>org.jamwiki.db.DB2400DataHandler</class>
+		<state>experimental</state>
+	</data-handler>
+</data-handlers>
+
+<!--
+   ====================================================================
+
+   Editors are used when editing topics and define which of the available
+   editing tools the user will use.
+
+   name  - The name of the editing tool.
+   key   - A string that will be stored in the user preferences if the
+           editing tool is selected.
+
+   ======================================================================
+-->
+<editors>
+	<editor>
+		<name>None</name>
+		<key>none</key>
+	</editor>
+	<editor>
+		<name>Toolbar</name>
+		<key>toolbar</key>
+	</editor>
+</editors>
+
+<!--
+   ====================================================================
+
+   Search engines that can be used with JAMWiki:
+
+   name  - A human-readable name for the search engine.
+   class - The fully qualified class name for the search engine class.
+   key   - The ApplicationResources translation key for the search engine
+           name.  If this value is not specified then the "name"
+           value is used when displaying the authentication mechanism name.
+   state - An optional parameter that can be set to "experimental" to warn
+           site administrators that a search engine is a work-in-progress.
+
+   ======================================================================
+-->
+<search-engines>
+	<search-engine>
+		<name>Lucene</name>
+		<class>org.jamwiki.search.LuceneSearchEngine</class>
+		<key>admin.searchengine.lucene</key>
+	</search-engine>
+</search-engines>
+
+<!--
+   ====================================================================
+
+   JAMWiki reserved topic names.  These topics are handled specially and
+   treated differently from normal topics.
+
+   name - The name used for the special topic.
+
+   ======================================================================
+-->
+<pseudotopics>
+	<pseudotopic>
+		<name>jamwiki.css</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Account</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Admin</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Allpages</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Categories</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Contributions</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Diff</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Edit</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Export</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Filelist</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:History</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Imagelist</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Import</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:ImportTiddly</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:LinkTo</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Listusers</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Login</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Logout</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Log</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Logs</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Maintenance</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Manage</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Move</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:OrphanedPages</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Print</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:RecentChanges</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:RecentChangesFeed</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Roles</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Search</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Setup</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Specialpages</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:TopicsAdmin</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Translation</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Upgrade</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Upload</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:VirtualWiki</name>
+	</pseudotopic>
+	<pseudotopic>
+		<name>Special:Watchlist</name>
+	</pseudotopic>
+</pseudotopics>
+
+<!--
+   ====================================================================
+
+   Languages and locales for which JAMWiki provides translations.  This
+   list is needed only for cases where a locale is not by default
+   supported by the JDK (example: Galician) and provides a way to ensure
+   that all languages and locales for which localization is available
+   are included on the Special:Register page.
+
+   name  - The localized name for the language/locale that is displayed
+           to end users.
+   key   - The ISO language code for the language/locale.
+
+   ======================================================================
+-->
+<translations>
+	<translation>
+		<name>English</name>
+		<key>en</key>
+	</translation>
+	<translation>
+		<name>dansk</name>
+		<key>da</key>
+	</translation>
+	<translation>
+		<name>Deutsch</name>
+		<key>de</key>
+	</translation>
+	<translation>
+		<name>español</name>
+		<key>es</key>
+	</translation>
+	<translation>
+		<name>français</name>
+		<key>fr</key>
+	</translation>
+	<translation>
+		<name>galego</name>
+		<key>gl</key>
+	</translation>
+	<translation>
+		<name>hrvatski</name>
+		<key>hr</key>
+	</translation>
+	<translation>
+		<name>magyar</name>
+		<key>hu</key>
+	</translation>
+	<translation>
+		<name>italiano</name>
+		<key>it</key>
+	</translation>
+	<translation>
+		<name>日本語</name>
+		<key>ja</key>
+	</translation>
+	<translation>
+		<name>Nederlands</name>
+		<key>nl</key>
+	</translation>
+	<translation>
+		<name>norsk</name>
+		<key>no</key>
+	</translation>
+	<translation>
+		<name>polski</name>
+		<key>pl</key>
+	</translation>
+	<translation>
+		<name>português</name>
+		<key>pt</key>
+	</translation>
+	<translation>
+		<name>sinhala</name>
+		<key>si_LK</key>
+	</translation>
+	<translation>
+		<name>svenska</name>
+		<key>sv</key>
+	</translation>
+	<translation>
+		<name>українська</name>
+		<key>uk</key>
+	</translation>
+	<translation>
+		<name>中文 (中国)</name>
+		<key>zh_CN</key>
+	</translation>
+	<translation>
+		<name>中文 (台灣)</name>
+		<key>zh_TW</key>
+	</translation>
+</translations>
+
+</configuration>
