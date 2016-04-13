@@ -49,7 +49,6 @@ Export-Package:\
 	!content,\
 	!custom-sql,\
 	!ehcache,\
-	!jamwiki-configuration.xml,\
 	!license,\
 	!license.html,\
 	!org.apache.html.*,\
