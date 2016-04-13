@@ -14,10 +14,10 @@
 
 package com.liferay.knowledge.base.web.portlet;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -30,7 +30,7 @@ import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
-import com.liferay.knowledge.base.web.constants.WebKeys;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.selector.KBArticleSelection;
 import com.liferay.knowledge.base.web.selector.KBArticleSelector;
 import com.liferay.knowledge.base.web.selector.KBArticleSelectorFactoryUtil;
@@ -92,7 +92,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/display/",
 		"javax.portlet.init-param.view-template=/display/view.jsp",
 		"javax.portlet.name=",
-		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-display-portlet-preferences.xml" + PortletKeys.KNOWLEDGE_BASE_DISPLAY,
+		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-display-portlet-preferences.xml" + KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=categoryId",
@@ -115,7 +115,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 			int status = getStatus(renderRequest, kbArticle);
 
-			renderRequest.setAttribute(WebKeys.KNOWLEDGE_BASE_STATUS, status);
+			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 
 			if ((kbArticle != null) && (kbArticle.getStatus() != status)) {
 				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
@@ -123,12 +123,12 @@ public class DisplayPortlet extends BaseKBPortlet {
 			}
 
 			renderRequest.setAttribute(
-				WebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 			renderRequest.setAttribute(
-				WebKeys.KNOWLEDGE_BASE_EXACT_MATCH,
+				KBWebKeys.KNOWLEDGE_BASE_EXACT_MATCH,
 				kbArticleSelection.isExactMatch());
 			renderRequest.setAttribute(
-				WebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS,
+				KBWebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS,
 				kbArticleSelection.getKeywords());
 
 			if (!kbArticleSelection.isExactMatch()) {
@@ -203,18 +203,18 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		if ((kbArticle != null) &&
 			!KBArticlePermission.contains(
 				themeDisplay.getPermissionChecker(), kbArticle,
-				ActionKeys.VIEW)) {
+				KBActionKeys.VIEW)) {
 
 			kbArticle = null;
 		}
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, PortletKeys.KNOWLEDGE_BASE_DISPLAY,
+			actionRequest, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter("kbFolderUrlTitle", kbFolder.getUrlTitle());
@@ -411,11 +411,11 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		if (KBArticlePermission.contains(
 				themeDisplay.getPermissionChecker(), kbArticle,
-				ActionKeys.UPDATE)) {
+				KBActionKeys.UPDATE)) {
 
 			return ParamUtil.getInteger(
 				renderRequest, "status", WorkflowConstants.STATUS_ANY);
