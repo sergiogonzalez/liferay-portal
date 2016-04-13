@@ -233,7 +233,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portlet.getPortletId());
 
-				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+				if (rootPortletId.equals(
+						KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -273,7 +275,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+				if (rootPortletId.equals(
+						KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -304,7 +308,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+				if (rootPortletId.equals(
+						KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
