@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -18,9 +18,9 @@ import com.liferay.knowledge.base.constants.ActionKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBCommentLocalService;
+import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.service.permission.KBTemplatePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
@@ -55,35 +57,32 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 		String className = activity.getClassName();
 
 		if (className.equals(KBArticle.class.getName())) {
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+			KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
 				activity.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 			title = kbArticle.getTitle();
 		}
 		else if (className.equals(KBComment.class.getName())) {
-			KBComment kbComment = KBCommentLocalServiceUtil.getKBComment(
+			KBComment kbComment = _kbCommentLocalService.getKBComment(
 				activity.getClassPK());
 
 			String kbCommentClassName = kbComment.getClassName();
 
 			if (kbCommentClassName.equals(KBArticle.class.getName())) {
-				KBArticle kbArticle =
-					KBArticleLocalServiceUtil.getLatestKBArticle(
-						kbComment.getClassPK(),
-						WorkflowConstants.STATUS_APPROVED);
+				KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
+					kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 				title = kbArticle.getTitle();
 			}
 			else if (kbCommentClassName.equals(KBTemplate.class.getName())) {
-				KBTemplate kbTemplate =
-					KBTemplateLocalServiceUtil.getKBTemplate(
-						kbComment.getClassPK());
+				KBTemplate kbTemplate = _kbTemplateLocalService.getKBTemplate(
+					kbComment.getClassPK());
 
 				title = kbTemplate.getTitle();
 			}
 		}
 		else if (className.equals(KBTemplate.class.getName())) {
-			KBTemplate kbTemplate = KBTemplateLocalServiceUtil.getKBTemplate(
+			KBTemplate kbTemplate = _kbTemplateLocalService.getKBTemplate(
 				activity.getClassPK());
 
 			title = kbTemplate.getTitle();
@@ -100,7 +99,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 		String className = activity.getClassName();
 
 		if (className.equals(KBArticle.class.getName())) {
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+			KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
 				activity.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 			return KnowledgeBaseUtil.getKBArticleURL(
@@ -108,16 +107,14 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 				kbArticle.getStatus(), serviceContext.getPortalURL(), false);
 		}
 		else if (className.equals(KBComment.class.getName())) {
-			KBComment kbComment = KBCommentLocalServiceUtil.getKBComment(
+			KBComment kbComment = _kbCommentLocalService.getKBComment(
 				activity.getClassPK());
 
 			String kbCommentClassName = kbComment.getClassName();
 
 			if (kbCommentClassName.equals(KBArticle.class.getName())) {
-				KBArticle kbArticle =
-					KBArticleLocalServiceUtil.getLatestKBArticle(
-						activity.getClassPK(),
-						WorkflowConstants.STATUS_APPROVED);
+				KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
+					activity.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 				return KnowledgeBaseUtil.getKBArticleURL(
 					serviceContext.getPlid(), kbArticle.getResourcePrimKey(),
@@ -216,7 +213,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 		String className = activity.getClassName();
 
 		if (className.equals(KBArticle.class.getName())) {
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+			KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
 				activity.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 			return KBArticlePermission.contains(
@@ -226,7 +223,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 			return true;
 		}
 		else if (className.equals(KBTemplate.class.getName())) {
-			KBTemplate kbTemplate = KBTemplateLocalServiceUtil.getKBTemplate(
+			KBTemplate kbTemplate = _kbTemplateLocalService.getKBTemplate(
 				activity.getClassPK());
 
 			return KBTemplatePermission.contains(
@@ -236,11 +233,35 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setKbArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKbCommentLocalService(
+		KBCommentLocalService kbCommentLocalService) {
+
+		_kbCommentLocalService = kbCommentLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKbTemplateLocalService(
+		KBTemplateLocalService kbTemplateLocalService) {
+
+		_kbTemplateLocalService = kbTemplateLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {
 		KBArticle.class.getName(), KBComment.class.getName(),
 		KBTemplate.class.getName()
 	};
 
+	private KBArticleLocalService _kbArticleLocalService;
+	private KBCommentLocalService _kbCommentLocalService;
+	private KBTemplateLocalService _kbTemplateLocalService;
 	private final ResourceBundleLoader _resourceBundleLoader =
 		new ClassResourceBundleLoader(
 			"content.Language", KBActivityInterpreter.class);
