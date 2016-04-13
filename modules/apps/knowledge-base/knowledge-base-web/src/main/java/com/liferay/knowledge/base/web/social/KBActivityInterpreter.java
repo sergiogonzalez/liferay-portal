@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.web.social;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
@@ -217,7 +217,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 				activity.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 			return KBArticlePermission.contains(
-				permissionChecker, kbArticle, ActionKeys.VIEW);
+				permissionChecker, kbArticle, KBActionKeys.VIEW);
 		}
 		else if (className.equals(KBComment.class.getName())) {
 			return true;
@@ -227,7 +227,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 				activity.getClassPK());
 
 			return KBTemplatePermission.contains(
-				permissionChecker, kbTemplate, ActionKeys.VIEW);
+				permissionChecker, kbTemplate, KBActionKeys.VIEW);
 		}
 
 		return false;
