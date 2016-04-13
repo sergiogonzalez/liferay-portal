@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -433,11 +432,6 @@ public class AdminPortlet extends BaseKBPortlet {
 	}
 
 	@Override
-	protected Http getHttp() {
-		return _http;
-	}
-
-	@Override
 	protected JSONFactory getJSONFactory() {
 		return _jsonFactory;
 	}
@@ -482,11 +476,6 @@ public class AdminPortlet extends BaseKBPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setHttp(Http http) {
-		_http = http;
-	}
-
-	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -523,7 +512,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		_portal = portal;
 	}
 
-	private Http _http;
 	private JSONFactory _jsonFactory;
 	private KBArticleService _kbArticleService;
 	private KBCommentLocalService _kbCommentLocalService;
