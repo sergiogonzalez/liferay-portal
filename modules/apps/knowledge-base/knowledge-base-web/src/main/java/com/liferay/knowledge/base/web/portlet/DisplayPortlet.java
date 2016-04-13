@@ -38,15 +38,14 @@ import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
-import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -171,7 +170,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		KBFolder kbFolder = _kbFolderService.getKBFolder(kbFolderId);
 
 		PortalPreferences portalPreferences =
-			_portletPreferencesFactory.getPortalPreferences(
+			PortletPreferencesFactoryUtil.getPortalPreferences(
 				PortalUtil.getLiferayPortletRequest(actionRequest));
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
@@ -214,7 +213,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			kbArticle = null;
 		}
 
-		PortletURL redirectURL = _portletURLFactory.create(
+		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			actionRequest, PortletKeys.KNOWLEDGE_BASE_DISPLAY,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
@@ -296,11 +295,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 
 		return kbArticle;
-	}
-
-	@Override
-	protected Http getHttp() {
-		return _http;
 	}
 
 	@Override
@@ -400,7 +394,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		throws PortalException {
 
 		PortalPreferences portalPreferences =
-			_portletPreferencesFactory.getPortalPreferences(renderRequest);
+			PortletPreferencesFactoryUtil.getPortalPreferences(renderRequest);
 
 		String contentRootPrefix = GetterUtil.getString(
 			portletPreferences.getValue("contentRootPrefix", null));
@@ -435,11 +429,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setHttp(Http http) {
-		_http = http;
 	}
 
 	@Reference(unbind = "-")
@@ -481,20 +470,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		_portal = portal;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesFactory(
-		PortletPreferencesFactory portletPreferencesFactory) {
-
-		_portletPreferencesFactory = portletPreferencesFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletURLFactory(PortletURLFactory portletURLFactory) {
-		_portletURLFactory = portletURLFactory;
-	}
-
 	private ClassNameLocalService _classNameLocalService;
-	private Http _http;
 	private JSONFactory _jsonFactory;
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBArticleService _kbArticleService;
@@ -502,7 +478,5 @@ public class DisplayPortlet extends BaseKBPortlet {
 	private KBCommentService _kbCommentService;
 	private KBFolderService _kbFolderService;
 	private Portal _portal;
-	private PortletPreferencesFactory _portletPreferencesFactory;
-	private PortletURLFactory _portletURLFactory;
 
 }
