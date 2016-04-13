@@ -84,8 +84,8 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-templates-order-by-col",
 				"modified-date");
 			String oldOrderByType = preferences.getValue(
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-templates-order-by-type",
-				"desc");
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				"kb-templates-order-by-type", "desc");
 
 			String orderByCol = ParamUtil.getString(
 				portletRequest, "orderByCol", oldOrderByCol);
