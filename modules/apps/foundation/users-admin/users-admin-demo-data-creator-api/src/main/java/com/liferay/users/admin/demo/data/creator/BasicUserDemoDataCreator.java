@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.model.User;
 /**
  * @author Sergio González
  */
-public interface BasicUserDemoDataCreator {
+public interface BasicUserDemoDataCreator extends UserDemoDataCreator {
 
 	public User create(long companyId, String emailAddress)
 		throws PortalException;
-
-	public void delete() throws PortalException;
 
 }
