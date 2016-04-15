@@ -15,14 +15,12 @@
 package com.liferay.users.admin.demo.data.creator;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 
 /**
  * @author Sergio González
  */
-public interface SiteAdminUserDemoDataCreator extends UserDemoDataCreator{
+public interface UserDemoDataCreator {
 
-	public User create(long groupId, String emailAddress)
-		throws PortalException;
+	public void delete() throws PortalException;
 
 }

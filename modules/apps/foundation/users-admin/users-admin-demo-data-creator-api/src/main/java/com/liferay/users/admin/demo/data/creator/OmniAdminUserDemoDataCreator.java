@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.model.User;
 /**
  * @author Sergio González
  */
-public interface OmniAdminUserDemoDataCreator {
+public interface OmniAdminUserDemoDataCreator extends UserDemoDataCreator {
 
 	public User create(long companyId, String emailAddress)
 		throws PortalException;
-
-	public void delete() throws PortalException;
 
 }
