@@ -15,6 +15,7 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
+import com.liferay.blogs.web.BlogsImageSelectorHelper;
 import com.liferay.blogs.web.BlogsItemSelectorHelper;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.constants.BlogsWebKeys;
@@ -54,6 +55,10 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			ActionUtil.getEntry(renderRequest);
 
 			renderRequest.setAttribute(
+				BlogsWebKeys.BLOGS_IMAGE_SELECTOR_HELPER,
+				_blogsImageSelectorHelper);
+
+			renderRequest.setAttribute(
 				BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER,
 				_blogsItemSelectorHelper);
 		}
@@ -74,12 +79,20 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(unbind = "-")
+	public void setImageSelectorHelper(
+		BlogsImageSelectorHelper blogsImageSelectorHelper) {
+
+		_blogsImageSelectorHelper = blogsImageSelectorHelper;
+	}
+
+	@Reference(unbind = "-")
 	public void setItemSelectorHelper(
 		BlogsItemSelectorHelper blogsItemSelectorHelper) {
 
 		_blogsItemSelectorHelper = blogsItemSelectorHelper;
 	}
 
+	private BlogsImageSelectorHelper _blogsImageSelectorHelper;
 	private BlogsItemSelectorHelper _blogsItemSelectorHelper;
 
 }

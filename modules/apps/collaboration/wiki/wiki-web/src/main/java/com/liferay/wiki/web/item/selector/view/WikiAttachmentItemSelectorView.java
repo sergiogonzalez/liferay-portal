@@ -117,6 +117,13 @@ public class WikiAttachmentItemSelectorView
 		_servletContext = servletContext;
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.item.selector.taglib)",
+		unbind = "-"
+	)
+	public void setTaglibServletContext(ServletContext servletContext) {
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
