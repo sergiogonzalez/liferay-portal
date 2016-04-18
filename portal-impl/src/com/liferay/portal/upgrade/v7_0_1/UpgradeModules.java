@@ -30,7 +30,9 @@ public class UpgradeModules
 		return _convertedLegacyModules;
 	}
 
-	private static final String[] _bundleSymbolicNames = new String[0];
+	private static final String[] _bundleSymbolicNames = {
+		"com.liferay.social.privatemessaging.web"
+	};
 	private static final String[][] _convertedLegacyModules = {
 		{
 			"notifications-portlet", "com.liferay.notifications.web",
