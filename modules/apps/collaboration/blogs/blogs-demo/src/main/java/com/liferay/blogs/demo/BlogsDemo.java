@@ -19,6 +19,7 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.OmniAdminUserDemoDataCreator;
@@ -72,6 +73,11 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		OmniAdminUserDemoDataCreator omniAdminUserDemoDataCreator) {
 
 		_omniAdminUserDemoDataCreator = omniAdminUserDemoDataCreator;
+	}
+
+	@Reference(unbind = "-", target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")
