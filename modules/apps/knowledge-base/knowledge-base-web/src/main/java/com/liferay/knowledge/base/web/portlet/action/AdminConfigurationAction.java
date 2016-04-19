@@ -14,7 +14,9 @@
 
 package com.liferay.knowledge.base.web.portlet.action;
 
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,12 +28,18 @@ import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
+	service = ConfigurationAction.class
+)
 public class AdminConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
