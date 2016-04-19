@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.icon=/icons/admin.png",
 		"com.liferay.portlet.preferences-unique-per-layout=false",
 		"com.liferay.portlet.scopeable=true",
-		"com.liferay.portlet.show-portlet-access=false",
+		"com.liferay.portlet.show-portlet-access-denied=false",
 		"javax.portlet.display-name=Knowledge Base",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.always-send-redirect=true",

@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.header-portlet-css=/admin/css/common.css,/section/css/main.css",
 		"com.liferay.portlet.icon=/icons/section.png",
-		"com.liferay.portlet.instanciable=true",
+		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Knowledge Base Section",
 		"javax.portlet.expiration-cache=0",
