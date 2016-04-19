@@ -21,7 +21,3 @@ dependencies {
 	provided project(":apps:foundation:petra:petra-content")
 	provided project(":apps:knowledge-base:knowledge-base-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
