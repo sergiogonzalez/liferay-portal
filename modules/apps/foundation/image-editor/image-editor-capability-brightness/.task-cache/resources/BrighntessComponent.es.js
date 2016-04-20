@@ -1,4 +1,4 @@
-define("liferay-image-editor-tool-brightness@1.0.0/BrighntessComponent.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal-promise/src/promise/Promise', 'metal-slider/src/Slider', './BrightnessComponent.soy', './BrightnessControls.soy'], function (exports, _Component2, _Soy, _Promise, _Slider, _BrightnessComponent, _BrightnessControls) {
+define("liferay-image-editor-capability-brightness@1.0.0/BrighntessComponent.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal-promise/src/promise/Promise', 'metal-slider/src/Slider', './BrightnessComponent.soy', './BrightnessControls.soy'], function (exports, _Component2, _Soy, _Promise, _Slider, _BrightnessComponent, _BrightnessControls) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {

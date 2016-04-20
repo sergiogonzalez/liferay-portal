@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Image Editor Capability Contrast
-Bundle-SymbolicName: com.liferay.image.editor.capability.contrast
+Bundle-Name: Liferay Image Editor Capability Crop
+Bundle-SymbolicName: com.liferay.image.editor.capability.crop
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

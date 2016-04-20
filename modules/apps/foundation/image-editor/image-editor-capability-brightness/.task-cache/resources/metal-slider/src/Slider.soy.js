@@ -1,4 +1,4 @@
-define("liferay-image-editor-tool-brightness@1.0.0/metal-slider/src/Slider.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
+define("liferay-image-editor-capability-brightness@1.0.0/metal-slider/src/Slider.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

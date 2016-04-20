@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Image Editor Capability Contrast
-Bundle-SymbolicName: com.liferay.image.editor.capability.contrast
+Bundle-Name: Liferay Image Editor Capability Saturation
+Bundle-SymbolicName: com.liferay.image.editor.capability.saturation
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
