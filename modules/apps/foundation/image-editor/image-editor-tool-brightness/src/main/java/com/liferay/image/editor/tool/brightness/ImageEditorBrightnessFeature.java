@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.image.editor.tool.category=brightness",
+		"com.liferay.image.editor.tool.category=adjust",
 		"com.liferay.image.editor.tool.controls=brightness",
 		"com.liferay.image.editor.tool.icon=sun",
 		"com.liferay.image.editor.tool.name=Brightness",
