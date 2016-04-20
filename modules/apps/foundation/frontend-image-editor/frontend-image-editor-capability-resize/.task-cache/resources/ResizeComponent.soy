@@ -1,0 +1,19 @@
+{namespace ImageEditorResizeComponent}
+
+/**
+ * Image Editor Brightness Component
+ *
+ * @param? imageHeight
+ * @param? imageWidth
+ * @param key
+ * @param? lockProportions
+ */
+{template .render}
+	<div id="{$key}" class="form-group">
+		<div class="input-group">
+			<input class="form-control" data-oninput="syncDimensions" id="{$key}Width" type="number" value="{$imageWidth}"></input>x
+			<input class="form-control" data-oninput="syncDimensions" id="{$key}Height" type="number" value="{$imageHeight}"></input>
+			<button class="btn btn-link icon-{$lockProportions ? 'lock' : 'unlock'}" data-onclick="toggleLockProportions"></button>
+		</div>
+	</div>
+{/template}
