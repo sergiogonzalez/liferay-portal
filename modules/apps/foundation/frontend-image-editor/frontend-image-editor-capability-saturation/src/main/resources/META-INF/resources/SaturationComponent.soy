@@ -1,0 +1,21 @@
+{namespace ImageEditorSaturationComponent}
+
+/**
+ * Image Editor Saturation Component
+ *
+ * @param key
+ * @param requestPreview
+ */
+{template .render}
+	<div id="{$key}">
+		{call Slider.render}
+			{param events: [
+				'valueChanged': $requestPreview
+			] /}
+			{param key: 'slider' /}
+			{param max: 100 /}
+			{param min: 0 /}
+			{param value: 50 /}
+		{/call}
+	</div>
+{/template}
