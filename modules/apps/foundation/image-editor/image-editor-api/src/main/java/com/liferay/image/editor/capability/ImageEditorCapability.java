@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.image.editor.capability.internal;
+package com.liferay.image.editor.capability;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Bruno Basto
  */
 public interface ImageEditorCapability {
+
+	public String getLabel(Locale locale);
+
+	public String getName();
 
 	public void prepareContext(
 		Map<String, Object> context, HttpServletRequest request);

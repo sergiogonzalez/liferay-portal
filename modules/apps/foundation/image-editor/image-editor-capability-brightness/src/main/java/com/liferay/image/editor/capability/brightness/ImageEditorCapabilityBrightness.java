@@ -14,9 +14,13 @@
 
 package com.liferay.image.editor.capability.brightness;
 
-import com.liferay.image.editor.capability.internal.BaseImageEditorCapability;
-import com.liferay.image.editor.capability.internal.ImageEditorCapability;
+import com.liferay.image.editor.capability.BaseImageEditorCapability;
+import com.liferay.image.editor.capability.ImageEditorCapability;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import org.osgi.service.component.annotations.Component;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Bruno Basto
@@ -27,10 +31,21 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.image.editor.capability.category=adjust",
 		"com.liferay.image.editor.capability.controls=brightness",
 		"com.liferay.image.editor.capability.icon=sun",
-		"com.liferay.image.editor.capability.name=Brightness",
 		"com.liferay.image.editor.capability.type=tool"
 	},
 	service = ImageEditorCapability.class
 )
 public class ImageEditorCapabilityBrightness extends BaseImageEditorCapability {
+
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return ResourceBundleUtil.getString(resourceBundle, "brightness");
+	}
+
+	public String getName() {
+		return "brightness";
+	}
+
 }

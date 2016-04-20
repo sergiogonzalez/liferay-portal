@@ -14,8 +14,8 @@
 
 package com.liferay.image.editor.capability.crop;
 
-import com.liferay.image.editor.capability.internal.BaseImageEditorCapability;
-import com.liferay.image.editor.capability.internal.ImageEditorCapability;
+import com.liferay.image.editor.capability.BaseImageEditorCapability;
+import com.liferay.image.editor.capability.ImageEditorCapability;
 import org.osgi.service.component.annotations.Component;
 
 /**

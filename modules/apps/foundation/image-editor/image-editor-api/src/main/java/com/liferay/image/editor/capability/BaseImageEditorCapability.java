@@ -12,13 +12,27 @@
  * details.
  */
 
-package com.liferay.image.editor.web;
+package com.liferay.image.editor.capability;
+
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Chema Balsas
+ * @author Bruno Basto
  */
-public class ImageEditorPortletKeys {
+public abstract class BaseImageEditorCapability
+	implements ImageEditorCapability {
 
-	public static final String NAME = "image_editor_portlet";
+	public void prepareContext(
+		Map<String, Object> context, HttpServletRequest request) {
+	}
 
 }

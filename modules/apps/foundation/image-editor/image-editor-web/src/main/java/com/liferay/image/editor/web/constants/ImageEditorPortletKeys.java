@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.image.editor.capability.internal;
-
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+package com.liferay.image.editor.web.constants;
 
 /**
- * @author Bruno Basto
+ * @author Chema Balsas
  */
-public abstract class BaseImageEditorCapability
-	implements ImageEditorCapability {
+public class ImageEditorPortletKeys {
 
-	public void prepareContext(
-		Map<String, Object> context, HttpServletRequest request) {
-	}
+	public static final String IMAGE_EDITOR =
+		"com_liferay_image_editor_web_portlet_ImageEditorPortlet";
 
 }
