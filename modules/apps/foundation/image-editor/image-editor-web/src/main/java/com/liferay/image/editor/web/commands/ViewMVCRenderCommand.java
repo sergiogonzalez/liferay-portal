@@ -90,7 +90,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			toolsContexts.add(context);
 		}
 
-		template.put("image", "http://localhost:8080/documents/20233/0/balloons.jpg/9356eb0b-5c4b-8560-4cbe-4614acffdbc8?t=1460753199035");
+		template.put("image", "http://localhost:8080/documents/20233/0/214H.jpg/44f148f9-adee-9020-dbc5-61c112d0bc26?t=1460307134146");
 		template.put("tools", toolsContexts);
 
 		return "ImageEditor";
