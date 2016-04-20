@@ -71,11 +71,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				featureName);
 
 			String controls = GetterUtil.getString(
-				properties.get("com.liferay.image.editor.tool.controls"));
+				properties.get("com.liferay.image.editor.capability.controls"));
 			String icon = GetterUtil.getString(
-				properties.get("com.liferay.image.editor.tool.icon"));
+				properties.get("com.liferay.image.editor.capability.icon"));
 			String name = GetterUtil.getString(
-				properties.get("com.liferay.image.editor.tool.name"));
+				properties.get("com.liferay.image.editor.capability.name"));
 
 			context.put("controls", controls);
 			context.put("icon", icon);

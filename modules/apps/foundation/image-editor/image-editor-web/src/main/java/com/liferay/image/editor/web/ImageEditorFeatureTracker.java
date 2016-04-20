@@ -84,7 +84,7 @@ public class ImageEditorFeatureTracker {
 
 					String featureName = GetterUtil.getString(
 						serviceReference.getProperty(
-							"com.liferay.image.editor.tool.name"));
+							"com.liferay.image.editor.capability.name"));
 
 					_featuresPropertiesMap.put(featureName, properties);
 
