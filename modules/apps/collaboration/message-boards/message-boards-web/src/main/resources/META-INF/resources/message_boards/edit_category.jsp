@@ -169,34 +169,34 @@ if (portletTitleBasedNavigation) {
 							<aui:input checked='<%= protocol.startsWith("imap") %>' label="imap" name="inProtocol" type="radio" value="imap" />
 						</aui:field-wrapper>
 
-						<aui:input label="server-name" name="inServerName" />
+						<aui:input disabled="true" label="server-name" name="inServerName" />
 
-						<aui:input label="server-port" name="inServerPort" value="110" />
+						<aui:input disabled="true" label="server-port" name="inServerPort" value="110" />
 
-						<aui:input label="use-a-secure-network-connection" name="inUseSSL" />
+						<aui:input disabled="true" label="use-a-secure-network-connection" name="inUseSSL" />
 
-						<aui:input label="user-name" name="inUserName" />
+						<aui:input disabled="true" label="user-name" name="inUserName" />
 
-						<aui:input label="password" name="inPassword" />
+						<aui:input disabled="true" label="password" name="inPassword" />
 
-						<aui:input label="read-interval-minutes" name="inReadInterval" value="5" />
+						<aui:input disabled="true" label="read-interval-minutes" name="inReadInterval" value="5" />
 					</aui:fieldset>
 
 					<aui:fieldset label="outgoing">
-						<aui:input label="email-address" name="outEmailAddress" />
+						<aui:input disabled="true" label="email-address" name="outEmailAddress" />
 
-						<aui:input label="use-custom-outgoing-server" name="outCustom" />
+						<aui:input disabled="true" label="use-custom-outgoing-server" name="outCustom" />
 
 						<div id="<portlet:namespace />outCustomSettings">
-							<aui:input label="server-name" name="outServerName" />
+							<aui:input disabled="true" label="server-name" name="outServerName" />
 
-							<aui:input label="server-port" name="outServerPort" value="25" />
+							<aui:input disabled="true" label="server-port" name="outServerPort" value="25" />
 
-							<aui:input label="use-a-secure-network-connection" name="outUseSSL" />
+							<aui:input disabled="true" label="use-a-secure-network-connection" name="outUseSSL" />
 
-							<aui:input label="user-name" name="outUserName" />
+							<aui:input disabled="true" label="user-name" name="outUserName" />
 
-							<aui:input label="password" name="outPassword" />
+							<aui:input disabled="true" label="password" name="outPassword" />
 						</div>
 					</aui:fieldset>
 				</div>
@@ -245,4 +245,95 @@ if (portletTitleBasedNavigation) {
 
 	Liferay.Util.toggleBoxes('<portlet:namespace />mailingListActive', '<portlet:namespace />mailingListSettings');
 	Liferay.Util.toggleBoxes('<portlet:namespace />outCustom', '<portlet:namespace />outCustomSettings');
+
+	AUI().use(
+		'event',
+		'node',
+		function(A) {
+			var activeCheckboxNode = A.one('#<portlet:namespace />mailingListActive');
+			var outgoingCheckboxNode = A.one('#<portlet:namespace />outCustom');
+
+			var activeCheckboxNodeChecked = activeCheckboxNode._node.checked;
+			var outgoingCheckboxNodeChecked = outgoingCheckboxNode._node.checked;
+
+			var incomingFields = [
+				'emailAddress',
+				'inServerName',
+				'inServerPort',
+				'inUseSSL',
+				'inUserName',
+				'inPassword',
+				'inReadInterval',
+				'outEmailAddress',
+				'outCustom'
+			];
+
+			var outgoingFields = [
+				'outServerName',
+				'outServerPort',
+				'outUseSSL',
+				'outUserName',
+				'outPassword'
+			];
+
+			activeCheckboxNode.on(
+				'click',
+				function(event) {
+					activeCheckboxNodeChecked = activeCheckboxNode._node.checked;
+					outgoingCheckboxNodeChecked = outgoingCheckboxNode._node.checked;
+
+					toggleDisableInputFields(incomingFields, activeCheckboxNodeChecked);
+
+					if (!activeCheckboxNodeChecked && outgoingCheckboxNodeChecked) {
+						outgoingCheckboxNodeChecked = false;
+					}
+
+					toggleDisableInputFields(outgoingFields, outgoingCheckboxNodeChecked);
+				}
+			);
+
+			outgoingCheckboxNode.on(
+				'click',
+				function(event) {
+					outgoingCheckboxNodeChecked = outgoingCheckboxNode._node.checked;
+
+					toggleDisableInputFields(outgoingFields, outgoingCheckboxNodeChecked);
+				}
+			);
+
+			function toggleDisableInputFields(fields, checkboxId) {
+				var nodeActive = false;
+
+				if (checkboxId) {
+					nodeActive = true;
+				}
+
+				for (var field in fields) {
+					var inputId = '#<portlet:namespace />' + fields[field];
+
+					var inputField = A.one(inputId);
+
+          inputField.set('disabled', false);
+
+					inputField.replaceClass('disabled', '');
+
+					if (!nodeActive) {
+						inputField.set('disabled', true);
+
+						var curClass = inputField.attr('class');
+
+						inputField.attr('class', curClass + ' disabled');
+					}
+				}
+			}
+
+			if (activeCheckboxNodeChecked) {
+				toggleDisableInputFields(incomingFields, activeCheckboxNodeChecked);
+
+				if (outgoingCheckboxNodeChecked) {
+					toggleDisableInputFields(outgoingFields, outgoingCheckboxNodeChecked);
+				}
+			}
+		}
+	);
 </aui:script>
