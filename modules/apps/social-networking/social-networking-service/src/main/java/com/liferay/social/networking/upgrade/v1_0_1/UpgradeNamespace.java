@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.upgrade.v1_0_0;
+package com.liferay.social.networking.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.social.networking.upgrade.v1_0_0.util.MeetupsEntryTable;
-import com.liferay.social.networking.upgrade.v1_0_0.util.MeetupsRegistrationTable;
-import com.liferay.social.networking.upgrade.v1_0_0.util.WallEntryTable;
+import com.liferay.social.networking.upgrade.v1_0_1.util.MeetupsEntryTable;
+import com.liferay.social.networking.upgrade.v1_0_1.util.MeetupsRegistrationTable;
+import com.liferay.social.networking.upgrade.v1_0_1.util.WallEntryTable;
 
 /**
  * @author Julio Camarero

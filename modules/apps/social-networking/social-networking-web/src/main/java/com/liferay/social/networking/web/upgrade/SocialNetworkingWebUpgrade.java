@@ -12,24 +12,29 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.upgrade;
+package com.liferay.social.networking.web.upgrade;
 
-import com.liferay.invitation.invite.members.upgrade.v1_0_0.UpgradeNamespace;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.social.networking.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class InviteMembersServiceUpgrade implements UpgradeStepRegistrator {
+public class SocialNetworkingWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public void register(Registry registry) {
+	public void register(UpgradeStepRegistrator.Registry registry) {
 		registry.register(
-			"com.liferay.invitation.invite.members.service", "0.0.1", "1.0.0",
-			new UpgradeNamespace());
+			"com.liferay.social.networking.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.social.networking.web", "0.0.1", "1.0.0",
+			new UpgradePortletId());
 	}
 
 }

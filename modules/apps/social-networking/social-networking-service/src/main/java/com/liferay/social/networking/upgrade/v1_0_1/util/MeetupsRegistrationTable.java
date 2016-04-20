@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.upgrade.v1_0_0.util;
+package com.liferay.social.networking.upgrade.v1_0_1.util;
 
 import java.sql.Types;
 

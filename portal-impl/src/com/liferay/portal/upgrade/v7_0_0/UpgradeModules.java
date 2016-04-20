@@ -140,7 +140,8 @@ public class UpgradeModules extends UpgradeProcess {
 	}
 
 	private static final String[] _bundleSymbolicNames = new String[] {
-		"com.liferay.amazon.rankings.web", "com.liferay.asset.browser.web",
+		"com.liferay.amazon.rankings.web", "com.liferay.announcements.web",
+		"com.liferay.asset.browser.web",
 		"com.liferay.asset.categories.navigation.web",
 		"com.liferay.asset.publisher.web",
 		"com.liferay.asset.tags.compiler.web",
@@ -148,8 +149,8 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.blogs.recent.bloggers.web", "com.liferay.blogs.web",
 		"com.liferay.bookmarks.service", "com.liferay.bookmarks.web",
 		"com.liferay.calendar.web", "com.liferay.comment.page.comments.web",
-		"com.liferay.currency.converter.web", "com.liferay.dictionary.web",
-		"com.liferay.document.library.service",
+		"com.liferay.contacts.web", "com.liferay.currency.converter.web",
+		"com.liferay.dictionary.web", "com.liferay.document.library.service",
 		"com.liferay.document.library.web",
 		"com.liferay.dynamic.data.lists.service",
 		"com.liferay.dynamic.data.lists.web",
@@ -157,13 +158,15 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.exportimport.service", "com.liferay.exportimport.web",
 		"com.liferay.flags.web", "com.liferay.hello.velocity.web",
 		"com.liferay.hello.world.web", "com.liferay.iframe.web",
-		"com.liferay.invitation.web", "com.liferay.item.selector.web",
+		"com.liferay.invitation.web",
+		"com.liferay.invitation.invite.members.web",
+		"com.liferay.item.selector.web",
 		"com.liferay.journal.content.search.web",
 		"com.liferay.journal.content.web", "com.liferay.journal.service",
 		"com.liferay.journal.web", "com.liferay.layout.admin.web",
 		"com.liferay.license.manager.web", "com.liferay.loan.calculator.web",
 		"com.liferay.login.web", "com.liferay.message.boards.web",
-		"com.liferay.mobile.device.rules.service",
+		"com.liferay.microblogs.web", "com.liferay.mobile.device.rules.service",
 		"com.liferay.mobile.device.rules.web", "com.liferay.my.account.web",
 		"com.liferay.nested.portlets.web", "com.liferay.network.utilities.web",
 		"com.liferay.password.generator.web", "com.liferay.plugins.admin.web",
@@ -174,7 +177,8 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.portal.settings.web",
 		"com.liferay.portlet.configuration.css.web",
 		"com.liferay.portlet.configuration.web", "com.liferay.quick.note.web",
-		"com.liferay.ratings.page.ratings.web", "com.liferay.rss.web",
+		"com.liferay.ratings.page.ratings.web",
+		"com.liferay.recent.documents.web", "com.liferay.rss.web",
 		"com.liferay.server.admin.web", "com.liferay.shopping.service",
 		"com.liferay.shopping.web", "com.liferay.site.browser.web",
 		"com.liferay.site.my.sites.web",
@@ -185,6 +189,8 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.site.navigation.site.map.web",
 		"com.liferay.social.activities.web", "com.liferay.social.activity.web",
 		"com.liferay.social.group.statistics.web",
+		"com.liferay.social.networking.web",
+		"com.liferay.social.privatemessaging.web",
 		"com.liferay.social.requests.web",
 		"com.liferay.social.user.statistics.web", "com.liferay.staging.bar.web",
 		"com.liferay.translator.web", "com.liferay.trash.web",
@@ -216,7 +222,11 @@ public class UpgradeModules extends UpgradeProcess {
 		},
 		{
 			"notifications-portlet", "com.liferay.notifications.web",
-			"Notifications"
+			"Notification"
+		},
+		{
+			"private-messaging-portlet",
+			"com.liferay.social.privatemessaging.service", "PM"
 		},
 		{
 			"so-portlet", "com.liferay.invitation.invite.members.service", "SO"
