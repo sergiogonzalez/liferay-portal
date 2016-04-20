@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Bruno Basto
  */
-public abstract class BaseImageEditorFeature implements ImageEditorFeature {
+public abstract class BaseImageEditorCapability
+	implements ImageEditorCapability {
 
 	public void prepareContext(
 		Map<String, Object> context, HttpServletRequest request) {

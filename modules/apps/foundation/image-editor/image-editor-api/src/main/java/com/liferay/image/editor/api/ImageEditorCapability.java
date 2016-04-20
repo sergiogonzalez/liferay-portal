@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Bruno Basto
  */
-public interface ImageEditorFeature {
+public interface ImageEditorCapability {
 
 	public void prepareContext(
 		Map<String, Object> context, HttpServletRequest request);
