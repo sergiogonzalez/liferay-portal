@@ -638,7 +638,17 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		validate(groupId, className, classTypeId, categoryIds, tagNames);
+		if(Validator.isNull(createDate)) {
+			createDate = new Date();
+		}
+		
+		if (Validator.isNull(modifiedDate)) {
+			modifiedDate = new Date();
+		}
+		
+		if (!createDate.equals(modifiedDate) || visible) {
+			validate(groupId, className, classTypeId, categoryIds, tagNames);
+		}
 
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -648,11 +658,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		if (entry != null) {
 			oldVisible = entry.isVisible();
 		}
-
-		if (modifiedDate == null) {
-			modifiedDate = new Date();
-		}
-
+		
 		if (entry == null) {
 			long entryId = counterLocalService.increment();
 
@@ -671,10 +677,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			}
 			else {
 				entry.setUserName(StringPool.BLANK);
-			}
-
-			if (createDate == null) {
-				createDate = new Date();
 			}
 
 			entry.setCreateDate(createDate);
