@@ -23,6 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
@@ -42,6 +43,12 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.notifications.web", "1.2.0", "2.0.0",
 			new com.liferay.notifications.web.upgrade.v2_0_0.
+				UpgradeUserNotificationEvent(
+					_userNotificationEventLocalService));
+
+		registry.register(
+			"com.liferay.notifications.web", "2.0.0", "2.1.0",
+			new com.liferay.notifications.web.upgrade.v2_1_0.
 				UpgradeUserNotificationEvent(
 					_userNotificationEventLocalService));
 	}
