@@ -31,6 +31,11 @@ public class UpgradeModules
 	}
 
 	private static final String[] _bundleSymbolicNames = {
+		"com.liferay.announcements.web", "com.liferay.contacts.web",
+		"com.liferay.directory.web",
+		"com.liferay.invitation.invite.members.web",
+		"com.liferay.microblogs.web", "com.liferay.recent.documents.web",
+		"com.liferay.social.networking.web",
 		"com.liferay.social.privatemessaging.web"
 	};
 	private static final String[][] _convertedLegacyModules = {
