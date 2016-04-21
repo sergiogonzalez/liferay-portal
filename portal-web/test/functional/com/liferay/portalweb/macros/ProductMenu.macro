@@ -112,7 +112,7 @@
 		<execute function="Click" locator1="ProductMenu#USER_PROFILE" />
 	</command>
 
-	<command name="gotoPrivatePages" summary="Navigate to Product Menu > Sites > Navigation > Private Pages > ${page}">
+	<command name="gotoPrivatePages" summary="Navigate to Product Menu > Sites > Navigation > Private Pages">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">

@@ -1781,6 +1781,8 @@ public interface PropsKeys {
 
 	public static final String RETRY_ADVICE_MAX_RETRIES = "retry.advice.max.retries";
 
+	public static final String RETRY_DATA_SOURCE_MAX_RETRIES = "retry.data.source.max.retries";
+
 	public static final String ROBOTS_TXT_WITH_SITEMAP = "robots.txt.with.sitemap";
 
 	public static final String ROBOTS_TXT_WITHOUT_SITEMAP = "robots.txt.without.sitemap";

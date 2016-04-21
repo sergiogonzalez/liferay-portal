@@ -1220,9 +1220,7 @@
 
 		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="www.able.com" />
 
-		<execute macro="ProductMenu#gotoPrivatePages">
-			<var name="page" value="Private Blogs Page" />
-		</execute>
+		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />

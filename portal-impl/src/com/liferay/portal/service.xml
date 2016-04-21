@@ -2170,6 +2170,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
 		<finder name="Scope" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="scope" />
 		</finder>

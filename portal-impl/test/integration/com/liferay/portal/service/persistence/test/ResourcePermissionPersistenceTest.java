@@ -166,6 +166,15 @@ public class ResourcePermissionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByName() throws Exception {
+		_persistence.countByName(StringPool.BLANK);
+
+		_persistence.countByName(StringPool.NULL);
+
+		_persistence.countByName((String)null);
+	}
+
+	@Test
 	public void testCountByScope() throws Exception {
 		_persistence.countByScope(RandomTestUtil.nextInt());
 
