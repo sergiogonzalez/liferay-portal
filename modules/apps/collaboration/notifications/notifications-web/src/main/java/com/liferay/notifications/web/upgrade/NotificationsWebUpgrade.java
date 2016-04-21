@@ -14,9 +14,12 @@
 
 package com.liferay.notifications.web.upgrade;
 
+import com.liferay.notifications.web.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.util.ReplacePortletId;
+import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +60,28 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.notifications.web.upgrade.v2_0_0.
 				UpgradeUserNotificationEvent(
 					_userNotificationEventLocalService));
+
+		UpgradePortletId upgradePortletId = new ReplacePortletId() {
+
+			@Override
+			protected String[][] getRenamePortletIdsArray() {
+				return new String[][] {
+					{
+						"1_WAR_notificationsportlet",
+						NotificationsPortletKeys.NOTIFICATIONS
+					},
+					{
+						"2_WAR_notificationsportlet",
+						NotificationsPortletKeys.NOTIFICATIONS
+					}
+				};
+			}
+
+		};
+
+		registry.register(
+			"com.liferay.notifications.web", "2.0.0", "2.1.0",
+			upgradePortletId);
 	}
 
 	@Reference(unbind = "-")
