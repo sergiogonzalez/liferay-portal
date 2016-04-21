@@ -24,8 +24,12 @@ public class UpgradeModules
 		return _bundleSymbolicNames;
 	}
 
-	private static final String[] _bundleSymbolicNames = new String[0];
+	protected String[][] getConvertedLegacyModules() {
+		return _convertedLegacyModules;
+	}
 
+	private static final String[] _bundleSymbolicNames =
+		new String[] {"com.liferay.knowledge.base.web"};
 	private static final String[][] _convertedLegacyModules = new String[][] {
 		{"knowledge-base-portlet", "com.liferay.knowledge.base.service", "KB"}
 	};
