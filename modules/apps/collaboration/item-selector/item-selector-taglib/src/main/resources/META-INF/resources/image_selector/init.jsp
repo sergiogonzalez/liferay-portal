@@ -16,4 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.image.editor.web.ImageEditorPortletKeys" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %>
+
 <portlet:defineObjects />
