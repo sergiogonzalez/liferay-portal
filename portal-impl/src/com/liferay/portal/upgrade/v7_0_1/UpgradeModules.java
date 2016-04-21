@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
-
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_0_1.UpgradeCompany;
-import com.liferay.portal.upgrade.v7_0_1.UpgradeModules;
+package com.liferay.portal.upgrade.v7_0_1;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
-public class UpgradeProcess_7_0_1 extends UpgradeProcess {
+public class UpgradeModules
+	extends com.liferay.portal.upgrade.util.UpgradeModules {
 
 	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_0_1_BUILD_NUMBER;
+	public String[] getBundleSymbolicNames() {
+		return _bundleSymbolicNames;
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeCompany.class);
-		upgrade(UpgradeModules.class);
-
-		clearIndexesCache();
+	public String[][] getConvertedLegacyModules() {
+		return _convertedLegacyModules;
 	}
+
+	private static final String[] _bundleSymbolicNames = new String[0];
+	private static final String[][] _convertedLegacyModules = {};
 
 }
