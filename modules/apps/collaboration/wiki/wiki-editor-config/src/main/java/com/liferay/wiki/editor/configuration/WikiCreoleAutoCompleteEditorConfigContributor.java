@@ -98,7 +98,7 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 		autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
 
 		autoCompleteConfigJSONObject.put(
-			"regExp", "(?:\\strigger|^trigger)(\\w+(\\s\\w+)+|[^\\s]+)");
+			"regExp", "(?:\\strigger|^trigger)([\\s\\w]*)");
 
 		jsonObject.put("autocomplete", autoCompleteConfigJSONObject);
 
