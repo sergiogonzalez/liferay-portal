@@ -29,7 +29,7 @@ import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.selector.KBArticleSelection;
 import com.liferay.knowledge.base.web.selector.KBArticleSelector;
-import com.liferay.knowledge.base.web.selector.KBArticleSelectorFactoryUtil;
+import com.liferay.knowledge.base.web.selector.KBArticleSelectorFactory;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -325,7 +325,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			kbFolderClassNameId);
 
 		KBArticleSelector kbArticleSelector =
-			KBArticleSelectorFactoryUtil.getKBArticleSelector(
+			_kbArticleSelectorFactory.getKBArticleSelector(
 				parentResourceClassNameId);
 
 		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
@@ -401,7 +401,15 @@ public class DisplayPortlet extends BaseKBPortlet {
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setKbArticleSelectorFactory(
+		KBArticleSelectorFactory kbArticleSelectorFactory) {
+
+		_kbArticleSelectorFactory = kbArticleSelectorFactory;
+	}
+
 	private ClassNameLocalService _classNameLocalService;
 	private KBArticleLocalService _kbArticleLocalService;
+	private KBArticleSelectorFactory _kbArticleSelectorFactory;
 
 }
