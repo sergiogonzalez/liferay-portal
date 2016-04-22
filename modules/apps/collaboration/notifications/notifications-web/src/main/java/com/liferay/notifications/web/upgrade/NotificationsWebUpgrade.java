@@ -34,7 +34,7 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.notifications.web", "0.0.0", "2.0.0",
+			"com.liferay.notifications.web", "0.0.0", "2.1.0",
 			new DummyUpgradeStep());
 
 		registry.register(
