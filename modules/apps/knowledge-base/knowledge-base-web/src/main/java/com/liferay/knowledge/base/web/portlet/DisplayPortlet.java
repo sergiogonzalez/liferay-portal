@@ -23,10 +23,6 @@ import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
-import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.knowledge.base.service.KBCommentLocalService;
-import com.liferay.knowledge.base.service.KBCommentService;
-import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
@@ -36,7 +32,6 @@ import com.liferay.knowledge.base.web.selector.KBArticleSelector;
 import com.liferay.knowledge.base.web.selector.KBArticleSelectorFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -47,7 +42,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -166,7 +160,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			return;
 		}
 
-		KBFolder kbFolder = _kbFolderService.getKBFolder(kbFolderId);
+		KBFolder kbFolder = kbFolderService.getKBFolder(kbFolderId);
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -296,11 +290,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 		return kbArticle;
 	}
 
-	@Override
-	protected JSONFactory getJSONFactory() {
-		return _jsonFactory;
-	}
-
 	protected KBArticleSelection getKBArticle(RenderRequest renderRequest)
 		throws PortalException {
 
@@ -363,31 +352,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 			preferredKBFolderURLTitle, parentResourcePrimKey, resourcePrimKey);
 	}
 
-	@Override
-	protected KBArticleService getKBArticleService() {
-		return _kbArticleService;
-	}
-
-	@Override
-	protected KBCommentLocalService getKBCommentLocalService() {
-		return _kbCommentLocalService;
-	}
-
-	@Override
-	protected KBCommentService getKBCommentService() {
-		return _kbCommentService;
-	}
-
-	@Override
-	protected KBFolderService getKBFolderService() {
-		return _kbFolderService;
-	}
-
-	@Override
-	protected Portal getPortal() {
-		return _portal;
-	}
-
 	protected String getPreferredKBFolderUrlTitle(
 			RenderRequest renderRequest, PortletPreferences portletPreferences)
 		throws PortalException {
@@ -431,51 +395,13 @@ public class DisplayPortlet extends BaseKBPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
+	protected void setKbArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleService(KBArticleService kbArticleService) {
-		_kbArticleService = kbArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		_kbCommentLocalService = kbCommentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentService(KBCommentService kbCommentService) {
-		_kbCommentService = kbCommentService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderService(KBFolderService kbFolderService) {
-		_kbFolderService = kbFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	private ClassNameLocalService _classNameLocalService;
-	private JSONFactory _jsonFactory;
 	private KBArticleLocalService _kbArticleLocalService;
-	private KBArticleService _kbArticleService;
-	private KBCommentLocalService _kbCommentLocalService;
-	private KBCommentService _kbCommentService;
-	private KBFolderService _kbFolderService;
-	private Portal _portal;
 
 }
