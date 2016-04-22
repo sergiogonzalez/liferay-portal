@@ -40,6 +40,10 @@ AUI.add(
 		var ImageSelector = A.Component.create(
 			{
 				ATTRS: {
+					editUrl: {
+						validator: Lang.isString
+					},
+
 					errorNode: {
 						validator: Lang.isString
 					},
@@ -227,6 +231,7 @@ AUI.add(
 										}
 									}
 								},
+								editUrl: instance.get('editUrl'),
 								eventName: instance.get('itemSelectorEventName'),
 								url: instance.get('itemSelectorURL')
 							}
