@@ -288,7 +288,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getKBArticleAndAllDescendantKBArticles(long, long, int,
-	 *             com.liferay.portal.kernel.util.OrderByComparator)}
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -598,7 +598,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getKBArticles(long, long,
 	 *             int, int, int,
-	 *             com.liferay.portal.kernel.util.OrderByComparator)}
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
