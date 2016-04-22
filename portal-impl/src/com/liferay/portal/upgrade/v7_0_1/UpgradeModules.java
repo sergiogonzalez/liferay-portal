@@ -12,21 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.portal.upgrade.v7_0_1;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeRepository
-	extends com.liferay.portal.upgrade.util.UpgradeRepository {
+public class UpgradeModules
+	extends com.liferay.portal.upgrade.util.UpgradeModules {
 
-	@Override
-	protected String[][] getRenamePortletNamesArray() {
-		return new String[][] {
-			new String[] {"19", "com.liferay.message.boards"},
-			new String[] {"33", "com.liferay.blogs"},
-			new String[] {"36", "com.liferay.wiki"}
-		};
+	protected String[] getBundleSymbolicNames() {
+		return _bundleSymbolicNames;
 	}
+
+	protected String[][] getConvertedLegacyModules() {
+		return _convertedLegacyModules;
+	}
+
+	private static final String[] _bundleSymbolicNames =
+		new String[] {"com.liferay.knowledge.base.web"};
+	private static final String[][] _convertedLegacyModules = new String[][] {
+		{"knowledge-base-portlet", "com.liferay.knowledge.base.service", "KB"}
+	};
 
 }
