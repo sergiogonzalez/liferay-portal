@@ -40,26 +40,6 @@ import java.util.concurrent.Future;
 public class ImageToolUtil {
 
 	/**
-	 * Returns the CMYK image converted to RGB using ImageMagick. This must be
-	 * run against the original <code>byte[]</code> and not one extracted from a
-	 * {@link RenderedImage}. The latter may potentially have been already been
-	 * read incorrectly.
-	 *
-	 * @param  bytes the image to convert
-	 * @param  type the image type (e.g., "gif", "jpg", etc.)
-	 * @return the asynchronous process converting the image or <code>null
-	 *         </code> if ImageMagick was disabled or if the conversion could
-	 *         not be completed. The conversion may not complete if (1) the
-	 *         image was not in the CMYK colorspace to begin with or (2) there
-	 *         was an error in the conversion process.
-	 */
-	public static Future<RenderedImage> convertCMYKtoRGB(
-		byte[] bytes, String type) {
-
-		return getImageTool().convertCMYKtoRGB(bytes, type);
-	}
-
-	/**
 	 * Returns the image converted to the type.
 	 *
 	 * @param  sourceImage the image to convert
@@ -76,32 +56,6 @@ public class ImageToolUtil {
 		RenderedImage renderedImage, int height, int width, int x, int y) {
 
 		return getImageTool().crop(renderedImage, height, width, x, y);
-	}
-
-	/**
-	 * Encodes the image using the GIF format.
-	 *
-	 * @param  renderedImage the image to encode
-	 * @param  os the stream to write to
-	 * @throws IOException if an IO exception occurred
-	 */
-	public static void encodeGIF(RenderedImage renderedImage, OutputStream os)
-		throws IOException {
-
-		getImageTool().encodeGIF(renderedImage, os);
-	}
-
-	/**
-	 * Encodes the image using the WBMP format.
-	 *
-	 * @param  renderedImage the image to encode
-	 * @param  os the stream to write to
-	 * @throws IOException if an IO exception occurred
-	 */
-	public static void encodeWBMP(RenderedImage renderedImage, OutputStream os)
-		throws IOException {
-
-		getImageTool().encodeWBMP(renderedImage, os);
 	}
 
 	/**
