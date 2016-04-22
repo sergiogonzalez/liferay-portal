@@ -39,13 +39,13 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasTable("Notifications_UserNotificationEvent")) {
-			updateNotificationsUserNotificationEvents();
+			updateUserNotificationEventActionRequired();
 		}
 
 		updateUserNotificationEvents();
 	}
 
-	protected void updateNotificationsUserNotificationEvents()
+	protected void updateUserNotificationEventActionRequired()
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -62,10 +62,6 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 				UserNotificationEvent userNotificationEvent =
 					_userNotificationEventLocalService.getUserNotificationEvent(
 						userNotificationEventId);
-
-				userNotificationEvent.setDeliveryType(
-					UserNotificationDeliveryConstants.TYPE_WEBSITE);
-				userNotificationEvent.setDelivered(true);
 
 				userNotificationEvent.setActionRequired(actionRequired);
 
