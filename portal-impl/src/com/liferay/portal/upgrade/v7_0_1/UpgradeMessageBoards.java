@@ -22,9 +22,10 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import javax.portlet.PortletPreferences;
 import java.util.Locale;
 import java.util.Set;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Roberto Díaz
@@ -34,26 +35,12 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 	@Override
 	protected String[] getPortletIds() {
 		return new String[] {
-			PortletKeys.MESSAGE_BOARDS, PortletKeys.MESSAGE_BOARDS_ADMIN};
-	}
-
-	@Override
-	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
-
-		upgradeLocalizedThreadPriorities(portletPreferences);
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+			PortletKeys.MESSAGE_BOARDS, PortletKeys.MESSAGE_BOARDS_ADMIN
+		};
 	}
 
 	protected void upgradeLocalizedThreadPriorities(
-		PortletPreferences portletPreferences)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
@@ -77,10 +64,24 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 						parts, StringPool.PIPE);
 				}
 
-				portletPreferences.setValues(
-					key, upgradedThreadPriorities);
+				portletPreferences.setValues(key, upgradedThreadPriorities);
 			}
 		}
+	}
+
+	@Override
+	protected String upgradePreferences(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, String xml)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId, xml);
+
+		upgradeLocalizedThreadPriorities(portletPreferences);
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 }
