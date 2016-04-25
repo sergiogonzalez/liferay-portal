@@ -1694,7 +1694,9 @@ tell application "Safari" to quit
 			<if>
 				<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
 				<then>
-					<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
+					<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false">
+						<property name="app.server.jboss.version" value="6.0.1" />
+					</ant>
 				</then>
 			</if>
 
@@ -1723,7 +1725,9 @@ tell application "Safari" to quit
 				<elseif>
 					<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
 					<then>
-						<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+						<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false">
+							<property name="app.server.jboss.version" value="6.1.0" />
+						</ant>
 					</then>
 				</elseif>
 			</if>
@@ -6383,7 +6387,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/${app.server.type}-*/**"
+						includes="liferay*portal-*/${app.server.type}-*/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
@@ -6397,7 +6401,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/deploy/**"
+						includes="liferay*portal-*/deploy/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
@@ -6411,7 +6415,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/osgi/**"
+						includes="liferay*portal-*/osgi/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
@@ -6425,7 +6429,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/patching-tool/patches/**"
+						includes="liferay*portal-*/patching-tool/patches/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
@@ -7967,7 +7971,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<waitfor maxwait="15" maxwaitunit="minute" timeoutproperty="upgrade.timeout.error">
 					<resourcecontains
 						resource="${liferay.home}/db_upgrade_log"
-						substring="Running modules upgrades. Connect to your Gogo Shell to check the status."
+						substring="Running modules upgrades. Connect to Gogo shell to check the status."
 					/>
 				</waitfor>
 

@@ -52,10 +52,9 @@ public class DDMFormRendererTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		sb.append("<link href=\"");
 		sb.append(themeDisplay.getPortalURL());
-		sb.append(PortalUtil.getPathContext());
+		sb.append(PortalUtil.getPathProxy());
 		sb.append(_servletContext.getContextPath());
-		sb.append("/css/main.css");
-		sb.append("\" rel=\"stylesheet\" type = \"text/css\" />");
+		sb.append("/css/main.css\" rel=\"stylesheet\" type = \"text/css\" />");
 
 		printWriter.println(sb.toString());
 	}

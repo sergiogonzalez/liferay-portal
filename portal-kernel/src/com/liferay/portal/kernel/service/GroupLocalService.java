@@ -167,7 +167,8 @@ public interface GroupLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException;
 
 	public Group addGroup(long userId, long parentGroupId,
 		java.lang.String className, long classPK, long liveGroupId,
@@ -175,7 +176,8 @@ public interface GroupLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> descriptionMap, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException;
 
 	public Group addGroup(long userId, long parentGroupId,
 		java.lang.String className, long classPK, long liveGroupId,
@@ -183,7 +185,8 @@ public interface GroupLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> descriptionMap, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean inheritContent,
-		boolean active, ServiceContext serviceContext)
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public Group checkScopeGroup(Layout layout, long userId)
@@ -523,14 +526,16 @@ public interface GroupLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean inheritContent, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException;
 
 	public Group updateGroup(long groupId, long parentGroupId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean inheritContent, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Associates the group with a main site if the group is an organization.

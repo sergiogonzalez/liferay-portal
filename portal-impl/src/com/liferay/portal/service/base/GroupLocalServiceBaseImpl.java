@@ -2705,7 +2705,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = GroupLocalService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
 	protected GroupLocalService groupLocalService;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;

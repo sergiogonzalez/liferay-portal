@@ -28,8 +28,8 @@ import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.TreeSet;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -187,9 +187,9 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 	private final Collection<ServiceReference<BundleWebResources>>
 		_bundleWebResourcesServiceReferences = new TreeSet<>();
 	private volatile Collection<String> _cssResourceURLs =
-		new CopyOnWriteArrayList<>();
+		Collections.emptyList();
 	private volatile Collection<String> _jsResourceURLs =
-		new CopyOnWriteArrayList<>();
+		Collections.emptyList();
 
 	private static class ComboPortalResourceURLRenderer
 		implements PortalResourceURLRenderer {
@@ -214,7 +214,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 			sb.append(
 				PortalUtil.getStaticResourceURL(
-					request, PortalUtil.getPathProxy() + "/combo",
+					request, PortalUtil.getPathContext() + "/combo",
 					"minifierType=" + _minifierType, _themeLastModified));
 
 			for (String resourceURL : resourceURLs) {

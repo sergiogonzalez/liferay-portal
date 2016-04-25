@@ -46,35 +46,35 @@ public class GroupUtil {
 	 */
 
 	/**
-	 * @see BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(Group group) {
 		getPersistence().clearCache(group);
 	}
 
 	/**
-	 * @see BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<Group> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Group> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end) {
@@ -82,7 +82,7 @@ public class GroupUtil {
 	}
 
 	/**
-	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Group> findWithDynamicQuery(DynamicQuery dynamicQuery,
 		int start, int end, OrderByComparator<Group> orderByComparator) {
@@ -92,14 +92,14 @@ public class GroupUtil {
 	}
 
 	/**
-	 * @see BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static Group update(Group group) {
 		return getPersistence().update(group);
 	}
 
 	/**
-	 * @see BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static Group update(Group group, ServiceContext serviceContext) {
 		return getPersistence().update(group, serviceContext);
@@ -1513,6 +1513,179 @@ public class GroupUtil {
 	*/
 	public static int countByC_A(long companyId, boolean active) {
 		return getPersistence().countByC_A(companyId, active);
+	}
+
+	/**
+	* Returns all the groups where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching groups
+	*/
+	public static List<Group> findByC_CPK(long classNameId, long classPK) {
+		return getPersistence().findByC_CPK(classNameId, classPK);
+	}
+
+	/**
+	* Returns a range of all the groups where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @return the range of matching groups
+	*/
+	public static List<Group> findByC_CPK(long classNameId, long classPK,
+		int start, int end) {
+		return getPersistence().findByC_CPK(classNameId, classPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the groups where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching groups
+	*/
+	public static List<Group> findByC_CPK(long classNameId, long classPK,
+		int start, int end, OrderByComparator<Group> orderByComparator) {
+		return getPersistence()
+				   .findByC_CPK(classNameId, classPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the groups where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching groups
+	*/
+	public static List<Group> findByC_CPK(long classNameId, long classPK,
+		int start, int end, OrderByComparator<Group> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_CPK(classNameId, classPK, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first group in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group
+	* @throws NoSuchGroupException if a matching group could not be found
+	*/
+	public static Group findByC_CPK_First(long classNameId, long classPK,
+		OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
+		return getPersistence()
+				   .findByC_CPK_First(classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the first group in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static Group fetchByC_CPK_First(long classNameId, long classPK,
+		OrderByComparator<Group> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_CPK_First(classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group
+	* @throws NoSuchGroupException if a matching group could not be found
+	*/
+	public static Group findByC_CPK_Last(long classNameId, long classPK,
+		OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
+		return getPersistence()
+				   .findByC_CPK_Last(classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static Group fetchByC_CPK_Last(long classNameId, long classPK,
+		OrderByComparator<Group> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_CPK_Last(classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the primary key of the current group
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next group
+	* @throws NoSuchGroupException if a group with the primary key could not be found
+	*/
+	public static Group[] findByC_CPK_PrevAndNext(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
+		return getPersistence()
+				   .findByC_CPK_PrevAndNext(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the groups where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	*/
+	public static void removeByC_CPK(long classNameId, long classPK) {
+		getPersistence().removeByC_CPK(classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of groups where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching groups
+	*/
+	public static int countByC_CPK(long classNameId, long classPK) {
+		return getPersistence().countByC_CPK(classNameId, classPK);
 	}
 
 	/**
