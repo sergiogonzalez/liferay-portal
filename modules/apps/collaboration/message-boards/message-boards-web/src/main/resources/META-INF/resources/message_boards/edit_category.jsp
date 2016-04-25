@@ -259,16 +259,16 @@ if (portletTitleBasedNavigation) {
 
 	Liferay.Util.toggleBoxes('<portlet:namespace />mailingListActive', '<portlet:namespace />mailingListSettings');
 	Liferay.Util.toggleBoxes('<portlet:namespace />outCustom', '<portlet:namespace />outCustomSettings');
+</aui:script>
 
-	<%-- AUI().use(
-		'event',
-		'node',
-		function(A) {
-			var activeCheckboxNode = A.one('#<portlet:namespace />mailingListActive');
-			var outgoingCheckboxNode = A.one('#<portlet:namespace />outCustom');
+<aui:script sandbox="<%= true %>">
+	$(document).ready(
+	function() {
+			var activeCheckboxNode = $('#<portlet:namespace />mailingListActive');
+			var outgoingCheckboxNode = $('#<portlet:namespace />outCustom');
 
-			var activeCheckboxNodeChecked = activeCheckboxNode._node.checked;
-			var outgoingCheckboxNodeChecked = outgoingCheckboxNode._node.checked;
+			var activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
+			var outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
 
 			var incomingFields = [
 				'emailAddress',
@@ -290,11 +290,10 @@ if (portletTitleBasedNavigation) {
 				'outPassword'
 			];
 
-			activeCheckboxNode.on(
-				'click',
-				function(event) {
-					activeCheckboxNodeChecked = activeCheckboxNode._node.checked;
-					outgoingCheckboxNodeChecked = outgoingCheckboxNode._node.checked;
+			activeCheckboxNode.click(
+				function() {
+					activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
+					outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
 
 					toggleDisableInputFields(incomingFields, activeCheckboxNodeChecked);
 
@@ -306,10 +305,9 @@ if (portletTitleBasedNavigation) {
 				}
 			);
 
-			outgoingCheckboxNode.on(
-				'click',
+			outgoingCheckboxNode.click(
 				function(event) {
-					outgoingCheckboxNodeChecked = outgoingCheckboxNode._node.checked;
+					outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
 
 					toggleDisableInputFields(outgoingFields, outgoingCheckboxNodeChecked);
 				}
@@ -323,16 +321,15 @@ if (portletTitleBasedNavigation) {
 				}
 
 				for (var field in fields) {
-					var inputId = '#<portlet:namespace />' + fields[field];
+					var inputField = $('#<portlet:namespace />' + fields[field]);
 
-					var inputField = A.one(inputId);
+					inputField.attr('disabled', false);
 
-          inputField.set('disabled', false);
-
-					inputField.replaceClass('disabled', '');
+					inputField.removeClass('disabled');
 
 					if (!nodeActive) {
-						inputField.set('disabled', true);
+
+						inputField.attr('disabled', true);
 
 						var curClass = inputField.attr('class');
 
@@ -349,35 +346,5 @@ if (portletTitleBasedNavigation) {
 				}
 			}
 		}
-	); --%>
-</aui:script>
-
-<aui:script sandbox="<%= true %>">
-	$(document).ready(function(){
-		var activeCheckboxNode = $('#<portlet:namespace />mailingListActiveCheckbox');
-		var outgoingCheckboxNode = $('#<portlet:namespace />outCustomCheckbox');
-
-		var activeCheckboxNodeChecked = activeCheckboxNode.is(checked);
-		var outgoingCheckboxNodeChecked = outgoingCheckboxNode.is(checked);
-
-		var incomingFields = [
-			'emailAddress',
-			'inServerName',
-			'inServerPort',
-			'inUseSSLCheckbox',
-			'inUserName',
-			'inPassword',
-			'inReadInterval',
-			'outEmailAddress',
-			'outCustomCheckbox'
-		];
-
-		var outgoingFields = [
-			'outServerName',
-			'outServerPort',
-			'outUseSSLCheckbox',
-			'outUserName',
-			'outPassword'
-		];
-	});
+	);
 </aui:script>
