@@ -395,14 +395,14 @@ public class DisplayPortlet extends BaseKBPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbArticleLocalService(
+	protected void setKBArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbArticleSelectorFactory(
+	protected void setKBArticleSelectorFactory(
 		KBArticleSelectorFactory kbArticleSelectorFactory) {
 
 		_kbArticleSelectorFactory = kbArticleSelectorFactory;
