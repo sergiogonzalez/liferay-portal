@@ -106,10 +106,6 @@ public class UpgradeModules
 			"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"
 		},
 		{
-			"notifications-portlet", "com.liferay.notifications.web",
-			"Notifications"
-		},
-		{
 			"so-portlet", "com.liferay.invitation.invite.members.service", "SO"
 		},
 		{
