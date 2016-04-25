@@ -146,6 +146,20 @@ if (portletTitleBasedNavigation) {
 				</aui:select>
 			</aui:fieldset>
 
+			<%
+			Boolean mailingListDisabled;
+			Boolean customOutDisabled;
+
+			if (mailingList ==  null) {
+				mailingListDisabled = true;
+				customOutDisabled = true;
+			}
+			else {
+				mailingListDisabled = !mailingList.isActive();
+				customOutDisabled = !mailingList.isOutCustom();
+			}
+			%>
+
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="mailing-list">
 				<aui:model-context bean="<%= mailingList %>" model="<%= MBMailingList.class %>" />
 
@@ -154,7 +168,7 @@ if (portletTitleBasedNavigation) {
 				<aui:input label="allow-anonymous-emails" name="allowAnonymous" />
 
 				<div id="<portlet:namespace />mailingListSettings">
-					<aui:input name="emailAddress" />
+					<aui:input disabled="<%= mailingListDisabled %>" name="emailAddress" />
 
 					<br />
 
@@ -169,34 +183,34 @@ if (portletTitleBasedNavigation) {
 							<aui:input checked='<%= protocol.startsWith("imap") %>' label="imap" name="inProtocol" type="radio" value="imap" />
 						</aui:field-wrapper>
 
-						<aui:input disabled="true" label="server-name" name="inServerName" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="server-name" name="inServerName" />
 
-						<aui:input disabled="true" label="server-port" name="inServerPort" value="110" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="server-port" name="inServerPort" value="110" />
 
-						<aui:input disabled="true" label="use-a-secure-network-connection" name="inUseSSL" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="use-a-secure-network-connection" name="inUseSSL" />
 
-						<aui:input disabled="true" label="user-name" name="inUserName" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="user-name" name="inUserName" />
 
-						<aui:input disabled="true" label="password" name="inPassword" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="password" name="inPassword" />
 
-						<aui:input disabled="true" label="read-interval-minutes" name="inReadInterval" value="5" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="read-interval-minutes" name="inReadInterval" value="5" />
 					</aui:fieldset>
 
 					<aui:fieldset label="outgoing">
-						<aui:input disabled="true" label="email-address" name="outEmailAddress" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="email-address" name="outEmailAddress" />
 
-						<aui:input disabled="true" label="use-custom-outgoing-server" name="outCustom" />
+						<aui:input disabled="<%= mailingListDisabled %>" label="use-custom-outgoing-server" name="outCustom" />
 
 						<div id="<portlet:namespace />outCustomSettings">
-							<aui:input disabled="true" label="server-name" name="outServerName" />
+							<aui:input disabled="<%= customOutDisabled %>" label="server-name" name="outServerName" />
 
-							<aui:input disabled="true" label="server-port" name="outServerPort" value="25" />
+							<aui:input disabled="<%= customOutDisabled %>" label="server-port" name="outServerPort" value="25" />
 
-							<aui:input disabled="true" label="use-a-secure-network-connection" name="outUseSSL" />
+							<aui:input disabled="<%= customOutDisabled %>" label="use-a-secure-network-connection" name="outUseSSL" />
 
-							<aui:input disabled="true" label="user-name" name="outUserName" />
+							<aui:input disabled="<%= customOutDisabled %>" label="user-name" name="outUserName" />
 
-							<aui:input disabled="true" label="password" name="outPassword" />
+							<aui:input disabled="<%= customOutDisabled %>" label="password" name="outPassword" />
 						</div>
 					</aui:fieldset>
 				</div>
@@ -246,7 +260,7 @@ if (portletTitleBasedNavigation) {
 	Liferay.Util.toggleBoxes('<portlet:namespace />mailingListActive', '<portlet:namespace />mailingListSettings');
 	Liferay.Util.toggleBoxes('<portlet:namespace />outCustom', '<portlet:namespace />outCustomSettings');
 
-	AUI().use(
+	<%-- AUI().use(
 		'event',
 		'node',
 		function(A) {
@@ -335,5 +349,35 @@ if (portletTitleBasedNavigation) {
 				}
 			}
 		}
-	);
+	); --%>
+</aui:script>
+
+<aui:script sandbox="<%= true %>">
+	$(document).ready(function(){
+		var activeCheckboxNode = $('#<portlet:namespace />mailingListActiveCheckbox');
+		var outgoingCheckboxNode = $('#<portlet:namespace />outCustomCheckbox');
+
+		var activeCheckboxNodeChecked = activeCheckboxNode.is(checked);
+		var outgoingCheckboxNodeChecked = outgoingCheckboxNode.is(checked);
+
+		var incomingFields = [
+			'emailAddress',
+			'inServerName',
+			'inServerPort',
+			'inUseSSLCheckbox',
+			'inUserName',
+			'inPassword',
+			'inReadInterval',
+			'outEmailAddress',
+			'outCustomCheckbox'
+		];
+
+		var outgoingFields = [
+			'outServerName',
+			'outServerPort',
+			'outUseSSLCheckbox',
+			'outUserName',
+			'outPassword'
+		];
+	});
 </aui:script>
