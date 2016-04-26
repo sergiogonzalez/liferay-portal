@@ -282,14 +282,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		options.put("discussion", discussion);
 
-		validate(subject, body);
-
 		subject = getSubject(subject, body);
 		body = getBody(subject, body);
 
 		body = SanitizerUtil.sanitize(
 			user.getCompanyId(), groupId, userId, MBMessage.class.getName(),
 			messageId, "text/" + format, Sanitizer.MODE_ALL, body, options);
+
+		validate(subject, body);
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
@@ -1609,8 +1609,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		options.put("discussion", message.isDiscussion());
 
-		validate(subject, body);
-
 		subject = getSubject(subject, body);
 		body = getBody(subject, body);
 
@@ -1618,6 +1616,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getCompanyId(), message.getGroupId(), userId,
 			MBMessage.class.getName(), messageId, "text/" + message.getFormat(),
 			Sanitizer.MODE_ALL, body, options);
+
+		validate(subject, body);
 
 		message.setModifiedDate(modifiedDate);
 		message.setSubject(subject);
