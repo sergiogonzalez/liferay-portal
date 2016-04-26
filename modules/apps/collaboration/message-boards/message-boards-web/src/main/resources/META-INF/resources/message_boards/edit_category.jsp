@@ -179,8 +179,8 @@ if (portletTitleBasedNavigation) {
 						%>
 
 						<aui:field-wrapper label="protocol">
-							<aui:input checked='<%= protocol.startsWith("pop3") %>' label="pop" name="inProtocol" type="radio" value="pop3" />
-							<aui:input checked='<%= protocol.startsWith("imap") %>' label="imap" name="inProtocol" type="radio" value="imap" />
+							<aui:input checked='<%= protocol.startsWith("pop3") %>' disabled="<%= mailingListDisabled %>" label="pop" name="inProtocol" type="radio" value="pop3" />
+							<aui:input checked='<%= protocol.startsWith("imap") %>' disabled="<%= mailingListDisabled %>" label="imap" name="inProtocol" type="radio" value="imap" />
 						</aui:field-wrapper>
 
 						<aui:input disabled="<%= mailingListDisabled %>" label="server-name" name="inServerName" />
@@ -197,9 +197,9 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<aui:fieldset label="outgoing">
-						<aui:input disabled="<%= mailingListDisabled %>" label="email-address" name="outEmailAddress" />
+						<aui:input disabled="<%=  mailingListDisabled %>" label="email-address" name="outEmailAddress" />
 
-						<aui:input disabled="<%= mailingListDisabled %>" label="use-custom-outgoing-server" name="outCustom" />
+						<aui:input label="use-custom-outgoing-server" name="outCustom" />
 
 						<div id="<portlet:namespace />outCustomSettings">
 							<aui:input disabled="<%= customOutDisabled %>" label="server-name" name="outServerName" />
@@ -263,23 +263,27 @@ if (portletTitleBasedNavigation) {
 
 <aui:script sandbox="<%= true %>">
 	$(document).ready(
-	function() {
-			var activeCheckboxNode = $('#<portlet:namespace />mailingListActive');
-			var outgoingCheckboxNode = $('#<portlet:namespace />outCustom');
+		function() {
+			var activeCheckboxId = '<portlet:namespace />mailingListActive';
+			var outgoingCheckboxId = '<portlet:namespace />outCustom';
+
+			var activeCheckboxNode = $('#' + activeCheckboxId);
+			var outgoingCheckboxNode = $('#' + outgoingCheckboxId);
 
 			var activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
 			var outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
 
 			var incomingFields = [
 				'emailAddress',
+				'inProtocol_1',
+				'inProtocol_3',
 				'inServerName',
 				'inServerPort',
 				'inUseSSL',
 				'inUserName',
 				'inPassword',
 				'inReadInterval',
-				'outEmailAddress',
-				'outCustom'
+				'outEmailAddress'
 			];
 
 			var outgoingFields = [
@@ -290,61 +294,44 @@ if (portletTitleBasedNavigation) {
 				'outPassword'
 			];
 
+			var field;
+			var inputField;
+			var inputFieldNode;
+
+			for (field in incomingFields) {
+				inputField = '<portlet:namespace />' + incomingFields[field];
+
+				if (activeCheckboxNodeChecked) {
+					inputFieldNode = $('#' + inputField);
+
+					Liferay.Util.toggleDisabled(inputFieldNode, !activeCheckboxNodeChecked);
+				}
+
+				Liferay.Util.disableToggleBoxes(activeCheckboxId, inputField);
+			}
+
+			for (field in outgoingFields) {
+				inputField = '<portlet:namespace />' + outgoingFields[field];
+
+				if (activeCheckboxNodeChecked && outgoingCheckboxNodeChecked) {
+					inputFieldNode = $('#' + inputField);
+
+					Liferay.Util.toggleDisabled(inputFieldNode, !outgoingCheckboxNodeChecked);
+				}
+
+				Liferay.Util.disableToggleBoxes(outgoingCheckboxId, inputField);
+			}
+
 			activeCheckboxNode.click(
 				function() {
-					activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
-					outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
-
-					toggleDisableInputFields(incomingFields, activeCheckboxNodeChecked);
+					var activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
+					var outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
 
 					if (!activeCheckboxNodeChecked && outgoingCheckboxNodeChecked) {
-						outgoingCheckboxNodeChecked = false;
-					}
-
-					toggleDisableInputFields(outgoingFields, outgoingCheckboxNodeChecked);
-				}
-			);
-
-			outgoingCheckboxNode.click(
-				function(event) {
-					outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
-
-					toggleDisableInputFields(outgoingFields, outgoingCheckboxNodeChecked);
-				}
-			);
-
-			function toggleDisableInputFields(fields, checkboxId) {
-				var nodeActive = false;
-
-				if (checkboxId) {
-					nodeActive = true;
-				}
-
-				for (var field in fields) {
-					var inputField = $('#<portlet:namespace />' + fields[field]);
-
-					inputField.attr('disabled', false);
-
-					inputField.removeClass('disabled');
-
-					if (!nodeActive) {
-
-						inputField.attr('disabled', true);
-
-						var curClass = inputField.attr('class');
-
-						inputField.attr('class', curClass + ' disabled');
+						outgoingCheckboxNode.trigger('click');
 					}
 				}
-			}
-
-			if (activeCheckboxNodeChecked) {
-				toggleDisableInputFields(incomingFields, activeCheckboxNodeChecked);
-
-				if (outgoingCheckboxNodeChecked) {
-					toggleDisableInputFields(outgoingFields, outgoingCheckboxNodeChecked);
-				}
-			}
+			);
 		}
 	);
 </aui:script>

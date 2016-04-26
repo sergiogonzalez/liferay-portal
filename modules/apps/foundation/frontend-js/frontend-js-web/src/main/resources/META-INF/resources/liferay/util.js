@@ -264,6 +264,14 @@
 				EVENT_CLICK,
 				function() {
 					toggleBox.prop('disabled', !toggleBox.prop('disabled'));
+
+					toggleBox.removeClass('disabled');
+
+					if (toggleBox.prop('disabled')) {
+						var curClass = toggleBox.attr('class');
+
+						toggleBox.attr('class', curClass + ' disabled');
+					}
 				}
 			);
 		},
