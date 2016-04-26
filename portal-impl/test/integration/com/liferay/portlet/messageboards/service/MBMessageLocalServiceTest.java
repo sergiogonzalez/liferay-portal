@@ -85,6 +85,26 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
+	public void testAddXSSMessage() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+		String subject = "<script>alert(1)</script>";
+		String body = StringPool.BLANK;
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, "html", inputStreamOVPs, false, 0.0, false,
+			serviceContext);
+
+		Assert.assertEquals(StringPool.BLANK, message.getBody());
+	}
+
+	@Test
 	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashDisabled()
 		throws Exception {
 
