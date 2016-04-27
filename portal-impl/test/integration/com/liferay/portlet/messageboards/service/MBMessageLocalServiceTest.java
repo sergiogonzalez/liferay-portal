@@ -102,6 +102,8 @@ public class MBMessageLocalServiceTest {
 			subject, body, "html", inputStreamOVPs, false, 0.0, false,
 			serviceContext);
 
+		Assert.assertEquals(subject, message.getSubject());
+
 		if (Validator.isNotNull(message.getBody())) {
 			Assert.fail("Message body should have been sanitized.");
 		}
