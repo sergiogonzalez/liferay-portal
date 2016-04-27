@@ -101,6 +101,7 @@ public class MBMessageLocalServiceTest {
 			subject, body, "html", inputStreamOVPs, false, 0.0, false,
 			serviceContext);
 
+		Assert.assertEquals(subject, message.getSubject());
 		Assert.assertEquals(StringPool.BLANK, message.getBody());
 	}
 
