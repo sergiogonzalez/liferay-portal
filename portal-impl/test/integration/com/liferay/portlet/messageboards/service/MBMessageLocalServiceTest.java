@@ -85,7 +85,7 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
-	public void testAddXSSMessage() throws Exception {
+	public void testAddXSSSubjectWithEmptyBodyMessage() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
