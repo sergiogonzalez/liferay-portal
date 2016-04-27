@@ -70,6 +70,14 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(LanguageUtil.get(request, mbHomeDisplayContext.getTitle()));
 }
+
+boolean mailingListDisabled = true;
+boolean customOutDisabled = true;
+
+if (Validator.isNotNull(mailingList)) {
+	mailingListDisabled = !mailingList.isActive();
+	customOutDisabled = !mailingList.isOutCustom();
+}
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
@@ -145,20 +153,6 @@ if (portletTitleBasedNavigation) {
 
 				</aui:select>
 			</aui:fieldset>
-
-			<%
-			Boolean mailingListDisabled;
-			Boolean customOutDisabled;
-
-			if (mailingList ==  null) {
-				mailingListDisabled = true;
-				customOutDisabled = true;
-			}
-			else {
-				mailingListDisabled = !mailingList.isActive();
-				customOutDisabled = !mailingList.isOutCustom();
-			}
-			%>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="mailing-list">
 				<aui:model-context bean="<%= mailingList %>" model="<%= MBMailingList.class %>" />
@@ -262,76 +256,69 @@ if (portletTitleBasedNavigation) {
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
-	$(document).ready(
+	var activeCheckboxId = '<portlet:namespace />mailingListActive';
+	var outgoingCheckboxId = '<portlet:namespace />outCustom';
+
+	var activeCheckboxNode = $('#' + activeCheckboxId);
+	var outgoingCheckboxNode = $('#' + outgoingCheckboxId);
+
+	var activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
+	var outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
+
+	var incomingInputFields = [
+		'emailAddress',
+		'inProtocol_1',
+		'inProtocol_3',
+		'inServerName',
+		'inServerPort',
+		'inUseSSL',
+		'inUserName',
+		'inPassword',
+		'inReadInterval',
+		'outEmailAddress'
+	];
+
+	for (var incomingField in incomingInputFields) {
+		var incomingFieldId = '<portlet:namespace />' + incomingInputFields[incomingField];
+
+		if (activeCheckboxNodeChecked) {
+			var incomingInputFieldNode = $('#' + incomingFieldId);
+
+			Liferay.Util.toggleDisabled(incomingInputFieldNode, !activeCheckboxNodeChecked);
+		}
+
+		Liferay.Util.disableToggleBoxes(activeCheckboxId, incomingFieldId);
+	}
+
+	var outgoingInputFields = [
+		'outServerName',
+		'outServerPort',
+		'outUseSSL',
+		'outUserName',
+		'outPassword'
+	];
+
+	for (var outgoingField in outgoingInputFields) {
+		var outgoingFieldId = '<portlet:namespace />' + outgoingInputFields[outgoingField];
+
+		if (activeCheckboxNodeChecked && outgoingCheckboxNodeChecked) {
+			var outgoingInputFieldNode = $('#' + outgoingFieldId);
+
+			Liferay.Util.toggleDisabled(outgoingInputFieldNode, !outgoingCheckboxNodeChecked);
+		}
+
+		Liferay.Util.disableToggleBoxes(outgoingCheckboxId, outgoingFieldId);
+	}
+
+	activeCheckboxNode.on(
+		'click',
 		function() {
-			var activeCheckboxId = '<portlet:namespace />mailingListActive';
-			var outgoingCheckboxId = '<portlet:namespace />outCustom';
-
-			var activeCheckboxNode = $('#' + activeCheckboxId);
-			var outgoingCheckboxNode = $('#' + outgoingCheckboxId);
-
 			var activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
 			var outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
 
-			var incomingFields = [
-				'emailAddress',
-				'inProtocol_1',
-				'inProtocol_3',
-				'inServerName',
-				'inServerPort',
-				'inUseSSL',
-				'inUserName',
-				'inPassword',
-				'inReadInterval',
-				'outEmailAddress'
-			];
-
-			var outgoingFields = [
-				'outServerName',
-				'outServerPort',
-				'outUseSSL',
-				'outUserName',
-				'outPassword'
-			];
-
-			var field;
-			var inputField;
-			var inputFieldNode;
-
-			for (field in incomingFields) {
-				inputField = '<portlet:namespace />' + incomingFields[field];
-
-				if (activeCheckboxNodeChecked) {
-					inputFieldNode = $('#' + inputField);
-
-					Liferay.Util.toggleDisabled(inputFieldNode, !activeCheckboxNodeChecked);
-				}
-
-				Liferay.Util.disableToggleBoxes(activeCheckboxId, inputField);
+			if (!activeCheckboxNodeChecked && outgoingCheckboxNodeChecked) {
+				outgoingCheckboxNode.trigger('click');
 			}
-
-			for (field in outgoingFields) {
-				inputField = '<portlet:namespace />' + outgoingFields[field];
-
-				if (activeCheckboxNodeChecked && outgoingCheckboxNodeChecked) {
-					inputFieldNode = $('#' + inputField);
-
-					Liferay.Util.toggleDisabled(inputFieldNode, !outgoingCheckboxNodeChecked);
-				}
-
-				Liferay.Util.disableToggleBoxes(outgoingCheckboxId, inputField);
-			}
-
-			activeCheckboxNode.click(
-				function() {
-					var activeCheckboxNodeChecked = activeCheckboxNode.prop('checked');
-					var outgoingCheckboxNodeChecked = outgoingCheckboxNode.prop('checked');
-
-					if (!activeCheckboxNodeChecked && outgoingCheckboxNodeChecked) {
-						outgoingCheckboxNode.trigger('click');
-					}
-				}
-			);
 		}
 	);
 </aui:script>
