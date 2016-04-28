@@ -69,7 +69,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			PortalUtil.getHttpServletRequest(renderRequest);
 
 		String imageUrl = ParamUtil.getString(
-			httpServletRequest, ImageEditorPortletKeys.IMAGE_EDITOR_URL);
+			httpServletRequest, "entity");
+
+		String saveEvent = ParamUtil.getString(
+			httpServletRequest, "eventName");
+
+		String saveParamName = ParamUtil.getString(
+			httpServletRequest, "saveParamName");
+
+		String saveURL = ParamUtil.getString(
+			httpServletRequest, "saveURL");
 
 		capabilitiesContext.put(
 			"tools", getImageEditorToolsContext(renderRequest));
@@ -81,6 +90,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		template.put("capabilities", capabilitiesContext);
 		template.put("image", imageUrl);
 		template.put("pathThemeImages", themeDisplay.getPathThemeImages());
+		template.put("saveEvent", saveEvent);
+		template.put("saveParamName", saveParamName);
+		template.put("saveURL", saveURL);
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(

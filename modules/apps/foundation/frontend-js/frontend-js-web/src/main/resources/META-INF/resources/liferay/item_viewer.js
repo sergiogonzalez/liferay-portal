@@ -428,91 +428,25 @@ AUI.add(
 								editIconEl.on('click', function(event) {
 									event.preventDefault();
 
-									var zIndex = instance.get('zIndex');
+									var itemUrl = instance.get('links').item(instance.get('currentIndex')).getAttribute('data-value');
 
-									var portletURL = new Liferay.PortletURL.createURL(instance.get('editItemUrl'));
-
-									var imageUrl = instance.get('links').item(instance.get('currentIndex')).getAttribute('data-value');
-
-									portletURL.setParameter('image_editor_url', imageUrl);
-
-									Liferay.Util.openWindow(
+									Liferay.Util.editEntity(
 										{
-											id: /*eventName +*/ 'editImageWindow',
 											dialog: {
-												zIndex: 10000,
-												'toolbars.footer': [
-													{
-														cssClass: 'btn-lg btn-primary',
-														id: 'saveButton',
-														label: /*strings.save*/'save',
-														on: {
-															click: function() {
-																//move this logic out of here eventually
-																var dialog = Liferay.Util.getWindow(/*eventName +*/ 'editImageWindow');
-
-																var dialogDoc = dialog.iframe.node.get('contentWindow').get('document');
-
-																var canvasElement = dialogDoc.one('canvas')._node;
-
-																canvasElement.toBlob(function(imageBlob) {
-																	imageBlob.name = 'file_' + Date.now();
-																	imageBlob.lastModifiedDate = new Date();
-																	imageBlob.type = 'image/jpeg';
-
-																	var formData = new FormData();
-
-																	formData.append('imageSelectorFileName', imageBlob);
-
-																	var url = new Liferay.PortletURL.createURL(instance.get('uploadItemUrl'), {
-																		title: 'file_' + Date.now()
-																	});
-
-																	$.ajax({
-																		contentType: false,
-																		data: formData,
-																		processData: false,
-																		success: A.bind('_onSaveEditSuccess', instance),
-																		type: 'POST',
-																		url: url.toString(),
-																		xhr: function() {
-																		    var xhr = new window.XMLHttpRequest();
-
-																		    //Upload progress
-																		    xhr.upload.addEventListener("progress", function(evt) {
-																		      if (evt.lengthComputable) {
-																		        var percentComplete = evt.loaded / evt.total;
-																		        //Do something with upload progress
-																		        console.log(percentComplete);
-																		      }
-																		    }, false);
-
-																		    return xhr;
-																		}
-																	});
-																}, 'image/jpeg');
-															}
-														},
-														render: true
-													},
-													{
-														cssClass: 'btn-lg btn-link close-modal',
-														id: 'cancelButton',
-														label: /*strings.cancel*/'cancel',
-														on: {
-															click: function() {
-																var dialog = Liferay.Util.getWindow(/*eventName +*/ 'editImageWindow');
-
-																dialog.hide();
-															}
-														}
-													}
-												]
+												destroyOnHide: true,
+												zIndex: 100000
 											},
-											uri: portletURL.toString(),
+											id: 'itemViewer',
 											stack: false,
-											title: Liferay.Language.get('Edit Image')
-										}
+											uri: instance.get('editItemUrl'),
+											urlParams: {
+												entity: itemUrl,
+												saveParamName: 'imageSelectorFileName',
+												saveURL: instance.get('uploadItemUrl')
+											},
+											title: 'Edit Copy of ' + itemUrl
+										},
+										A.bind('_onSaveEditSuccess', instance)
 									);
 								});
 
@@ -523,17 +457,11 @@ AUI.add(
 						}
 					},
 
-
-					_onSaveEditSuccess: function(data) {
+					_onSaveEditSuccess: function(event) {
 						var instance = this;
 
-						var dialog = Liferay.Util.getWindow(/*eventName +*/ 'editImageWindow');
-
-						instance.appendNewLink(data);
-
-						instance.updateCurrentImage(data);
-
-						dialog.hide();
+						instance.appendNewLink(event.data);
+						instance.updateCurrentImage(event.data);
 					},
 
 					appendNewLink: function(imageData) {
@@ -571,7 +499,6 @@ AUI.add(
 						instance.set('links', links);
 
 						instance.set('currentIndex', links.size() - 1);
-
 					},
 
 					_renderSidenav: function() {

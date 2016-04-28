@@ -79,6 +79,16 @@ class ImageEditor extends Component {
 	}
 
 	/**
+	 * Notifies the opener app that the user wants to close the
+	 * editor without saving the changes
+	 *
+	 * @protected
+	 */
+	close_() {
+		Liferay.Util.getWindow().hide();
+	}
+
+	/**
 	 * Creates a new history entry state.
 	 *
 	 * @param  {ImageData} imageData The ImageData of the new image.
@@ -113,12 +123,42 @@ class ImageEditor extends Component {
 	}
 
 	/**
+	 * Retrieves the Blob representation of the current image.
+	 *
+	 * @return {CancellablePromise} A promise that will resolve with the image blob.
+	 */
+	getEditorImageBlob() {
+		return new CancellablePromise((resolve, reject) => {
+			this.getEditorCanvas().toBlob(resolve);
+		});
+	}
+
+	/**
 	 * Retrieves the ImageData representation of the current image.
 	 *
 	 * @return {CancellablePromise} A promise that will resolve with the image data.
 	 */
 	getEditorImageData() {
 		return this.history_[this.historyIndex_].getImageData();
+	}
+
+	/**
+	 * Notifies the opener app of the result of the save action
+	 *
+	 * @param  {Object} result The server response to the save action
+	 * @protected
+	 */
+	notifySaveResult_(result) {
+		if (result && result.success) {
+			Liferay.Util.getOpener().Liferay.fire(
+				this.saveEvent,
+				{
+					data: result
+				}
+			);
+
+			Liferay.Util.getWindow().hide();
+		}
 	}
 
 	/**
@@ -173,6 +213,47 @@ class ImageEditor extends Component {
 		this.historyIndex_ = 0;
 		this.history_.length = 1;
 		this.syncHistory_();
+	}
+
+	/**
+	 * Tries to save the current image using the provided save url.
+	 *
+	 * @protected
+	 */
+	save_() {
+		this.getEditorImageBlob()
+			.then(imageBlob => this.submitBlob_(imageBlob))
+			.then(result => this.notifySaveResult_(result));
+	}
+
+	/**
+	 * Sends a given image blob to the server for processing
+	 * and storing.
+	 *
+	 * @param  {Blob} imageBlob The image blob to send to the server
+	 * @return {CancellablePromise} A promise that follows the xhr submission process
+	 * @protected
+	 */
+	submitBlob_(imageBlob) {
+		let saveParamName = this.saveParamName;
+
+		let promise = new CancellablePromise((resolve, reject) => {
+			let formData = new FormData();
+
+			formData.append(saveParamName, imageBlob);
+
+			$.ajax({
+				contentType: false,
+				data: formData,
+				error: (error) => reject(error),
+				processData: false,
+				success: (result) => resolve(result),
+				type: 'POST',
+				url: this.saveURL
+			});
+		});
+
+		return promise;
 	}
 
 	/**
@@ -253,6 +334,38 @@ class ImageEditor extends Component {
 		this.syncHistory_();
 	}
 }
+
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
+ImageEditor.STATE = {
+	/**
+	 * Event to dispatch when the edition has been completed
+	 * @type {String}
+	 */
+	saveEvent: {
+		validator: core.isString
+	},
+
+	/**
+	 * Name of the param where the image should be sent
+	 * to the server for the save action
+	 * @type {String}
+	 */
+	saveParamName: {
+		validator: core.isString
+	},
+
+	/**
+	 * Url to save the image changes
+	 * @type {String}
+	 */
+	saveURL: {
+		validator: core.isString
+	}
+};
 
 // Register component
 Soy.register(ImageEditor, templates);
