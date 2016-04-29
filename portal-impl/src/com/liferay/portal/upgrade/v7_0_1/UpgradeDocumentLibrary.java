@@ -54,9 +54,24 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updateTikaRawMetadataDDMStructure();
+		updateTikaRawMetadataDDMStructure();
 
 		updateTikaRawMetadataFileEntryMetadata();
+	}
+
+	protected void updateTikaRawMetadataDDMStructure() throws Exception {
+		long classNameId = addRawMetadataProcessorClassName();
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update DDMStructure set classNameId = ? where " +
+					"ddmStructureId != ? and structureKey = ? ")) {
+
+			ps.setLong(1, classNameId);
+			ps.setLong(2, 0);
+			ps.setString(3, "TIKARAWMETADATA");
+
+			ps.execute();
+		}
 	}
 
 	protected void updateTikaRawMetadataFileEntryMetadata() throws Exception {
@@ -107,21 +122,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 
 			return 0;
-		}
-	}
-
-	private void _updateTikaRawMetadataDDMStructure() throws Exception {
-		long classNameId = addRawMetadataProcessorClassName();
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update DDMStructure set classNameId = ? where " +
-					"ddmStructureId != ? and structureKey = ? ")) {
-
-			ps.setLong(1, classNameId);
-			ps.setLong(2, 0);
-			ps.setString(3, "TIKARAWMETADATA");
-
-			ps.execute();
 		}
 	}
 
