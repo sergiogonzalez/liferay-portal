@@ -113,19 +113,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	private void _updateTikaRawMetadataDDMStructure() throws Exception {
 		long classNameId = addRawMetadataProcessorClassName();
 
-		long ddmStructureId = _getDDMStructureId(
-			"TIKARAWMETADATA", classNameId);
-
-		if (ddmStructureId != 0) {
-			return;
-		}
-
 		try (PreparedStatement ps = connection.prepareStatement(
 				"update DDMStructure set classNameId = ? where " +
-					"structureKey = ?")) {
+					"ddmStructureId != ? and structureKey = ? ")) {
 
 			ps.setLong(1, classNameId);
-			ps.setString(2, "TIKARAWMETADATA");
+			ps.setLong(2, 0);
+			ps.setString(3, "TIKARAWMETADATA");
 
 			ps.execute();
 		}
