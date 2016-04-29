@@ -92,10 +92,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	private long _getDDMStructureId(String structureKey, long classNameId)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
 				"select structureId from DDMStructure where structureKey = ? " +
-					"and classNameId = ?");
+					"and classNameId = ?")) {
 
 			ps.setString(1, structureKey);
 			ps.setLong(2, classNameId);
