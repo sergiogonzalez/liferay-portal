@@ -94,7 +94,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			PreparedStatement ps = connection.prepareStatement(
-				"select structureId from DDMStructure where structureKey = ?" +
+				"select structureId from DDMStructure where structureKey = ? " +
 					"and classNameId = ?");
 
 			ps.setString(1, structureKey);
