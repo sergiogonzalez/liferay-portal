@@ -1,3 +1,23 @@
+apply plugin: 'java'
+
+task unzip(type: Copy) {
+	from zipTree('jamwiki-0.9.3-src.zip')
+	into 'src/main/resources'
+	include 'jamwiki-0.9.3/main/resources/ApplicationResources.properties'
+	include 'jamwiki-0.9.3/main/resources/interwiki.properties'
+	include 'jamwiki-0.9.3/main/resources/jamwiki-configuration.xml'
+	include 'jamwiki-0.9.3/main/resources/logging.properties'
+	eachFile {
+		it.path = it.path.substring(it.path.lastIndexOf('/'))
+	}
+
+	def binDir = new File('src/main/resources/jamwiki-0.9.3')
+
+	binDir.deleteDir()
+}
+
+deploy.dependsOn unzip
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.wiki.engine.input.editor.common", version: "2.0.0"
