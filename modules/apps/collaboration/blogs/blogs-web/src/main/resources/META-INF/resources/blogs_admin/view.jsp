@@ -61,18 +61,3 @@ portletURL.setParameter("navigation", navigation);
 		<liferay-util:include page="/blogs_admin/view_images.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>
-
-<c:if test='<%= navigation.equals("entries") && BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>'>
-	<portlet:renderURL var="viewEntriesURL">
-		<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
-	</portlet:renderURL>
-
-	<portlet:renderURL var="addEntryURL">
-		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-		<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-blog-entry") %>' url="<%= addEntryURL %>" />
-	</liferay-frontend:add-menu>
-</c:if>
