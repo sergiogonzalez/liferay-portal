@@ -263,7 +263,7 @@
 			checkBox.on(
 				EVENT_CLICK,
 				function() {
-					toggleBox.prop('disabled', !toggleBox.prop('disabled'));
+					Util.toggleDisabled(toggleBox, !toggleBox.prop('disabled'));
 				}
 			);
 		},
