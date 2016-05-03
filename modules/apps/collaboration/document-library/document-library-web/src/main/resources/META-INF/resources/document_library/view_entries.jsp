@@ -599,6 +599,8 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 <%@ include file="/document_library/version_details.jspf" %>
 
+<%@ include file="/document_library/action/edit_with_image_editor_js.jspf" %>
+
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_web.document_library.view_entries_jsp");
 %>
