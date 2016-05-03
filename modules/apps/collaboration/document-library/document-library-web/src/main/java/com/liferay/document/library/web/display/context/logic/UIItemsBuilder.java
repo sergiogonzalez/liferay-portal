@@ -24,9 +24,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -47,10 +51,12 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -366,6 +372,63 @@ public class UIItemsBuilder {
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, DLUIItemKeys.EDIT,
 			LanguageUtil.get(_request, "edit"), portletURL.toString());
+	}
+
+	public void addEditWithImageEditorMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (!_fileEntryDisplayContextHelper.isEditActionAvailable()) {
+			return;
+		}
+
+		//TODO check editable mime_types
+
+		if (!ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+				_fileEntry.getMimeType())) {
+
+			return;
+		}
+
+		String imageEditorPortletId = PortletProviderUtil.getPortletId(
+			Image.class.getName(), PortletProvider.Action.EDIT);
+
+		PortletURL imageEditorURL = PortletURLFactoryUtil.create(
+				_request, imageEditorPortletId, _themeDisplay.getPlid(),
+				PortletRequest.RENDER_PHASE);
+
+		imageEditorURL.setParameter(
+			"mvcRenderCommandName", "/image_editor/view");
+
+		try {
+			imageEditorURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (Exception e) {
+			throw new SystemException("Unable to set window state", e);
+		}
+
+		PortletURL uploadURL = _getLiferayPortletResponse().createActionURL(
+			PortletKeys.DOCUMENT_LIBRARY);
+
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME, "/document_library/upload_file_entry");
+		uploadURL.setParameter(
+			"folderId", String.valueOf(_fileEntry.getFolderId()));
+
+		String fileEntryPreviewURL = DLUtil.getPreviewURL(
+			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK);
+
+		String onClick =
+			getNamespace() + "editWithImageEditor('" +
+			imageEditorURL.toString() + "', '" +
+			uploadURL.toString() + "', '" +
+			_fileEntry.getFileName() + "', '" +
+			fileEntryPreviewURL + "');";
+
+		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
+			new JavaScriptMenuItem(), menuItems,
+			DLUIItemKeys.EDIT_WITH_IMAGE_EDITOR,
+			LanguageUtil.get(_request, "edit-with-image-editor"), onClick);//TODO language.properties
 	}
 
 	public void addMoveMenuItem(List<MenuItem> menuItems)
