@@ -100,8 +100,11 @@ public class DeleteFileEntryPortletConfigurationIcon
 		try {
 			fileEntry = ActionUtil.getFileEntry(portletRequest);
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
-			return null;
+			throw new RuntimeException(e);
 		}
 
 		long folderId = fileEntry.getFolderId();
@@ -132,10 +135,11 @@ public class DeleteFileEntryPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
 			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
@@ -144,10 +148,12 @@ public class DeleteFileEntryPortletConfigurationIcon
 
 			return fileEntryDisplayContextHelper.isFileEntryDeletable();
 		}
-		catch (Exception e) {
+		catch (RuntimeException re) {
+			throw re;
 		}
-
-		return false;
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public boolean isToolTip() {
@@ -159,7 +165,7 @@ public class DeleteFileEntryPortletConfigurationIcon
 			return DLTrashUtil.isTrashEnabled(groupId, repository);
 		}
 		catch (PortalException pe) {
-			return false;
+			throw new RuntimeException(pe);
 		}
 	}
 
