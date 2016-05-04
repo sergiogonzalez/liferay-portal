@@ -66,9 +66,10 @@ public class BlogsContentEditorConfigContributor
 
 		jsonObject.put(
 			"allowedContent",
-			"b strong i em u hr h1 h2 h3 h4 h5 h6 em ul ol li pre " +
-				"table[border,cellpadding,cellspacing]{width}; thead tbody " +
-					"tr[scope]; th[scope]; td img a[*]");
+			"p{text-align}; b strong i em u hr h1 h2 h3 h4 h5 h6 em ul ol li " +
+				"pre table[border,cellpadding,cellspacing]{width}; thead " +
+					"tbody tr[scope]; th[scope]; td " +
+						"img[!src,class]{width,height}; a[*];");
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
