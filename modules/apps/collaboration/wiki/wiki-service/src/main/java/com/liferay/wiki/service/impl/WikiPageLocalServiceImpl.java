@@ -884,6 +884,26 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage fetchPage(long nodeId, String title, Boolean head)
+		throws PortalException {
+
+		List<WikiPage> pages;
+
+		if (head == null) {
+			pages = wikiPagePersistence.findByN_T(nodeId, title, 0, 1);
+		}
+		else {
+			pages = wikiPagePersistence.findByN_T_H(nodeId, title, head, 0, 1);
+		}
+
+		if (!pages.isEmpty()) {
+			return pages.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
 	public WikiPage fetchPage(long nodeId, String title, double version) {
 		WikiPage page = null;
 
@@ -1177,26 +1197,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			throw new NoSuchPageException(sb.toString());
 		}
-	}
-
-	@Override
-	public WikiPage fetchPage(long nodeId, String title, Boolean head)
-		throws PortalException {
-
-		List<WikiPage> pages;
-
-		if (head == null) {
-			pages = wikiPagePersistence.findByN_T(nodeId, title, 0, 1);
-		}
-		else {
-			pages = wikiPagePersistence.findByN_T_H(nodeId, title, head, 0, 1);
-		}
-
-		if (!pages.isEmpty()) {
-			return pages.get(0);
-		}
-
-		return null;
 	}
 
 	@Override
