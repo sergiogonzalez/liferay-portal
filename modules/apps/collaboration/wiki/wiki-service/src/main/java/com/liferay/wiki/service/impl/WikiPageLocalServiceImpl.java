@@ -1180,7 +1180,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public WikiPage getPage(long nodeId, String title, Boolean head)
+	public WikiPage fetchPage(long nodeId, String title, Boolean head)
 		throws PortalException {
 
 		List<WikiPage> pages;
@@ -1194,6 +1194,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (!pages.isEmpty()) {
 			return pages.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	public WikiPage getPage(long nodeId, String title, Boolean head)
+		throws PortalException {
+
+		WikiPage wikiPage = fetchPage(nodeId, title, head);
+
+		if (wikiPage != null) {
+			return wikiPage;
 		}
 		else {
 			StringBundler sb = new StringBundler(7);
