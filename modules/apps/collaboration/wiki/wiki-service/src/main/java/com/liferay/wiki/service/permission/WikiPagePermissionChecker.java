@@ -148,15 +148,18 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 			if (actionId.equals(ActionKeys.VIEW) &&
 				!contains(permissionChecker, page, ActionKeys.UPDATE)) {
 
-				try {
-					WikiPage headPage = _wikiPageLocalService.getPage(
+				if (!page.isHead()) {
+					WikiPage headPage = _wikiPageLocalService.fetchPage(
 						page.getNodeId(), page.getTitle(), true);
 
-					return contains(permissionChecker, headPage, actionId);
+					if ((headPage != null) &&
+						contains(permissionChecker, headPage, actionId)) {
+
+						return true;
+					}
 				}
-				catch (PortalException e) {
-					return false;
-				}
+
+				return false;
 			}
 
 			if (actionId.equals(ActionKeys.DELETE) &&
