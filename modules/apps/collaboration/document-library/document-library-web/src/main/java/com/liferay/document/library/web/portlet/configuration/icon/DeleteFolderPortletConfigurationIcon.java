@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
+import com.liferay.document.library.web.util.DLTrashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -69,7 +69,8 @@ public class DeleteFolderPortletConfigurationIcon
 		String key = "delete";
 
 		if ((folder.getModel() instanceof DLFolder) &&
-			isTrashEnabled(themeDisplay.getScopeGroupId())) {
+			isTrashEnabled(
+				themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 			key = "move-to-the-recycle-bin";
 		}
@@ -107,7 +108,8 @@ public class DeleteFolderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		if (folder.isMountPoint() ||
-				!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
+				!isTrashEnabled(
+					themeDisplay.getScopeGroupId(), folder.getRepositoryId()) ||
 					!(folder.getModel() instanceof DLFolder)) {
 
 			portletURL.setParameter(Constants.CMD, Constants.DELETE);
@@ -169,16 +171,13 @@ public class DeleteFolderPortletConfigurationIcon
 		return false;
 	}
 
-	protected boolean isTrashEnabled(long groupId) {
+	protected boolean isTrashEnabled(long groupId, long repositoryId) {
 		try {
-			if (TrashUtil.isTrashEnabled(groupId)) {
-				return true;
-			}
+			return DLTrashUtil.isTrashEnabled(groupId, repositoryId);
 		}
 		catch (PortalException pe) {
+			return false;
 		}
-
-		return false;
 	}
 
 }
