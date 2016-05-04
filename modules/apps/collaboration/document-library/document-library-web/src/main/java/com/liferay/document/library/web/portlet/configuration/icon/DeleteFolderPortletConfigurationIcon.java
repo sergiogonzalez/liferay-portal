@@ -68,8 +68,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 		String key = "delete";
 
-		if ((folder.getModel() instanceof DLFolder) &&
-			isTrashEnabled(
+		if (isTrashEnabled(
 				themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 			key = "move-to-the-recycle-bin";
@@ -109,8 +108,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 		if (folder.isMountPoint() ||
 				!isTrashEnabled(
-					themeDisplay.getScopeGroupId(), folder.getRepositoryId()) ||
-					!(folder.getModel() instanceof DLFolder)) {
+					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 			portletURL.setParameter(Constants.CMD, Constants.DELETE);
 		}
