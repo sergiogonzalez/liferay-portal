@@ -100,11 +100,8 @@ public class DeleteFileEntryPortletConfigurationIcon
 		try {
 			fileEntry = ActionUtil.getFileEntry(portletRequest);
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
 		}
 
 		long folderId = fileEntry.getFolderId();
@@ -148,11 +145,8 @@ public class DeleteFileEntryPortletConfigurationIcon
 
 			return fileEntryDisplayContextHelper.isFileEntryDeletable();
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
 		}
 	}
 

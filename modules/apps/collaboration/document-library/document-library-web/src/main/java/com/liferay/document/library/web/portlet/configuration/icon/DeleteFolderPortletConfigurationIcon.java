@@ -62,11 +62,8 @@ public class DeleteFolderPortletConfigurationIcon
 		try {
 			folder = ActionUtil.getFolder(portletRequest);
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
 		}
 
 		String key = "delete";
@@ -94,11 +91,8 @@ public class DeleteFolderPortletConfigurationIcon
 		try {
 			folder = ActionUtil.getFolder(portletRequest);
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
 		}
 
 		if (folder.isMountPoint()) {
@@ -166,11 +160,8 @@ public class DeleteFolderPortletConfigurationIcon
 				themeDisplay.getScopeGroupId(), folder.getFolderId(),
 				ActionKeys.DELETE);
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
 		}
 	}
 
