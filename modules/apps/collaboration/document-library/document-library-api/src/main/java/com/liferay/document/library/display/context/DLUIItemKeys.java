@@ -36,7 +36,8 @@ public class DLUIItemKeys {
 
 	public static final String EDIT = DLUIItemKeys.class.getName() + "#edit";
 
-	public static final String EDIT_WITH_IMAGE_EDITOR = DLUIItemKeys.class.getName() + "#edit-with-image-editor";
+	public static final String EDIT_WITH_IMAGE_EDITOR =
+		DLUIItemKeys.class.getName() + "#edit-with-image-editor";
 
 	public static final String MOVE = DLUIItemKeys.class.getName() + "#move";
 
