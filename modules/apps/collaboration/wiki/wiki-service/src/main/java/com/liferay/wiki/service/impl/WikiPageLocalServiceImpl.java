@@ -884,8 +884,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public WikiPage fetchPage(long nodeId, String title, Boolean head)
-		throws PortalException {
+	public WikiPage fetchPage(long nodeId, String title, Boolean head) {
 
 		List<WikiPage> pages;
 
