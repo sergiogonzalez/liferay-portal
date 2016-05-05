@@ -11,7 +11,7 @@
 	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>
 	<tag>
-		<description>Creates a UI to select scope groups (groups).<![CDATA[<br /><br />Example:<br /><img src="../images/group-selector.png"/>]]></description>
+		<description>Creates a UI to select groups (tipically sites).<![CDATA[<br /><br />Example:<br /><img src="../images/group-selector.png"/>]]></description>
 		<name>group-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.GroupSelectorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -29,18 +29,18 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a UI to add images. It renders a drag and drop area and a button to open a selection dialog. It works as an image viewer if an image is selected.<![CDATA[<br /><br />Example:<br /><img src="../images/image-selector.png"/>]]></description>
+		<description>Creates a UI to select images. It renders a drag and drop area to add a new file from the desktop and a button to open a selection dialog (typically item selector portlet). It works as an image viewer if an image is selected.<![CDATA[<br /><br />Example:<br /><img src="../images/image-selector.png"/>]]></description>
 		<name>image-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.ImageSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class to specify the direction of the image drag. Possible values are <![CDATA[<code>vertical</code>]]>, <![CDATA[<code>horizontal</code>]]>, <![CDATA[<code>both</code>]]>, or <![CDATA[<code>none</code>]]>.</description>
+			<description>A certain portion of the image can be selected by dragging the image. The direction of the image drag can be limited by selecting any of the possible values: <![CDATA[<code>vertical</code>]]>, <![CDATA[<code>horizontal</code>]]>, <![CDATA[<code>both</code>]]>, or <![CDATA[<code>none</code>]]>. By default the image cannot be dragged.</description>
 			<name>draggableImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The ID of a previously selected file entry.</description>
+			<description>The ID of the file entry that will be displayed when rendering the taglib.</description>
 			<name>fileEntryId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -52,7 +52,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL of the selection dialog to be shown on the user clicking the select button.</description>
+			<description>The URL of the selection dialog to be shown on the user clicking the select button. Typically a url to the item selector portlet.</description>
 			<name>itemSelectorURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -83,18 +83,18 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a UI to show file entries.<![CDATA[<br /><br />Example:<br /><img src="../images/repository-entry-browser.png"/>]]></description>
+		<description>Creates a UI to show repository entries, which can be file entries, folders or shortcuts. This taglib should be used to render repository entries in an item selector view that will be displayed by the item selector portlet.<![CDATA[<br /><br />Example:<br /><img src="../images/repository-entry-browser.png"/>]]></description>
 		<name>repository-entry-browser</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A list of the <![CDATA[<code>ItemSelectorReturnType</code>]]> objects that the client of the taglib can handle.</description>
+			<description>An ordered list of the <![CDATA[<code>ItemSelectorReturnType</code>]]> objects that the client of the taglib can handle. The possible list items are either <![CDATA[<code>FileEntryItemSelectorReturnType</code>]]> or <![CDATA[<code>URLItemSelectorReturnType</code>]]></description>
 			<name>desiredItemSelectorReturnTypes</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The style of the element list. The icon style is used by default.</description>
+			<description>The style of the element list. The request parameter "displayStyle" takes precedence on value specified here. If this attribute is not specified, the icon style is used by default for the first time. If the user changes the display style, the value will be stored as a user preference and we will keep that display style the next time that he uses the taglib.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -118,13 +118,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL of the dialog. This is used as a base URL in order to be populated with needed parameters.</description>
+			<description>The URL to the item selector view where the taglib is used. This URL is provided to the ItemSelectorView class by the item selector portlet. This is used as a base URL in order to be populated with needed parameters.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A list of the <![CDATA[<code>RepositoryEntry</code>]]> objects to be rendered.</description>
+			<description>A list of the <![CDATA[<code>RepositoryEntry</code>]]> objects to be rendered. This list should already be paginated by the client of the taglib.</description>
 			<name>repositoryEntries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -148,7 +148,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The title of the current dialog tab.</description>
+			<description>The title of the item selector view where the taglib is being used.</description>
 			<name>tabName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
