@@ -381,8 +381,6 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		//TODO check editable mime_types
-
 		if (!ArrayUtil.contains(
 				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
 				_fileEntry.getMimeType())) {
@@ -390,45 +388,9 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		String imageEditorPortletId = PortletProviderUtil.getPortletId(
-			Image.class.getName(), PortletProvider.Action.EDIT);
+		JavaScriptMenuItem javascriptMenuItem = getJavacriptEditWithImageEditorMenuItem();
 
-		PortletURL imageEditorURL = PortletURLFactoryUtil.create(
-				_request, imageEditorPortletId, _themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
-
-		imageEditorURL.setParameter(
-			"mvcRenderCommandName", "/image_editor/view");
-
-		try {
-			imageEditorURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (Exception e) {
-			throw new SystemException("Unable to set window state", e);
-		}
-
-		PortletURL uploadURL = _getLiferayPortletResponse().createActionURL(
-			PortletKeys.DOCUMENT_LIBRARY);
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME, "/document_library/upload_file_entry");
-		uploadURL.setParameter(
-			"folderId", String.valueOf(_fileEntry.getFolderId()));
-
-		String fileEntryPreviewURL = DLUtil.getPreviewURL(
-			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK);
-
-		String onClick =
-			getNamespace() + "editWithImageEditor('" +
-			imageEditorURL.toString() + "', '" +
-			uploadURL.toString() + "', '" +
-			_fileEntry.getFileName() + "', '" +
-			fileEntryPreviewURL + "');";
-
-		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems,
-			DLUIItemKeys.EDIT_WITH_IMAGE_EDITOR,
-			LanguageUtil.get(_request, "edit-with-image-editor"), onClick);//TODO language.properties
+		menuItems.add(javascriptMenuItem);
 	}
 
 	public void addMoveMenuItem(List<MenuItem> menuItems)
@@ -710,6 +672,60 @@ public class UIItemsBuilder {
 		template.processTemplate(unsyncStringWriter);
 
 		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
+
+		return javascriptMenuItem;
+	}
+
+	public JavaScriptMenuItem getJavacriptEditWithImageEditorMenuItem()
+		throws PortalException {
+
+		String imageEditorPortletId = PortletProviderUtil.getPortletId(
+			Image.class.getName(), PortletProvider.Action.EDIT);
+
+		PortletURL imageEditorURL = PortletURLFactoryUtil.create(
+			_request, imageEditorPortletId, _themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		imageEditorURL.setParameter(
+			"mvcRenderCommandName", "/image_editor/view");
+
+		try {
+			imageEditorURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (Exception e) {
+			throw new SystemException("Unable to set window state", e);
+		}
+
+		PortletURL editURL = _getLiferayPortletResponse().createActionURL(
+			PortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+		editURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/document_library/edit_file_entry_image_editor");
+
+		editURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		editURL.setParameter("title", String.valueOf(_fileEntry.getTitle()));
+		editURL.setParameter(
+			"description", String.valueOf(_fileEntry.getDescription()));
+		editURL.setParameter(Constants.CMD, Constants.PREVIEW);
+
+		String fileEntryPreviewURL = DLUtil.getPreviewURL(
+			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK);
+
+		String onClick =
+			getNamespace() + "editWithImageEditor('" +
+			imageEditorURL.toString() + "', '" +
+			editURL.toString() + "', '" +
+			_fileEntry.getFileName() + "', '" +
+			fileEntryPreviewURL + "');";
+
+		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
+
+		javascriptMenuItem.setKey(DLUIItemKeys.EDIT_WITH_IMAGE_EDITOR);
+		javascriptMenuItem.setLabel(
+			LanguageUtil.get(_request, "edit-with-image-editor"));
+		javascriptMenuItem.setOnClick(onClick);
 
 		return javascriptMenuItem;
 	}
