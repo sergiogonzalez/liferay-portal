@@ -229,8 +229,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	@Override
 	public com.liferay.wiki.model.WikiPage fetchPage(long nodeId,
-		java.lang.String title, java.lang.Boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String title, java.lang.Boolean head) {
 		return _wikiPageLocalService.fetchPage(nodeId, title, head);
 	}
 
