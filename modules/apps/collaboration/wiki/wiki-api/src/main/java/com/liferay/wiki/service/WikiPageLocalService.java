@@ -190,7 +190,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage fetchPage(long nodeId, java.lang.String title,
-		java.lang.Boolean head) throws PortalException;
+		java.lang.Boolean head);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage fetchPage(long resourcePrimKey);
