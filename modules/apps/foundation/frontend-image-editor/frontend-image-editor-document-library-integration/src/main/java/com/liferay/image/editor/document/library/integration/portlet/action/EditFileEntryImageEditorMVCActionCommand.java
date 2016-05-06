@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet.action;
+package com.liferay.image.editor.document.library.integration.portlet.action;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.editor.EditorConstants;
@@ -62,7 +63,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"mvc.command.name=/document_library/edit_file_entry_image_editor"
 	},
@@ -100,115 +100,22 @@ public class EditFileEntryImageEditorMVCActionCommand
 			}
 
 			updateFileEntry(actionRequest, actionResponse);
-
-			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-			if (cmd.equals(Constants.PREVIEW)) {
-				SessionMessages.add(
-					actionRequest, PortalUtil.getPortletId(actionRequest) +
-								SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
-
-				hideDefaultSuccessMessage(actionRequest);
-
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName",
-					"/document_library/edit_file_entry");
-			}
-			else {
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				if (Validator.isNotNull(redirect)) {
-					actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-				}
-			}
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
 		catch (PortalException pe) {
-			handleUploadException(actionRequest, actionResponse, pe);
+			handleUploadException(actionRequest, actionResponse);
 		}
 	}
 
-	protected JSONObject getImageJSONObject(
-			PortletRequest portletRequest, FileEntry fileEntry)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String url = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			themeDisplay, fileEntry, StringPool.BLANK);
-
-		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
-
-		imageJSONObject.put(
-			"attributeDataImageId", EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-
-		imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		imageJSONObject.put("groupId", fileEntry.getGroupId());
-		imageJSONObject.put("title", fileEntry.getTitle());
-		imageJSONObject.put("type", "document");
-		imageJSONObject.put("url", url);
-		imageJSONObject.put("uuid", fileEntry.getUuid());
-
-		return imageJSONObject;
-	}
-
-	protected String getParameterName() {
-		return "imageEditorFileName";
-	}
-
 	protected void handleUploadException(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortalException pe)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("success", Boolean.FALSE);
-
-		if (pe instanceof AntivirusScannerException ||
-			pe instanceof FileNameException ||
-			pe instanceof FileSizeException ||
-			pe instanceof UploadRequestSizeException) {
-
-			String errorMessage = StringPool.BLANK;
-			int errorType = 0;
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (pe instanceof AntivirusScannerException) {
-				errorType =
-					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
-				AntivirusScannerException ase = (AntivirusScannerException)pe;
-
-				errorMessage = themeDisplay.translate(ase.getMessageKey());
-			}
-			else if (pe instanceof FileNameException) {
-				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
-			}
-			else if (pe instanceof FileSizeException) {
-				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
-			}
-			else if (pe instanceof UploadRequestSizeException) {
-				errorType =
-					ServletResponseConstants.SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
-			}
-
-			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
-
-			errorJSONObject.put("errorType", errorType);
-			errorJSONObject.put("message", errorMessage);
-
-			jsonObject.put("error", errorJSONObject);
-		}
-		else {
-			throw pe;
-		}
 
 		try {
 			JSONPortletResponseUtil.writeJSON(
@@ -217,11 +124,6 @@ public class EditFileEntryImageEditorMVCActionCommand
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
 	}
 
 	protected FileEntry updateFileEntry(
@@ -234,36 +136,24 @@ public class EditFileEntryImageEditorMVCActionCommand
 		long fileEntryId = ParamUtil.getLong(
 			uploadPortletRequest, "fileEntryId");
 
-		String parameterName = getParameterName();
+		String sourceFileName = uploadPortletRequest.getFileName("imageEditorFileName");
 
-		String sourceFileName = uploadPortletRequest.getFileName(parameterName);
-		String title = ParamUtil.getString(uploadPortletRequest, "title");
-		String description = ParamUtil.getString(
-			uploadPortletRequest, "description");
-		boolean majorVersion = Boolean.TRUE;
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		InputStream inputStream = uploadPortletRequest.getFileAsStream(
-			parameterName);
-		String contentType = uploadPortletRequest.getContentType(parameterName);
-		long size = uploadPortletRequest.getSize(parameterName);
+			"imageEditorFileName");
+		String contentType = uploadPortletRequest.getContentType("imageEditorFileName");
+		long size = uploadPortletRequest.getSize("imageEditorFileName");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), uploadPortletRequest);
 
-		FileEntry fileEntry = _dlAppService.updateFileEntry(
-			fileEntryId, sourceFileName, contentType, title, description, null,
-			majorVersion, inputStream, size, serviceContext);
+		fileEntry = _dlAppService.updateFileEntry(
+			fileEntryId, sourceFileName, contentType, fileEntry.getTitle(),
+			fileEntry.getDescription(), StringPool.BLANK,
+			true, inputStream, size, serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject imageJSONObject = getImageJSONObject(
-			actionRequest, fileEntry);
-
-		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
-
-		imageJSONObject.put("randomId", randomId);
-
-		jsonObject.put("file", imageJSONObject);
 
 		jsonObject.put("success", Boolean.TRUE);
 
@@ -273,6 +163,10 @@ public class EditFileEntryImageEditorMVCActionCommand
 		return fileEntry;
 	}
 
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 }

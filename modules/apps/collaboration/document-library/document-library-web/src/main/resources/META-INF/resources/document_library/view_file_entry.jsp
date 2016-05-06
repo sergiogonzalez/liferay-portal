@@ -628,10 +628,6 @@ if (portletTitleBasedNavigation) {
 	<%@ include file="/document_library/action/open_document_js.jspf" %>
 </c:if>
 
-<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
-	<%@ include file="/document_library/action/edit_with_image_editor_js.jspf" %>
-</c:if>
-
 <aui:script sandbox="<%= true %>">
 	$('.show-url-file').on(
 		'click',

@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet.configuration.icon;
+package com.liferay.image.editor.document.library.integration.portlet.configuration.icon;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.document.library.web.portlet.action.ActionUtil;
+//import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
+//import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
@@ -24,6 +26,9 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -32,6 +37,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +58,7 @@ public class EditWithImageEditorPortletConfigurationIcon
 
 	@Override
 	public String getJspPath() {
-		return "/document_library/configuration/icon/edit_image_editor.jsp";
+		return "/image_editor/configuration/icon/edit_image_editor.jsp";
 	}
 
 	@Override
@@ -80,13 +86,13 @@ public class EditWithImageEditorPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+			FileEntry fileEntry = getFileEntry(portletRequest);
 
-			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
+			/*FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(
 					themeDisplay.getPermissionChecker(), fileEntry);
-
-			if (fileEntryDisplayContextHelper.isEditActionAvailable() &&
+*/
+			if (/*fileEntryDisplayContextHelper.isEditActionAvailable() &&*/
 				ArrayUtil.contains(
 					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
 					fileEntry.getMimeType())) {
@@ -103,29 +109,46 @@ public class EditWithImageEditorPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
-	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		target = "(osgi.web.symbolicname=com.liferay.image.editor.document.library.integration)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
 
-	protected boolean isTrashEnabled(long groupId) {
-		try {
-			if (TrashUtil.isTrashEnabled(groupId)) {
-				return true;
-			}
-		}
-		catch (PortalException pe) {
+	public static FileEntry getFileEntry(HttpServletRequest request)
+		throws Exception {
+
+		long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
+
+		FileEntry fileEntry = null;
+
+		if (fileEntryId > 0) {
+			fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 		}
 
-		return false;
+		if (fileEntry == null) {
+			return null;
+		}
+
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
+		if (fileEntry.isInTrash() && !cmd.equals(Constants.MOVE_FROM_TRASH)) {
+			throw new NoSuchFileEntryException(
+				"{fileEntryId=" + fileEntryId + "}");
+		}
+
+		return fileEntry;
+	}
+
+	public static FileEntry getFileEntry(PortletRequest portletRequest)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		return getFileEntry(request);
 	}
 
 }

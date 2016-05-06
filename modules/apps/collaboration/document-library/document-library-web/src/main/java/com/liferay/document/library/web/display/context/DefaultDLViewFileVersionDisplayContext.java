@@ -308,8 +308,6 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addEditMenuItem(menuItems);
 
-			_uiItemsBuilder.addEditWithImageEditorMenuItem(menuItems);
-
 			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
 			_uiItemsBuilder.addCheckoutMenuItem(menuItems);

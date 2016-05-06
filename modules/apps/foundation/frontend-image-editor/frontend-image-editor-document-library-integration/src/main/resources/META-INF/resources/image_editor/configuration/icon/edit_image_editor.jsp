@@ -1,3 +1,10 @@
+<%@ page import="com.liferay.document.library.web.portlet.action.ActionUtil" %>
+<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
+<%@ page
+		import="com.liferay.document.library.web.display.context.logic.UIItemsBuilder" %>
+<%@ page
+		import="com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem" %>
+<%@ page import="com.liferay.portal.kernel.repository.model.FileVersion" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -14,7 +21,6 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
 
 <%
 FileEntry fileEntry = ActionUtil.getFileEntry(liferayPortletRequest);
