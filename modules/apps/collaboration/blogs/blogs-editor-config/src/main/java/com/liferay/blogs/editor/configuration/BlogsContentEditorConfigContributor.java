@@ -68,7 +68,7 @@ public class BlogsContentEditorConfigContributor
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("a[*]; b em hr h1 h2 h3 h4 h5 h6 i ");
-		sb.append("img[!src, class]{width, height}; li ol p{text-align}; pre ");
+		sb.append("img[class, !src]{height, width}; li ol p{text-align}; pre ");
 		sb.append("strong table[border, cellpadding, cellspacing]{width}; ");
 		sb.append("tbody td th[scope]; thead tr[scope]; u ul");
 
