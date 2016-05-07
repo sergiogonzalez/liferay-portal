@@ -22,7 +22,6 @@ import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
@@ -31,6 +30,10 @@ import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -112,17 +115,15 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		for (String ddmStructureName : ddmStructureNames) {
 			String ddmStructureKey = ddmStructureName;
 
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchStructure(
-					groupId,
-					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-					ddmStructureKey);
+			long ddmStructureId = getDDMStructureId(
+				groupId, PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+				ddmStructureKey);
 
-			if (ddmStructure == null) {
+			if (ddmStructureId == 0) {
 				continue;
 			}
 
-			ddmStructureIds.add(ddmStructure.getStructureId());
+			ddmStructureIds.add(ddmStructureId);
 		}
 
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
@@ -231,40 +232,34 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 			String structureElementRootXML =
 				structureElementRootElement.asXML();
 
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchStructure(
-					groupId,
-					PortalUtil.getClassNameId(RawMetadataProcessor.class),
-					name);
+			long ddmStructureId = getDDMStructureId(
+				groupId, PortalUtil.getClassNameId(RawMetadataProcessor.class),
+				name);
+
+			if (ddmStructureId > 0) {
+				continue;
+			}
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(locale, name);
+
+			Map<Locale, String> descriptionMap = new HashMap<>();
+
+			descriptionMap.put(locale, description);
 
 			DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(
 				structureElementRootXML);
 
-			if (ddmStructure != null) {
-				ddmStructure.setDDMForm(ddmForm);
+			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
-				_ddmStructureLocalService.updateDDMStructure(ddmStructure);
-			}
-			else {
-				Map<Locale, String> nameMap = new HashMap<>();
-
-				nameMap.put(locale, name);
-
-				Map<Locale, String> descriptionMap = new HashMap<>();
-
-				descriptionMap.put(locale, description);
-
-				DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(
-					ddmForm);
-
-				_ddmStructureLocalService.addStructure(
-					userId, groupId,
-					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-					PortalUtil.getClassNameId(RawMetadataProcessor.class), name,
-					nameMap, descriptionMap, ddmForm, ddmFormLayout,
-					StorageType.JSON.toString(),
-					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
-			}
+			_ddmStructureLocalService.addStructure(
+				userId, groupId,
+				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+				PortalUtil.getClassNameId(RawMetadataProcessor.class), name,
+				nameMap, descriptionMap, ddmForm, ddmFormLayout,
+				StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
+				serviceContext);
 		}
 	}
 
@@ -332,6 +327,29 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		sb.append("</root>");
 
 		return sb.toString();
+	}
+
+	protected long getDDMStructureId(
+		long groupId, long classNameId, String ddmStructureKey) {
+
+		DynamicQuery dynamicQuery = _ddmStructureLocalService.dynamicQuery();
+
+		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(groupIdProperty.eq(groupId));
+
+		Property classNameIdProperty = PropertyFactoryUtil.forName(
+			"classNameId");
+
+		dynamicQuery.add(classNameIdProperty.eq(classNameId));
+
+		Property ddmStructureKeyProperty = PropertyFactoryUtil.forName(
+			"structureKey");
+
+		dynamicQuery.add(ddmStructureKeyProperty.eq(ddmStructureKey));
+
+		return _ddmStructureLocalService.dynamicQueryCount(
+			dynamicQuery, ProjectionFactoryUtil.property("structureId"));
 	}
 
 	@Reference(unbind = "-")
