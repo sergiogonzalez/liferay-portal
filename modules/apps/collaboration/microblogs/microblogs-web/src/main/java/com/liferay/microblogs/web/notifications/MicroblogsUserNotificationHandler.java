@@ -76,8 +76,7 @@ public class MicroblogsUserNotificationHandler
 				MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY) {
 
 			title = ResourceBundleUtil.getString(
-				resourceBundle, resourceBundle.getLocale(),
-				"x-commented-on-your-post", new Object[] {userFullName});
+				resourceBundle, "x-commented-on-your-post", userFullName);
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.
@@ -91,9 +90,8 @@ public class MicroblogsUserNotificationHandler
 
 			if (user != null) {
 				title = ResourceBundleUtil.getString(
-					resourceBundle, resourceBundle.getLocale(),
-					"x-also-commented-on-x's-post",
-					new Object[] {userFullName, user.getFullName()});
+					resourceBundle, "x-also-commented-on-x's-post",
+					userFullName, user.getFullName());
 			}
 		}
 		else if (notificationType ==
@@ -101,16 +99,14 @@ public class MicroblogsUserNotificationHandler
 						NOTIFICATION_TYPE_REPLY_TO_TAGGED) {
 
 			title = ResourceBundleUtil.getString(
-				resourceBundle, resourceBundle.getLocale(),
-				"x-commented-on-a-post-you-are-tagged-in",
-				new Object[] {userFullName});
+				resourceBundle, "x-commented-on-a-post-you-are-tagged-in",
+				userFullName);
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG) {
 
 			title = ResourceBundleUtil.getString(
-				resourceBundle, resourceBundle.getLocale(),
-				"x-tagged-you-in-a-post", new Object[] {userFullName});
+				resourceBundle, "x-tagged-you-in-a-post", userFullName);
 		}
 
 		return title;
