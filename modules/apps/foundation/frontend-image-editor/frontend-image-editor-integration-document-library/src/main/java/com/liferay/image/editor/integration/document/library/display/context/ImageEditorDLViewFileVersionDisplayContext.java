@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -111,12 +112,15 @@ public class ImageEditorDLViewFileVersionDisplayContext
 			throw new SystemException("Unable to set window state", e);
 		}
 
-		PortletURL editURL = _getLiferayPortletResponse().createActionURL(
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		PortletURL editURL = liferayPortletResponse.createActionURL(
 			PortletKeys.DOCUMENT_LIBRARY_ADMIN);
 
 		editURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/image_editor/edit_file_entry_image_editor");
+			"/document_library/edit_file_entry_with_image_editor");
 
 		editURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
@@ -124,23 +128,30 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		String fileEntryPreviewURL = DLUtil.getPreviewURL(
 			_fileEntry, fileVersion, _themeDisplay, StringPool.BLANK);
 
-		String onClick =
-			_getLiferayPortletResponse().getNamespace() + "editWithImageEditor('" +
-			imageEditorURL.toString() + "', '" +
-			editURL.toString() + "', '" +
-			_fileEntry.getFileName() + "', '" +
-			fileEntryPreviewURL + "');";
-
 		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
 
 		javascriptMenuItem.setKey("#edit-with-image-editor");
 		javascriptMenuItem.setLabel(
 			LanguageUtil.get(request, "edit-with-image-editor"));
-		javascriptMenuItem.setOnClick(onClick);
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(liferayPortletResponse.getNamespace());
+		sb.append("editWithImageEditor('");
+		sb.append(imageEditorURL.toString());
+		sb.append("', '");
+		sb.append(editURL.toString());
+		sb.append("', '");
+		sb.append(_fileEntry.getFileName());
+		sb.append("', '");
+		sb.append(fileEntryPreviewURL);
+		sb.append("');");
+
+		javascriptMenuItem.setOnClick(sb.toString());
 
 		String javaScript =
-			"/com/liferay/image/editor/integration/document/library/display/context/dependencies/" +
-			"edit_with_image_editor_js.ftl";
+			"/com/liferay/image/editor/integration/document/library/display/" +
+				"context/dependencies/edit_with_image_editor_js.ftl";
 
 		Class<?> clazz = getClass();
 
@@ -150,7 +161,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
-		template.put("namespace", _getLiferayPortletResponse().getNamespace());
+		template.put("namespace", liferayPortletResponse.getNamespace());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -196,7 +207,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"ec0c6ec4-8671-4c9e-94a3-8c6bcca0437c");
 
-	//private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+	//private final FileEntryDisplayContextHelper
+	//	_fileEntryDisplayContextHelper;
 	private final FileEntry _fileEntry;
 	private final ThemeDisplay _themeDisplay;
 
