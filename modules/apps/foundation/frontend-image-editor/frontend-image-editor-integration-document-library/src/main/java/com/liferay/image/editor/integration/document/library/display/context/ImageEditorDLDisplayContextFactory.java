@@ -20,7 +20,6 @@ import com.liferay.document.library.display.context.DLViewFileVersionDisplayCont
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -57,10 +56,8 @@ public class ImageEditorDLDisplayContextFactory
 	}
 
 	@Override
-	public DLViewFileVersionDisplayContext
-	getDLViewFileVersionDisplayContext(
-		DLViewFileVersionDisplayContext
-			parentDLViewFileVersionDisplayContext,
+	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
+		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileShortcut fileShortcut) {
 
@@ -68,10 +65,8 @@ public class ImageEditorDLDisplayContextFactory
 	}
 
 	@Override
-	public DLViewFileVersionDisplayContext
-	getDLViewFileVersionDisplayContext(
-		DLViewFileVersionDisplayContext
-			parentDLViewFileVersionDisplayContext,
+	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
+		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
@@ -92,6 +87,5 @@ public class ImageEditorDLDisplayContextFactory
 	}
 
 	private DLAppService _dlAppService;
-	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 
 }

@@ -16,19 +16,12 @@
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.repository.model.FileVersion" %>
-
-<%@ page
-		import="com.liferay.document.library.display.context.DLViewFileVersionDisplayContext" %>
-<%@ page
-		import="com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem" %>
-<%@ page
-		import="com.liferay.image.editor.integration.document.library.display.context.ImageEditorDLViewFileVersionDisplayContext" %>
-<%@ page
-		import="com.liferay.document.library.web.util.DLWebComponentProvider" %>
-<%@ page
-		import="com.liferay.document.library.web.display.context.DLDisplayContextProvider" %>
+<%@ page import="com.liferay.document.library.web.display.context.DLDisplayContextProvider" %><%@
+page import="com.liferay.document.library.web.util.DLWebComponentProvider" %><%@
+page import="com.liferay.image.editor.integration.document.library.display.context.ImageEditorDLViewFileVersionDisplayContext" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem" %>
 
 <liferay-theme:defineObjects />
 

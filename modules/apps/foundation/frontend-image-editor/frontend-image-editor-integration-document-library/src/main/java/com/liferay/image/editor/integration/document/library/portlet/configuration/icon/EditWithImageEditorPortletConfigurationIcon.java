@@ -14,8 +14,7 @@
 
 package com.liferay.image.editor.integration.document.library.portlet.configuration.icon;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
@@ -23,9 +22,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
@@ -33,7 +30,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,38 +48,16 @@ import org.osgi.service.component.annotations.Reference;
 public class EditWithImageEditorPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
-	public static FileEntry getFileEntry(HttpServletRequest request)
+	public FileEntry getFileEntry(PortletRequest portletRequest)
 		throws Exception {
 
-		long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
+		long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
 
-		FileEntry fileEntry = null;
-
-		if (fileEntryId > 0) {
-			fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-		}
-
-		if (fileEntry == null) {
+		if (fileEntryId == 0) {
 			return null;
 		}
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
-
-		if (fileEntry.isInTrash() && !cmd.equals(Constants.MOVE_FROM_TRASH)) {
-			throw new NoSuchFileEntryException(
-				"{fileEntryId=" + fileEntryId + "}");
-		}
-
-		return fileEntry;
-	}
-
-	public static FileEntry getFileEntry(PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		return getFileEntry(request);
+		return _dlAppService.getFileEntry(fileEntryId);
 	}
 
 	@Override
@@ -138,6 +112,11 @@ public class EditWithImageEditorPortletConfigurationIcon
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	public void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.image.editor.integration.document.library)",
@@ -146,5 +125,7 @@ public class EditWithImageEditorPortletConfigurationIcon
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	private DLAppService _dlAppService;
 
 }
