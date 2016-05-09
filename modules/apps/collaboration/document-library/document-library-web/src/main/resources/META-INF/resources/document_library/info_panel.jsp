@@ -196,7 +196,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							</dt>
 
 							<dd>
-								<%= fileEntry.getDescription() %>
+								<%= HtmlUtil.escape(fileEntry.getDescription()) %>
 							</dd>
 						</c:if>
 

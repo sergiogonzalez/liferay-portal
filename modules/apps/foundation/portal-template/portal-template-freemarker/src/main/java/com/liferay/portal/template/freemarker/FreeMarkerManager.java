@@ -382,7 +382,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		FreeMarkerManager.class);
 
 	private Bundle _bundle;
-	private BundleTracker<Bundle> _bundleTracker;
+	private BundleTracker<Set<String>> _bundleTracker;
 	private Configuration _configuration;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration
@@ -513,11 +513,14 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	}
 
 	private class TaglibBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<Bundle> {
+		implements BundleTrackerCustomizer<Set<String>> {
 
 		@Override
-		public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+		public Set<String> addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
 			boolean track = false;
+			Set<String> trackedKeys = new HashSet<>();
 
 			Enumeration<URL> enumeration = bundle.findEntries(
 				"/META-INF", "taglib-mappings.properties", true);
@@ -530,8 +533,12 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 						Properties properties = PropertiesUtil.load(
 							inputStream, StringPool.UTF8);
 
-						_taglibMappings.putAll(
-							PropertiesUtil.toMap(properties));
+						Map<String, String> map = PropertiesUtil.toMap(
+							properties);
+
+						_taglibMappings.putAll(map);
+
+						trackedKeys.addAll(map.keySet());
 
 						track = true;
 					}
@@ -566,7 +573,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			}
 
 			if (track) {
-				return bundle;
+				return trackedKeys;
 			}
 
 			return null;
@@ -574,44 +581,27 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Bundle bundleCapabilities) {
+			Bundle bundle, BundleEvent bundleEvent, Set<String> trackedKeys) {
 		}
 
 		@Override
 		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Bundle trackedBundle) {
+			Bundle bundle, BundleEvent bundleEvent, Set<String> trackedKeys) {
 
 			Bundle[] bundles = _freeMarkerBundleClassloader.getBundles();
 
-			if (ArrayUtil.contains(bundles, trackedBundle)) {
-				bundles = ArrayUtil.remove(bundles, trackedBundle);
+			if (ArrayUtil.contains(bundles, bundle)) {
+				bundles = ArrayUtil.remove(bundles, bundle);
 
 				_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
 					bundles);
 			}
 
-			Enumeration<URL> enumeration = trackedBundle.findEntries(
-				"/META-INF", "taglib-mappings.properties", true);
-
-			if (enumeration == null) {
-				return;
+			for (String key : trackedKeys) {
+				_taglibMappings.remove(key);
 			}
 
-			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
-				try (InputStream inputStream = url.openStream()) {
-					Properties properties = PropertiesUtil.load(
-						inputStream, StringPool.UTF8);
-
-					for (Object keyObject : properties.keySet()) {
-						_taglibMappings.remove(keyObject);
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
+			_templateModels.clear();
 		}
 
 	}
