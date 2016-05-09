@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- * <p/>
+ *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- * <p/>
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -55,15 +55,6 @@ public class WikiPagePermissionCheckerTest extends BasePermissionTestCase {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	private WikiNode _node;
-	private User _groupAdminUser;
-
-	protected void doSetUp() throws Exception {
-		_node = WikiTestUtil.addNode(group.getGroupId());
-
-		_groupAdminUser = UserTestUtil.addGroupAdminUser(group);
-	}
-
 	@Test
 	public void testGuestCouldNotSeeDraftPage() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
@@ -84,8 +75,7 @@ public class WikiPagePermissionCheckerTest extends BasePermissionTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		serviceContext.setWorkflowAction(
-			WorkflowConstants.ACTION_SAVE_DRAFT);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		WikiPageLocalServiceUtil.updatePage(
 			_groupAdminUser.getUserId(), page.getNodeId(), page.getTitle(),
@@ -102,11 +92,21 @@ public class WikiPagePermissionCheckerTest extends BasePermissionTestCase {
 				permissionChecker, draftPage, ActionKeys.VIEW));
 	}
 
+	protected void addPortletModelViewPermission() throws Exception {
+		return;
+	}
+
+	protected void doSetUp() throws Exception {
+		_node = WikiTestUtil.addNode(group.getGroupId());
+
+		_groupAdminUser = UserTestUtil.addGroupAdminUser(group);
+	}
+
 	protected String getResourceName() {
 		return WikiResourcePermissionChecker.RESOURCE_NAME;
 	}
 
-	protected void addPortletModelViewPermission() throws Exception {
-		return;
-	}
+	private User _groupAdminUser;
+	private WikiNode _node;
+
 }
