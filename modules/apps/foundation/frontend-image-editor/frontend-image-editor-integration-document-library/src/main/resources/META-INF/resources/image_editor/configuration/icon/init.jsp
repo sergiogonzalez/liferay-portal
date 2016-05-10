@@ -14,14 +14,11 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.image.editor.integration.document.library.constants.ImageEditorIntegrationDLWebKeys" %><%@
 page import="com.liferay.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileVersion" %>
 
 <liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
