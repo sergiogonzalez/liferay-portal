@@ -16,6 +16,7 @@ package com.liferay.image.editor.integration.document.library.portlet.configurat
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -92,14 +93,14 @@ public class EditWithImageEditorPortletConfigurationIcon
 
 			FileEntry fileEntry = getFileEntry(portletRequest);
 
-			/*FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
+			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(
 					themeDisplay.getPermissionChecker(), fileEntry);
-*/
-			if (/*fileEntryDisplayContextHelper.isEditActionAvailable() &&*/
-					ArrayUtil.contains(
-						PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-						fileEntry.getMimeType())) {
+
+			if (fileEntryDisplayContextHelper.isEditActionAvailable() &&
+				ArrayUtil.contains(
+					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+					fileEntry.getMimeType())) {
 
 				return true;
 			}
