@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,7 +76,7 @@ public class ImageEditorDLDisplayContextFactory
 		if (model instanceof DLFileVersion) {
 			return new ImageEditorDLViewFileVersionDisplayContext(
 				parentDLViewFileVersionDisplayContext, request, response,
-				fileVersion);
+				fileVersion, _resourceBundleLoader);
 		}
 
 		return parentDLViewFileVersionDisplayContext;
@@ -86,6 +87,17 @@ public class ImageEditorDLDisplayContextFactory
 		_dlAppService = dlAppService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.image.editor.integration.document.library)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
 	private DLAppService _dlAppService;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

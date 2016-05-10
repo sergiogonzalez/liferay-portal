@@ -14,20 +14,24 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-FileEntry fileEntry = ActionUtil.getFileEntry(liferayPortletRequest);
+long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
+String version = ParamUtil.getString(request, "version");
 
-FileVersion fileVersion = ActionUtil.getFileVersion(liferayPortletRequest, fileEntry);
+FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 
-DLWebComponentProvider dlWebComponentProvider = DLWebComponentProvider.getDLWebComponentProvider();
+FileVersion fileVersion = null;
 
-DLDisplayContextProvider dlDisplayContextProvider = dlWebComponentProvider.getDLDisplayContextProvider();
+if (Validator.isNotNull(version)) {
+	fileVersion = fileEntry.getFileVersion(version);
+}
+else {
+	fileVersion = fileEntry.getFileVersion();
+}
 
-ImageEditorDLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = (ImageEditorDLViewFileVersionDisplayContext)dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
-
-JavaScriptMenuItem javaScriptMenuItem = dlViewFileVersionDisplayContext.getJavacriptEditWithImageEditorMenuItem();
+ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper = new ImageEditorDLDisplayContextHelper(fileVersion, request, resourceBundle);
 %>
 
-<liferay-ui:menu-item menuItem="<%= javaScriptMenuItem %>" />
+<liferay-ui:menu-item menuItem="<%= imageEditorDLDisplayContextHelper.getJavacriptEditWithImageEditorMenuItem(locale) %>" />
