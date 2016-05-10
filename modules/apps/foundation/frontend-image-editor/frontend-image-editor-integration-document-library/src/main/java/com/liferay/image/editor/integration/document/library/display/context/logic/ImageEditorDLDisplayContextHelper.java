@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -39,8 +40,8 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -56,12 +57,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ImageEditorDLDisplayContextHelper {
 
 	public ImageEditorDLDisplayContextHelper(
-		FileVersion fileVersion, HttpServletRequest request,
-		ResourceBundle resourceBundle) {
+		FileVersion fileVersion, HttpServletRequest request) {
 
 		_fileVersion = fileVersion;
 		_request = request;
-		_resourceBundle = resourceBundle;
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -84,7 +83,7 @@ public class ImageEditorDLDisplayContextHelper {
 	}
 
 	public JavaScriptMenuItem getJavacriptEditWithImageEditorMenuItem(
-			Locale locale)
+			ResourceBundle resourceBundle)
 		throws PortalException {
 
 		String imageEditorPortletId = PortletProviderUtil.getPortletId(
@@ -125,7 +124,7 @@ public class ImageEditorDLDisplayContextHelper {
 		javascriptMenuItem.setKey("#edit-with-image-editor");
 
 		javascriptMenuItem.setLabel(
-			LanguageUtil.get(_resourceBundle, "edit-with-image-editor"));
+			LanguageUtil.get(resourceBundle, "edit-with-image-editor"));
 
 		StringBundler sb = new StringBundler(10);
 
@@ -165,6 +164,20 @@ public class ImageEditorDLDisplayContextHelper {
 		return javascriptMenuItem;
 	}
 
+	public boolean isEditWithImageEditorActionAvailable()
+		throws PortalException {
+
+		if (_isEditWithImageEditorActionAvailable == null) {
+			_isEditWithImageEditorActionAvailable =
+				DLFileEntryPermission.contains(
+					_themeDisplay.getPermissionChecker(), _fileEntry,
+					ActionKeys.UPDATE) &&
+				(!_fileEntry.isCheckedOut() || _fileEntry.hasLock());
+		}
+
+		return _isEditWithImageEditorActionAvailable;
+	}
+
 	private LiferayPortletResponse _getLiferayPortletResponse() {
 		PortletResponse portletResponse =
 			(PortletResponse)_request.getAttribute(
@@ -175,8 +188,8 @@ public class ImageEditorDLDisplayContextHelper {
 
 	private final FileEntry _fileEntry;
 	private final FileVersion _fileVersion;
+	private Boolean _isEditWithImageEditorActionAvailable;
 	private final HttpServletRequest _request;
-	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
 
 }

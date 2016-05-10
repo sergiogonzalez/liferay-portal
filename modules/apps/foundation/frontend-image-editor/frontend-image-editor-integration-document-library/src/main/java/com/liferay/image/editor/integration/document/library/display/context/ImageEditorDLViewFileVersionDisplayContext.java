@@ -16,7 +16,6 @@ package com.liferay.image.editor.integration.document.library.display.context;
 
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -65,8 +64,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 
 			_fileEntry = fileEntry;
 
-			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-				_themeDisplay.getPermissionChecker(), _fileEntry);
+			_imageEditorDLDisplayContextHelper =
+				new ImageEditorDLDisplayContextHelper(fileVersion, request);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -82,7 +81,9 @@ public class ImageEditorDLViewFileVersionDisplayContext
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		if (!_fileEntryDisplayContextHelper.isEditActionAvailable()) {
+		if (!_imageEditorDLDisplayContextHelper.
+				isEditWithImageEditorActionAvailable()) {
+
 			return menu;
 		}
 
@@ -98,13 +99,11 @@ public class ImageEditorDLViewFileVersionDisplayContext
 				LanguageUtil.getLanguageId(_themeDisplay.getLocale()));
 
 		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
-			new ImageEditorDLDisplayContextHelper(
-				fileVersion, request, resourceBundle);
+			new ImageEditorDLDisplayContextHelper(fileVersion, request);
 
 		menuItems.add(
 			imageEditorDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorMenuItem(
-					_themeDisplay.getLocale()));
+				getJavacriptEditWithImageEditorMenuItem(resourceBundle));
 
 		return menu;
 	}
@@ -113,7 +112,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		"ec0c6ec4-8671-4c9e-94a3-8c6bcca0437c");
 
 	private final FileEntry _fileEntry;
-	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+	private final ImageEditorDLDisplayContextHelper
+		_imageEditorDLDisplayContextHelper;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final ThemeDisplay _themeDisplay;
 
