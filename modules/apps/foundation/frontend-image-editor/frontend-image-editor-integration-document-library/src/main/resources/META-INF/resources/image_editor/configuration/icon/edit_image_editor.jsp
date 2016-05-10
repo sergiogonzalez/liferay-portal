@@ -17,19 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
-String version = ParamUtil.getString(request, "version");
-
-FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-
-FileVersion fileVersion = null;
-
-if (Validator.isNotNull(version)) {
-	fileVersion = fileEntry.getFileVersion(version);
-}
-else {
-	fileVersion = fileEntry.getFileVersion();
-}
+FileVersion fileVersion = (FileVersion)request.getAttribute(ImageEditorIntegrationDLWebKeys.IMAGE_EDITOR_INTEGRATION_DL_FILE_VERSION);
 
 ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper = new ImageEditorDLDisplayContextHelper(fileVersion, request);
 %>
