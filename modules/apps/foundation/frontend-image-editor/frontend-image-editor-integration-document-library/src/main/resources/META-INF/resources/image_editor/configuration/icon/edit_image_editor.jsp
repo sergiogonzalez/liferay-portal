@@ -31,7 +31,7 @@ else {
 	fileVersion = fileEntry.getFileVersion();
 }
 
-ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper = new ImageEditorDLDisplayContextHelper(fileVersion, request, resourceBundle);
+ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper = new ImageEditorDLDisplayContextHelper(fileVersion, request);
 %>
 
-<liferay-ui:menu-item menuItem="<%= imageEditorDLDisplayContextHelper.getJavacriptEditWithImageEditorMenuItem(locale) %>" />
+<liferay-ui:menu-item menuItem="<%= imageEditorDLDisplayContextHelper.getJavacriptEditWithImageEditorMenuItem(resourceBundle) %>" />
