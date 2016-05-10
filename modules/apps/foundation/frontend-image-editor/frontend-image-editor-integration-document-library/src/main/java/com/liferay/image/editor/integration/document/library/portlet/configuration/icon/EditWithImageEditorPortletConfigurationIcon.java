@@ -16,21 +16,28 @@ package com.liferay.image.editor.integration.document.library.portlet.configurat
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.image.editor.integration.document.library.constants.ImageEditorIntegrationDLWebKeys;
+import com.liferay.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.IOException;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,18 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditWithImageEditorPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
-
-	public FileEntry getFileEntry(PortletRequest portletRequest)
-		throws Exception {
-
-		long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
-
-		if (fileEntryId == 0) {
-			return null;
-		}
-
-		return _dlAppService.getFileEntry(fileEntryId);
-	}
 
 	@Override
 	public String getJspPath() {
@@ -85,22 +80,40 @@ public class EditWithImageEditorPortletConfigurationIcon
 	}
 
 	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		try {
+			request.setAttribute(
+				ImageEditorIntegrationDLWebKeys.
+					IMAGE_EDITOR_INTEGRATION_DL_FILE_VERSION,
+				getFileVersion(request));
+
+			return super.include(request, response);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				portletRequest);
 
-			FileEntry fileEntry = getFileEntry(portletRequest);
+			FileVersion fileVersion = getFileVersion(request);
 
-			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
-				new FileEntryDisplayContextHelper(
-					themeDisplay.getPermissionChecker(), fileEntry);
+			ImageEditorDLDisplayContextHelper
+				imageEditorDLDisplayContextHelper =
+					new ImageEditorDLDisplayContextHelper(fileVersion, request);
 
-			if (fileEntryDisplayContextHelper.isEditActionAvailable() &&
+			if (imageEditorDLDisplayContextHelper.
+					isEditWithImageEditorActionAvailable() &&
 				ArrayUtil.contains(
 					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-					fileEntry.getMimeType())) {
+					fileVersion.getMimeType())) {
 
 				return true;
 			}
@@ -125,6 +138,30 @@ public class EditWithImageEditorPortletConfigurationIcon
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	protected FileVersion getFileVersion(HttpServletRequest request)
+		throws Exception {
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		String version = ParamUtil.getString(portletRequest, "version");
+
+		FileVersion fileVersion = null;
+
+		if (Validator.isNotNull(version)) {
+			fileVersion = fileEntry.getFileVersion(version);
+		}
+		else {
+			fileVersion = fileEntry.getFileVersion();
+		}
+
+		return fileVersion;
 	}
 
 	private DLAppService _dlAppService;
