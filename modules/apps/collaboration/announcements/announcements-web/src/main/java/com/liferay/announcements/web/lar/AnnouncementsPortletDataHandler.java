@@ -46,8 +46,8 @@ public class AnnouncementsPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected PortletPreferences doDeleteData(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences)
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		long groupId = portletDataContext.getGroupId();

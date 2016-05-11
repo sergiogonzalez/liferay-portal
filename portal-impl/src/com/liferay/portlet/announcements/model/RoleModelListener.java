@@ -15,9 +15,9 @@
 package com.liferay.portlet.announcements.model;
 
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryUtil;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Role;
 
 /**
  * @author Christopher Kian
@@ -26,7 +26,6 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
 	public void onBeforeRemove(Role role) throws ModelListenerException {
-
 		try {
 			AnnouncementsEntryUtil.removeByC_C(
 				role.getClassNameId(), role.getRoleId());
