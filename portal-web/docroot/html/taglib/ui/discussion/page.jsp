@@ -110,7 +110,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 											<div class="lfr-discussion-details">
 												<liferay-ui:user-portrait
 													cssClass="user-icon-lg"
-													userId="<%= discussionTaglibHelper.getUserId() %>"
+													userId="<%= themeDisplay.getUserId() %>"
 												/>
 											</div>
 
