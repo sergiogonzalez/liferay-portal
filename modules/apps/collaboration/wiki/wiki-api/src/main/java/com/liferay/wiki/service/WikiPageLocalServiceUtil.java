@@ -218,6 +218,11 @@ public class WikiPageLocalServiceUtil {
 		return getService().fetchPage(nodeId, title, version);
 	}
 
+	public static com.liferay.wiki.model.WikiPage fetchPage(long nodeId,
+		java.lang.String title, java.lang.Boolean head) {
+		return getService().fetchPage(nodeId, title, head);
+	}
+
 	public static com.liferay.wiki.model.WikiPage fetchPage(
 		long resourcePrimKey) {
 		return getService().fetchPage(resourcePrimKey);
