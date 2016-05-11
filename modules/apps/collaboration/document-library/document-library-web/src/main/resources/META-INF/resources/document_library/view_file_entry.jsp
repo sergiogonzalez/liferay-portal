@@ -303,24 +303,30 @@ if (portletTitleBasedNavigation) {
 								for (DDMStructure ddmStructure : ddmStructures) {
 									DDMFormValues ddmFormValues = null;
 
+									List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<DDMFormFieldValue>();
+
 									try {
 										ddmFormValues = dlViewFileVersionDisplayContext.getDDMFormValues(ddmStructure);
+
+										ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues();
 									}
 									catch (Exception e) {
 									}
 							%>
 
-									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" markupView="lexicon" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
-										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-											classPK="<%= ddmStructure.getPrimaryKey() %>"
-											ddmFormValues="<%= ddmFormValues %>"
-											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-											readOnly="<%= true %>"
-											requestedLocale="<%= (ddmFormValues != null) ? ddmFormValues.getDefaultLocale() : locale %>"
-											showEmptyFieldLabel="<%= false %>"
-										/>
-									</liferay-ui:panel>
+									<c:if test="<%= !ddmFormFieldValues.isEmpty() %>">
+										<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" markupView="lexicon" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
+											<liferay-ddm:html
+												classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+												classPK="<%= ddmStructure.getPrimaryKey() %>"
+												ddmFormValues="<%= ddmFormValues %>"
+												fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+												readOnly="<%= true %>"
+												requestedLocale="<%= (ddmFormValues != null) ? ddmFormValues.getDefaultLocale() : locale %>"
+												showEmptyFieldLabel="<%= false %>"
+											/>
+										</liferay-ui:panel>
+									</c:if>
 
 							<%
 								}
@@ -369,6 +375,7 @@ if (portletTitleBasedNavigation) {
 						catch (Exception e) {
 						}
 						%>
+
 					</liferay-ui:panel-container>
 				</div>
 
