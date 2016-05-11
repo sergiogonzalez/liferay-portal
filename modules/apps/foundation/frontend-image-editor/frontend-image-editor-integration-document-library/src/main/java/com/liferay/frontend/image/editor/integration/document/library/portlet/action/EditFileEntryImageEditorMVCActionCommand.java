@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.editor.integration.document.library.portlet.action;
+package com.liferay.frontend.image.editor.integration.document.library.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;

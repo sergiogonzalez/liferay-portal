@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.editor.integration.document.library.display.context;
+package com.liferay.frontend.image.editor.integration.document.library.display.context;
 
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
@@ -88,7 +88,7 @@ public class ImageEditorDLDisplayContextFactory
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.image.editor.integration.document.library)",
+		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.integration.document.library)",
 		unbind = "-"
 	)
 	protected void setResourceBundleLoader(

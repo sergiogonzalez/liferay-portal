@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.image.editor.integration.document.library.portlet.configuration.icon;
+package com.liferay.frontend.image.editor.integration.document.library.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.image.editor.integration.document.library.constants.ImageEditorIntegrationDLWebKeys;
-import com.liferay.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper;
+import com.liferay.frontend.image.editor.integration.document.library.constants.ImageEditorIntegrationDLWebKeys;
+import com.liferay.frontend.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -133,7 +133,7 @@ public class EditWithImageEditorPortletConfigurationIcon
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.image.editor.integration.document.library)",
+		target = "(osgi.web.symbolicname=com.liferay.frontend.image.editor.integration.document.library)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

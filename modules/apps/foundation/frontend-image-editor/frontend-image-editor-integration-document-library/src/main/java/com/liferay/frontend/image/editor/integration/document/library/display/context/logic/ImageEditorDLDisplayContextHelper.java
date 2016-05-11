@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.editor.integration.document.library.display.context.logic;
+package com.liferay.frontend.image.editor.integration.document.library.display.context.logic;
 
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -142,8 +142,8 @@ public class ImageEditorDLDisplayContextHelper {
 		javascriptMenuItem.setOnClick(sb.toString());
 
 		String javaScript =
-			"/com/liferay/image/editor/integration/document/library/display/" +
-				"context/dependencies/edit_with_image_editor_js.ftl";
+			"/com/liferay/frontend/image/editor/integration/document/library/" +
+				"display/context/dependencies/edit_with_image_editor_js.ftl";
 
 		Class<?> clazz = getClass();
 

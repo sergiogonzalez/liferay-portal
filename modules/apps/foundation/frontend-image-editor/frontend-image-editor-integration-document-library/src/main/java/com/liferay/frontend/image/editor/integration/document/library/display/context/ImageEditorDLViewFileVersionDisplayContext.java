@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.image.editor.integration.document.library.display.context;
+package com.liferay.frontend.image.editor.integration.document.library.display.context;
 
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper;
+import com.liferay.frontend.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
