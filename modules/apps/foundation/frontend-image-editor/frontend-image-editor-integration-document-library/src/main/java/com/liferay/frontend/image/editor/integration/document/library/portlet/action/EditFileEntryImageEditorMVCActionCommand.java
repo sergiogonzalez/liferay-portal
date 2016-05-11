@@ -23,23 +23,29 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -121,6 +127,9 @@ public class EditFileEntryImageEditorMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
@@ -150,6 +159,15 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 		jsonObject.put("success", Boolean.TRUE);
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LanguageUtil.getLanguageId(themeDisplay.getLocale()));
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle, "the-image-has-been-edited-successfully"));
+
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 
@@ -161,5 +179,11 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.integration.document.library)",
+		unbind = "-"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }
