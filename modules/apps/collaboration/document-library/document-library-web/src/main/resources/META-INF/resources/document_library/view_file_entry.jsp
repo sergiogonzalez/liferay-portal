@@ -374,7 +374,7 @@ if (portletTitleBasedNavigation) {
 						}
 
 						if (ddmFormValues != null) {
-							String name = "metadata." + ddmStructure.getName(locale, true);
+							String name = "metadata." + ddmStructure.getStructureKey();
 				%>
 
 							<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" markupView="lexicon" persistState="<%= true %>" title="<%= name %>">
