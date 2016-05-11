@@ -684,10 +684,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return blogsEntryPersistence.findByG_S_PrevAndNext(
-			entry.getEntryId(), entry.getGroupId(),
-			WorkflowConstants.STATUS_APPROVED,
-			new EntryDisplayDateComparator(true));
+		long groupId = entry.getGroupId();
+
+		Date displayDate = entry.getDisplayDate();
+
+		BlogsEntry[] blogsEntries =
+			blogsEntryPersistence.findByG_S_D_PrevAndNext(
+				entryId, groupId, WorkflowConstants.STATUS_APPROVED,
+				displayDate, new EntryDisplayDateComparator(true));
+
+		if (Validator.isNull(blogsEntries[0])) {
+			blogsEntries[0] = blogsEntryPersistence.fetchByG_LtD_S_First(
+				groupId, displayDate, WorkflowConstants.STATUS_APPROVED, null);
+		}
+
+		if (Validator.isNull(blogsEntries[2])) {
+			blogsEntries[2] = blogsEntryPersistence.fetchByG_GtD_S_Last(
+				groupId, displayDate, WorkflowConstants.STATUS_APPROVED, null);
+		}
+
+		return blogsEntries;
 	}
 
 	@Override
