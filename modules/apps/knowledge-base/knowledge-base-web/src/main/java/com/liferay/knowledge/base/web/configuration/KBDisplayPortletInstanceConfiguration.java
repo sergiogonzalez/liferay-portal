@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.web.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Roberto Díaz
@@ -31,4 +32,65 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	name = "knowledge.base.display.portlet.instance.configuration.name"
 )
 public interface KBDisplayPortletInstanceConfiguration {
+
+	@Meta.AD(deflt = "0",required = false)
+	public long resourcePrimKey();
+
+	@Meta.AD(deflt = "0",required = false)
+	public long resourceClassNameId();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enableKBArticleDescription();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleKBComments();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleRatings();
+
+	@Meta.AD(deflt = "thumbs", required = false)
+	public String kbArticleRatingsType();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean showKBArticleAssetEntries();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean showKBArticleAttachments();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean showKBArticleComments();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleAssetLinks();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleViewCountIncrement();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleSubscriptions();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleHistory();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticlePrint();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enableSocialBookmarks();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
+		required = false
+	)
+	public String socialBookmarksTypes();
+
+	@Meta.AD(deflt = "menu", required = false)
+	public String socialBookmarksDisplayStyle();
+
+	@Meta.AD(deflt = "bottom", required = false)
+	public String socialBookmarksDisplayPosition();
+
+	@Meta.AD(deflt = StringPool.BLANK, required = false)
+	public String contentRootPrefix();
+
 }
