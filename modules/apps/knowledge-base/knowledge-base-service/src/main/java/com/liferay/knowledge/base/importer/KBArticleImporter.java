@@ -14,13 +14,13 @@
 
 package com.liferay.knowledge.base.importer;
 
+import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.importer.util.KBArticleMarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,11 +50,15 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author James Hinkey
  * @author Sergio González
  * @author Jesse Rao
  */
+@Component(service = KBArticleImporter.class)
 public class KBArticleImporter {
 
 	public int processZipFile(
@@ -183,7 +187,8 @@ public class KBArticleImporter {
 			String extension = FileUtil.getExtension(zipEntry);
 
 			if (!ArrayUtil.contains(
-					PortletPropsValues.MARKDOWN_IMPORTER_ARTICLE_EXTENSIONS,
+					_kbGroupServiceConfiguration.
+						markdownImporterArticleExtensions(),
 					StringPool.PERIOD.concat(extension))) {
 
 				continue;
@@ -275,7 +280,8 @@ public class KBArticleImporter {
 
 			for (String fileEntryName : fileEntryNames) {
 				if (fileEntryName.endsWith(
-						PortletPropsValues.MARKDOWN_IMPORTER_ARTICLE_INTRO)) {
+						_kbGroupServiceConfiguration.
+							markdownImporterArticleIntro())) {
 
 					sectionIntroFileEntryName = fileEntryName;
 				}
@@ -334,6 +340,13 @@ public class KBArticleImporter {
 		return importedKBArticlesCount;
 	}
 
+	@Reference(unbind = "-")
+	protected void setKBGroupServiceConfiguration(
+		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+
+		_kbGroupServiceConfiguration = kbGroupServiceConfiguration;
+	}
+
 	private List<String> _getEntries(ZipReader zipReader)
 		throws KBArticleImportException {
 
@@ -349,5 +362,7 @@ public class KBArticleImporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
+
+	private KBGroupServiceConfiguration _kbGroupServiceConfiguration;
 
 }
