@@ -21,27 +21,29 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-long resourceClassNameId = GetterUtil.getLong(portletPreferences.getValue("resourceClassNameId", null), PortalUtil.getClassNameId(KBFolderConstants.getClassName()));
-long resourcePrimKey = GetterUtil.getLong(portletPreferences.getValue("resourcePrimKey", null));
+KBDisplayPortletInstanceConfiguration kbDisplayPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBDisplayPortletInstanceConfiguration.class);
 
-boolean enableKBArticleDescription = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleDescription", null));
-boolean enableKBArticleRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleRatings", null));
-String kbArticleRatingsType = GetterUtil.getString(portletPreferences.getValue("kbArticleRatingsType", null), "thumbs");
-boolean showKBArticleAssetEntries = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticleAssetEntries", null));
-boolean showKBArticleAttachments = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticleAttachments", null), true);
-boolean enableKBArticleAssetLinks = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleAssetLinks", null), true);
-boolean enableKBArticleViewCountIncrement = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleViewCountIncrement", null));
-boolean enableKBArticleSubscriptions = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleSubscriptions", null), true);
-boolean enableKBArticleHistory = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleHistory", null), true);
-boolean enableKBArticlePrint = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticlePrint", null), true);
-boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null));
-String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", PortletPropsValues.KNOWLEDGE_BASE_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
-String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
-String socialBookmarksTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
-String contentRootPrefix = GetterUtil.getString(portletPreferences.getValue("contentRootPrefix", null));
+long resourceClassNameId = GetterUtil.getLong(kbDisplayPortletInstanceConfiguration.resourceClassNameId(), PortalUtil.getClassNameId(KBFolderConstants.getClassName()));
+long resourcePrimKey = kbDisplayPortletInstanceConfiguration.resourcePrimKey();
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableKBArticleDescription = kbDisplayPortletInstanceConfiguration.enableKBArticleDescription();
+boolean enableKBArticleRatings = kbDisplayPortletInstanceConfiguration.enableKBArticleRatings();
+String kbArticleRatingsType = kbDisplayPortletInstanceConfiguration.kbArticleRatingsType();
+boolean showKBArticleAssetEntries = kbDisplayPortletInstanceConfiguration.showKBArticleAssetEntries();
+boolean showKBArticleAttachments = kbDisplayPortletInstanceConfiguration.showKBArticleAttachments();
+boolean enableKBArticleAssetLinks = kbDisplayPortletInstanceConfiguration.enableKBArticleAssetLinks();
+boolean enableKBArticleViewCountIncrement = kbDisplayPortletInstanceConfiguration.enableKBArticleViewCountIncrement();
+boolean enableKBArticleSubscriptions = kbDisplayPortletInstanceConfiguration.enableKBArticleSubscriptions();
+boolean enableKBArticleHistory = kbDisplayPortletInstanceConfiguration.enableKBArticleHistory();
+boolean enableKBArticlePrint = kbDisplayPortletInstanceConfiguration.enableKBArticlePrint();
+boolean enableSocialBookmarks = kbDisplayPortletInstanceConfiguration.enableSocialBookmarks();
+String socialBookmarksDisplayStyle = kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle();
+String socialBookmarksDisplayPosition = kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayPosition();
+String socialBookmarksTypes = kbDisplayPortletInstanceConfiguration.socialBookmarksTypes();
+String contentRootPrefix = kbDisplayPortletInstanceConfiguration.contentRootPrefix();
+
+boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
+int rssDelta = kbGroupServiceConfiguration.rssDelta();
+String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();
+String rssFeedType = kbGroupServiceConfiguration.rssFeedType();
 %>

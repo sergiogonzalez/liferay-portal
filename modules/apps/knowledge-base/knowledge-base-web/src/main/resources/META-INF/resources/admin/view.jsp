@@ -54,7 +54,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			<c:otherwise>
 				<div class="alert alert-warning">
 					<liferay-ui:message
-						arguments="<%= StringUtil.merge(PortletPropsValues.MARKDOWN_IMPORTER_ARTICLE_EXTENSIONS, StringPool.COMMA_AND_SPACE) %>"
+						arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
 						key="nothing-was-imported-no-articles-were-found-with-one-of-the-supported-extensions-x"
 					/>
 				</div>
