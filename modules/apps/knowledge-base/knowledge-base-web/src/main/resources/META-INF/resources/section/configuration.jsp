@@ -54,7 +54,7 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 					<%
 					Map<String, String> sectionsMap = new TreeMap<String, String>();
 
-					for (String section : PortletPropsValues.ADMIN_KB_ARTICLE_SECTIONS) {
+					for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
 						sectionsMap.put(LanguageUtil.get(request, section), section);
 					}
 
