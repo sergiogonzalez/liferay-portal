@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
@@ -86,6 +87,86 @@ public class ImageEditorDLDisplayContextHelper {
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
+		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
+
+		javascriptMenuItem.setKey("#edit-with-image-editor");
+
+		javascriptMenuItem.setLabel(
+			LanguageUtil.get(resourceBundle, "edit-with-image-editor"));
+
+		javascriptMenuItem.setOnClick(_getOnclickMethod());
+
+		javascriptMenuItem.setJavaScript(_getJavaScript());
+
+		return javascriptMenuItem;
+	}
+
+	public JavaScriptToolbarItem getJavacriptEditWithImageEditorToolbarItem(
+			ResourceBundle resourceBundle)
+		throws PortalException {
+
+		JavaScriptToolbarItem javascriptUIItem = new JavaScriptToolbarItem();
+
+		javascriptUIItem.setKey("#edit-with-image-editor");
+
+		javascriptUIItem.setLabel(
+			LanguageUtil.get(resourceBundle, "edit-with-image-editor"));
+
+		javascriptUIItem.setOnClick(_getOnclickMethod());
+
+		javascriptUIItem.setJavaScript(_getJavaScript());
+
+		return javascriptUIItem;
+	}
+
+	public boolean isEditWithImageEditorActionAvailable()
+		throws PortalException {
+
+		if (_isEditWithImageEditorActionAvailable == null) {
+			_isEditWithImageEditorActionAvailable =
+				DLFileEntryPermission.contains(
+					_themeDisplay.getPermissionChecker(), _fileEntry,
+					ActionKeys.UPDATE) &&
+				(!_fileEntry.isCheckedOut() || _fileEntry.hasLock());
+		}
+
+		return _isEditWithImageEditorActionAvailable;
+	}
+
+	private String _getJavaScript() throws PortalException {
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		String javaScript =
+			"/com/liferay/frontend/image/editor/integration/document/library/" +
+			"display/context/dependencies/edit_with_image_editor_js.ftl";
+
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put("namespace", liferayPortletResponse.getNamespace());
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
+	}
+
+	private LiferayPortletResponse _getLiferayPortletResponse() {
+		PortletResponse portletResponse =
+			(PortletResponse)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return PortalUtil.getLiferayPortletResponse(portletResponse);
+	}
+
+	private String _getOnclickMethod() {
 		String imageEditorPortletId = PortletProviderUtil.getPortletId(
 			Image.class.getName(), PortletProvider.Action.EDIT);
 
@@ -107,7 +188,7 @@ public class ImageEditorDLDisplayContextHelper {
 			_getLiferayPortletResponse();
 
 		PortletURL editURL = liferayPortletResponse.createActionURL(
-			PortletKeys.DOCUMENT_LIBRARY_ADMIN);
+			PortletKeys.DOCUMENT_LIBRARY);
 
 		editURL.setParameter(
 			ActionRequest.ACTION_NAME,
@@ -118,13 +199,6 @@ public class ImageEditorDLDisplayContextHelper {
 
 		String fileEntryPreviewURL = DLUtil.getPreviewURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK);
-
-		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
-
-		javascriptMenuItem.setKey("#edit-with-image-editor");
-
-		javascriptMenuItem.setLabel(
-			LanguageUtil.get(resourceBundle, "edit-with-image-editor"));
 
 		StringBundler sb = new StringBundler(10);
 
@@ -139,51 +213,7 @@ public class ImageEditorDLDisplayContextHelper {
 		sb.append(fileEntryPreviewURL);
 		sb.append("');");
 
-		javascriptMenuItem.setOnClick(sb.toString());
-
-		String javaScript =
-			"/com/liferay/frontend/image/editor/integration/document/library/" +
-				"display/context/dependencies/edit_with_image_editor_js.ftl";
-
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put("namespace", liferayPortletResponse.getNamespace());
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.processTemplate(unsyncStringWriter);
-
-		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
-
-		return javascriptMenuItem;
-	}
-
-	public boolean isEditWithImageEditorActionAvailable()
-		throws PortalException {
-
-		if (_isEditWithImageEditorActionAvailable == null) {
-			_isEditWithImageEditorActionAvailable =
-				DLFileEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _fileEntry,
-					ActionKeys.UPDATE) &&
-				(!_fileEntry.isCheckedOut() || _fileEntry.hasLock());
-		}
-
-		return _isEditWithImageEditorActionAvailable;
-	}
-
-	private LiferayPortletResponse _getLiferayPortletResponse() {
-		PortletResponse portletResponse =
-			(PortletResponse)_request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		return PortalUtil.getLiferayPortletResponse(portletResponse);
+		return sb.toString();
 	}
 
 	private final FileEntry _fileEntry;
