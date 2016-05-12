@@ -11,7 +11,7 @@ function ${namespace}editWithImageEditor(
 			stack: false,
 			title: 'Edit ' + fileEntryFilename,
 			uri: editItemURL,
-			URLParams: {
+			urlParams: {
 				entityURL: fileEntrySrc,
 				saveParamName: 'imageEditorFileName',
 				saveURL: uploadItemURL
