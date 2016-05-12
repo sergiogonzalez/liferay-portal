@@ -208,7 +208,9 @@ public class ImageEditorDLDisplayContextHelper {
 		sb.append("', '");
 		sb.append(editURL.toString());
 		sb.append("', '");
-		sb.append(_fileEntry.getFileName());
+		sb.append(
+			LanguageUtil.get(
+				_request, "edit") + " " + _fileEntry.getFileName());
 		sb.append("', '");
 		sb.append(fileEntryPreviewURL);
 		sb.append("');");
