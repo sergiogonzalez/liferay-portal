@@ -25,7 +25,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 %>
 
 <liferay-util:html-top outputKey="blogs_common_main_css">
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <c:if test="<%= entry.isSmallImage() %>">
