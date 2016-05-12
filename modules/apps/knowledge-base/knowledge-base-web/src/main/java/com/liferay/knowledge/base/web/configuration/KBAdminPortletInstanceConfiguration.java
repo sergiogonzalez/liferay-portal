@@ -31,4 +31,68 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	name = "knowledge.base.admin.portlet.instance.configuration.name"
 )
 public interface KBAdminPortletInstanceConfiguration {
+
+	@Meta.AD(deflt = "0", required = false)
+	public long resourceClassNameId();
+
+	@Meta.AD(deflt = "0", required = false)
+	public long resourcePrimKey();
+
+	@Meta.AD(deflt = "priority", required = false)
+	public String kbArticlesOrderByCol();
+
+	@Meta.AD(deflt = "desc", required = false)
+	public String kbArticlesOrderByType();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enableKBArticleDescription();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleComments();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleRatings();
+
+	@Meta.AD(deflt = "thumbs", required = false)
+	public String kbArticleRatingsType();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean showKBArticleAssetEntries();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean showKBArticleAttachments();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean showKBArticleKBComments();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleAssetLinks();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleViewCountIncrement();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleSubscriptions();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticleHistory();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBArticlePrint();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enableSocialBookmarks();
+
+	@Meta.AD(deflt = "menu", required = false)
+	public String socialBookmarksDisplayStyle();
+
+	@Meta.AD(deflt = "bottom", required = false)
+	public String socialBookmarksDisplayPosition();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableKBTemplateKBComments();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean showKBTemplateKBComments();
+
 }
