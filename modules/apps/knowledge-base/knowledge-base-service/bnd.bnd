@@ -4,7 +4,8 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.knowledge.base.model.impl,\
 	com.liferay.knowledge.base.service.permission,\
-	com.liferay.knowledge.base.service.util
+	com.liferay.knowledge.base.service.util,\
+	com.liferay.knowledge.base.configuration,\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Knowledge Base
 Liferay-Require-SchemaVersion: 2.0.0
