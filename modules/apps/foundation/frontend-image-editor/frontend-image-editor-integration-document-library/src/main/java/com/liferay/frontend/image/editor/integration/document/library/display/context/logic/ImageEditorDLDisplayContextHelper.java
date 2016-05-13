@@ -105,18 +105,19 @@ public class ImageEditorDLDisplayContextHelper {
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
-		JavaScriptToolbarItem javascriptUIItem = new JavaScriptToolbarItem();
+		JavaScriptToolbarItem javascriptToolbarItem =
+			new JavaScriptToolbarItem();
 
-		javascriptUIItem.setKey("#edit-with-image-editor");
+		javascriptToolbarItem.setKey("#edit-with-image-editor");
 
-		javascriptUIItem.setLabel(
+		javascriptToolbarItem.setLabel(
 			LanguageUtil.get(resourceBundle, "edit-with-image-editor"));
 
-		javascriptUIItem.setOnClick(_getOnclickMethod());
+		javascriptToolbarItem.setOnClick(_getOnclickMethod());
 
-		javascriptUIItem.setJavaScript(_getJavaScript());
+		javascriptToolbarItem.setJavaScript(_getJavaScript());
 
-		return javascriptUIItem;
+		return javascriptToolbarItem;
 	}
 
 	public boolean isEditWithImageEditorActionAvailable()
