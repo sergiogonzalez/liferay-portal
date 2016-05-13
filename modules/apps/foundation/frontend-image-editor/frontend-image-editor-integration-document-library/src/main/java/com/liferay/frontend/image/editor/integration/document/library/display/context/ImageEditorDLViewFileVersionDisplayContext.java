@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -106,6 +107,37 @@ public class ImageEditorDLViewFileVersionDisplayContext
 				getJavacriptEditWithImageEditorMenuItem(resourceBundle));
 
 		return menu;
+	}
+
+	@Override
+	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		List<ToolbarItem> toolbarItems = super.getToolbarItems();
+
+		if (!_imageEditorDLDisplayContextHelper.
+				isEditWithImageEditorActionAvailable()) {
+
+			return toolbarItems;
+		}
+
+		if (!ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+				_fileEntry.getMimeType())) {
+
+			return toolbarItems;
+		}
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LanguageUtil.getLanguageId(_themeDisplay.getLocale()));
+
+		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
+			new ImageEditorDLDisplayContextHelper(fileVersion, request);
+
+		toolbarItems.add(
+			imageEditorDLDisplayContextHelper.
+				getJavacriptEditWithImageEditorToolbarItem(resourceBundle));
+
+		return toolbarItems;
 	}
 
 	private static final UUID _UUID = UUID.fromString(
