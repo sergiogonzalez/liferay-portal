@@ -154,7 +154,7 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 		fileEntry = _dlAppService.updateFileEntry(
 			fileEntryId, sourceFileName, contentType, fileEntry.getTitle(),
-			fileEntry.getDescription(), StringPool.BLANK, true, inputStream,
+			fileEntry.getDescription(), StringPool.BLANK, false, inputStream,
 			size, serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
