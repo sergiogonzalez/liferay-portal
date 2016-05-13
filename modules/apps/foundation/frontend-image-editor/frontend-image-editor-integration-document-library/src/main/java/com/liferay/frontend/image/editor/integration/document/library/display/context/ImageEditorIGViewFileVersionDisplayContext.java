@@ -70,7 +70,8 @@ public class ImageEditorIGViewFileVersionDisplayContext
 		catch (PortalException pe) {
 			throw new SystemException(
 				"Unable to create image editor image gallery view file " +
-				"version display context for file version " + fileVersion, pe);
+					"version display context for file version " + fileVersion,
+				pe);
 		}
 	}
 
