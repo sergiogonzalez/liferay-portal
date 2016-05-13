@@ -15,6 +15,7 @@
 package com.liferay.frontend.image.editor.integration.document.library.display.context.logic;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -128,6 +129,12 @@ public class ImageEditorDLDisplayContextHelper {
 
 	public boolean isShowActions() throws PortalException {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			return true;
+		}
 
 		Settings settings = SettingsFactoryUtil.getSettings(
 			new PortletInstanceSettingsLocator(
