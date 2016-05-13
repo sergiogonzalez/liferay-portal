@@ -43,7 +43,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	<liferay-ui:ratings
 		className="<%= KBArticle.class.getName() %>"
 		classPK="<%= kbArticle.getResourcePrimKey() %>"
-		numberOfStars="<%= kbGroupServiceConfiguration.ratingsNumberOfStars() %>"
+		numberOfStars="<%= GetterUtil.getInteger(kbGroupServiceConfiguration.ratingsNumberOfStars()) %>"
 		type="<%= kbArticleRatingsType %>"
 	/>
 
