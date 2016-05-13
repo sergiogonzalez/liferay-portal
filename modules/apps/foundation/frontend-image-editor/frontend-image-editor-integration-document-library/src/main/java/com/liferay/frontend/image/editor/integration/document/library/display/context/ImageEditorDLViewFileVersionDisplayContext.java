@@ -26,10 +26,8 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -82,16 +80,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		if (!_imageEditorDLDisplayContextHelper.
-				isEditWithImageEditorActionAvailable()) {
-
-			return menu;
-		}
-
-		if (!ArrayUtil.contains(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-				_fileEntry.getMimeType())) {
-
+		if (!_imageEditorDLDisplayContextHelper.isShowImageEditorAction()) {
 			return menu;
 		}
 
@@ -113,16 +102,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = super.getToolbarItems();
 
-		if (!_imageEditorDLDisplayContextHelper.
-				isEditWithImageEditorActionAvailable()) {
-
-			return toolbarItems;
-		}
-
-		if (!ArrayUtil.contains(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-				_fileEntry.getMimeType())) {
-
+		if (!_imageEditorDLDisplayContextHelper.isShowImageEditorAction()) {
 			return toolbarItems;
 		}
 

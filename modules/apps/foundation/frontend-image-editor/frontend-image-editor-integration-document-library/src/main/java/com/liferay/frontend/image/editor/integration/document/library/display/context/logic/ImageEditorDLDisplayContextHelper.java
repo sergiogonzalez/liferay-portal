@@ -40,11 +40,13 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 
 import java.util.ResourceBundle;
@@ -124,24 +126,6 @@ public class ImageEditorDLDisplayContextHelper {
 		return javascriptToolbarItem;
 	}
 
-	public boolean isEditWithImageEditorActionAvailable()
-		throws PortalException {
-
-		if (!isShowActions()) {
-			return false;
-		}
-
-		if (_isEditWithImageEditorActionAvailable == null) {
-			_isEditWithImageEditorActionAvailable =
-				DLFileEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _fileEntry,
-					ActionKeys.UPDATE) &&
-				(!_fileEntry.isCheckedOut() || _fileEntry.hasLock());
-		}
-
-		return _isEditWithImageEditorActionAvailable;
-	}
-
 	public boolean isShowActions() throws PortalException {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
@@ -152,6 +136,34 @@ public class ImageEditorDLDisplayContextHelper {
 		TypedSettings typedSettings = new TypedSettings(settings);
 
 		return typedSettings.getBooleanValue("showActions");
+	}
+
+	public boolean isShowImageEditorAction() throws PortalException {
+		if (_isShowImageEditorAction != null) {
+			return _isShowImageEditorAction;
+		}
+
+		if (!isShowActions()) {
+			_isShowImageEditorAction = false;
+		}
+		else if (!DLFileEntryPermission.contains(
+					_themeDisplay.getPermissionChecker(), _fileEntry,
+					ActionKeys.UPDATE) ||
+				 (_fileEntry.isCheckedOut() && !_fileEntry.hasLock())) {
+
+			_isShowImageEditorAction = false;
+		}
+		else if (!ArrayUtil.contains(
+					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+					_fileEntry.getMimeType())) {
+
+			_isShowImageEditorAction = false;
+		}
+		else {
+			_isShowImageEditorAction = true;
+		}
+
+		return _isShowImageEditorAction;
 	}
 
 	private String _getJavaScript() throws PortalException {
@@ -239,7 +251,7 @@ public class ImageEditorDLDisplayContextHelper {
 
 	private final FileEntry _fileEntry;
 	private final FileVersion _fileVersion;
-	private Boolean _isEditWithImageEditorActionAvailable;
+	private Boolean _isShowImageEditorAction;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

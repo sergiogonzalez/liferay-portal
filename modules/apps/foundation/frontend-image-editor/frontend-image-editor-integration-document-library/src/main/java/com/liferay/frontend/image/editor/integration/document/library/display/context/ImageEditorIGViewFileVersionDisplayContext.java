@@ -25,10 +25,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -79,20 +77,11 @@ public class ImageEditorIGViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = super.getMenu();
 
+		if (!_imageEditorDLDisplayContextHelper.isShowImageEditorAction()) {
+			return menu;
+		}
+
 		List<MenuItem> menuItems = menu.getMenuItems();
-
-		if (!_imageEditorDLDisplayContextHelper.
-				isEditWithImageEditorActionAvailable()) {
-
-			return menu;
-		}
-
-		if (!ArrayUtil.contains(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-				_fileEntry.getMimeType())) {
-
-			return menu;
-		}
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(
