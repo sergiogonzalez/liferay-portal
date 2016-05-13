@@ -189,8 +189,7 @@ public class ImageEditorDLDisplayContextHelper {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
-		PortletURL editURL = liferayPortletResponse.createActionURL(
-			PortletKeys.DOCUMENT_LIBRARY);
+		PortletURL editURL = liferayPortletResponse.createActionURL();
 
 		editURL.setParameter(
 			ActionRequest.ACTION_NAME,
