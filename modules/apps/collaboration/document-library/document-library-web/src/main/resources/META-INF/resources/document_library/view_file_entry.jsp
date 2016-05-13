@@ -147,23 +147,7 @@ if (portletTitleBasedNavigation) {
 	<liferay-frontend:sidebar-panel>
 
 		<%
-		boolean showCustomFieldsTab = false;
-		%>
-
-		<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
-
-			<%
-			showCustomFieldsTab = true;
-			%>
-
-		</liferay-ui:custom-attributes-available>
-
-		<%
 		String tabsNames = "details";
-
-		if (showCustomFieldsTab) {
-			tabsNames += ",custom-fields";
-		}
 
 		if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 			tabsNames += ",versions";
@@ -341,6 +325,17 @@ if (portletTitleBasedNavigation) {
 
 						</c:if>
 
+						<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
+							<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-custom-fields" id="documentLibraryCustomFieldsPanel" markupView="lexicon" persistState="<%= true %>" title="custom-fields">
+								<liferay-ui:custom-attribute-list
+									className="<%= DLFileEntryConstants.getClassName() %>"
+									classPK="<%= fileVersionId %>"
+									editable="<%= false %>"
+									label="<%= true %>"
+								/>
+							</liferay-ui:panel>
+						</liferay-ui:custom-attributes-available>
+
 						<%
 						try {
 							List<DDMStructure> ddmStructures = DDMStructureManagerUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(RawMetadataProcessor.class), DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
@@ -382,19 +377,7 @@ if (portletTitleBasedNavigation) {
 
 					</liferay-ui:panel-container>
 				</div>
-
 			</liferay-ui:section>
-
-			<c:if test="<%= showCustomFieldsTab %>">
-				<liferay-ui:section>
-					<liferay-ui:custom-attribute-list
-						className="<%= DLFileEntryConstants.getClassName() %>"
-						classPK="<%= fileVersionId %>"
-						editable="<%= false %>"
-						label="<%= true %>"
-					/>
-				</liferay-ui:section>
-			</c:if>
 
 			<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 				<liferay-ui:section>
