@@ -293,6 +293,10 @@ if (portletTitleBasedNavigation) {
 						</c:if>
 					</c:if>
 
+					<%
+					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+					%>
+
 					<liferay-ui:panel-container cssClass="metadata-panel-container" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">
 						<c:if test="<%= dlViewFileVersionDisplayContext.getDDMStructuresCount() > 0 %>">
 
@@ -354,7 +358,7 @@ if (portletTitleBasedNavigation) {
 
 								if (ddmFormValues != null) {
 									String name = "metadata." + ddmStructure.getStructureKey();
-				%>
+						%>
 
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>' markupView="lexicon" persistState="<%= true %>" title="<%= name %>">
 										<liferay-ddm:html
@@ -380,10 +384,6 @@ if (portletTitleBasedNavigation) {
 				</div>
 
 			</liferay-ui:section>
-
-			<%
-			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-			%>
 
 			<c:if test="<%= showCustomFieldsTab %>">
 				<liferay-ui:section>
