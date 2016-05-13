@@ -62,6 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/edit_file_entry_with_image_editor"
 	},
 	service = MVCActionCommand.class
