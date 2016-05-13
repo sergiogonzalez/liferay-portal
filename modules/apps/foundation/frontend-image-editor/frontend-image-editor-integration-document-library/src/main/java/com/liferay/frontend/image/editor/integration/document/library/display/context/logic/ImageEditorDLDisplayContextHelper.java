@@ -30,14 +30,18 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -123,6 +127,10 @@ public class ImageEditorDLDisplayContextHelper {
 	public boolean isEditWithImageEditorActionAvailable()
 		throws PortalException {
 
+		if (!isShowActions()) {
+			return false;
+		}
+
 		if (_isEditWithImageEditorActionAvailable == null) {
 			_isEditWithImageEditorActionAvailable =
 				DLFileEntryPermission.contains(
@@ -134,13 +142,25 @@ public class ImageEditorDLDisplayContextHelper {
 		return _isEditWithImageEditorActionAvailable;
 	}
 
+	public boolean isShowActions() throws PortalException {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new PortletInstanceSettingsLocator(
+				_themeDisplay.getLayout(), portletDisplay.getId()));
+
+		TypedSettings typedSettings = new TypedSettings(settings);
+
+		return typedSettings.getBooleanValue("showActions");
+	}
+
 	private String _getJavaScript() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
 		String javaScript =
 			"/com/liferay/frontend/image/editor/integration/document/library/" +
-			"display/context/dependencies/edit_with_image_editor_js.ftl";
+				"display/context/dependencies/edit_with_image_editor_js.ftl";
 
 		Class<?> clazz = getClass();
 
