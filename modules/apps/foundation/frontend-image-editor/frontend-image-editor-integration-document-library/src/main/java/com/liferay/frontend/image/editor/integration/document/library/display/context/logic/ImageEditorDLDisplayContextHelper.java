@@ -149,6 +149,7 @@ public class ImageEditorDLDisplayContextHelper {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
+		template.put("editLanguageKey", LanguageUtil.get(_request, "edit"));
 		template.put("namespace", liferayPortletResponse.getNamespace());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -208,9 +209,7 @@ public class ImageEditorDLDisplayContextHelper {
 		sb.append("', '");
 		sb.append(editURL.toString());
 		sb.append("', '");
-		sb.append(
-			LanguageUtil.get(
-				_request, "edit") + " " + _fileEntry.getFileName());
+		sb.append(_fileEntry.getFileName());
 		sb.append("', '");
 		sb.append(fileEntryPreviewURL);
 		sb.append("');");
