@@ -23,13 +23,14 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 KBDisplayPortletInstanceConfiguration kbDisplayPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBDisplayPortletInstanceConfiguration.class);
 
+long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
+
+long resourcePrimKey = kbDisplayPortletInstanceConfiguration.resourcePrimKey();
 long resourceClassNameId = kbDisplayPortletInstanceConfiguration.resourceClassNameId();
 
 if (resourceClassNameId == 0) {
-	resourceClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
+	resourceClassNameId = kbFolderClassNameId;
 }
-
-long resourcePrimKey = kbDisplayPortletInstanceConfiguration.resourcePrimKey();
 
 boolean enableKBArticleDescription = kbDisplayPortletInstanceConfiguration.enableKBArticleDescription();
 boolean enableKBArticleRatings = kbDisplayPortletInstanceConfiguration.enableKBArticleRatings();
