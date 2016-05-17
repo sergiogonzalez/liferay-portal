@@ -74,4 +74,10 @@ public interface KBArticlePortletInstanceConfiguration {
 	@Meta.AD(deflt = "bottom", required = false)
 	public String socialBookmarksDisplayPosition();
 
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
+		required = false
+	)
+	public String socialBookmarksTypes();
+
 }
