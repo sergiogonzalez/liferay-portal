@@ -32,28 +32,35 @@ page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %>
 
 <%
-KBAdminPortletInstanceConfiguration kbAdminPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBAdminPortletInstanceConfiguration.class);
+long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
-String kbArticlesOrderByCol = kbAdminPortletInstanceConfiguration.kbArticlesOrderByCol();
-String kbArticlesOrderByType = kbAdminPortletInstanceConfiguration.kbArticlesOrderByType();
+long resourceClassNameId = kbFolderClassNameId;
+long resourcePrimKey = 0;
 
-boolean enableKBArticleDescription = kbAdminPortletInstanceConfiguration.enableKBArticleDescription();
-boolean enableKBArticleRatings = kbAdminPortletInstanceConfiguration.enableKBArticleRatings();
-String kbArticleRatingsType = kbAdminPortletInstanceConfiguration.kbArticleRatingsType();
-boolean showKBArticleAssetEntries = kbAdminPortletInstanceConfiguration.showKBArticleAssetEntries();
-boolean showKBArticleAttachments = kbAdminPortletInstanceConfiguration.showKBArticleAttachments();
-boolean enableKBArticleAssetLinks = kbAdminPortletInstanceConfiguration.enableKBArticleAssetLinks();
-boolean enableKBArticleViewCountIncrement = kbAdminPortletInstanceConfiguration.enableKBArticleViewCountIncrement();
-boolean enableKBArticleSubscriptions = kbAdminPortletInstanceConfiguration.enableKBArticleSubscriptions();
-boolean enableKBArticleHistory = kbAdminPortletInstanceConfiguration.enableKBArticleHistory();
-boolean enableKBArticlePrint = kbAdminPortletInstanceConfiguration.enableKBArticlePrint();
-boolean enableSocialBookmarks = kbAdminPortletInstanceConfiguration.enableSocialBookmarks();
-String socialBookmarksDisplayStyle = kbAdminPortletInstanceConfiguration.socialBookmarksDisplayStyle();
-String socialBookmarksDisplayPosition = kbAdminPortletInstanceConfiguration.socialBookmarksDisplayPosition();
-String socialBookmarksTypes = kbAdminPortletInstanceConfiguration.socialBookmarksTypes();
+if (resourceClassNameId == 0) {
+	resourceClassNameId = kbFolderClassNameId;
+}
 
-boolean enableKBTemplateKBComments = kbAdminPortletInstanceConfiguration.enableKBTemplateKBComments();
-boolean showKBTemplateKBComments = kbAdminPortletInstanceConfiguration.showKBTemplateKBComments();
+String kbArticlesOrderByCol = "priority";
+String kbArticlesOrderByType = "desc";
+
+boolean enableKBArticleDescription = false;
+boolean enableKBArticleRatings = true;
+String kbArticleRatingsType = "thumbs";
+boolean showKBArticleAssetEntries = true;
+boolean showKBArticleAttachments = true;
+boolean enableKBArticleAssetLinks = true;
+boolean enableKBArticleViewCountIncrement = true;
+boolean enableKBArticleSubscriptions = true;
+boolean enableKBArticleHistory = true;
+boolean enableKBArticlePrint = true;
+boolean enableSocialBookmarks = false;
+String socialBookmarksDisplayStyle = "menu";
+String socialBookmarksDisplayPosition = "bottom";
+String socialBookmarksTypes = PropsKeys.SOCIAL_BOOKMARK_TYPES;
+
+boolean enableKBTemplateKBComments = true;
+boolean showKBTemplateKBComments = true;
 
 boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
 int rssDelta = kbGroupServiceConfiguration.rssDelta();
