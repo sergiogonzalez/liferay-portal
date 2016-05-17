@@ -63,13 +63,7 @@ public interface KBSectionPortletInstanceConfiguration {
 	public boolean enableKBArticleRatings();
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean enableKBArticleKBComments();
-
-	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticleAttachments();
-
-	@Meta.AD(deflt = "false", required = false)
-	public boolean showKBArticleKBComments();
 
 	@Meta.AD(deflt = "thumbs", required = false)
 	public String kbArticleRatingsType();

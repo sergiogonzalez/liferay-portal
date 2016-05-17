@@ -39,9 +39,6 @@ public interface KBArticlePortletInstanceConfiguration {
 	public boolean enableKBArticleDescription();
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean enableKBArticleKBComments();
-
-	@Meta.AD(deflt = "true", required = false)
 	public boolean enableKBArticleRatings();
 
 	@Meta.AD(deflt = "thumbs", required = false)
@@ -49,9 +46,6 @@ public interface KBArticlePortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticleAssetEntries();
-
-	@Meta.AD(deflt = "false", required = false)
-	public boolean showKBArticleKBComments();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticleAttachments();
