@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.importer.util.KBArticleMarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,15 +51,18 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author James Hinkey
  * @author Sergio González
  * @author Jesse Rao
  */
-@Component(service = KBArticleImporter.class)
+@Component(
+	configurationPid = "com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration",
+	service = KBArticleImporter.class
+)
 public class KBArticleImporter {
 
 	public int processZipFile(
@@ -84,6 +88,12 @@ public class KBArticleImporter {
 		catch (IOException ioe) {
 			throw new KBArticleImportException(ioe);
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_kbGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			KBGroupServiceConfiguration.class, properties);
 	}
 
 	protected KBArticle addKBArticleMarkdown(
@@ -340,13 +350,6 @@ public class KBArticleImporter {
 		return importedKBArticlesCount;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBGroupServiceConfiguration(
-		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
-
-		_kbGroupServiceConfiguration = kbGroupServiceConfiguration;
-	}
-
 	private List<String> _getEntries(ZipReader zipReader)
 		throws KBArticleImportException {
 
@@ -363,6 +366,6 @@ public class KBArticleImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
-	private KBGroupServiceConfiguration _kbGroupServiceConfiguration;
+	private volatile KBGroupServiceConfiguration _kbGroupServiceConfiguration;
 
 }
