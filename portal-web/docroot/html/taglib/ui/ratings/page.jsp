@@ -150,10 +150,19 @@ if (ratingsEntry != null) {
 
 							<c:choose>
 								<c:when test="<%= !themeDisplay.isSignedIn() || TrashUtil.isInTrash(className, classPK) %>">
-									<span class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (thumbUp) ? "on" : "off" %>" title="<%= themeDisplay.isSignedIn() ? LanguageUtil.get(resourceBundle, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : StringPool.BLANK %>"><%= negativeVotes %></span>
+
+									<%
+									String thumbsTitle = StringPool.BLANK;
+
+									if (TrashUtil.isInTrash(className, classPK)) {
+										thumbsTitle = LanguageUtil.get(resourceBundle, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin");
+									}
+									%>
+
+									<span class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (thumbUp) ? "on" : "off" %>" title="<%= thumbsTitle %>"><%= positiveVotes %></span>
 
 									<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-										<span class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (thumbDown) ? "on" : "off" %>" title="<%= themeDisplay.isSignedIn() ? LanguageUtil.get(resourceBundle, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : StringPool.BLANK %>"><%= negativeVotes %></span>
+										<span class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (thumbDown) ? "on" : "off" %>" title="<%= thumbsTitle %>"><%= negativeVotes %></span>
 									</c:if>
 								</c:when>
 								<c:otherwise>
