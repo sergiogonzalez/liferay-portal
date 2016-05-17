@@ -50,7 +50,7 @@ boolean enableKBArticlePrint = kbAdminPortletInstanceConfiguration.enableKBArtic
 boolean enableSocialBookmarks = kbAdminPortletInstanceConfiguration.enableSocialBookmarks();
 String socialBookmarksDisplayStyle = kbAdminPortletInstanceConfiguration.socialBookmarksDisplayStyle();
 String socialBookmarksDisplayPosition = kbAdminPortletInstanceConfiguration.socialBookmarksDisplayPosition();
-String socialBookmarksTypes = kbAdminPortletInstanceConfiguration.socialBookmarksDisplayPosition();
+String socialBookmarksTypes = kbAdminPortletInstanceConfiguration.socialBookmarksTypes();
 
 boolean enableKBTemplateKBComments = kbAdminPortletInstanceConfiguration.enableKBTemplateKBComments();
 boolean showKBTemplateKBComments = kbAdminPortletInstanceConfiguration.showKBTemplateKBComments();

@@ -89,4 +89,10 @@ public interface KBAdminPortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBTemplateKBComments();
 
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
+		required = false
+	)
+	public String socialBookmarksTypes();
+
 }
