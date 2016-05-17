@@ -34,7 +34,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 		messageBoardsHomeURL.setParameter("tag", StringPool.BLANK);
 		%>
 
-		<aui:nav-item cssClass='<%= (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category")) ? "active" : StringPool.BLANK %>' href="<%= messageBoardsHomeURL.toString() %>" label="message-boards-home" selected='<%= (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category")) %>' />
+		<aui:nav-item cssClass='<%= (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category")) ? "active" : StringPool.BLANK %>' href="<%= messageBoardsHomeURL.toString() %>" label="message-boards-home" selected='<%= Boolean.TRUE %>' />
 
 		<%
 		PortletURL viewRecentPostsURL = renderResponse.createRenderURL();
