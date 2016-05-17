@@ -152,8 +152,7 @@ public class KBNavigationDisplayContext {
 		long kbFolderClassNameId = PortalUtil.getClassNameId(
 			KBFolderConstants.getClassName());
 
-		if ((_kbDisplayPortletInstanceConfiguration.resourceClassNameId() ==
-				kbFolderClassNameId) &&
+		if ((getResourceClassNameId() == kbFolderClassNameId) &&
 			!isLeftNavigationVisible()) {
 
 			return true;
