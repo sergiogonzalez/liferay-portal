@@ -35,7 +35,7 @@ boolean enableKBArticlePrint = kbArticlePortletInstanceConfiguration.enableKBArt
 boolean enableSocialBookmarks = kbArticlePortletInstanceConfiguration.enableSocialBookmarks();
 String socialBookmarksDisplayStyle = kbArticlePortletInstanceConfiguration.socialBookmarksDisplayStyle();
 String socialBookmarksDisplayPosition = kbArticlePortletInstanceConfiguration.socialBookmarksDisplayPosition();
-String socialBookmarksTypes = kbArticlePortletInstanceConfiguration.socialBookmarksDisplayPosition();
+String socialBookmarksTypes = kbArticlePortletInstanceConfiguration.socialBookmarksTypes();
 
 boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : kbGroupServiceConfiguration.enableRSS();
 int rssDelta = kbGroupServiceConfiguration.rssDelta();
