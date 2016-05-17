@@ -17,8 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "general");
-String tabs3 = ParamUtil.getString(request, "tabs3", "article");
+String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
 
 String emailFromName = kbGroupServiceConfiguration.emailFromName();
 String emailFromAddress = kbGroupServiceConfiguration.emailFromAddress();
@@ -75,11 +74,18 @@ else if (tabs2.equals("suggestion-resolved-email")) {
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-	<portlet:param name="tabs3" value="<%= tabs3 %>" />
 </liferay-portlet:renderURL>
 
+<%
+String tabs2Names = "email-from,article-added-email,article-updated-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
+
+if (PortalUtil.isRSSFeedsEnabled()) {
+	tabs2Names += ",rss";
+}
+%>
+
 <liferay-ui:tabs
-	names="general,email-from,article-added-email,article-updated-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email,display-settings"
+	names="<%= tabs2Names %>"
 	param="tabs2"
 	url="<%= configurationRenderURL %>"
 />
@@ -87,7 +93,6 @@ else if (tabs2.equals("suggestion-resolved-email")) {
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
 
 	<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
@@ -98,26 +103,6 @@ else if (tabs2.equals("suggestion-resolved-email")) {
 
 	<aui:fieldset>
 		<c:choose>
-			<c:when test='<%= tabs2.equals("general") %>'>
-				<div class="kb-field-wrapper">
-					<aui:field-wrapper label="order-by">
-						<aui:select inlineField="<%= true %>" label="" name="preferences--kbArticlesOrderByCol--" value="<%= kbArticlesOrderByCol %>">
-							<aui:option label="author" value="user-name" />
-							<aui:option label="create-date" />
-							<aui:option label="modified-date" />
-							<aui:option label="priority" />
-							<aui:option label="status" />
-							<aui:option label="title" />
-							<aui:option label="view-count" />
-						</aui:select>
-
-						<aui:select inlineField="<%= true %>" label="" name="preferences--kbArticlesOrderByType--" value="<%= kbArticlesOrderByType %>">
-							<aui:option label="ascending" value="asc" />
-							<aui:option label="descending" value="desc" />
-						</aui:select>
-					</aui:field-wrapper>
-				</div>
-			</c:when>
 			<c:when test='<%= tabs2.equals("email-from") %>'>
 				<aui:input label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" wrapperCssClass="lfr-input-text-container" />
 
@@ -390,36 +375,13 @@ else if (tabs2.equals("suggestion-resolved-email")) {
 					</dl>
 				</div>
 			</c:when>
-			<c:when test='<%= tabs2.equals("display-settings") %>'>
-				<liferay-ui:tabs
-					names="article,template"
-					param="tabs3"
-					url="<%= configurationRenderURL %>"
+			<c:when test='<%= tabs2.equals("rss") %>'>
+				<liferay-ui:rss-settings
+					delta="<%= rssDelta %>"
+					displayStyle="<%= rssDisplayStyle %>"
+					enabled="<%= enableRSS %>"
+					feedType="<%= rssFeedType %>"
 				/>
-
-				<c:choose>
-					<c:when test='<%= tabs3.equals("article") %>'>
-						<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= enableKBArticleDescription %>" />
-
-						<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= enableKBArticleRatings %>" />
-
-						<div class="kb-ratings-type" id="<portlet:namespace />ratingsType">
-							<aui:input checked='<%= kbArticleRatingsType.equals("stars") %>' label="use-star-ratings" name="preferences--kbArticleRatingsType--" type="radio" value="stars" />
-							<aui:input checked='<%= kbArticleRatingsType.equals("thumbs") %>' label="use-thumbs-up-thumbs-down" name="preferences--kbArticleRatingsType--" type="radio" value="thumbs" />
-						</div>
-
-						<aui:input label="show-asset-entries" name="preferences--showKBArticleAssetEntries--" type="checkbox" value="<%= showKBArticleAssetEntries %>" />
-
-						<aui:input label="enable-related-assets" name="preferences--enableKBArticleAssetLinks--" type="checkbox" value="<%= enableKBArticleAssetLinks %>" />
-
-						<aui:input label="enable-view-count-increment" name="preferences--enableKBArticleViewCountIncrement--" type="checkbox" value="<%= enableKBArticleViewCountIncrement %>" />
-					</c:when>
-					<c:when test='<%= tabs3.equals("template") %>'>
-						<aui:input label="enable-suggestions" name="preferences--enableKBTemplateKBComments--" type="checkbox" value="<%= enableKBTemplateKBComments %>" />
-
-						<aui:input label="show-suggestions" name="preferences--showKBTemplateKBComments--" type="checkbox" value="<%= showKBTemplateKBComments %>" />
-					</c:when>
-				</c:choose>
 			</c:when>
 		</c:choose>
 
@@ -428,9 +390,3 @@ else if (tabs2.equals("suggestion-resolved-email")) {
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
-
-<c:if test='<%= tabs2.equals("display-settings") && tabs3.equals("article") %>'>
-	<aui:script>
-		Liferay.Util.toggleBoxes('<portlet:namespace />enableKBArticleRatingsCheckbox', '<portlet:namespace />ratingsType');
-	</aui:script>
-</c:if>

@@ -47,9 +47,4 @@ String socialBookmarksDisplayStyle = kbDisplayPortletInstanceConfiguration.socia
 String socialBookmarksDisplayPosition = kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayPosition();
 String socialBookmarksTypes = kbDisplayPortletInstanceConfiguration.socialBookmarksTypes();
 String contentRootPrefix = kbDisplayPortletInstanceConfiguration.contentRootPrefix();
-
-boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
-int rssDelta = kbGroupServiceConfiguration.rssDelta();
-String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();
-String rssFeedType = kbGroupServiceConfiguration.rssFeedType();
 %>
