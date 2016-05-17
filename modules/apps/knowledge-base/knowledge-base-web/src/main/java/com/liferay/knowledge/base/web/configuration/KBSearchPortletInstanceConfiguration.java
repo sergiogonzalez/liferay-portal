@@ -45,9 +45,6 @@ public interface KBSearchPortletInstanceConfiguration {
 	public boolean showKBArticleViewsColumn();
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean showKBArticleKBComments();
-
-	@Meta.AD(deflt = "false", required = false)
 	public boolean enableKBArticleDescription();
 
 	@Meta.AD(deflt = "true", required = false)
@@ -61,9 +58,6 @@ public interface KBSearchPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticleAttachments();
-
-	@Meta.AD(deflt = "true", required = false)
-	public boolean enableKBArticleKBComments();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enableKBArticleAssetLinks();
