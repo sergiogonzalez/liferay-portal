@@ -38,9 +38,4 @@ boolean enableSocialBookmarks = kbSearchPortletInstanceConfiguration.enableSocia
 String socialBookmarksDisplayStyle = kbSearchPortletInstanceConfiguration.socialBookmarksDisplayStyle();
 String socialBookmarksDisplayPosition = kbSearchPortletInstanceConfiguration.socialBookmarksDisplayPosition();
 String socialBookmarksTypes = kbSearchPortletInstanceConfiguration.socialBookmarksTypes();
-
-boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
-int rssDelta = kbGroupServiceConfiguration.rssDelta();
-String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();
-String rssFeedType = kbGroupServiceConfiguration.rssFeedType();
 %>
