@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
@@ -327,6 +326,54 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		return kbComment;
 	}
 
+	protected String getEmailKBArticleSuggestionNotificationBody(
+		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+
+		if (status == KBCommentConstants.STATUS_COMPLETED) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionResolvedBody();
+		}
+		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionInProgressBody();
+		}
+		else if (status == KBCommentConstants.STATUS_NEW) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionReceivedBody();
+		}
+		else {
+			throw new IllegalArgumentException(
+				String.format("Unknown suggestion status %s", status));
+		}
+	}
+
+	protected String getEmailKBArticleSuggestionNotificationSubject(
+		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+
+		if (status == KBCommentConstants.STATUS_COMPLETED) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionResolvedSubject();
+		}
+		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionInProgressSubject();
+		}
+		else if (status == KBCommentConstants.STATUS_NEW) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionReceivedSubject();
+		}
+		else {
+			throw new IllegalArgumentException(
+				String.format("Unknown suggestion status %s", status));
+		}
+	}
+
 	protected KBGroupServiceConfiguration getKBGroupServiceConfiguration(
 			long groupId)
 		throws ConfigurationException {
@@ -355,6 +402,29 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		return KBCommentConstants.USER_RATING_DISLIKE;
 	}
 
+	protected boolean isSuggestionStatusChangeNotificationEnabled(
+		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+
+		if (status == KBCommentConstants.STATUS_COMPLETED) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionResolvedEnabled();
+		}
+		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionInProgressEnabled();
+		}
+		else if (status == KBCommentConstants.STATUS_NEW) {
+			return
+				kbGroupServiceConfiguration.
+					emailKBArticleSuggestionReceivedEnabled();
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void notifySubscribers(
 			long userId, KBComment kbComment, ServiceContext serviceContext)
 		throws PortalException {
@@ -362,29 +432,8 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
 			getKBGroupServiceConfiguration(kbComment.getGroupId());
 
-		int status = kbComment.getStatus();
-
-		if ((status == KBCommentConstants.STATUS_COMPLETED) &&
-			!kbGroupServiceConfiguration.
-				emailKBArticleSuggestionResolvedEnabled()) {
-
-			return;
-		}
-		else if ((status == KBCommentConstants.STATUS_IN_PROGRESS) &&
-				 !kbGroupServiceConfiguration.
-					 emailKBArticleSuggestionInProgressEnabled()) {
-
-			return;
-		}
-		else if ((status == KBCommentConstants.STATUS_NEW) &&
-				 !kbGroupServiceConfiguration.
-					 emailKBArticleSuggestionReceivedEnabled()) {
-
-			return;
-		}
-		else if ((status != KBCommentConstants.STATUS_COMPLETED) &&
-				 (status != KBCommentConstants.STATUS_IN_PROGRESS) &&
-				 (status != KBCommentConstants.STATUS_NEW)) {
+		if (!isSuggestionStatusChangeNotificationEnabled(
+				kbComment.getStatus(), kbGroupServiceConfiguration)) {
 
 			return;
 		}
@@ -392,33 +441,10 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		String fromName = kbGroupServiceConfiguration.emailFromName();
 		String fromAddress = kbGroupServiceConfiguration.emailFromAddress();
 
-		String subject = StringPool.BLANK;
-		String body = StringPool.BLANK;
-
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			subject =
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionResolvedSubject();
-			body =
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionResolvedBody();
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			subject =
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionInProgressSubject();
-			body =
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionInProgressBody();
-		}
-		else if (status == KBCommentConstants.STATUS_NEW) {
-			subject =
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionReceivedSubject();
-			body =
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionReceivedBody();
-		}
+		String subject = getEmailKBArticleSuggestionNotificationSubject(
+			kbComment.getStatus(), kbGroupServiceConfiguration);
+		String body = getEmailKBArticleSuggestionNotificationBody(
+			kbComment.getStatus(), kbGroupServiceConfiguration);
 
 		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
 			kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
