@@ -21,7 +21,15 @@ KBArticlePortletInstanceConfiguration kbArticlePortletInstanceConfiguration = po
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
+long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
+
 long resourcePrimKey = kbArticlePortletInstanceConfiguration.resourcePrimKey();
+long resourceClassNameId = kbArticlePortletInstanceConfiguration.resourceClassNameId();
+
+if (resourceClassNameId == 0) {
+	resourceClassNameId = kbFolderClassNameId;
+}
+
 boolean enableKBArticleDescription = kbArticlePortletInstanceConfiguration.enableKBArticleDescription();
 boolean enableKBArticleRatings = kbArticlePortletInstanceConfiguration.enableKBArticleRatings();
 String kbArticleRatingsType = kbArticlePortletInstanceConfiguration.kbArticleRatingsType();

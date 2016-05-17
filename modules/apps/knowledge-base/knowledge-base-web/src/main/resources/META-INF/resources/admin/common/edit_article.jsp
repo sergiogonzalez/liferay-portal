@@ -21,9 +21,9 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-long resourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "resourcePrimKey");
+resourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "resourcePrimKey");
 
-long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
+kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
 long parentResourceClassNameId = BeanParamUtil.getLong(kbArticle, request, "parentResourceClassNameId", kbFolderClassNameId);
 
