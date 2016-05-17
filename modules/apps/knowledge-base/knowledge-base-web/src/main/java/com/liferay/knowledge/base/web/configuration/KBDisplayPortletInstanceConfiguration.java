@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.util.StringPool;
 )
 public interface KBDisplayPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "0",required = false)
+	@Meta.AD(deflt = "0", required = false)
 	public long resourcePrimKey();
 
-	@Meta.AD(deflt = "0",required = false)
+	@Meta.AD(deflt = "0", required = false)
 	public long resourceClassNameId();
 
 	@Meta.AD(deflt = "false", required = false)
