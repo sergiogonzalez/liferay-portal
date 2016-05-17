@@ -20,28 +20,28 @@
 String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 String tabs3 = ParamUtil.getString(request, "tabs3", "article");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", AdminUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", AdminUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
+String emailFromName = kbGroupServiceConfiguration.emailFromName();
+String emailFromAddress = kbGroupServiceConfiguration.emailFromAddress();
 
-boolean emailKBArticleAddedEnabled = ParamUtil.getBoolean(request, "emailKBArticleAddedEnabled", AdminUtil.getEmailKBArticleAddedEnabled(portletPreferences));
-String emailKBArticleAddedSubject = ParamUtil.getString(request, "emailKBArticleAddedSubject", AdminUtil.getEmailKBArticleAddedSubject(portletPreferences));
-String emailKBArticleAddedBody = ParamUtil.getString(request, "emailKBArticleAddedBody", AdminUtil.getEmailKBArticleAddedBody(portletPreferences));
+boolean emailKBArticleAddedEnabled = kbGroupServiceConfiguration.emailKBArticleAddedEnabled();
+String emailKBArticleAddedSubject = kbGroupServiceConfiguration.emailKBArticleAddedSubject();
+String emailKBArticleAddedBody = kbGroupServiceConfiguration.emailKBArticleAddedBody();
 
-boolean emailKBArticleSuggestionInProgressEnabled = ParamUtil.getBoolean(request, "emailKBArticleSuggestionInProgressEnabled", AdminUtil.getEmailKBArticleSuggestionInProgressEnabled(portletPreferences));
-String emailKBArticleSuggestionInProgressSubject = ParamUtil.getString(request, "emailKBArticleSuggestionInProgressSubject", AdminUtil.getEmailKBArticleSuggestionInProgressSubject(portletPreferences));
-String emailKBArticleSuggestionInProgressBody = ParamUtil.getString(request, "emailKBArticleSuggestionInProgressBody", AdminUtil.getEmailKBArticleSuggestionInProgressBody(portletPreferences));
+boolean emailKBArticleSuggestionInProgressEnabled = kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressEnabled();
+String emailKBArticleSuggestionInProgressSubject = kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressSubject();
+String emailKBArticleSuggestionInProgressBody = kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressBody();
 
-boolean emailKBArticleSuggestionReceivedEnabled = ParamUtil.getBoolean(request, "emailKBArticleSuggestionReceivedEnabled", AdminUtil.getEmailKBArticleSuggestionReceivedEnabled(portletPreferences));
-String emailKBArticleSuggestionReceivedSubject = ParamUtil.getString(request, "emailKBArticleSuggestionReceivedSubject", AdminUtil.getEmailKBArticleSuggestionReceivedSubject(portletPreferences));
-String emailKBArticleSuggestionReceivedBody = ParamUtil.getString(request, "emailKBArticleSuggestionReceivedBody", AdminUtil.getEmailKBArticleSuggestionReceivedBody(portletPreferences));
+boolean emailKBArticleSuggestionReceivedEnabled = kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedEnabled();
+String emailKBArticleSuggestionReceivedSubject = kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedSubject();
+String emailKBArticleSuggestionReceivedBody = kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedBody();
 
-boolean emailKBArticleSuggestionResolvedEnabled = ParamUtil.getBoolean(request, "emailKBArticleSuggestionResolvedEnabled", AdminUtil.getEmailKBArticleSuggestionResolvedEnabled(portletPreferences));
-String emailKBArticleSuggestionResolvedSubject = ParamUtil.getString(request, "emailKBArticleSuggestionResolvedSubject", AdminUtil.getEmailKBArticleSuggestionResolvedSubject(portletPreferences));
-String emailKBArticleSuggestionResolvedBody = ParamUtil.getString(request, "emailKBArticleSuggestionResolvedBody", AdminUtil.getEmailKBArticleSuggestionResolvedBody(portletPreferences));
+boolean emailKBArticleSuggestionResolvedEnabled = kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedEnabled();
+String emailKBArticleSuggestionResolvedSubject = kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedSubject();
+String emailKBArticleSuggestionResolvedBody = kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedBody();
 
-boolean emailKBArticleUpdatedEnabled = ParamUtil.getBoolean(request, "emailKBArticleUpdatedEnabled", AdminUtil.getEmailKBArticleUpdatedEnabled(portletPreferences));
-String emailKBArticleUpdatedSubject = ParamUtil.getString(request, "emailKBArticleUpdatedSubject", AdminUtil.getEmailKBArticleUpdatedSubject(portletPreferences));
-String emailKBArticleUpdatedBody = ParamUtil.getString(request, "emailKBArticleUpdatedBody", AdminUtil.getEmailKBArticleUpdatedBody(portletPreferences));
+boolean emailKBArticleUpdatedEnabled = kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled();
+String emailKBArticleUpdatedSubject = kbGroupServiceConfiguration.emailKBArticleUpdatedSubject();
+String emailKBArticleUpdatedBody = kbGroupServiceConfiguration.emailKBArticleUpdatedBody();
 
 String editorParam = StringPool.BLANK;
 String editorBody = StringPool.BLANK;

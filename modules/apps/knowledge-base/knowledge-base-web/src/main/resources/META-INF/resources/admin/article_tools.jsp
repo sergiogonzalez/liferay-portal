@@ -23,10 +23,10 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 %>
 
 <div class="kb-article-tools">
-	<c:if test="<%= PortletPropsValues.KNOWLEDGE_BASE_SOURCE_URL_ENABLED && Validator.isUrl(kbArticle.getSourceURL()) %>">
+	<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() && Validator.isUrl(kbArticle.getSourceURL()) %>">
 		<a href="<%= kbArticle.getSourceURL() %>" target="_blank">
 			<span class="kb-article-source-url label label-success">
-				<liferay-ui:message key="<%= PortletPropsValues.KNOWLEDGE_BASE_SOURCE_URL_EDIT_MESSAGE_KEY %>" />
+				<liferay-ui:message key="<%= kbGroupServiceConfiguration.sourceURLEditMessageKey() %>" />
 			</span>
 		</a>
 	</c:if>
