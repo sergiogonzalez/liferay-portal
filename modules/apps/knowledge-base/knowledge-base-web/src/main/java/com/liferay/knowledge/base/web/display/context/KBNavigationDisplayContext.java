@@ -171,9 +171,10 @@ public class KBNavigationDisplayContext {
 					_kbDisplayPortletInstanceConfiguration.
 						resourceClassNameId();
 			}
-
-			_resourceClassNameId = PortalUtil.getClassNameId(
-				KBFolderConstants.getClassName());
+			else {
+				_resourceClassNameId = PortalUtil.getClassNameId(
+					KBFolderConstants.getClassName());
+			}
 		}
 
 		return _resourceClassNameId;
