@@ -68,7 +68,10 @@ else if (tabs2.equals("suggestion-resolved-email")) {
 }
 %>
 
-<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+	<portlet:param name="serviceName" value="<%= KBConstants.SERVICE_NAME %>" />
+	<portlet:param name="settingsScope" value="group" />
+</liferay-portlet:actionURL>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
