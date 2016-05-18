@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.upgrade.v7_0_0.util.DLFolderTable;
@@ -176,7 +177,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
 						"update DLFileVersion set title = ? where " +
-							"fileEntryId = " + "? and version = ?");
+							"fileEntryId = ? and version = ? and status != ?");
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
@@ -250,6 +251,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						ps3.setString(1, uniqueTitle);
 						ps3.setLong(2, fileEntryId);
 						ps3.setString(3, version);
+						ps3.setInt(4, WorkflowConstants.STATUS_IN_TRASH);
 
 						ps3.addBatch();
 					}
