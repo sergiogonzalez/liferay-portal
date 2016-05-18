@@ -16,6 +16,17 @@
 
 <%@ include file="/admin/init.jsp" %>
 
+<%
+String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
+portletURL.setParameter("orderBycol", orderByCol);
+portletURL.setParameter("orderByType", orderByType);
+%>
+
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewTemplatesURL">
@@ -44,6 +55,54 @@
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
+<%
+String keywords = ParamUtil.getString(request, "keywords");
+%>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="kbTemplates"
+>
+	<c:if test="<%= Validator.isNull(keywords) %>">
+
+		<%
+		PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+		%>
+
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"descriptive"} %>'
+				portletURL="<%= displayStyleURL %>"
+				selectedDisplayStyle="descriptive"
+			/>
+		</liferay-frontend:management-bar-buttons>
+
+		<%
+		PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+		%>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= navigationPortletURL %>"
+			/>
+
+			<%
+			PortletURL sortURL = renderResponse.createRenderURL();
+
+			sortURL.setParameter("mvcPath", "/admin/view_templates.jsp");
+			%>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"title", "user-name", "create-date", "modified-date"} %>'
+				portletURL="<%= sortURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</c:if>
+</liferay-frontend:management-bar>
+
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
 </liferay-portlet:renderURL>
@@ -58,7 +117,7 @@
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:search-container
-			id="kbTemplateAdminSearchContainer"
+			id="kbTemplates"
 			rowChecker="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) ? new RowChecker(renderResponse) : null %>"
 			searchContainer="<%= new KBTemplateSearch(renderRequest, iteratorURL) %>"
 		>
