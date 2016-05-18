@@ -72,8 +72,8 @@ public class KBArticleImporterUtil {
 			return addImageFileEntry(
 				userId, kbArticle, imageFileName,
 				zipReader.getEntryAsInputStream(
-					kbGroupServiceConfiguration.
-						markdownImporterImageFolder() + imageFileName),
+					kbGroupServiceConfiguration.markdownImporterImageFolder() +
+						imageFileName),
 				fileEntriesMap);
 		}
 		catch (Exception e) {
