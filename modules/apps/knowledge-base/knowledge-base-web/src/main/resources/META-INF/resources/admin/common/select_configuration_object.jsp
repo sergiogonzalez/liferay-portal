@@ -17,10 +17,6 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
-
-long resourceClassNameId = GetterUtil.getLong(portletPreferences.getValue("resourceClassNameId", null), kbFolderClassNameId);
-long resourcePrimKey = GetterUtil.getLong(portletPreferences.getValue("resourcePrimKey", null));
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
