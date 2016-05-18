@@ -97,7 +97,6 @@ page import="com.liferay.knowledge.base.web.display.context.util.KBArticleURLHel
 page import="com.liferay.knowledge.base.web.search.KBArticleDisplayTerms" %><%@
 page import="com.liferay.knowledge.base.web.search.KBArticleSearch" %><%@
 page import="com.liferay.knowledge.base.web.search.KBArticleSearchTerms" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateDisplayTerms" %><%@
 page import="com.liferay.knowledge.base.web.search.KBTemplateSearch" %><%@
 page import="com.liferay.knowledge.base.web.search.KBTemplateSearchTerms" %><%@
 page import="com.liferay.knowledge.base.web.util.KBArticleAssetEntriesUtil" %><%@
