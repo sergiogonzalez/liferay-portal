@@ -114,15 +114,6 @@
 						<aui:nav-item cssClass="hide" id="deleteKBTemplates" label="delete" />
 					</c:if>
 
-					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_TEMPLATE) %>">
-						<liferay-portlet:renderURL var="addKBTemplateURL">
-							<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-						</liferay-portlet:renderURL>
-
-						<aui:nav-item href="<%= addKBTemplateURL %>" label="add-template" />
-					</c:if>
-
 					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) %>">
 						<liferay-security:permissionsURL
 							modelResource="com.liferay.knowledge.base.admin"
@@ -141,6 +132,17 @@
 		</liferay-ui:search-container>
 	</aui:fieldset>
 </aui:form>
+
+<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_TEMPLATE) %>">
+	<liferay-portlet:renderURL var="addKBTemplateURL">
+		<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-template") %>' url="<%= addKBTemplateURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script use="aui-base,liferay-util-list-fields">
 	var deleteKBTemplates = A.one('#<portlet:namespace />deleteKBTemplates');
