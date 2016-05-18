@@ -83,7 +83,6 @@ page import="com.liferay.knowledge.base.service.permission.KBTemplatePermission"
 page import="com.liferay.knowledge.base.service.permission.SuggestionPermission" %><%@
 page import="com.liferay.knowledge.base.util.KnowledgeBaseUtil" %><%@
 page import="com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator" %><%@
-page import="com.liferay.knowledge.base.web.configuration.KBAdminPortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBArticlePortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBSearchPortletInstanceConfiguration" %><%@
