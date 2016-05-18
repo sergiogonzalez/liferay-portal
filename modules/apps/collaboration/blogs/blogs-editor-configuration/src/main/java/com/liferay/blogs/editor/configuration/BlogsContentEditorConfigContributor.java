@@ -68,10 +68,10 @@ public class BlogsContentEditorConfigContributor
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("a[*]; ");
-		sb.append(_getTextAllowedContent() + " ");
-		sb.append("div[*]; img[class, !src] { height, width }; ");
-		sb.append(_getListsAllowedContent() + " ");
-		sb.append("p { text-align }; ");
+		sb.append(_getTextAllowedContent());
+		sb.append(" div[*]; img[class, !src] { height, width }; ");
+		sb.append(_getListsAllowedContent());
+		sb.append(" p { text-align }; ");
 		sb.append(_getTableAllowedContent());
 
 		jsonObject.put("allowedContent", sb.toString());
