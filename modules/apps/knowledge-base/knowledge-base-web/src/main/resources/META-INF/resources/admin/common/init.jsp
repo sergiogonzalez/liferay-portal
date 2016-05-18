@@ -25,7 +25,7 @@ if (resourceClassNameId == 0) {
 	resourceClassNameId = kbFolderClassNameId;
 }
 
-long resourcePrimKey = GetterUtil.getLong(request.getAttribute("init.jsp-resourcePrimKey"), 0);
+long resourcePrimKey = GetterUtil.getLong(request.getAttribute("init.jsp-resourcePrimKey"));
 
 boolean enableKBArticleDescription = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticleDescription"));
 boolean enableKBArticleRatings = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticleRatings"));

@@ -22,4 +22,4 @@ String navItem = "viewNewSuggestions";
 int suggestionStatus = KBCommentConstants.STATUS_NEW;
 %>
 
-<%@ include file="/META-INF/resources/admin/view_suggestions_in_state.jspf" %>
+<%@ include file="/META-INF/resources/admin/common/view_suggestions_in_state.jspf" %>
