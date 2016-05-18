@@ -101,6 +101,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 			/>
 		</liferay-frontend:management-bar-filters>
 	</c:if>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKBTemplates();" %>' icon="times" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -186,34 +190,13 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	var deleteKBTemplates = A.one('#<portlet:namespace />deleteKBTemplates');
+<aui:script>
+	function <portlet:namespace />deleteKBTemplates() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-templates") %>')) {
+			document.<portlet:namespace />fm.method = 'post';
+			document.<portlet:namespace />fm.<portlet:namespace />kbTemplateIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-	if (deleteKBTemplates) {
-		deleteKBTemplates.on(
-			'click',
-			function() {
-				if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-templates") %>')) {
-					document.<portlet:namespace />fm.method = 'post';
-					document.<portlet:namespace />fm.<portlet:namespace />kbTemplateIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
-					submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /></liferay-portlet:actionURL>');
-				}
-			}
-		);
+			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /></liferay-portlet:actionURL>');
+		}
 	}
-
-	A.one('#<portlet:namespace />kbTemplateAdminSearchContainer').delegate(
-		'click',
-		function() {
-			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
-
-			var deleteKBTemplates = A.one('#<portlet:namespace />deleteKBTemplates');
-
-			if (deleteKBTemplates) {
-				deleteKBTemplates.toggle(!hide);
-			}
-		},
-		'input[type=checkbox]'
-	);
 </aui:script>
