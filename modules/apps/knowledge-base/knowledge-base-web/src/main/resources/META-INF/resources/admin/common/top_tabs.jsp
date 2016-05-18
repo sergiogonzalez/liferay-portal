@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 String mvcPath = ParamUtil.getString(request, "mvcPath");

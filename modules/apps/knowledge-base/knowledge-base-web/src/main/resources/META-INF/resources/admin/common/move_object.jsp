@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
@@ -71,7 +71,7 @@ else {
 			<aui:input cssClass="input-mini" label="priority" name="currentPriority" readonly="<%= true %>" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
 		</aui:field-wrapper>
 
-		<liferay-util:include page="/admin/new_parent.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/new_parent.jsp" servletContext="<%= application %>" />
 
 		<aui:button-row cssClass="kb-submit-buttons">
 			<aui:button type="submit" value="move" />

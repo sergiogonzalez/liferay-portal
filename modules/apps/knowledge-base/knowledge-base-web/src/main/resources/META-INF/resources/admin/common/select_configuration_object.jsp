@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
