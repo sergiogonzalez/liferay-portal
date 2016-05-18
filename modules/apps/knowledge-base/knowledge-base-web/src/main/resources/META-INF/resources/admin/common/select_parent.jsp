@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);

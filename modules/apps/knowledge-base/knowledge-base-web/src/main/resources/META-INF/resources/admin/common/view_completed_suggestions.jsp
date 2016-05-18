@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
-String emptyResultsMessage = "no-new-suggestion-was-found";
-String navItem = "viewNewSuggestions";
-int suggestionStatus = KBCommentConstants.STATUS_NEW;
+String emptyResultsMessage = "no-completed-suggestion-was-found";
+String navItem = "viewCompletedSuggestions";
+int suggestionStatus = KBCommentConstants.STATUS_COMPLETED;
 %>
 
-<%@ include file="/admin/view_suggestions_in_state.jspf" %>
+<%@ include file="/META-INF/resources/admin/view_suggestions_in_state.jspf" %>

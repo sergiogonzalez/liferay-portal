@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
@@ -54,7 +54,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 								request.setAttribute("template_comment.jsp-kb_comment", kbComment);
 								%>
 
-								<liferay-util:include page="/admin/template_comment.jsp" servletContext="<%= application %>" />
+								<liferay-util:include page="/admin/common/template_comment.jsp" servletContext="<%= application %>" />
 							</c:if>
 
 							<aui:input label="" name="content" />
@@ -104,7 +104,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 							request.setAttribute("template_comment.jsp-kb_comment", curKBComment);
 							%>
 
-							<liferay-util:include page="/admin/template_comment.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/admin/common/template_comment.jsp" servletContext="<%= application %>" />
 
 						<%
 						}

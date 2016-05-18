@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
@@ -199,7 +199,7 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 		<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" persistState="<%= true %>" title="attachments">
 			<aui:fieldset>
 				<div id="<portlet:namespace />attachments">
-					<liferay-util:include page="/admin/attachments.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
 				</div>
 			</aui:fieldset>
 		</liferay-ui:panel>
