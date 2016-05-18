@@ -37,16 +37,6 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 		value = names.get(names.size() - 1);
 	}
 
-	if (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_KB_TEMPLATES)) {
-		PortletURL kbTemplatesURL = renderResponse.createRenderURL();
-
-		kbTemplatesURL.setParameter("mvcPath", "/admin/view_templates.jsp");
-
-		names.add("templates");
-		urls.add(kbTemplatesURL.toString());
-		value = mvcPath.contains("template") ? names.get(names.size() - 1) : value;
-	}
-
 	if (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_SUGGESTIONS)) {
 		PortletURL kbSuggestionsURL = renderResponse.createRenderURL();
 
@@ -63,7 +53,6 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 		param="topTabs"
 		url0="<%= (urls.size() > 0) ? urls.get(0) : null %>"
 		url1="<%= (urls.size() > 1) ? urls.get(1) : null %>"
-		url2="<%= (urls.size() > 2) ? urls.get(2) : null %>"
 		value="<%= value %>"
 	/>
 </c:if>
