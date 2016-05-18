@@ -34,7 +34,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 		messageBoardsHomeURL.setParameter("tag", StringPool.BLANK);
 		%>
 
-		<aui:nav-item cssClass='<%= (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category")) ? "active" : StringPool.BLANK %>' href="<%= messageBoardsHomeURL.toString() %>" label="message-boards-home" selected='<%= (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category")) %>' />
+		<aui:nav-item href="<%= messageBoardsHomeURL.toString() %>" label="message-boards-home" selected='<%= mvcRenderCommandName.equals("/message_boards/edit_category") || mvcRenderCommandName.equals("/message_boards/edit_message") || (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mvcRenderCommandName.equals("/message_boards/view_message")) %>' />
 
 		<%
 		PortletURL viewRecentPostsURL = renderResponse.createRenderURL();
@@ -42,7 +42,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 		viewRecentPostsURL.setParameter("mvcRenderCommandName", "/message_boards/view_recent_posts");
 		%>
 
-		<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts") ? "active" : StringPool.BLANK %>' href="<%= viewRecentPostsURL.toString() %>" label="recent-posts" selected='<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>' />
+		<aui:nav-item href="<%= viewRecentPostsURL.toString() %>" label="recent-posts" selected='<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>' />
 
 		<c:if test="<%= themeDisplay.isSignedIn() && !portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) %>">
 
@@ -52,7 +52,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 			viewMyPostsURL.setParameter("mvcRenderCommandName", "/message_boards/view_my_posts");
 			%>
 
-			<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") ? "active" : StringPool.BLANK %>' href="<%= viewMyPostsURL.toString() %>" label="my-posts" selected='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") %>' />
+			<aui:nav-item href="<%= viewMyPostsURL.toString() %>" label="my-posts" selected='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") %>' />
 
 			<c:if test="<%= mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled() %>">
 
@@ -62,7 +62,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 				viewMySubscriptionsURL.setParameter("mvcRenderCommandName", "/message_boards/view_my_subscriptions");
 				%>
 
-				<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") ? "active" : StringPool.BLANK %>' href="<%= viewMySubscriptionsURL.toString() %>" label="my-subscriptions" selected='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") %>' />
+				<aui:nav-item href="<%= viewMySubscriptionsURL.toString() %>" label="my-subscriptions" selected='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") %>' />
 			</c:if>
 		</c:if>
 
@@ -72,7 +72,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 		viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
 		%>
 
-		<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_statistics") ? "active" : StringPool.BLANK %>' href="<%= viewStatisticsURL.toString() %>" label="statistics" selected='<%= mvcRenderCommandName.equals("/message_boards/view_statistics") %>' />
+		<aui:nav-item href="<%= viewStatisticsURL.toString() %>" label="statistics" selected='<%= mvcRenderCommandName.equals("/message_boards/view_statistics") %>' />
 
 		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
 
@@ -82,7 +82,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 			bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
 			%>
 
-			<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_banned_users") ? "active" : StringPool.BLANK %>' href="<%= bannedUsersURL.toString() %>" label="banned-users" selected='<%= mvcRenderCommandName.equals("/message_boards/view_banned_users") %>' />
+			<aui:nav-item href="<%= bannedUsersURL.toString() %>" label="banned-users" selected='<%= mvcRenderCommandName.equals("/message_boards/view_banned_users") %>' />
 		</c:if>
 	</aui:nav>
 

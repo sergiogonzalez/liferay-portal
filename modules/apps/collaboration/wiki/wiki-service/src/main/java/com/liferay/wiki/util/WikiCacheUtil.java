@@ -66,7 +66,9 @@ public class WikiCacheUtil {
 			pageDisplay = _getPageDisplay(
 				nodeId, title, viewPageURL, editPageURL, attachmentURLPrefix);
 
-			_portalCache.put(key, pageDisplay);
+			if (pageDisplay != null) {
+				_portalCache.put(key, pageDisplay);
+			}
 		}
 
 		if (_log.isDebugEnabled()) {
