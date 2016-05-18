@@ -16,8 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.knowledge.base.web.search.KBArticleSearch" %>
-
 <%
 boolean showKBArticlesSectionsTitle = kbSectionPortletInstanceConfiguration.showKBArticlesSectionsTitle();
 String[] kbArticlesSections = kbSectionPortletInstanceConfiguration.kbArticlesSections();
@@ -42,4 +40,19 @@ boolean enableSocialBookmarks = kbSectionPortletInstanceConfiguration.enableSoci
 String socialBookmarksDisplayStyle = kbSectionPortletInstanceConfiguration.socialBookmarksDisplayStyle();
 String socialBookmarksDisplayPosition = kbSectionPortletInstanceConfiguration.socialBookmarksDisplayPosition();
 String socialBookmarksTypes = kbSectionPortletInstanceConfiguration.socialBookmarksTypes();
+
+request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
+request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
+request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
+request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
+request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
+request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);
+request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", enableKBArticleViewCountIncrement);
+request.setAttribute("init.jsp-enableKBArticleSubscriptions", enableKBArticleSubscriptions);
+request.setAttribute("init.jsp-enableKBArticleHistory", enableKBArticleHistory);
+request.setAttribute("init.jsp-enableKBArticlePrint", enableKBArticlePrint);
+request.setAttribute("init.jsp-enableSocialBookmarks", enableSocialBookmarks);
+request.setAttribute("init.jsp-socialBookmarksDisplayStyle", socialBookmarksDisplayStyle);
+request.setAttribute("init.jsp-socialBookmarksDisplayPosition", socialBookmarksDisplayPosition);
+request.setAttribute("init.jsp-socialBookmarksTypes", socialBookmarksTypes);
 %>
