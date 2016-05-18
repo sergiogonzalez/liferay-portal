@@ -16,7 +16,33 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<liferay-util:include page="/admin/top_tabs.jsp" servletContext="<%= application %>" />
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<portlet:renderURL var="viewTemplatesURL">
+			<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewTemplatesURL %>"
+			label="templates"
+			selected="<%= true %>"
+		/>
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
+		</liferay-portlet:renderURL>
+
+		<aui:form action="<%= searchURL %>" method="get" name="fm2">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<aui:nav-bar-search>
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:nav-bar-search>
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
@@ -109,15 +135,6 @@
 						<aui:nav-item href="<%= permissionsURL %>" label="permissions" useDialog="<%= true %>" />
 					</c:if>
 				</aui:nav>
-
-				<aui:nav-bar-search
-					cssClass="navbar-search-advanced"
-				>
-					<liferay-ui:search-form
-						page="/admin/template_search.jsp"
-						servletContext="<%= application %>"
-					/>
-				</aui:nav-bar-search>
 			</aui:nav-bar>
 
 			<liferay-ui:search-iterator type='<%= searchTerms.hasSearchTerms() ? "more" : "regular" %>' />
