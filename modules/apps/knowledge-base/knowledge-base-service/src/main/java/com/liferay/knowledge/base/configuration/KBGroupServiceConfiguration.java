@@ -24,8 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(
 	category = "collaboration",
-	scope = ExtendedObjectClassDefinition.Scope.GROUP,
-	settingsId = KBConstants.SERVICE_NAME
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration",
