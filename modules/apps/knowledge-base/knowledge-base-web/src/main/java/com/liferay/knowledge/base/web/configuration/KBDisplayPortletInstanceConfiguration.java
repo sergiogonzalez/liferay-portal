@@ -72,17 +72,17 @@ public interface KBDisplayPortletInstanceConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enableSocialBookmarks();
 
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
-		required = false
-	)
-	public String socialBookmarksTypes();
-
 	@Meta.AD(deflt = "menu", required = false)
 	public String socialBookmarksDisplayStyle();
 
 	@Meta.AD(deflt = "bottom", required = false)
 	public String socialBookmarksDisplayPosition();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
+		required = false
+	)
+	public String socialBookmarksTypes();
 
 	@Meta.AD(deflt = StringPool.BLANK, required = false)
 	public String contentRootPrefix();
