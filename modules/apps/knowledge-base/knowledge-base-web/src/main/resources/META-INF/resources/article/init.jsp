@@ -23,12 +23,17 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
-long resourcePrimKey = kbArticlePortletInstanceConfiguration.resourcePrimKey();
 long resourceClassNameId = kbArticlePortletInstanceConfiguration.resourceClassNameId();
 
 if (resourceClassNameId == 0) {
 	resourceClassNameId = kbFolderClassNameId;
 }
+
+request.setAttribute("init.jsp-resourceClassNameId", resourceClassNameId);
+
+long resourcePrimKey = kbArticlePortletInstanceConfiguration.resourcePrimKey();
+
+request.setAttribute("init.jsp-resourcePrimKey", resourcePrimKey);
 
 boolean enableKBArticleDescription = kbArticlePortletInstanceConfiguration.enableKBArticleDescription();
 boolean enableKBArticleRatings = kbArticlePortletInstanceConfiguration.enableKBArticleRatings();
@@ -44,4 +49,19 @@ boolean enableSocialBookmarks = kbArticlePortletInstanceConfiguration.enableSoci
 String socialBookmarksDisplayStyle = kbArticlePortletInstanceConfiguration.socialBookmarksDisplayStyle();
 String socialBookmarksDisplayPosition = kbArticlePortletInstanceConfiguration.socialBookmarksDisplayPosition();
 String socialBookmarksTypes = kbArticlePortletInstanceConfiguration.socialBookmarksTypes();
+
+request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
+request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
+request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
+request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
+request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
+request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);
+request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", enableKBArticleViewCountIncrement);
+request.setAttribute("init.jsp-enableKBArticleSubscriptions", enableKBArticleSubscriptions);
+request.setAttribute("init.jsp-enableKBArticleHistory", enableKBArticleHistory);
+request.setAttribute("init.jsp-enableKBArticlePrint", enableKBArticlePrint);
+request.setAttribute("init.jsp-enableSocialBookmarks", enableSocialBookmarks);
+request.setAttribute("init.jsp-socialBookmarksDisplayStyle", socialBookmarksDisplayStyle);
+request.setAttribute("init.jsp-socialBookmarksDisplayPosition", socialBookmarksDisplayPosition);
+request.setAttribute("init.jsp-socialBookmarksTypes", socialBookmarksTypes);
 %>

@@ -16,30 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
-page import="com.liferay.knowledge.base.constants.KBCommentConstants" %><%@
-page import="com.liferay.knowledge.base.service.util.AdminUtil" %><%@
-page import="com.liferay.knowledge.base.web.display.context.KBSuggestionListDisplayContext" %><%@
-page import="com.liferay.knowledge.base.web.search.KBArticleDisplayTerms" %><%@
-page import="com.liferay.knowledge.base.web.search.KBArticleSearch" %><%@
-page import="com.liferay.knowledge.base.web.search.KBArticleSearchTerms" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateDisplayTerms" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateSearch" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateSearchTerms" %><%@
-page import="com.liferay.knowledge.base.web.util.KBArticleAssetEntriesUtil" %><%@
-page import="com.liferay.portal.kernel.model.Portlet" %><%@
-page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.servlet.SessionMessages" %>
-
 <%
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
 long resourceClassNameId = kbFolderClassNameId;
-long resourcePrimKey = 0;
 
 if (resourceClassNameId == 0) {
 	resourceClassNameId = kbFolderClassNameId;
 }
+
+long resourcePrimKey = 0;
 
 String kbArticlesOrderByCol = "priority";
 String kbArticlesOrderByType = "desc";
@@ -58,6 +44,21 @@ boolean enableSocialBookmarks = false;
 String socialBookmarksDisplayStyle = "menu";
 String socialBookmarksDisplayPosition = "bottom";
 String socialBookmarksTypes = PropsKeys.SOCIAL_BOOKMARK_TYPES;
+
+request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
+request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
+request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
+request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
+request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
+request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);
+request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", enableKBArticleViewCountIncrement);
+request.setAttribute("init.jsp-enableKBArticleSubscriptions", enableKBArticleSubscriptions);
+request.setAttribute("init.jsp-enableKBArticleHistory", enableKBArticleHistory);
+request.setAttribute("init.jsp-enableKBArticlePrint", enableKBArticlePrint);
+request.setAttribute("init.jsp-enableSocialBookmarks", enableSocialBookmarks);
+request.setAttribute("init.jsp-socialBookmarksDisplayStyle", socialBookmarksDisplayStyle);
+request.setAttribute("init.jsp-socialBookmarksDisplayPosition", socialBookmarksDisplayPosition);
+request.setAttribute("init.jsp-socialBookmarksTypes", socialBookmarksTypes);
 
 boolean enableKBTemplateKBComments = true;
 boolean showKBTemplateKBComments = true;
