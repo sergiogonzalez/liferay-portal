@@ -43,7 +43,7 @@ boolean enableKBArticlePrint = true;
 boolean enableSocialBookmarks = false;
 String socialBookmarksDisplayStyle = "menu";
 String socialBookmarksDisplayPosition = "bottom";
-String socialBookmarksTypes = PropsKeys.SOCIAL_BOOKMARK_TYPES;
+String socialBookmarksTypes = PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES);
 
 request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
 request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
