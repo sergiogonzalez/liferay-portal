@@ -58,6 +58,9 @@ try {
 <%
 }
 catch (WikiFormatException wfe) {
+	if (_log.isDebugEnabled()) {
+		_log.debug("Unable to get wiki engine for " + wikiPage.getFormat());
+	}
 %>
 
 	<div class="alert alert-danger">
