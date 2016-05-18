@@ -65,12 +65,13 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("a[*]; b em hr h1 h2 h3 h4 h5 h6 i img[class, !src] ");
-		sb.append("{height, width}; li ol p{text-align}; pre strong ");
-		sb.append("table[border, cellpadding, cellspacing] {width}; tbody td ");
-		sb.append("th[scope]; thead tr[scope]; u ul;");
+		sb.append("a[*]; b code em h1 h2 h3 h4 h5 h6 hr i pre strong u; ");
+		sb.append("div[*]; img[class, !src] { height, width }; ");
+		sb.append("li ol ul; p { text-align }; ");
+		sb.append("table[border, cellpadding, cellspacing] { width } ");
+		sb.append("thead tbody tr[scope] th[scope] td;");
 
 		jsonObject.put("allowedContent", sb.toString());
 
