@@ -75,40 +75,43 @@
 				keyProperty="kbTemplateId"
 				modelVar="kbTemplate"
 			>
-				<liferay-ui:search-container-column-text
-					orderable="<%= true %>"
-					property="title"
+				<liferay-ui:search-container-column-user
+					cssClass="user-icon-lg"
+					showDetails="<%= false %>"
+					userId="<%= kbTemplate.getUserId() %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="author"
-					orderable="<%= true %>"
-					orderableProperty="user-name"
-					property="userName"
-				/>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
-				<liferay-ui:search-container-column-date
-					cssClass="kb-column-no-wrap"
-					name="create-date"
-					orderable="<%= true %>"
-					value="<%= kbTemplate.getCreateDate() %>"
-				/>
+					<%
+					Date modifiedDate = kbTemplate.getModifiedDate();
 
-				<liferay-ui:search-container-column-date
-					cssClass="kb-column-no-wrap"
-					name="modified-date"
-					orderable="<%= true %>"
-					value="<%= kbTemplate.getModifiedDate() %>"
-				/>
+					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+					%>
+
+					<h5 class="text-default">
+						<liferay-ui:message arguments="<%= new String[] {kbTemplate.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+					</h5>
+
+					<liferay-portlet:renderURL var="editURL">
+						<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
+					</liferay-portlet:renderURL>
+
+					<h4>
+						<aui:a href="<%= editURL.toString() %>">
+							<%= kbTemplate.getTitle() %>
+						</aui:a>
+					</h4>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
 					path="/admin/template_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator type='<%= searchTerms.hasSearchTerms() ? "more" : "regular" %>' />
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:fieldset>
 </aui:form>
