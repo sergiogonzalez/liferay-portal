@@ -108,26 +108,6 @@
 				/>
 			</liferay-ui:search-container-row>
 
-			<aui:nav-bar>
-				<aui:nav cssClass="navbar-nav">
-					<c:if test="<%= (total > 0) && AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) %>">
-						<aui:nav-item cssClass="hide" id="deleteKBTemplates" label="delete" />
-					</c:if>
-
-					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) %>">
-						<liferay-security:permissionsURL
-							modelResource="com.liferay.knowledge.base.admin"
-							modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-							resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-							var="permissionsURL"
-							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						/>
-
-						<aui:nav-item href="<%= permissionsURL %>" label="permissions" useDialog="<%= true %>" />
-					</c:if>
-				</aui:nav>
-			</aui:nav-bar>
-
 			<liferay-ui:search-iterator type='<%= searchTerms.hasSearchTerms() ? "more" : "regular" %>' />
 		</liferay-ui:search-container>
 	</aui:fieldset>
