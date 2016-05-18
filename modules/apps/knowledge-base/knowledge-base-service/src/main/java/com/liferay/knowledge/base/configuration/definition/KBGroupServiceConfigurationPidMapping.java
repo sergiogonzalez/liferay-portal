@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.knowledge.base.configuration;
+package com.liferay.knowledge.base.configuration.definition;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
+import com.liferay.knowledge.base.constants.KBConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,12 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component
-public class KBGroupServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class KBGroupServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return KBGroupServiceConfiguration.class;
+	}
+
+	@Override
+	public String getConfigurationPid() {
+		return KBConstants.SERVICE_NAME;
 	}
 
 }
