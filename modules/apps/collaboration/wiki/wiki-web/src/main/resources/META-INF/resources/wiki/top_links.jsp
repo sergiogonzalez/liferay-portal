@@ -83,7 +83,7 @@ if (portletTitleBasedNavigation) {
 			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected();
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= frontPageURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item href="<%= frontPageURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
 			PortletURL viewRecentChangesURL = wikiURLHelper.getViewRecentChangesURL(node);
@@ -92,7 +92,7 @@ if (portletTitleBasedNavigation) {
 			selected = wikiVisualizationHelper.isViewRecentChangesNavItemSelected();
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewRecentChangesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item href="<%= viewRecentChangesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
 			PortletURL viewAllPagesURL = wikiURLHelper.getViewPagesURL(node);
@@ -101,7 +101,7 @@ if (portletTitleBasedNavigation) {
 			selected = wikiVisualizationHelper.isViewAllPagesNavItemSelected();
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewAllPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item href="<%= viewAllPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
 			PortletURL viewOrphanPagesURL = wikiURLHelper.getViewOrphanPagesURL(node);
@@ -110,7 +110,7 @@ if (portletTitleBasedNavigation) {
 			selected = wikiVisualizationHelper.isViewOrphanPagesNavItemSelected();
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewOrphanPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item href="<%= viewOrphanPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
 			PortletURL viewDraftPagesURL = wikiURLHelper.getViewDraftPagesURL(node);
@@ -119,7 +119,7 @@ if (portletTitleBasedNavigation) {
 			selected = wikiVisualizationHelper.isViewDraftPagesNavItemSelected();
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewDraftPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item href="<%= viewDraftPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 		</aui:nav>
 
 		<%
