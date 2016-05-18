@@ -189,7 +189,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 <c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_TEMPLATE) %>">
 	<liferay-portlet:renderURL var="addKBTemplateURL">
 		<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
-		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
@@ -203,7 +203,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			document.<portlet:namespace />fm.method = 'post';
 			document.<portlet:namespace />fm.<portlet:namespace />kbTemplateIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /></liferay-portlet:actionURL>');
+			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="deleteKBTemplates"><portlet:param name="mvcPath" value="/admin/view_templates.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>');
 		}
 	}
 </aui:script>
