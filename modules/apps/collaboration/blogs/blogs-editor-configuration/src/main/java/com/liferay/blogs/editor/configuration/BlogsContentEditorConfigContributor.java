@@ -65,9 +65,10 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
-		sb.append("a[*]; b code em h1 h2 h3 h4 h5 h6 hr i pre strong u; ");
+		sb.append("a[*]; ");
+		sb.append(_getTextAllowedContent() + " ");
 		sb.append("div[*]; img[class, !src] { height, width }; ");
 		sb.append("li ol ul; p { text-align }; ");
 		sb.append("table[border, cellpadding, cellspacing] { width } ");
@@ -158,6 +159,10 @@ public class BlogsContentEditorConfigContributor
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+	}
+
+	private String _getTextAllowedContent() {
+		return "b code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
 	}
 
 	private ItemSelector _itemSelector;
