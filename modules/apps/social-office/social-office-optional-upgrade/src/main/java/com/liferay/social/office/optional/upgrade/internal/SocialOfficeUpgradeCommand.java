@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
@@ -142,9 +143,12 @@ public class SocialOfficeUpgradeCommand {
 			"[so:renameDashboardSiteTemplate] Successfully renamed Dashboard " +
 				"site template.";
 
+		String notFoundMessage =
+			"[so:renameDashboardSiteTemplate] Site template not found.";
+
 		_doRenameSiteTemplate(
 			"%>Social Office User Home<%", _DASHBOARD_NAME_XML,
-			_DASHBOARD_DESCRIPTION_XML, successMessage);
+			_DASHBOARD_DESCRIPTION_XML, successMessage, notFoundMessage);
 	}
 
 	public void renameProfileSiteTemplate() {
@@ -152,9 +156,12 @@ public class SocialOfficeUpgradeCommand {
 			"[so:renameProfileSiteTemplate] Successfully renamed Profile " +
 				"site template.";
 
+		String notFoundMessage =
+			"[so:renameProfileSiteTemplate] Site template not found.";
+
 		_doRenameSiteTemplate(
 			"%>Social Office User Profile<%", _PROFILE_NAME_XML,
-			_PROFILE_DESCRIPTION_XML, successMessage);
+			_PROFILE_DESCRIPTION_XML, successMessage, notFoundMessage);
 	}
 
 	public void updateDashboardTheme() {
@@ -192,7 +199,7 @@ public class SocialOfficeUpgradeCommand {
 
 	private void _doRenameSiteTemplate(
 		final String filter, final String nameXml, final String descriptionXml,
-		String successMessage) {
+		String successMessage, String notFoundMessage) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_layoutSetPrototypeLocalService.getActionableDynamicQuery();
@@ -207,6 +214,8 @@ public class SocialOfficeUpgradeCommand {
 
 			});
 
+		final AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.
 				PerformActionMethod<LayoutSetPrototype>() {
@@ -219,11 +228,18 @@ public class SocialOfficeUpgradeCommand {
 
 					_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 						layoutSetPrototype);
+
+					atomicBoolean.set(true);
 				}
 
 			});
 
-		System.out.println(successMessage);
+		if (atomicBoolean.get()) {
+			System.out.println(successMessage);
+		}
+		else {
+			System.out.println(notFoundMessage);
+		}
 	}
 
 	private static final String _DASHBOARD_DESCRIPTION_XML =
