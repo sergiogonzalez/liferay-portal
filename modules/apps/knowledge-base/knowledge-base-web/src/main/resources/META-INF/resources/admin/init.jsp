@@ -30,7 +30,7 @@ long resourcePrimKey = 0;
 String kbArticlesOrderByCol = "priority";
 String kbArticlesOrderByType = "desc";
 
-boolean enableKBArticleDescription = false;
+boolean enableKBArticleDescription = true;
 boolean enableKBArticleRatings = true;
 String kbArticleRatingsType = "thumbs";
 boolean showKBArticleAssetEntries = true;
