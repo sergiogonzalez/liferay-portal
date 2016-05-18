@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**

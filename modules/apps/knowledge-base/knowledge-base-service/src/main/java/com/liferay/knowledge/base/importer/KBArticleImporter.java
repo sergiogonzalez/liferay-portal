@@ -96,7 +96,7 @@ public class KBArticleImporter {
 			Map<String, String> metadata,
 			PrioritizationStrategy prioritizationStrategy,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws KBArticleImportException {
 
 		if (Validator.isNull(markdown)) {
 			throw new KBArticleImportException(
