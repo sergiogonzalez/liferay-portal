@@ -188,15 +188,13 @@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-WindowState windowState = renderRequest.getWindowState();
-
-String currentURL = PortalUtil.getCurrentURL(request);
-
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
 
 String rootPortletId = portletDisplay.getRootPortletId();

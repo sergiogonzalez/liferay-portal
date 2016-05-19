@@ -16,17 +16,31 @@ package com.liferay.knowledge.base.web.application.dao.search;
 
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.model.KBComment;
+import com.liferay.knowledge.base.web.display.context.KBSuggestionListDisplayContext;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * @author Sergio González
  */
 public class KBCommentResultRowSplitter implements ResultRowSplitter {
+
+	public KBCommentResultRowSplitter(
+		KBSuggestionListDisplayContext kbSuggestionListDisplayContext,
+		ResourceBundle resourceBundle) {
+
+		_kbSuggestionListDisplayContext = kbSuggestionListDisplayContext;
+		_resourceBundle = resourceBundle;
+	}
 
 	@Override
 	public List<ResultRowSplitterEntry> split(List<ResultRow> resultRows) {
@@ -55,21 +69,84 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 
 		if (!newResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
-				new ResultRowSplitterEntry("new", newResultRows));
+				new ResultRowSplitterEntry(
+					getNewKBCommentsLabel(), newResultRows));
 		}
 
 		if (!inProgressResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					"in-progress", inProgressResultRows));
+					getInProgressKBCommentsLabel(), inProgressResultRows));
 		}
 
 		if (!completedResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
-				new ResultRowSplitterEntry("completed", completedResultRows));
+				new ResultRowSplitterEntry(
+					getCompletedKBCommentsLabel(), completedResultRows));
 		}
 
 		return resultRowSplitterEntries;
 	}
+
+	protected String getCompletedKBCommentsLabel() {
+		int completedKBCommentsCount = 0;
+
+		try {
+			completedKBCommentsCount =
+				_kbSuggestionListDisplayContext.getCompletedKBCommentsCount();
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to obtain completed kb comments count for group " +
+					_kbSuggestionListDisplayContext.getGroupId());
+		}
+
+		return String.format(
+			"%s (%s)", LanguageUtil.get(_resourceBundle, "completed"),
+			completedKBCommentsCount);
+	}
+
+	protected String getInProgressKBCommentsLabel() {
+		int inProgressKBCommentsCount = 0;
+
+		try {
+			inProgressKBCommentsCount =
+				_kbSuggestionListDisplayContext.getInProgressKBCommentsCount();
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to obtain in progress kb comments count for " +
+					" group " + _kbSuggestionListDisplayContext.getGroupId());
+		}
+
+		return String.format(
+			"%s (%s)", LanguageUtil.get(_resourceBundle, "in-progress"),
+			inProgressKBCommentsCount);
+	}
+
+	protected String getNewKBCommentsLabel() {
+		int newKBCommentsCount = 0;
+
+		try {
+			newKBCommentsCount =
+				_kbSuggestionListDisplayContext.getNewKBCommentsCount();
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to obtain new kb comments count for group " +
+					_kbSuggestionListDisplayContext.getGroupId());
+		}
+
+		return String.format(
+			"%s (%s)", LanguageUtil.get(_resourceBundle, "new"),
+			newKBCommentsCount);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBCommentResultRowSplitter.class);
+
+	private final KBSuggestionListDisplayContext
+		_kbSuggestionListDisplayContext;
+	private final ResourceBundle _resourceBundle;
 
 }
