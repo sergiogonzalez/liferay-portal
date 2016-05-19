@@ -44,7 +44,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		className="<%= KBArticle.class.getName() %>"
 		classPK="<%= kbArticle.getResourcePrimKey() %>"
 		numberOfStars="<%= GetterUtil.getInteger(kbGroupServiceConfiguration.ratingsNumberOfStars()) %>"
-		type="<%= kbArticleRatingsType %>"
 	/>
 
 	<c:if test='<%= kbArticleRatingsType.equals("thumbs") && themeDisplay.isSignedIn() %>'>
