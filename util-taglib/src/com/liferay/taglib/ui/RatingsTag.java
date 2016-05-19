@@ -17,7 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,7 +25,6 @@ import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
-import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -107,13 +105,8 @@ public class RatingsTag extends IncludeTag {
 			group = group.getLiveGroup();
 		}
 
-		String type = PortletRatingsDefinitionUtil.getRatingsType(
+		return PortletRatingsDefinitionUtil.getRatingsType(
 			_className, group, themeDisplay.getCompanyId(), _DEFAULT_TYPE);
-
-		String propertyKey = RatingsDataTransformerUtil.getPropertyKey(
-			_className);
-
-		return ParamUtil.getString(request, propertyKey, type);
 	}
 
 	@Override
