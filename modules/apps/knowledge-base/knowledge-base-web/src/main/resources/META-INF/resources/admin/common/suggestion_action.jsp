@@ -39,7 +39,7 @@ int nextStatus = KnowledgeBaseUtil.getNextStatus(kbComment.getStatus());
 
 			<liferay-ui:icon
 				message="<%= KnowledgeBaseUtil.getStatusTransitionLabel(previousStatus) %>"
-				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(previousStatusURL, kbSuggestionListDisplayContext.getSelectedNavItem()) %>"
+				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(previousStatusURL) %>"
 			/>
 		</c:if>
 
@@ -51,7 +51,7 @@ int nextStatus = KnowledgeBaseUtil.getNextStatus(kbComment.getStatus());
 
 			<liferay-ui:icon
 				message="<%= KnowledgeBaseUtil.getStatusTransitionLabel(nextStatus) %>"
-				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL, kbSuggestionListDisplayContext.getSelectedNavItem()) %>"
+				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL) %>"
 			/>
 		</c:if>
 
@@ -61,7 +61,7 @@ int nextStatus = KnowledgeBaseUtil.getNextStatus(kbComment.getStatus());
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon-delete
-				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(deleteURL, kbSuggestionListDisplayContext.getSelectedNavItem()) %>"
+				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(deleteURL) %>"
 			/>
 		</c:if>
 	</liferay-ui:icon-menu>

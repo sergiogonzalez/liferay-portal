@@ -18,14 +18,12 @@
 
 <%
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
-
-String navItem = kbSuggestionListDisplayContext.getSelectedNavItem();
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL" />
 
 <%
-kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL, navItem);
+kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL);
 %>
 
 <div id="<portlet:namespace />kbArticleCommentsWrapper">
