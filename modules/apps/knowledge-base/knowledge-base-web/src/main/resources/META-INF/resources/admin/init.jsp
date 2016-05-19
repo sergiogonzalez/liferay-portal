@@ -60,9 +60,6 @@ request.setAttribute("init.jsp-socialBookmarksDisplayStyle", socialBookmarksDisp
 request.setAttribute("init.jsp-socialBookmarksDisplayPosition", socialBookmarksDisplayPosition);
 request.setAttribute("init.jsp-socialBookmarksTypes", socialBookmarksTypes);
 
-boolean enableKBTemplateKBComments = true;
-boolean showKBTemplateKBComments = true;
-
 boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
 int rssDelta = kbGroupServiceConfiguration.rssDelta();
 String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();
