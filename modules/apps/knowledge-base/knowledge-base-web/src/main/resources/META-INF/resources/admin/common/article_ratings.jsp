@@ -47,10 +47,14 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	/>
 
 	<%
-	String ratingsType = PortletRatingsDefinitionUtil.getRatingsType(KBArticle.class.getName(), themeDisplay.getScopeGroup(), themeDisplay.getCompanyId(), RatingsType.THUMBS.getValue());
+	RatingsType ratingsType = PortletRatingsDefinitionUtil.getRatingsType(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), KBArticle.class.getName());
+
+	if (ratingsType == null) {
+		ratingsType = RatingsType.THUMBS;
+	}
 	%>
 
-	<c:if test="<%= ratingsType.equals(RatingsType.THUMBS.getValue()) && themeDisplay.isSignedIn() %>">
+	<c:if test="<%= (ratingsType == RatingsType.THUMBS) && themeDisplay.isSignedIn() %>">
 		<div class="kb-article-suggestion-actions" id="<portlet:namespace />additionalSuggestionActionsContainer">
 			<a data-show-node-id="<portlet:namespace />suggestionContainer" href="javascript:void(0)">
 				<liferay-ui:message key="do-you-have-any-suggestions" />
