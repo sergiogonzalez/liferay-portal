@@ -71,7 +71,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL, navItem);
 
 <div id="<portlet:namespace />kbArticleCommentsWrapper">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-suggestion-was-found"
+		emptyResultsMessage="no-suggestions-were-found"
 		iteratorURL="<%= iteratorURL %>"
 		total="<%= kbSuggestionListDisplayContext.getKBCommentsCount() %>"
 	>
@@ -83,16 +83,49 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL, navItem);
 			className="com.liferay.knowledge.base.model.KBComment"
 			modelVar="kbComment"
 		>
+			<liferay-ui:search-container-column-user
+				cssClass="user-icon-lg"
+				showDetails="<%= false %>"
+				userId="<%= kbComment.getUserId() %>"
+			/>
 
-			<%
-			request.setAttribute("article_comment.jsp-kb_comment", kbComment);
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
-			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
+				<%
+				Date modifiedDate = kbComment.getModifiedDate();
 
-			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
-			%>
+				String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+				%>
 
-			<liferay-util:include page="/admin/common/article_comment.jsp" servletContext="<%= application %>" />
+				<h5 class="text-default">
+					<liferay-ui:message arguments="<%= new String[] {kbComment.getUserName(), modifiedDateDescription} %>" key="x-suggested-x-ago" />
+				</h5>
+
+				<h4>
+					<%= StringUtil.shorten(HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())), 100) %>
+				</h4>
+
+				<h5 class="text-default">
+
+					<%
+					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
+
+					request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+
+					KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+
+					PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
+					%>
+
+					<c:if test="<%= kbSuggestionListDisplayContext.isShowKBArticleTitle() %>">
+						<a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+					</c:if>
+				</h5>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				path="/admin/common/suggestion_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new KBCommentResultRowSplitter() %>" />
