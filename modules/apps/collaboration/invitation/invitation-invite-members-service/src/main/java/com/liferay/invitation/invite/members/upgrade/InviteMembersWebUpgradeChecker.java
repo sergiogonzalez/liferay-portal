@@ -14,29 +14,30 @@
 
 package com.liferay.invitation.invite.members.upgrade;
 
-import com.liferay.invitation.invite.members.upgrade.v1_0_0.UpgradeNamespace;
-import com.liferay.invitation.invite.members.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
+import com.liferay.portal.upgrade.util.BaseWebUpgradeChecker;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class InviteMembersServiceUpgrade implements UpgradeStepRegistrator {
+@Component(immediate = true, service = Object.class)
+public class InviteMembersWebUpgradeChecker extends BaseWebUpgradeChecker {
 
 	@Override
-	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.invitation.invite.members.service", "0.0.1", "1.0.0",
-			new UpgradeNamespace(), new UpgradePortletId());
+	protected String getBundleSymbolicName() {
+		return "com.liferay.invitation.invite.members.web";
 	}
 
-	@Reference(unbind = "-")
-	protected void setInviteMembersWebUpgradeChecker(
-		InviteMembersWebUpgradeChecker inviteMembersWebUpgradeChecker) {
+	@Override
+	protected String[] getNewPortletIds() {
+		return new String[] {InviteMembersPortletKeys.INVITE_MEMBERS};
+	}
+
+	@Override
+	protected String[] getOldPortletIds() {
+		return new String[] {"2_WAR_soportlet"};
 	}
 
 }
