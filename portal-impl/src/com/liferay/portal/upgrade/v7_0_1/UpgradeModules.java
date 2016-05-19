@@ -31,7 +31,7 @@ public class UpgradeModules
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.announcements.web", "com.liferay.contacts.web",
+		"com.liferay.announcements.web",
 		"com.liferay.invitation.invite.members.web",
 		"com.liferay.social.networking.web"
 	};
@@ -42,6 +42,7 @@ public class UpgradeModules
 			"notifications-portlet", "com.liferay.notifications.web",
 			"Notification"
 		},
+		{"com.liferay.contacts.web", "com.liferay.contacts.web", "Contacts"},
 		{
 			"com.liferay.directory.web", "com.liferay.directory.web",
 			"Directory"

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -35,6 +36,11 @@ public class ContactsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.contacts.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
+	}
+
+	@Reference(unbind = "-")
+	protected void setContactsWebUpgradeChecker(
+		ContactsWebUpgradeChecker contactsWebUpgradeChecker) {
 	}
 
 }
