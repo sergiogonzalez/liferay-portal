@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/common/init.jsp" %>
+<%@ include file="/admin/init.jsp" %>
 
 <%
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute("template_icons.jsp-kb_template");
