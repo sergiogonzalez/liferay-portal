@@ -31,12 +31,15 @@ public class UpgradeModules
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.announcements.web",
 		"com.liferay.invitation.invite.members.web",
 		"com.liferay.social.networking.web"
 	};
 
 	private static final String[][] _CONVERTED_LEGACY_MODULES = {
+		{
+			"com.liferay.announcements.web", "com.liferay.announcements.web",
+			"Announcements"
+		 },
 		{"knowledge-base-portlet", "com.liferay.knowledge.base.service", "KB"},
 		{
 			"notifications-portlet", "com.liferay.notifications.web",

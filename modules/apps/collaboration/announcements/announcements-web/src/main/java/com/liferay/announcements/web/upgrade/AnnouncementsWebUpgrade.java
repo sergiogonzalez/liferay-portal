@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -52,6 +53,11 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.announcements.web", "0.0.1", "1.0.0",
 			upgradePortletId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setAnnouncementsWebUpgradeChecker(
+		AnnouncementsWebUpgradeChecker announcementsWebUpgradeChecker) {
 	}
 
 }
