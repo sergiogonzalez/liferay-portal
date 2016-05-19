@@ -143,9 +143,3 @@ String tabs2Names = "general,display-settings";
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
-
-<c:if test='<%= tabs2.equals("display-settings") %>'>
-	<aui:script>
-		Liferay.Util.toggleBoxes('<portlet:namespace />enableKBArticleRatingsCheckbox', '<portlet:namespace />ratingsType');
-	</aui:script>
-</c:if>
