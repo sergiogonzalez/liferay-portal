@@ -34,7 +34,7 @@ public class UpgradeModules
 		"com.liferay.announcements.web", "com.liferay.contacts.web",
 		"com.liferay.directory.web",
 		"com.liferay.invitation.invite.members.web",
-		"com.liferay.microblogs.web", "com.liferay.social.networking.web"
+		"com.liferay.social.networking.web"
 	};
 
 	private static final String[][] _CONVERTED_LEGACY_MODULES = {
@@ -46,6 +46,10 @@ public class UpgradeModules
 		{
 			"com.liferay.recent.documents.web",
 			"com.liferay.recent.documents.web", "RecentDocuments"
+		},
+		{
+			"com.liferay.microblogs.web", "com.liferay.microblogs.web",
+			"Microblogs"
 		},
 		{
 			"com.liferay.social.privatemessaging.web",
