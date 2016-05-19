@@ -47,15 +47,15 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 		List<ResultRowSplitterEntry> resultRowSplitterEntries =
 			new ArrayList<>();
 
-		List<ResultRow> completedResultRows = new ArrayList<>();
-		List<ResultRow> inProgressResultRows = new ArrayList<>();
 		List<ResultRow> newResultRows = new ArrayList<>();
+		List<ResultRow> inProgressResultRows = new ArrayList<>();
+		List<ResultRow> completedResultRows = new ArrayList<>();
 
 		for (ResultRow resultRow : resultRows) {
 			KBComment kbComment = (KBComment)resultRow.getObject();
 
-			if (kbComment.getStatus() == KBCommentConstants.STATUS_COMPLETED) {
-				completedResultRows.add(resultRow);
+			if (kbComment.getStatus() == KBCommentConstants.STATUS_NEW) {
+				newResultRows.add(resultRow);
 			}
 			else if (kbComment.getStatus() ==
 						KBCommentConstants.STATUS_IN_PROGRESS) {
@@ -63,14 +63,14 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 				inProgressResultRows.add(resultRow);
 			}
 			else {
-				newResultRows.add(resultRow);
+				completedResultRows.add(resultRow);
 			}
 		}
 
-		if (!completedResultRows.isEmpty()) {
+		if (!newResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					getCompletedKBCommentsLabel(), completedResultRows));
+					getNewKBCommentsLabel(), newResultRows));
 		}
 
 		if (!inProgressResultRows.isEmpty()) {
@@ -79,10 +79,10 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 					getInProgressKBCommentsLabel(), inProgressResultRows));
 		}
 
-		if (!newResultRows.isEmpty()) {
+		if (!completedResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					getNewKBCommentsLabel(), newResultRows));
+					getCompletedKBCommentsLabel(), completedResultRows));
 		}
 
 		return resultRowSplitterEntries;
