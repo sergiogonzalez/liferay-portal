@@ -14,6 +14,9 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -105,8 +108,22 @@ public class RatingsTag extends IncludeTag {
 			group = group.getLiveGroup();
 		}
 
-		return PortletRatingsDefinitionUtil.getRatingsType(
-			_className, group, themeDisplay.getCompanyId(), _DEFAULT_TYPE);
+		RatingsType ratingsType = RatingsType.STARS;
+
+		if (group != null) {
+			try {
+				ratingsType = PortletRatingsDefinitionUtil.getRatingsType(
+					themeDisplay.getCompanyId(), group.getGroupId(),
+					_className);
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to obtain rating type for group " +
+						group.getGroupId());
+			}
+		}
+
+		return ratingsType.getValue();
 	}
 
 	@Override
@@ -140,9 +157,10 @@ public class RatingsTag extends IncludeTag {
 	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
-	private static final String _DEFAULT_TYPE = RatingsType.STARS.getValue();
-
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RatingsTag.class);
 
 	private String _className;
 	private long _classPK;
