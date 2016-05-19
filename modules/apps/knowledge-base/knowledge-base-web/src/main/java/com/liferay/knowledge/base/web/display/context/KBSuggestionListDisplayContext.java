@@ -69,6 +69,10 @@ public class KBSuggestionListDisplayContext {
 		return getKBCommentsCount(KBCommentConstants.STATUS_COMPLETED);
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public int getInProgressKBCommentsCount() throws PortalException {
 		return getKBCommentsCount(KBCommentConstants.STATUS_IN_PROGRESS);
 	}

@@ -22,47 +22,6 @@ KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionLis
 String navItem = kbSuggestionListDisplayContext.getSelectedNavItem();
 %>
 
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		int newKBCommentsCount = kbSuggestionListDisplayContext.getNewKBCommentsCount();
-
-		String newKBCommentsLabel = String.format("%s (%s)", LanguageUtil.get(request, "new"), newKBCommentsCount);
-		%>
-
-		<aui:nav-item
-			href='<%= kbSuggestionListDisplayContext.getViewSuggestionURL(renderResponse, "viewNewSuggestions") %>'
-			label="<%= newKBCommentsLabel %>"
-			selected='<%= navItem.equals("viewNewSuggestions") %>'
-		/>
-
-		<%
-		int inProgressKBCommentsCount = kbSuggestionListDisplayContext.getInProgressKBCommentsCount();
-
-		String inProgressKBCommentsLabel = String.format("%s (%s)", LanguageUtil.get(request, "in-progress"), inProgressKBCommentsCount);
-		%>
-
-		<aui:nav-item
-			href='<%= kbSuggestionListDisplayContext.getViewSuggestionURL(renderResponse, "viewInProgressSuggestions") %>'
-			label="<%= inProgressKBCommentsLabel %>"
-			selected='<%= navItem.equals("viewInProgressSuggestions") %>'
-		/>
-
-		<%
-		int completedKBCommentsCount = kbSuggestionListDisplayContext.getCompletedKBCommentsCount();
-
-		String completedLabel = String.format("%s (%s)", LanguageUtil.get(request, "resolved"), completedKBCommentsCount);
-		%>
-
-		<aui:nav-item
-			href='<%= kbSuggestionListDisplayContext.getViewSuggestionURL(renderResponse, "viewCompletedSuggestions") %>'
-			label="<%= completedLabel %>"
-			selected='<%= navItem.equals("viewCompletedSuggestions") %>'
-		/>
-	</aui:nav>
-</aui:nav-bar>
-
 <liferay-portlet:renderURL varImpl="iteratorURL" />
 
 <%
@@ -128,7 +87,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL, navItem);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new KBCommentResultRowSplitter() %>" />
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle) %>" />
 	</liferay-ui:search-container>
 </div>
 
