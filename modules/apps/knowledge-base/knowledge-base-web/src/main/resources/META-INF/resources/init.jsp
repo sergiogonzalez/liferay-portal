@@ -87,6 +87,7 @@ page import="com.liferay.knowledge.base.service.permission.SuggestionPermission"
 page import="com.liferay.knowledge.base.service.util.AdminUtil" %><%@
 page import="com.liferay.knowledge.base.util.KnowledgeBaseUtil" %><%@
 page import="com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator" %><%@
+page import="com.liferay.knowledge.base.web.application.dao.search.KBCommentResultRowSplitter" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBArticlePortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBSearchPortletInstanceConfiguration" %><%@

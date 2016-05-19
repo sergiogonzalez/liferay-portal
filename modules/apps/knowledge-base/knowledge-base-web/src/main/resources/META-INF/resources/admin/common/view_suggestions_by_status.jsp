@@ -63,14 +63,50 @@ String navItem = kbSuggestionListDisplayContext.getSelectedNavItem();
 	</aui:nav>
 </aui:nav-bar>
 
-<c:choose>
-	<c:when test='<%= navItem.equals("viewInProgressSuggestions") %>'>
-		<liferay-util:include page="/admin/common/view_in_progress_suggestions.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= navItem.equals("viewNewSuggestions") %>'>
-		<liferay-util:include page="/admin/common/view_new_suggestions.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/admin/common/view_completed_suggestions.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+<liferay-portlet:renderURL varImpl="iteratorURL" />
+
+<%
+kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL, navItem);
+%>
+
+<div id="<portlet:namespace />kbArticleCommentsWrapper">
+	<liferay-ui:search-container
+		emptyResultsMessage="no-suggestion-was-found"
+		iteratorURL="<%= iteratorURL %>"
+		total="<%= kbSuggestionListDisplayContext.getKBCommentsCount() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= kbSuggestionListDisplayContext.getKBComments(searchContainer) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.knowledge.base.model.KBComment"
+			modelVar="kbComment"
+		>
+
+			<%
+			request.setAttribute("article_comment.jsp-kb_comment", kbComment);
+
+			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
+
+			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+			%>
+
+			<liferay-util:include page="/admin/common/article_comment.jsp" servletContext="<%= application %>" />
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new KBCommentResultRowSplitter() %>" />
+	</liferay-ui:search-container>
+</div>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />kbArticleCommentsWrapper').delegate(
+		'click',
+		function(e) {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				location.href = this.getData('href');
+			}
+		},
+		'.kb-suggestion-actions .kb-suggestion-delete'
+	);
+</aui:script>
