@@ -15,16 +15,15 @@
 package com.liferay.portlet.announcements.service;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,19 +51,8 @@ public class AnnouncementsEntryLocalServiceTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_announcementsEntryLocalService =
-			(AnnouncementsEntryLocalService)PortalBeanLocatorUtil.locate(
-				AnnouncementsEntryLocalService.class.getName());
-	}
-
 	@Test
 	public void testDeleteGroupAnnouncements() throws Exception {
-		GroupLocalService _groupLocalService =
-			(GroupLocalService)PortalBeanLocatorUtil.locate(
-				GroupLocalService.class.getName());
-
 		Group group = GroupTestUtil.addGroup();
 
 		AnnouncementsEntry entry = createAnnouncementsEntry(
@@ -74,12 +61,14 @@ public class AnnouncementsEntryLocalServiceTest {
 		long entryId = entry.getEntryId();
 
 		Assert.assertNotNull(
-			_announcementsEntryLocalService.fetchAnnouncementsEntry(entryId));
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entryId));
 
-		_groupLocalService.deleteGroup(group);
+		GroupLocalServiceUtil.deleteGroup(group);
 
 		Assert.assertNull(
-			_announcementsEntryLocalService.fetchAnnouncementsEntry(entryId));
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entryId));
 	}
 
 	@Test
@@ -91,17 +80,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteUserGroupAnnouncements() throws Exception {
-		UserGroupLocalService _userGroupLocalService =
-			(UserGroupLocalService)PortalBeanLocatorUtil.locate(
-				UserGroupLocalService.class.getName());
-
-		ClassNameLocalService _classNameLocalService =
-			(ClassNameLocalService)PortalBeanLocatorUtil.locate(
-				ClassNameLocalService.class.getName());
-
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-		long classNameId = _classNameLocalService.getClassNameId(
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 			"com.liferay.portal.kernel.model.UserGroup");
 
 		AnnouncementsEntry entry = createAnnouncementsEntry(
@@ -110,12 +91,14 @@ public class AnnouncementsEntryLocalServiceTest {
 		long entryId = entry.getEntryId();
 
 		Assert.assertNotNull(
-			_announcementsEntryLocalService.fetchAnnouncementsEntry(entryId));
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entryId));
 
-		_userGroupLocalService.deleteUserGroup(userGroup);
+		UserGroupLocalServiceUtil.deleteUserGroup(userGroup);
 
 		Assert.assertNull(
-			_announcementsEntryLocalService.fetchAnnouncementsEntry(entryId));
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entryId));
 	}
 
 	protected AnnouncementsEntry createAnnouncementsEntry(
@@ -123,22 +106,18 @@ public class AnnouncementsEntryLocalServiceTest {
 		throws Exception {
 
 		AnnouncementsEntry entry =
-			_announcementsEntryLocalService.createAnnouncementsEntry(
+			AnnouncementsEntryLocalServiceUtil.createAnnouncementsEntry(
 				TestPropsValues.getPlid());
 
 		entry.setClassNameId(classNameId);
 		entry.setClassPK(classPK);
 
-		_announcementsEntryLocalService.addAnnouncementsEntry(entry);
+		AnnouncementsEntryLocalServiceUtil.addAnnouncementsEntry(entry);
 
 		return entry;
 	}
 
 	protected void deleteRoleAnnouncements(int roleType) throws Exception {
-		RoleLocalService _roleLocalService =
-			(RoleLocalService)PortalBeanLocatorUtil.locate(
-				RoleLocalService.class.getName());
-
 		Role role = RoleTestUtil.addRole(roleType);
 
 		AnnouncementsEntry entry = createAnnouncementsEntry(
@@ -147,14 +126,14 @@ public class AnnouncementsEntryLocalServiceTest {
 		long entryId = entry.getEntryId();
 
 		Assert.assertNotNull(
-			_announcementsEntryLocalService.fetchAnnouncementsEntry(entryId));
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entryId));
 
-		_roleLocalService.deleteRole(role);
+		RoleLocalServiceUtil.deleteRole(role);
 
 		Assert.assertNull(
-			_announcementsEntryLocalService.fetchAnnouncementsEntry(entryId));
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entryId));
 	}
-
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
 
 }
