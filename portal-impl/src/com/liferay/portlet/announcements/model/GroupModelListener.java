@@ -14,8 +14,7 @@
 
 package com.liferay.portlet.announcements.model;
 
-import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
@@ -27,17 +26,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
-		AnnouncementsEntryLocalService announcementsEntryLocalService =
-			(AnnouncementsEntryLocalService)PortalBeanLocatorUtil.locate(
-				AnnouncementsEntryLocalService.class.getName());
-
 		try {
 			if (group.isSite()) {
-				announcementsEntryLocalService.deleteEntries(
+				AnnouncementsEntryLocalServiceUtil.deleteEntries(
 					group.getClassNameId(), group.getGroupId());
 			}
 			else {
-				announcementsEntryLocalService.deleteEntries(
+				AnnouncementsEntryLocalServiceUtil.deleteEntries(
 					group.getClassNameId(), group.getClassPK());
 			}
 		}
