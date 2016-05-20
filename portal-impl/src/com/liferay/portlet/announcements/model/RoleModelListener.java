@@ -14,8 +14,7 @@
 
 package com.liferay.portlet.announcements.model;
 
-import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Role;
@@ -27,12 +26,8 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
 	public void onBeforeRemove(Role role) throws ModelListenerException {
-		AnnouncementsEntryLocalService announcementsEntryLocalService =
-			(AnnouncementsEntryLocalService)PortalBeanLocatorUtil.locate(
-				AnnouncementsEntryLocalService.class.getName());
-
 		try {
-			announcementsEntryLocalService.deleteEntries(
+			AnnouncementsEntryLocalServiceUtil.deleteEntries(
 				role.getClassNameId(), role.getRoleId());
 		}
 		catch (Exception e) {
