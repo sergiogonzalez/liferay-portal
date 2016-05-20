@@ -19,6 +19,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.social.privatemessaging.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -35,6 +36,11 @@ public class PrivateMessagingWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.social.privatemessaging.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
+	}
+
+	@Reference(unbind = "-")
+	protected void setPrivateMessagingWebUpgradeChecker(
+		PrivateMessagingWebUpgradeChecker privateMessagingWebUpgradeChecker) {
 	}
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -36,6 +37,11 @@ public class MicroblogsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.microblogs.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
+	}
+
+	@Reference(unbind = "-")
+	protected void setMicroblogsWebUpgradeChecker(
+		MicroblogsUpgradeChecker microblogsWebUpgradeChecker) {
 	}
 
 }

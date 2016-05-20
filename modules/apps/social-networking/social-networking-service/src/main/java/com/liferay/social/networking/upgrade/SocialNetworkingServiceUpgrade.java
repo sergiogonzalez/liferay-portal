@@ -19,6 +19,7 @@ import com.liferay.social.networking.upgrade.v1_0_0.UpgradeNamespace;
 import com.liferay.social.networking.upgrade.v1_0_1.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -36,6 +37,11 @@ public class SocialNetworkingServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.social.networking.service", "1.0.0", "1.0.1",
 			new UpgradePortletId());
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialNetworkingUpgradeChecker(
+		SocialNetworkingUpgradeChecker socialNetworkingUpgradeChecker) {
 	}
 
 }
