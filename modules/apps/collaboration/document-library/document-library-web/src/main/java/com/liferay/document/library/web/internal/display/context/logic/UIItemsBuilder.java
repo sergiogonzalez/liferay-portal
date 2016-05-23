@@ -160,6 +160,10 @@ public class UIItemsBuilder {
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
 		template.put(
+			"dialogCancelButtonLabel", LanguageUtil.get(_request, "cancel"));
+		template.put(
+			"dialogSaveButtonLabel", LanguageUtil.get(_request, "save"));
+		template.put(
 			"dialogTitle",
 			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
 		template.put("namespace", getNamespace());
@@ -635,6 +639,10 @@ public class UIItemsBuilder {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
+		template.put(
+			"dialogCancelButtonLabel", LanguageUtil.get(_request, "cancel"));
+		template.put(
+			"dialogSaveButtonLabel", LanguageUtil.get(_request, "save"));
 		template.put(
 			"dialogTitle",
 			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
