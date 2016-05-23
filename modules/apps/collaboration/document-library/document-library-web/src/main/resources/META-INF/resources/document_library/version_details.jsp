@@ -24,14 +24,12 @@ boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("edit_file_entry
 	<aui:fieldset>
 		<h5 class="control-label"><liferay-ui:message key="select-whether-this-is-a-major-or-minor-version" /></h5>
 
-		<aui:input checked="<%= checkedOut %>" label="major-version" name="versionDetailsMajorVersion" type="radio" value="<%= true %>" />
+		<div class="file-version-type-container">
+			<aui:input checked="<%= checkedOut %>" cssClass="file-version-type" label="major-version" name="versionDetailsMajorVersion" type="radio" value="<%= true %>" />
 
-		<aui:input checked="<%= !checkedOut %>" label="minor-version" name="versionDetailsMajorVersion" type="radio" value="<%= false %>" />
+			<aui:input checked="<%= !checkedOut %>" cssClass="file-version-type" label="minor-version" name="versionDetailsMajorVersion" type="radio" value="<%= false %>" />
+		</div>
 
 		<aui:input label="change-log" name="versionDetailsChangeLog" type="textarea" />
-
-		<aui:button name="versionDetailsSave" primary="true" value="save" />
-
-		<aui:button name="versionDetailsCancel" type="cancel" value="cancel" />
 	</aui:fieldset>
 </div>
