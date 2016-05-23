@@ -621,7 +621,7 @@ if (portletTitleBasedNavigation) {
 		$('#<portlet:namespace />updateVersionDetails').on(
 			'click',
 			function(event) {
-				$('#<portlet:namespace />versionDetails').show();
+				$('#<portlet:namespace />versionDetails').toggle();
 			}
 		);
 	</aui:script>
