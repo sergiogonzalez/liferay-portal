@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -55,20 +56,18 @@ public class AnnouncementsEntryLocalServiceTest {
 	public void testDeleteGroupAnnouncements() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		AnnouncementsEntry entry = createAnnouncementsEntry(
+		AnnouncementsEntry entry = addAnnouncementsEntry(
 			group.getClassNameId(), group.getGroupId());
-
-		long entryId = entry.getEntryId();
 
 		Assert.assertNotNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
-				entryId));
+				entry.getEntryId()));
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		Assert.assertNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
-				entryId));
+				entry.getEntryId()));
 	}
 
 	@Test
@@ -85,55 +84,46 @@ public class AnnouncementsEntryLocalServiceTest {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 			"com.liferay.portal.kernel.model.UserGroup");
 
-		AnnouncementsEntry entry = createAnnouncementsEntry(
+		AnnouncementsEntry entry = addAnnouncementsEntry(
 			classNameId, userGroup.getUserGroupId());
-
-		long entryId = entry.getEntryId();
 
 		Assert.assertNotNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
-				entryId));
+				entry.getEntryId()));
 
 		UserGroupLocalServiceUtil.deleteUserGroup(userGroup);
 
 		Assert.assertNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
-				entryId));
+				entry.getEntryId()));
 	}
 
-	protected AnnouncementsEntry createAnnouncementsEntry(
+	protected AnnouncementsEntry addAnnouncementsEntry(
 			long classNameId, long classPK)
 		throws Exception {
 
-		AnnouncementsEntry entry =
-			AnnouncementsEntryLocalServiceUtil.createAnnouncementsEntry(
-				TestPropsValues.getPlid());
-
-		entry.setClassNameId(classNameId);
-		entry.setClassPK(classPK);
-
-		AnnouncementsEntryLocalServiceUtil.addAnnouncementsEntry(entry);
-
-		return entry;
+		return AnnouncementsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), classNameId, classPK,
+			StringUtil.randomString(), StringUtil.randomString(),
+			"http://localhost", "general", 1, 1, 1990, 1, 1, false, 1, 1, 1991,
+			1, 1, 1, false);
 	}
 
 	protected void deleteRoleAnnouncements(int roleType) throws Exception {
 		Role role = RoleTestUtil.addRole(roleType);
 
-		AnnouncementsEntry entry = createAnnouncementsEntry(
+		AnnouncementsEntry entry = addAnnouncementsEntry(
 			role.getClassNameId(), role.getRoleId());
-
-		long entryId = entry.getEntryId();
 
 		Assert.assertNotNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
-				entryId));
+				entry.getEntryId()));
 
 		RoleLocalServiceUtil.deleteRole(role);
 
 		Assert.assertNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
-				entryId));
+				entry.getEntryId()));
 	}
 
 }
