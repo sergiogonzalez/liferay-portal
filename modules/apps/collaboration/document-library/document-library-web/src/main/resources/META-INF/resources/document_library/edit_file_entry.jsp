@@ -427,7 +427,8 @@ if (portletTitleBasedNavigation) {
 					<aui:input
 						label="customize-the-version-number-increment-and-describe-my-changes"
 						name="updateVersionDetails"
-						type="checkbox"
+						type="toggle-switch"
+						value="<%= false %>"
 					/>
 
 					<div id="<portlet:namespace />versionDetails" style="display: none">
