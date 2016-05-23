@@ -53,7 +53,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	}
 	%>
 
-	<c:if test="<%= (ratingsType == RatingsType.THUMBS) && themeDisplay.isSignedIn() %>">
+	<c:if test="<%= ratingsType.equals(RatingsType.THUMBS) && themeDisplay.isSignedIn() %>">
 		<div class="kb-article-suggestion-actions" id="<portlet:namespace />additionalSuggestionActionsContainer">
 			<a data-show-node-id="<portlet:namespace />suggestionContainer" href="javascript:void(0)">
 				<liferay-ui:message key="do-you-have-any-suggestions" />
