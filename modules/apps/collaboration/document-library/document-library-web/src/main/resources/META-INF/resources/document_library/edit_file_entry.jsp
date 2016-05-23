@@ -419,28 +419,30 @@ if (portletTitleBasedNavigation) {
 						%>
 
 					</c:if>
-
-					<c:if test="<%= (fileEntry != null) && !checkedOut %>">
-						<aui:input
-							label="customize-the-version-number-increment-and-describe-my-changes"
-							name="updateVersionDetails"
-							type="checkbox"
-						/>
-
-						<div id="<portlet:namespace />versionDetails" style="display: none">
-							<aui:input label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
-
-							<aui:input checked="<%= true %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
-
-							<aui:model-context />
-
-							<aui:input label="change-log" name="changeLog" type="textarea" />
-
-							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-						</div>
-					</c:if>
 				</c:if>
 			</aui:fieldset>
+
+			<c:if test="<%= (fileEntry != null) && !checkedOut %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="version">
+					<aui:input
+						label="customize-the-version-number-increment-and-describe-my-changes"
+						name="updateVersionDetails"
+						type="checkbox"
+					/>
+
+					<div id="<portlet:namespace />versionDetails" style="display: none">
+						<aui:input label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
+
+						<aui:input checked="<%= true %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
+
+						<aui:model-context />
+
+						<aui:input label="change-log" name="changeLog" type="textarea" />
+
+						<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+					</div>
+				</aui:fieldset>
+			</c:if>
 
 			<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 				<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
