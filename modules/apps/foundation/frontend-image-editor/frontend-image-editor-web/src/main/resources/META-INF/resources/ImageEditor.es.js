@@ -316,7 +316,7 @@ class ImageEditor extends Component {
 					},
 					duration: 3000,
 					icon: 'exclamation-circle',
-					message: message,
+					message: message.message,
 					type: 'danger'
 				}
 			).render(this.element);
