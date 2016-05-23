@@ -82,7 +82,7 @@ public class AnnouncementsEntryLocalServiceTest {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			"com.liferay.portal.kernel.model.UserGroup");
+			UserGroup.class);
 
 		AnnouncementsEntry entry = addAnnouncementsEntry(
 			classNameId, userGroup.getUserGroupId());
