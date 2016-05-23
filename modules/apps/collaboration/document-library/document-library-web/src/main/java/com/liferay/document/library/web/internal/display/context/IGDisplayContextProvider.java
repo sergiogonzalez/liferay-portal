@@ -20,8 +20,11 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +33,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -45,7 +49,7 @@ public class IGDisplayContextProvider {
 		try {
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					request, response, fileShortcut);
+					request, response, fileShortcut, _resourceBundleLoader);
 
 			if (fileShortcut == null) {
 				return igViewFileVersionDisplayContext;
@@ -75,7 +79,7 @@ public class IGDisplayContextProvider {
 		try {
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					request, response, fileVersion);
+					request, response, fileVersion, _resourceBundleLoader);
 
 			if (fileVersion == null) {
 				return igViewFileVersionDisplayContext;
@@ -108,7 +112,19 @@ public class IGDisplayContextProvider {
 		_igDisplayContextFactories.close();
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageUtil.getPortalResourceBundleLoader());
+	}
+
 	private ServiceTrackerList<IGDisplayContextFactory, IGDisplayContextFactory>
 		_igDisplayContextFactories;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }
