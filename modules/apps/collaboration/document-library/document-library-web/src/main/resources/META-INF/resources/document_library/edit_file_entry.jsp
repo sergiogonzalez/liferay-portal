@@ -580,19 +580,23 @@ if (portletTitleBasedNavigation) {
 			Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
 				'<portlet:namespace />versionDetails',
 				'<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>',
-				function(event) {
-					var $ = AUI.$;
+				{
+					label: '<liferay-ui:message key="save" />',
+					callback: function(event) {
+						var $ = AUI.$;
 
-					var majorVersionNode = $("input:radio[name='<portlet:namespace />versionDetailsMajorVersion']:checked");
+						var majorVersionNode = $("input:radio[name='<portlet:namespace />versionDetailsMajorVersion']:checked");
 
-					form.fm('majorVersion').val(majorVersionNode.val());
+						form.fm('majorVersion').val(majorVersionNode.val());
 
-					var changeLogNode = $('#<portlet:namespace />versionDetailsChangeLog');
+						var changeLogNode = $('#<portlet:namespace />versionDetailsChangeLog');
 
-					form.fm('changeLog').val(changeLogNode.val());
+						form.fm('changeLog').val(changeLogNode.val());
 
-					submitForm(form);
-				}
+						submitForm(form);
+					}
+				},
+				'<liferay-ui:message key="cancel" />'
 			);
 		},
 		['document-library-checkin']
