@@ -231,13 +231,32 @@ if (portletTitleBasedNavigation) {
 		</aui:fieldset-group>
 
 		<aui:button-row cssClass="kb-submit-buttons">
-			<c:if test="<%= (kbArticle == null) || !kbArticle.isPending() %>">
-				<aui:button name="publish" type="submit" value='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, KBArticle.class.getName()) ? "submit-for-publication" : "publish" %>' />
-			</c:if>
 
-			<aui:button primary="<%= false %>" type="submit" value='<%= (kbArticle == null) || kbArticle.isApproved() || kbArticle.isDraft() ? "save-as-draft" : "save" %>' />
+			<%
+			boolean pending = false;
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			if (kbArticle != null) {
+				pending = kbArticle.isPending();
+			}
+
+			String saveButtonLabel = "save";
+
+			if ((kbArticle == null) || kbArticle.isDraft() || kbArticle.isApproved()) {
+				saveButtonLabel = "save-as-draft";
+			}
+
+			String publishButtonLabel = "publish";
+
+			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, KBArticle.class.getName())) {
+				publishButtonLabel = "submit-for-publication";
+			}
+			%>
+
+			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+			<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>
@@ -284,7 +303,7 @@ if (portletTitleBasedNavigation) {
 
 	var form = A.one('#<portlet:namespace />fm');
 
-	var publishButton = form.one('#<portlet:namespace />publish');
+	var publishButton = form.one('#<portlet:namespace />publishButton');
 
 	if (publishButton) {
 		publishButton.on(
