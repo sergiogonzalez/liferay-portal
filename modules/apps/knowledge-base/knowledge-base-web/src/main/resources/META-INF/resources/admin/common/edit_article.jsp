@@ -29,7 +29,9 @@ long parentResourceClassNameId = BeanParamUtil.getLong(kbArticle, request, "pare
 
 long parentResourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+String title = BeanParamUtil.getString(kbArticle, request, "title", BeanPropertiesUtil.getString(kbTemplate, "title"));
 String content = BeanParamUtil.getString(kbArticle, request, "content", BeanPropertiesUtil.getString(kbTemplate, "content"));
+
 String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(kbSectionPortletInstanceConfiguration.adminKBArticleSections())));
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
@@ -147,39 +149,43 @@ if (portletTitleBasedNavigation) {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="title" required="<%= true %>" />
+				<h1 class="kb-title">
+					<liferay-ui:input-editor contents="<%= title %>" editorName="alloyeditor" name="titleEditor" onChangeMethod="OnChangeEditor" placeholder="title" showSource="<%= false %>" />
+				</h1>
 
-				<aui:field-wrapper cssClass="input-append input-flex-add-on input-prepend" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' label="friendly-url">
+				<aui:input name="title" type="hidden" />
 
-					<%
-					StringBundler sb = new StringBundler();
+				<liferay-ui:input-editor contents="<%= content %>" name="contentEditor" editorName="alloyeditor" placeholder="content" />
 
-					sb.append("/-/");
+				<aui:input name="content" type="hidden" />
 
-					Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
+				<div style="margin-top: 40px">
+					<aui:field-wrapper cssClass="input-append input-flex-add-on input-prepend" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' label="friendly-url">
 
-					sb.append(portlet.getFriendlyURLMapping());
+						<%
+						StringBundler sb = new StringBundler();
 
-					long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
+						sb.append("/-/");
 
-					if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-						KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
+						Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 
-						sb.append(StringPool.SLASH);
-						sb.append(kbFolder.getUrlTitle());
-					}
-					%>
+						sb.append(portlet.getFriendlyURLMapping());
 
-					<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(sb.toString(), 40) %>" /></span>
+						long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
 
-					<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" label="" name="urlTitle" placeholder="/sample-article-url-title" value="<%= (kbArticle == null ? StringPool.BLANK : (StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
-				</aui:field-wrapper>
+						if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+							KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
 
-				<aui:field-wrapper label="content" required="<%= true %>">
-					<liferay-ui:input-editor width="100%" />
+							sb.append(StringPool.SLASH);
+							sb.append(kbFolder.getUrlTitle());
+						}
+						%>
 
-					<aui:input name="content" type="hidden" />
-				</aui:field-wrapper>
+						<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(sb.toString(), 40) %>" /></span>
+
+						<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" label="" name="urlTitle" placeholder="/sample-article-url-title" value="<%= (kbArticle == null ? StringPool.BLANK : (StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
+					</aui:field-wrapper>
+				</div>
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
@@ -280,45 +286,28 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	function <portlet:namespace />initEditor() {
-		return '<%= UnicodeFormatter.toString(content) %>';
-	}
+	<c:if test="<%= kbArticle == null %>">
+		var urlTitleCustomized = false;
+
+		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
+
+		function <portlet:namespace />OnChangeEditor(html) {
+			debugger;
+
+			html = html.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+			if (html[0] === '-') {
+				html = html.replace(/^-+/, '');
+			}
+
+			html = html.replace(/--+/g, '-');
+
+			urlTitleInput.value = '/' + html.toLowerCase();
+		}
+	</c:if>
 </aui:script>
 
 <aui:script use="aui-base,event-input">
-	<c:if test="<%= kbArticle == null %>">
-		var titleInput = A.one('#<portlet:namespace />title');
-		var urlTitleInput = A.one('#<portlet:namespace />urlTitle');
-
-		var urlTitleCustomized = false;
-
-		titleInput.on(
-			'input',
-			function(event) {
-				if (!urlTitleCustomized) {
-					var urlTitle = titleInput.val();
-
-					urlTitle = urlTitle.replace(/[^a-zA-Z0-9_-]/g, '-');
-
-					if (urlTitle[0] === '-') {
-						urlTitle = urlTitle.replace(/^-+/, '');
-					}
-
-					urlTitle = urlTitle.replace(/--+/g, '-');
-
-					urlTitleInput.val('/' + urlTitle.toLowerCase());
-				}
-			}
-		);
-
-		urlTitleInput.on(
-			'input',
-			function() {
-				urlTitleCustomized = true;
-			}
-		);
-	</c:if>
-
 	var form = A.one('#<portlet:namespace />fm');
 
 	var publishButton = form.one('#<portlet:namespace />publishButton');
@@ -339,10 +328,18 @@ if (portletTitleBasedNavigation) {
 	form.on(
 		'submit',
 		function() {
-			var contentInput = form.one('#<portlet:namespace />content');
+			var form = AUI.$(document.<portlet:namespace />fm);
 
-			if (contentInput) {
-				contentInput.val(<portlet:namespace />editor.getHTML());
+			var contentEditor= window.<portlet:namespace />contentEditor;
+
+			if (contentEditor) {
+				form.fm('content').val(contentEditor.getHTML());
+			}
+
+			var titleEditor = window.<portlet:namespace />titleEditor;
+
+			if (titleEditor) {
+				form.fm('title').val(titleEditor.getText());
 			}
 
 			updateMultipleKBArticleAttachments();
