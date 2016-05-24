@@ -166,40 +166,6 @@ if (portletTitleBasedNavigation) {
 
 					<aui:input name="content" type="hidden" />
 				</aui:field-wrapper>
-
-				<c:if test="<%= enableKBArticleDescription %>">
-					<aui:input name="description" />
-				</c:if>
-
-				<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() %>">
-					<aui:input label="source-url" name="sourceURL" />
-				</c:if>
-
-				<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
-					<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
-
-					<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
-
-						<%
-						Map<String, String> sectionsMap = new TreeMap<String, String>();
-
-						for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
-							sectionsMap.put(LanguageUtil.get(request, section), section);
-						}
-
-						for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
-						%>
-
-							<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>" value="<%= entry.getValue() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
-					<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
-				</c:if>
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
@@ -220,6 +186,44 @@ if (portletTitleBasedNavigation) {
 					classPK="<%= (kbArticle == null) ? KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY : kbArticle.getClassPK() %>"
 				/>
 			</aui:fieldset>
+
+			<c:if test="<%= enableKBArticleDescription || kbGroupServiceConfiguration.sourceURLEnabled() || ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+					<c:if test="<%= enableKBArticleDescription %>">
+						<aui:input name="description" />
+					</c:if>
+
+					<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() %>">
+						<aui:input label="source-url" name="sourceURL" />
+					</c:if>
+
+					<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
+						<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
+
+						<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
+
+							<%
+							Map<String, String> sectionsMap = new TreeMap<String, String>();
+
+							for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
+								sectionsMap.put(LanguageUtil.get(request, section), section);
+							}
+
+							for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
+							%>
+
+								<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>" value="<%= entry.getValue() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
+						<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
+					</c:if>
+				</aui:fieldset>
+			</c:if>
 
 			<c:if test="<%= kbArticle == null %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>' label="permissions">
