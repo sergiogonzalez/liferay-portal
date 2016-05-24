@@ -131,116 +131,114 @@ if (portletTitleBasedNavigation) {
 			<aui:workflow-status id="<%= String.valueOf(resourcePrimKey) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
 		</c:if>
 
-		<aui:fieldset>
-			<aui:input name="title" required="<%= true %>" />
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input name="title" required="<%= true %>" />
 
-			<aui:field-wrapper cssClass="input-append input-flex-add-on input-prepend" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' label="friendly-url">
-
-				<%
-				StringBundler sb = new StringBundler();
-
-				sb.append("/-/");
-
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
-
-				sb.append(portlet.getFriendlyURLMapping());
-
-				long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
-
-				if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-					KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
-
-					sb.append(StringPool.SLASH);
-					sb.append(kbFolder.getUrlTitle());
-				}
-				%>
-
-				<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(sb.toString(), 40) %>" /></span>
-
-				<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" label="" name="urlTitle" placeholder="/sample-article-url-title" value="<%= (kbArticle == null ? StringPool.BLANK : (StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
-			</aui:field-wrapper>
-
-			<aui:field-wrapper label="content" required="<%= true %>">
-				<liferay-ui:input-editor width="100%" />
-
-				<aui:input name="content" type="hidden" />
-			</aui:field-wrapper>
-
-			<c:if test="<%= enableKBArticleDescription %>">
-				<aui:input name="description" />
-			</c:if>
-
-			<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() %>">
-				<aui:input label="source-url" name="sourceURL" />
-			</c:if>
-
-			<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
-				<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
-
-				<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
+				<aui:field-wrapper cssClass="input-append input-flex-add-on input-prepend" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' label="friendly-url">
 
 					<%
-					Map<String, String> sectionsMap = new TreeMap<String, String>();
+					StringBundler sb = new StringBundler();
 
-					for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
-						sectionsMap.put(LanguageUtil.get(request, section), section);
-					}
+					sb.append("/-/");
 
-					for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
-					%>
+					Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 
-						<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>" value="<%= entry.getValue() %>" />
+					sb.append(portlet.getFriendlyURLMapping());
 
-					<%
+					long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
+
+					if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+						KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
+
+						sb.append(StringPool.SLASH);
+						sb.append(kbFolder.getUrlTitle());
 					}
 					%>
 
-				</aui:select>
+					<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(sb.toString(), 40) %>" /></span>
 
-				<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
-			</c:if>
-
-			<c:if test="<%= kbArticle == null %>">
-				<aui:field-wrapper cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>' label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= KBArticle.class.getName() %>"
-					/>
+					<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" label="" name="urlTitle" placeholder="/sample-article-url-title" value="<%= (kbArticle == null ? StringPool.BLANK : (StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
 				</aui:field-wrapper>
-			</c:if>
 
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" persistState="<%= true %>" title="attachments">
-				<aui:fieldset>
-					<div id="<portlet:namespace />attachments">
-						<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
-					</div>
-				</aui:fieldset>
-			</liferay-ui:panel>
+				<aui:field-wrapper label="content" required="<%= true %>">
+					<liferay-ui:input-editor width="100%" />
 
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" persistState="<%= true %>" title="categorization">
-				<aui:fieldset>
-					<aui:input classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" name="categories" type="assetCategories" />
+					<aui:input name="content" type="hidden" />
+				</aui:field-wrapper>
 
-					<aui:input classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" name="tags" type="assetTags" />
-				</aui:fieldset>
-			</liferay-ui:panel>
+				<c:if test="<%= enableKBArticleDescription %>">
+					<aui:input name="description" />
+				</c:if>
 
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" persistState="<%= true %>" title="related-assets">
+				<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() %>">
+					<aui:input label="source-url" name="sourceURL" />
+				</c:if>
+
+				<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
+					<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
+
+					<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
+
+						<%
+						Map<String, String> sectionsMap = new TreeMap<String, String>();
+
+						for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
+							sectionsMap.put(LanguageUtil.get(request, section), section);
+						}
+
+						for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
+						%>
+
+							<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>" value="<%= entry.getValue() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
+				</c:if>
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+				<div id="<portlet:namespace />attachments">
+					<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
+				</div>
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+				<aui:input classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" name="categories" type="assetCategories" />
+
+				<aui:input classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" name="tags" type="assetTags" />
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 				<liferay-ui:input-asset-links
 					className="<%= KBArticle.class.getName() %>"
 					classPK="<%= (kbArticle == null) ? KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY : kbArticle.getClassPK() %>"
 				/>
-			</liferay-ui:panel>
+			</aui:fieldset>
 
-			<aui:button-row cssClass="kb-submit-buttons">
-				<c:if test="<%= (kbArticle == null) || !kbArticle.isPending() %>">
-					<aui:button name="publish" type="submit" value='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, KBArticle.class.getName()) ? "submit-for-publication" : "publish" %>' />
-				</c:if>
+			<c:if test="<%= kbArticle == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>' label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= KBArticle.class.getName() %>"
+					/>
+				</aui:fieldset>
+			</c:if>
+		</aui:fieldset-group>
 
-				<aui:button primary="<%= false %>" type="submit" value='<%= (kbArticle == null) || kbArticle.isApproved() || kbArticle.isDraft() ? "save-as-draft" : "save" %>' />
+		<aui:button-row cssClass="kb-submit-buttons">
+			<c:if test="<%= (kbArticle == null) || !kbArticle.isPending() %>">
+				<aui:button name="publish" type="submit" value='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, KBArticle.class.getName()) ? "submit-for-publication" : "publish" %>' />
+			</c:if>
 
-				<aui:button href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:fieldset>
+			<aui:button primary="<%= false %>" type="submit" value='<%= (kbArticle == null) || kbArticle.isApproved() || kbArticle.isDraft() ? "save-as-draft" : "save" %>' />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
 	</aui:form>
 </div>
 
