@@ -42,6 +42,18 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
+<liferay-util:buffer var="saveStatus">
+	<c:if test="<%= kbArticle != null %>">
+		<aui:workflow-status id="<%= String.valueOf(resourcePrimKey) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
+	</c:if>
+</liferay-util:buffer>
+
+<c:if test="<%= (kbArticle != null) && portletTitleBasedNavigation %>">
+	<liferay-frontend:info-bar>
+		<%= saveStatus %>
+	</liferay-frontend:info-bar>
+</c:if>
+
 <c:if test="<%= !portletTitleBasedNavigation %>">
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -61,6 +73,12 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="parentResourceClassNameId" type="hidden" value="<%= parentResourceClassNameId %>" />
 		<aui:input name="parentResourcePrimKey" type="hidden" value="<%= parentResourcePrimKey %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
+
+		<c:if test="<%= (kbArticle != null) && !portletTitleBasedNavigation %>">
+			<div class="kb-article-status">
+				<%= saveStatus %>
+			</div>
+		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-document-name" />
 		<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
@@ -126,10 +144,6 @@ if (portletTitleBasedNavigation) {
 		</c:choose>
 
 		<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
-
-		<c:if test="<%= kbArticle != null %>">
-			<aui:workflow-status id="<%= String.valueOf(resourcePrimKey) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
-		</c:if>
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
