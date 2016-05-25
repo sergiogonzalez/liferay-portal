@@ -31,6 +31,7 @@ long parentResourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "parentRe
 
 String title = BeanParamUtil.getString(kbArticle, request, "title", BeanPropertiesUtil.getString(kbTemplate, "title"));
 String content = BeanParamUtil.getString(kbArticle, request, "content", BeanPropertiesUtil.getString(kbTemplate, "content"));
+String urlTitle = BeanParamUtil.getString(kbArticle, request, "urlTitle");
 
 String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(kbSectionPortletInstanceConfiguration.adminKBArticleSections())));
 
@@ -199,7 +200,7 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-				<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
+				<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + urlTitle)) %>" />
 
 				<aui:input name="customURLTitle" type="hidden" value="false" />
 
