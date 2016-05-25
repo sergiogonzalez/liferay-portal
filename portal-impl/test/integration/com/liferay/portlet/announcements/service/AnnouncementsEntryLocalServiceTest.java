@@ -17,17 +17,20 @@ package com.liferay.portlet.announcements.service;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
@@ -64,6 +67,27 @@ public class AnnouncementsEntryLocalServiceTest {
 				entry.getEntryId()));
 
 		GroupLocalServiceUtil.deleteGroup(group);
+
+		Assert.assertNull(
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entry.getEntryId()));
+	}
+
+	@Test
+	public void testDeleteOrganizationAnnouncements() throws Exception {
+		Organization org = OrganizationTestUtil.addOrganization();
+
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			Organization.class);
+
+		AnnouncementsEntry entry = addAnnouncementsEntry(
+			classNameId, org.getOrganizationId());
+
+		Assert.assertNotNull(
+			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
+				entry.getEntryId()));
+
+		OrganizationLocalServiceUtil.deleteOrganization(org);
 
 		Assert.assertNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
