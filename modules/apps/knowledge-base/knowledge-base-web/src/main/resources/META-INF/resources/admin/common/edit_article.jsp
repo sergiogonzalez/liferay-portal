@@ -42,6 +42,25 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle((kbArticle != null) ? kbArticle.getTitle() : LanguageUtil.get(request, "new-article"));
 }
+
+StringBundler sb = new StringBundler();
+
+sb.append("/-/");
+
+Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
+
+sb.append(portlet.getFriendlyURLMapping());
+
+long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
+
+if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
+
+	sb.append(StringPool.SLASH);
+	sb.append(kbFolder.getUrlTitle());
+}
+
+String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 %>
 
 <liferay-util:buffer var="saveStatus">
@@ -155,36 +174,14 @@ if (portletTitleBasedNavigation) {
 
 				<aui:input name="title" type="hidden" />
 
-				<liferay-ui:input-editor contents="<%= content %>" name="contentEditor" editorName="alloyeditor" placeholder="content" />
+				<liferay-ui:input-editor contents="<%= content %>" editorName="alloyeditor" name="contentEditor" placeholder="content" />
 
 				<aui:input name="content" type="hidden" />
 
 				<div style="margin-top: 40px">
-					<aui:field-wrapper cssClass="input-append input-flex-add-on input-prepend" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' label="friendly-url">
+					<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
 
-						<%
-						StringBundler sb = new StringBundler();
-
-						sb.append("/-/");
-
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
-
-						sb.append(portlet.getFriendlyURLMapping());
-
-						long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
-
-						if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-							KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
-
-							sb.append(StringPool.SLASH);
-							sb.append(kbFolder.getUrlTitle());
-						}
-						%>
-
-						<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(sb.toString(), 40) %>" /></span>
-
-						<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" label="" name="urlTitle" placeholder="/sample-article-url-title" value="<%= (kbArticle == null ? StringPool.BLANK : (StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
-					</aui:field-wrapper>
+					<aui:input name="customURLTitle" type="hidden" value="false" />
 				</div>
 			</aui:fieldset>
 
@@ -289,26 +286,43 @@ if (portletTitleBasedNavigation) {
 	<c:if test="<%= kbArticle == null %>">
 		var urlTitleCustomized = false;
 
+		var customURLTitle = document.getElementById('<portlet:namespace />customURLTitle');
 		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
 
 		function <portlet:namespace />OnChangeEditor(html) {
-			debugger;
+			if (customURLTitle.value === 'false') {
+				html = html.replace(/[^a-zA-Z0-9_-]/g, '-');
 
-			html = html.replace(/[^a-zA-Z0-9_-]/g, '-');
+				if (html[0] === '-') {
+					html = html.replace(/^-+/, '');
+				}
 
-			if (html[0] === '-') {
-				html = html.replace(/^-+/, '');
+				html = html.replace(/--+/g, '-');
+
+				urlTitleInput.value = '<%= friendlyURLPrefix %>/' + html.toLowerCase();
 			}
-
-			html = html.replace(/--+/g, '-');
-
-			urlTitleInput.value = '/' + html.toLowerCase();
 		}
 	</c:if>
 </aui:script>
 
 <aui:script use="aui-base,event-input">
 	var form = A.one('#<portlet:namespace />fm');
+
+	<c:if test="<%= kbArticle == null %>">
+		var urlTitleInput = A.one('#<portlet:namespace />urlTitle');
+
+		urlTitleInput.on(
+			'input',
+			function() {
+				if (urlTitleInput.val()) {
+					form.one('#<portlet:namespace />customURLTitle').val('true');
+				}
+				else {
+					form.one('#<portlet:namespace />customURLTitle').val('false');
+				}
+			}
+		);
+	</c:if>
 
 	var publishButton = form.one('#<portlet:namespace />publishButton');
 
@@ -328,19 +342,23 @@ if (portletTitleBasedNavigation) {
 	form.on(
 		'submit',
 		function() {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
 			var contentEditor= window.<portlet:namespace />contentEditor;
 
 			if (contentEditor) {
-				form.fm('content').val(contentEditor.getHTML());
+				form.one('#<portlet:namespace />content').val(contentEditor.getHTML());
 			}
 
 			var titleEditor = window.<portlet:namespace />titleEditor;
 
 			if (titleEditor) {
-				form.fm('title').val(titleEditor.getText());
+				form.one('#<portlet:namespace />title').val(titleEditor.getText());
 			}
+
+			var urlTitleInput = A.one('#<portlet:namespace />urlTitle');
+
+			var urlTitleInputValue = urlTitleInput.val().replace('<%= friendlyURLPrefix %>', '')
+
+			urlTitleInput.val(urlTitleInputValue);
 
 			updateMultipleKBArticleAttachments();
 		}
