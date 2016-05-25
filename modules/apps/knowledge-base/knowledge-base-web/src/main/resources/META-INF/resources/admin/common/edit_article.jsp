@@ -177,12 +177,6 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 				<liferay-ui:input-editor contents="<%= content %>" editorName="alloyeditor" name="contentEditor" placeholder="content" />
 
 				<aui:input name="content" type="hidden" />
-
-				<div style="margin-top: 40px">
-					<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
-
-					<aui:input name="customURLTitle" type="hidden" value="false" />
-				</div>
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
@@ -204,43 +198,45 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 				/>
 			</aui:fieldset>
 
-			<c:if test="<%= enableKBArticleDescription || kbGroupServiceConfiguration.sourceURLEnabled() || ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-					<c:if test="<%= enableKBArticleDescription %>">
-						<aui:input name="description" />
-					</c:if>
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+				<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + kbArticle.getUrlTitle())) %>" />
 
-					<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() %>">
-						<aui:input label="source-url" name="sourceURL" />
-					</c:if>
+				<aui:input name="customURLTitle" type="hidden" value="false" />
 
-					<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
-						<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
+				<c:if test="<%= enableKBArticleDescription %>">
+					<aui:input name="description" />
+				</c:if>
 
-						<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
+				<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() %>">
+					<aui:input label="source-url" name="sourceURL" />
+				</c:if>
 
-							<%
-							Map<String, String> sectionsMap = new TreeMap<String, String>();
+				<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
+					<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
 
-							for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
-								sectionsMap.put(LanguageUtil.get(request, section), section);
-							}
+					<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
 
-							for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
-							%>
+						<%
+						Map<String, String> sectionsMap = new TreeMap<String, String>();
 
-								<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>" value="<%= entry.getValue() %>" />
+						for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
+							sectionsMap.put(LanguageUtil.get(request, section), section);
+						}
 
-							<%
-							}
-							%>
+						for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
+						%>
 
-						</aui:select>
+							<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>" value="<%= entry.getValue() %>" />
 
-						<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
-					</c:if>
-				</aui:fieldset>
-			</c:if>
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
+				</c:if>
+			</aui:fieldset>
 
 			<c:if test="<%= kbArticle == null %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>' label="permissions">
