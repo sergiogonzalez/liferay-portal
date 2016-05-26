@@ -281,8 +281,6 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 
 <aui:script>
 	<c:if test="<%= kbArticle == null %>">
-		var urlTitleCustomized = false;
-
 		var customURLTitle = document.getElementById('<portlet:namespace />customURLTitle');
 		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
 
@@ -305,55 +303,40 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 <aui:script use="aui-base,event-input">
 	var form = A.one('#<portlet:namespace />fm');
 
+	var urlTitleInput = form.one('#<portlet:namespace />urlTitle');
+
 	<c:if test="<%= kbArticle == null %>">
-		var urlTitleInput = A.one('#<portlet:namespace />urlTitle');
+		var customURLTitle = form.one('#<portlet:namespace />customURLTitle');
 
 		urlTitleInput.on(
 			'input',
 			function() {
-				if (urlTitleInput.val()) {
-					form.one('#<portlet:namespace />customURLTitle').val('true');
-				}
-				else {
-					form.one('#<portlet:namespace />customURLTitle').val('false');
-				}
+				customURLTitle.val(urlTitleInput.val() != '');
 			}
 		);
 	</c:if>
 
 	var publishButton = form.one('#<portlet:namespace />publishButton');
 
-	if (publishButton) {
-		publishButton.on(
-			'click',
-			function() {
-				var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
+	publishButton.on(
+		'click',
+		function() {
+			var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
 
-				if (workflowActionInput) {
-					workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-				}
+			if (workflowActionInput) {
+				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 			}
-		);
-	}
+		}
+	);
 
 	form.on(
 		'submit',
 		function() {
-			var contentEditor= window.<portlet:namespace />contentEditor;
+			form.one('#<portlet:namespace />content').val(window.<portlet:namespace />contentEditor.getHTML());
 
-			if (contentEditor) {
-				form.one('#<portlet:namespace />content').val(contentEditor.getHTML());
-			}
+			form.one('#<portlet:namespace />title').val(window.<portlet:namespace />titleEditor.getText());
 
-			var titleEditor = window.<portlet:namespace />titleEditor;
-
-			if (titleEditor) {
-				form.one('#<portlet:namespace />title').val(titleEditor.getText());
-			}
-
-			var urlTitleInput = A.one('#<portlet:namespace />urlTitle');
-
-			var urlTitleInputValue = urlTitleInput.val().replace('<%= friendlyURLPrefix %>', '')
+			var urlTitleInputValue = urlTitleInput.val().replace('<%= friendlyURLPrefix %>', '');
 
 			urlTitleInput.val(urlTitleInputValue);
 
