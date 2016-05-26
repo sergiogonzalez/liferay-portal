@@ -91,6 +91,12 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradePhone.class);
 		upgrade(UpgradePortalPreferences.class);
 		upgrade(UpgradePortletDisplayTemplatePreferences.class);
+
+		// This upgrade process must be executed before UpgradePortletId.
+		// See LPS-64788.
+
+		upgrade(UpgradeUserNotificationEvent.class);
+
 		upgrade(UpgradePortletId.class);
 		upgrade(UpgradePostgreSQL.class);
 		upgrade(UpgradeRatings.class);
@@ -100,7 +106,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeResourcePermission.class);
 		upgrade(UpgradeSocial.class);
 		upgrade(UpgradeSubscription.class);
-		upgrade(UpgradeUserNotificationEvent.class);
 		upgrade(UpgradeWebsite.class);
 
 		upgrade(UpgradeSharding.class);
