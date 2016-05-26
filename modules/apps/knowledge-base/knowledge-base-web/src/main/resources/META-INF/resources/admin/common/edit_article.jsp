@@ -44,24 +44,7 @@ if (portletTitleBasedNavigation) {
 	renderResponse.setTitle((kbArticle != null) ? kbArticle.getTitle() : LanguageUtil.get(request, "new-article"));
 }
 
-StringBundler sb = new StringBundler();
-
-sb.append("/-/");
-
-Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
-
-sb.append(portlet.getFriendlyURLMapping());
-
-long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
-
-if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
-
-	sb.append(StringPool.SLASH);
-	sb.append(kbFolder.getUrlTitle());
-}
-
-String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
+String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, parentResourcePrimKey);
 %>
 
 <liferay-util:buffer var="kbArticleStatus">
@@ -368,3 +351,26 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 		selectedFileNameContainer.html(buffer.join(''));
 	};
 </aui:script>
+
+<%!
+private String _getFriendlyURLPrefix(long parentResourceClassNameId, long parentResourcePrimKey) throws PortalException {
+	StringBundler sb = new StringBundler();
+
+	sb.append("/-/");
+
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
+
+	sb.append(portlet.getFriendlyURLMapping());
+
+	long kbFolderId = KnowledgeBaseUtil.getKBFolderId(parentResourceClassNameId, parentResourcePrimKey);
+
+	if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
+
+		sb.append(StringPool.SLASH);
+		sb.append(kbFolder.getUrlTitle());
+	}
+
+	return StringUtil.shorten(sb.toString(), 40);
+}
+%>
