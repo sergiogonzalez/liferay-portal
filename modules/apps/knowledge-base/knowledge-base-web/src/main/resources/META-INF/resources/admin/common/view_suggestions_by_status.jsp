@@ -36,7 +36,6 @@ List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbComm
 		includeCheckBox="<%= true %>"
 		searchContainerId="kbComments"
 	>
-
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"descriptive"} %>'
@@ -44,6 +43,10 @@ List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbComm
 				selectedDisplayStyle="descriptive"
 			/>
 		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-util:include page="/admin/common/suggestions_filters.jsp" servletContext="<%= application %>" />
+		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteKBComments" label="delete" />
