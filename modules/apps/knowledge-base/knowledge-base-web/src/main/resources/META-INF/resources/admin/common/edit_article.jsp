@@ -35,13 +35,19 @@ String urlTitle = BeanParamUtil.getString(kbArticle, request, "urlTitle");
 
 String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(kbSectionPortletInstanceConfiguration.adminKBArticleSections())));
 
+String headerTitle = LanguageUtil.get(request, "new-article");
+
+if (kbArticle != null) {
+	headerTitle = kbArticle.getTitle();
+}
+
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
-	renderResponse.setTitle((kbArticle != null) ? kbArticle.getTitle() : LanguageUtil.get(request, "new-article"));
+	renderResponse.setTitle(headerTitle);
 }
 
 String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, parentResourcePrimKey);
@@ -62,8 +68,8 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 <c:if test="<%= !portletTitleBasedNavigation %>">
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		localizeTitle="<%= (kbArticle == null) %>"
-		title='<%= (kbArticle == null) ? "new-article" : kbArticle.getTitle() %>'
+		localizeTitle="<%= false %>"
+		title='<%= headerTitle %>'
 	/>
 </c:if>
 
