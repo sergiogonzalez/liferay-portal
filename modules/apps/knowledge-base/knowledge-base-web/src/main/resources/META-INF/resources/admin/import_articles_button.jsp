@@ -26,8 +26,4 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey")
 	<portlet:param name="parentKBFolderId" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 </portlet:renderURL>
 
-<aui:nav-item
-	href="<%= importURL %>"
-	iconCssClass="icon-hdd"
-	label="import"
-/>
+<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "import") %>' url="<%= importURL.toString() %>" />
