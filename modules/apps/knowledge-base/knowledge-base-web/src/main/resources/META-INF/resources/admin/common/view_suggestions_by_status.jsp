@@ -19,9 +19,24 @@
 <%
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
 
+String mvcPath = ParamUtil.getString(request, "mvcPath");
+
 SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "no-suggestions-were-found");
 
-String mvcPath = ParamUtil.getString(request, "mvcPath");
+String orderByCol = ParamUtil.getString(renderRequest, "orderByCol");
+String orderByType = ParamUtil.getString(renderRequest, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", orderByCol);
+	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", "modifiedDate");
+	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", "desc");
+}
+
+kbCommentsSearchContainer.setOrderByCol(orderByCol);
+kbCommentsSearchContainer.setOrderByType(orderByType);
 
 if (mvcPath.equals("/admin/view_suggestions.jsp")) {
 	kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
@@ -54,12 +69,24 @@ List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbComm
 			portletURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
 			portletURL.setParameter("redirect", currentURL);
 			portletURL.setParameter("navigation", navigation);
+
+			Map<String, String> orderColumns = new HashMap<String, String>();
+
+			orderColumns.put("modifiedDate", "modified-date");
+			orderColumns.put("user", "user");
 			%>
 
 			<liferay-frontend:management-bar-navigation
 				disabled="<%= false %>"
 				navigationKeys='<%= new String[] {"all", "new", "in-progress", "resolved"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns="<%= orderColumns %>"
+				portletURL="<%= portletURL %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 
@@ -145,7 +172,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle) %>" />
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter='<%= !orderByCol.equals("user") && !orderByCol.equals("modified-name") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle) : null %>' />
 	</liferay-ui:search-container>
 </aui:form>
 
