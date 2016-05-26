@@ -346,7 +346,7 @@
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
