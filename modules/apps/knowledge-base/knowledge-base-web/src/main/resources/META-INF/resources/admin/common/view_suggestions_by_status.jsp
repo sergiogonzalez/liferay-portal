@@ -18,18 +18,22 @@
 
 <%
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
+
+String mvcPath = ParamUtil.getString(request, "mvcPath");
 %>
 
-<liferay-portlet:renderURL varImpl="iteratorURL" />
+<c:if test='<%= mvcPath.equals("/admin/view_suggestions.jsp") %>'>
+	<liferay-frontend:management-bar>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <%
-kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL);
+kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 %>
 
 <div id="<portlet:namespace />kbArticleCommentsWrapper">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-suggestions-were-found"
-		iteratorURL="<%= iteratorURL %>"
+		id="kbComments"
 		total="<%= kbSuggestionListDisplayContext.getKBCommentsCount() %>"
 	>
 		<liferay-ui:search-container-results
