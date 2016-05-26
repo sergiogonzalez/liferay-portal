@@ -75,19 +75,19 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteOrganizationAnnouncements() throws Exception {
-		Organization org = OrganizationTestUtil.addOrganization();
+		Organization organization = OrganizationTestUtil.addOrganization();
 
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 			Organization.class);
 
 		AnnouncementsEntry entry = addAnnouncementsEntry(
-			classNameId, org.getOrganizationId());
+			classNameId, organization.getOrganizationId());
 
 		Assert.assertNotNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
 				entry.getEntryId()));
 
-		OrganizationLocalServiceUtil.deleteOrganization(org);
+		OrganizationLocalServiceUtil.deleteOrganization(organization);
 
 		Assert.assertNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
