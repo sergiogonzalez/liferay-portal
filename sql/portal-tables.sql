@@ -399,7 +399,7 @@ create table DLFileEntryType (
 	modifiedDate DATE null,
 	fileEntryTypeKey VARCHAR(75) null,
 	name TEXT null,
-	description STRING null,
+	description TEXT null,
 	lastPublishDate DATE null
 );
 
