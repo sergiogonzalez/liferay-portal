@@ -64,7 +64,7 @@ if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 %>
 
-<liferay-util:buffer var="saveStatus">
+<liferay-util:buffer var="kbArticleStatus">
 	<c:if test="<%= kbArticle != null %>">
 		<aui:workflow-status id="<%= String.valueOf(resourcePrimKey) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
 	</c:if>
@@ -72,7 +72,7 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 
 <c:if test="<%= (kbArticle != null) && portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
-		<%= saveStatus %>
+		<%= kbArticleStatus %>
 	</liferay-frontend:info-bar>
 </c:if>
 
@@ -98,7 +98,7 @@ String friendlyURLPrefix = StringUtil.shorten(sb.toString(), 40);
 
 		<c:if test="<%= (kbArticle != null) && !portletTitleBasedNavigation %>">
 			<div class="kb-article-status">
-				<%= saveStatus %>
+				<%= kbArticleStatus %>
 			</div>
 		</c:if>
 
