@@ -23,6 +23,24 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 
 SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "no-suggestions-were-found");
 
+String orderByCol = ParamUtil.getString(renderRequest, "orderByCol");
+String orderByType = ParamUtil.getString(renderRequest, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", orderByCol);
+	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", "modifiedDate");
+	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", "desc");
+}
+
+request.setAttribute("view_suggestions_by_status.jsp-orderByCol", orderByCol);
+request.setAttribute("view_suggestions_by_status.jsp-orderByType", orderByType);
+
+kbCommentsSearchContainer.setOrderByCol(orderByCol);
+kbCommentsSearchContainer.setOrderByType(orderByType);
+
 if (mvcPath.equals("/admin/view_suggestions.jsp")) {
 	kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
 }

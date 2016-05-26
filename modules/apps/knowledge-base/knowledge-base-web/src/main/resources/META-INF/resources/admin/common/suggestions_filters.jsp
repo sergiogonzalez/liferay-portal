@@ -19,14 +19,29 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "all");
 
+String orderByCol = GetterUtil.getString((String)request.getAttribute("view_suggestions_by_status.jsp-orderByCol"));
+String orderByType = GetterUtil.getString((String)request.getAttribute("view_suggestions_by_status.jsp-orderByType"));
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("navigation", navigation);
+
+Map<String, String> orderColumns = new HashMap<String, String>();
+
+orderColumns.put("modifiedDate", "modified-date");
+orderColumns.put("userId", "user");
 %>
 
 <liferay-frontend:management-bar-navigation
 	navigationKeys='<%= new String[] {"all", "new", "in-progress", "resolved"} %>'
 	portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+/>
+
+<liferay-frontend:management-bar-sort
+	orderByCol="<%= orderByCol %>"
+	orderByType="<%= orderByType %>"
+	orderColumns="<%= orderColumns %>"
+	portletURL="<%= portletURL %>"
 />

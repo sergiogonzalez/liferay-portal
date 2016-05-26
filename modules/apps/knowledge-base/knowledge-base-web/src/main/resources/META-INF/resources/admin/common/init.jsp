@@ -45,4 +45,6 @@ boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
 int rssDelta = kbGroupServiceConfiguration.rssDelta();
 String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();
 String rssFeedType = kbGroupServiceConfiguration.rssFeedType();
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 %>

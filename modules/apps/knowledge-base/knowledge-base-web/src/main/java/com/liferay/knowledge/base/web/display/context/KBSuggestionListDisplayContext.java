@@ -23,8 +23,8 @@ import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBCommentServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
-import com.liferay.knowledge.base.util.comparator.KBCommentStatusComparator;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
+import com.liferay.knowledge.base.web.util.KBPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -84,7 +84,10 @@ public class KBSuggestionListDisplayContext {
 			if (status == KBCommentConstants.STATUS_ANY) {
 				return KBCommentServiceUtil.getKBComments(
 					_groupId, searchContainer.getStart(),
-					searchContainer.getEnd(), new KBCommentStatusComparator());
+					searchContainer.getEnd(),
+					KBPortletUtil.getKBCommentOrderByComparator(
+						searchContainer.getOrderByCol(),
+						searchContainer.getOrderByType()));
 			}
 
 			return KBCommentServiceUtil.getKBComments(
@@ -96,7 +99,10 @@ public class KBSuggestionListDisplayContext {
 				return KBCommentServiceUtil.getKBComments(
 					_groupId, KBArticleConstants.getClassName(),
 					_kbArticle.getClassPK(), searchContainer.getStart(),
-					searchContainer.getEnd(), new KBCommentStatusComparator());
+					searchContainer.getEnd(),
+					KBPortletUtil.getKBCommentOrderByComparator(
+						searchContainer.getOrderByCol(),
+						searchContainer.getOrderByType()));
 			}
 
 			return KBCommentServiceUtil.getKBComments(
