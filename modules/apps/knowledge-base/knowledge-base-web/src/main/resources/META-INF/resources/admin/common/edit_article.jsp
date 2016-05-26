@@ -164,7 +164,7 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 
 				<aui:input name="title" type="hidden" />
 
-				<liferay-ui:input-editor contents="<%= content %>" editorName="alloyeditor" name="contentEditor" placeholder="content" />
+				<liferay-ui:input-editor contents="<%= content %>" editorName="<%= kbGroupServiceConfiguration.getEditorName() %>" name="contentEditor" placeholder="content" />
 
 				<aui:input name="content" type="hidden" />
 			</aui:fieldset>
