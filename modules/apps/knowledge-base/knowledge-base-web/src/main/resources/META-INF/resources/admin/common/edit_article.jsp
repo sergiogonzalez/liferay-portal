@@ -80,7 +80,7 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 		<c:if test="<%= (kbArticle != null) && !portletTitleBasedNavigation %>">
-			<div class="kb-article-status">
+			<div class="text-center">
 				<%= kbArticleStatus %>
 			</div>
 		</c:if>
@@ -183,7 +183,7 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-				<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + urlTitle)) %>" />
+				<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null) ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + urlTitle) %>" />
 
 				<aui:input name="customURLTitle" type="hidden" value="false" />
 
