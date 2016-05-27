@@ -166,16 +166,20 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 				"value.object.column.bitmask.enabled.com.liferay.document.library.kernel.model.DLFileEntry"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long FILEENTRYTYPEID_COLUMN_BITMASK = 2L;
-	public static final long FILENAME_COLUMN_BITMASK = 4L;
-	public static final long FOLDERID_COLUMN_BITMASK = 8L;
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
-	public static final long MIMETYPE_COLUMN_BITMASK = 32L;
-	public static final long NAME_COLUMN_BITMASK = 64L;
-	public static final long REPOSITORYID_COLUMN_BITMASK = 128L;
-	public static final long TITLE_COLUMN_BITMASK = 256L;
-	public static final long USERID_COLUMN_BITMASK = 512L;
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long CUSTOM1IMAGEID_COLUMN_BITMASK = 2L;
+	public static final long CUSTOM2IMAGEID_COLUMN_BITMASK = 4L;
+	public static final long FILEENTRYTYPEID_COLUMN_BITMASK = 8L;
+	public static final long FILENAME_COLUMN_BITMASK = 16L;
+	public static final long FOLDERID_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 64L;
+	public static final long LARGEIMAGEID_COLUMN_BITMASK = 128L;
+	public static final long MIMETYPE_COLUMN_BITMASK = 256L;
+	public static final long NAME_COLUMN_BITMASK = 512L;
+	public static final long REPOSITORYID_COLUMN_BITMASK = 1024L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 2048L;
+	public static final long TITLE_COLUMN_BITMASK = 4096L;
+	public static final long USERID_COLUMN_BITMASK = 8192L;
+	public static final long UUID_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -994,7 +998,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public void setSmallImageId(long smallImageId) {
+		_columnBitmask |= SMALLIMAGEID_COLUMN_BITMASK;
+
+		if (!_setOriginalSmallImageId) {
+			_setOriginalSmallImageId = true;
+
+			_originalSmallImageId = _smallImageId;
+		}
+
 		_smallImageId = smallImageId;
+	}
+
+	public long getOriginalSmallImageId() {
+		return _originalSmallImageId;
 	}
 
 	@JSON
@@ -1005,7 +1021,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public void setLargeImageId(long largeImageId) {
+		_columnBitmask |= LARGEIMAGEID_COLUMN_BITMASK;
+
+		if (!_setOriginalLargeImageId) {
+			_setOriginalLargeImageId = true;
+
+			_originalLargeImageId = _largeImageId;
+		}
+
 		_largeImageId = largeImageId;
+	}
+
+	public long getOriginalLargeImageId() {
+		return _originalLargeImageId;
 	}
 
 	@JSON
@@ -1016,7 +1044,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public void setCustom1ImageId(long custom1ImageId) {
+		_columnBitmask |= CUSTOM1IMAGEID_COLUMN_BITMASK;
+
+		if (!_setOriginalCustom1ImageId) {
+			_setOriginalCustom1ImageId = true;
+
+			_originalCustom1ImageId = _custom1ImageId;
+		}
+
 		_custom1ImageId = custom1ImageId;
+	}
+
+	public long getOriginalCustom1ImageId() {
+		return _originalCustom1ImageId;
 	}
 
 	@JSON
@@ -1027,7 +1067,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public void setCustom2ImageId(long custom2ImageId) {
+		_columnBitmask |= CUSTOM2IMAGEID_COLUMN_BITMASK;
+
+		if (!_setOriginalCustom2ImageId) {
+			_setOriginalCustom2ImageId = true;
+
+			_originalCustom2ImageId = _custom2ImageId;
+		}
+
 		_custom2ImageId = custom2ImageId;
+	}
+
+	public long getOriginalCustom2ImageId() {
+		return _originalCustom2ImageId;
 	}
 
 	@JSON
@@ -1365,6 +1417,22 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryModelImpl._originalFileEntryTypeId = dlFileEntryModelImpl._fileEntryTypeId;
 
 		dlFileEntryModelImpl._setOriginalFileEntryTypeId = false;
+
+		dlFileEntryModelImpl._originalSmallImageId = dlFileEntryModelImpl._smallImageId;
+
+		dlFileEntryModelImpl._setOriginalSmallImageId = false;
+
+		dlFileEntryModelImpl._originalLargeImageId = dlFileEntryModelImpl._largeImageId;
+
+		dlFileEntryModelImpl._setOriginalLargeImageId = false;
+
+		dlFileEntryModelImpl._originalCustom1ImageId = dlFileEntryModelImpl._custom1ImageId;
+
+		dlFileEntryModelImpl._setOriginalCustom1ImageId = false;
+
+		dlFileEntryModelImpl._originalCustom2ImageId = dlFileEntryModelImpl._custom2ImageId;
+
+		dlFileEntryModelImpl._setOriginalCustom2ImageId = false;
 
 		dlFileEntryModelImpl._columnBitmask = 0;
 	}
@@ -1773,9 +1841,17 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _size;
 	private int _readCount;
 	private long _smallImageId;
+	private long _originalSmallImageId;
+	private boolean _setOriginalSmallImageId;
 	private long _largeImageId;
+	private long _originalLargeImageId;
+	private boolean _setOriginalLargeImageId;
 	private long _custom1ImageId;
+	private long _originalCustom1ImageId;
+	private boolean _setOriginalCustom1ImageId;
 	private long _custom2ImageId;
+	private long _originalCustom2ImageId;
+	private boolean _setOriginalCustom2ImageId;
 	private boolean _manualCheckInRequired;
 	private Date _lastPublishDate;
 	private long _columnBitmask;

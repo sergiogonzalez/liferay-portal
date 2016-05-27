@@ -3493,6 +3493,223 @@ public class DLFileEntryUtil {
 	}
 
 	/**
+	* Returns all the document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @return the matching document library file entries
+	*/
+	public static List<DLFileEntry> findByS_L_C1_C2(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId) {
+		return getPersistence()
+				   .findByS_L_C1_C2(smallImageId, largeImageId, custom1ImageId,
+			custom2ImageId);
+	}
+
+	/**
+	* Returns a range of all the document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @return the range of matching document library file entries
+	*/
+	public static List<DLFileEntry> findByS_L_C1_C2(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId, int start,
+		int end) {
+		return getPersistence()
+				   .findByS_L_C1_C2(smallImageId, largeImageId, custom1ImageId,
+			custom2ImageId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library file entries
+	*/
+	public static List<DLFileEntry> findByS_L_C1_C2(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId, int start,
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
+		return getPersistence()
+				   .findByS_L_C1_C2(smallImageId, largeImageId, custom1ImageId,
+			custom2ImageId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching document library file entries
+	*/
+	public static List<DLFileEntry> findByS_L_C1_C2(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId, int start,
+		int end, OrderByComparator<DLFileEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByS_L_C1_C2(smallImageId, largeImageId, custom1ImageId,
+			custom2ImageId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file entry
+	* @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	*/
+	public static DLFileEntry findByS_L_C1_C2_First(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryException {
+		return getPersistence()
+				   .findByS_L_C1_C2_First(smallImageId, largeImageId,
+			custom1ImageId, custom2ImageId, orderByComparator);
+	}
+
+	/**
+	* Returns the first document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	*/
+	public static DLFileEntry fetchByS_L_C1_C2_First(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByS_L_C1_C2_First(smallImageId, largeImageId,
+			custom1ImageId, custom2ImageId, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file entry
+	* @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	*/
+	public static DLFileEntry findByS_L_C1_C2_Last(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryException {
+		return getPersistence()
+				   .findByS_L_C1_C2_Last(smallImageId, largeImageId,
+			custom1ImageId, custom2ImageId, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	*/
+	public static DLFileEntry fetchByS_L_C1_C2_Last(long smallImageId,
+		long largeImageId, long custom1ImageId, long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByS_L_C1_C2_Last(smallImageId, largeImageId,
+			custom1ImageId, custom2ImageId, orderByComparator);
+	}
+
+	/**
+	* Returns the document library file entries before and after the current document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* @param fileEntryId the primary key of the current document library file entry
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library file entry
+	* @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
+	*/
+	public static DLFileEntry[] findByS_L_C1_C2_PrevAndNext(long fileEntryId,
+		long smallImageId, long largeImageId, long custom1ImageId,
+		long custom2ImageId, OrderByComparator<DLFileEntry> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryException {
+		return getPersistence()
+				   .findByS_L_C1_C2_PrevAndNext(fileEntryId, smallImageId,
+			largeImageId, custom1ImageId, custom2ImageId, orderByComparator);
+	}
+
+	/**
+	* Removes all the document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63; from the database.
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	*/
+	public static void removeByS_L_C1_C2(long smallImageId, long largeImageId,
+		long custom1ImageId, long custom2ImageId) {
+		getPersistence()
+			.removeByS_L_C1_C2(smallImageId, largeImageId, custom1ImageId,
+			custom2ImageId);
+	}
+
+	/**
+	* Returns the number of document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
+	*
+	* @param smallImageId the small image ID
+	* @param largeImageId the large image ID
+	* @param custom1ImageId the custom1 image ID
+	* @param custom2ImageId the custom2 image ID
+	* @return the number of matching document library file entries
+	*/
+	public static int countByS_L_C1_C2(long smallImageId, long largeImageId,
+		long custom1ImageId, long custom2ImageId) {
+		return getPersistence()
+				   .countByS_L_C1_C2(smallImageId, largeImageId,
+			custom1ImageId, custom2ImageId);
+	}
+
+	/**
 	* Caches the document library file entry in the entity cache if it is enabled.
 	*
 	* @param dlFileEntry the document library file entry
