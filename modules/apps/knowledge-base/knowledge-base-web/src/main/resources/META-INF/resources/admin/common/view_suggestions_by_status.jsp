@@ -45,11 +45,25 @@ List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbComm
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
-			<liferay-util:include page="/admin/common/suggestions_filters.jsp" servletContext="<%= application %>" />
+
+			<%
+			String navigation = ParamUtil.getString(request, "navigation", "all");
+
+			PortletURL portletURL = renderResponse.createRenderURL();
+
+			portletURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
+			portletURL.setParameter("redirect", currentURL);
+			portletURL.setParameter("navigation", navigation);
+			%>
+
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all", "new", "in-progress", "resolved"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteKBComments" label="delete" />
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKBComments();" %>' icon="trash" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
@@ -58,11 +72,11 @@ List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbComm
 kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 %>
 
-<liferay-portlet:actionURL name="deleteKBComments" varImpl="deleteKBComments">
+<liferay-portlet:actionURL name="deleteKBComments" varImpl="deleteKBCommentsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:actionURL>
 
-<aui:form action="<%= deleteKBComments %>" name="fm">
+<aui:form action="<%= deleteKBCommentsURL %>" name="fm">
 	<liferay-ui:search-container
 		id="kbComments"
 		searchContainer="<%= kbCommentsSearchContainer %>"
@@ -126,13 +140,12 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteKBComments').on(
-		'click',
-		function() {
+<c:if test='<%= mvcPath.equals("/admin/view_suggestions.jsp") %>'>
+	<aui:script>
+		function <portlet:namespace />deleteKBComments() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 				submitForm($(document.<portlet:namespace />fm));
 			}
 		}
-	);
-</aui:script>
+	</aui:script>
+</c:if>
