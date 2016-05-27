@@ -189,9 +189,7 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-				<aui:input cssClass="input-medium" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null) ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + urlTitle) %>" />
-
-				<aui:input name="customURLTitle" type="hidden" value="false" />
+				<aui:input cssClass="input-medium" data-customUrl="false" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null) ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + urlTitle) %>" />
 
 				<c:if test="<%= enableKBArticleDescription %>">
 					<aui:input name="description" />
@@ -270,11 +268,12 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 
 <aui:script>
 	<c:if test="<%= kbArticle == null %>">
-		var customURLTitle = document.getElementById('<portlet:namespace />customURLTitle');
 		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
 
 		function <portlet:namespace />OnChangeEditor(html) {
-			if (customURLTitle.value === 'false') {
+			var customUrl = urlTitleInput.getAttribute('data-customUrl');
+
+			if (customUrl === 'false') {
 				html = html.replace(/[^a-zA-Z0-9_-]/g, '-');
 
 				if (html[0] === '-') {
@@ -295,12 +294,10 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 	var urlTitleInput = form.one('#<portlet:namespace />urlTitle');
 
 	<c:if test="<%= kbArticle == null %>">
-		var customURLTitle = form.one('#<portlet:namespace />customURLTitle');
-
 		urlTitleInput.on(
 			'input',
-			function() {
-				customURLTitle.val(urlTitleInput.val() != '');
+			function(event) {
+				event.currentTarget.setAttribute('data-customUrl', urlTitleInput.val() != '');
 			}
 		);
 	</c:if>
