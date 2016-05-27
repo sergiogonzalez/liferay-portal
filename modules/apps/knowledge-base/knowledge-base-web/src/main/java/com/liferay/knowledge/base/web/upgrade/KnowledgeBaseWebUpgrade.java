@@ -14,10 +14,11 @@
 
 package com.liferay.knowledge.base.web.upgrade;
 
-import com.liferay.knowledge.base.web.upgrade.v0_0_1.UpgradeWebModule;
+import com.liferay.knowledge.base.web.upgrade.v0_0_1.KnowledgeBaseWebUpgradeSetUp;
 import com.liferay.knowledge.base.web.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,6 +33,16 @@ public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		try {
+			KnowledgeBaseWebUpgradeSetUp knowledgeBaseWebUpgradeSetUp =
+				new KnowledgeBaseWebUpgradeSetUp();
+
+			knowledgeBaseWebUpgradeSetUp.upgrade();
+		}
+		catch (UpgradeException ue) {
+			throw new RuntimeException("Could not update the module setup", ue);
+		}
+
 		registry.register(
 			"com.liferay.knowledge.base.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
@@ -46,10 +57,6 @@ public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUpgradeWebModule(UpgradeWebModule upgradeWebModule) {
 	}
 
 	private SettingsFactory _settingsFactory;
