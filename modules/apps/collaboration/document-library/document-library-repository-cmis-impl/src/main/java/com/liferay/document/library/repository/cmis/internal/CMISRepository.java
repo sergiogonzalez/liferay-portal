@@ -866,7 +866,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public Session getSession() throws PortalException {
-		Session session = getCachedSession();
+		Session session = _cmisSessionCache.get(_sessionKey);
 
 		if (session == null) {
 			SessionImpl sessionImpl =
@@ -874,7 +874,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 			session = sessionImpl.getSession();
 
-			setCachedSession(session);
+			_cmisSessionCache.put(_sessionKey, session);
 		}
 
 		if (_cmisRepositoryDetector == null) {
@@ -1803,10 +1803,6 @@ public class CMISRepository extends BaseCmisRepository {
 		return hits;
 	}
 
-	protected Session getCachedSession() {
-		return _cmisSessionCache.get(_sessionKey);
-	}
-
 	protected org.apache.chemistry.opencmis.client.api.Folder getCmisFolder(
 			Session session, long folderId)
 		throws PortalException {
@@ -2119,10 +2115,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 			throw new PrincipalException.MustBeAuthenticated(login);
 		}
-	}
-
-	protected void setCachedSession(Session session) {
-		_cmisSessionCache.put(_sessionKey, session);
 	}
 
 	protected <E> List<E> subList(
