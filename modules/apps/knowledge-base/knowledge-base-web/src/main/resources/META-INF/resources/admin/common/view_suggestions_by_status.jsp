@@ -57,6 +57,7 @@ List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbComm
 			%>
 
 			<liferay-frontend:management-bar-navigation
+				disabled="<%= false %>"
 				navigationKeys='<%= new String[] {"all", "new", "in-progress", "resolved"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			/>
