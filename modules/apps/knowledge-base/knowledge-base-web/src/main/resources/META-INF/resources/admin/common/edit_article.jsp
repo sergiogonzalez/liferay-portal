@@ -189,7 +189,7 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-				<aui:input cssClass="input-medium" data-customUrl="false" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder='<%= friendlyURLPrefix + "/sample-article-url-title" %>' type="text" value="<%= (kbArticle == null) ? StringPool.BLANK : (friendlyURLPrefix + StringPool.SLASH + urlTitle) %>" />
+				<aui:input cssClass="input-medium" data-customUrl="false" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder="sample-article-url-title" prefix="<%= friendlyURLPrefix %>" type="text" value="<%= urlTitle %>" />
 
 				<c:if test="<%= enableKBArticleDescription %>">
 					<aui:input name="description" />
@@ -282,7 +282,7 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 
 				html = html.replace(/--+/g, '-');
 
-				urlTitleInput.value = '<%= friendlyURLPrefix %>/' + html.toLowerCase();
+				urlTitleInput.value = html.toLowerCase();
 			}
 		}
 	</c:if>
@@ -321,10 +321,6 @@ String friendlyURLPrefix = _getFriendlyURLPrefix(parentResourceClassNameId, pare
 			form.one('#<portlet:namespace />content').val(window.<portlet:namespace />contentEditor.getHTML());
 
 			form.one('#<portlet:namespace />title').val(window.<portlet:namespace />titleEditor.getText());
-
-			var urlTitleInputValue = urlTitleInput.val().replace('<%= friendlyURLPrefix %>', '');
-
-			urlTitleInput.val(urlTitleInputValue);
 
 			updateMultipleKBArticleAttachments();
 		}
@@ -374,6 +370,6 @@ private String _getFriendlyURLPrefix(long parentResourceClassNameId, long parent
 		sb.append(kbFolder.getUrlTitle());
 	}
 
-	return StringUtil.shorten(sb.toString(), 40);
+	return StringUtil.shorten(sb.toString(), 40) + StringPool.SLASH;
 }
 %>
