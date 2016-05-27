@@ -80,17 +80,13 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 
 		form.fm('<%= Constants.CMD %>').val('<%= (kbTemplate == null) ? Constants.ADD : Constants.UPDATE %>');
 
-		var contentEditor= window.<portlet:namespace />contentEditor;
+		var contentEditor = window.<portlet:namespace />contentEditor;
 
-		if (contentEditor) {
-			form.fm('content').val(contentEditor.getHTML());
-		}
+		form.fm('content').val(contentEditor.getHTML());
 
 		var titleEditor = window.<portlet:namespace />titleEditor;
 
-		if (titleEditor) {
-			form.fm('title').val(titleEditor.getText());
-		}
+		form.fm('title').val(titleEditor.getText());
 
 		submitForm(form);
 	}
