@@ -210,6 +210,12 @@
 			<finder-column arrayable-operator="OR" name="folderId" />
 			<finder-column name="fileEntryTypeId" />
 		</finder>
+		<finder name="S_L_C1_C2" return-type="Collection">
+			<finder-column name="smallImageId" />
+			<finder-column name="largeImageId" />
+			<finder-column name="custom1ImageId" />
+			<finder-column name="custom2ImageId" />
+		</finder>
 
 		<!-- References -->
 
