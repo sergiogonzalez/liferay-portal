@@ -18,6 +18,11 @@
 
 <%
 long parentKBFolderId = ParamUtil.getLong(request, "parentKBFolderId");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 %>
 
 <portlet:actionURL name="importFile" var="importFileURL">
@@ -42,25 +47,31 @@ long parentKBFolderId = ParamUtil.getLong(request, "parentKBFolderId");
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<aui:fieldset class="kb-block-labels">
-			<aui:field-wrapper>
-				<div class="alert alert-info">
-					<liferay-ui:message
-						arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
-						key="upload-your-zip-file-help"
-					/>
-				</div>
-			</aui:field-wrapper>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:field-wrapper>
+					<div class="alert alert-info">
+						<liferay-ui:message
+								arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
+								key="upload-your-zip-file-help"
+						/>
+					</div>
+				</aui:field-wrapper>
 
-			<aui:input id="file" label="upload-your-zip-file" name="file" type="file" />
-		</aui:fieldset>
+				<aui:input id="file" label="upload-your-zip-file" name="file" type="file" />
+			</aui:fieldset>
 
-		<aui:field-wrapper label="prioritization-strategy">
-			<aui:input helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help" label="apply-numerical-prefixes-of-article-files-as-priorities" name="prioritizeByNumericalPrefix" type="checkbox" value="true" />
-		</aui:field-wrapper>
+			<aui:fieldset>
+				<aui:field-wrapper label="prioritization-strategy">
+					<aui:input helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help" label="apply-numerical-prefixes-of-article-files-as-priorities" name="prioritizeByNumericalPrefix" type="checkbox" value="true" />
+				</aui:field-wrapper>
+			</aui:fieldset>
+
+		</aui:fieldset-group>
+
 
 		<aui:button-row>
-			<aui:button name="submit" type="submit" />
+			<aui:button cssClass="btn-lg" name="submit" type="submit" />
 
 			<portlet:renderURL var="cancelURL">
 				<portlet:param name="mvcPath" value="/admin/view.jsp" />
@@ -68,7 +79,7 @@ long parentKBFolderId = ParamUtil.getLong(request, "parentKBFolderId");
 				<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentKBFolderId) %>" />
 			</portlet:renderURL>
 
-			<aui:button href="<%= cancelURL %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= cancelURL %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>
