@@ -142,6 +142,7 @@ page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %
 page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.upload.UploadRequestSizeException" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -171,7 +172,8 @@ page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.wiki.model.WikiPage" %>
+page import="com.liferay.wiki.model.WikiPage" %><%@
+page import="com.liferay.portal.configuration.metatype.util.ParameterMapUtil" %>
 
 <%@ page import="java.math.BigDecimal" %>
 
