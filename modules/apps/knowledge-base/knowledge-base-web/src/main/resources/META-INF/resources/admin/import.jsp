@@ -52,23 +52,19 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 				<aui:field-wrapper>
 					<div class="alert alert-info">
 						<liferay-ui:message
-								arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
-								key="upload-your-zip-file-help"
+							arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
+							key="upload-your-zip-file-help"
 						/>
 					</div>
 				</aui:field-wrapper>
 
 				<aui:input id="file" label="upload-your-zip-file" name="file" type="file" />
-			</aui:fieldset>
 
-			<aui:fieldset>
 				<aui:field-wrapper label="prioritization-strategy">
 					<aui:input helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help" label="apply-numerical-prefixes-of-article-files-as-priorities" name="prioritizeByNumericalPrefix" type="checkbox" value="true" />
 				</aui:field-wrapper>
 			</aui:fieldset>
-
 		</aui:fieldset-group>
-
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" name="submit" type="submit" />

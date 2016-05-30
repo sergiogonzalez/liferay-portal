@@ -60,13 +60,13 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 				<aui:input name="name" />
 
 				<aui:input name="description" />
-
 			</aui:fieldset>
+
 			<c:if test="<%= kbFolder == null %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 					<aui:field-wrapper cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>'>
 						<liferay-ui:input-permissions
-								modelName="<%= KBFolder.class.getName() %>"
+							modelName="<%= KBFolder.class.getName() %>"
 						/>
 					</aui:field-wrapper>
 				</aui:fieldset>
@@ -78,6 +78,5 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
-
 	</aui:form>
 </div>
