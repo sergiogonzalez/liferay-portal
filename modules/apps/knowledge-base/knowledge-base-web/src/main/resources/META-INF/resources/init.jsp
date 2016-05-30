@@ -143,6 +143,7 @@ page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil"
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.upload.UploadRequestSizeException" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
