@@ -45,7 +45,9 @@ public class KnowledgeBaseWebUpgradeSetup extends UpgradeModules {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (!rs.next()) {
-					super.updateExtractedModules();
+					if (hasServiceComponent("KB")) {
+						super.updateExtractedModules();
+					}
 				}
 			}
 		}
