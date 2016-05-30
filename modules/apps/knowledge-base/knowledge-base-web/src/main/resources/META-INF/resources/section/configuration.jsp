@@ -72,44 +72,6 @@ String tabs2Names = "general,display-settings";
 					<aui:option label="abstract" />
 				</aui:select>
 
-				<aui:select label="article-window-state" name="preferences--kbArticleWindowState--" value="<%= kbSectionPortletInstanceConfiguration.kbArticleWindowState() %>">
-					<aui:option label="maximized" value="<%= WindowState.MAXIMIZED.toString() %>" />
-					<aui:option label="normal" value="<%= WindowState.NORMAL.toString() %>" />
-				</aui:select>
-
-				<div class="kb-block-labels kb-field-wrapper">
-					<aui:select inlineField="<%= true %>" label="order-by" name="preferences--kbArticlesOrderByCol--" value="<%= kbSectionPortletInstanceConfiguration.kbArticlesOrderByCol() %>">
-						<aui:option label="create-date" />
-						<aui:option label="modified-date" />
-						<aui:option label="priority" />
-						<aui:option label="title" />
-						<aui:option label="view-count" />
-					</aui:select>
-
-					<aui:select inlineField="<%= true %>" label="<%= StringPool.NBSP %>" name="preferences--kbArticlesOrderByType--" value="<%= kbSectionPortletInstanceConfiguration.kbArticlesOrderByType() %>">
-						<aui:option label="ascending" value="asc" />
-						<aui:option label="descending" value="desc" />
-					</aui:select>
-				</div>
-
-				<aui:select cssClass="kb-field-wrapper" label="items-per-page" name="preferences--kbArticlesDelta--">
-
-					<%
-					int[] pageDeltaValues = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SEARCH_CONTAINER_PAGE_DELTA_VALUES));
-
-					Arrays.sort(pageDeltaValues);
-
-					for (int pageDeltaValue : pageDeltaValues) {
-					%>
-
-						<aui:option label="<%= pageDeltaValue %>" selected="<%= kbArticlesDelta == pageDeltaValue %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
 				<aui:input label="show-pagination" name="preferences--showKBArticlesPagination--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.showKBArticlesPagination() %>" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("display-settings") %>'>
