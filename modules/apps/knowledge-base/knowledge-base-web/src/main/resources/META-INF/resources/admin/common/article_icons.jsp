@@ -27,23 +27,6 @@ resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
 <c:if test="<%= (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) || (DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) || ((!rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY) || DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR)) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE)) || (kbArticle.isRoot() && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.PERMISSIONS)) || KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.MOVE_KB_ARTICLE) || KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.DELETE) %>">
 	<div class="kb-article-icons text-right">
 		<liferay-ui:icon-menu cssClass="right" direction="down" extended="<%= false %>" triggerCssClass="btn">
-			<c:if test="<%= (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) || (DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) %>">
-				<liferay-portlet:renderURL var="addKBArticleURL">
-					<portlet:param name="mvcPath" value='<%= templatePath + "edit_article.jsp" %>' />
-					<portlet:param name="redirect" value="<%= redirect %>" />
-					<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
-					<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-				</liferay-portlet:renderURL>
-
-				<liferay-ui:icon
-					iconCssClass="icon-plus"
-					label="<%= true %>"
-					message="add-child-article"
-					method="get"
-					url="<%= addKBArticleURL %>"
-				/>
-			</c:if>
-
 			<c:if test="<%= kbArticle.isRoot() && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.PERMISSIONS) %>">
 				<liferay-security:permissionsURL
 					modelResource="<%= KBArticle.class.getName() %>"

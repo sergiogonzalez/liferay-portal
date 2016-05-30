@@ -17,16 +17,19 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.knowledge.base.service.permission.DisplayPermission;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -45,13 +48,15 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class EditArticlePortletConfigurationIcon
+public class AddChildArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "edit");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
+		return LanguageUtil.get(resourceBundle, "add-child-article");
 	}
 
 	@Override
@@ -73,10 +78,12 @@ public class EditArticlePortletConfigurationIcon
 			"article_icons.jsp-kb_article");
 
 		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
+			"parentResourceClassNameId",
+			String.valueOf(kbArticle.getClassNameId()));
 
 		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+			"parentResourcePrimKey",
+			String.valueOf(kbArticle.getResourcePrimKey()));
 
 		portletURL.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
@@ -86,7 +93,7 @@ public class EditArticlePortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 108;
+		return 107;
 	}
 
 	@Override
@@ -105,12 +112,14 @@ public class EditArticlePortletConfigurationIcon
 		String rootPortletId =
 			themeDisplay.getPortletDisplay().getRootPortletId();
 
-		if ((!rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY) ||
+		if ((AdminPermission.contains(
+				permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) &&
+			 rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) ||
+			(DisplayPermission.contains(
+				permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) &&
 			 DisplayPermission.contains(
-				 permissionChecker, scopeGroupId,
-				 KBActionKeys.ADMINISTRATOR)) &&
-			KBArticlePermission.contains(
-				permissionChecker, kbArticle, KBActionKeys.UPDATE)) {
+				 permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR) &&
+			 rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY))) {
 
 			return true;
 		}
