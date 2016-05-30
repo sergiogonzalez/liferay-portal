@@ -207,7 +207,7 @@ String rootPortletId = portletDisplay.getRootPortletId();
 
 String templatePath = portletConfig.getInitParameter("template-path");
 
-KBGroupServiceConfiguration kbGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(KBGroupServiceConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getScopeGroupId(), KBConstants.SERVICE_NAME));
+KBGroupServiceConfiguration kbGroupServiceConfiguration = ConfigurationProviderUtil.getGroupConfiguration(KBGroupServiceConfiguration.class, themeDisplay.getScopeGroupId());
 
 KBSectionPortletInstanceConfiguration kbSectionPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBSectionPortletInstanceConfiguration.class);
 
