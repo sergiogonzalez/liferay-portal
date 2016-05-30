@@ -18,6 +18,11 @@
 
 <%
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+
+boolean showKBArticlesSectionsTitle = kbSectionPortletInstanceConfiguration.showKBArticlesSectionsTitle();
+String[] kbArticlesSections = kbSectionPortletInstanceConfiguration.kbArticlesSections();
+String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDisplayStyle();
+boolean showKBArticlesPagination = kbSectionPortletInstanceConfiguration.showKBArticlesPagination();
 %>
 
 <c:choose>
