@@ -19,10 +19,8 @@
 <%
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 
-boolean showKBArticlesSectionsTitle = kbSectionPortletInstanceConfiguration.showKBArticlesSectionsTitle();
 String[] kbArticlesSections = kbSectionPortletInstanceConfiguration.kbArticlesSections();
 String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDisplayStyle();
-boolean showKBArticlesPagination = kbSectionPortletInstanceConfiguration.showKBArticlesPagination();
 %>
 
 <c:choose>
@@ -39,7 +37,7 @@ boolean showKBArticlesPagination = kbSectionPortletInstanceConfiguration.showKBA
 				results="<%= KBArticleServiceUtil.getSectionsKBArticles(scopeGroupId, kbArticlesSections, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 			/>
 
-			<c:if test="<%= showKBArticlesSectionsTitle %>">
+			<c:if test="<%= kbSectionPortletInstanceConfiguration.showKBArticlesSectionsTitle() %>">
 
 				<%
 				List<String> titles = new ArrayList<String>();
@@ -101,7 +99,7 @@ boolean showKBArticlesPagination = kbSectionPortletInstanceConfiguration.showKBA
 
 			</div>
 
-			<c:if test="<%= showKBArticlesPagination && (total > searchContainer.getDelta()) %>">
+			<c:if test="<%= kbSectionPortletInstanceConfiguration.showKBArticlesPagination() && (total > searchContainer.getDelta()) %>">
 				<div class="taglib-search-iterator-page-iterator-bottom">
 					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 				</div>
