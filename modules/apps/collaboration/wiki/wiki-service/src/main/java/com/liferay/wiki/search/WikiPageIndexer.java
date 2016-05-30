@@ -194,8 +194,6 @@ public class WikiPageIndexer
 	protected Document doGetDocument(WikiPage wikiPage) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiPage);
 
-		document.addUID(CLASS_NAME, wikiPage.getResourcePrimKey());
-
 		try {
 			String content = HtmlUtil.extractText(
 				_wikiEngineRenderer.convert(wikiPage, null, null, null));
