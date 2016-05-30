@@ -17,6 +17,8 @@ package com.liferay.knowledge.base.markdown.converter.internal.pegdown.serialize
 import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
@@ -35,6 +37,52 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 	public LiferayToHtmlSerializer(LinkRenderer linkRenderer) {
 		super(linkRenderer);
+	}
+
+	@Override
+	public void visit(HeaderNode node) {
+		boolean anchorInserted = false;
+
+		if (node.getLevel() != 1) {
+			List<Node> childNodes = node.getChildren();
+
+			if (!childNodes.isEmpty()) {
+
+				StringBuilder strb = new StringBuilder();
+
+				for(Node child : childNodes){
+					if(child instanceof TextNode){
+						strb.append(((TextNode) child).getText());
+					}
+				}
+
+				String nodeText = strb.toString();
+
+				String find = "\\[\\]\\(id=([^\\s]+?)\\)";
+				Pattern pattern = Pattern.compile(find);
+				Matcher matcher = pattern.matcher(nodeText);
+
+				String matchString = null;
+
+				if(matcher.find()) {
+					matchString = matcher.group(1);
+				}
+				else{
+					matchString = "unknow"+System.currentTimeMillis();
+				}
+
+				printer.print(
+					"<a href=\"#" + matchString + "\" id=\"" + matchString + "\">");
+
+				anchorInserted = true;
+			}
+		}
+
+		super.visit(node);
+
+		if (anchorInserted) {
+			printer.print("</a>");
+		}
 	}
 
 	@Override
