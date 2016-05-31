@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUt
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 
 /**
  * @author Christopher Kian
@@ -34,6 +35,14 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			else {
 				AnnouncementsEntryLocalServiceUtil.deleteEntries(
 					group.getClassNameId(), group.getClassPK());
+
+				if (group.isOrganization()) {
+					long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+						Group.class);
+
+					AnnouncementsEntryLocalServiceUtil.deleteEntries(
+						classNameId, group.getGroupId());
+				}
 			}
 		}
 		catch (Exception e) {
