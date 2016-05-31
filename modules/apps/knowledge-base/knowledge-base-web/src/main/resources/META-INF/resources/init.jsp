@@ -48,7 +48,6 @@ page import="com.liferay.knowledge.base.configuration.KBGroupServiceConfiguratio
 page import="com.liferay.knowledge.base.constants.KBActionKeys" %><%@
 page import="com.liferay.knowledge.base.constants.KBArticleConstants" %><%@
 page import="com.liferay.knowledge.base.constants.KBCommentConstants" %><%@
-page import="com.liferay.knowledge.base.constants.KBConstants" %><%@
 page import="com.liferay.knowledge.base.constants.KBFolderConstants" %><%@
 page import="com.liferay.knowledge.base.constants.KBPortletKeys" %><%@
 page import="com.liferay.knowledge.base.exception.DuplicateKBFolderNameException" %><%@
