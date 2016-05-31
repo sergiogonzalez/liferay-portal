@@ -264,8 +264,8 @@
 					(DLFileEntryType.companyId = ?) AND
 					[$GROUP_ID$]
 					(
-						(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
+						(CAST_CLOB_TEXT(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(CAST_CLOB_TEXT(DLFileEntryType.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 				)
 		]]>
@@ -282,8 +282,8 @@
 					(DLFileEntryType.companyId = ?) AND
 					[$GROUP_ID$]
 					(
-						(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
+						(CAST_CLOB_TEXT(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(CAST_CLOB_TEXT(DLFileEntryType.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 				)
 		]]>
