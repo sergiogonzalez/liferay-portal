@@ -17,8 +17,6 @@
 <%@ include file="/section/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "general");
-
 String tabs2Names = "general,display-settings";
 
 kbSectionPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSectionPortletInstanceConfiguration.class, kbSectionPortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
@@ -28,13 +26,11 @@ kbSectionPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSecti
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 
 	<liferay-ui:error key="kbArticlesSections" message="please-select-at-least-one-section" />
 
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
-		param="tabs2"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>
