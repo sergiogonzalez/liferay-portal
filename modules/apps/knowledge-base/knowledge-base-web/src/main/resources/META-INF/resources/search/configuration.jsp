@@ -17,8 +17,6 @@
 <%@ include file="/search/init.jsp" %>
 
 <%
-String tabs2Names = "general,display-settings";
-
 kbSearchPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSearchPortletInstanceConfiguration.class, kbSearchPortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
 %>
 
@@ -28,7 +26,7 @@ kbSearchPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSearch
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="general,display-settings"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>

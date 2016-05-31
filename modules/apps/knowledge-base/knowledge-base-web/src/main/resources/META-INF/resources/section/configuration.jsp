@@ -17,8 +17,6 @@
 <%@ include file="/section/init.jsp" %>
 
 <%
-String tabs2Names = "general,display-settings";
-
 kbSectionPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSectionPortletInstanceConfiguration.class, kbSectionPortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
 %>
 
@@ -30,7 +28,7 @@ kbSectionPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSecti
 	<liferay-ui:error key="kbArticlesSections" message="please-select-at-least-one-section" />
 
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="general,display-settings"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>

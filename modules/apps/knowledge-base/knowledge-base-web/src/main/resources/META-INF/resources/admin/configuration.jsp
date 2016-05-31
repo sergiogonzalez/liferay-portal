@@ -19,10 +19,10 @@
 <%
 kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceConfiguration.class, kbGroupServiceConfiguration, request.getParameterMap(), "preferences--", "--");
 
-String tabs2Names = "email-from,article-added-email,article-updated-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
+String tabsNames = "email-from,article-added-email,article-updated-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
 
 if (PortalUtil.isRSSFeedsEnabled()) {
-	tabs2Names += ",rss";
+	tabsNames += ",rss";
 }
 %>
 
@@ -42,7 +42,7 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="<%= tabsNames %>"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>
