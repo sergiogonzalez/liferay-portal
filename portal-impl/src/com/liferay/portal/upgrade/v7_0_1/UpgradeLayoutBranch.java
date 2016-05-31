@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.knowledge.base.constants;
+package com.liferay.portal.upgrade.v7_0_1;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.v7_0_1.util.LayoutBranchTable;
 
 /**
- * @author Roberto Díaz
+ * @author Miguel Pastor
  */
-public class KBConstants {
+public class UpgradeLayoutBranch extends UpgradeProcess {
 
-	public static final java.lang.String SERVICE_NAME =
-		"com.liferay.knowledge.base";
+	@Override
+	protected void doUpgrade() throws Exception {
+		alter(
+			LayoutBranchTable.class,
+			new AlterColumnName("LayoutBranchId", "layoutBranchId"));
+	}
 
 }
