@@ -17,7 +17,7 @@
 <%@ include file="/article/init.jsp" %>
 
 <%
-String tabs2Names = Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) ? "display-settings" : "general,display-settings";
+String tabsNames = Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) ? "display-settings" : "general,display-settings";
 
 kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArticlePortletInstanceConfiguration.class, kbArticlePortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
 %>
@@ -29,26 +29,28 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 	<aui:input name="preferences--resourcePrimKey--" type="hidden" value="<%= kbArticlePortletInstanceConfiguration.resourcePrimKey() %>" />
 
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="<%= tabsNames %>"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>
-		<liferay-ui:section>
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="form-group kb-field-wrapper">
+		<c:if test="<%= tabsNames.contains("general") %>">
+			<liferay-ui:section>
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<div class="form-group kb-field-wrapper">
 
-						<%
-						KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(kbArticlePortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
-						%>
+							<%
+							KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(kbArticlePortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
+							%>
 
-						<aui:input label="article" name="configurationKBArticle" type="resource" value="<%= (kbArticle != null) ? kbArticle.getTitle() : StringPool.BLANK %>" />
+							<aui:input label="article" name="configurationKBArticle" type="resource" value="<%= (kbArticle != null) ? kbArticle.getTitle() : StringPool.BLANK %>" />
 
-						<aui:button name="selectKBArticleButton" value="select" />
-					</div>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</liferay-ui:section>
+							<aui:button name="selectKBArticleButton" value="select" />
+						</div>
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</liferay-ui:section>
+		</c:if>
 
 		<liferay-ui:section>
 			<aui:fieldset-group markupView="lexicon">
