@@ -52,55 +52,53 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 					<aui:input label="name" name="preferences--emailFromName--" value="<%= kbGroupServiceConfiguration.emailFromName() %>" wrapperCssClass="lfr-input-text-container" />
 
 					<aui:input label="address" name="preferences--emailFromAddress--" value="<%= kbGroupServiceConfiguration.emailFromAddress() %>" wrapperCssClass="lfr-input-text-container" />
+				</aui:fieldset>
 
-					<div class="definition-of-terms">
-						<h4><liferay-ui:message key="definition-of-terms" /></h4>
-
-						<dl>
-							<dt>
-								[$ARTICLE_USER_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-email-address-of-the-user-who-added-the-article" />
-							</dd>
-							<dt>
-								[$ARTICLE_USER_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-user-who-added-the-article" />
-							</dd>
-							<dt>
-								[$CATEGORY_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="category.kb" />
-							</dd>
-							<dt>
-								[$COMPANY_ID$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-id-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$COMPANY_MX$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-mx-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$COMPANY_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-name-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$SITE_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-site-name-associated-with-the-article" />
-							</dd>
-						</dl>
-					</div>
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="definition-of-terms">
+					<dl>
+						<dt>
+							[$ARTICLE_USER_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-user-who-added-the-article" />
+						</dd>
+						<dt>
+							[$ARTICLE_USER_NAME$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-user-who-added-the-article" />
+						</dd>
+						<dt>
+							[$CATEGORY_TITLE$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="category.kb" />
+						</dd>
+						<dt>
+							[$COMPANY_ID$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-company-id-associated-with-the-article" />
+						</dd>
+						<dt>
+							[$COMPANY_MX$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-company-mx-associated-with-the-article" />
+						</dd>
+						<dt>
+							[$COMPANY_NAME$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-company-name-associated-with-the-article" />
+						</dd>
+						<dt>
+							[$SITE_NAME$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-site-name-associated-with-the-article" />
+						</dd>
+					</dl>
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</liferay-ui:section>
