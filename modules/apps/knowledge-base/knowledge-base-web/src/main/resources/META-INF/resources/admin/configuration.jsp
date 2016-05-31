@@ -109,452 +109,99 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 			</aui:fieldset-group>
 		</liferay-ui:section>
 
+		<%
+		Map<String, String> emailDefinitionTerms = new LinkedHashMap<String, String>();
+
+		emailDefinitionTerms.put("[$ARTICLE_ATTACHMENTS$]", LanguageUtil.get(resourceBundle, "the-article-attachments-file-names"));
+		emailDefinitionTerms.put("[$ARTICLE_CONTENT$]", LanguageUtil.get(resourceBundle, "the-article-content"));
+		emailDefinitionTerms.put("[$ARTICLE_CONTENT_DIFF$]", LanguageUtil.get(resourceBundle, "the-article-content-diff"));
+		emailDefinitionTerms.put("[$ARTICLE_TITLE$]", LanguageUtil.get(resourceBundle, "the-article-title"));
+		emailDefinitionTerms.put("[$ARTICLE_TITLE_DIFF$]", LanguageUtil.get(resourceBundle, "the-article-title-diff"));
+		emailDefinitionTerms.put("[$ARTICLE_URL$]", LanguageUtil.get(resourceBundle, "the-article-url"));
+		emailDefinitionTerms.put("[$ARTICLE_USER_ADDRESS$]", LanguageUtil.get(resourceBundle, "the-email-address-of-the-user-who-added-the-article"));
+		emailDefinitionTerms.put("[$ARTICLE_USER_NAME$]", LanguageUtil.get(resourceBundle, "the-user-who-added-the-article"));
+		emailDefinitionTerms.put("[$ARTICLE_VERSION$]", LanguageUtil.get(resourceBundle, "the-article-version"));
+		emailDefinitionTerms.put("[$CATEGORY_TITLE$]", LanguageUtil.get(resourceBundle, "category.kb"));
+		emailDefinitionTerms.put("[$COMPANY_ID$]", LanguageUtil.get(resourceBundle, "the-company-id-associated-with-the-article"));
+		emailDefinitionTerms.put("[$COMPANY_MX$]", LanguageUtil.get(resourceBundle, "the-company-mx-associated-with-the-article"));
+		emailDefinitionTerms.put("[$COMPANY_NAME$]", LanguageUtil.get(resourceBundle, "the-company-name-associated-with-the-article"));
+		emailDefinitionTerms.put("[$FROM_ADDRESS$]", HtmlUtil.escape(kbGroupServiceConfiguration.emailFromAddress()));
+		emailDefinitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(kbGroupServiceConfiguration.emailFromName()));
+		emailDefinitionTerms.put("[$PORTAL_URL$]", PortalUtil.getPortalURL(themeDisplay));
+		emailDefinitionTerms.put("[$SITE_NAME$]", LanguageUtil.get(resourceBundle, "the-site-name-associated-with-the-article"));
+		emailDefinitionTerms.put("[$TO_ADDRESS$]", LanguageUtil.get(resourceBundle, "the-address-of-the-email-recipient"));
+		emailDefinitionTerms.put("[$TO_NAME$]", LanguageUtil.get(resourceBundle, "the-name-of-the-email-recipient"));
+		%>
+
 		<liferay-ui:section>
 			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input label="enabled" name="preferences--emailKBArticleAddedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleAddedEnabled() %>" />
-
-					<aui:input label="subject" name="preferences--emailKBArticleAddedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleAddedSubject() %>" wrapperCssClass="lfr-input-text-container" />
-
-					<aui:input label="body" name="preferences--emailKBArticleAddedBody--" type="textarea" value="<%= kbGroupServiceConfiguration.emailKBArticleAddedBody() %>" wrapperCssClass="lfr-textarea-container" />
-
-					<div class="definition-of-terms">
-						<h4><liferay-ui:message key="definition-of-terms" /></h4>
-
-						<dl>
-							<dt>
-								[$ARTICLE_ATTACHMENTS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-attachments-file-names" />
-							</dd>
-							<dt>
-								[$ARTICLE_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-content" />
-							</dd>
-							<dt>
-								[$ARTICLE_CONTENT_DIFF$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-content-diff" />
-							</dd>
-							<dt>
-								[$ARTICLE_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-title" />
-							</dd>
-							<dt>
-								[$ARTICLE_TITLE_DIFF$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-title-diff" />
-							</dd>
-							<dt>
-								[$ARTICLE_URL$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-url" />
-							</dd>
-							<dt>
-								[$ARTICLE_USER_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-email-address-of-the-user-who-added-the-article" />
-							</dd>
-							<dt>
-								[$ARTICLE_USER_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-user-who-added-the-article" />
-							</dd>
-							<dt>
-								[$ARTICLE_VERSION$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-version" />
-							</dd>
-							<dt>
-								[$CATEGORY_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="category.kb" />
-							</dd>
-							<dt>
-								[$COMPANY_ID$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-id-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$COMPANY_MX$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-mx-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$COMPANY_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-name-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$FROM_ADDRESS$]
-							</dt>
-							<dd>
-								<%= HtmlUtil.escape(kbGroupServiceConfiguration.emailFromAddress()) %>
-							</dd>
-							<dt>
-								[$FROM_NAME$]
-							</dt>
-							<dd>
-								<%= HtmlUtil.escape(kbGroupServiceConfiguration.emailFromName()) %>
-							</dd>
-							<dt>
-								[$PORTAL_URL$]
-							</dt>
-							<dd>
-								<%= PortalUtil.getPortalURL(themeDisplay) %>
-							</dd>
-							<dt>
-								[$SITE_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-site-name-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$TO_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-address-of-the-email-recipient" />
-							</dd>
-							<dt>
-								[$TO_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-name-of-the-email-recipient" />
-							</dd>
-						</dl>
-					</div>
-				</aui:fieldset>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= kbGroupServiceConfiguration.emailKBArticleAddedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleAddedEnabled() %>"
+					emailParam="emailKBArticleAdded"
+					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleAddedSubject() %>"
+				/>
 			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input label="enabled" name="preferences--emailKBArticleUpdatedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled() %>" />
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled() %>"
+					emailParam="emailKBArticleUpdated"
+					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedSubject() %>"
+				/>
+			</aui:fieldset-group>
+		</liferay-ui:section>
 
-					<aui:input label="subject" name="preferences--emailKBArticleUpdatedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedSubject() %>" wrapperCssClass="lfr-input-text-container" />
+		<%
+		emailDefinitionTerms = new LinkedHashMap<String, String>();
 
-					<aui:input label="body" name="preferences--emailKBArticleUpdatedBody--" type="textarea" value="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedBody() %>" wrapperCssClass="lfr-textarea-container" />
+		emailDefinitionTerms.put("[$ARTICLE_CONTENT$]", LanguageUtil.get(resourceBundle, "the-article-content"));
+		emailDefinitionTerms.put("[$ARTICLE_TITLE$]", LanguageUtil.get(resourceBundle, "the-article-attachments-file-names"));
+		emailDefinitionTerms.put("[$ARTICLE_URL$]", LanguageUtil.get(resourceBundle, "the-article-url"));
+		emailDefinitionTerms.put("[$COMMENT_CONTENT$]", LanguageUtil.get(resourceBundle, "the-comment-content"));
+		emailDefinitionTerms.put("[$COMMENT_CREATE_DATE$]", LanguageUtil.get(resourceBundle, "the-comment-create-date"));
+		emailDefinitionTerms.put("[$TO_ADDRESS$]", LanguageUtil.get(resourceBundle, "the-address-of-the-email-recipient"));
+		emailDefinitionTerms.put("[$TO_NAME$]", LanguageUtil.get(resourceBundle, "the-name-of-the-email-recipient"));
+		%>
 
-					<div class="definition-of-terms">
-						<h4><liferay-ui:message key="definition-of-terms" /></h4>
-
-						<dl>
-							<dt>
-								[$ARTICLE_ATTACHMENTS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-attachments-file-names" />
-							</dd>
-							<dt>
-								[$ARTICLE_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-content" />
-							</dd>
-							<dt>
-								[$ARTICLE_CONTENT_DIFF$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-content-diff" />
-							</dd>
-							<dt>
-								[$ARTICLE_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-title" />
-							</dd>
-							<dt>
-								[$ARTICLE_TITLE_DIFF$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-title-diff" />
-							</dd>
-							<dt>
-								[$ARTICLE_URL$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-url" />
-							</dd>
-							<dt>
-								[$ARTICLE_USER_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-email-address-of-the-user-who-added-the-article" />
-							</dd>
-							<dt>
-								[$ARTICLE_USER_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-user-who-added-the-article" />
-							</dd>
-							<dt>
-								[$ARTICLE_VERSION$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-version" />
-							</dd>
-							<dt>
-								[$CATEGORY_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="category.kb" />
-							</dd>
-							<dt>
-								[$COMPANY_ID$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-id-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$COMPANY_MX$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-mx-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$COMPANY_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-company-name-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$FROM_ADDRESS$]
-							</dt>
-							<dd>
-								<%= HtmlUtil.escape(kbGroupServiceConfiguration.emailFromAddress()) %>
-							</dd>
-							<dt>
-								[$FROM_NAME$]
-							</dt>
-							<dd>
-								<%= HtmlUtil.escape(kbGroupServiceConfiguration.emailFromName()) %>
-							</dd>
-							<dt>
-								[$PORTAL_URL$]
-							</dt>
-							<dd>
-								<%= PortalUtil.getPortalURL(themeDisplay) %>
-							</dd>
-							<dt>
-								[$SITE_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-site-name-associated-with-the-article" />
-							</dd>
-							<dt>
-								[$TO_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-address-of-the-email-recipient" />
-							</dd>
-							<dt>
-								[$TO_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-name-of-the-email-recipient" />
-							</dd>
-						</dl>
-					</div>
-				</aui:fieldset>
+		<liferay-ui:section>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedEnabled() %>"
+					emailParam="emailKBArticleSuggestionReceived"
+					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedSubject() %>"
+				/>
 			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input label="enabled" name="preferences--emailKBArticleSuggestionInProgressEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressEnabled() %>" />
-
-					<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionInProgressSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressSubject() %>" />
-
-					<aui:input cssClass="lfr-textarea-container" label="body" name="preferences--emailKBArticleSuggestionInProgressBody--" type="textarea" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressBody() %>" />
-
-					<div class="definition-of-terms">
-						<h4><liferay-ui:message key="definition-of-terms" /></h4>
-
-						<dl>
-							<dt>
-								[$ARTICLE_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-content" />
-							</dd>
-							<dt>
-								[$ARTICLE_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-title" />
-							</dd>
-							<dt>
-								[$ARTICLE_URL$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-url" />
-							</dd>
-							<dt>
-								[$COMMENT_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-comment-content" />
-							</dd>
-							<dt>
-								[$COMMENT_CREATE_DATE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-comment-create-date" />
-							</dd>
-							<dt>
-								[$TO_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-address-of-the-email-recipient" />
-							</dd>
-							<dt>
-								[$TO_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-name-of-the-email-recipient" />
-							</dd>
-						</dl>
-					</div>
-				</aui:fieldset>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressEnabled() %>"
+					emailParam="emailKBArticleSuggestionInProgress"
+					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressSubject() %>"
+				/>
 			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input label="enabled" name="preferences--emailKBArticleSuggestionReceivedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedEnabled() %>" />
-
-					<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionReceivedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedSubject() %>" />
-
-					<aui:input cssClass="lfr-textarea-container" label="body" name="preferences--emailKBArticleSuggestionReceivedBody--" type="textarea" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedBody() %>" />
-
-					<div class="definition-of-terms">
-						<h4><liferay-ui:message key="definition-of-terms" /></h4>
-
-						<dl>
-							<dt>
-								[$ARTICLE_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-content" />
-							</dd>
-							<dt>
-								[$ARTICLE_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-title" />
-							</dd>
-							<dt>
-								[$ARTICLE_URL$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-url" />
-							</dd>
-							<dt>
-								[$COMMENT_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-comment-content" />
-							</dd>
-							<dt>
-								[$COMMENT_CREATE_DATE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-comment-create-date" />
-							</dd>
-							<dt>
-								[$TO_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-address-of-the-email-recipient" />
-							</dd>
-							<dt>
-								[$TO_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-name-of-the-email-recipient" />
-							</dd>
-						</dl>
-					</div>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input label="enabled" name="preferences--emailKBArticleSuggestionResolvedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedEnabled() %>" />
-
-					<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionResolvedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedSubject() %>" />
-
-					<aui:input cssClass="lfr-textarea-container" label="body" name="preferences--emailKBArticleSuggestionResolvedBody--" type="textarea" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedBody() %>" />
-
-					<div class="definition-of-terms">
-						<h4><liferay-ui:message key="definition-of-terms" /></h4>
-
-						<dl>
-							<dt>
-								[$ARTICLE_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-content" />
-							</dd>
-							<dt>
-								[$ARTICLE_TITLE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-title" />
-							</dd>
-							<dt>
-								[$ARTICLE_URL$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-article-url" />
-							</dd>
-							<dt>
-								[$COMMENT_CONTENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-comment-content" />
-							</dd>
-							<dt>
-								[$COMMENT_CREATE_DATE$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-comment-create-date" />
-							</dd>
-							<dt>
-								[$TO_ADDRESS$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-address-of-the-email-recipient" />
-							</dd>
-							<dt>
-								[$TO_NAME$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-name-of-the-email-recipient" />
-							</dd>
-						</dl>
-					</div>
-				</aui:fieldset>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedEnabled() %>"
+					emailParam="emailKBArticleSuggestionResolved"
+					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedSubject() %>"
+				/>
 			</aui:fieldset-group>
 		</liferay-ui:section>
 
@@ -573,6 +220,26 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 	</liferay-ui:tabs>
 
 	<aui:button-row cssClass="kb-submit-buttons">
-		<aui:button type="submit" />
+		<aui:button cssClass="btn btn-lg btn-primary" onClick='<%= renderResponse.getNamespace() + "save();" %>' value="save" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />save() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		var emailKBArticleAddedEditor = window.<portlet:namespace />emailKBArticleAdded;
+		var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated;
+		var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived;
+		var emailKBArticleSuggestionInProgressEditor = window.<portlet:namespace />emailKBArticleSuggestionInProgress;
+		var emailKBArticleSuggestionResolvedEditor = window.<portlet:namespace />emailKBArticleSuggestionResolved;
+
+		form.fm('preferences--emailKBArticleAddedBody--').val(emailKBArticleAddedEditor.getHTML());
+		form.fm('preferences--emailKBArticleUpdatedBody--').val(emailKBArticleUpdatedEditor.getHTML());
+		form.fm('preferences--emailKBArticleSuggestionReceivedBody--').val(emailKBArticleSuggestionReceivedEditor.getHTML());
+		form.fm('preferences--emailKBArticleSuggestionInProgressBody--').val(emailKBArticleSuggestionInProgressEditor.getHTML());
+		form.fm('preferences--emailKBArticleSuggestionResolvedBody--').val(emailKBArticleSuggestionResolvedEditor.getHTML());
+
+		submitForm(form);
+	}
+</aui:script>
