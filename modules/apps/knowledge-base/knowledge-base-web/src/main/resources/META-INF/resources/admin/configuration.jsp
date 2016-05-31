@@ -17,8 +17,6 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
-
 kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceConfiguration.class, kbGroupServiceConfiguration, request.getParameterMap(), "preferences--", "--");
 
 String tabs2Names = "email-from,article-added-email,article-updated-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
@@ -35,7 +33,6 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 
 	<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
@@ -46,7 +43,6 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
-		param="tabs2"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>

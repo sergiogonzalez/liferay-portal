@@ -17,8 +17,6 @@
 <%@ include file="/display/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) ? "display-settings" : "general");
-
 String tabs2Names = Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) ? "display-settings" : "general,display-settings";
 
 kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDisplayPortletInstanceConfiguration.class, kbDisplayPortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
@@ -28,7 +26,6 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 
 	<%
 	resourceClassNameId = kbDisplayPortletInstanceConfiguration.resourceClassNameId();
@@ -43,7 +40,6 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
-		param="tabs2"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>
