@@ -213,7 +213,7 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 		</c:if>
 	</liferay-ui:tabs>
 
-	<aui:button-row cssClass="kb-submit-buttons">
+	<aui:button-row>
 		<aui:button cssClass="btn btn-lg btn-primary" onClick='<%= renderResponse.getNamespace() + "save();" %>' value="save" />
 	</aui:button-row>
 </aui:form>
