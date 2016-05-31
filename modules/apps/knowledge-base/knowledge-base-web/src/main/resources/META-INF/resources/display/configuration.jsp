@@ -17,7 +17,7 @@
 <%@ include file="/display/init.jsp" %>
 
 <%
-String tabs2Names = Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) ? "display-settings" : "general,display-settings";
+String tabsNames = Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) ? "display-settings" : "general,display-settings";
 
 kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDisplayPortletInstanceConfiguration.class, kbDisplayPortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
 %>
@@ -39,44 +39,45 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 	<aui:input name="preferences--resourcePrimKey--" type="hidden" value="<%= kbDisplayPortletInstanceConfiguration.resourcePrimKey() %>" />
 
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="<%= tabsNames %>"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>
-		<liferay-ui:section>
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="input-append kb-field-wrapper">
-						<aui:field-wrapper label="article-or-folder">
+		<c:if test="<%= tabsNames.contains("general") %>">
+			<liferay-ui:section>
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<div class="input-append kb-field-wrapper">
+							<aui:field-wrapper label="article-or-folder">
 
-							<%
-							String title = StringPool.BLANK;
+								<%
+								String title = StringPool.BLANK;
 
-							if (resourceClassNameId != kbFolderClassNameId) {
-								KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(kbDisplayPortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
+								if (resourceClassNameId != kbFolderClassNameId) {
+									KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(kbDisplayPortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 
-								if (kbArticle != null) {
-									title = kbArticle.getTitle();
+									if (kbArticle != null) {
+										title = kbArticle.getTitle();
+									}
 								}
-							}
-							else {
-								KBFolder kbFolder = KBFolderLocalServiceUtil.fetchKBFolder(kbDisplayPortletInstanceConfiguration.resourcePrimKey());
+								else {
+									KBFolder kbFolder = KBFolderLocalServiceUtil.fetchKBFolder(kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 
-								if (kbFolder != null) {
-									title = kbFolder.getName();
+									if (kbFolder != null) {
+										title = kbFolder.getName();
+									}
 								}
-							}
-							%>
+								%>
 
-							<liferay-ui:input-resource id="configurationKBObject" url="<%= title %>" />
+								<liferay-ui:input-resource id="configurationKBObject" url="<%= title %>" />
 
-							<aui:button name="selectKBObjectButton" value="select" />
-						</aui:field-wrapper>
-					</div>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</liferay-ui:section>
-
+								<aui:button name="selectKBObjectButton" value="select" />
+							</aui:field-wrapper>
+						</div>
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</liferay-ui:section>
+		</c:if>
 
 		<liferay-ui:section>
 			<aui:fieldset-group markupView="lexicon">
@@ -116,33 +117,35 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectConfigurationKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/display/select_configuration_object.jsp" />
-		<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolderClassNameId) %>" />
-		<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-	</liferay-portlet:renderURL>
+<c:if test='<%= tabsNames.contains("general") %>'>
+	<aui:script use="aui-base">
+		<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectConfigurationKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/display/select_configuration_object.jsp" />
+			<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolderClassNameId) %>" />
+			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+		</liferay-portlet:renderURL>
 
-	A.one('#<portlet:namespace />selectKBObjectButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
+		A.one('#<portlet:namespace />selectKBObjectButton').on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true
+						},
+						id: '<portlet:namespace />selectConfigurationKBObject',
+						title: '<liferay-ui:message key="select-parent" />',
+						uri: '<%= selectConfigurationKBObjectURL %>'
 					},
-					id: '<portlet:namespace />selectConfigurationKBObject',
-					title: '<liferay-ui:message key="select-parent" />',
-					uri: '<%= selectConfigurationKBObjectURL %>'
-				},
-				function(event) {
-					document.<portlet:namespace />fm.<portlet:namespace />resourceClassNameId.value = event.resourceclassnameid;
-					document.<portlet:namespace />fm.<portlet:namespace />resourcePrimKey.value = event.resourceprimkey;
-					document.getElementById('<portlet:namespace />configurationKBObject').value = event.title;
-				}
-			);
-		}
-	);
-</aui:script>
+					function(event) {
+						document.<portlet:namespace />fm.<portlet:namespace />resourceClassNameId.value = event.resourceclassnameid;
+						document.<portlet:namespace />fm.<portlet:namespace />resourcePrimKey.value = event.resourceprimkey;
+						document.getElementById('<portlet:namespace />configurationKBObject').value = event.title;
+					}
+				);
+			}
+		);
+	</aui:script>
+</c:if>
