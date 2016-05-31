@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,11 +51,7 @@ public class SectionConfigurationAction extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-
-		if (tabs2.equals("general")) {
-			updateGeneral(actionRequest);
-		}
+		updateGeneral(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

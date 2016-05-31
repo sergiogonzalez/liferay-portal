@@ -18,7 +18,6 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
@@ -54,17 +53,9 @@ public class AdminConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-
-		if (tabs2.equals("article-added-email")) {
-			validateEmailKBArticleAdded(actionRequest);
-		}
-		else if (tabs2.equals("article-updated-email")) {
-			validateEmailKBArticleUpdated(actionRequest);
-		}
-		else if (tabs2.equals("email-from")) {
-			validateEmailFrom(actionRequest);
-		}
+		validateEmailKBArticleAdded(actionRequest);
+		validateEmailKBArticleUpdated(actionRequest);
+		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
