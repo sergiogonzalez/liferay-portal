@@ -53,9 +53,9 @@ public class AdminConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
+		validateEmailFrom(actionRequest);
 		validateEmailKBArticleAdded(actionRequest);
 		validateEmailKBArticleUpdated(actionRequest);
-		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
