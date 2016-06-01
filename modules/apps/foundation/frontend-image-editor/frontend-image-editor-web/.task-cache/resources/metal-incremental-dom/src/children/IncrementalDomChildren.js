@@ -1,9 +1,11 @@
-define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], function (exports, _IncrementalDomAop, _IncrementalDomUtils) {
+define(['exports', 'metal/src/metal', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], function (exports, _metal, _IncrementalDomAop, _IncrementalDomUtils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _metal2 = _interopRequireDefault(_metal);
 
 	var _IncrementalDomAop2 = _interopRequireDefault(_IncrementalDomAop);
 
@@ -50,6 +52,7 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
 				}
 			};
 			currentParent_ = tree_;
+			isCapturing_ = true;
 			_IncrementalDomAop2.default.startInterception({
 				elementClose: handleInterceptedCloseCall_,
 				elementOpen: handleInterceptedOpenCall_,
@@ -58,11 +61,17 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
 		};
 
 		IncrementalDomChildren.render = function render(tree, opt_skipNode) {
+			if (isCapturing_) {
+				// If capturing, just add the node directly to the captured tree.
+				addChildToTree(tree);
+				return;
+			}
+
 			if (opt_skipNode && opt_skipNode(tree)) {
 				return;
 			}
 
-			if (tree.text) {
+			if (_metal2.default.isDef(tree.text)) {
 				var args = tree.args ? tree.args : [];
 				args[0] = tree.text;
 				IncrementalDOM.text.apply(null, args);
@@ -83,6 +92,7 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
 
 	var callback_;
 	var currentParent_;
+	var isCapturing_ = false;
 	var renderer_;
 	var tree_;
 
@@ -93,7 +103,7 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
   *     text element.
   * @protected
   */
-	function addChildToTree_(args, opt_isText) {
+	function addChildCallToTree_(args, opt_isText) {
 		var child = _defineProperty({
 			parent: currentParent_
 		}, IncrementalDomChildren.CHILD_OWNER, renderer_);
@@ -112,8 +122,12 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
 			child.config.children = [];
 		}
 
-		currentParent_.config.children.push(child);
+		addChildToTree(child);
 		return child;
+	}
+
+	function addChildToTree(child) {
+		currentParent_.config.children.push(child);
 	}
 
 	/**
@@ -124,10 +138,12 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
 	function handleInterceptedCloseCall_() {
 		if (currentParent_ === tree_) {
 			_IncrementalDomAop2.default.stopInterception();
+			isCapturing_ = false;
 			callback_(tree_);
-			tree_ = null;
 			callback_ = null;
 			currentParent_ = null;
+			renderer_ = null;
+			tree_ = null;
 		} else {
 			currentParent_ = currentParent_.parent;
 		}
@@ -144,7 +160,7 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
 			args[_key - 1] = arguments[_key];
 		}
 
-		currentParent_ = addChildToTree_(args);
+		currentParent_ = addChildCallToTree_(args);
 	}
 
 	/**
@@ -157,7 +173,7 @@ define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], func
 			args[_key2 - 1] = arguments[_key2];
 		}
 
-		addChildToTree_(args, true);
+		addChildCallToTree_(args, true);
 	}
 
 	/**

@@ -16,30 +16,34 @@ package com.liferay.knowledge.base.web.application.dao.search;
 
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.model.KBComment;
-import com.liferay.knowledge.base.web.display.context.KBSuggestionListDisplayContext;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class KBCommentResultRowSplitter implements ResultRowSplitter {
 
 	public KBCommentResultRowSplitter(
-		KBSuggestionListDisplayContext kbSuggestionListDisplayContext,
-		ResourceBundle resourceBundle) {
+		ResourceBundle resourceBundle, int total) {
 
-		_kbSuggestionListDisplayContext = kbSuggestionListDisplayContext;
+		this(resourceBundle, "desc", total);
+	}
+
+	public KBCommentResultRowSplitter(
+		ResourceBundle resourceBundle, String orderByType, int total) {
+
 		_resourceBundle = resourceBundle;
+		_orderByType = orderByType;
+		_total = total;
 	}
 
 	@Override
@@ -70,85 +74,35 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 		if (!newResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					getNewKBCommentsLabel(), newResultRows));
+					getKBCommentsLabel("new"), newResultRows));
 		}
 
 		if (!inProgressResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					getInProgressKBCommentsLabel(), inProgressResultRows));
+					getKBCommentsLabel("in-progress"), inProgressResultRows));
 		}
 
 		if (!completedResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					getCompletedKBCommentsLabel(), completedResultRows));
+					getKBCommentsLabel("completed"), completedResultRows));
+		}
+
+		if (_orderByType.equals("asc")) {
+			Collections.reverse(resultRowSplitterEntries);
 		}
 
 		return resultRowSplitterEntries;
 	}
 
-	protected String getCompletedKBCommentsLabel() {
-		int completedKBCommentsCount = 0;
-
-		try {
-			completedKBCommentsCount =
-				_kbSuggestionListDisplayContext.getCompletedKBCommentsCount();
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to obtain completed knowledge base comments count " +
-					"for group " +
-						_kbSuggestionListDisplayContext.getGroupId());
-		}
-
+	protected String getKBCommentsLabel(String key) {
 		return String.format(
-			"%s (%s)", LanguageUtil.get(_resourceBundle, "completed"),
-			completedKBCommentsCount);
+			"%s (%s)", LanguageUtil.get(_resourceBundle, key), _total);
 	}
 
-	protected String getInProgressKBCommentsLabel() {
-		int inProgressKBCommentsCount = 0;
-
-		try {
-			inProgressKBCommentsCount =
-				_kbSuggestionListDisplayContext.getInProgressKBCommentsCount();
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to obtain in progress knowledge base comments count " +
-					"for  group " +
-						_kbSuggestionListDisplayContext.getGroupId());
-		}
-
-		return String.format(
-			"%s (%s)", LanguageUtil.get(_resourceBundle, "in-progress"),
-			inProgressKBCommentsCount);
-	}
-
-	protected String getNewKBCommentsLabel() {
-		int newKBCommentsCount = 0;
-
-		try {
-			newKBCommentsCount =
-				_kbSuggestionListDisplayContext.getNewKBCommentsCount();
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to obtain new knowledge base comments count for " +
-					"group " + _kbSuggestionListDisplayContext.getGroupId());
-		}
-
-		return String.format(
-			"%s (%s)", LanguageUtil.get(_resourceBundle, "new"),
-			newKBCommentsCount);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KBCommentResultRowSplitter.class);
-
-	private final KBSuggestionListDisplayContext
-		_kbSuggestionListDisplayContext;
+	private final String _orderByType;
 	private final ResourceBundle _resourceBundle;
+	private final int _total;
 
 }

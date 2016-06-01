@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend CSS RTL Converter
 Bundle-SymbolicName: com.liferay.frontend.css.rtl.converter
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Export-Package: com.liferay.frontend.css.rtl.converter
 Import-Package:\
 	!org.junit,\
