@@ -27,20 +27,16 @@ SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, n
 
 String navigation = ParamUtil.getString(request, "navigation", "all");
 
-String orderByCol = ParamUtil.getString(renderRequest, "orderByCol", navigation.equals("all") ? "status" : "modifiedDate");
-
-boolean orderByColStatus = false;
+String orderByCol = ParamUtil.getString(request, "orderByCol", navigation.equals("all") ? "status" : "modifiedDate");
 
 if (!navigation.equals("all") && orderByCol.equals("status")) {
 	orderByCol = "modifiedDate";
-
-	orderByColStatus = true;
 }
 
-String orderByType = ParamUtil.getString(renderRequest, "orderByType");
+String orderByType = ParamUtil.getString(request, "orderByType");
 
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", orderByColStatus ? "status" : orderByCol);
+if (storeOrderByPreference && Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", orderByCol);
 	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", orderByType);
 }
 else {
@@ -88,11 +84,15 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 		orderColumns.put("modifiedDate", "modified-date");
 		orderColumns.put("user-name", "user-name");
+
+		PortletURL navigationURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+		navigationURL.setParameter("storeOrderByPreference", Boolean.FALSE.toString());
 		%>
 
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "new", "in-progress", "resolved"} %>'
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
+			portletURL="<%= navigationURL %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
