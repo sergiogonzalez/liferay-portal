@@ -179,6 +179,14 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 	@Override
 	public List<KBComment> getKBComments(
+		long groupId, int status, int start, int end,
+		OrderByComparator<KBComment> obc) {
+
+		return kbCommentPersistence.findByG_S(groupId, status, start, end, obc);
+	}
+
+	@Override
+	public List<KBComment> getKBComments(
 		long groupId, int start, int end, OrderByComparator<KBComment> obc) {
 
 		return kbCommentPersistence.findByGroupId(groupId, start, end, obc);
