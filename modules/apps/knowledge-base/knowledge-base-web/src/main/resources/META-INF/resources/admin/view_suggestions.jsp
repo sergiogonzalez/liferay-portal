@@ -35,6 +35,8 @@ if (!navigation.equals("all") && orderByCol.equals("status")) {
 
 String orderByType = ParamUtil.getString(request, "orderByType");
 
+boolean storeOrderByPreference = ParamUtil.getBoolean(request, "storeOrderByPreference", true);
+
 if (storeOrderByPreference && Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
 	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
 	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", orderByType);
