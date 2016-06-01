@@ -46,20 +46,19 @@ else {
 	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", "desc");
 }
 
-KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
-
 kbCommentsSearchContainer.setOrderByCol(orderByCol);
 kbCommentsSearchContainer.setOrderByType(orderByType);
+
+KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
+
+kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer);
+
 kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
-
-kbCommentsSearchContainer.setTotal(kbSuggestionListDisplayContext.getKBCommentsCount());
-
-List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
-
-kbCommentsSearchContainer.setResults(kbComments);
 
 request.setAttribute("view_suggestions.jsp-resultRowSplitter", kbCommentResultRowSplitter);
 request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
+
+List kbComments = kbCommentsSearchContainer.getResults();
 %>
 
 <liferay-frontend:management-bar
