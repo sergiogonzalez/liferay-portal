@@ -19,7 +19,16 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessChannel;
+import com.liferay.portal.kernel.process.ProcessConfig;
+import com.liferay.portal.kernel.process.ProcessConfig.Builder;
+import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
@@ -27,16 +36,35 @@ import com.liferay.portal.target.platform.indexer.IndexValidator;
 import com.liferay.portal.target.platform.indexer.IndexValidatorFactory;
 import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.IndexerFactory;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.security.MessageDigest;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.Future;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -48,19 +76,161 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = LPKGIndexValidator.class)
 public class LPKGIndexValidator {
 
+	public LPKGIndexValidator() {
+		Builder builder = new Builder();
+
+		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
+
+		String classpath = ClassPathUtil.getGlobalClassPath();
+
+		builder.setBootstrapClassPath(classpath);
+		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
+		builder.setRuntimeClassPath(
+			classpath.concat(File.pathSeparator).concat(
+				ClassPathUtil.buildClassPath(
+					IndexerFactory.class, Bundle.class,
+					TargetPlatformIndexerProcessCallable.class)));
+
+		_processConfig = builder.build();
+	}
+
+	public boolean checkIntegrity(List<URI> indexURIs) {
+		if (Files.notExists(_integrityPropertiesFilePath)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skip integrity check because " +
+						_integrityPropertiesFilePath + " does not exist");
+			}
+
+			return false;
+		}
+
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(
+				_integrityPropertiesFilePath)) {
+
+			properties.load(inputStream);
+		}
+		catch (IOException ioe) {
+			_log.error("Unable to read " + _integrityPropertiesFilePath, ioe);
+
+			return false;
+		}
+
+		Set<String> integrityKeys = new HashSet<>();
+
+		for (URI uri : indexURIs) {
+			integrityKeys.add(_toIntegrityKey(uri));
+		}
+
+		if (!integrityKeys.equals(properties.stringPropertyNames())) {
+			if (_log.isInfoEnabled()) {
+				List<String> expectedKeys = new ArrayList<>(
+					properties.stringPropertyNames());
+
+				Collections.sort(expectedKeys);
+
+				List<String> actualKeys = new ArrayList<>(integrityKeys);
+
+				Collections.sort(actualKeys);
+
+				_log.info(
+					"Failed integrity check because expected keys: " +
+						expectedKeys + " do not match actual keys: " +
+							actualKeys);
+			}
+
+			return false;
+		}
+
+		for (URI uri : indexURIs) {
+			String integrityKey = _toIntegrityKey(uri);
+
+			try {
+				String expectedChecksum = properties.getProperty(integrityKey);
+
+				String actualChecksum = _toChecksum(uri);
+
+				if (!Objects.equals(expectedChecksum, actualChecksum)) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Failed integrity check because of mismatched " +
+								"checksum for " + integrityKey);
+					}
+
+					return false;
+				}
+			}
+			catch (Exception e) {
+				_log.error("Unable to generate checksum for " + uri);
+
+				return false;
+			}
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Passed integrity check");
+		}
+
+		return true;
+	}
+
 	public void setLPKGDeployer(LPKGDeployer lpkgDeployer) {
 		_lpkgDeployer = lpkgDeployer;
+	}
+
+	public void updateIntegrityProperties() {
+		try {
+			List<URI> indexURIs = _getTargetPlatformIndexURIs();
+
+			Collections.sort(indexURIs);
+
+			StringBundler sb = new StringBundler(indexURIs.size() * 4);
+
+			for (URI uri : indexURIs) {
+				sb.append(_toIntegrityKey(uri));
+				sb.append(StringPool.EQUAL);
+				sb.append(_toChecksum(uri));
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			Files.createDirectories(_integrityPropertiesFilePath.getParent());
+
+			Files.write(
+				_integrityPropertiesFilePath,
+				Collections.singleton(sb.toString()), StandardCharsets.UTF_8);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Updated " + _integrityPropertiesFilePath);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to update integrity properties", e);
+		}
 	}
 
 	public void validate(List<File> lpkgFiles) throws Exception {
 		long start = System.currentTimeMillis();
 
+		List<URI> allIndexURIs = new ArrayList<>();
+
 		List<URI> targetPlatformIndexURIs = _getTargetPlatformIndexURIs();
+
+		allIndexURIs.addAll(targetPlatformIndexURIs);
+
+		List<URI> lpkgIndexURIs = _indexLPKGFiles(lpkgFiles);
+
+		allIndexURIs.addAll(lpkgIndexURIs);
+
+		if (checkIntegrity(allIndexURIs)) {
+			return;
+		}
 
 		IndexValidator indexValidator = _indexValidatorFactory.create(
 			targetPlatformIndexURIs);
-
-		List<URI> lpkgIndexURIs = _indexLPKGFiles(lpkgFiles);
 
 		try {
 			List<String> messages = indexValidator.validate(lpkgIndexURIs);
@@ -102,7 +272,7 @@ public class LPKGIndexValidator {
 
 	private void _cleanUp(List<URI> uris) throws MalformedURLException {
 		for (URI uri : uris) {
-			_bytesURLProtocolSupport.removeData(uri.toURL());
+			_bytesURLProtocolSupport.removeBytes(uri.toURL());
 		}
 	}
 
@@ -118,16 +288,29 @@ public class LPKGIndexValidator {
 
 		List<URI> uris = _indexLPKGFiles(files);
 
-		Indexer indexer = _indexerFactory.createTargetPlatformIndexer();
+		byte[] bytes = null;
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		LocalProcessExecutor localProcessExecutor = new LocalProcessExecutor();
 
-		indexer.index(unsyncByteArrayOutputStream);
+		try {
+			ProcessChannel<byte[]> processChannel =
+				localProcessExecutor.execute(
+					_processConfig,
+					new TargetPlatformIndexerProcessCallable(
+						PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static",
+						PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
+						PropsValues.MODULE_FRAMEWORK_PORTAL_DIR));
 
-		URL url = _bytesURLProtocolSupport.putData(
-			"liferay-target-platform",
-			unsyncByteArrayOutputStream.toByteArray());
+			Future<byte[]> future = processChannel.getProcessNoticeableFuture();
+
+			bytes = future.get();
+		}
+		finally {
+			localProcessExecutor.destroy();
+		}
+
+		URL url = _bytesURLProtocolSupport.putBytes(
+			"liferay-target-platform", bytes);
 
 		uris.add(url.toURI());
 
@@ -148,7 +331,7 @@ public class LPKGIndexValidator {
 
 				String name = lpkgFile.getName();
 
-				URL url = _bytesURLProtocolSupport.putData(
+				URL url = _bytesURLProtocolSupport.putBytes(
 					name.substring(0, name.length() - 5),
 					unsyncByteArrayOutputStream.toByteArray());
 
@@ -166,8 +349,49 @@ public class LPKGIndexValidator {
 		return uris;
 	}
 
+	private String _toChecksum(URI uri) throws Exception {
+		URL url = uri.toURL();
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		StreamUtil.transfer(url.openStream(), unsyncByteArrayOutputStream);
+
+		String content = unsyncByteArrayOutputStream.toString(StringPool.UTF8);
+
+		Matcher matcher = _incrementPattern.matcher(content);
+
+		if (matcher.find()) {
+			String start = content.substring(0, matcher.start(1));
+			String end = content.substring(matcher.end(1));
+
+			content = start.concat(end);
+		}
+
+		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+
+		messageDigest.update(content.getBytes(StandardCharsets.UTF_8));
+
+		return StringUtil.bytesToHexString(messageDigest.digest());
+	}
+
+	private String _toIntegrityKey(URI uri) {
+		String integrityKey = uri.getPath();
+
+		int index = integrityKey.lastIndexOf(StringPool.SLASH);
+
+		if (index != -1) {
+			integrityKey = integrityKey.substring(index + 1);
+		}
+
+		return integrityKey;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGIndexValidator.class);
+
+	private static final Pattern _incrementPattern = Pattern.compile(
+		"<repository( increment=\"\\d*\")");
 
 	@Reference
 	private BytesURLProtocolSupport _bytesURLProtocolSupport;
@@ -178,6 +402,10 @@ public class LPKGIndexValidator {
 	@Reference
 	private IndexValidatorFactory _indexValidatorFactory;
 
+	private final Path _integrityPropertiesFilePath = Paths.get(
+		PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.DIR_NAME_TARGET_PLATFORM,
+		"integrity.properties");
 	private LPKGDeployer _lpkgDeployer;
+	private final ProcessConfig _processConfig;
 
 }

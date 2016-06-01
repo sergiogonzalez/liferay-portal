@@ -54,11 +54,11 @@ public class BytesURLProtocolSupport {
 			new BytesURLStreamHandlerService(), properties);
 	}
 
-	public URL putData(String id, byte[] data) {
+	public URL putBytes(String id, byte[] bytes) {
 		try {
 			URL url = new URL("bytes://localhost/".concat(id));
 
-			_bytesMap.put(url, data);
+			_bytesMap.put(url, bytes);
 
 			return url;
 		}
@@ -67,7 +67,7 @@ public class BytesURLProtocolSupport {
 		}
 	}
 
-	public byte[] removeData(URL url) {
+	public byte[] removeBytes(URL url) {
 		return _bytesMap.remove(url);
 	}
 
