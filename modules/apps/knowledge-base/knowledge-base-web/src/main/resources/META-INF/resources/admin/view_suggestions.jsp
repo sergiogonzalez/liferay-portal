@@ -27,32 +27,17 @@ String navigation = ParamUtil.getString(request, "navigation", "all");
 
 SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, kbSuggestionListDisplayContext.getEmptyResultsMessage());
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", navigation.equals("all") ? "status" : "modified-date");
+kbSuggestionListDisplayContext.setKBCommentsOrder(kbCommentsSearchContainer);
 
-if (!navigation.equals("all") && orderByCol.equals("status")) {
-	orderByCol = "modified-date";
-}
-
-String orderByType = ParamUtil.getString(request, "orderByType");
-
-boolean storeOrderByPreference = ParamUtil.getBoolean(request, "storeOrderByPreference", true);
-
-if (storeOrderByPreference && Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", orderByType);
-}
-else if (Validator.isNull(orderByType)) {
-	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", "desc");
-}
+String orderByCol = kbCommentsSearchContainer.getOrderByCol();
+String orderByType = kbCommentsSearchContainer.getOrderByType();
 
 KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
 
-kbCommentsSearchContainer.setOrderByCol(orderByCol);
-kbCommentsSearchContainer.setOrderByType(orderByType);
-kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
-
 kbSuggestionListDisplayContext.getKBCommentsCount(kbCommentsSearchContainer);
 kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
+
+kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
 
 request.setAttribute("view_suggestions.jsp-resultRowSplitter", kbCommentResultRowSplitter);
 request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);

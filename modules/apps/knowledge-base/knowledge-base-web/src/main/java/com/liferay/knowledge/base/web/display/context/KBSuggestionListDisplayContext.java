@@ -27,6 +27,8 @@ import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -242,6 +244,45 @@ public class KBSuggestionListDisplayContext {
 		}
 
 		return false;
+	}
+
+	public void setKBCommentsOrder(SearchContainer searchContainer) {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		String navigation = ParamUtil.getString(_request, "navigation");
+
+		String orderByCol = ParamUtil.getString(
+			_request, "orderByCol",
+			navigation.equals("all") ? "status" : "modified-date");
+
+		if (!navigation.equals("all") && orderByCol.equals("status")) {
+			orderByCol = "modified-date";
+		}
+
+		String orderByType = ParamUtil.getString(_request, "orderByType");
+
+		boolean storeOrderByPreference = ParamUtil.getBoolean(
+			_request, "storeOrderByPreference", true);
+
+		if (storeOrderByPreference && Validator.isNotNull(orderByCol) &&
+			Validator.isNotNull(orderByType)) {
+
+			portalPreferences.setValue(
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col",
+				orderByCol);
+			portalPreferences.setValue(
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type",
+				orderByType);
+		}
+		else if (Validator.isNull(orderByType)) {
+			orderByType = portalPreferences.getValue(
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type",
+				"desc");
+		}
+
+		searchContainer.setOrderByCol(orderByCol);
+		searchContainer.setOrderByType(orderByType);
 	}
 
 	private int _getStatus() {
