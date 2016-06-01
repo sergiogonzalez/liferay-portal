@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Doulos
 Bundle-SymbolicName: com.liferay.petra.doulos
-Bundle-Version: 3.1.2
+Bundle-Version: 3.1.3
 Export-Package:\
 	com.liferay.petra.doulos.processor,\
 	com.liferay.petra.doulos.servlet

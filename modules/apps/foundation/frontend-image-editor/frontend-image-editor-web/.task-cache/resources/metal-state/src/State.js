@@ -227,6 +227,10 @@ define(['exports', 'metal/src/metal', 'metal-events/src/events'], function (expo
 			return info.state === State.KeyStates.INITIALIZED || info.initialValue;
 		};
 
+		State.prototype.hasStateKey = function hasStateKey(key) {
+			return !!this.stateInfo_[key];
+		};
+
 		State.prototype.informChange_ = function informChange_(name, prevVal) {
 			if (this.shouldInformChange_(name, prevVal)) {
 				var data = {
@@ -297,7 +301,9 @@ define(['exports', 'metal/src/metal', 'metal-events/src/events'], function (expo
 		};
 
 		State.prototype.set = function set(name, value) {
-			this[name] = value;
+			if (this.hasStateKey(name)) {
+				this[name] = value;
+			}
 		};
 
 		State.prototype.setDefaultValue_ = function setDefaultValue_(name) {
@@ -319,11 +325,12 @@ define(['exports', 'metal/src/metal', 'metal-events/src/events'], function (expo
 		};
 
 		State.prototype.setState = function setState(values, opt_callback) {
+			var _this2 = this;
+
 			this.updateConfig_(values);
-			var names = Object.keys(values);
-			for (var i = 0; i < names.length; i++) {
-				this[names[i]] = values[names[i]];
-			}
+			Object.keys(values).forEach(function (name) {
+				return _this2.set(name, values[name]);
+			});
 			if (opt_callback && this.scheduledBatchData_) {
 				this.once('stateChanged', opt_callback);
 			}
