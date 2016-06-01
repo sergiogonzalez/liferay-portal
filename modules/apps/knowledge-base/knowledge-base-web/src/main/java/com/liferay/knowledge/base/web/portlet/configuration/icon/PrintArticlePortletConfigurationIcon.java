@@ -16,12 +16,12 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -68,17 +68,14 @@ public class PrintArticlePortletConfigurationIcon
 			portletURL.setParameter("mvcPath", "/admin/print_article.jsp");
 
 			KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-				"article_icons.jsp-kb_article");
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 			portletURL.setParameter(
 				"resourceClassNameId",
 				String.valueOf(kbArticle.getClassNameId()));
-
 			portletURL.setParameter(
 				"resourcePrimKey",
 				String.valueOf(kbArticle.getResourcePrimKey()));
-
-			portletURL.setParameter("title", kbArticle.getTitle());
 			portletURL.setParameter("viewMode", Constants.PRINT);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -86,7 +83,7 @@ public class PrintArticlePortletConfigurationIcon
 
 			sb.append("', '', 'directories=no,height=640,location=no,");
 			sb.append("menubar=no,resizable=yes,scrollbars=yes,status=0,");
-			sb.append("toolbar=no,width=680');");
+			sb.append("toolbar=0,width=680');");
 
 			return sb.toString();
 		}
@@ -110,8 +107,7 @@ public class PrintArticlePortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return GetterUtil.getBoolean(
-			portletRequest.getAttribute("init.jsp-enableKBArticlePrint"));
+		return true;
 	}
 
 }

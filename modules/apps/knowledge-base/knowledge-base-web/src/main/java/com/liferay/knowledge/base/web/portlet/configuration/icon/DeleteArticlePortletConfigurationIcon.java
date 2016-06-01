@@ -72,7 +72,7 @@ public class DeleteArticlePortletConfigurationIcon
 		String redirect = themeDisplay.getURLCurrent();
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		long resourcePrimKey = ParamUtil.getLong(
 			portletRequest, "resourcePrimKey");
@@ -89,10 +89,8 @@ public class DeleteArticlePortletConfigurationIcon
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
-
 		portletURL.setParameter(
 			"status", String.valueOf(
 				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
@@ -111,11 +109,11 @@ public class DeleteArticlePortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		return (KBArticlePermission.contains(
+		return KBArticlePermission.contains(
 			themeDisplay.getPermissionChecker(), kbArticle,
-			KBActionKeys.DELETE));
+			KBActionKeys.DELETE);
 	}
 
 }

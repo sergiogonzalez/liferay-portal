@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -62,7 +63,7 @@ public class PermissionsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		try {
 			String modelResource = KBArticle.class.getName();
@@ -92,7 +93,7 @@ public class PermissionsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		if (kbArticle.isRoot() &&
 			KBArticlePermission.contains(

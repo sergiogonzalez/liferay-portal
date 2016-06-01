@@ -20,7 +20,6 @@ import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
@@ -60,14 +59,12 @@ public class HistoryArticlePortletConfigurationIcon
 		portletURL.setParameter("mvcPath", "/admin/history.jsp");
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
-
 		portletURL.setParameter(
 			"status", String.valueOf(
 				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
@@ -85,12 +82,7 @@ public class HistoryArticlePortletConfigurationIcon
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		boolean enableKBArticleHistory = GetterUtil.getBoolean(
-			portletRequest.getAttribute("init.jsp-enableKBArticleHistory"));
-
-		if (enableKBArticleHistory &&
-			(kbArticle.isApproved() || !kbArticle.isFirstVersion())) {
-
+		if (kbArticle.isApproved() || !kbArticle.isFirstVersion()) {
 			return true;
 		}
 

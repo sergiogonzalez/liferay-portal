@@ -17,8 +17,8 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.DisplayPermission;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -70,14 +70,12 @@ public class EditArticlePortletConfigurationIcon
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
-
 		portletURL.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 
@@ -95,21 +93,12 @@ public class EditArticlePortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
-		String rootPortletId =
-			themeDisplay.getPortletDisplay().getRootPortletId();
-
-		if ((!rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY) ||
-			 DisplayPermission.contains(
-				 permissionChecker, scopeGroupId,
-				 KBActionKeys.ADMINISTRATOR)) &&
-			KBArticlePermission.contains(
+		if (KBArticlePermission.contains(
 				permissionChecker, kbArticle, KBActionKeys.UPDATE)) {
 
 			return true;

@@ -18,7 +18,7 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.AdminPermission;
-import com.liferay.knowledge.base.service.permission.DisplayPermission;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ResourceBundle;
 
@@ -75,18 +74,14 @@ public class AddChildArticlePortletConfigurationIcon
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		portletURL.setParameter(
 			"parentResourceClassNameId",
 			String.valueOf(kbArticle.getClassNameId()));
-
 		portletURL.setParameter(
 			"parentResourcePrimKey",
 			String.valueOf(kbArticle.getResourcePrimKey()));
-
-		portletURL.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 
 		return portletURL.toString();
 	}
@@ -101,25 +96,13 @@ public class AddChildArticlePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
-
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 
-		String rootPortletId =
-			themeDisplay.getPortletDisplay().getRootPortletId();
-
-		if ((AdminPermission.contains(
-				permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) &&
-			 rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) ||
-			(DisplayPermission.contains(
-				permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) &&
-			 DisplayPermission.contains(
-				 permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR) &&
-			 rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY))) {
+		if (AdminPermission.contains(
+				permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE)) {
 
 			return true;
 		}

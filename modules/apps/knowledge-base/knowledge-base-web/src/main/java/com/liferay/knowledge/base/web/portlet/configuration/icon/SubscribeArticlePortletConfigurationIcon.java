@@ -20,13 +20,11 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -75,11 +73,10 @@ public class SubscribeArticlePortletConfigurationIcon
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			"article_icons.jsp-kb_article");
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
 
@@ -102,18 +99,11 @@ public class SubscribeArticlePortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		boolean enableKBArticleSubscriptions = GetterUtil.getBoolean(
-			portletRequest.getAttribute(
-				"init.jsp-enableKBArticleSubscriptions"));
-
-		User user = themeDisplay.getUser();
-
-		if (enableKBArticleSubscriptions &&
-			(kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
+		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
 			KBArticlePermission.contains(
 				permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) &&
 			!_subscriptionLocalService.isSubscribed(
-				user.getCompanyId(), user.getUserId(),
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
 
 			return true;
