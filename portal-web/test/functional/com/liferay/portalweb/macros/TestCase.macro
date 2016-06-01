@@ -27,7 +27,17 @@
 						<return name="siteName" value="${portalURL}" />
 					</then>
 					<else>
-						<return name="siteName" value="Liferay" />
+						<var method="TestPropsUtil#get('liferay.portal.branch')" name="testPortalBranch" />
+
+						<if>
+							<equals arg1="${testPortalBranch}" arg2="ee-7.0.x" />
+							<then>
+								<return name="siteName" value="Liferay DXP" />
+							</then>
+							<else>
+								<return name="siteName" value="Liferay" />
+							</else>
+						</if>
 					</else>
 				</if>
 			</then>

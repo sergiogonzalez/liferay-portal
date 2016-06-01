@@ -67,7 +67,9 @@ public class UpgradeModules extends UpgradeProcess {
 				ps.setInt(10, 0);
 				ps.setString(11, ReleaseConstants.TEST_STRING);
 
-				ps.addBatch();
+				if (!hasRelease(bundleSymbolicName)) {
+					ps.addBatch();
+				}
 			}
 
 			ps.executeBatch();
@@ -79,6 +81,20 @@ public class UpgradeModules extends UpgradeProcess {
 		updateExtractedModules();
 
 		updateConvertedLegacyModules();
+	}
+
+	protected boolean hasRelease(String bundleSymbolicName)
+		throws SQLException {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from Release_ where servletContextName = ?")) {
+
+			ps.setString(1, bundleSymbolicName);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				return rs.next();
+			}
+		}
 	}
 
 	protected boolean hasServiceComponent(String buildNamespace)
