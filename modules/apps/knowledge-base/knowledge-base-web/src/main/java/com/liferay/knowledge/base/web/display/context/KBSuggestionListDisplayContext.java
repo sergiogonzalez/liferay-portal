@@ -23,8 +23,8 @@ import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBCommentServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
-import com.liferay.knowledge.base.web.util.KBPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -85,7 +85,7 @@ public class KBSuggestionListDisplayContext {
 				return KBCommentServiceUtil.getKBComments(
 					_groupId, searchContainer.getStart(),
 					searchContainer.getEnd(),
-					KBPortletUtil.getKBCommentOrderByComparator(
+					KnowledgeBaseUtil.getKBCommentOrderByComparator(
 						searchContainer.getOrderByCol(),
 						searchContainer.getOrderByType()));
 			}
@@ -93,7 +93,7 @@ public class KBSuggestionListDisplayContext {
 			return KBCommentServiceUtil.getKBComments(
 				_groupId, status, searchContainer.getStart(),
 				searchContainer.getEnd(),
-				KBPortletUtil.getKBCommentOrderByComparator(
+				KnowledgeBaseUtil.getKBCommentOrderByComparator(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType()));
 		}
@@ -103,7 +103,7 @@ public class KBSuggestionListDisplayContext {
 					_groupId, KBArticleConstants.getClassName(),
 					_kbArticle.getClassPK(), searchContainer.getStart(),
 					searchContainer.getEnd(),
-					KBPortletUtil.getKBCommentOrderByComparator(
+					KnowledgeBaseUtil.getKBCommentOrderByComparator(
 						searchContainer.getOrderByCol(),
 						searchContainer.getOrderByType()));
 			}
@@ -112,7 +112,7 @@ public class KBSuggestionListDisplayContext {
 				_groupId, KBArticleConstants.getClassName(),
 				_kbArticle.getClassPK(), status, searchContainer.getStart(),
 				searchContainer.getEnd(),
-				KBPortletUtil.getKBCommentOrderByComparator(
+				KnowledgeBaseUtil.getKBCommentOrderByComparator(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType()));
 		}
