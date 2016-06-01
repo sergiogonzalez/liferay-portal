@@ -16,8 +16,12 @@ package com.liferay.wiki.editor.configuration;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.wiki.constants.WikiPortletKeys;
+
+import java.util.Iterator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,6 +49,46 @@ public class WikiAttachmentCKEditorEditorConfigContributor
 
 	@Override
 	protected void removeImageButton(JSONObject jsonObject) {
+		Iterator<String> jsonObjectKeysIterator = jsonObject.keys();
+
+		while (jsonObjectKeysIterator.hasNext()) {
+			String key = jsonObjectKeysIterator.next();
+
+			if (key.startsWith("toolbar_")) {
+				JSONArray toolbarJSONArray = JSONFactoryUtil.createJSONArray();
+				JSONArray jsonArray = jsonObject.getJSONArray(key);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONArray itemJSONArray = jsonArray.getJSONArray(i);
+
+					if (itemJSONArray != null) {
+						if (itemJSONArray.length() == 1 &&
+							itemJSONArray.get(0).equals("ImageSelector")) {
+
+							continue;
+						}
+
+						JSONArray toolbarItemJSONArray =
+							JSONFactoryUtil.createJSONArray();
+
+						for (int j = 0; j < itemJSONArray.length(); j++) {
+							Object item = itemJSONArray.get(j);
+
+							if (!item.equals("ImageSelector")) {
+								toolbarItemJSONArray.put(item);
+							}
+						}
+
+						toolbarJSONArray.put(toolbarItemJSONArray);
+					}
+					else {
+						toolbarJSONArray.put(jsonArray.get(i));
+					}
+				}
+
+				jsonObject.put(key, toolbarJSONArray);
+			}
+		}
 	}
 
 }
