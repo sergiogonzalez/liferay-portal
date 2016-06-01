@@ -17,24 +17,24 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
+import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
+import java.util.ResourceBundle;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrin Chaudhary
@@ -47,13 +47,15 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class UnsubscribePortletConfigurationIcon
+public class AddChildKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "unsubscribe");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
+		return LanguageUtil.get(resourceBundle, "add-child-article");
 	}
 
 	@Override
@@ -62,10 +64,9 @@ public class UnsubscribePortletConfigurationIcon
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.ACTION_PHASE);
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "unsubscribeKBArticle");
+		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -76,16 +77,18 @@ public class UnsubscribePortletConfigurationIcon
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
+			"parentResourceClassNameId",
+			String.valueOf(kbArticle.getClassNameId()));
 		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+			"parentResourcePrimKey",
+			String.valueOf(kbArticle.getResourcePrimKey()));
 
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 110;
+		return 107;
 	}
 
 	@Override
@@ -93,32 +96,18 @@ public class UnsubscribePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
-			KBArticlePermission.contains(
-				permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) &&
-			_subscriptionLocalService.isSubscribed(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (AdminPermission.contains(
+				permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE)) {
 
 			return true;
 		}
 
 		return false;
 	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	private SubscriptionLocalService _subscriptionLocalService;
 
 }

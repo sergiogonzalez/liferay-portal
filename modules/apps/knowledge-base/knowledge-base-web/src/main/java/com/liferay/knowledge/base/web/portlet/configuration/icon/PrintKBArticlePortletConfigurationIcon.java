@@ -14,21 +14,17 @@
 
 package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
-import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ResourceBundle;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -47,67 +43,71 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class AddChildArticlePortletConfigurationIcon
+public class PrintKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "print");
+	}
 
-		return LanguageUtil.get(resourceBundle, "add-child-article");
+	@Override
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		try {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("window.open('");
+
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("mvcPath", "/admin/print_article.jsp");
+
+			KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+			portletURL.setParameter(
+				"resourceClassNameId",
+				String.valueOf(kbArticle.getClassNameId()));
+			portletURL.setParameter(
+				"resourcePrimKey",
+				String.valueOf(kbArticle.getResourcePrimKey()));
+			portletURL.setParameter("viewMode", Constants.PRINT);
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			sb.append(portletURL.toString());
+
+			sb.append("', '', 'directories=no,height=640,location=no,");
+			sb.append("menubar=no,resizable=yes,scrollbars=yes,status=0,");
+			sb.append("toolbar=0,width=680');");
+
+			return sb.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
-		portletURL.setParameter(
-			"parentResourceClassNameId",
-			String.valueOf(kbArticle.getClassNameId()));
-		portletURL.setParameter(
-			"parentResourcePrimKey",
-			String.valueOf(kbArticle.getResourcePrimKey()));
-
-		return portletURL.toString();
+		return "javascript:;";
 	}
 
 	@Override
 	public double getWeight() {
-		return 107;
+		return 109;
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
-		if (AdminPermission.contains(
-				permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE)) {
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 }

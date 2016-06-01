@@ -22,12 +22,12 @@ import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -45,13 +45,13 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class EditArticlePortletConfigurationIcon
+public class DeleteKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "edit");
+			getResourceBundle(getLocale(portletRequest)), "delete");
 	}
 
 	@Override
@@ -60,31 +60,47 @@ public class EditArticlePortletConfigurationIcon
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
+			PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
+		portletURL.setParameter("mvcPath", "/admin/view_article.jsp");
+
+		portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteKBArticle");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		String redirect = themeDisplay.getURLCurrent();
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		long resourcePrimKey = ParamUtil.getLong(
+			portletRequest, "resourcePrimKey");
+
+		if (kbArticle.getResourcePrimKey() == resourcePrimKey) {
+			PortletURL homeURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			redirect = homeURL.toString();
+		}
+
+		portletURL.setParameter("redirect", redirect);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
 		portletURL.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
+			"status", String.valueOf(
+				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
 
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 108;
+		return 104;
 	}
 
 	@Override
@@ -95,16 +111,9 @@ public class EditArticlePortletConfigurationIcon
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (KBArticlePermission.contains(
-				permissionChecker, kbArticle, KBActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
+		return KBArticlePermission.contains(
+			themeDisplay.getPermissionChecker(), kbArticle,
+			KBActionKeys.DELETE);
 	}
 
 }

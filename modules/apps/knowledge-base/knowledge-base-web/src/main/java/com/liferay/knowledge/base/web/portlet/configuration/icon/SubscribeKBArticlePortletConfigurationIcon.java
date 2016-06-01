@@ -14,19 +14,27 @@
 
 package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.SubscriptionLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrin Chaudhary
@@ -39,13 +47,13 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class HistoryArticlePortletConfigurationIcon
+public class SubscribeKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "history");
+			getResourceBundle(getLocale(portletRequest)), "subscribe");
 	}
 
 	@Override
@@ -54,9 +62,15 @@ public class HistoryArticlePortletConfigurationIcon
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
+			PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/history.jsp");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "subscribeKBArticle");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
@@ -65,28 +79,46 @@ public class HistoryArticlePortletConfigurationIcon
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
-		portletURL.setParameter(
-			"status", String.valueOf(
-				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
 
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 109;
+		return 110;
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		if (kbArticle.isApproved() || !kbArticle.isFirstVersion()) {
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
+			KBArticlePermission.contains(
+				permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) &&
+			!_subscriptionLocalService.isSubscribed(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
+
 			return true;
 		}
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

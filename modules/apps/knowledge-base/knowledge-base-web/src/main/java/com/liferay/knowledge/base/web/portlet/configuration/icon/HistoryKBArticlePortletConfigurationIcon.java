@@ -14,20 +14,14 @@
 
 package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
-import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -45,13 +39,13 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class DeleteArticlePortletConfigurationIcon
+public class HistoryKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
+			getResourceBundle(getLocale(portletRequest)), "history");
 	}
 
 	@Override
@@ -60,32 +54,12 @@ public class DeleteArticlePortletConfigurationIcon
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.ACTION_PHASE);
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/view_article.jsp");
-
-		portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteKBArticle");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String redirect = themeDisplay.getURLCurrent();
+		portletURL.setParameter("mvcPath", "/admin/history.jsp");
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
-		long resourcePrimKey = ParamUtil.getLong(
-			portletRequest, "resourcePrimKey");
-
-		if (kbArticle.getResourcePrimKey() == resourcePrimKey) {
-			PortletURL homeURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			redirect = homeURL.toString();
-		}
-
-		portletURL.setParameter("redirect", redirect);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
@@ -100,20 +74,19 @@ public class DeleteArticlePortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 104;
+		return 109;
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		return KBArticlePermission.contains(
-			themeDisplay.getPermissionChecker(), kbArticle,
-			KBActionKeys.DELETE);
+		if (kbArticle.isApproved() || !kbArticle.isFirstVersion()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

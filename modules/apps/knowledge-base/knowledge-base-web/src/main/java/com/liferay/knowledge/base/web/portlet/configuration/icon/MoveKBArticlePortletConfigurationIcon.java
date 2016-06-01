@@ -14,17 +14,17 @@
 
 package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -43,71 +43,60 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class PrintArticlePortletConfigurationIcon
+public class MoveKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "print");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		try {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("window.open('");
-
-			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/admin/print_article.jsp");
-
-			KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
-			portletURL.setParameter(
-				"resourceClassNameId",
-				String.valueOf(kbArticle.getClassNameId()));
-			portletURL.setParameter(
-				"resourcePrimKey",
-				String.valueOf(kbArticle.getResourcePrimKey()));
-			portletURL.setParameter("viewMode", Constants.PRINT);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			sb.append(portletURL.toString());
-
-			sb.append("', '', 'directories=no,height=640,location=no,");
-			sb.append("menubar=no,resizable=yes,scrollbars=yes,status=0,");
-			sb.append("toolbar=0,width=680');");
-
-			return sb.toString();
-		}
-		catch (Exception e) {
-		}
-
-		return StringPool.BLANK;
+			getResourceBundle(getLocale(portletRequest)), "move");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return "javascript:;";
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/admin/move_object.jsp");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		portletURL.setParameter(
+			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
+		portletURL.setParameter(
+			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+		portletURL.setParameter(
+			"status", String.valueOf(
+				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
+
+		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 109;
+		return 105;
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return true;
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		return KBArticlePermission.contains(
+			themeDisplay.getPermissionChecker(), kbArticle,
+			KBActionKeys.MOVE_KB_ARTICLE);
 	}
 
 }

@@ -22,9 +22,11 @@ import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -43,13 +45,13 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class MoveArticlePortletConfigurationIcon
+public class EditKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "move");
+			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class MoveArticlePortletConfigurationIcon
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/move_object.jsp");
+		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -75,15 +77,14 @@ public class MoveArticlePortletConfigurationIcon
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
 		portletURL.setParameter(
-			"status", String.valueOf(
-				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
+			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 105;
+		return 108;
 	}
 
 	@Override
@@ -94,9 +95,16 @@ public class MoveArticlePortletConfigurationIcon
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		return KBArticlePermission.contains(
-			themeDisplay.getPermissionChecker(), kbArticle,
-			KBActionKeys.MOVE_KB_ARTICLE);
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (KBArticlePermission.contains(
+				permissionChecker, kbArticle, KBActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

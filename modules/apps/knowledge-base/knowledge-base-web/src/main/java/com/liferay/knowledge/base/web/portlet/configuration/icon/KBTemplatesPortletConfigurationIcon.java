@@ -16,44 +16,35 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
-import com.liferay.knowledge.base.web.constants.KBWebKeys;
+import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Sergio González
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_article.jsp"
-	},
+	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
 	service = PortletConfigurationIcon.class
 )
-public class SubscribeArticlePortletConfigurationIcon
+public class KBTemplatesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "subscribe");
+			getResourceBundle(getLocale(portletRequest)), "templates");
 	}
 
 	@Override
@@ -62,30 +53,21 @@ public class SubscribeArticlePortletConfigurationIcon
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.ACTION_PHASE);
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "subscribeKBArticle");
+		portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
-
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 110;
+		return 101;
 	}
 
 	@Override
@@ -93,18 +75,10 @@ public class SubscribeArticlePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
-			KBArticlePermission.contains(
-				permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) &&
-			!_subscriptionLocalService.isSubscribed(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
+		if (AdminPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				KBActionKeys.VIEW_KB_TEMPLATES)) {
 
 			return true;
 		}
@@ -112,13 +86,9 @@ public class SubscribeArticlePortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
+	@Override
+	public boolean isToolTip() {
+		return false;
 	}
-
-	private SubscriptionLocalService _subscriptionLocalService;
 
 }
