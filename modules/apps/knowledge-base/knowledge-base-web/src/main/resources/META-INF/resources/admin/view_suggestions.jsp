@@ -36,12 +36,12 @@ if (!navigation.equals("all") && orderByCol.equals("status")) {
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 if (storeOrderByPreference && Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", orderByCol);
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", orderByType);
+	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
+	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", orderByCol);
-	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", "desc");
+	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
+	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", "desc");
 }
 
 KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
