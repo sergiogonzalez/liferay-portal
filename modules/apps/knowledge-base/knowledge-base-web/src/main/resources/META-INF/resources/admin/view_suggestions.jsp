@@ -27,10 +27,10 @@ SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, n
 
 String navigation = ParamUtil.getString(request, "navigation", "all");
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", navigation.equals("all") ? "status" : "modifiedDate");
+String orderByCol = ParamUtil.getString(request, "orderByCol", navigation.equals("all") ? "status" : "modified-date");
 
 if (!navigation.equals("all") && orderByCol.equals("status")) {
-	orderByCol = "modifiedDate";
+	orderByCol = "modified-date";
 }
 
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -84,7 +84,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 			orderColumns.put("status", "status");
 		}
 
-		orderColumns.put("modifiedDate", "modified-date");
+		orderColumns.put("modified-date", "modified-date");
 		orderColumns.put("user-name", "user-name");
 
 		PortletURL navigationURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);

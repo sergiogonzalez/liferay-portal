@@ -320,7 +320,7 @@ public class KnowledgeBaseUtil {
 		else if (orderByCol.equals("status")) {
 			return new KBCommentStatusComparator(ascending);
 		}
-		else if (orderByCol.equals("user")) {
+		else if (orderByCol.equals("user-name")) {
 			return new KBCommentUserNameComparator(ascending);
 		}
 
