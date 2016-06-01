@@ -155,29 +155,20 @@ public class KBSuggestionListDisplayContext {
 
 		int status = _getStatus();
 
-		if (_kbArticle == null) {
-			if (status == KBCommentConstants.STATUS_ANY) {
+		if (status == KBCommentConstants.STATUS_ANY) {
+			if (_kbArticle == null) {
 				searchContainer.setTotal(
 					KBCommentServiceUtil.getKBCommentsCount(_groupId));
 			}
 			else {
 				searchContainer.setTotal(
-					KBCommentServiceUtil.getKBCommentsCount(_groupId, status));
-			}
-		}
-		else {
-			if (status == KBCommentConstants.STATUS_ANY) {
-				searchContainer.setTotal(
 					KBCommentServiceUtil.getKBCommentsCount(
 						_groupId, KBArticleConstants.getClassName(),
 						_kbArticle.getClassPK()));
 			}
-			else {
-				searchContainer.setTotal(
-					KBCommentServiceUtil.getKBCommentsCount(
-						_groupId, KBArticleConstants.getClassName(),
-						_kbArticle.getClassPK(), status));
-			}
+		}
+		else {
+			searchContainer.setTotal(getKBCommentsCount(status));
 		}
 	}
 
