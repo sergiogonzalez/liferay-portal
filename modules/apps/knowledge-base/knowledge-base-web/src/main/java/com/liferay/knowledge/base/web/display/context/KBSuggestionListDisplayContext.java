@@ -176,7 +176,7 @@ public class KBSuggestionListDisplayContext {
 
 			if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 				portletURL.setParameter(
-					"mvcPath", _templatePath + "/view_article.jsp");
+					"mvcPath", _templatePath + "view_article.jsp");
 			}
 
 			portletURL.setParameter(
