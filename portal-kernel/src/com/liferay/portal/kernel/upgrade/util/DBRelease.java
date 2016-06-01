@@ -45,6 +45,10 @@ public class DBRelease {
 	}
 
 	public void addRelease(String bundleSymbolicName) throws SQLException {
+		if (_hasRelease(bundleSymbolicName)) {
+			return;
+		}
+
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 		StringBundler sb = new StringBundler(4);
@@ -68,10 +72,6 @@ public class DBRelease {
 			ps.setBoolean(9, false);
 			ps.setInt(10, 0);
 			ps.setString(11, ReleaseConstants.TEST_STRING);
-
-			if (!_hasRelease(bundleSymbolicName)) {
-				ps.addBatch();
-			}
 
 			ps.execute();
 		}
