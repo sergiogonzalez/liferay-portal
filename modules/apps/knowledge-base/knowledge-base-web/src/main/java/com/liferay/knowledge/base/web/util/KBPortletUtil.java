@@ -17,7 +17,7 @@ package com.liferay.knowledge.base.web.util;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.util.comparator.KBCommentModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBCommentStatusComparator;
-import com.liferay.knowledge.base.util.comparator.KBCommentUserComparator;
+import com.liferay.knowledge.base.util.comparator.KBCommentUserNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -48,7 +48,7 @@ public class KBPortletUtil {
 			return new KBCommentStatusComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("user")) {
-			orderByComparator = new KBCommentUserComparator(orderByAsc);
+			orderByComparator = new KBCommentUserNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;
