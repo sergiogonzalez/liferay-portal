@@ -78,6 +78,23 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 
 	@Override
 	public List<KBComment> getKBComments(
+			long groupId, int status, int start, int end,
+			OrderByComparator<KBComment> obc)
+		throws PortalException {
+
+		if (AdminPermission.contains(
+				getPermissionChecker(), groupId,
+				KBActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentPersistence.findByG_S(
+				groupId, status, start, end, obc);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<KBComment> getKBComments(
 			long groupId, int start, int end, OrderByComparator<KBComment> obc)
 		throws PortalException {
 
@@ -103,6 +120,23 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 
 			return kbCommentLocalService.getKBComments(
 				className, classPK, status, start, end);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<KBComment> getKBComments(
+			long groupId, String className, long classPK, int status, int start,
+			int end, OrderByComparator<KBComment> obc)
+		throws PortalException {
+
+		if (SuggestionPermission.contains(
+				getPermissionChecker(), groupId, className, classPK,
+				KBActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentLocalService.getKBComments(
+				className, classPK, status, start, end, obc);
 		}
 
 		return Collections.emptyList();

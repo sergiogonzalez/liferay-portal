@@ -92,7 +92,10 @@ public class KBSuggestionListDisplayContext {
 
 			return KBCommentServiceUtil.getKBComments(
 				_groupId, status, searchContainer.getStart(),
-				searchContainer.getEnd());
+				searchContainer.getEnd(),
+				KBPortletUtil.getKBCommentOrderByComparator(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType()));
 		}
 		else {
 			if (status == KBCommentConstants.STATUS_ANY) {
@@ -108,7 +111,10 @@ public class KBSuggestionListDisplayContext {
 			return KBCommentServiceUtil.getKBComments(
 				_groupId, KBArticleConstants.getClassName(),
 				_kbArticle.getClassPK(), status, searchContainer.getStart(),
-				searchContainer.getEnd());
+				searchContainer.getEnd(),
+				KBPortletUtil.getKBCommentOrderByComparator(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType()));
 		}
 	}
 
