@@ -45,22 +45,6 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 		/>
 	</c:if>
 
-	<c:if test="<%= enableKBArticleHistory && (kbArticle.isApproved() || !kbArticle.isFirstVersion()) %>">
-		<liferay-portlet:renderURL var="historyURL">
-			<portlet:param name="mvcPath" value='<%= templatePath + "history.jsp" %>' />
-			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
-			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-			<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			iconCssClass="icon-file-alt"
-			label="<%= true %>"
-			message="history"
-			url="<%= historyURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= enableKBArticlePrint %>">
 		<liferay-portlet:renderURL var="printURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value='<%= templatePath + "print_article.jsp" %>' />
