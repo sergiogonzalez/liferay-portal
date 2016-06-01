@@ -98,13 +98,17 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 		orderColumns.put("modified-date", "modified-date");
 		orderColumns.put("user-name", "user-name");
+
+		PortletURL sortURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+		sortURL.setParameter("storeOrderByPreference", Boolean.TRUE.toString());
 		%>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
 			orderColumns="<%= orderColumns %>"
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
+			portletURL="<%= sortURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
