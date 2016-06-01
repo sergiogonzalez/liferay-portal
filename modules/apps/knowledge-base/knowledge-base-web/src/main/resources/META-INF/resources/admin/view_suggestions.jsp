@@ -41,8 +41,7 @@ if (storeOrderByPreference && Validator.isNotNull(orderByCol) && Validator.isNot
 	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
 	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", orderByType);
 }
-else {
-	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
+else if (Validator.isNull(orderByType)) {
 	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", "desc");
 }
 
@@ -90,6 +89,10 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 		orderColumns.put("modified-date", "modified-date");
 		orderColumns.put("user-name", "user-name");
+
+		PortletURL sortURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+		sortURL.setParameter("storeOrderByPreference", Boolean.TRUE.toString());
 		%>
 
 		<liferay-frontend:management-bar-navigation
@@ -102,7 +105,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
 			orderColumns="<%= orderColumns %>"
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
+			portletURL="<%= sortURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
