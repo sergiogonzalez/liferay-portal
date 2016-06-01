@@ -172,6 +172,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				kbCommentsSearchContainer.setResults(kbComments);
 
 				request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
+				request.setAttribute("view_suggestions.jsp-resultRowSplitter", new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle));
 				%>
 
 				<div class="kb-article-previous-comments <%= expanded ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />previousCommentsContainer">

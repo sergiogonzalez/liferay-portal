@@ -44,6 +44,9 @@ public class KBPortletUtil {
 		if (orderByCol.equals("modifiedDate")) {
 			orderByComparator = new KBCommentModifiedDateComparator(orderByAsc);
 		}
+		else if (orderByCol.equals("status")) {
+			return new KBCommentStatusComparator(orderByAsc);
+		}
 		else if (orderByCol.equals("user")) {
 			orderByComparator = new KBCommentUserComparator(orderByAsc);
 		}
