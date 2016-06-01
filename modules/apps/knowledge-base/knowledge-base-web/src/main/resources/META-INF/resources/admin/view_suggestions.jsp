@@ -91,7 +91,6 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 		%>
 
 		<liferay-frontend:management-bar-navigation
-			disabled="<%= false %>"
 			navigationKeys='<%= new String[] {"all", "new", "in-progress", "resolved"} %>'
 			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
 		/>
