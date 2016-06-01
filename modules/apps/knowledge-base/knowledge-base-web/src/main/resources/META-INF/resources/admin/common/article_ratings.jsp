@@ -165,14 +165,10 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 				SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, kbSuggestionListDisplayContext.getEmptyResultsMessage());
 
-				kbCommentsSearchContainer.setTotal(kbSuggestionListDisplayContext.getKBCommentsCount());
-
-				List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
-
-				kbCommentsSearchContainer.setResults(kbComments);
+				kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer);
 
 				request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
-				request.setAttribute("view_suggestions.jsp-resultRowSplitter", new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle));
+				request.setAttribute("view_suggestions.jsp-resultRowSplitter", new KBCommentResultRowSplitter(resourceBundle, kbCommentsSearchContainer.getTotal()));
 				%>
 
 				<div class="kb-article-previous-comments <%= expanded ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />previousCommentsContainer">

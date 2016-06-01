@@ -23,42 +23,23 @@ KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestion
 
 request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
 
-String navigation = ParamUtil.getString(request, "navigation", "all");
-
 SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, kbSuggestionListDisplayContext.getEmptyResultsMessage());
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", navigation.equals("all") ? "status" : "modified-date");
+kbSuggestionListDisplayContext.populateOrderByColAndOrderByType(kbCommentsSearchContainer);
 
-if (!navigation.equals("all") && orderByCol.equals("status")) {
-	orderByCol = "modified-date";
-}
+String orderByCol = kbCommentsSearchContainer.getOrderByCol();
+String orderByType = kbCommentsSearchContainer.getOrderByType();
 
-String orderByType = ParamUtil.getString(request, "orderByType");
+KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(resourceBundle, orderByType, kbCommentsSearchContainer.getTotal()) : null;
 
-boolean storeOrderByPreference = ParamUtil.getBoolean(request, "storeOrderByPreference", true);
+kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer);
 
-if (storeOrderByPreference && Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", orderByType);
-}
-else if (Validator.isNull(orderByType)) {
-	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", "desc");
-}
-
-KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
-
-kbCommentsSearchContainer.setOrderByCol(orderByCol);
-kbCommentsSearchContainer.setOrderByType(orderByType);
 kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
-
-kbCommentsSearchContainer.setTotal(kbSuggestionListDisplayContext.getKBCommentsCount());
-
-List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
-
-kbCommentsSearchContainer.setResults(kbComments);
 
 request.setAttribute("view_suggestions.jsp-resultRowSplitter", kbCommentResultRowSplitter);
 request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
+
+List kbComments = kbCommentsSearchContainer.getResults();
 %>
 
 <liferay-frontend:management-bar
@@ -81,15 +62,6 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 		navigationURL.setParameter("storeOrderByPreference", Boolean.FALSE.toString());
 
-		Map<String, String> orderColumns = new HashMap<String, String>();
-
-		if (navigation.equals("all")) {
-			orderColumns.put("status", "status");
-		}
-
-		orderColumns.put("modified-date", "modified-date");
-		orderColumns.put("user-name", "user-name");
-
 		PortletURL sortURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
 		sortURL.setParameter("storeOrderByPreference", Boolean.TRUE.toString());
@@ -104,7 +76,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
-			orderColumns="<%= orderColumns %>"
+			orderColumns="<%= kbSuggestionListDisplayContext.getOrderColumns() %>"
 			portletURL="<%= sortURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
