@@ -23,19 +23,16 @@ KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestion
 
 request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
 
-String navigation = ParamUtil.getString(request, "navigation", "all");
-
 SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, kbSuggestionListDisplayContext.getEmptyResultsMessage());
 
-kbSuggestionListDisplayContext.setKBCommentsOrder(kbCommentsSearchContainer);
+kbSuggestionListDisplayContext.populateOrderByColAndOrderByType(kbCommentsSearchContainer);
 
 String orderByCol = kbCommentsSearchContainer.getOrderByCol();
 String orderByType = kbCommentsSearchContainer.getOrderByType();
 
-KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
+KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(resourceBundle, orderByType, kbCommentsSearchContainer.getTotal()) : null;
 
-kbSuggestionListDisplayContext.getKBCommentsCount(kbCommentsSearchContainer);
-kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
+kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer);
 
 kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
 
@@ -65,15 +62,6 @@ List kbComments = kbCommentsSearchContainer.getResults();
 
 		navigationURL.setParameter("storeOrderByPreference", Boolean.FALSE.toString());
 
-		Map<String, String> orderColumns = new HashMap<String, String>();
-
-		if (navigation.equals("all")) {
-			orderColumns.put("status", "status");
-		}
-
-		orderColumns.put("modified-date", "modified-date");
-		orderColumns.put("user-name", "user-name");
-
 		PortletURL sortURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
 		sortURL.setParameter("storeOrderByPreference", Boolean.TRUE.toString());
@@ -88,7 +76,7 @@ List kbComments = kbCommentsSearchContainer.getResults();
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
-			orderColumns="<%= orderColumns %>"
+			orderColumns="<%= kbSuggestionListDisplayContext.getOrderColumns() %>"
 			portletURL="<%= sortURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
