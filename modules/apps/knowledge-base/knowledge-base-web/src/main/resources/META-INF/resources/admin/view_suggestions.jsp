@@ -48,7 +48,7 @@ else {
 	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", "desc");
 }
 
-KBCommentResultRowSplitter kbCommentResultRowSplitter = !orderByCol.equals("user") && !orderByCol.equals("modifiedDate") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
+KBCommentResultRowSplitter kbCommentResultRowSplitter = !orderByCol.equals("user-name") && !orderByCol.equals("modifiedDate") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
 
 kbCommentsSearchContainer.setOrderByCol(orderByCol);
 kbCommentsSearchContainer.setOrderByType(orderByType);
@@ -87,7 +87,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 		}
 
 		orderColumns.put("modifiedDate", "modified-date");
-		orderColumns.put("user", "user");
+		orderColumns.put("user-name", "user-name");
 		%>
 
 		<liferay-frontend:management-bar-navigation

@@ -47,7 +47,7 @@ public class KBPortletUtil {
 		else if (orderByCol.equals("status")) {
 			return new KBCommentStatusComparator(orderByAsc);
 		}
-		else if (orderByCol.equals("user")) {
+		else if (orderByCol.equals("user-name")) {
 			orderByComparator = new KBCommentUserNameComparator(orderByAsc);
 		}
 
