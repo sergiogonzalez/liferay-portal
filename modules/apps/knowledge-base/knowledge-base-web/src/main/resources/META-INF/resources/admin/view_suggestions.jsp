@@ -51,14 +51,13 @@ kbCommentsSearchContainer.setOrderByCol(orderByCol);
 kbCommentsSearchContainer.setOrderByType(orderByType);
 kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
 
-kbCommentsSearchContainer.setTotal(kbSuggestionListDisplayContext.getKBCommentsCount());
-
-List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
-
-kbCommentsSearchContainer.setResults(kbComments);
+kbSuggestionListDisplayContext.getKBCommentsCount(kbCommentsSearchContainer);
+kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
 
 request.setAttribute("view_suggestions.jsp-resultRowSplitter", kbCommentResultRowSplitter);
 request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
+
+List kbComments = kbCommentsSearchContainer.getResults();
 %>
 
 <liferay-frontend:management-bar
