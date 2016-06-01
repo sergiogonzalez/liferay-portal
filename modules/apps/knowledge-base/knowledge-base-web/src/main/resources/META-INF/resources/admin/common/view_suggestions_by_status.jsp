@@ -19,85 +19,9 @@
 <%
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
 
-String mvcPath = ParamUtil.getString(request, "mvcPath");
+SearchContainer kbCommentsSearchContainer = (SearchContainer)request.getAttribute("view_suggestions.jsp-searchContainer");
 
-SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "no-suggestions-were-found");
-
-String orderByCol = ParamUtil.getString(renderRequest, "orderByCol");
-String orderByType = ParamUtil.getString(renderRequest, "orderByType");
-
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", orderByCol);
-	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", orderByType);
-}
-else {
-	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-col", "modifiedDate");
-	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", "desc");
-}
-
-kbCommentsSearchContainer.setOrderByCol(orderByCol);
-kbCommentsSearchContainer.setOrderByType(orderByType);
-
-if (mvcPath.equals("/admin/view_suggestions.jsp")) {
-	kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
-}
-
-List<KBComment> kbComments = kbSuggestionListDisplayContext.getKBComments(kbCommentsSearchContainer);
-%>
-
-<c:if test='<%= mvcPath.equals("/admin/view_suggestions.jsp") %>'>
-	<liferay-frontend:management-bar
-		disabled="<%= kbComments.isEmpty() %>"
-		includeCheckBox="<%= true %>"
-		searchContainerId="kbComments"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"descriptive"} %>'
-				portletURL="<%= currentURLObj %>"
-				selectedDisplayStyle="descriptive"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-
-			<%
-			String navigation = ParamUtil.getString(request, "navigation", "all");
-
-			PortletURL portletURL = renderResponse.createRenderURL();
-
-			portletURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
-			portletURL.setParameter("redirect", currentURL);
-			portletURL.setParameter("navigation", navigation);
-
-			Map<String, String> orderColumns = new HashMap<String, String>();
-
-			orderColumns.put("modifiedDate", "modified-date");
-			orderColumns.put("user", "user");
-			%>
-
-			<liferay-frontend:management-bar-navigation
-				disabled="<%= false %>"
-				navigationKeys='<%= new String[] {"all", "new", "in-progress", "resolved"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns="<%= orderColumns %>"
-				portletURL="<%= portletURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKBComments();" %>' icon="times" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
-
-<%
-kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
+KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)request.getAttribute("view_suggestions.jsp-resultRowSplitter");
 %>
 
 <liferay-portlet:actionURL name="deleteKBComments" varImpl="deleteKBCommentsURL">
@@ -108,12 +32,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 	<liferay-ui:search-container
 		id="kbComments"
 		searchContainer="<%= kbCommentsSearchContainer %>"
-		total="<%= kbSuggestionListDisplayContext.getKBCommentsCount() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= kbComments %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.knowledge.base.model.KBComment"
 			keyProperty="kbCommentId"
@@ -172,16 +91,6 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter='<%= !orderByCol.equals("user") && !orderByCol.equals("modified-name") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle) : null %>' />
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= resultRowSplitter %>" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test='<%= mvcPath.equals("/admin/view_suggestions.jsp") %>'>
-	<aui:script>
-		function <portlet:namespace />deleteKBComments() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
-		}
-	</aui:script>
-</c:if>
