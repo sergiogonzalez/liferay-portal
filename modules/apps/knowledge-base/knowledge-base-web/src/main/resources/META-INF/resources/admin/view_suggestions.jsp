@@ -44,7 +44,7 @@ else {
 	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "pages-order-by-type", "desc");
 }
 
-KBCommentResultRowSplitter kbCommentResultRowSplitter = !orderByCol.equals("user-name") && !orderByCol.equals("modifiedDate") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
+KBCommentResultRowSplitter kbCommentResultRowSplitter = orderByCol.equals("status") ? new KBCommentResultRowSplitter(kbSuggestionListDisplayContext, resourceBundle, orderByType) : null;
 
 kbCommentsSearchContainer.setOrderByCol(orderByCol);
 kbCommentsSearchContainer.setOrderByType(orderByType);
