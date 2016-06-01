@@ -70,7 +70,8 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				getPermissionChecker(), groupId,
 				KBActionKeys.VIEW_SUGGESTIONS)) {
 
-			return kbCommentPersistence.findByG_S(groupId, status, start, end);
+			return kbCommentLocalService.getKBComments(
+				groupId, status, start, end);
 		}
 
 		return Collections.emptyList();
@@ -86,7 +87,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				getPermissionChecker(), groupId,
 				KBActionKeys.VIEW_SUGGESTIONS)) {
 
-			return kbCommentPersistence.findByG_S(
+			return kbCommentLocalService.getKBComments(
 				groupId, status, start, end, obc);
 		}
 
@@ -102,7 +103,8 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				getPermissionChecker(), groupId,
 				KBActionKeys.VIEW_SUGGESTIONS)) {
 
-			return kbCommentPersistence.findByGroupId(groupId, start, end, obc);
+			return kbCommentLocalService.getKBComments(
+				groupId, start, end, obc);
 		}
 
 		return Collections.emptyList();
@@ -179,7 +181,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				getPermissionChecker(), groupId,
 				KBActionKeys.VIEW_SUGGESTIONS)) {
 
-			return kbCommentPersistence.countByG_S(groupId, status);
+			return kbCommentLocalService.getKBCommentsCount(groupId, status);
 		}
 
 		return 0;
