@@ -78,6 +78,10 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 	<liferay-frontend:management-bar-filters>
 
 		<%
+		PortletURL navigationURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+		navigationURL.setParameter("storeOrderByPreference", Boolean.FALSE.toString());
+
 		Map<String, String> orderColumns = new HashMap<String, String>();
 
 		if (navigation.equals("all")) {
@@ -86,10 +90,6 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 		orderColumns.put("modified-date", "modified-date");
 		orderColumns.put("user-name", "user-name");
-
-		PortletURL navigationURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-
-		navigationURL.setParameter("storeOrderByPreference", Boolean.FALSE.toString());
 		%>
 
 		<liferay-frontend:management-bar-navigation
