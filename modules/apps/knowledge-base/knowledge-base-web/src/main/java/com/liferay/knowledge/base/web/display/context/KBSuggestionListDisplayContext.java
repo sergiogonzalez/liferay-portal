@@ -66,6 +66,22 @@ public class KBSuggestionListDisplayContext {
 		return getKBCommentsCount(KBCommentConstants.STATUS_COMPLETED);
 	}
 
+	public String getEmptyResultsMessage() {
+		String navigation = ParamUtil.getString(_request, "navigation");
+
+		if (navigation.equals("new")) {
+			return "there-are-no-new-suggestions";
+		}
+		else if (navigation.equals("in-progress")) {
+			return "there-are-no-suggestions-in-progress";
+		}
+		else if (navigation.equals("resolved")) {
+			return "there-are-no-resolved-suggestions";
+		}
+
+		return "there-are-no-suggestions";
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
