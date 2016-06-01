@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Roberto Díaz
  */
-public class KBCommentUserComparator extends OrderByComparator<KBComment> {
+public class KBCommentUserNameComparator extends OrderByComparator<KBComment> {
 
 	public static final String ORDER_BY_ASC = "KBComment.userName ASC";
 
@@ -28,11 +28,11 @@ public class KBCommentUserComparator extends OrderByComparator<KBComment> {
 
 	public static final String[] ORDER_BY_FIELDS = {"userName"};
 
-	public KBCommentUserComparator() {
+	public KBCommentUserNameComparator() {
 		this(false);
 	}
 
-	public KBCommentUserComparator(boolean ascending) {
+	public KBCommentUserNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
