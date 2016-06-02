@@ -8,7 +8,7 @@ Bundle-ClassPath:\
 	lib/jettison.jar
 Bundle-Name: Liferay Portal Remote CXF JAX-RS Common
 Bundle-SymbolicName: com.liferay.portal.remote.cxf.jaxrs.common
-Bundle-Version: 2.0.2
+Bundle-Version: 2.0.3
 Export-Package:\
 	javax.json.*,\
 	\

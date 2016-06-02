@@ -96,19 +96,11 @@ public class DBUpgrader {
 			upgrade();
 			verify();
 
+			_registerModuleServiceLifecycle("database.initialized");
+
 			InitUtil.registerContext();
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put("module.service.lifecycle", "portal.initialized");
-			properties.put("service.vendor", ReleaseInfo.getVendor());
-			properties.put("service.version", ReleaseInfo.getVersion());
-
-			registry.registerService(
-				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
-				properties);
+			_registerModuleServiceLifecycle("portal.initialized");
 
 			System.out.println(
 				"\nCompleted Liferay core upgrade and verify processes in " +
@@ -399,6 +391,22 @@ public class DBUpgrader {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	private static void _registerModuleServiceLifecycle(
+		String moduleServiceLifecycle) {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("module.service.lifecycle", moduleServiceLifecycle);
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties.put("service.version", ReleaseInfo.getVersion());
+
+		registry.registerService(
+			ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+			properties);
 	}
 
 	private static void _updateCompanyKey() throws Exception {

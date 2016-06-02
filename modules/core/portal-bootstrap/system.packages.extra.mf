@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1464842053033
+Bnd-LastModified: 1464892269992
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
@@ -2929,7 +2929,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  eray.trash.kernel.model,javax.portlet,javax.servlet,javax.servlet.htt
  p",com.liferay.portal.kernel.tree;version="2.1.0";uses:="com.liferay.
  portal.kernel.exception",com.liferay.portal.kernel.upgrade;version="7
- .2.0";uses:="com.liferay.portal.kernel.dao.db,com.liferay.portal.kern
+ .1.0";uses:="com.liferay.portal.kernel.dao.db,com.liferay.portal.kern
  el.exception,com.liferay.portal.kernel.upgrade.util,com.liferay.porta
  l.kernel.util,com.liferay.portal.kernel.xml,javax.portlet",com.lifera
  y.portal.kernel.upgrade.dao.orm;version="7.0.0";uses:="com.liferay.po

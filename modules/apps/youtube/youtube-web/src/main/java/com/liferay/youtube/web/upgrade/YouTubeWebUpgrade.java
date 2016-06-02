@@ -15,10 +15,10 @@
 package com.liferay.youtube.web.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeRelease;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 import com.liferay.youtube.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,20 +32,21 @@ public class YouTubeWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		BaseUpgradeRelease upgradeRelease = new BaseUpgradeRelease() {
+		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
+			new BaseUpgradeWebModuleRelease() {
 
-			protected String getBundleSymbolicName() {
-				return "com.liferay.youtube.web";
-			}
+				protected String getBundleSymbolicName() {
+					return "com.liferay.youtube.web";
+				}
 
-			protected String[] getPortletIds() {
-				return new String[] {"1_WAR_youtubeportlet"};
-			}
+				protected String[] getPortletIds() {
+					return new String[] {"1_WAR_youtubeportlet"};
+				}
 
-		};
+			};
 
 		try {
-			upgradeRelease.upgrade();
+			upgradeWebModuleRelease.upgrade();
 		}
 		catch (UpgradeException ue) {
 			throw new RuntimeException(ue);

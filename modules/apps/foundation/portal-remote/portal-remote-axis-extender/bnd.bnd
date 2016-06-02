@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Remote Axis Extender
 Bundle-SymbolicName: com.liferay.portal.remote.axis.extender
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 DynamicImport-Package: com.liferay.*
 Export-Package: org.apache.axis.*;version="1.4"
 Import-Package:\
