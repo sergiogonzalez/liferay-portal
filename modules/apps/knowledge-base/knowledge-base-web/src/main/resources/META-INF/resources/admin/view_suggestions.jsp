@@ -23,16 +23,9 @@ KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestion
 
 request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
 
-String navigation = ParamUtil.getString(request, "navigation", "all");
-
 SearchContainer kbCommentsSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, kbSuggestionListDisplayContext.getEmptyResultsMessage());
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", navigation.equals("all") ? "status" : "modified-date");
-
-if (!navigation.equals("all") && orderByCol.equals("status")) {
-	orderByCol = "modified-date";
-}
-
+String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 boolean storeOrderByPreference = ParamUtil.getBoolean(request, "storeOrderByPreference", true);
@@ -41,9 +34,16 @@ if (storeOrderByPreference && Validator.isNotNull(orderByCol) && Validator.isNot
 	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
 	portalPreferences.setValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", orderByType);
 }
-else {
-	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", orderByCol);
+
+if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
+	orderByCol = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-col", "status");
 	orderByType = portalPreferences.getValue(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "suggestions-order-by-type", "desc");
+}
+
+String navigation = ParamUtil.getString(request, "navigation", "all");
+
+if (!navigation.equals("all") && orderByCol.equals("status")) {
+	orderByCol = "modified-date";
 }
 
 kbCommentsSearchContainer.setOrderByCol(orderByCol);
