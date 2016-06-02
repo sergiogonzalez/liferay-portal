@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.knowledge.base.service.permission.KBTemplatePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -110,10 +109,7 @@ public class DeleteKBTemplatePortletConfigurationIcon
 		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-		if (AdminPermission.contains(
-				permissionChecker, themeDisplay.getScopeGroupId(),
-				KBActionKeys.ADD_KB_ARTICLE) &&
-			KBTemplatePermission.contains(
+		if (KBTemplatePermission.contains(
 				permissionChecker, kbTemplate, KBActionKeys.DELETE)) {
 
 			return true;
