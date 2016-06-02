@@ -36,6 +36,8 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Sergio González
  * @author Roberto Díaz
@@ -124,7 +126,7 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 			name = namespace + name;
 		}
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, name + "selectItem",
 			attachmentItemSelectorCriterion, uploadItemSelectorCriterion);
 
@@ -133,8 +135,13 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
+	@Reference(unbind = "-")
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
 	protected abstract void removeImageButton(JSONObject jsonObject);
 
-	protected ItemSelector itemSelector;
+	private ItemSelector _itemSelector;
 
 }
