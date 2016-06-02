@@ -53,6 +53,9 @@ public class AdminConfigurationAction
 
 		validateEmail(actionRequest, "emailKBArticleAdded");
 		validateEmail(actionRequest, "emailKBArticleUpdated");
+		validateEmail(actionRequest, "emailKBArticleSuggestionReceived");
+		validateEmail(actionRequest, "emailKBArticleSuggestionInProgress");
+		validateEmail(actionRequest, "emailKBArticleSuggestionResolved");
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
