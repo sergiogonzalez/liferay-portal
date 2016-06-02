@@ -58,7 +58,7 @@ kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequ
 request.setAttribute("view_suggestions.jsp-resultRowSplitter", kbCommentResultRowSplitter);
 request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
 
-List kbComments = kbCommentsSearchContainer.getResults();
+List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 %>
 
 <liferay-frontend:management-bar
