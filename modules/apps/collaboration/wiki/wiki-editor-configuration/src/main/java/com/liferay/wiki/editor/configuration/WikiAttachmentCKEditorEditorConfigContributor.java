@@ -62,7 +62,7 @@ public class WikiAttachmentCKEditorEditorConfigContributor
 					JSONArray itemJSONArray = jsonArray.getJSONArray(i);
 
 					if (itemJSONArray != null) {
-						if (itemJSONArray.length() == 1 &&
+						if ((itemJSONArray.length() == 1) &&
 							itemJSONArray.get(0).equals("ImageSelector")) {
 
 							continue;
