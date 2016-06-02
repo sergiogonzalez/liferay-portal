@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
@@ -53,9 +54,9 @@ public class AdminConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
+		validateEmail(actionRequest, "emailKBArticleAdded");
+		validateEmail(actionRequest, "emailKBArticleUpdated");
 		validateEmailFrom(actionRequest);
-		validateEmailKBArticleAdded(actionRequest);
-		validateEmailKBArticleUpdated(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -69,56 +70,23 @@ public class AdminConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected boolean isVariableTerm(String s) {
-		if (s.contains("[$") && s.contains("$]")) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	@Override
-	protected void validateEmailFrom(ActionRequest actionRequest) {
-		String emailFromName = getParameter(actionRequest, "emailFromName");
-		String emailFromAddress = getParameter(
-			actionRequest, "emailFromAddress");
+	protected void validateEmail(
+		ActionRequest actionRequest, String emailParam) {
 
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress) &&
-				 !isVariableTerm(emailFromAddress)) {
+		boolean emailEnabled = GetterUtil.getBoolean(
+			getParameter(actionRequest, emailParam + "Enabled"));
+		String emailSubject = getParameter(
+			actionRequest, emailParam + "Subject");
+		String emailBody = getParameter(actionRequest, emailParam + "Body");
 
-			SessionErrors.add(actionRequest, "emailFromAddress");
-		}
-	}
-
-	protected void validateEmailKBArticleAdded(ActionRequest actionRequest) {
-		String emailKBArticleAddedSubject = getParameter(
-			actionRequest, "emailKBArticleAddedSubject");
-		String emailKBArticleAddedBody = getParameter(
-			actionRequest, "emailKBArticleAddedBody");
-
-		if (Validator.isNull(emailKBArticleAddedSubject)) {
-			SessionErrors.add(actionRequest, "emailKBArticleAddedSubject");
-		}
-		else if (Validator.isNull(emailKBArticleAddedBody)) {
-			SessionErrors.add(actionRequest, "emailKBArticleAddedBody");
-		}
-	}
-
-	protected void validateEmailKBArticleUpdated(ActionRequest actionRequest) {
-		String emailKBArticleUpdatedSubject = getParameter(
-			actionRequest, "emailKBArticleUpdatedSubject");
-		String emailKBArticleUpdatedBody = getParameter(
-			actionRequest, "emailKBArticleUpdatedBody");
-
-		if (Validator.isNull(emailKBArticleUpdatedSubject)) {
-			SessionErrors.add(actionRequest, "emailKBArticleUpdatedSubject");
-		}
-		else if (Validator.isNull(emailKBArticleUpdatedBody)) {
-			SessionErrors.add(actionRequest, "emailKBArticleUpdatedBody");
+		if (emailEnabled) {
+			if (Validator.isNull(emailSubject)) {
+				SessionErrors.add(actionRequest, emailParam + "Subject");
+			}
+			else if (Validator.isNull(emailBody)) {
+				SessionErrors.add(actionRequest, emailParam + "Body");
+			}
 		}
 	}
 
