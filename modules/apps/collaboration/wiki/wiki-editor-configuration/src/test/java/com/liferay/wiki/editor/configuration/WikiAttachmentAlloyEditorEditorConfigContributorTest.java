@@ -14,17 +14,34 @@
 
 package com.liferay.wiki.editor.configuration;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.language.LanguageImpl;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
-import org.junit.Assert;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.PortletURL;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
 import org.powermock.api.mockito.PowerMockito;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Sergio González
@@ -34,71 +51,87 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 	@Before
 	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
+		_requestBackedPortletURLFactory = mock(
+			RequestBackedPortletURLFactory.class);
+
+		when(
+			_requestBackedPortletURLFactory.createActionURL(
+				WikiPortletKeys.WIKI)
+		).thenReturn(
+			mock(LiferayPortletURL.class)
+		);
+
+		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+
+		when(
+			itemSelectorPortletURL.toString()
+		).thenReturn(
+			"itemSelectorPortletURL"
+		);
+
+		when(
+			_itemSelector.getItemSelectorURL(
+				Mockito.any(RequestBackedPortletURLFactory.class),
+				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
+				Mockito.any(ItemSelectorCriterion.class))
+		).thenReturn(
+			itemSelectorPortletURL
+		);
+
+		_inputEditorTaglibAttributes.put(
+			"liferay-ui:input-editor:name", "testEditor");
+
+		setAllowBrowseDocuments(true);
 	}
 
 	@Test
-	public void testRemoveImageButtonWithoutToolbarDoesNothing() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+	public void testImageButtonNotRemovedWhenValidWikiPage() throws Exception {
+		setWikiPageResourcePrimKey(1);
 
-		jsonObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+
+		originalJSONObject.put(
+			"toolbars", getToolbarsWithCameraImageButtonJSONObject());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
 
 		WikiAttachmentAlloyEditorEditorConfigContributor
 			wikiAttachmentAlloyEditorEditorConfigContributor =
 				new WikiAttachmentAlloyEditorEditorConfigContributor();
 
-		wikiAttachmentAlloyEditorEditorConfigContributor.removeImageButton(
-			jsonObject);
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		Assert.assertEquals(1, jsonObject.length());
-		Assert.assertEquals(
-			"plugin1,plugin2,plugin3", jsonObject.getString("extraPlugins"));
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
+
+		originalJSONObject.put(
+			"filebrowserImageBrowseLinkUrl", "itemSelectorPortletURL");
+		originalJSONObject.put(
+			"filebrowserImageBrowseUrl", "itemSelectorPortletURL");
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
 	@Test
-	public void testRemoveImageButtonWithToolbarCameraHLineButtonDoesNothing()
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("extraPlugins", "plugin1,plugin2,plugin3");
-
-		jsonObject.put(
-			"toolbars", getToolbarsWithCameraHlineButtonJSONObject());
-
-		WikiAttachmentAlloyEditorEditorConfigContributor
-			wikiAttachmentAlloyEditorEditorConfigContributor =
-				new WikiAttachmentAlloyEditorEditorConfigContributor();
-
-		wikiAttachmentAlloyEditorEditorConfigContributor.removeImageButton(
-			jsonObject);
-
-		Assert.assertEquals(2, jsonObject.length());
-		Assert.assertEquals(
-			"plugin1,plugin2,plugin3", jsonObject.getString("extraPlugins"));
-
-		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
-
-		JSONObject addJSONObject = toolbarsJSONObject.getJSONObject("add");
-
-		JSONArray buttonsJSONArray = addJSONObject.getJSONArray("buttons");
-
-		Assert.assertEquals(2, buttonsJSONArray.length());
-
-		for (int i = 0; i < buttonsJSONArray.length(); i++) {
-			String button = buttonsJSONArray.getString(i);
-
-			if (!button.equals("camera") && !button.equals("hline")) {
-				Assert.fail(button + " should not be in toolbar");
-			}
-		}
-	}
-
-	@Test
-	public void testRemoveImageButtonWithToolbarCameraImageButton()
-		throws Exception {
+	public void testImageButtonRemovedWhenInvalidWikiPage() throws Exception {
+		setWikiPageResourcePrimKey(0);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -111,60 +144,271 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 			wikiAttachmentAlloyEditorEditorConfigContributor =
 				new WikiAttachmentAlloyEditorEditorConfigContributor();
 
-		wikiAttachmentAlloyEditorEditorConfigContributor.removeImageButton(
-			jsonObject);
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		Assert.assertEquals(2, jsonObject.length());
-		Assert.assertEquals(
-			"plugin1,plugin2,plugin3", jsonObject.getString("extraPlugins"));
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
 
-		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
+		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject addJSONObject = toolbarsJSONObject.getJSONObject("add");
+		expectedJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
 
-		JSONArray buttonsJSONArray = addJSONObject.getJSONArray("buttons");
+		expectedJSONObject.put(
+			"toolbars", getToolbarsWithCameraButtonJSONObject());
 
-		Assert.assertEquals(1, buttonsJSONArray.length());
-
-		String button = buttonsJSONArray.getString(0);
-
-		if (button.equals("image")) {
-			Assert.fail("Image button was not removed");
-		}
-
-		if (!button.equals("camera")) {
-			Assert.fail("Camera button should not be removed");
-		}
+		JSONAssert.assertEquals(
+			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
 	@Test
-	public void testRemoveImageButtonWithToolbarStylesDoesNothing() {
+	public void testImageButtonRemovedWhenNotAllowBrowseDocuments()
+		throws Exception {
+
+		setAllowBrowseDocuments(false);
+		setWikiPageResourcePrimKey(1);
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("extraPlugins", "plugin1,plugin2,plugin3");
 
-		jsonObject.put("toolbars", getToolbarsWithStylesJSONObject());
+		jsonObject.put(
+			"toolbars", getToolbarsWithCameraImageButtonJSONObject());
 
 		WikiAttachmentAlloyEditorEditorConfigContributor
 			wikiAttachmentAlloyEditorEditorConfigContributor =
 				new WikiAttachmentAlloyEditorEditorConfigContributor();
 
-		wikiAttachmentAlloyEditorEditorConfigContributor.removeImageButton(
-			jsonObject);
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		Assert.assertEquals(2, jsonObject.length());
-		Assert.assertEquals(
-			"plugin1,plugin2,plugin3", jsonObject.getString("extraPlugins"));
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
 
-		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
+		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject toolbarsStylesJSONObject = toolbarsJSONObject.getJSONObject(
-			"styles");
+		expectedJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
 
-		Assert.assertEquals(
-			"AlloyEditor.Selections",
-			toolbarsStylesJSONObject.getString("selections"));
-		Assert.assertEquals(1, toolbarsStylesJSONObject.getInt("tabIndex"));
+		expectedJSONObject.put(
+			"toolbars", getToolbarsWithCameraButtonJSONObject());
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	@Test
+	public void testJSONWithCameraHLineButtonDoesNotChangeWithInvalidWikiPage()
+		throws Exception {
+
+		setWikiPageResourcePrimKey(0);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+
+		originalJSONObject.put(
+			"toolbars", getToolbarsWithCameraHlineButtonJSONObject());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		WikiAttachmentAlloyEditorEditorConfigContributor
+			wikiAttachmentAlloyEditorEditorConfigContributor =
+				new WikiAttachmentAlloyEditorEditorConfigContributor();
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	@Test
+	public void testJSONWithNotImageButtonDoesNotChangeWithValidWikiPage()
+		throws Exception {
+
+		setWikiPageResourcePrimKey(1);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+
+		originalJSONObject.put(
+			"toolbars", getToolbarsWithCameraHlineButtonJSONObject());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		WikiAttachmentAlloyEditorEditorConfigContributor
+			wikiAttachmentAlloyEditorEditorConfigContributor =
+				new WikiAttachmentAlloyEditorEditorConfigContributor();
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
+
+		originalJSONObject.put(
+			"filebrowserImageBrowseLinkUrl", "itemSelectorPortletURL");
+		originalJSONObject.put(
+			"filebrowserImageBrowseUrl", "itemSelectorPortletURL");
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	@Test
+	public void testJSONWithoutToolbarDoesNotChangeWhenInvalidWikiPage()
+		throws Exception {
+
+		setWikiPageResourcePrimKey(0);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+
+		WikiAttachmentAlloyEditorEditorConfigContributor
+			wikiAttachmentAlloyEditorEditorConfigContributor =
+				new WikiAttachmentAlloyEditorEditorConfigContributor();
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	@Test
+	public void testJSONWithoutToolbarDoesNotChangeWithValidWikiPage()
+		throws Exception {
+
+		setWikiPageResourcePrimKey(1);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		WikiAttachmentAlloyEditorEditorConfigContributor
+			wikiAttachmentAlloyEditorEditorConfigContributor =
+				new WikiAttachmentAlloyEditorEditorConfigContributor();
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
+
+		originalJSONObject.put(
+			"filebrowserImageBrowseLinkUrl", "itemSelectorPortletURL");
+		originalJSONObject.put(
+			"filebrowserImageBrowseUrl", "itemSelectorPortletURL");
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	@Test
+	public void testJSONWithToolbarStylesDoesNotChangeWithInvalidWikiPage()
+		throws Exception {
+
+		setWikiPageResourcePrimKey(0);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+
+		originalJSONObject.put("toolbars", getToolbarsWithStylesJSONObject());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		WikiAttachmentAlloyEditorEditorConfigContributor
+			wikiAttachmentAlloyEditorEditorConfigContributor =
+				new WikiAttachmentAlloyEditorEditorConfigContributor();
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	@Test
+	public void testJSONWithToolbarStylesDoesNotChangeWithValidWikiPage()
+		throws Exception {
+
+		setWikiPageResourcePrimKey(1);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
+
+		originalJSONObject.put("toolbars", getToolbarsWithStylesJSONObject());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		WikiAttachmentAlloyEditorEditorConfigContributor
+			wikiAttachmentAlloyEditorEditorConfigContributor =
+				new WikiAttachmentAlloyEditorEditorConfigContributor();
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		wikiAttachmentAlloyEditorEditorConfigContributor.
+			populateConfigJSONObject(
+				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				_requestBackedPortletURLFactory);
+
+		originalJSONObject.put(
+			"filebrowserImageBrowseLinkUrl", "itemSelectorPortletURL");
+		originalJSONObject.put(
+			"filebrowserImageBrowseUrl", "itemSelectorPortletURL");
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	protected JSONObject getToolbarsAddCameraButtonJSONObject()
+		throws JSONException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"buttons", JSONFactoryUtil.createJSONArray("['camera']"));
+		jsonObject.put("tabIndex", 2);
+
+		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsAddCameraHlineButtonJSONObject()
@@ -200,6 +444,16 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		return jsonObject;
 	}
 
+	protected JSONObject getToolbarsWithCameraButtonJSONObject()
+		throws JSONException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("add", getToolbarsAddCameraButtonJSONObject());
+
+		return jsonObject;
+	}
+
 	protected JSONObject getToolbarsWithCameraHlineButtonJSONObject()
 		throws JSONException {
 
@@ -227,5 +481,32 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 		return jsonObject;
 	}
+
+	protected void setAllowBrowseDocuments(boolean allowBrowseDocuments) {
+		_inputEditorTaglibAttributes.put(
+			"liferay-ui:input-editor:allowBrowseDocuments",
+			allowBrowseDocuments);
+	}
+
+	protected void setWikiPageResourcePrimKey(long primKey) {
+		Map<String, String> fileBrowserParamsMap = new HashMap<>();
+
+		fileBrowserParamsMap.put(
+			"wikiPageResourcePrimKey", String.valueOf(primKey));
+
+		_inputEditorTaglibAttributes.put(
+			"liferay-ui:input-editor:fileBrowserParams", fileBrowserParamsMap);
+	}
+
+	private final Map<String, Object> _inputEditorTaglibAttributes =
+		new HashMap<>();
+
+	@Mock
+	private ItemSelector _itemSelector;
+
+	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
+
+	@Mock
+	private ThemeDisplay _themeDisplay;
 
 }
