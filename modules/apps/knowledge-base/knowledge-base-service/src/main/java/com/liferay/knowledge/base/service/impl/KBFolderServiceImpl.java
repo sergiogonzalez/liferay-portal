@@ -20,6 +20,7 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBFolderServiceBaseImpl;
 import com.liferay.knowledge.base.service.permission.KBFolderPermission;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -99,6 +100,24 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 		return kbFolderPersistence.filterFindByG_P(
 			groupId, parentKBFolderId, start, end);
+	}
+
+	@Override
+	public List<Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey,
+		QueryDefinition<?> queryDefinition) {
+
+		return kbFolderFinder.filterFindF_A_ByG_P(
+			groupId, parentResourcePrimKey, queryDefinition);
+	}
+
+	@Override
+	public int getKBFoldersAndKBArticlesCount(
+		long groupId, long parentResourcePrimKey,
+		QueryDefinition<?> queryDefinition) {
+
+		return kbFolderFinder.filterCountF_A_ByG_P(
+			groupId, parentResourcePrimKey, queryDefinition);
 	}
 
 	@Override
