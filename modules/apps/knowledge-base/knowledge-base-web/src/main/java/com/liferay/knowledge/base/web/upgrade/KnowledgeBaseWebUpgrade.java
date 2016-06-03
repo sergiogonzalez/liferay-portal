@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,7 +34,7 @@ public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		BaseUpgradeWebModuleRelease upgradeRelease =
+		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
 			new BaseUpgradeWebModuleRelease() {
 
 				protected String getBundleSymbolicName() {
@@ -47,14 +47,14 @@ public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 						"2_WAR_knowledgebaseportlet",
 						"3_WAR_knowledgebaseportlet",
 						"4_WAR_knowledgebaseportlet",
-						"5_WAR_knowledgebaseportlet",
+						"5_WAR_knowledgebaseportlet"
 					};
 				}
 
 			};
 
 		try {
-			upgradeRelease.upgrade();
+			upgradeWebModuleRelease.upgrade();
 		}
 		catch (UpgradeException ue) {
 			throw new RuntimeException(ue);

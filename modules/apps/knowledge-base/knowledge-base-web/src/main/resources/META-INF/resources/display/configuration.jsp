@@ -106,6 +106,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 						enabled="<%= kbDisplayPortletInstanceConfiguration.enableSocialBookmarks() %>"
 						types="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksTypes() %>"
 					/>
+
 					<aui:input label="content-root-prefix" name="preferences--contentRootPrefix--" type="input" value="<%= kbDisplayPortletInstanceConfiguration.contentRootPrefix() %>" />
 				</aui:fieldset>
 			</aui:fieldset-group>
