@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,8 +65,7 @@ public class KBArticleImporterUtil {
 		}
 
 		try {
-			String fileName = _join(
-				StringPool.SLASH,
+			String fileName = _buildImagePath(
 				kbGroupServiceConfiguration.markdownImporterImageFolder(),
 				imageFileName);
 
@@ -181,26 +179,15 @@ public class KBArticleImporterUtil {
 		return fileEntry;
 	}
 
-	private static String _join(String separator, String... strings) {
-		if ((strings == null) || (strings.length == 0)) {
-			return StringPool.BLANK;
+	private static String _buildImagePath(
+		String imageFolder, String imageFileName) {
+
+		if (imageFolder.endsWith(StringPool.SLASH)) {
+			return imageFolder + imageFileName;
 		}
-
-		StringBundler sb = new StringBundler(strings.length * 2 - 1);
-
-		sb.append(strings[0]);
-
-		for (int i = 1; i < strings.length; i++) {
-			String previous = strings[i - 1];
-
-			if (!previous.endsWith(separator)) {
-				sb.append(separator);
-			}
-
-			sb.append(strings[i]);
+		else {
+			return imageFolder + StringPool.SLASH + imageFileName;
 		}
-
-		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
