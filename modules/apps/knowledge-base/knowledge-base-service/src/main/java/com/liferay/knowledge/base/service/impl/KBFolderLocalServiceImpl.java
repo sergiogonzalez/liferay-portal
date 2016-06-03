@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBFolderLocalServiceBaseImpl;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -148,6 +149,24 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 		return kbFolderPersistence.findByG_P(
 			groupId, parentKBFolderId, start, end);
+	}
+
+	@Override
+	public List<Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey,
+		QueryDefinition<?> queryDefinition) {
+
+		return kbFolderFinder.findF_A_ByG_P(
+			groupId, parentResourcePrimKey, queryDefinition);
+	}
+
+	@Override
+	public int getKBFoldersAndKBArticlesCount(
+		long groupId, long parentResourcePrimKey,
+		QueryDefinition<?> queryDefinition) {
+
+		return kbFolderFinder.countF_A_ByG_P(
+			groupId, parentResourcePrimKey, queryDefinition);
 	}
 
 	@Override
