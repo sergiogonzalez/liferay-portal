@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,12 +66,14 @@ public class KBArticleImporterUtil {
 		}
 
 		try {
+			String fileName = _join(
+				StringPool.SLASH,
+				kbGroupServiceConfiguration.markdownImporterImageFolder(),
+				imageFileName);
+
 			return addImageFileEntry(
 				userId, kbArticle, imageFileName,
-				zipReader.getEntryAsInputStream(
-					kbGroupServiceConfiguration.markdownImporterImageFolder() +
-						imageFileName),
-				fileEntriesMap);
+				zipReader.getEntryAsInputStream(fileName), fileEntriesMap);
 		}
 		catch (Exception e) {
 			StringBuilder sb = new StringBuilder(4);
@@ -176,6 +179,28 @@ public class KBArticleImporterUtil {
 		fileEntriesMap.put(imageFileName, fileEntry);
 
 		return fileEntry;
+	}
+
+	private static String _join(String separator, String... strings) {
+		if ((strings == null) || (strings.length == 0)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(strings.length * 2 - 1);
+
+		sb.append(strings[0]);
+
+		for (int i = 1; i < strings.length; i++) {
+			String previous = strings[i - 1];
+
+			if (!previous.endsWith(separator)) {
+				sb.append(separator);
+			}
+
+			sb.append(strings[i]);
+		}
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
