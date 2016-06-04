@@ -128,37 +128,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			showParentGroups="<%= false %>"
 		/>
 
-		<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.SUBSCRIBE) %>">
-			<div class="kb-admin-tools">
-				<c:choose>
-					<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), KBArticle.class.getName(), scopeGroupId) %>">
-						<liferay-portlet:actionURL name="unsubscribeGroupKBArticles" var="unsubscribeGroupKBArticlesURL">
-							<portlet:param name="redirect" value="<%= redirect %>" />
-						</liferay-portlet:actionURL>
-
-						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
-							message="unsubscribe"
-							url="<%= unsubscribeGroupKBArticlesURL %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-portlet:actionURL name="subscribeGroupKBArticles" var="subscribeGroupKBArticlesURL">
-							<portlet:param name="redirect" value="<%= redirect %>" />
-						</liferay-portlet:actionURL>
-
-						<liferay-ui:icon
-							iconCssClass="icon-ok-sign"
-							label="<%= true %>"
-							message="subscribe"
-							url="<%= subscribeGroupKBArticlesURL %>"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</c:if>
-
 		<c:if test="<%= parentResourceClassNameId == kbFolderClassNameId %>">
 			<liferay-ui:search-container
 				curParam="cur1"
