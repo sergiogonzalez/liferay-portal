@@ -14,9 +14,11 @@
 
 package com.liferay.knowledge.base.upgrade;
 
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -88,6 +90,11 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.knowledge.base.service", "1.3.5", "2.0.0",
 			new com.liferay.knowledge.base.upgrade.v2_0_0.UpgradeClassNames(),
 			new com.liferay.knowledge.base.upgrade.v2_0_0.UpgradeRepository());
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }
