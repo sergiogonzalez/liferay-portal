@@ -56,6 +56,8 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 				"liferay-ui:input-editor:allowBrowseDocuments"));
 
 		if (!allowBrowseDocuments) {
+			removeImageButton(jsonObject);
+
 			return;
 		}
 
