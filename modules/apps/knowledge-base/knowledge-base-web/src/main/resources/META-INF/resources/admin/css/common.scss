@@ -227,7 +227,12 @@
 	}
 
 	.kb-attachments {
-		margin: 5px 0 0;
+		display: inline-block;
+		margin: 20px 0 0;
+
+		& > div {
+			padding-left: 0;
+		}
 	}
 
 	.kb-block-labels .field-label {
