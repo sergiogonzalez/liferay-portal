@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.portlet;
 
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -68,6 +69,9 @@ import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Peter Shin
@@ -243,6 +247,10 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE, kbTemplate);
+
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				_dlMimeTypeDisplayContext);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
@@ -259,6 +267,17 @@ public class AdminPortlet extends BaseKBPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	public void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
+	}
+
 	public void subscribeGroupKBArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -270,6 +289,12 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		kbArticleService.subscribeGroupKBArticles(
 			themeDisplay.getScopeGroupId(), portletId);
+	}
+
+	public void unsetDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = null;
 	}
 
 	public void unsubscribeGroupKBArticles(
@@ -446,5 +471,7 @@ public class AdminPortlet extends BaseKBPortlet {
 	)
 	protected void setRelease(Release release) {
 	}
+
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 }

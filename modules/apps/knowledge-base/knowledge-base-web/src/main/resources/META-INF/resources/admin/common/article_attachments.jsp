@@ -26,33 +26,38 @@ if (kbArticle != null) {
 }
 %>
 
-<div class="kb-attachments">
-	<c:if test="<%= !attachmentsFileEntries.isEmpty() %>">
-		<div id="<portlet:namespace />existingAttachmentsContainer">
+<c:if test="<%= !attachmentsFileEntries.isEmpty() %>">
+	<div class="kb-attachments">
+		<p><liferay-ui:message key="attachments" />:</p>
 
-			<%
-			for (FileEntry fileEntry : attachmentsFileEntries) {
-			%>
+		<%
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
 
-				<div id="<portlet:namespace />fileEntryIdWrapper<%= fileEntry.getFileEntryId() %>">
+		for (FileEntry fileEntry : attachmentsFileEntries) {
+			String clipURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
+		%>
 
-					<%
-					String clipURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
-					%>
+			<div class="col-md-4">
+				<div class="card card-horizontal">
+					<div class="card-row card-row-padded">
+						<div class="card-col-field">
+							<span class="sticker sticker-static <%= (dlMimeTypeDisplayContext != null) ? dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) : "file-icon-color-0" %>">
+								<%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %>
+							</span>
+						</div>
 
-					<liferay-ui:icon
-						iconCssClass="icon-paper-clip"
-						label="<%= true %>"
-						message='<%= HtmlUtil.escape(fileEntry.getTitle() + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")") %>'
-						method="get"
-						url="<%= clipURL %>"
-					/>
+						<div class="card-col-content card-col-gutters">
+							<aui:a href="<%= clipURL.toString() %>">
+								<%= HtmlUtil.escape(fileEntry.getTitle()) %>
+							</aui:a>
+						</div>
+					</div>
 				</div>
+			</div>
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</div>
-	</c:if>
-</div>
+	</div>
+</c:if>
