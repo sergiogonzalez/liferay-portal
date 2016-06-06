@@ -27,15 +27,18 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 %>
 
 <c:if test="<%= !childKBArticles.isEmpty() %>">
-	<div class="kb-article-child">
-		<div class="kb-elements">
+	<h4 class="text-default">
+		<liferay-ui:message arguments="<%= childKBArticles.size() %>" key="child-articles-x" translateArguments="<%= false %>" />
+	</h4>
+	<div class="panel panel-default">
+		<div class="panel-body">
 
 			<%
 			for (KBArticle childrenKBArticle : childKBArticles) {
 			%>
 
-				<section class="kb-element">
-					<h2 class="kb-element-header">
+				<section>
+					<h2>
 
 						<%
 						PortletURL viewKBArticleURL = null;
@@ -51,18 +54,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 						<aui:a href="<%= viewKBArticleURL.toString() %>"><%= childrenKBArticle.getTitle() %></aui:a>
 					</h2>
 
-					<div class="kb-element-body">
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
-								<%= childrenKBArticle.getDescription() %>
-							</c:when>
-							<c:otherwise>
-								<p><%= StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200) %></p>
-
-								<aui:a href="<%= viewKBArticleURL.toString() %>"><liferay-ui:message key="read-more" /></aui:a>
-							</c:otherwise>
-						</c:choose>
-					</div>
+					<p><%= StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200) %></p>
 				</section>
 
 			<%
@@ -71,4 +63,5 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 		</div>
 	</div>
+
 </c:if>
