@@ -76,10 +76,8 @@ public class GroupKBArticlesSubscriptionPortletConfigurationIcon
 				ActionRequest.ACTION_NAME, "subscribeGroupKBArticles");
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
 		return portletURL.toString();
 	}
