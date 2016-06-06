@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,6 +29,16 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		try {
+			UpgradeServiceModuleRelease upgradeServiceModuleRelease =
+				new UpgradeServiceModuleRelease();
+
+			upgradeServiceModuleRelease.upgrade();
+		}
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
+		}
+
 		registry.register(
 			"com.liferay.knowledge.base.service", "0.0.1", "1.0.0",
 			new com.liferay.knowledge.base.upgrade.v1_0_0.UpgradeRatingsEntry(),
