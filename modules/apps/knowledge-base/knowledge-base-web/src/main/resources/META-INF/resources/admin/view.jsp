@@ -24,23 +24,23 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey",
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-SearchContainer kbEntriesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "there-are-no-entries");
+SearchContainer kbEntriesSearchContainer = new KBArticleSearch(renderRequest, PortletURLUtil.clone(currentURLObj, renderResponse));
 
-boolean kbFolderView = parentResourceClassNameId == PortalUtil.getClassNameId(KBFolder.class);
+boolean kbFolderView = (parentResourceClassNameId == PortalUtil.getClassNameId(KBFolder.class));
 
 if (Validator.isNotNull(keywords)) {
-	KBArticleSearchDisplay kbArticleSearchDisplay = KBArticleServiceUtil.getKBArticleSearchDisplay(scopeGroupId, keywords, keywords, WorkflowConstants.STATUS_ANY, null, null, false, new int[0], kbEntriesSearchContainer.getCur(), kbEntriesSearchContainer.getDelta(), new KBArticleTitleComparator());
+	KBArticleSearchDisplay kbArticleSearchDisplay = KBArticleServiceUtil.getKBArticleSearchDisplay(scopeGroupId, keywords, keywords, WorkflowConstants.STATUS_ANY, null, null, false, new int[0], kbEntriesSearchContainer.getCur(), kbEntriesSearchContainer.getDelta(), kbEntriesSearchContainer.getOrderByComparator());
 
 	kbEntriesSearchContainer.setResults(kbArticleSearchDisplay.getResults());
 	kbEntriesSearchContainer.setTotal(kbArticleSearchDisplay.getTotal());
 }
 else if (kbFolderView) {
 	kbEntriesSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
-	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), new KBEntriesTitleComparator<>(false, true)));
+	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), kbEntriesSearchContainer.getOrderByComparator()));
 }
 else {
 	kbEntriesSearchContainer.setTotal(KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
-	kbEntriesSearchContainer.setResults(KBArticleServiceUtil.getKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), new KBArticleTitleComparator()));
+	kbEntriesSearchContainer.setResults(KBArticleServiceUtil.getKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), kbEntriesSearchContainer.getOrderByComparator()));
 }
 
 kbEntriesSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
