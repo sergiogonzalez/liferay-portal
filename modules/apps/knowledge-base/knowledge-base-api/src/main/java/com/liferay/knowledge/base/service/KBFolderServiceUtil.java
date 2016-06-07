@@ -87,6 +87,14 @@ public class KBFolderServiceUtil {
 			parentResourcePrimKey, kbFolderId, name, description);
 	}
 
+	public static int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getService()
+				   .getKBFoldersAndKBArticlesCount(groupId,
+			parentResourcePrimKey, queryDefinition);
+	}
+
 	public static int getKBFoldersCount(long groupId, long parentKBFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBFoldersCount(groupId, parentKBFolderId);
@@ -105,6 +113,14 @@ public class KBFolderServiceUtil {
 		long groupId, long parentKBFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBFolders(groupId, parentKBFolderId, start, end);
+	}
+
+	public static java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getService()
+				   .getKBFoldersAndKBArticles(groupId, parentResourcePrimKey,
+			queryDefinition);
 	}
 
 	public static void moveKBFolder(long kbFolderId, long parentKBFolderId)
