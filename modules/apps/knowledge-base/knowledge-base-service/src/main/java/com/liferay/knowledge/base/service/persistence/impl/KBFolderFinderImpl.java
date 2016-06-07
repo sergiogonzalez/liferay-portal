@@ -195,7 +195,7 @@ public class KBFolderFinderImpl
 			}
 
 			sb.append(sql);
-			sb.append(") TEMP_TABLE ");
+			sb.append(") TEMP_TABLE ORDER BY modelFolder DESC");
 
 			sql = sb.toString();
 
