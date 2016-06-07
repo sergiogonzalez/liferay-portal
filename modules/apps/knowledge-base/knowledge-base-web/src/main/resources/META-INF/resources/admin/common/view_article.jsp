@@ -31,15 +31,19 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(kbArticle.getTitle());
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
-<liferay-frontend:info-bar>
-	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
-		<liferay-ui:message arguments="<%= kbArticle.getVersion() %>" key="version-x" translateArguments="<%= false %>" />
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<liferay-frontend:info-bar>
+		<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
+			<liferay-ui:message arguments="<%= kbArticle.getVersion() %>" key="version-x" translateArguments="<%= false %>" />
 
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
-	</small>
-</liferay-frontend:info-bar>
+			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+		</small>
+	</liferay-frontend:info-bar>
+</c:if>
 
 <div class="container-fluid-1280 kb-article">
 	<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
