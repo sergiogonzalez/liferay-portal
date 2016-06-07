@@ -21,7 +21,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBEntriesTitleComparator;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,12 +70,6 @@ public class KBFolderLocalServiceTest {
 
 	@Test
 	public void testgetKBFoldersAndKBArticles() throws Exception {
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-		queryDefinition.setOrderByComparator(
-			new KBEntriesTitleComparator<>(false, true));
-
 		KBArticle kbArticle = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
@@ -83,7 +77,8 @@ public class KBFolderLocalServiceTest {
 		List<Object> kbFolderAndArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				queryDefinition);
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
 
 		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
 		KBArticle currentkbArticle = (KBArticle)kbFolderAndArticles.get(1);
@@ -100,15 +95,11 @@ public class KBFolderLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
 		Assert.assertEquals(
 			2,
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticlesCount(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				queryDefinition));
+				WorkflowConstants.STATUS_ANY));
 	}
 
 	@Test
@@ -119,15 +110,11 @@ public class KBFolderLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-
 		Assert.assertEquals(
 			1,
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticlesCount(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				queryDefinition));
+				WorkflowConstants.STATUS_DRAFT));
 	}
 
 	@Test
@@ -139,15 +126,11 @@ public class KBFolderLocalServiceTest {
 
 		addKbFolder(_kbFolder.getKbFolderId());
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
 		Assert.assertEquals(
 			3,
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticlesCount(
 				_group.getGroupId(), _kbFolder.getKbFolderId(),
-				queryDefinition));
+				WorkflowConstants.STATUS_ANY));
 	}
 
 	@Test
@@ -160,26 +143,16 @@ public class KBFolderLocalServiceTest {
 
 		updateKBArticle(kbArticle);
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
 		Assert.assertEquals(
 			2,
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticlesCount(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				queryDefinition));
+				WorkflowConstants.STATUS_ANY));
 	}
 
 	@Test
 	public void testgetKBFoldersAndKBArticlesFilteredByDraftStatus()
 		throws Exception {
-
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-		queryDefinition.setOrderByComparator(
-			new KBEntriesTitleComparator<>(false, true));
 
 		addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -188,7 +161,8 @@ public class KBFolderLocalServiceTest {
 		List<Object> kbFolderAndArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				queryDefinition);
+				WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
 
 		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
 
@@ -199,12 +173,6 @@ public class KBFolderLocalServiceTest {
 
 	@Test
 	public void testgetKBFoldersAndKBArticlesInKBFolder() throws Exception {
-		QueryDefinition<KBArticle> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-		queryDefinition.setOrderByComparator(
-			new KBEntriesTitleComparator<KBArticle>(true, true));
-
 		KBArticle kbArticle1 = addKBArticle(_kbFolder.getKbFolderId(), "A");
 		KBArticle kbArticle2 = addKBArticle(_kbFolder.getKbFolderId(), "B");
 
@@ -213,7 +181,9 @@ public class KBFolderLocalServiceTest {
 		List<Object> kbFolderAndArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), _kbFolder.getKbFolderId(),
-				queryDefinition);
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new KBEntriesTitleComparator<KBArticle>(true, true));
 
 		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
 		KBArticle currentkbArticle1 = (KBArticle)kbFolderAndArticles.get(1);
@@ -231,12 +201,6 @@ public class KBFolderLocalServiceTest {
 	public void testgetKBFoldersAndKBArticlesWithKBArticleVersions()
 		throws Exception {
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-		queryDefinition.setOrderByComparator(
-			new KBEntriesTitleComparator<>(false, true));
-
 		KBArticle kbArticle = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
@@ -246,7 +210,8 @@ public class KBFolderLocalServiceTest {
 		List<Object> kbFolderAndArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				queryDefinition);
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
 
 		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
 		KBArticle currentkbArticle1 = (KBArticle)kbFolderAndArticles.get(1);
