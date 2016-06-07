@@ -82,6 +82,14 @@ public class KBFolderServiceWrapper implements KBFolderService,
 	}
 
 	@Override
+	public int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _kbFolderService.getKBFoldersAndKBArticlesCount(groupId,
+			parentResourcePrimKey, queryDefinition);
+	}
+
+	@Override
 	public int getKBFoldersCount(long groupId, long parentKBFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderService.getKBFoldersCount(groupId, parentKBFolderId);
@@ -103,6 +111,14 @@ public class KBFolderServiceWrapper implements KBFolderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderService.getKBFolders(groupId, parentKBFolderId, start,
 			end);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _kbFolderService.getKBFoldersAndKBArticles(groupId,
+			parentResourcePrimKey, queryDefinition);
 	}
 
 	@Override
