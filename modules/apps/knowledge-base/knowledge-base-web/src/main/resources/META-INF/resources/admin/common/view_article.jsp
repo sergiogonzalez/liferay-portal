@@ -83,6 +83,10 @@ renderResponse.setTitle(kbArticle.getTitle());
 			<c:if test="<%= enableKBArticleRatings %>">
 				<liferay-util:include page="/admin/common/article_ratings.jsp" servletContext="<%= application %>" />
 			</c:if>
+
+			<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
+				<liferay-util:include page="/admin/common/article_siblings.jsp" servletContext="<%= application %>" />
+			</c:if>
 		</div>
 	</div>
 
