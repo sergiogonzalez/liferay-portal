@@ -69,28 +69,30 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticles() throws Exception {
+	public void testGetKBFoldersAndKBArticlesInRootFolder() throws Exception {
 		KBArticle kbArticle = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		List<Object> kbFolderAndArticles =
+		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
 
-		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
-		KBArticle currentkbArticle = (KBArticle)kbFolderAndArticles.get(1);
+		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
+		KBArticle currentKBArticle = (KBArticle)kbFolderAndKBArticles.get(1);
 
 		Assert.assertEquals(
-			_kbFolder.getKbFolderId(), currentkbFolder.getKbFolderId());
+			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 		Assert.assertEquals(
-			kbArticle.getKbArticleId(), currentkbArticle.getKbArticleId());
+			kbArticle.getKbArticleId(), currentKBArticle.getKbArticleId());
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticlesCount() throws Exception {
+	public void testGetKBFoldersAndKBArticlesCountInRootFolder()
+		throws Exception {
+
 		addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
@@ -103,7 +105,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticlesCountFilteredByDraftStatus()
+	public void testGetKBFoldersAndKBArticlesCountInRootFolderByDraftStatus()
 		throws Exception {
 
 		addKBArticle(
@@ -118,7 +120,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticlesCountInKBFolder()
+	public void testGetKBFoldersAndKBArticlesCountInKBFolder()
 		throws Exception {
 
 		addKBArticle(_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
@@ -134,14 +136,15 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticlesCountWithKBArticleVersions()
+	public void
+			testGetKBFoldersAndKBArticlesCountWithMultipleKBArticleVersions()
 		throws Exception {
 
 		KBArticle kbArticle = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		updateKBArticle(kbArticle);
+		updateKBArticle(kbArticle, RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			2,
@@ -151,76 +154,80 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticlesFilteredByDraftStatus()
+	public void testGetKBFoldersAndKBArticlesInRootFolderByDraftStatus()
 		throws Exception {
 
 		addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		List<Object> kbFolderAndArticles =
+		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
 
-		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
+		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
 
-		Assert.assertEquals(1, kbFolderAndArticles.size());
+		Assert.assertEquals(1, kbFolderAndKBArticles.size());
 		Assert.assertEquals(
-			_kbFolder.getKbFolderId(), currentkbFolder.getKbFolderId());
+			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticlesInKBFolder() throws Exception {
-		KBArticle kbArticle1 = addKBArticle(_kbFolder.getKbFolderId(), "A");
-		KBArticle kbArticle2 = addKBArticle(_kbFolder.getKbFolderId(), "B");
+	public void testGetKBFoldersAndKBArticlesInKBFolder() throws Exception {
+		KBArticle kbArticle1 = addKBArticle(
+			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
+		KBArticle kbArticle2 = addKBArticle(
+			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
 
 		KBFolder kbFolder = addKbFolder(_kbFolder.getKbFolderId());
 
-		List<Object> kbFolderAndArticles =
+		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), _kbFolder.getKbFolderId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
 				new KBEntriesTitleComparator<KBArticle>(true, true));
 
-		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
-		KBArticle currentkbArticle1 = (KBArticle)kbFolderAndArticles.get(1);
-		KBArticle currentkbArticle2 = (KBArticle)kbFolderAndArticles.get(2);
+		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
+		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
+		KBArticle currentKBArticle2 = (KBArticle)kbFolderAndKBArticles.get(2);
 
 		Assert.assertEquals(
-			kbFolder.getKbFolderId(), currentkbFolder.getKbFolderId());
+			kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 		Assert.assertEquals(
-			kbArticle1.getKbArticleId(), currentkbArticle1.getKbArticleId());
+			kbArticle1.getKbArticleId(), currentKBArticle1.getKbArticleId());
 		Assert.assertEquals(
-			kbArticle2.getKbArticleId(), currentkbArticle2.getKbArticleId());
+			kbArticle2.getKbArticleId(), currentKBArticle2.getKbArticleId());
 	}
 
 	@Test
-	public void testgetKBFoldersAndKBArticlesWithKBArticleVersions()
+	public void testGetKBFoldersAndKBArticlesWithMultipleKBArticleVersions()
 		throws Exception {
 
 		KBArticle kbArticle = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		KBArticle kbArticle1 = updateKBArticle(kbArticle);
+		KBArticle kbArticleVersion = updateKBArticle(
+			kbArticle, RandomTestUtil.randomString());
 
-		List<Object> kbFolderAndArticles =
+		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
 
-		KBFolder currentkbFolder = (KBFolder)kbFolderAndArticles.get(0);
-		KBArticle currentkbArticle1 = (KBArticle)kbFolderAndArticles.get(1);
+		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
+		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
 
-		Assert.assertEquals(2, kbFolderAndArticles.size());
+		Assert.assertEquals(2, kbFolderAndKBArticles.size());
 		Assert.assertEquals(
-			_kbFolder.getKbFolderId(), currentkbFolder.getKbFolderId());
+			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 		Assert.assertEquals(
-			kbArticle1.getKbArticleId(), currentkbArticle1.getKbArticleId());
+			kbArticleVersion.getKbArticleId(),
+			currentKBArticle1.getKbArticleId());
 	}
 
 	protected KBArticle addKBArticle(long parentKbFolderId, String title)
@@ -237,7 +244,7 @@ public class KBFolderLocalServiceTest {
 			serviceContext);
 	}
 
-	protected KBFolder addKbFolder(long kbFolderId)
+	protected KBFolder addKbFolder(long parentResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		ServiceContext serviceContext =
@@ -246,19 +253,20 @@ public class KBFolderLocalServiceTest {
 		return KBFolderLocalServiceUtil.addKBFolder(
 			_user.getUserId(), _group.getGroupId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
-			kbFolderId, RandomTestUtil.randomString(),
+			parentResourcePrimKey, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	protected KBArticle updateKBArticle(KBArticle kbArticle) throws Exception {
+	protected KBArticle updateKBArticle(KBArticle kbArticle, String title)
+		throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
 		return KBArticleLocalServiceUtil.updateKBArticle(
-			kbArticle.getUserId(), kbArticle.getResourcePrimKey(),
-			RandomTestUtil.randomString(), kbArticle.getContent(),
-			kbArticle.getDescription(), kbArticle.getSourceURL(), null,
-			new String[0], new long[0], serviceContext);
+			kbArticle.getUserId(), kbArticle.getResourcePrimKey(), title,
+			kbArticle.getContent(), kbArticle.getDescription(),
+			kbArticle.getSourceURL(), null, new String[0], new long[0],
+			serviceContext);
 	}
 
 	@DeleteAfterTestRun
