@@ -256,12 +256,70 @@ public class KBFolderServiceHttp {
 		}
 	}
 
+	public static java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+		HttpPrincipal httpPrincipal, long groupId, long parentResourcePrimKey,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		try {
+			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
+					"getKBFoldersAndKBArticles",
+					_getKBFoldersAndKBArticlesParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					parentResourcePrimKey, queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<java.lang.Object>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getKBFoldersAndKBArticlesCount(
+		HttpPrincipal httpPrincipal, long groupId, long parentResourcePrimKey,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		try {
+			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
+					"getKBFoldersAndKBArticlesCount",
+					_getKBFoldersAndKBArticlesCountParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					parentResourcePrimKey, queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static int getKBFoldersCount(HttpPrincipal httpPrincipal,
 		long groupId, long parentKBFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
-					"getKBFoldersCount", _getKBFoldersCountParameterTypes6);
+					"getKBFoldersCount", _getKBFoldersCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentKBFolderId);
@@ -293,7 +351,7 @@ public class KBFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
-					"moveKBFolder", _moveKBFolderParameterTypes7);
+					"moveKBFolder", _moveKBFolderParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					kbFolderId, parentKBFolderId);
@@ -323,7 +381,7 @@ public class KBFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
-					"updateKBFolder", _updateKBFolderParameterTypes8);
+					"updateKBFolder", _updateKBFolderParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					parentResourceClassNameId, parentResourcePrimKey,
@@ -372,13 +430,22 @@ public class KBFolderServiceHttp {
 	private static final Class<?>[] _getKBFoldersParameterTypes5 = new Class[] {
 			long.class, long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getKBFoldersCountParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getKBFoldersAndKBArticlesParameterTypes6 = new Class[] {
+			long.class, long.class,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
+		};
+	private static final Class<?>[] _getKBFoldersAndKBArticlesCountParameterTypes7 =
+		new Class[] {
+			long.class, long.class,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
+		};
+	private static final Class<?>[] _getKBFoldersCountParameterTypes8 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _moveKBFolderParameterTypes7 = new Class[] {
+	private static final Class<?>[] _moveKBFolderParameterTypes9 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _updateKBFolderParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateKBFolderParameterTypes10 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class
 		};
