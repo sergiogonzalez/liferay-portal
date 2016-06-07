@@ -51,8 +51,7 @@
 			KBFolder
 		WHERE
 			(KBFolder.groupId = ?) AND
-			(KBFolder.parentKBFolderId = ?
-		)
+			(KBFolder.parentKBFolderId = ?)
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findA_ByG_P">
 		SELECT

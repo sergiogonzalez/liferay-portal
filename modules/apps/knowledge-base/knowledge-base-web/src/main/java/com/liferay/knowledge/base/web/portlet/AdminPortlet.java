@@ -122,16 +122,16 @@ public class AdminPortlet extends BaseKBPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
-		long[] deleteKBArticleResourceClassPKs = ParamUtil.getLongValues(
+		long[] deleteKBArticleResourcePrimKeys = ParamUtil.getLongValues(
 			actionRequest, "rowIdsKBArticle");
 
 		long[] deleteKBFolderIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsKBFolder");
 
-		for (long deleteKBArticleResourceClassPK :
-				deleteKBArticleResourceClassPKs) {
+		for (long deleteKBArticleResourcePrimKey :
+				deleteKBArticleResourcePrimKeys) {
 
-			kbArticleService.deleteKBArticle(deleteKBArticleResourceClassPK);
+			kbArticleService.deleteKBArticle(deleteKBArticleResourcePrimKey);
 		}
 
 		for (long deleteKBFolderId : deleteKBFolderIds) {
