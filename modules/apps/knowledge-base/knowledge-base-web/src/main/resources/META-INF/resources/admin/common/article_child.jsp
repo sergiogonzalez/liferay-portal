@@ -30,6 +30,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	<h4 class="text-default">
 		<liferay-ui:message arguments="<%= childKBArticles.size() %>" key="child-articles-x" translateArguments="<%= false %>" />
 	</h4>
+
 	<div class="panel">
 		<ul class="list-group">
 
@@ -65,5 +66,4 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 		</div>
 	</div>
-
 </c:if>
