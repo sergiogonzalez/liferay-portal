@@ -118,6 +118,27 @@ public class AdminPortlet extends BaseKBPortlet {
 			themeDisplay.getScopeGroupId(), resourcePrimKeys);
 	}
 
+	public void deleteKBArticlesAndFolders(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		long[] deleteKBArticleResourceClassPKs = ParamUtil.getLongValues(
+			actionRequest, "rowIdsKBArticle");
+
+		long[] deleteKBFolderIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsKBFolder");
+
+		for (long deleteKBArticleResourceClassPK :
+				deleteKBArticleResourceClassPKs) {
+
+			kbArticleService.deleteKBArticle(deleteKBArticleResourceClassPK);
+		}
+
+		for (long deleteKBFolderId : deleteKBFolderIds) {
+			kbFolderService.deleteKBFolder(deleteKBFolderId);
+		}
+	}
+
 	public void deleteKBFolder(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
