@@ -103,13 +103,19 @@ public class DisplayPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				dlMimeTypeDisplayContext);
+
 			KBArticleSelection kbArticleSelection = getKBArticle(renderRequest);
+
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_EXACT_MATCH,
+				kbArticleSelection.isExactMatch());
 
 			KBArticle kbArticle = kbArticleSelection.getKBArticle();
 
 			int status = getStatus(renderRequest, kbArticle);
-
-			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 
 			if ((kbArticle != null) && (kbArticle.getStatus() != status)) {
 				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
@@ -117,13 +123,13 @@ public class DisplayPortlet extends BaseKBPortlet {
 			}
 
 			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_EXACT_MATCH,
-				kbArticleSelection.isExactMatch());
-			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS,
 				kbArticleSelection.getKeywords());
+
+			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 
 			if (!kbArticleSelection.isExactMatch()) {
 				HttpServletResponse response =

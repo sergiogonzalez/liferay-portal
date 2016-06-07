@@ -208,9 +208,9 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			int status = WorkflowConstants.STATUS_ANY;
-
-			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				dlMimeTypeDisplayContext);
 
 			KBArticle kbArticle = null;
 
@@ -221,6 +221,7 @@ public class AdminPortlet extends BaseKBPortlet {
 				renderRequest, "resourceClassNameId", kbArticleClassNameId);
 			long resourcePrimKey = ParamUtil.getLong(
 				renderRequest, "resourcePrimKey");
+			int status = WorkflowConstants.STATUS_ANY;
 
 			if ((resourcePrimKey > 0) &&
 				(resourceClassNameId == kbArticleClassNameId)) {
@@ -243,6 +244,8 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE, kbTemplate);
+
+			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
