@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.service.permission.KBFolderPermission;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -104,8 +105,11 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 	@Override
 	public List<Object> getKBFoldersAndKBArticles(
-		long groupId, long parentResourcePrimKey,
-		QueryDefinition<?> queryDefinition) {
+		long groupId, long parentResourcePrimKey, int status, int start,
+		int end, OrderByComparator<?> orderByComparator) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, start, end, orderByComparator);
 
 		return kbFolderFinder.filterFindF_A_ByG_P(
 			groupId, parentResourcePrimKey, queryDefinition);
@@ -113,8 +117,9 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 	@Override
 	public int getKBFoldersAndKBArticlesCount(
-		long groupId, long parentResourcePrimKey,
-		QueryDefinition<?> queryDefinition) {
+		long groupId, long parentResourcePrimKey, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
 
 		return kbFolderFinder.filterCountF_A_ByG_P(
 			groupId, parentResourcePrimKey, queryDefinition);

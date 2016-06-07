@@ -35,13 +35,8 @@ if (Validator.isNotNull(keywords)) {
 	kbEntriesSearchContainer.setTotal(kbArticleSearchDisplay.getTotal());
 }
 else if (kbFolderView) {
-	QueryDefinition<?> countQueryDefinition = new QueryDefinition<>(WorkflowConstants.STATUS_ANY);
-
-	kbEntriesSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, countQueryDefinition));
-
-	QueryDefinition<?> resultsQueryDefinition = new QueryDefinition<>(WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), new KBEntriesTitleComparator<>(false, true));
-
-	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, resultsQueryDefinition));
+	kbEntriesSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
+	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), new KBEntriesTitleComparator<>(false, true)));
 }
 else {
 	kbEntriesSearchContainer.setTotal(KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
