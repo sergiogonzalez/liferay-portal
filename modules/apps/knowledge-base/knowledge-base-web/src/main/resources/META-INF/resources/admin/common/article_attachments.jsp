@@ -28,36 +28,32 @@ if (kbArticle != null) {
 
 <c:if test="<%= !attachmentsFileEntries.isEmpty() %>">
 	<div class="kb-attachments">
-		<p><liferay-ui:message key="attachments" />:</p>
+		<h5><liferay-ui:message key="attachments" /></h5>
 
-		<%
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
+		<div class="row">
 
-		for (FileEntry fileEntry : attachmentsFileEntries) {
-			String clipURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
-		%>
+			<%
+			DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
 
-			<div class="col-md-4">
-				<div class="card card-horizontal">
-					<div class="card-row card-row-padded">
-						<div class="card-col-field">
-							<span class="sticker sticker-static <%= (dlMimeTypeDisplayContext != null) ? dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) : "file-icon-color-0" %>">
-								<%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %>
-							</span>
-						</div>
+			for (FileEntry fileEntry : attachmentsFileEntries) {
+				String clipURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
+			%>
 
-						<div class="card-col-content card-col-gutters">
-							<aui:a href="<%= clipURL.toString() %>">
-								<%= HtmlUtil.escape(fileEntry.getTitle()) %>
-							</aui:a>
-						</div>
-					</div>
+				<div class="col-md-4">
+					<liferay-frontend:horizontal-card
+						text="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
+						url="<%= clipURL %>"
+					>
+						<liferay-frontend:horizontal-card-col>
+							<span class="icon-monospaced sticker-lg <%= (dlMimeTypeDisplayContext != null) ? dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) : "file-icon-color-0" %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
+						</liferay-frontend:horizontal-card-col>
+					</liferay-frontend:horizontal-card>
 				</div>
-			</div>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
+		</div>
 	</div>
 </c:if>
