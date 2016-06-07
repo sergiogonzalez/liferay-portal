@@ -44,11 +44,13 @@ if (subscriptionId > 0) {
 			<liferay-ui:icon message="delete" url="<%= deleteURL.toString() %>" />
 		</c:when>
 		<c:otherwise>
-			<portlet:actionURL name="markAsRead" var="markAsReadURL">
-				<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
-			</portlet:actionURL>
+			<c:if test="<%= !userNotificationEvent.isArchived() %>">
+				<portlet:actionURL name="markAsRead" var="markAsReadURL">
+					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
+				</portlet:actionURL>
 
-			<liferay-ui:icon message="mark-as-read" url="<%= markAsReadURL.toString() %>" />
+				<liferay-ui:icon message="mark-as-read" url="<%= markAsReadURL.toString() %>" />
+			</c:if>
 
 			<c:if test="<%= subscriptionId > 0 %>">
 				<portlet:actionURL name="unsubscribe" var="unsubscribeURL">
