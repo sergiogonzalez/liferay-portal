@@ -27,18 +27,24 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.admin.kernel.util.PortalSearchApplicationType" %><%@
+page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
+page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
+page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.persistence.AssetEntryQuery" %><%@
+page import="com.liferay.blogs.kernel.model.BlogsEntry" %><%@
 page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
 page import="com.liferay.document.library.kernel.exception.DuplicateFileException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileNameException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileException" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
+page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration" %><%@
 page import="com.liferay.knowledge.base.constants.KBActionKeys" %><%@
 page import="com.liferay.knowledge.base.constants.KBArticleConstants" %><%@
@@ -97,6 +103,8 @@ page import="com.liferay.knowledge.base.web.search.KBArticleSearchTerms" %><%@
 page import="com.liferay.knowledge.base.web.search.KBCommentsChecker" %><%@
 page import="com.liferay.knowledge.base.web.search.KBTemplateSearch" %><%@
 page import="com.liferay.knowledge.base.web.search.KBTemplateSearchTerms" %><%@
+page import="com.liferay.knowledge.base.web.util.KBArticleAssetEntriesUtil" %><%@
+page import="com.liferay.message.boards.kernel.model.MBMessage" %><%@
 page import="com.liferay.portal.configuration.metatype.util.ParameterMapUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
@@ -127,6 +135,7 @@ page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
+page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContext" %><%@
 page import="com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil" %><%@
@@ -161,7 +170,8 @@ page import="com.liferay.portlet.configuration.kernel.util.PortletConfigurationA
 page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
-page import="com.liferay.taglib.search.ResultRow" %>
+page import="com.liferay.taglib.search.ResultRow" %><%@
+page import="com.liferay.wiki.model.WikiPage" %>
 
 <%@ page import="java.math.BigDecimal" %>
 

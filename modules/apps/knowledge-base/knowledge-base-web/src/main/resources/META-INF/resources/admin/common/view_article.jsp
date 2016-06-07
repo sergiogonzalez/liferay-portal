@@ -84,6 +84,10 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 			<liferay-util:include page="/admin/common/article_asset_links.jsp" servletContext="<%= application %>" />
 
+			<c:if test="<%= !portletTitleBasedNavigation %>">
+				<liferay-util:include page="/admin/common/article_asset_entries.jsp" servletContext="<%= application %>" />
+			</c:if>
+
 			<c:if test="<%= enableKBArticleRatings %>">
 				<liferay-util:include page="/admin/common/article_ratings.jsp" servletContext="<%= application %>" />
 			</c:if>
