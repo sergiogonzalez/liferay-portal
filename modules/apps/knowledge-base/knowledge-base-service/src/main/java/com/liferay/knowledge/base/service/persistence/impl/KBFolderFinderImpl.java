@@ -205,7 +205,7 @@ public class KBFolderFinderImpl
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("modelId", Type.LONG);
-			q.addScalar("modelFolder", Type.INTEGER);
+			q.addScalar("modelFolder", Type.LONG);
 			q.addScalar("title", Type.STRING);
 
 			QueryPos qPos = QueryPos.getInstance(q);
@@ -227,7 +227,7 @@ public class KBFolderFinderImpl
 				Object[] array = itr.next();
 
 				long modelId = (Long)array[0];
-				int modelFolder = (Integer)array[1];
+				long modelFolder = (Long)array[1];
 
 				Object obj = null;
 
