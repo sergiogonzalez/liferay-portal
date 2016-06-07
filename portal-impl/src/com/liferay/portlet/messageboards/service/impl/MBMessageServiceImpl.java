@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.message.boards.kernel.exception.LockedThreadException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
@@ -91,6 +92,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getPermissionChecker(), user.getCompanyId(),
 			serviceContext.getScopeGroupId(), className, classPK,
 			ActionKeys.ADD_DISCUSSION);
+
+		checkDiscussion(className, classPK, threadId, parentMessageId);
 
 		return mbMessageLocalService.addDiscussionMessage(
 			user.getUserId(), null, groupId, className, classPK, threadId,
@@ -746,6 +749,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		MBDiscussionPermission.check(
 			getPermissionChecker(), messageId, ActionKeys.UPDATE_DISCUSSION);
 
+		checkDiscussion(className, classPK, messageId);
+
 		return mbMessageLocalService.updateDiscussionMessage(
 			getUserId(), messageId, className, classPK, subject, body,
 			serviceContext);
@@ -809,6 +814,49 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		return mbMessageLocalService.updateMessage(
 			getGuestOrUserId(), messageId, subject, body, inputStreamOVPs,
 			existingFiles, priority, allowPingbacks, serviceContext);
+	}
+
+	protected void checkDiscussion(
+			String className, long classPK, long messageId)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		MBDiscussion mbDiscussion = mbDiscussionPersistence.findByC_C(
+			classNameId, classPK);
+
+		MBThread mbThread = mbThreadPersistence.findByPrimaryKey(
+			mbDiscussion.getThreadId());
+
+		if (mbThread.getRootMessageId() != messageId) {
+			throw new PrincipalException.MustHavePermission(
+				getPermissionChecker(), MBMessage.class.getName(), messageId,
+				ActionKeys.REPLY_TO_MESSAGE);
+		}
+	}
+
+	protected void checkDiscussion(
+			String className, long classPK, long threadId, long messageId)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		MBDiscussion mbDiscussion = mbDiscussionPersistence.findByC_C(
+			classNameId, classPK);
+
+		if (mbDiscussion.getThreadId() != threadId) {
+			throw new PrincipalException.MustHavePermission(
+				getPermissionChecker(), MBThread.class.getName(), threadId,
+				ActionKeys.ADD_MESSAGE);
+		}
+
+		MBThread mbThread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		if (mbThread.getRootMessageId() != messageId) {
+			throw new PrincipalException.MustHavePermission(
+				getPermissionChecker(), MBMessage.class.getName(), messageId,
+				ActionKeys.REPLY_TO_MESSAGE);
+		}
 	}
 
 	protected void checkReplyToPermission(
