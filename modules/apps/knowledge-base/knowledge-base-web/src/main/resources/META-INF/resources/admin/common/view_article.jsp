@@ -35,11 +35,9 @@ renderResponse.setTitle(kbArticle.getTitle());
 
 <liferay-frontend:info-bar>
 	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
-		<c:if test="<%= kbArticle != null %>">
-			<liferay-ui:message arguments="<%= kbArticle.getVersion() %>" key="version-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= kbArticle.getVersion() %>" key="version-x" translateArguments="<%= false %>" />
 
-			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
-		</c:if>
+		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 	</small>
 </liferay-frontend:info-bar>
 
