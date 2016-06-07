@@ -103,9 +103,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 			try {
 				if (KBArticlePermission.contains(
-						_permissionChecker, kbArticle, ActionKeys.DELETE) ||
-					KBArticlePermission.contains(
-						_permissionChecker, kbArticle, ActionKeys.UPDATE)) {
+						_permissionChecker, kbArticle, ActionKeys.DELETE)) {
 
 					showInput = true;
 				}
@@ -118,9 +116,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 			try {
 				if (KBFolderPermission.contains(
-						_permissionChecker, kbFolder, ActionKeys.DELETE) ||
-					KBFolderPermission.contains(
-						_permissionChecker, kbFolder, ActionKeys.UPDATE)) {
+						_permissionChecker, kbFolder, ActionKeys.DELETE)) {
 
 					showInput = true;
 				}
