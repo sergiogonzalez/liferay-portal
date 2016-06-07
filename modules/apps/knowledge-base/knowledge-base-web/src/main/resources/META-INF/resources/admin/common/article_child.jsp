@@ -30,32 +30,34 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	<h4 class="text-default">
 		<liferay-ui:message arguments="<%= childKBArticles.size() %>" key="child-articles-x" translateArguments="<%= false %>" />
 	</h4>
-	<div class="panel panel-default">
-		<div class="panel-body">
+	<div class="panel">
+		<ul class="list-group">
 
 			<%
 			for (KBArticle childrenKBArticle : childKBArticles) {
 			%>
 
-				<section>
-					<h2>
+				<li class="list-group-item">
+					<div class="list-group-item-content">
+						<h3>
 
-						<%
-						PortletURL viewKBArticleURL = null;
+							<%
+							PortletURL viewKBArticleURL = null;
 
-						if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
-							viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(childrenKBArticle, currentURL);
-						}
-						else {
-							viewKBArticleURL = kbArticleURLHelper.createViewURL(childrenKBArticle);
-						}
-						%>
+							if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+								viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(childrenKBArticle, currentURL);
+							}
+							else {
+								viewKBArticleURL = kbArticleURLHelper.createViewURL(childrenKBArticle);
+							}
+							%>
 
-						<aui:a href="<%= viewKBArticleURL.toString() %>"><%= childrenKBArticle.getTitle() %></aui:a>
-					</h2>
+							<aui:a href="<%= viewKBArticleURL.toString() %>"><%= childrenKBArticle.getTitle() %></aui:a>
+						</h3>
 
-					<p><%= StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200) %></p>
-				</section>
+						<p class="text-default"><%= StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200) %></p>
+					</div>
+				</li>
 
 			<%
 			}
