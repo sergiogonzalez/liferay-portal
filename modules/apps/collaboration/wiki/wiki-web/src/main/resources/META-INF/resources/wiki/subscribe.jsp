@@ -51,8 +51,8 @@ else {
 					</portlet:actionURL>
 
 					<liferay-ui:icon
-						icon='<%= row == null ? "star" : StringPool.BLANK %>'
-						linkCssClass='<%= row == null ? "icon-monospaced" : StringPool.BLANK %>'
+						icon='<%= (row == null) ? "star" : StringPool.BLANK %>'
+						linkCssClass='<%= (row == null) ? "icon-monospaced" : StringPool.BLANK %>'
 						markupView="lexicon"
 						message="unsubscribe"
 						url="<%= unsubscribeURL %>"
@@ -66,8 +66,8 @@ else {
 					</portlet:actionURL>
 
 					<liferay-ui:icon
-						icon='<%= row == null ? "star-o" : StringPool.BLANK %>'
-						linkCssClass="<%= row == null ? "icon-monospaced" : StringPool.BLANK %>"
+						icon='<%= (row == null) ? "star-o" : StringPool.BLANK %>'
+						linkCssClass='<%= (row == null) ? "icon-monospaced" : StringPool.BLANK %>'
 						markupView="lexicon"
 						message="subscribe"
 						url="<%= subscribeURL %>"
