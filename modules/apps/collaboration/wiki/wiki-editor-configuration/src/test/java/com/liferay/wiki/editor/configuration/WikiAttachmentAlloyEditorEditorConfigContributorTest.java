@@ -98,7 +98,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 	public void testImageButtonNotRemovedWhenValidWikiPage() throws Exception {
 		setWikiPageResourcePrimKey(1);
 
-		JSONObject originalJSONObject = getJsonObjectWithToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithToolbar(
 			getToolbarsWithCameraAndImageButtonsJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -129,7 +129,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 	public void testImageButtonRemovedWhenInvalidWikiPage() throws Exception {
 		setWikiPageResourcePrimKey(0);
 
-		JSONObject jsonObject = getJsonObjectWithToolbar(
+		JSONObject jsonObject = getJSONObjectWithToolbar(
 			getToolbarsWithCameraAndImageButtonsJSONObject());
 
 		WikiAttachmentAlloyEditorEditorConfigContributor
@@ -144,7 +144,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 				_requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = getJsonObjectWithToolbar(
+		JSONObject expectedJSONObject = getJSONObjectWithToolbar(
 			getToolbarsWithCameraButtonJSONObject());
 
 		JSONAssert.assertEquals(
@@ -158,7 +158,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		setAllowBrowseDocuments(false);
 		setWikiPageResourcePrimKey(1);
 
-		JSONObject jsonObject = getJsonObjectWithToolbar(
+		JSONObject jsonObject = getJSONObjectWithToolbar(
 			getToolbarsWithCameraAndImageButtonsJSONObject());
 
 		WikiAttachmentAlloyEditorEditorConfigContributor
@@ -190,7 +190,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(0);
 
-		JSONObject originalJSONObject = getJsonObjectWithToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithToolbar(
 			getToolbarsWithCameraAndHlineButtonsJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -218,7 +218,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(1);
 
-		JSONObject originalJSONObject = getJsonObjectWithToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithToolbar(
 			getToolbarsWithCameraAndHlineButtonsJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -314,7 +314,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(0);
 
-		JSONObject originalJSONObject = getJsonObjectWithToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithToolbar(
 			getToolbarsWithStylesJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -342,7 +342,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(1);
 
-		JSONObject originalJSONObject = getJsonObjectWithToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithToolbar(
 			getToolbarsWithStylesJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -369,7 +369,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
-	protected JSONObject getJsonObjectWithToolbar(JSONObject jsonObject)
+	protected JSONObject getJSONObjectWithToolbar(JSONObject jsonObject)
 		throws Exception {
 
 		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
