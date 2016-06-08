@@ -37,11 +37,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
-		<span class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
-			<liferay-ui:message arguments="<%= kbArticle.getVersion() %>" key="version-x" translateArguments="<%= false %>" />
-
-			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
-		</span>
+		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
 
 		<liferay-frontend:info-bar-buttons>
 			<liferay-frontend:info-bar-sidenav-toggler-button
