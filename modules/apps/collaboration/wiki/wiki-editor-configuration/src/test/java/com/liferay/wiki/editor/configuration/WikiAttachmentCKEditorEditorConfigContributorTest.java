@@ -101,7 +101,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 		setWikiPageResourcePrimKey(1);
 
 		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
-			getJsonArrayWithTableAndImageSelectorButtons());
+			getToolbarsWithTableAndImageSelectorButtonsJSONArray());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -133,7 +133,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 		setWikiPageResourcePrimKey(0);
 
 		JSONObject jsonObject = getJSONObjectWithCreoleToolbar(
-			getJsonArrayWithTableAndImageSelectorButtons());
+			getToolbarsWithTableAndImageSelectorButtonsJSONArray());
 
 		WikiAttachmentCKEditorEditorConfigContributor
 			wikiAttachmentCKEditorEditorConfigContributor =
@@ -147,7 +147,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 			_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = getJSONObjectWithCreoleToolbar(
-			getJsonArrayWithTableButton());
+			getToolbarsWithTableButtonJSONArray());
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
@@ -161,7 +161,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 		setWikiPageResourcePrimKey(1);
 
 		JSONObject jsonObject = getJSONObjectWithCreoleToolbar(
-			getJsonArrayWithTableAndImageSelectorButtons());
+			getToolbarsWithTableAndImageSelectorButtonsJSONArray());
 
 		WikiAttachmentCKEditorEditorConfigContributor
 			wikiAttachmentCKEditorEditorConfigContributor =
@@ -175,69 +175,10 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 			_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = getJSONObjectWithCreoleToolbar(
-			getJsonArrayWithTableButton());
+			getToolbarsWithTableButtonJSONArray());
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
-	}
-
-	@Test
-	public void testJSONWithoutImageSelectorButtonDoesNotChangeWithInvalidWikiPage()
-		throws Exception {
-
-		setWikiPageResourcePrimKey(0);
-
-		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
-			getJsonArrayWithTableAndHorizontalRuleButtons());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
-
-		WikiAttachmentCKEditorEditorConfigContributor
-			wikiAttachmentCKEditorEditorConfigContributor =
-				new WikiAttachmentCKEditorEditorConfigContributor();
-
-		wikiAttachmentCKEditorEditorConfigContributor.setItemSelector(
-			_itemSelector);
-
-		wikiAttachmentCKEditorEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
-			_requestBackedPortletURLFactory);
-
-		JSONAssert.assertEquals(
-			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
-	}
-
-	@Test
-	public void testJSONWithoutImageSelectorButtonDoesNotChangeWithValidWikiPage()
-		throws Exception {
-
-		setWikiPageResourcePrimKey(1);
-
-		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
-			getJsonArrayWithTableAndHorizontalRuleButtons());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
-
-		WikiAttachmentCKEditorEditorConfigContributor
-			wikiAttachmentCKEditorEditorConfigContributor =
-				new WikiAttachmentCKEditorEditorConfigContributor();
-
-		wikiAttachmentCKEditorEditorConfigContributor.setItemSelector(
-			_itemSelector);
-
-		wikiAttachmentCKEditorEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
-			_requestBackedPortletURLFactory);
-
-		originalJSONObject.put(
-			"filebrowserImageBrowseLinkUrl", "itemSelectorPortletURL");
-		originalJSONObject.put(
-			"filebrowserImageBrowseUrl", "itemSelectorPortletURL");
-
-		JSONAssert.assertEquals(
-			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
 	@Test
@@ -301,34 +242,63 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
-	protected JSONArray getJsonArrayWithTableAndHorizontalRuleButtons()
+	@Test
+	public void testJSONWithoutImageSelectorButtonDoesNotChangeWithInvalidWikiPage()
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		setWikiPageResourcePrimKey(0);
 
-		jsonArray.put(
-			JSONFactoryUtil.createJSONArray("['Table', 'HorizontalRule']"));
+		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
+			getToolbarsWithTableAndHorizontalRuleButtonsJSONArray());
 
-		return jsonArray;
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		WikiAttachmentCKEditorEditorConfigContributor
+			wikiAttachmentCKEditorEditorConfigContributor =
+				new WikiAttachmentCKEditorEditorConfigContributor();
+
+		wikiAttachmentCKEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		wikiAttachmentCKEditorEditorConfigContributor.populateConfigJSONObject(
+			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			_requestBackedPortletURLFactory);
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
-	protected JSONArray getJsonArrayWithTableAndImageSelectorButtons()
+	@Test
+	public void testJSONWithoutImageSelectorButtonDoesNotChangeWithValidWikiPage()
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		setWikiPageResourcePrimKey(1);
 
-		jsonArray.put(
-			JSONFactoryUtil.createJSONArray("['Table', 'ImageSelector']"));
+		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
+			getToolbarsWithTableAndHorizontalRuleButtonsJSONArray());
 
-		return jsonArray;
-	}
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
 
-	protected JSONArray getJsonArrayWithTableButton() throws Exception {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		WikiAttachmentCKEditorEditorConfigContributor
+			wikiAttachmentCKEditorEditorConfigContributor =
+				new WikiAttachmentCKEditorEditorConfigContributor();
 
-		jsonArray.put(JSONFactoryUtil.createJSONArray("['Table']"));
+		wikiAttachmentCKEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
 
-		return jsonArray;
+		wikiAttachmentCKEditorEditorConfigContributor.populateConfigJSONObject(
+			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			_requestBackedPortletURLFactory);
+
+		originalJSONObject.put(
+			"filebrowserImageBrowseLinkUrl", "itemSelectorPortletURL");
+		originalJSONObject.put(
+			"filebrowserImageBrowseUrl", "itemSelectorPortletURL");
+
+		JSONAssert.assertEquals(
+			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
 	protected JSONObject getJSONObjectWithCreoleToolbar(JSONArray jsonArray)
@@ -341,6 +311,36 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 		jsonObject.put("toolbar_creole", jsonArray);
 
 		return jsonObject;
+	}
+
+	protected JSONArray getToolbarsWithTableAndHorizontalRuleButtonsJSONArray()
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(
+			JSONFactoryUtil.createJSONArray("['Table', 'HorizontalRule']"));
+
+		return jsonArray;
+	}
+
+	protected JSONArray getToolbarsWithTableAndImageSelectorButtonsJSONArray()
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(
+			JSONFactoryUtil.createJSONArray("['Table', 'ImageSelector']"));
+
+		return jsonArray;
+	}
+
+	protected JSONArray getToolbarsWithTableButtonJSONArray() throws Exception {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(JSONFactoryUtil.createJSONArray("['Table']"));
+
+		return jsonArray;
 	}
 
 	protected void setAllowBrowseDocuments(boolean allowBrowseDocuments) {
