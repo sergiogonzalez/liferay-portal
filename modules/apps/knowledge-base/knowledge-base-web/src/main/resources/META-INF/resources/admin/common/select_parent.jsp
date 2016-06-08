@@ -25,7 +25,6 @@ long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClass
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 double priority = ParamUtil.getDouble(request, "priority", KBArticleConstants.DEFAULT_PRIORITY);
 String parentTitle = ParamUtil.getString(request, "parentTitle", LanguageUtil.get(request, "home"));
-long originalParentResourceClassNameId = ParamUtil.getLong(request, "originalParentResourceClassNameId");
 long originalParentResourcePrimKey = ParamUtil.getLong(request, "originalParentResourcePrimKey");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "priority");
@@ -36,7 +35,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 	<aui:form method="post" name="selectFolderFm">
 
 		<%
-		KnowledgeBaseUtil.addPortletBreadcrumbEntries(originalParentResourceClassNameId, originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
+		KnowledgeBaseUtil.addPortletBreadcrumbEntries(originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
 		%>
 
 		<liferay-ui:breadcrumb
@@ -66,7 +65,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 			<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
 			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-			<portlet:param name="originalParentResourceClassNameId" value="<%= String.valueOf(originalParentResourceClassNameId) %>" />
 			<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(originalParentResourcePrimKey) %>" />
 			<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 		</liferay-portlet:renderURL>
@@ -94,7 +92,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 						<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
 						<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
-						<portlet:param name="originalParentResourceClassNameId" value="<%= String.valueOf(originalParentResourceClassNameId) %>" />
 						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(originalParentResourcePrimKey) %>" />
 						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 					</liferay-portlet:renderURL>
@@ -176,7 +173,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 					<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 					<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(curKBArticle.getClassNameId()) %>" />
 					<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(curKBArticle.getResourcePrimKey()) %>" />
-					<portlet:param name="originalParentResourceClassNameId" value="<%= String.valueOf(originalParentResourceClassNameId) %>" />
 					<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(originalParentResourcePrimKey) %>" />
 					<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 				</liferay-portlet:renderURL>

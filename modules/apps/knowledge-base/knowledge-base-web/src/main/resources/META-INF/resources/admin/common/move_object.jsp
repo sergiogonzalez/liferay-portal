@@ -125,7 +125,6 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 						<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
 						<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-						<portlet:param name="originalParentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
 						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 						<portlet:param name="priority" value="<%= String.valueOf(priority) %>" />
 						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
