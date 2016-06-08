@@ -99,7 +99,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		setWikiPageResourcePrimKey(1);
 
 		JSONObject originalJSONObject = getJsonObjectWithToolbar(
-			getToolbarsWithCameraImageButtonJSONObject());
+			getToolbarsWithCameraAndImageButtonsJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -130,7 +130,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		setWikiPageResourcePrimKey(0);
 
 		JSONObject jsonObject = getJsonObjectWithToolbar(
-			getToolbarsWithCameraImageButtonJSONObject());
+			getToolbarsWithCameraAndImageButtonsJSONObject());
 
 		WikiAttachmentAlloyEditorEditorConfigContributor
 			wikiAttachmentAlloyEditorEditorConfigContributor =
@@ -159,7 +159,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		setWikiPageResourcePrimKey(1);
 
 		JSONObject jsonObject = getJsonObjectWithToolbar(
-			getToolbarsWithCameraImageButtonJSONObject());
+			getToolbarsWithCameraAndImageButtonsJSONObject());
 
 		WikiAttachmentAlloyEditorEditorConfigContributor
 			wikiAttachmentAlloyEditorEditorConfigContributor =
@@ -185,13 +185,13 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 	}
 
 	@Test
-	public void testJSONWithCameraHLineButtonDoesNotChangeWithInvalidWikiPage()
+	public void testJSONWithoutImageButtonDoesNotChangeWithInvalidWikiPage()
 		throws Exception {
 
 		setWikiPageResourcePrimKey(0);
 
 		JSONObject originalJSONObject = getJsonObjectWithToolbar(
-			getToolbarsWithCameraHlineButtonJSONObject());
+			getToolbarsWithCameraAndHlineButtonsJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -213,13 +213,13 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 	}
 
 	@Test
-	public void testJSONWithNotImageButtonDoesNotChangeWithValidWikiPage()
+	public void testJSONWithoutImageButtonDoesNotChangeWithValidWikiPage()
 		throws Exception {
 
 		setWikiPageResourcePrimKey(1);
 
 		JSONObject originalJSONObject = getJsonObjectWithToolbar(
-			getToolbarsWithCameraHlineButtonJSONObject());
+			getToolbarsWithCameraAndHlineButtonsJSONObject());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -369,19 +369,19 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 			originalJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
-	protected JSONObject getJsonObjectWithToolbar(JSONObject toolbarsJsonObject)
+	protected JSONObject getJsonObjectWithToolbar(JSONObject jsonObject)
 		throws Exception {
 
 		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
 
 		originalJSONObject.put("extraPlugins", "plugin1,plugin2,plugin3");
 
-		originalJSONObject.put("toolbars", toolbarsJsonObject);
+		originalJSONObject.put("toolbars", jsonObject);
 
 		return originalJSONObject;
 	}
 
-	protected JSONObject getToolbarsAddCameraButtonJSONObject()
+	protected JSONObject getToolbarsWithAddAndCameraButtonJSONObject()
 		throws JSONException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -393,7 +393,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		return jsonObject;
 	}
 
-	protected JSONObject getToolbarsAddCameraHlineButtonJSONObject()
+	protected JSONObject getToolbarsWidthAddAndCameraAndHlineButtonsJSONObject()
 		throws JSONException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -405,7 +405,7 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		return jsonObject;
 	}
 
-	protected JSONObject getToolbarsAddCameraImageButtonJSONObject()
+	protected JSONObject getToolbarsWithAddAndCameraAndImageButtonsJSONObject()
 		throws JSONException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -431,27 +431,29 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("add", getToolbarsAddCameraButtonJSONObject());
+		jsonObject.put("add", getToolbarsWithAddAndCameraButtonJSONObject());
 
 		return jsonObject;
 	}
 
-	protected JSONObject getToolbarsWithCameraHlineButtonJSONObject()
+	protected JSONObject getToolbarsWithCameraAndHlineButtonsJSONObject()
 		throws JSONException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("add", getToolbarsAddCameraHlineButtonJSONObject());
+		jsonObject.put(
+			"add", getToolbarsWidthAddAndCameraAndHlineButtonsJSONObject());
 
 		return jsonObject;
 	}
 
-	protected JSONObject getToolbarsWithCameraImageButtonJSONObject()
+	protected JSONObject getToolbarsWithCameraAndImageButtonsJSONObject()
 		throws JSONException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("add", getToolbarsAddCameraImageButtonJSONObject());
+		jsonObject.put(
+			"add", getToolbarsWithAddAndCameraAndImageButtonsJSONObject());
 
 		return jsonObject;
 	}
