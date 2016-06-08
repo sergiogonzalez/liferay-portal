@@ -5371,7 +5371,9 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		uniqueElementIds.add(namespace.concat(uniqueElementId));
+		uniqueElementId = namespace.concat(uniqueElementId);
+
+		uniqueElementIds.add(uniqueElementId);
 
 		return uniqueElementId;
 	}
