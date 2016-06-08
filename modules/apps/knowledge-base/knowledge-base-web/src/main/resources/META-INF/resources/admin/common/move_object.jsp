@@ -43,40 +43,55 @@ else {
 	title = kbFolder.getName();
 	parentTitle = kbFolder.getParentTitle(locale);
 }
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(title);
+}
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= title %>"
-/>
+<c:if test="<%= !portletTitleBasedNavigation %>">
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		localizeTitle="<%= false %>"
+		title="<%= title %>"
+	/>
+</c:if>
 
-<liferay-portlet:actionURL name="moveKBObject" var="moveKBObjectURL" />
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<liferay-portlet:actionURL name="moveKBObject" var="moveKBObjectURL" />
 
-<aui:form action="<%= moveKBObjectURL %>" method="post" name="fm">
-	<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "move_object.jsp" %>' />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
-	<aui:input name="resourcePrimKey" type="hidden" value="<%= String.valueOf(resourcePrimKey) %>" />
-	<aui:input name="parentResourceClassNameId" type="hidden" value="<%= String.valueOf(parentResourceClassNameId) %>" />
-	<aui:input name="parentResourcePrimKey" type="hidden" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-	<aui:input name="status" type="hidden" value="<%= String.valueOf(status) %>" />
+	<aui:form action="<%= moveKBObjectURL %>" method="post" name="fm">
+		<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "move_object.jsp" %>' />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
+		<aui:input name="resourcePrimKey" type="hidden" value="<%= String.valueOf(resourcePrimKey) %>" />
+		<aui:input name="parentResourceClassNameId" type="hidden" value="<%= String.valueOf(parentResourceClassNameId) %>" />
+		<aui:input name="parentResourcePrimKey" type="hidden" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+		<aui:input name="status" type="hidden" value="<%= String.valueOf(status) %>" />
 
-	<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
+		<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
 
-	<aui:fieldset>
-		<aui:field-wrapper label="current-parent">
-			<aui:input label="" name="currentParentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:field-wrapper label="current-parent">
+					<aui:input label="" name="currentParentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
 
-			<aui:input cssClass="input-mini" label="priority" name="currentPriority" readonly="<%= true %>" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
-		</aui:field-wrapper>
+					<aui:input cssClass="input-mini" label="priority" name="currentPriority" readonly="<%= true %>" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
+				</aui:field-wrapper>
 
-		<liferay-util:include page="/admin/common/new_parent.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/admin/common/new_parent.jsp" servletContext="<%= application %>" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
-		<aui:button-row cssClass="kb-submit-buttons">
-			<aui:button type="submit" value="move" />
+		<aui:button-row>
+			<aui:button cssClass="btn btn-lg btn-primary" type="submit" value="move" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
-	</aui:fieldset>
-</aui:form>
+	</aui:form>
+</div>
