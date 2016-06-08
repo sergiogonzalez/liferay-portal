@@ -14,7 +14,6 @@
 
 package com.liferay.portal.target.platform.indexer;
 
-import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.target.platform.indexer.internal.PathUtil;
 import com.liferay.portal.target.platform.indexer.internal.TargetPlatformIndexer;
 
@@ -97,7 +96,7 @@ public class TargetPlatformIndexerUtil {
 				stopWaitTimeout);
 
 			if (frameworkEvent.getType() == FrameworkEvent.WAIT_TIMEDOUT) {
-				throw new ProcessException(
+				throw new Exception(
 					"OSGi framework event " + frameworkEvent +
 						" triggered after a " + stopWaitTimeout + "ms timeout");
 			}

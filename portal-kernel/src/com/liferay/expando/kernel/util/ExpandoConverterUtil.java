@@ -79,6 +79,12 @@ public class ExpandoConverterUtil {
 		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 			return GetterUtil.getLongValues(StringUtil.split(attribute));
 		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			return GetterUtil.getNumber(attribute);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			return GetterUtil.getNumberValues(StringUtil.split(attribute));
+		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			return GetterUtil.getShort(attribute);
 		}
@@ -139,6 +145,12 @@ public class ExpandoConverterUtil {
 		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 			return GetterUtil.getLongValues(attribute);
 		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			return GetterUtil.getNumber(attribute[0]);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			return GetterUtil.getNumberValues(attribute);
+		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			return GetterUtil.getShort(attribute[0]);
 		}
@@ -165,6 +177,7 @@ public class ExpandoConverterUtil {
 			(type == ExpandoColumnConstants.FLOAT) ||
 			(type == ExpandoColumnConstants.INTEGER) ||
 			(type == ExpandoColumnConstants.LONG) ||
+			(type == ExpandoColumnConstants.NUMBER) ||
 			(type == ExpandoColumnConstants.SHORT)) {
 
 			return String.valueOf(attribute);
@@ -174,6 +187,7 @@ public class ExpandoConverterUtil {
 				 (type == ExpandoColumnConstants.FLOAT_ARRAY) ||
 				 (type == ExpandoColumnConstants.INTEGER_ARRAY) ||
 				 (type == ExpandoColumnConstants.LONG_ARRAY) ||
+				 (type == ExpandoColumnConstants.NUMBER_ARRAY) ||
 				 (type == ExpandoColumnConstants.SHORT_ARRAY) ||
 				 (type == ExpandoColumnConstants.STRING_ARRAY)) {
 

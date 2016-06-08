@@ -90,8 +90,14 @@ public class TargetPlatformIndexer implements Indexer {
 			_processSystemBundle(tempDir, jarFiles);
 
 			for (String dirName : _dirNames) {
+				Path path = Paths.get(dirName);
+
+				if (Files.notExists(path)) {
+					continue;
+				}
+
 				try (DirectoryStream<Path> directoryStream =
-						Files.newDirectoryStream(Paths.get(dirName), "*.jar")) {
+						Files.newDirectoryStream(path, "*.jar")) {
 
 					Iterator<Path> iterator = directoryStream.iterator();
 
