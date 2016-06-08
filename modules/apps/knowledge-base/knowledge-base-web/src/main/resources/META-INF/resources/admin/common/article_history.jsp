@@ -17,7 +17,7 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBArticle kbArticle = (KBArticle)request.getAttribute("article_info_panel.jsp-kbArticle");
+KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 
 int selStatus = KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) ? WorkflowConstants.STATUS_ANY : status;
@@ -30,7 +30,6 @@ OrderByComparator orderByComparator = KnowledgeBaseUtil.getKBArticleOrderByCompa
 List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
 for (KBArticle curKBArticle : kbArticles) {
-	request.setAttribute("article_info_panel.jsp-kbArticleVersion", curKBArticle);
 %>
 
 	<aui:row>

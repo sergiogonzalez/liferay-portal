@@ -85,11 +85,6 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 
 	<liferay-ui:section>
 		<div class="sidebar-body">
-
-			<%
-			request.setAttribute("article_info_panel.jsp-kbArticle", kbArticle);
-			%>
-
 			<liferay-util:include page="/admin/common/article_history.jsp" servletContext="<%= application %>" />
 		</div>
 	</liferay-ui:section>
