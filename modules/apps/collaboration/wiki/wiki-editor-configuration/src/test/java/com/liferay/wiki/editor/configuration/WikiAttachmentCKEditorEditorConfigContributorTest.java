@@ -100,7 +100,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(1);
 
-		JSONObject originalJSONObject = getJsonObjectWithCreoleToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
 			getJsonArrayWithTableAndImageSelectorButtons());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -132,7 +132,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(0);
 
-		JSONObject jsonObject = getJsonObjectWithCreoleToolbar(
+		JSONObject jsonObject = getJSONObjectWithCreoleToolbar(
 			getJsonArrayWithTableAndImageSelectorButtons());
 
 		WikiAttachmentCKEditorEditorConfigContributor
@@ -146,7 +146,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = getJsonObjectWithCreoleToolbar(
+		JSONObject expectedJSONObject = getJSONObjectWithCreoleToolbar(
 			getJsonArrayWithTableButton());
 
 		JSONAssert.assertEquals(
@@ -160,7 +160,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 		setAllowBrowseDocuments(false);
 		setWikiPageResourcePrimKey(1);
 
-		JSONObject jsonObject = getJsonObjectWithCreoleToolbar(
+		JSONObject jsonObject = getJSONObjectWithCreoleToolbar(
 			getJsonArrayWithTableAndImageSelectorButtons());
 
 		WikiAttachmentCKEditorEditorConfigContributor
@@ -174,7 +174,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = getJsonObjectWithCreoleToolbar(
+		JSONObject expectedJSONObject = getJSONObjectWithCreoleToolbar(
 			getJsonArrayWithTableButton());
 
 		JSONAssert.assertEquals(
@@ -187,7 +187,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(0);
 
-		JSONObject originalJSONObject = getJsonObjectWithCreoleToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
 			getJsonArrayWithTableAndHorizontalRuleButtons());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -214,7 +214,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 
 		setWikiPageResourcePrimKey(1);
 
-		JSONObject originalJSONObject = getJsonObjectWithCreoleToolbar(
+		JSONObject originalJSONObject = getJSONObjectWithCreoleToolbar(
 			getJsonArrayWithTableAndHorizontalRuleButtons());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -331,7 +331,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 		return jsonArray;
 	}
 
-	protected JSONObject getJsonObjectWithCreoleToolbar(JSONArray jsonArray)
+	protected JSONObject getJSONObjectWithCreoleToolbar(JSONArray jsonArray)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
