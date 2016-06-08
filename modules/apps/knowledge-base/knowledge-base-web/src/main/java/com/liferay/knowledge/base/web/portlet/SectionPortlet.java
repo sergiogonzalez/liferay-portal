@@ -82,14 +82,18 @@ public class SectionPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			int status = getStatus(renderRequest);
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				dlMimeTypeDisplayContext);
 
-			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
+			int status = getStatus(renderRequest);
 
 			KBArticle kbArticle = getKBArticle(renderRequest, status);
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+
+			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
