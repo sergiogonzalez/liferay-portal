@@ -337,12 +337,18 @@ if (portletTitleBasedNavigation) {
 									</div>
 
 									<div class="page-tags">
-										<liferay-ui:asset-tags-summary
+										<liferay-ui:asset-tags-available
 											className="<%= WikiPage.class.getName() %>"
 											classPK="<%= wikiPage.getResourcePrimKey() %>"
-											message="tags"
-											portletURL="<%= PortletURLUtil.clone(taggedPagesURL, renderResponse) %>"
-										/>
+										>
+											<h5><liferay-ui:message key="tags" /></h5>
+
+											<liferay-ui:asset-tags-summary
+												className="<%= WikiPage.class.getName() %>"
+												classPK="<%= wikiPage.getResourcePrimKey() %>"
+												portletURL="<%= PortletURLUtil.clone(taggedPagesURL, renderResponse) %>"
+											/>
+										</liferay-ui:asset-tags-available>
 									</div>
 								</div>
 
