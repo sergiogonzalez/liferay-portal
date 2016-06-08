@@ -49,28 +49,25 @@ List kbEntries = kbEntriesSearchContainer.getResults();
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 
-String headerTitle = StringPool.BLANK;
-
-if (parentResourcePrimKey == KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	headerTitle = LanguageUtil.get(resourceBundle, "model.resource.com.liferay.knowledge.base.admin");
-}
-else if (kbFolderView) {
-	KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(parentResourcePrimKey);
-
-	headerTitle = kbFolder.getName();
-}
-else {
-	KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-	headerTitle = kbArticle.getTitle();
-}
-
 if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
-}
 
-renderResponse.setTitle(headerTitle);
+	String headerTitle = StringPool.BLANK;
+
+	if (kbFolderView) {
+		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(parentResourcePrimKey);
+
+		headerTitle = kbFolder.getName();
+	}
+	else {
+		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		headerTitle = kbArticle.getTitle();
+	}
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
