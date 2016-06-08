@@ -16,20 +16,38 @@ package com.liferay.portal.osgi.web.wab.generator.internal;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.osgi.web.wab.generator.internal.artifact.ArtifactURLUtil;
 import com.liferay.portal.osgi.web.wab.generator.internal.artifact.WarArtifactUrlTransformer;
 import com.liferay.portal.osgi.web.wab.generator.internal.handler.WabURLStreamHandlerService;
 import com.liferay.portal.osgi.web.wab.generator.internal.processor.WabProcessor;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URI;
+import java.net.URL;
+
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.apache.felix.fileinstall.ArtifactUrlTransformer;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -37,6 +55,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.url.URLConstants;
 import org.osgi.service.url.URLStreamHandlerService;
+import org.osgi.util.tracker.BundleTracker;
 
 /**
  * @author Miguel Pastor
@@ -63,6 +82,40 @@ public class WabGenerator
 		registerURLStreamHandlerService(bundleContext);
 
 		registerArtifactUrlTransformer(bundleContext);
+
+		final Set<String> requiredForStartupLocations =
+			getRequiredForStartupLocations(
+				Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
+
+		if (requiredForStartupLocations.isEmpty()) {
+			return;
+		}
+
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
+			bundleContext, Bundle.ACTIVE, null) {
+
+			@Override
+			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+				String location = bundle.getLocation();
+
+				if (requiredForStartupLocations.remove(location) &&
+					requiredForStartupLocations.isEmpty()) {
+
+					countDownLatch.countDown();
+				}
+
+				return null;
+			}
+
+		};
+
+		bundleTracker.open();
+
+		countDownLatch.await();
+
+		bundleTracker.close();
 	}
 
 	@Deactivate
@@ -70,6 +123,42 @@ public class WabGenerator
 		_serviceRegistration.unregister();
 
 		_serviceRegistration = null;
+	}
+
+	protected Set<String> getRequiredForStartupLocations(Path path)
+		throws IOException {
+
+		Set<String> locations = new HashSet<>();
+
+		try (DirectoryStream<Path> directoryStream =
+				Files.newDirectoryStream(path, "*.war")) {
+
+			for (Path warPath : directoryStream) {
+				URI uri = warPath.toUri();
+
+				try (ZipFile zipFile = new ZipFile(new File(uri));
+					InputStream inputStream = zipFile.getInputStream(
+						new ZipEntry(
+							"WEB-INF/liferay-plugin-package.properties"))) {
+
+					Properties properties = new Properties();
+
+					properties.load(inputStream);
+
+					if (!Boolean.valueOf(
+							properties.getProperty("required-for-startup"))) {
+
+						continue;
+					}
+
+					URL url = ArtifactURLUtil.transform(uri.toURL());
+
+					locations.add(url.toString());
+				}
+			}
+		}
+
+		return locations;
 	}
 
 	protected void registerArtifactUrlTransformer(BundleContext bundleContext) {

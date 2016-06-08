@@ -26,73 +26,99 @@ if (enableKBArticleViewCountIncrement && kbArticle.isApproved()) {
 
 	AssetEntryServiceUtil.incrementViewCounter(KBArticle.class.getName(), latestKBArticle.getClassPK());
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(kbArticle.getTitle());
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
-<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
-	<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<liferay-frontend:info-bar>
+		<span class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
+			<liferay-ui:message arguments="<%= kbArticle.getVersion() %>" key="version-x" translateArguments="<%= false %>" />
+
+			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+		</span>
+
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				icon="info-circle"
+				label="info"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:info-bar>
 </c:if>
 
-<c:choose>
-	<c:when test="<%= !redirect.equals(currentURL) %>">
+<div class="closed container-fluid-1280 kb-article main-content-body sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<c:if test="<%= portletTitleBasedNavigation %>">
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/common/article_info_panel" var="sidebarPanelURL">
+			<portlet:param name="articleId" value="<%= String.valueOf(kbArticle.getKbArticleId()) %>" />
+		</liferay-portlet:resourceURL>
+
+		<liferay-frontend:sidebar-panel
+			resourceURL="<%= sidebarPanelURL %>"
+			searchContainerId="article"
+		>
+			<liferay-util:include page="/admin/common/article_info_panel.jsp" servletContext="<%= application %>" />
+		</liferay-frontend:sidebar-panel>
+	</c:if>
+
+	<div class="sidenav-content">
+		<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
+			<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
+		</c:if>
+
 		<div class="kb-tools">
 			<liferay-util:include page="/admin/common/article_tools.jsp" servletContext="<%= application %>" />
 		</div>
 
-		<liferay-ui:header title="<%= kbArticle.getTitle() %>" />
-	</c:when>
-	<c:otherwise>
-		<div class="float-container kb-entity-header">
-			<div class="kb-tools">
-				<liferay-util:include page="/admin/common/article_tools.jsp" servletContext="<%= application %>" />
-			</div>
+		<div class="panel panel-default">
+			<div class="panel-body text-default">
+				<h1>
+					<%= HtmlUtil.escape(kbArticle.getTitle()) %>
+				</h1>
 
-			<h1 class="kb-title">
-				<%= HtmlUtil.escape(kbArticle.getTitle()) %>
-			</h1>
+				<%
+				request.setAttribute("article_icons.jsp-kb_article", kbArticle);
+				%>
 
-			<c:if test="<%= !kbArticle.isApproved() %>">
-				<div class="kb-article-status">
-					<aui:model-context bean="<%= kbArticle %>" model="<%= KBArticle.class %>" />
+				<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
+					<liferay-util:include page="/admin/common/article_icons.jsp" servletContext="<%= application %>" />
+				</c:if>
 
-					<aui:workflow-status status="<%= kbArticle.getStatus() %>" />
+				<div id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">
+					<%= kbArticle.getContent() %>
 				</div>
-			</c:if>
+
+				<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom") %>'>
+					<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
+				</c:if>
+
+				<liferay-util:include page="/admin/common/article_assets.jsp" servletContext="<%= application %>" />
+
+				<c:if test="<%= showKBArticleAttachments %>">
+					<liferay-util:include page="/admin/common/article_attachments.jsp" servletContext="<%= application %>" />
+				</c:if>
+
+				<liferay-util:include page="/admin/common/article_asset_links.jsp" servletContext="<%= application %>" />
+
+				<c:if test="<%= !portletTitleBasedNavigation %>">
+					<liferay-util:include page="/admin/common/article_asset_entries.jsp" servletContext="<%= application %>" />
+				</c:if>
+
+				<c:if test="<%= enableKBArticleRatings %>">
+					<liferay-util:include page="/admin/common/article_ratings.jsp" servletContext="<%= application %>" />
+				</c:if>
+
+				<c:if test="<%= !portletTitleBasedNavigation && !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
+					<liferay-util:include page="/admin/common/article_siblings.jsp" servletContext="<%= application %>" />
+				</c:if>
+			</div>
 		</div>
-	</c:otherwise>
-</c:choose>
 
-<%
-request.setAttribute("article_icons.jsp-kb_article", kbArticle);
-%>
-
-<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
-	<liferay-util:include page="/admin/common/article_icons.jsp" servletContext="<%= application %>" />
-</c:if>
-
-<div class="kb-entity-body">
-	<div class="kb-article-body" id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">
-		<%= kbArticle.getContent() %>
+		<liferay-util:include page="/admin/common/article_child.jsp" servletContext="<%= application %>" />
 	</div>
-
-	<liferay-util:include page="/admin/common/article_child.jsp" servletContext="<%= application %>" />
-
-	<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom") %>'>
-		<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
-	</c:if>
-
-	<liferay-util:include page="/admin/common/article_ratings.jsp" servletContext="<%= application %>" />
-
-	<c:if test="<%= showKBArticleAttachments %>">
-		<liferay-util:include page="/admin/common/article_attachments.jsp" servletContext="<%= application %>" />
-	</c:if>
-
-	<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
-		<liferay-util:include page="/admin/common/article_siblings.jsp" servletContext="<%= application %>" />
-	</c:if>
-
-	<liferay-util:include page="/admin/common/article_assets.jsp" servletContext="<%= application %>" />
-
-	<liferay-util:include page="/admin/common/article_asset_entries.jsp" servletContext="<%= application %>" />
-
-	<liferay-util:include page="/admin/common/article_asset_links.jsp" servletContext="<%= application %>" />
 </div>
