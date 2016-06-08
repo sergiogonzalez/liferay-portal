@@ -39,8 +39,7 @@ for (KBArticle curKBArticle : kbArticles) {
 					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 						<c:if test="<%= (kbArticle.getStatus() == WorkflowConstants.STATUS_APPROVED) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
 							<liferay-portlet:actionURL name="updateKBArticle" varImpl="revertURL">
-								<portlet:param name="mvcPath" value='<%= templatePath + "history.jsp" %>' />
-								<portlet:param name="redirect" value="<%= redirect %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
 								<portlet:param name="version" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
