@@ -31,7 +31,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 %>
 
 <div class="container-fluid-1280">
-	<aui:form method="post" name="fm">
+	<aui:form method="post" name="selectFolderFm">
 		<aui:fieldset>
 			<c:if test="<%= originalParentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 				<aui:button-row cssClass="input-append">
@@ -253,17 +253,5 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 </div>
 
 <aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	A.one('#<portlet:namespace />fm').delegate(
-		'click',
-		function(event) {
-			var result = Util.getAttributes(event.currentTarget, 'data-');
-
-			Util.getOpener().Liferay.fire('<portlet:namespace />selectKBObject', result);
-
-			Util.getWindow().hide();
-		},
-		'.selector-button'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFolderFm', '<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectKBEntry") %>');
 </aui:script>

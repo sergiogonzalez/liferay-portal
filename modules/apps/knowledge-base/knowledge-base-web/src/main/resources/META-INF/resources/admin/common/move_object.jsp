@@ -104,8 +104,8 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 </div>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectKBEntryButton').on(
+<aui:script>
+	AUI.$('#<portlet:namespace />selectKBEntryButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -116,10 +116,10 @@ if (portletTitleBasedNavigation) {
 						modal: true,
 						width: 600
 					},
-					id: '<portlet:namespace />selectKBObject',
+					id: '<portlet:namespace />selectKBEntry',
 					title: '<liferay-ui:message key="select-parent" />',
 
-					<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL var="selectKBEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
 						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
@@ -130,13 +130,20 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 					</liferay-portlet:renderURL>
 
-					uri: '<%= selectKBObjectURL %>'
+					uri: '<%= selectKBEntryURL %>'
 				},
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentPriority.value = event.priority;
 					document.<portlet:namespace />fm.<portlet:namespace />parentResourceClassNameId.value = event.resourceclassnameid;
-					document.<portlet:namespace />fm.<portlet:namespace />parentResourcePrimKey.value = event.resourceprimkey;
-					document.<portlet:namespace />fm.<portlet:namespace />parentTitle.value = A.Lang.String.unescapeEntities(event.title);
+
+					var folderData = {
+						idString: 'parentResourcePrimKey',
+						idValue: event.resourceprimkey,
+						nameString: 'parentTitle',
+						nameValue: event.title
+					};
+
+					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 				}
 			);
 		}
