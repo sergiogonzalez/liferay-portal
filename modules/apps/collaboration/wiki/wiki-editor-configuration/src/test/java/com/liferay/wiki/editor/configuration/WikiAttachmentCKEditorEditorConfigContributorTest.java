@@ -46,7 +46,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Roberto Díaz
  */
-public class WikiAttachmentCKEditorEditorEditorConfigContributorTest
+public class WikiAttachmentCKEditorEditorConfigContributorTest
 	extends PowerMockito {
 
 	@Before
