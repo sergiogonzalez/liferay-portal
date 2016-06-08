@@ -182,7 +182,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 	}
 
 	@Test
-	public void testJSONWithNotImageSelectorButtonDoesNotChangeWithInvalidWikiPage()
+	public void testJSONWithoutImageSelectorButtonDoesNotChangeWithInvalidWikiPage()
 		throws Exception {
 
 		setWikiPageResourcePrimKey(0);
@@ -209,7 +209,7 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 	}
 
 	@Test
-	public void testJSONWithNotImageSelectorButtonDoesNotChangeWithValidWikiPage()
+	public void testJSONWithoutImageSelectorButtonDoesNotChangeWithValidWikiPage()
 		throws Exception {
 
 		setWikiPageResourcePrimKey(1);
