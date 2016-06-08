@@ -177,7 +177,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 						%>
 
 						<liferay-ui:search-container-column-icon
-							icon='<%= "folder" %>'
+							icon="folder"
 							toggleRowChecker="<%= true %>"
 						/>
 
