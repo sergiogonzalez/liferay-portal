@@ -26,7 +26,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 SearchContainer kbEntriesSearchContainer = new KBArticleSearch(renderRequest, PortletURLUtil.clone(currentURLObj, renderResponse));
 
-boolean kbFolderView = (parentResourceClassNameId == PortalUtil.getClassNameId(KBFolder.class));
+boolean kbFolderView = (parentResourceClassNameId == kbFolderClassNameId);
 
 if (Validator.isNotNull(keywords)) {
 	KBArticleSearchDisplay kbArticleSearchDisplay = KBArticleServiceUtil.getKBArticleSearchDisplay(scopeGroupId, keywords, keywords, WorkflowConstants.STATUS_ANY, null, null, false, new int[0], kbEntriesSearchContainer.getCur(), kbEntriesSearchContainer.getDelta(), kbEntriesSearchContainer.getOrderByComparator());
