@@ -43,12 +43,12 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 		</span>
 
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
+		<liferay-frontend:info-bar-buttons>
+			<liferay-frontend:info-bar-sidenav-toggler-button
+					icon="info-circle"
+					label="info"
 			/>
-		</liferay-frontend:management-bar-buttons>
+		</liferay-frontend:info-bar-buttons>
 	</liferay-frontend:info-bar>
 </c:if>
 
