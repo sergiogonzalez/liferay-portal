@@ -52,7 +52,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 	</liferay-frontend:info-bar>
 </c:if>
 
-<div class="closed container-fluid-1280 kb-article main-content-body sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div <%= portletTitleBasedNavigation ? "class=\"closed container-fluid-1280 kb-article main-content-body sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>
 	<c:if test="<%= portletTitleBasedNavigation %>">
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/common/article_info_panel" var="sidebarPanelURL">
 			<portlet:param name="articleId" value="<%= String.valueOf(kbArticle.getKbArticleId()) %>" />
