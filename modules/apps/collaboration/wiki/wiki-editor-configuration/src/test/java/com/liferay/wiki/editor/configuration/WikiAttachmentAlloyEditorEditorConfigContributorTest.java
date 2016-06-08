@@ -381,14 +381,11 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		return originalJSONObject;
 	}
 
-	protected JSONObject getToolbarsWithAddAndCameraButtonJSONObject()
-		throws JSONException {
-
+	protected JSONObject getToolbarsStylesSelectionsJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(
-			"buttons", JSONFactoryUtil.createJSONArray("['camera']"));
-		jsonObject.put("tabIndex", 2);
+		jsonObject.put("selections", "AlloyEditor.Selections");
+		jsonObject.put("tabIndex", 1);
 
 		return jsonObject;
 	}
@@ -417,21 +414,14 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 		return jsonObject;
 	}
 
-	protected JSONObject getToolbarsStylesSelectionsJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("selections", "AlloyEditor.Selections");
-		jsonObject.put("tabIndex", 1);
-
-		return jsonObject;
-	}
-
-	protected JSONObject getToolbarsWithCameraButtonJSONObject()
+	protected JSONObject getToolbarsWithAddAndCameraButtonJSONObject()
 		throws JSONException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("add", getToolbarsWithAddAndCameraButtonJSONObject());
+		jsonObject.put(
+			"buttons", JSONFactoryUtil.createJSONArray("['camera']"));
+		jsonObject.put("tabIndex", 2);
 
 		return jsonObject;
 	}
@@ -454,6 +444,16 @@ public class WikiAttachmentAlloyEditorEditorConfigContributorTest
 
 		jsonObject.put(
 			"add", getToolbarsWithAddAndCameraAndImageButtonsJSONObject());
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarsWithCameraButtonJSONObject()
+		throws JSONException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("add", getToolbarsWithAddAndCameraButtonJSONObject());
 
 		return jsonObject;
 	}
