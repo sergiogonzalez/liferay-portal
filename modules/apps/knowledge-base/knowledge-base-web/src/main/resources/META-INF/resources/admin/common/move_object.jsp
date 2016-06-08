@@ -91,7 +91,7 @@ if (portletTitleBasedNavigation) {
 						<aui:input cssClass="input-mini" id="parentPriority" label="priority" name="priority" type="text" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
 					</div>
 
-					<aui:button name="selectKBObjectButton" value="select" />
+					<aui:button name="selectKBEntryButton" value="select" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</aui:fieldset-group>
@@ -105,18 +105,7 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script use="aui-base">
-	<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
-		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-		<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
-		<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
-		<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-		<portlet:param name="originalParentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
-		<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-		<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-	</liferay-portlet:renderURL>
-
-	A.one('#<portlet:namespace />selectKBObjectButton').on(
+	A.one('#<portlet:namespace />selectKBEntryButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -124,10 +113,23 @@ if (portletTitleBasedNavigation) {
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
+						width: 600
 					},
 					id: '<portlet:namespace />selectKBObject',
 					title: '<liferay-ui:message key="select-parent" />',
+
+					<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
+						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
+						<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
+						<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+						<portlet:param name="originalParentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
+						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
+					</liferay-portlet:renderURL>
+
 					uri: '<%= selectKBObjectURL %>'
 				},
 				function(event) {
