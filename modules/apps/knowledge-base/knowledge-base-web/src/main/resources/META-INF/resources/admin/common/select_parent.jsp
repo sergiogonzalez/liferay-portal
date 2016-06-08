@@ -23,6 +23,8 @@ resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+double priority = ParamUtil.getDouble(request, "priority", KBArticleConstants.DEFAULT_PRIORITY);
+String parentTitle = ParamUtil.getString(request, "parentTitle", LanguageUtil.get(request, "home"));
 long originalParentResourceClassNameId = ParamUtil.getLong(request, "originalParentResourceClassNameId");
 long originalParentResourcePrimKey = ParamUtil.getLong(request, "originalParentResourcePrimKey");
 
@@ -32,39 +34,9 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectFolderFm">
-		<c:if test="<%= originalParentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
-			<aui:button-row cssClass="input-append">
-				<c:choose>
-					<c:when test="<%= originalParentResourceClassNameId == kbFolderClassNameId %>">
-
-						<%
-						KBFolder oldParentKBFolder = KBFolderServiceUtil.getKBFolder(originalParentResourcePrimKey);
-						%>
-
-						<liferay-ui:input-resource url="<%= oldParentKBFolder.getName() %>" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:input-resource url='<%= BeanPropertiesUtil.getString(KBArticleServiceUtil.getLatestKBArticle(originalParentResourcePrimKey, status), "title") %>' />
-					</c:otherwise>
-				</c:choose>
-
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("priority", KBArticleConstants.DEFAULT_PRIORITY);
-				data.put("resourceClassNameId", kbFolderClassNameId);
-				data.put("resourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-				data.put("title", StringPool.BLANK);
-				%>
-
-				<aui:button cssClass="selector-button" data="<%= data %>" value="remove" />
-			</aui:button-row>
-
-			<div class="separator"><!-- --></div>
-		</c:if>
 
 		<%
-		KnowledgeBaseUtil.addPortletBreadcrumbEntries(originalParentResourceClassNameId, originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, "/admin/common/select_parent.jsp", request, renderResponse);
+		KnowledgeBaseUtil.addPortletBreadcrumbEntries(originalParentResourceClassNameId, originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
 		%>
 
 		<liferay-ui:breadcrumb
@@ -73,6 +45,20 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			showLayout="<%= false %>"
 			showParentGroups="<%= false %>"
 		/>
+
+		<aui:button-row cssClass="input-append">
+
+			<%
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("priority", priority);
+			data.put("resourceClassNameId", parentResourceClassNameId);
+			data.put("resourcePrimKey", parentResourcePrimKey);
+			data.put("title", parentTitle);
+			%>
+
+			<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />
+		</aui:button-row>
 
 		<liferay-portlet:renderURL varImpl="iteratorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
