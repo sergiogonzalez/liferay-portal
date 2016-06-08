@@ -95,34 +95,6 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 	}
 
 	@Test
-	public void testImageSelectorButtonRemovedWhenNotAllowBrowseDocuments()
-		throws Exception {
-
-		setAllowBrowseDocuments(false);
-		setWikiPageResourcePrimKey(1);
-
-		JSONObject jsonObject = getJsonObjectWithCreoleToolbar(
-			getJsonArrayWithTableAndImageSelectorButtons());
-
-		WikiAttachmentCKEditorEditorConfigContributor
-			wikiAttachmentCKEditorEditorConfigContributor =
-				new WikiAttachmentCKEditorEditorConfigContributor();
-
-		wikiAttachmentCKEditorEditorConfigContributor.setItemSelector(
-			_itemSelector);
-
-		wikiAttachmentCKEditorEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
-			_requestBackedPortletURLFactory);
-
-		JSONObject expectedJSONObject = getJsonObjectWithCreoleToolbar(
-			getJsonArrayWithTableButton());
-
-		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
-	}
-
-	@Test
 	public void testImageSelectorButtonNotRemovedWhenValidWikiPage()
 		throws Exception {
 
@@ -159,6 +131,34 @@ public class WikiAttachmentCKEditorEditorConfigContributorTest
 		throws Exception {
 
 		setWikiPageResourcePrimKey(0);
+
+		JSONObject jsonObject = getJsonObjectWithCreoleToolbar(
+			getJsonArrayWithTableAndImageSelectorButtons());
+
+		WikiAttachmentCKEditorEditorConfigContributor
+			wikiAttachmentCKEditorEditorConfigContributor =
+				new WikiAttachmentCKEditorEditorConfigContributor();
+
+		wikiAttachmentCKEditorEditorConfigContributor.setItemSelector(
+			_itemSelector);
+
+		wikiAttachmentCKEditorEditorConfigContributor.populateConfigJSONObject(
+			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			_requestBackedPortletURLFactory);
+
+		JSONObject expectedJSONObject = getJsonObjectWithCreoleToolbar(
+			getJsonArrayWithTableButton());
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+	}
+
+	@Test
+	public void testImageSelectorButtonRemovedWhenNotAllowBrowseDocuments()
+		throws Exception {
+
+		setAllowBrowseDocuments(false);
+		setWikiPageResourcePrimKey(1);
 
 		JSONObject jsonObject = getJsonObjectWithCreoleToolbar(
 			getJsonArrayWithTableAndImageSelectorButtons());
