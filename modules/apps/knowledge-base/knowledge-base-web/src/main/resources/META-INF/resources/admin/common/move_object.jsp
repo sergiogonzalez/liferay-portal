@@ -128,7 +128,6 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 						<portlet:param name="priority" value="<%= String.valueOf(priority) %>" />
 						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-						<portlet:param name="parentTitle" value="<%= parentTitle %>" />
 					</liferay-portlet:renderURL>
 
 					uri: '<%= selectKBEntryURL %>'

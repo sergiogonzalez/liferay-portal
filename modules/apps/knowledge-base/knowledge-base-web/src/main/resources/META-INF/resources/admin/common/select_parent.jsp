@@ -24,7 +24,6 @@ resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 double priority = ParamUtil.getDouble(request, "priority", KBArticleConstants.DEFAULT_PRIORITY);
-String parentTitle = ParamUtil.getString(request, "parentTitle", LanguageUtil.get(request, "home"));
 long originalParentResourcePrimKey = ParamUtil.getLong(request, "originalParentResourcePrimKey");
 
 boolean kbFolderView = (resourceClassNameId == kbFolderClassNameId);
@@ -39,13 +38,31 @@ else {
 	kbEntriesSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
 	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), new KBEntriesTitleComparator<Object>()));
 }
+
+String parentTitle = LanguageUtil.get(request, "home");
+
+if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	if (parentResourceClassNameId == kbFolderClassNameId) {
+		KBFolder parentKBFolder =
+				KBFolderServiceUtil.getKBFolder(parentResourcePrimKey);
+
+		parentTitle = parentKBFolder.getName();
+	}
+	else {
+		KBArticle parentKBArticle =
+				KBArticleServiceUtil.getLatestKBArticle(parentResourcePrimKey,
+						status);
+
+		parentTitle = parentKBArticle.getTitle();
+	}
+}
 %>
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="fm">
 
 		<%
-		KnowledgeBaseUtil.addPortletBreadcrumbEntries(0, originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
+		KnowledgeBaseUtil.addPortletBreadcrumbEntries(0L, originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
 		%>
 
 		<liferay-ui:breadcrumb
