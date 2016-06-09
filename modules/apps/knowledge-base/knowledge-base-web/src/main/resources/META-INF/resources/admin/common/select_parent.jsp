@@ -96,7 +96,7 @@ else {
 
 						<%
 						int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbFolder.getKbFolderId(), status);
-						int kbFoldersCount = KBFolderLocalServiceUtil.getKBFoldersCount(scopeGroupId, kbFolder.getKbFolderId());
+						int kbFoldersCount = KBFolderServiceUtil.getKBFoldersCount(scopeGroupId, kbFolder.getKbFolderId());
 
 						if ((kbFolder.getKbFolderId() == resourcePrimKey) || ((kbArticlesCount == 0) && (kbFoldersCount == 0))) {
 							rowURL = null;
