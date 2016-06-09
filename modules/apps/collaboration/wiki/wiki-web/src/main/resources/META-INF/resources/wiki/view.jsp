@@ -475,7 +475,7 @@ if (portletTitleBasedNavigation) {
 				<liferay-ui:message arguments="<%= childPages.size() %>" key="children-pages-x" translateArguments="<%= false %>" />
 			</h4>
 
-			<div <%= portletTitleBasedNavigation ? "class=\"panel main-content-card\"" : StringPool.BLANK %>>
+			<div>
 				<ul class="list-group">
 
 					<%
