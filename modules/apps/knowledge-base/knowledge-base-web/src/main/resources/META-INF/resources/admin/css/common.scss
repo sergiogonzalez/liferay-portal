@@ -215,8 +215,12 @@
 	}
 
 	.kb-article-tools {
-		float: right;
-		margin: 5px 0 5px;
+		margin-bottom: 15px;
+		text-align: right;
+
+		& > span {
+			margin-left: 5px;
+		}
 	}
 
 	.kb-attachments {

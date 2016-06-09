@@ -78,14 +78,6 @@ if (portletTitleBasedNavigation) {
 					</h1>
 				</c:if>
 
-				<%
-				request.setAttribute("article_icons.jsp-kb_article", kbArticle);
-				%>
-
-				<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
-					<liferay-util:include page="/admin/common/article_icons.jsp" servletContext="<%= application %>" />
-				</c:if>
-
 				<div id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">
 					<%= kbArticle.getContent() %>
 				</div>
