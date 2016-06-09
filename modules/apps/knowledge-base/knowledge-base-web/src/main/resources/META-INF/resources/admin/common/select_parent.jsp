@@ -170,7 +170,7 @@ else {
 						<%
 						int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), status);
 
-						if ((kbArticle.getResourcePrimKey() == resourcePrimKey) || (KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), status) == 0)) {
+						if ((kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticlesCount == 0)) {
 							rowURL = null;
 						}
 						%>
