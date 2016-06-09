@@ -40,7 +40,7 @@ if (wikiPage != null) {
 	parentTitle = wikiPage.getParentTitle();
 }
 
-List childPages = wikiPage.getViewableChildPages();
+List<WikiPage> childPages = wikiPage.getViewableChildPages();
 
 int attachmentsFileEntriesCount = 0;
 
@@ -479,8 +479,7 @@ if (portletTitleBasedNavigation) {
 				<ul class="list-group">
 
 					<%
-					for (int i = 0; i < childPages.size(); i++) {
-						WikiPage childPage = (WikiPage)childPages.get(i);
+					for (WikiPage childPage : childPages) {
 					%>
 
 						<li class="list-group-item">
