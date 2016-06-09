@@ -93,9 +93,7 @@ public class KBEntriesSearch extends SearchContainer<Object> {
 
 			OrderByComparator<Object> orderByComparator = null;
 
-			if (parentResourceClassNameId ==
-					PortalUtil.getClassNameId(KBFolder.class)) {
-
+			if (parentResourceClassNameId == kbFolderClassNameId) {
 				orderByComparator =
 					KnowledgeBaseUtil.getKBEntriesOrderByComparator(
 						orderByCol, orderByType);
