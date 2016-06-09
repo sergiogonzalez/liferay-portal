@@ -42,7 +42,7 @@ else {
 %>
 
 <div class="container-fluid-1280">
-	<aui:form method="post" name="selectFolderFm">
+	<aui:form method="post" name="fm">
 
 		<%
 		KnowledgeBaseUtil.addPortletBreadcrumbEntries(originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
@@ -230,5 +230,5 @@ else {
 </div>
 
 <aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFolderFm', '<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectKBEntry") %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />fm', '<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectKBEntry") %>');
 </aui:script>
