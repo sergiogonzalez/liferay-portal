@@ -27,12 +27,11 @@ if (enableKBArticleViewCountIncrement && kbArticle.isApproved()) {
 	AssetEntryServiceUtil.incrementViewCounter(KBArticle.class.getName(), latestKBArticle.getClassPK());
 }
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
 	renderResponse.setTitle(kbArticle.getTitle());
 }
 %>
@@ -71,7 +70,7 @@ if (portletTitleBasedNavigation) {
 		</div>
 
 		<div <%= portletTitleBasedNavigation ? "class=\"main-content-card panel\"" : StringPool.BLANK %>>
-			<div <%= portletTitleBasedNavigation ? "class=\"panel-body\"" : StringPool.BLANK %>>
+			<div class="kb-entity-body <%= portletTitleBasedNavigation ? "panel-body" : StringPool.BLANK %>">
 				<c:if test="<%= portletTitleBasedNavigation %>">
 					<h1>
 						<%= HtmlUtil.escape(kbArticle.getTitle()) %>
