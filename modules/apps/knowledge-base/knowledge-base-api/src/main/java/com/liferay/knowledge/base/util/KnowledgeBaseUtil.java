@@ -96,12 +96,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class KnowledgeBaseUtil {
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addPortletBreadcrumbEntries(
-	 *             long, long, long, String, HttpServletRequest,
-	 *             RenderResponse)}
-	 */
-	@Deprecated
 	public static void addPortletBreadcrumbEntries(
 			long originalParentResourceClassNameId,
 			long originalParentResourcePrimKey, long parentResourceClassNameId,
@@ -114,23 +108,6 @@ public class KnowledgeBaseUtil {
 		parameters.put(
 			"originalParentResourceClassNameId",
 			originalParentResourceClassNameId);
-		parameters.put(
-			"originalParentResourcePrimKey", originalParentResourcePrimKey);
-		parameters.put("parentResourceClassNameId", parentResourceClassNameId);
-		parameters.put("parentResourcePrimKey", parentResourcePrimKey);
-		parameters.put("mvcPath", mvcPath);
-
-		addPortletBreadcrumbEntries(parameters, request, renderResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			long originalParentResourcePrimKey, long parentResourceClassNameId,
-			long parentResourcePrimKey, String mvcPath,
-			HttpServletRequest request, RenderResponse renderResponse)
-		throws PortalException {
-
-		Map<String, Object> parameters = new HashMap<>();
-
 		parameters.put(
 			"originalParentResourcePrimKey", originalParentResourcePrimKey);
 		parameters.put("parentResourceClassNameId", parentResourceClassNameId);

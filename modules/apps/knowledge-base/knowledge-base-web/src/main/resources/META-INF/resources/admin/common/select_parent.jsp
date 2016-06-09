@@ -45,7 +45,7 @@ else {
 	<aui:form method="post" name="fm">
 
 		<%
-		KnowledgeBaseUtil.addPortletBreadcrumbEntries(originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
+		KnowledgeBaseUtil.addPortletBreadcrumbEntries(0, originalParentResourcePrimKey, parentResourceClassNameId, parentResourcePrimKey, templatePath + "select_parent.jsp", request, renderResponse);
 		%>
 
 		<liferay-ui:breadcrumb
