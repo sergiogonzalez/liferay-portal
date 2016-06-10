@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.web.search;
 
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
