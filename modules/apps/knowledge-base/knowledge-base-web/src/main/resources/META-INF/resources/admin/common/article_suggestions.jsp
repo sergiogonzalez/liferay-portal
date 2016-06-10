@@ -169,30 +169,32 @@ if (ratingsType == null) {
 						escapedModel="<%= true %>"
 						modelVar="kbComment"
 					>
-						<div class="kb-article-comment">
-							<p class="kb-article-comment-body">
-								<%= kbComment.getContent() %>
-							</p>
+						<liferay-ui:search-container-column-text
+							cssClass="kb-column-no-wrap"
+							name="comment"
+							orderable="<%= true %>"
+						>
+							<%= kbComment.getContent() %>
+						</liferay-ui:search-container-column-text>
 
-							<div class="kb-article-comment-post-date">
-								<i class="icon-calendar"></i>
+						<liferay-ui:search-container-column-date
+							cssClass="kb-column-no-wrap"
+							name="date"
+							orderable="<%= true %>"
+							orderableProperty="modified-date"
+							value="<%= kbComment.getModifiedDate() %>"
+						/>
 
-								<%
-								DateSearchEntry dateSearchEntry = new DateSearchEntry();
-
-								dateSearchEntry.setDate(kbComment.getModifiedDate());
-								%>
-
-								<%= dateSearchEntry.getName(request) %>
-
-								<aui:model-context bean="<%= kbComment %>" model="<%= KBComment.class %>" />
-
-								<aui:workflow-status status="<%= kbComment.getStatus() %>" statusMessage="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
-							</div>
-						</div>
+						<liferay-ui:search-container-column-text
+							cssClass="kb-column-no-wrap"
+							name="status"
+							orderable="<%= true %>"
+						>
+							<liferay-ui:message key="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
+						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator />
+					<liferay-ui:search-iterator markupView="lexicon" />
 				</liferay-ui:search-container>
 			</c:if>
 		</c:otherwise>

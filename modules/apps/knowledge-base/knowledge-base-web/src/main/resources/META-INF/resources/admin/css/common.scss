@@ -93,26 +93,6 @@
 		font-weight: normal;
 	}
 
-	.kb-article-comment {
-		border-top: 1px dotted;
-		margin: 20px;
-		padding: 10px;
-
-		.lfr-table {
-			vertical-align: top;
-			width: 100%;
-
-			.kb-article-comment-body {
-				word-wrap: break-word;
-			}
-
-			.kb-article-comment-user {
-				text-align: center;
-				width: 30%;
-			}
-		}
-	}
-
 	.kb-article-ratings {
 		display: inline-block;
 		width: 100%;
@@ -165,10 +145,6 @@
 				padding-left: 15px;
 			}
 		}
-	}
-
-	.kb-article-comment-date, .kb-article-comment-helpful {
-		margin-top: 10px;
 	}
 
 	.kb-article-tools {
