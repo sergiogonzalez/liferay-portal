@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_article.jsp"
+		"path=/admin/view_article.jsp", "path=/admin/view_articles.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
@@ -62,7 +62,9 @@ public class DeleteKBArticlePortletConfigurationIcon
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/view_article.jsp");
+		String mvcPath = ParamUtil.getString(portletRequest, "mvcPath");
+
+		portletURL.setParameter("mvcPath", mvcPath);
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteKBArticle");
 
