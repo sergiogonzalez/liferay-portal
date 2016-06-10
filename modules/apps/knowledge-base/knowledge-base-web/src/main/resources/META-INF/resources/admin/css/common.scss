@@ -131,31 +131,6 @@
 		width: 100%;
 	}
 
-	.kb-article-suggestion {
-		clear: both;
-
-		textarea {
-			min-width: 98%;
-			padding: 1%;
-			width: 98%;
-		}
-
-		div.control-group {
-			margin-bottom: 5px;
-		}
-	}
-
-	@include respond-to(desktop) {
-		.kb-article-suggestion {
-			margin-left: 15px;
-			margin-top: 15px;
-
-			textarea {
-				max-width: 500px;
-			}
-		}
-	}
-
 	.kb-article-suggestion-actions {
 		clear: both;
 		display: inline-block;

@@ -44,9 +44,7 @@ if (ratingsType == null) {
 
 <c:if test="<%= ratingsType.equals(RatingsType.THUMBS) && themeDisplay.isSignedIn() %>">
 	<div class="kb-article-suggestion-actions" id="<portlet:namespace />additionalSuggestionActionsContainer">
-		<a data-show-node-id="<portlet:namespace />suggestionContainer" href="javascript:void(0)">
-			<liferay-ui:message key="do-you-have-any-suggestions" />
-		</a>
+		<h5><liferay-ui:message key="do-you-have-any-suggestions" /></h5>
 
 		<c:choose>
 			<c:when test="<%= kbCommentsCount == 1 %>">
@@ -90,7 +88,7 @@ if (ratingsType == null) {
 
 	<a name="kbSuggestions"></a>
 
-	<div class="hide kb-article-suggestion" id="<portlet:namespace />suggestionContainer">
+	<div id="<portlet:namespace />suggestionContainer">
 
 		<%
 		PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithCommentsURL(kbArticle);
@@ -110,16 +108,10 @@ if (ratingsType == null) {
 			<aui:model-context model="<%= KBComment.class %>" />
 
 			<aui:fieldset>
-				<span class="kb-helpful-text">
-					<liferay-ui:message key="what-did-you-like-the-most-what-would-you-improve" />
-				</span>
-
 				<aui:input label="" name="content" />
 
 				<aui:button-row cssClass="kb-submit-buttons">
 					<aui:button type="submit" value="submit" />
-
-					<aui:button name="cancelSuggestion" value="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</aui:form>
@@ -231,21 +223,6 @@ if (ratingsType == null) {
 				}
 			},
 			'a'
-		);
-
-		A.one('#<portlet:namespace />cancelSuggestion').on(
-			'click',
-			function(event) {
-				var container = this.ancestor('#<portlet:namespace />suggestionContainer');
-
-				container.hide();
-
-				var content = container.one('#<portlet:namespace />content');
-
-				if (content) {
-					content.val('');
-				}
-			}
 		);
 	</aui:script>
 </c:if>
