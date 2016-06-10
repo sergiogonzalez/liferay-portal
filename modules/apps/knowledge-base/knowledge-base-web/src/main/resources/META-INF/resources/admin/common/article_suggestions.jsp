@@ -22,16 +22,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 boolean showAdminSuggestionView = SuggestionPermission.contains(permissionChecker, scopeGroupId, kbArticle, KBActionKeys.VIEW_SUGGESTIONS);
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
-%>
 
-<div class="kb-article-ratings">
-	<liferay-ui:ratings
-		className="<%= KBArticle.class.getName() %>"
-		classPK="<%= kbArticle.getResourcePrimKey() %>"
-	/>
-</div>
-
-<%
 int kbCommentsCount = 0;
 int pendingKBCommentsCount = 0;
 
