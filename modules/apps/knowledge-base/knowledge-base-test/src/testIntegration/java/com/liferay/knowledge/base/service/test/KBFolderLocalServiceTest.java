@@ -35,10 +35,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -213,6 +215,8 @@ public class KBFolderLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
+		sortByModifiedDate(kbArticle1, kbArticle2);
+
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -242,6 +246,8 @@ public class KBFolderLocalServiceTest {
 		KBArticle kbArticle2 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
+
+		sortByPriority(kbArticle1, kbArticle2);
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -301,6 +307,8 @@ public class KBFolderLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
+		sortByModifiedDate(kbArticle1, kbArticle2);
+
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -330,6 +338,8 @@ public class KBFolderLocalServiceTest {
 		KBArticle kbArticle2 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
+
+		sortByPriority(kbArticle1, kbArticle2);
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -455,6 +465,30 @@ public class KBFolderLocalServiceTest {
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentResourcePrimKey, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
+	}
+
+	protected void sortByModifiedDate(KBArticle... kbArticles) {
+		Calendar calendar = CalendarFactoryUtil.getCalendar(2016, 1, 1);
+
+		for (KBArticle kbArticle : kbArticles) {
+			kbArticle.setModifiedDate(calendar.getTime());
+
+			KBArticleLocalServiceUtil.updateKBArticle(kbArticle);
+
+			calendar.add(Calendar.DATE, 1);
+		}
+	}
+
+	protected void sortByPriority(KBArticle... kbArticles) {
+		double priority = 1.0;
+
+		for (KBArticle kbArticle : kbArticles) {
+			kbArticle.setPriority(priority);
+
+			KBArticleLocalServiceUtil.updateKBArticle(kbArticle);
+
+			priority++;
+		}
 	}
 
 	protected KBArticle updateKBArticle(KBArticle kbArticle, String title)
