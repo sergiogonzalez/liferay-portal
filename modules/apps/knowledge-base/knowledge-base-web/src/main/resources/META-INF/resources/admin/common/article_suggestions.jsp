@@ -43,48 +43,7 @@ if (ratingsType == null) {
 %>
 
 <c:if test="<%= ratingsType.equals(RatingsType.THUMBS) && themeDisplay.isSignedIn() %>">
-	<div class="kb-article-suggestion-actions" id="<portlet:namespace />additionalSuggestionActionsContainer">
-		<h5><liferay-ui:message key="do-you-have-any-suggestions" /></h5>
-
-		<c:choose>
-			<c:when test="<%= kbCommentsCount == 1 %>">
-				|
-
-				<a data-show-node-id="<portlet:namespace />previousCommentsContainer" href="javascript:void(0)">
-					<c:choose>
-						<c:when test="<%= showAdminSuggestionView %>">
-							<liferay-ui:message key="there-is-one-suggestion" />
-
-							<c:if test="<%= pendingKBCommentsCount > 0 %>">
-								(<liferay-ui:message arguments="<%= pendingKBCommentsCount %>" key="x-pending" />)
-							</c:if>
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="you-sent-one-suggestion-for-this-article" />
-						</c:otherwise>
-					</c:choose>
-				</a>
-			</c:when>
-			<c:when test="<%= kbCommentsCount > 1 %>">
-				|
-
-				<a data-show-node-id="<portlet:namespace />previousCommentsContainer" href="javascript:void(0)">
-					<c:choose>
-						<c:when test="<%= showAdminSuggestionView %>">
-							<liferay-ui:message arguments="<%= kbCommentsCount %>" key="there-are-x-suggestions" />
-
-							<c:if test="<%= pendingKBCommentsCount > 0 %>">
-								(<liferay-ui:message arguments="<%= pendingKBCommentsCount %>" key="x-pending" />)
-							</c:if>
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message arguments="<%= kbCommentsCount %>" key="you-sent-x-suggestions-for-this-article" />
-						</c:otherwise>
-					</c:choose>
-				</a>
-			</c:when>
-		</c:choose>
-	</div>
+	<h5><liferay-ui:message key="do-you-have-any-suggestions" /></h5>
 
 	<a name="kbSuggestions"></a>
 
@@ -132,6 +91,41 @@ if (ratingsType == null) {
 		message="suggestion-saved-successfully"
 	/>
 
+	<c:choose>
+		<c:when test="<%= kbCommentsCount == 1 %>">
+			<c:choose>
+				<c:when test="<%= showAdminSuggestionView %>">
+					<h5>
+						<liferay-ui:message key="there-is-one-suggestion" />
+
+						<c:if test="<%= pendingKBCommentsCount > 0 %>">
+							(<liferay-ui:message arguments="<%= pendingKBCommentsCount %>" key="x-pending" />)
+						</c:if>
+					</h5>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key="you-sent-one-suggestion-for-this-article" />
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+		<c:when test="<%= kbCommentsCount > 1 %>">
+			<c:choose>
+				<c:when test="<%= showAdminSuggestionView %>">
+					<h5>
+						<liferay-ui:message arguments="<%= kbCommentsCount %>" key="there-are-x-suggestions" />
+
+						<c:if test="<%= pendingKBCommentsCount > 0 %>">
+							(<liferay-ui:message arguments="<%= pendingKBCommentsCount %>" key="x-pending" />)
+						</c:if>
+					</h5>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message arguments="<%= kbCommentsCount %>" key="you-sent-x-suggestions-for-this-article" />
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+	</c:choose>
+
 	<%
 	boolean expanded = ParamUtil.getBoolean(request, "expanded");
 	%>
@@ -152,77 +146,55 @@ if (ratingsType == null) {
 			request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
 			%>
 
-			<div class="kb-article-previous-comments <%= expanded ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />previousCommentsContainer">
-				<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
-			</div>
+			<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
-			<div class="kb-article-previous-comments <%= expanded ? "" : "hide" %>" id="<portlet:namespace />previousCommentsContainer">
-				<c:if test="<%= kbCommentsCount > 0 %>">
-					<liferay-portlet:renderURL varImpl="iteratorURL">
-						<portlet:param name="expanded" value="<%= Boolean.TRUE.toString() %>" />
-					</liferay-portlet:renderURL>
+			<c:if test="<%= kbCommentsCount > 0 %>">
+				<liferay-portlet:renderURL varImpl="iteratorURL">
+					<portlet:param name="expanded" value="<%= Boolean.TRUE.toString() %>" />
+				</liferay-portlet:renderURL>
 
-					<liferay-ui:search-container
-						emptyResultsMessage="no-comments-found"
-						iteratorURL="<%= iteratorURL %>"
-						orderByComparator='<%= KnowledgeBaseUtil.getKBCommentOrderByComparator("modified-date", "desc") %>'
-						total="<%= kbCommentsCount %>"
+				<liferay-ui:search-container
+					emptyResultsMessage="no-comments-found"
+					iteratorURL="<%= iteratorURL %>"
+					orderByComparator='<%= KnowledgeBaseUtil.getKBCommentOrderByComparator("modified-date", "desc") %>'
+					total="<%= kbCommentsCount %>"
+				>
+					<liferay-ui:search-container-results
+						results="<%= KBCommentLocalServiceUtil.getKBComments(themeDisplay.getUserId(), KBArticle.class.getName(), kbArticle.getClassPK(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+					/>
+
+					<liferay-ui:search-container-row
+						className="com.liferay.knowledge.base.model.KBComment"
+						escapedModel="<%= true %>"
+						modelVar="kbComment"
 					>
-						<liferay-ui:search-container-results
-							results="<%= KBCommentLocalServiceUtil.getKBComments(themeDisplay.getUserId(), KBArticle.class.getName(), kbArticle.getClassPK(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-						/>
+						<div class="kb-article-comment">
+							<p class="kb-article-comment-body">
+								<%= kbComment.getContent() %>
+							</p>
 
-						<liferay-ui:search-container-row
-							className="com.liferay.knowledge.base.model.KBComment"
-							escapedModel="<%= true %>"
-							modelVar="kbComment"
-						>
-							<div class="kb-article-comment">
-								<p class="kb-article-comment-body">
-									<%= kbComment.getContent() %>
-								</p>
+							<div class="kb-article-comment-post-date">
+								<i class="icon-calendar"></i>
 
-								<div class="kb-article-comment-post-date">
-									<i class="icon-calendar"></i>
+								<%
+								DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
-									<%
-									DateSearchEntry dateSearchEntry = new DateSearchEntry();
+								dateSearchEntry.setDate(kbComment.getModifiedDate());
+								%>
 
-									dateSearchEntry.setDate(kbComment.getModifiedDate());
-									%>
+								<%= dateSearchEntry.getName(request) %>
 
-									<%= dateSearchEntry.getName(request) %>
+								<aui:model-context bean="<%= kbComment %>" model="<%= KBComment.class %>" />
 
-									<aui:model-context bean="<%= kbComment %>" model="<%= KBComment.class %>" />
-
-									<aui:workflow-status status="<%= kbComment.getStatus() %>" statusMessage="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
-								</div>
+								<aui:workflow-status status="<%= kbComment.getStatus() %>" statusMessage="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
 							</div>
-						</liferay-ui:search-container-row>
+						</div>
+					</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator />
-					</liferay-ui:search-container>
-				</c:if>
-			</div>
+					<liferay-ui:search-iterator />
+				</liferay-ui:search-container>
+			</c:if>
 		</c:otherwise>
 	</c:choose>
-
-	<aui:script use="aui-base">
-		A.one('#<portlet:namespace />additionalSuggestionActionsContainer').delegate(
-			'click',
-			function(event) {
-				var showNode = A.one('#' + event.currentTarget.getData('show-node-id'));
-
-				showNode.toggleView();
-
-				var content = showNode.one('#<portlet:namespace />content');
-
-				if (content) {
-					content.focus();
-				}
-			},
-			'a'
-		);
-	</aui:script>
 </c:if>
