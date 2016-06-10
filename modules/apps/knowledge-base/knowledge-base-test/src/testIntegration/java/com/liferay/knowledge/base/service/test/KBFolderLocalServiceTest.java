@@ -395,9 +395,6 @@ public class KBFolderLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		KBArticle newKBArticle = updateKBArticle(
-			kbArticle, RandomTestUtil.randomString());
-
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -410,7 +407,7 @@ public class KBFolderLocalServiceTest {
 		Assert.assertEquals(
 			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 		Assert.assertEquals(
-			newKBArticle.getKbArticleId(), currentKBArticle1.getKbArticleId());
+			kbArticle.getKbArticleId(), currentKBArticle1.getKbArticleId());
 	}
 
 	@Test
