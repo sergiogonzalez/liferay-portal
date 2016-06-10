@@ -610,8 +610,17 @@ public class JournalFolderLocalServiceImpl
 			restoreDependentsFromTrash(foldersAndArticles);
 		}
 
-		return journalFolderLocalService.moveFolder(
+		folder = journalFolderLocalService.moveFolder(
 			folderId, parentFolderId, serviceContext);
+
+		// Index
+
+		Indexer<JournalFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			JournalFolder.class);
+
+		indexer.reindex(folder);
+
+		return folder;
 	}
 
 	@Override
@@ -664,6 +673,13 @@ public class JournalFolderLocalServiceImpl
 		SocialActivityManagerUtil.addActivity(
 			userId, folder, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		// Index
+
+		Indexer<JournalFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			JournalFolder.class);
+
+		indexer.reindex(folder);
 
 		return folder;
 	}
