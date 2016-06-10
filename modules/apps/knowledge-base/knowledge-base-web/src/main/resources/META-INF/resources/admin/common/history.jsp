@@ -29,12 +29,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(kbArticle.getTitle());
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(kbArticle.getTitle());
+}
 %>
 
 <liferay-portlet:renderURL varImpl="compareVersionsURL">
@@ -180,6 +182,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 			</h1>
 
 			<div class="kb-article-tools">
+
 				<%
 				PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
 				%>
