@@ -21,7 +21,14 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 
 ResultRow row = (ResultRow)request.getAttribute(KBWebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-KBArticle kbArticle = (KBArticle)row.getObject();
+KBArticle kbArticle = null;
+
+if (row != null) {
+	kbArticle = (KBArticle)row.getObject();
+}
+else {
+	kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle");
+}
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 %>
