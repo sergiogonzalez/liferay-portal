@@ -47,13 +47,19 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class UnsubscribeKBArticlePortletConfigurationIcon
+public class KBArticleSubscriptionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		String key = "subscribe";
+
+		if (isSubscribed(portletRequest)) {
+			key = "unsubscribe";
+		}
+
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "unsubscribe");
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override
@@ -64,8 +70,15 @@ public class UnsubscribeKBArticlePortletConfigurationIcon
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "unsubscribeKBArticle");
+		if (isSubscribed(portletRequest)) {
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "unsubscribeKBArticle");
+		}
+		else {
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "subscribeKBArticle");
+		}
+
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
@@ -98,15 +111,24 @@ public class UnsubscribeKBArticlePortletConfigurationIcon
 
 		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
 			KBArticlePermission.contains(
-				permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) &&
-			_subscriptionLocalService.isSubscribed(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
+				permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE)) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	protected boolean isSubscribed(PortletRequest portletRequest) {
+		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _subscriptionLocalService.isSubscribed(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
 	}
 
 	@Reference(unbind = "-")
