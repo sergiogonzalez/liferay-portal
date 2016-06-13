@@ -36,12 +36,12 @@ if (portletTitleBasedNavigation) {
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcPath" value="/admin/common/compare_versions.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-portlet:resourceURL id="compareVersions" varImpl="resourceURL">
-	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 </liferay-portlet:resourceURL>
 
