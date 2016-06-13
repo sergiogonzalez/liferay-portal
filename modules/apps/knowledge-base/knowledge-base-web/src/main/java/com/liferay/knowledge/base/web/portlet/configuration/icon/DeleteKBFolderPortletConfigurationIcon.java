@@ -66,11 +66,11 @@ public class DeleteKBFolderPortletConfigurationIcon
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteKBFolder");
 
-		PortletURL homeURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("redirect", homeURL.toString());
+		portletURL.setParameter("redirect", redirectURL.toString());
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
