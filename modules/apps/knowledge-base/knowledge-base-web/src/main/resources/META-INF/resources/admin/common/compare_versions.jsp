@@ -20,6 +20,7 @@
 String backURL = ParamUtil.getString(request, "backURL");
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
+String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 double targetVersion = ParamUtil.getDouble(request, "targetVersion");
 
@@ -46,7 +47,7 @@ if (portletTitleBasedNavigation) {
 
 <div class="container-fluid-1280">
 	<liferay-frontend:diff-version-comparator
-		diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), GetterUtil.getInteger(sourceVersion), GetterUtil.getInteger(targetVersion), "content") %>'
+		diffHtmlResults="<%= diffHtmlResults %>"
 		diffVersionsInfo="<%= AdminUtil.getDiffVersionsInfo(scopeGroupId, kbArticle.getResourcePrimKey(), GetterUtil.getInteger(sourceVersion), GetterUtil.getInteger(targetVersion)) %>"
 		portletURL="<%= portletURL %>"
 		resourceURL="<%= resourceURL %>"
