@@ -249,6 +249,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 								<c:if test="<%= childKBArticlesCount > 0 %>">
 									<liferay-portlet:renderURL varImpl="childKBArticlesURL">
 										<portlet:param name="mvcPath" value="/admin/view_articles.jsp" />
+										<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 										<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 										<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
