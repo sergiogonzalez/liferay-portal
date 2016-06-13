@@ -73,7 +73,7 @@ public class DeleteKBFolderPortletConfigurationIcon
 		portletURL.setParameter("redirect", redirectURL.toString());
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		portletURL.setParameter(
 			"kbFolderId", String.valueOf(kbFolder.getKbFolderId()));
@@ -92,7 +92,7 @@ public class DeleteKBFolderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

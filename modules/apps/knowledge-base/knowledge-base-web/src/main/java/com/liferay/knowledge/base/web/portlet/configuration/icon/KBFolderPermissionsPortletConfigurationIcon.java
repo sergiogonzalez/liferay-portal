@@ -64,7 +64,7 @@ public class KBFolderPermissionsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		try {
 			String modelResource = KBFolder.class.getName();
@@ -93,7 +93,7 @@ public class KBFolderPermissionsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
