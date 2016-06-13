@@ -147,6 +147,7 @@ public class KnowledgeBaseUtil {
 							KBArticleConstants.getClassName())) {
 
 				parameters.put("mvcPath", "/admin/view_articles.jsp");
+				parameters.put("resourcePrimKey", parentResourcePrimKey);
 			}
 			else {
 				parameters.put("mvcPath", "/admin/view.jsp");
