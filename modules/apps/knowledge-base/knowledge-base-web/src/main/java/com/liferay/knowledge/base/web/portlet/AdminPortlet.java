@@ -273,7 +273,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			}
 
 			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER, kbFolder);
+				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER, kbFolder);
 
 			KBTemplate kbTemplate = null;
 

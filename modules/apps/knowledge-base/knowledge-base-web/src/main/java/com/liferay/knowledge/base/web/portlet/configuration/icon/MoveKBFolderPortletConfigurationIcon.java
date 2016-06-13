@@ -66,7 +66,7 @@ public class MoveKBFolderPortletConfigurationIcon
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbFolder.getClassNameId()));
@@ -93,7 +93,7 @@ public class MoveKBFolderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
