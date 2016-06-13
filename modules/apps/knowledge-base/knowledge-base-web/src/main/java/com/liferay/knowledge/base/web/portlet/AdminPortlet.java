@@ -22,6 +22,7 @@ import com.liferay.knowledge.base.exception.KBTemplateContentException;
 import com.liferay.knowledge.base.exception.KBTemplateTitleException;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
+import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.exception.NoSuchTemplateException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -254,6 +255,26 @@ public class AdminPortlet extends BaseKBPortlet {
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 
+			KBFolder kbFolder = null;
+
+			long kbFolderClassNameId = PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName());
+
+			long parentResourceClassNameId = ParamUtil.getLong(
+				renderRequest, "parentResourceClassNameId",
+				kbFolderClassNameId);
+			long parentResourcePrimKey = ParamUtil.getLong(
+				renderRequest, "parentResourcePrimKey");
+
+			if ((parentResourcePrimKey > 0) &&
+				(parentResourceClassNameId == kbFolderClassNameId)) {
+
+				kbFolder = kbFolderService.getKBFolder(parentResourcePrimKey);
+			}
+
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER, kbFolder);
+
 			KBTemplate kbTemplate = null;
 
 			long kbTemplateId = ParamUtil.getLong(
@@ -270,6 +291,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
+				e instanceof NoSuchFolderException ||
 				e instanceof NoSuchTemplateException ||
 				e instanceof PrincipalException) {
 
