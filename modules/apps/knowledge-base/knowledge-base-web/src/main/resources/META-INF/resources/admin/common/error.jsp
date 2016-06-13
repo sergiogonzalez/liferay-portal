@@ -16,12 +16,26 @@
 
 <%@ include file="/admin/common/init.jsp" %>
 
-<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
+<%
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+
+	PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, PortletRequest.RENDER_PHASE);
+
+	portletDisplay.setURLBack(portletURL.toString());
+
+	renderResponse.setTitle(LanguageUtil.get(resourceBundle,"error"));
+}
+%>
+
+<c:if test="<%= !portletTitleBasedNavigation %>">
 	<liferay-ui:error-header />
 </c:if>
 
 <c:choose>
-	<c:when test="<%= rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
+	<c:when test="<%= portletTitleBasedNavigation %>">
 		<liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-selected-article-no-longer-exists" />
 	</c:when>
 	<c:otherwise>
