@@ -49,7 +49,7 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 
 	<aui:nav-bar-search>
 		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/admin/search_results.jsp" />
+			<portlet:param name="mvcPath" value="/admin/search.jsp" />
 		</liferay-portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" method="get" name="searchFm">
