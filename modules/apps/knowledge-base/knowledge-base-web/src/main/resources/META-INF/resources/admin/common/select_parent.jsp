@@ -75,7 +75,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			showParentGroups="<%= false %>"
 		/>
 
-		<c:if test="<%= ArrayUtil.contains(selectableClassNameIds, parentResourceClassNameId) && ((parentResourceClassNameId == kbFolderClassNameId) || ((parentResourceClassNameId == kbArticleClassNameId) && (parentResourcePrimKey != 0))) %>">
+		<c:if test="<%= ArrayUtil.contains(selectableClassNameIds, parentResourceClassNameId) && ((parentResourceClassNameId != kbArticleClassNameId) || (parentResourcePrimKey != 0)) %>">
 			<aui:button-row cssClass="input-append">
 
 				<%
