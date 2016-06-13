@@ -69,13 +69,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" name="submit" type="submit" />
 
-			<portlet:renderURL var="cancelURL">
-				<portlet:param name="mvcPath" value='<%= parentKBFolderId == KBFolderConstants.DEFAULT_PARENT_FOLDER_ID ? "/admin/view.jsp" : "/admin/view_folders.jsp" %>' />
-				<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
-				<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentKBFolderId) %>" />
-			</portlet:renderURL>
-
-			<aui:button cssClass="btn-lg" href="<%= cancelURL %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>
