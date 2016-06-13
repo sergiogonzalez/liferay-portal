@@ -16,81 +16,75 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.permission.KBFolderPermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_article.jsp", "path=/admin/view_articles.jsp"
+		"path=/admin/view_folders.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
-public class DeleteKBArticlePortletConfigurationIcon
+public class KBFolderPermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
+			getResourceBundle(getLocale(portletRequest)), "permissions");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.ACTION_PHASE);
+		String url = StringPool.BLANK;
 
-		String mvcPath = ParamUtil.getString(portletRequest, "mvcPath");
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("mvcPath", mvcPath);
+		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
 
-		portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteKBArticle");
+		try {
+			String modelResource = KBFolder.class.getName();
+			String modelResourceDescription = kbFolder.getName();
+			String resourcePrimKey = String.valueOf(kbFolder.getKbFolderId());
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+			url = PermissionsURLTag.doTag(
+				StringPool.BLANK, modelResource, modelResourceDescription, null,
+				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
+				themeDisplay.getRequest());
+		}
+		catch (Exception e) {
+		}
 
-		PortletURL homeURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", homeURL.toString());
-
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
-		portletURL.setParameter(
-			"status", String.valueOf(
-				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
-
-		return portletURL.toString();
+		return url;
 	}
 
 	@Override
 	public double getWeight() {
-		return 104;
+		return 101;
 	}
 
 	@Override
@@ -98,12 +92,24 @@ public class DeleteKBArticlePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
 
-		return KBArticlePermission.contains(
-			themeDisplay.getPermissionChecker(), kbArticle,
-			KBActionKeys.DELETE);
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (KBFolderPermission.contains(
+				permissionChecker, kbFolder, KBActionKeys.PERMISSIONS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
 	}
 
 }
