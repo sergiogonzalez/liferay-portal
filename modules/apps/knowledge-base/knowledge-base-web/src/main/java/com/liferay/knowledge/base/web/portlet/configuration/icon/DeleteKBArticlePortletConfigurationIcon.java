@@ -20,7 +20,6 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -46,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 	service = PortletConfigurationIcon.class
 )
 public class DeleteKBArticlePortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseGetKBArticlePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -68,8 +67,7 @@ public class DeleteKBArticlePortletConfigurationIcon
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteKBArticle");
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
@@ -98,8 +96,7 @@ public class DeleteKBArticlePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		return KBArticlePermission.contains(
 			themeDisplay.getPermissionChecker(), kbArticle,
