@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_article.jsp"
+		"path=/admin/view_article.jsp", "path=/admin/view_articles.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
@@ -62,30 +62,20 @@ public class DeleteKBArticlePortletConfigurationIcon
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/view_article.jsp");
+		String mvcPath = ParamUtil.getString(portletRequest, "mvcPath");
+
+		portletURL.setParameter("mvcPath", mvcPath);
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteKBArticle");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String redirect = themeDisplay.getURLCurrent();
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		long resourcePrimKey = ParamUtil.getLong(
-			portletRequest, "resourcePrimKey");
+		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
-		if (kbArticle.getResourcePrimKey() == resourcePrimKey) {
-			PortletURL homeURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			redirect = homeURL.toString();
-		}
-
-		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("redirect", redirectURL.toString());
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
