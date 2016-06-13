@@ -78,9 +78,16 @@
 			<div class="entry-body">
 				<c:choose>
 					<c:when test='<%= displayStyle.startsWith("abstract") %>'>
-						<div class="asset-small-image">
-							<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(entry.getSmallImageURL(themeDisplay)) %>" width="150" />
-						</div>
+
+						<%
+						String smallImageURL = HtmlUtil.escape(entry.getSmallImageURL(themeDisplay));
+						%>
+
+						<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
+							<div class="asset-small-image">
+								<img alt="" class="asset-small-image" src="<%= smallImageURL %>" width="150" />
+							</div>
+						</c:if>
 
 						<%
 						String summary = entry.getDescription();
