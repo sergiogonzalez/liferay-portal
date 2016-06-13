@@ -55,7 +55,7 @@ else {
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.UPDATE) %>">
 			<liferay-portlet:renderURL var="editURL">
 				<portlet:param name="mvcPath" value='<%= templatePath + "common/edit_folder.jsp" %>' />
-				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="kbFolderId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 			</liferay-portlet:renderURL>
 
@@ -68,7 +68,7 @@ else {
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.MOVE_KB_FOLDER) %>">
 			<liferay-portlet:renderURL var="moveKBFolderURL">
 				<portlet:param name="mvcPath" value='<%= templatePath + "move_object.jsp" %>' />
-				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
 				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 				<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
@@ -84,7 +84,7 @@ else {
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.DELETE) %>">
 			<liferay-portlet:actionURL name="deleteKBFolder" var="deleteURL">
 				<portlet:param name="mvcPath" value='<%= ParamUtil.getString(request, "mvcPath") %>' />
-				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="redirect" value="<%= (row == null) ? redirect : currentURL %>" />
 				<portlet:param name="kbFolderId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 			</liferay-portlet:actionURL>
 
