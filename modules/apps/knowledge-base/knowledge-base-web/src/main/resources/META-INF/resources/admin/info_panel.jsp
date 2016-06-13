@@ -123,56 +123,75 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 			</div>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<liferay-ui:tabs names="details,versions" refresh="<%= false %>" type="dropdown">
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<dl>
+						<dt class="h5">
+							<liferay-ui:message key="title" />
+						</dt>
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="created" /></h5>
+						<dd>
+							<%= HtmlUtil.escape(kbArticle.getTitle()) %>
+						</dd>
 
-			<p>
-				<%= HtmlUtil.escape(kbArticle.getUserName()) %>
-			</p>
+						<dt class="h5">
+							<liferay-ui:message key="author" />
+						</dt>
 
-			<c:if test="<%= Validator.isNotNull(kbArticle.getDescription()) %>">
-				<h5><liferay-ui:message key="description" /></h5>
+						<dd>
+							<%= HtmlUtil.escape(kbArticle.getUserName()) %>
+						</dd>
 
-				<p>
-					<%= HtmlUtil.escape(kbArticle.getDescription()) %>
-				</p>
-			</c:if>
+						<dt class="h5">
+							<liferay-ui:message key="status" />
+						</dt>
 
-			<div class="lfr-asset-categories">
-				<liferay-ui:asset-categories-summary
-					className="<%= KBArticle.class.getName() %>"
-					classPK="<%= kbArticle.getClassPK() %>"
-				/>
-			</div>
+						<dd>
+							<span class="text-capitalize"><%= HtmlUtil.escape(KnowledgeBaseUtil.getStatusLabel(kbArticle.getStatus())) %></span>
+						</dd>
 
-			<div class="lfr-asset-tags">
-				<liferay-ui:asset-tags-summary
-					className="<%= KBArticle.class.getName() %>"
-					classPK="<%= kbArticle.getClassPK() %>"
-					message="tags"
-				/>
-			</div>
+						<dt class="h5">
+							<liferay-ui:message key="priority" />
+						</dt>
 
-			<liferay-ui:ratings
-				className="<%= KBArticle.class.getName() %>"
-				classPK="<%= kbArticle.getClassPK() %>"
-			/>
+						<dd>
+							<%= kbArticle.getPriority() %>
+						</dd>
 
-			<liferay-ui:custom-attributes-available className="<%= KBArticle.class.getName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= KBArticle.class.getName() %>"
-					classPK="<%= kbArticle.getClassPK() %>"
-					editable="<%= false %>"
-					label="<%= true %>"
-				/>
-			</liferay-ui:custom-attributes-available>
-		</div>
+						<dt class="h5">
+							<liferay-ui:message key="create-date" />
+						</dt>
+
+						<dd>
+							<%= dateFormatDateTime.format(kbArticle.getCreateDate()) %>
+						</dd>
+
+						<dt class="h5">
+							<liferay-ui:message key="modified-date" />
+						</dt>
+
+						<dd>
+							<%= dateFormatDateTime.format(kbArticle.getModifiedDate()) %>
+						</dd>
+
+						<dt class="h5">
+							<liferay-ui:message key="views" />
+						</dt>
+
+						<dd>
+							<%= kbArticle.getViewCount() %>
+						</dd>
+					</dl>
+				</div>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<liferay-util:include page="/admin/common/article_history.jsp" servletContext="<%= application %>" />
+				</div>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
