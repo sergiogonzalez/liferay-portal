@@ -65,8 +65,8 @@ public class AdminUtil {
 	}
 
 	public static DiffVersionsInfo getDiffVersionsInfo(
-		long groupId, long kbArticleResourcePrimKey, double sourceVersion,
-		double targetVersion) {
+		long groupId, long kbArticleResourcePrimKey, int sourceVersion,
+		int targetVersion) {
 
 		double previousVersion = 0;
 		double nextVersion = 0;
@@ -105,7 +105,7 @@ public class AdminUtil {
 	}
 
 	public static String getKBArticleDiff(
-			long resourcePrimKey, double sourceVersion, double targetVersion,
+			long resourcePrimKey, int sourceVersion, int targetVersion,
 			String param)
 		throws Exception {
 
@@ -115,15 +115,15 @@ public class AdminUtil {
 
 		if (sourceVersion == targetVersion) {
 			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
-				resourcePrimKey, GetterUtil.getInteger(targetVersion));
+				resourcePrimKey, targetVersion);
 
 			return BeanPropertiesUtil.getString(kbArticle, param);
 		}
 
 		KBArticle sourceKBArticle = KBArticleLocalServiceUtil.getKBArticle(
-			resourcePrimKey, GetterUtil.getInteger(sourceVersion));
+			resourcePrimKey, sourceVersion);
 		KBArticle targetKBArticle = KBArticleLocalServiceUtil.getKBArticle(
-			resourcePrimKey, GetterUtil.getInteger(targetVersion));
+			resourcePrimKey, targetVersion);
 
 		String sourceHtml = BeanPropertiesUtil.getString(
 			sourceKBArticle, param);

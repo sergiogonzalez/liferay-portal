@@ -46,8 +46,8 @@ if (portletTitleBasedNavigation) {
 
 <div class="container-fluid-1280">
 	<liferay-frontend:diff-version-comparator
-		diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), sourceVersion, targetVersion, "content") %>'
-		diffVersionsInfo="<%= AdminUtil.getDiffVersionsInfo(scopeGroupId, kbArticle.getResourcePrimKey(), sourceVersion, targetVersion) %>"
+		diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), GetterUtil.getInteger(sourceVersion), GetterUtil.getInteger(targetVersion), "content") %>'
+		diffVersionsInfo="<%= AdminUtil.getDiffVersionsInfo(scopeGroupId, kbArticle.getResourcePrimKey(), GetterUtil.getInteger(sourceVersion), GetterUtil.getInteger(targetVersion)) %>"
 		portletURL="<%= portletURL %>"
 		resourceURL="<%= resourceURL %>"
 		sourceVersion="<%= sourceVersion %>"
