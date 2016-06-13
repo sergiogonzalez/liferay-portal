@@ -66,11 +66,8 @@ public class UnsubscribeKBArticlePortletConfigurationIcon
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "unsubscribeKBArticle");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
