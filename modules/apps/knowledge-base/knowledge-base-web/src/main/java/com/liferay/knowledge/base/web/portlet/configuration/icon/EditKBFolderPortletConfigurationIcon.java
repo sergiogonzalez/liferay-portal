@@ -62,11 +62,8 @@ public class EditKBFolderPortletConfigurationIcon
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/common/edit_folder.jsp");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_FOLDER);
