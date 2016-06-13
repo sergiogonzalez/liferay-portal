@@ -17,8 +17,13 @@ package com.liferay.knowledge.base.service.util;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
+import com.liferay.portal.kernel.diff.DiffVersion;
+import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,7 +31,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import net.htmlparser.jericho.Attribute;
@@ -56,8 +64,48 @@ public class AdminUtil {
 		return sections;
 	}
 
+	public static DiffVersionsInfo getDiffVersionsInfo(
+		long groupId, long kbArticleResourcePrimKey, double sourceVersion,
+		double targetVersion) {
+
+		double previousVersion = 0;
+		double nextVersion = 0;
+
+		List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(
+			groupId, kbArticleResourcePrimKey,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new KBArticleVersionComparator());
+
+		for (KBArticle curKBArticle : kbArticles) {
+			if ((curKBArticle.getVersion() < sourceVersion) &&
+				(curKBArticle.getVersion() > previousVersion)) {
+
+				previousVersion = curKBArticle.getVersion();
+			}
+
+			if ((curKBArticle.getVersion() > targetVersion) &&
+				((curKBArticle.getVersion() < nextVersion) ||
+				 (nextVersion == 0))) {
+
+				nextVersion = curKBArticle.getVersion();
+			}
+		}
+
+		List<DiffVersion> diffVersions = new ArrayList<>();
+
+		for (KBArticle curKBArticle : kbArticles) {
+			DiffVersion diffVersion = new DiffVersion(
+				curKBArticle.getUserId(), curKBArticle.getVersion(),
+				curKBArticle.getModifiedDate());
+
+			diffVersions.add(diffVersion);
+		}
+
+		return new DiffVersionsInfo(diffVersions, nextVersion, previousVersion);
+	}
+
 	public static String getKBArticleDiff(
-			long resourcePrimKey, int sourceVersion, int targetVersion,
+			long resourcePrimKey, double sourceVersion, double targetVersion,
 			String param)
 		throws Exception {
 
@@ -67,15 +115,15 @@ public class AdminUtil {
 
 		if (sourceVersion == targetVersion) {
 			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
-				resourcePrimKey, targetVersion);
+				resourcePrimKey, GetterUtil.getInteger(targetVersion));
 
 			return BeanPropertiesUtil.getString(kbArticle, param);
 		}
 
 		KBArticle sourceKBArticle = KBArticleLocalServiceUtil.getKBArticle(
-			resourcePrimKey, sourceVersion);
+			resourcePrimKey, GetterUtil.getInteger(sourceVersion));
 		KBArticle targetKBArticle = KBArticleLocalServiceUtil.getKBArticle(
-			resourcePrimKey, targetVersion);
+			resourcePrimKey, GetterUtil.getInteger(targetVersion));
 
 		String sourceHtml = BeanPropertiesUtil.getString(
 			sourceKBArticle, param);

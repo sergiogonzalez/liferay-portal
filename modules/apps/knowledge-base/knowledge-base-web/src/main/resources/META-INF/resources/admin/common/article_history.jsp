@@ -56,6 +56,29 @@ for (KBArticle curKBArticle : kbArticles) {
 								url="<%= revertURL.toString() %>"
 							/>
 						</c:if>
+
+						<portlet:renderURL var="compareVersionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/admin/common/select_version.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+							<portlet:param name="sourceVersion" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
+						</portlet:renderURL>
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("uri", compareVersionsURL);
+						%>
+
+						<liferay-ui:icon
+							cssClass="compare-to-link"
+							data="<%= data %>"
+							label="<%= true %>"
+							message="compare-to"
+							url="javascript:;"
+						/>
+
+						<%@ include file="/admin/common/compare_versions_pop_up.jspf" %>
 					</liferay-ui:icon-menu>
 				</li>
 			</ul>
