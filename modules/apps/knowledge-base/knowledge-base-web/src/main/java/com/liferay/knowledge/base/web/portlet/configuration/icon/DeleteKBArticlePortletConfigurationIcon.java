@@ -71,11 +71,11 @@ public class DeleteKBArticlePortletConfigurationIcon
 		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		PortletURL homeURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("redirect", homeURL.toString());
+		portletURL.setParameter("redirect", redirectURL.toString());
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
