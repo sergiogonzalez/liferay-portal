@@ -26,6 +26,12 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey",
 long originalParentResourcePrimKey = ParamUtil.getLong(request, "originalParentResourcePrimKey");
 double priority = ParamUtil.getDouble(request, "priority", KBArticleConstants.DEFAULT_PRIORITY);
 
+long kbArticleClassNameId = PortalUtil.getClassNameId(KBArticleConstants.getClassName());
+
+long[] selectableClassNameIds = ParamUtil.getLongValues(request, "selectableClassNameIds", new long[] {kbFolderClassNameId, kbArticleClassNameId});
+
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectKBEntry");
+
 boolean kbFolderView = (resourceClassNameId == kbFolderClassNameId);
 
 SearchContainer kbEntriesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "there-are-no-entries");
@@ -69,19 +75,21 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			showParentGroups="<%= false %>"
 		/>
 
-		<aui:button-row cssClass="input-append">
+		<c:if test="<%= ArrayUtil.contains(selectableClassNameIds, parentResourceClassNameId) && ((parentResourceClassNameId == kbFolderClassNameId) || ((parentResourceClassNameId == kbArticleClassNameId) && (parentResourcePrimKey != 0))) %>">
+			<aui:button-row cssClass="input-append">
 
-			<%
-			Map<String, Object> data = new HashMap<String, Object>();
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
 
-			data.put("priority", priority);
-			data.put("resourceClassNameId", parentResourceClassNameId);
-			data.put("resourcePrimKey", parentResourcePrimKey);
-			data.put("title", parentTitle);
-			%>
+				data.put("priority", priority);
+				data.put("resourceClassNameId", parentResourceClassNameId);
+				data.put("resourcePrimKey", parentResourcePrimKey);
+				data.put("title", parentTitle);
+				%>
 
-			<aui:button cssClass="selector-button" data="<%= data %>" value='<%= (parentResourceClassNameId == kbFolderClassNameId) ? "choose-this-folder" : "choose-this-article" %>' />
-		</aui:button-row>
+				<aui:button cssClass="selector-button" data="<%= data %>" value='<%= (parentResourceClassNameId == kbFolderClassNameId) ? "choose-this-folder" : "choose-this-article" %>' />
+			</aui:button-row>
+		</c:if>
 
 		<liferay-ui:search-container
 			searchContainer="<%= kbEntriesSearchContainer %>"
@@ -105,6 +113,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
+							<portlet:param name="selectableClassNameIds" value="<%= StringUtil.merge(selectableClassNameIds) %>" />
 							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(originalParentResourcePrimKey) %>" />
 						</liferay-portlet:renderURL>
 
@@ -158,7 +167,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<aui:button
 								cssClass="selector-button"
 								data="<%= data %>"
-								disabled="<%= (kbFolder.getKbFolderId() == resourcePrimKey) || (kbFolder.getKbFolderId() == originalParentResourcePrimKey) %>"
+								disabled="<%= (kbFolder.getKbFolderId() == resourcePrimKey) || (kbFolder.getKbFolderId() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbFolderClassNameId) %>"
 								value="choose"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -173,11 +182,13 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 						<liferay-portlet:renderURL var="rowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
+							<portlet:param name="eventName" value="<%= eventName %>" />
 							<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(originalParentResourcePrimKey) %>" />
+							<portlet:param name="selectableClassNameIds" value="<%= StringUtil.merge(selectableClassNameIds) %>" />
 							<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 						</liferay-portlet:renderURL>
 
@@ -214,26 +225,28 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							align="right"
-						>
+						<c:if test="<%= ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>">
+							<liferay-ui:search-container-column-text
+								align="right"
+							>
 
-							<%
-							Map<String, Object> data = new HashMap<String, Object>();
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
 
-							data.put("priority", kbArticle.getPriority());
-							data.put("resourceClassNameId", kbArticle.getClassNameId());
-							data.put("resourcePrimKey", kbArticle.getResourcePrimKey());
-							data.put("title", kbArticle.getTitle());
-							%>
+								data.put("priority", kbArticle.getPriority());
+								data.put("resourceClassNameId", kbArticle.getClassNameId());
+								data.put("resourcePrimKey", kbArticle.getResourcePrimKey());
+								data.put("title", kbArticle.getTitle());
+								%>
 
-							<aui:button
-								cssClass="selector-button"
-								data="<%= data %>"
-								disabled="<%= (kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticle.getResourcePrimKey() == originalParentResourcePrimKey) %>"
-								value="choose"
-							/>
-						</liferay-ui:search-container-column-text>
+								<aui:button
+									cssClass="selector-button"
+									data="<%= data %>"
+									disabled="<%= (kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticle.getResourcePrimKey() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>"
+									value="choose"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:if>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>
@@ -244,5 +257,5 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 </div>
 
 <aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />fm', '<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectKBEntry") %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />fm', '<%= HtmlUtil.escape(eventName) %>');
 </aui:script>
