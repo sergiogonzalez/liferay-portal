@@ -22,7 +22,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 
 int selStatus = KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) ? WorkflowConstants.STATUS_ANY : status;
 
-double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
+int sourceVersion = ParamUtil.getInteger(request, "sourceVersion");
 String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectVersionFm");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -55,11 +55,11 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 						<c:when test="<%= sourceVersion != curKBArticle.getVersion() %>">
 
 							<%
-							double curSourceVersion = sourceVersion;
-							double curTargetVersion = curKBArticle.getVersion();
+							int curSourceVersion = sourceVersion;
+							int curTargetVersion = curKBArticle.getVersion();
 
 							if (curTargetVersion < curSourceVersion) {
-								double tempVersion = curTargetVersion;
+								int tempVersion = curTargetVersion;
 
 								curTargetVersion = curSourceVersion;
 								curSourceVersion = tempVersion;
