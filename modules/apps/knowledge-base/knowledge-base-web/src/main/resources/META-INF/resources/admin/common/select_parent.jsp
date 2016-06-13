@@ -109,6 +109,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 						<liferay-portlet:renderURL var="rowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
+							<portlet:param name="eventName" value="<%= eventName %>" />
 							<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
@@ -225,28 +226,26 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 
-						<c:if test="<%= ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>">
-							<liferay-ui:search-container-column-text
-								align="right"
-							>
+						<liferay-ui:search-container-column-text
+							align="right"
+						>
 
-								<%
-								Map<String, Object> data = new HashMap<String, Object>();
+							<%
+							Map<String, Object> data = new HashMap<String, Object>();
 
-								data.put("priority", kbArticle.getPriority());
-								data.put("resourceClassNameId", kbArticle.getClassNameId());
-								data.put("resourcePrimKey", kbArticle.getResourcePrimKey());
-								data.put("title", kbArticle.getTitle());
-								%>
+							data.put("priority", kbArticle.getPriority());
+							data.put("resourceClassNameId", kbArticle.getClassNameId());
+							data.put("resourcePrimKey", kbArticle.getResourcePrimKey());
+							data.put("title", kbArticle.getTitle());
+							%>
 
-								<aui:button
-									cssClass="selector-button"
-									data="<%= data %>"
-									disabled="<%= (kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticle.getResourcePrimKey() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>"
-									value="choose"
-								/>
-							</liferay-ui:search-container-column-text>
-						</c:if>
+							<aui:button
+								cssClass="selector-button"
+								data="<%= data %>"
+								disabled="<%= (kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticle.getResourcePrimKey() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>"
+								value="choose"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>

@@ -136,10 +136,10 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/display/select_parent.jsp" />
+							<portlet:param name="eventName" value="<%= liferayPortletResponse.getNamespace() + "selectKBEntry" %>" />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourceClassNameId()) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourcePrimKey()) %>" />
 							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourcePrimKey()) %>" />
-							<portlet:param name="eventName" value="<%= liferayPortletResponse.getNamespace() + "selectKBEntry" %>" />
 						</liferay-portlet:renderURL>
 
 						uri: '<%= selectKBEntryURL %>'
