@@ -78,7 +78,43 @@ for (KBArticle curKBArticle : kbArticles) {
 							url="javascript:;"
 						/>
 
-						<%@ include file="/admin/common/compare_versions_pop_up.jspf" %>
+						<aui:script sandbox="<%= true %>">
+							$('body').on(
+								'click',
+								'.compare-to-link a',
+								function(event) {
+									var currentTarget = $(event.currentTarget);
+
+									Liferay.Util.selectEntity(
+										{
+											dialog: {
+												constrain: true,
+												destroyOnHide: true,
+												modal: true
+											},
+											eventName: '<portlet:namespace />selectVersionFm',
+											id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
+											title: '<liferay-ui:message key="compare-versions" />',
+											uri: currentTarget.data('uri')
+										},
+										function(event) {
+											<portlet:renderURL var="compareVersionURL">
+												<portlet:param name="mvcPath" value="/admin/common/compare_versions.jsp" />
+												<portlet:param name="backURL" value="<%= currentURL %>" />
+												<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+											</portlet:renderURL>
+
+											var uri = '<%= compareVersionURL %>';
+
+											uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + event.sourceversion, uri);
+											uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + event.targetversion, uri);
+
+											location.href = uri;
+										}
+									);
+								}
+							);
+						</aui:script>
 					</liferay-ui:icon-menu>
 				</li>
 			</ul>
