@@ -39,6 +39,9 @@ public class KBWebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String KNOWLEDGE_BASE_KB_TEMPLATE =
 		"KNOWLEDGE_BASE_KB_TEMPLATE";
 
+	public static final String KNOWLEDGE_BASE_PARENT_KB_ARTICLE =
+		"KNOWLEDGE_BASE_PARENT_KB_ARTICLE";
+
 	public static final String KNOWLEDGE_BASE_PARENT_KB_FOLDER =
 		"KNOWLEDGE_BASE_PARENT_KB_FOLDER";
 

@@ -20,7 +20,6 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 	service = PortletConfigurationIcon.class
 )
 public class MoveKBArticlePortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseGetKBArticlePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -64,8 +63,7 @@ public class MoveKBArticlePortletConfigurationIcon
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
@@ -94,8 +92,7 @@ public class MoveKBArticlePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		return KBArticlePermission.contains(
 			themeDisplay.getPermissionChecker(), kbArticle,

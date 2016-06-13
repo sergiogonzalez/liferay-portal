@@ -255,7 +255,8 @@ public class AdminPortlet extends BaseKBPortlet {
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 
-			KBFolder kbFolder = null;
+			KBArticle parentKBArticle = null;
+			KBFolder parentKBFolder = null;
 
 			long kbFolderClassNameId = PortalUtil.getClassNameId(
 				KBFolderConstants.getClassName());
@@ -266,14 +267,21 @@ public class AdminPortlet extends BaseKBPortlet {
 			long parentResourcePrimKey = ParamUtil.getLong(
 				renderRequest, "parentResourcePrimKey");
 
-			if ((parentResourcePrimKey > 0) &&
-				(parentResourceClassNameId == kbFolderClassNameId)) {
-
-				kbFolder = kbFolderService.getKBFolder(parentResourcePrimKey);
+			if (parentResourcePrimKey > 0) {
+				if ((parentResourceClassNameId == kbFolderClassNameId)) {
+					parentKBFolder = kbFolderService.getKBFolder(
+						parentResourcePrimKey);
+				}
+				else {
+					parentKBArticle = kbArticleService.getLatestKBArticle(
+						parentResourcePrimKey, status);
+				}
 			}
 
 			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER, kbFolder);
+				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_ARTICLE, parentKBArticle);
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER, parentKBFolder);
 
 			KBTemplate kbTemplate = null;
 
