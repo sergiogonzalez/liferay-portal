@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,6 +82,57 @@ public class KBArticleLocalServiceTest {
 			_group, _user.getUserId());
 	}
 
+	@Test(expected = KBArticleContentException.class)
+	public void testAddKBArticleWithBlankContent() throws Exception {
+		String content = StringPool.BLANK;
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(), content,
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			_serviceContext);
+	}
+
+	@Test
+	public void testAddKBArticleWithBlankSourceURL() throws Exception {
+		String sourceURL = StringPool.BLANK;
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), sourceURL,
+			null, null, _serviceContext);
+
+		Assert.assertTrue(Validator.isNull(kbArticle.getSourceURL()));
+	}
+
+	@Test(expected = KBArticleTitleException.class)
+	public void testAddKBArticleWithBlankTitle() throws Exception {
+		String title = StringPool.BLANK;
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			_serviceContext);
+	}
+
+	@Test
+	public void testAddKBArticleWithBlankURLTitle() throws Exception {
+		String urlTitle = StringPool.BLANK;
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), urlTitle, StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		Assert.assertTrue(Validator.isNotNull(kbArticle.getUrlTitle()));
+	}
+
 	@Test(expected = KBArticleUrlTitleException.class)
 	public void testAddKBArticleWithDuplicateURLTitle() throws Exception {
 		String urlTitle = StringUtil.randomString();
@@ -99,7 +151,7 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test(expected = KBArticleParentException.class)
-	public void testAddKBArticleWithInvalidParent() throws Exception {
+	public void testAddKBArticleWithInvalidParentClassName() throws Exception {
 		long invalidParentClassNameId = 123456789L;
 
 		KBArticleLocalServiceUtil.addKBArticle(
@@ -111,11 +163,13 @@ public class KBArticleLocalServiceTest {
 
 	@Test(expected = KBArticleSourceURLException.class)
 	public void testAddKBArticleWithInvalidSourceURL() throws Exception {
+		String sourceURL = "InvalidURL";
+
 		KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), "InvalidURL",
+			StringUtil.randomString(), StringUtil.randomString(), sourceURL,
 			null, null, _serviceContext);
 	}
 
@@ -148,31 +202,37 @@ public class KBArticleLocalServiceTest {
 
 	@Test(expected = KBArticleContentException.class)
 	public void testAddKBArticleWithNullContent() throws Exception {
+		String content = null;
+
 		KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), StringUtil.randomString(), null,
+			StringUtil.randomString(), StringUtil.randomString(), content,
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
 			_serviceContext);
 	}
 
 	@Test
 	public void testAddKBArticleWithNullSourceURL() throws Exception {
+		String sourceURL = null;
+
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			null, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(), sourceURL,
+			null, null, _serviceContext);
 
 		Assert.assertTrue(Validator.isNull(kbArticle.getSourceURL()));
 	}
 
 	@Test(expected = KBArticleTitleException.class)
 	public void testAddKBArticleWithNullTitle() throws Exception {
+		String title = null;
+
 		KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
 			_serviceContext);
@@ -180,10 +240,12 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testAddKBArticleWithNullURLTitle() throws Exception {
+		String urlTitle = null;
+
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), null, StringUtil.randomString(),
+			StringUtil.randomString(), urlTitle, StringUtil.randomString(),
 			StringUtil.randomString(), null, null, null, _serviceContext);
 
 		Assert.assertTrue(Validator.isNotNull(kbArticle.getUrlTitle()));
@@ -191,12 +253,14 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testAddKBArticleWithValidSourceURL() throws Exception {
+		String sourceURL = "http://www.liferay.com";
+
 		KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(),
-			"http://www.liferay.com", null, null, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(), sourceURL,
+			null, null, _serviceContext);
 	}
 
 	@Test
