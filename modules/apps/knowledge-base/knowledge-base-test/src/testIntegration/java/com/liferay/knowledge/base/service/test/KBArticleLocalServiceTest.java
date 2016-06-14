@@ -24,8 +24,10 @@ import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
@@ -73,6 +75,8 @@ public class KBArticleLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+		_kbArticleClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+			KBArticleConstants.getClassName());
 		_kbFolderClassNameId = ClassNameLocalServiceUtil.getClassNameId(
 			KBFolderConstants.getClassName());
 
@@ -252,6 +256,37 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testAddKBArticleWithValidParentKBArticle() throws Exception {
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, _serviceContext);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			kbArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+	}
+
+	@Test
+	public void testAddKBArticleWithValidParentKBFolder() throws Exception {
+		KBFolder kbFolder = KBFolderLocalServiceUtil.addKBFolder(
+			_user.getUserId(), _group.getGroupId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			_serviceContext);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId, kbFolder.getPrimaryKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+	}
+
+	@Test
 	public void testAddKBArticleWithValidSourceURL() throws Exception {
 		String sourceURL = "http://www.liferay.com";
 
@@ -404,6 +439,7 @@ public class KBArticleLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private long _kbArticleClassNameId;
 	private long _kbFolderClassNameId;
 	private ServiceContext _serviceContext;
 	private User _user;
