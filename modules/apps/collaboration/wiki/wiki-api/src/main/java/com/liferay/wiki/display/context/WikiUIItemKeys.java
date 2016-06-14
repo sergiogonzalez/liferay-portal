@@ -37,6 +37,9 @@ public class WikiUIItemKeys {
 	public static final String PERMISSIONS =
 		WikiUIItemKeys.class.getName() + "#permissions";
 
+	public static final String PRINT =
+		WikiUIItemKeys.class.getName() + "#print";
+
 	public static final String SUBSCRIBE =
 		WikiUIItemKeys.class.getName() + "#subscribe";
 
