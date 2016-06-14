@@ -124,7 +124,7 @@ public class KBArticleLocalServiceTest {
 			_serviceContext);
 	}
 
-	@Test
+	@Test(expected = KBArticleUrlTitleException.class)
 	public void testAddKBArticleWithBlankURLTitle() throws Exception {
 		String urlTitle = StringPool.BLANK;
 
@@ -257,12 +257,14 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testAddKBArticleWithValidParentKBArticle() throws Exception {
+		ServiceTestUtil.setUser(_user);
+
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
 
 		KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbArticleClassNameId,
