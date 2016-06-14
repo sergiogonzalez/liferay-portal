@@ -166,6 +166,8 @@ public class DefaultWikiListPagesDisplayContext
 
 		addMoveMenuItem(menuItems, wikiPage);
 
+		addChildPageMenuItem(menuItems, wikiPage);
+
 		addSubscriptionMenuItem(menuItems, wikiPage);
 
 		addDeleteMenuItem(menuItems, wikiPage);
@@ -377,6 +379,39 @@ public class DefaultWikiListPagesDisplayContext
 		}
 
 		searchContainer.setResults(results);
+	}
+
+	protected void addChildPageMenuItem(
+			List<MenuItem> menuItems, WikiPage wikiPage)
+		throws PortalException {
+
+		if (!WikiNodePermissionChecker.contains(
+				_wikiRequestHelper.getPermissionChecker(), wikiPage.getNodeId(),
+				ActionKeys.ADD_PAGE)) {
+
+			return;
+		}
+
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setKey(WikiUIItemKeys.ADD_CHILD_PAGE);
+		urlMenuItem.setLabel("add-child-page");
+
+		LiferayPortletResponse liferayPortletResponse =
+			_wikiRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
+		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+		portletURL.setParameter("title", StringPool.BLANK);
+		portletURL.setParameter("editTitle", "1");
+		portletURL.setParameter("parentTitle", wikiPage.getTitle());
+
+		urlMenuItem.setURL(portletURL.toString());
+
+		menuItems.add(urlMenuItem);
 	}
 
 	protected void addCopyMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
