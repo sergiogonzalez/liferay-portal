@@ -22,11 +22,17 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 
-	PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, PortletRequest.RENDER_PHASE);
+	String urlBack = request.getHeader(HttpHeaders.REFERER);
 
-	portletDisplay.setURLBack(portletURL.toString());
+	if (Validator.isNull(urlBack)) {
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, PortletRequest.RENDER_PHASE);
 
-	renderResponse.setTitle(LanguageUtil.get(resourceBundle,"error"));
+		urlBack = portletURL.toString();
+	}
+
+	portletDisplay.setURLBack(urlBack);
+
+	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "error"));
 }
 %>
 
