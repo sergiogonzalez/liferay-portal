@@ -120,6 +120,18 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
+
+		<%
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "wiki"), portletURL.toString());
+		%>
+
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
+
 		<liferay-trash:undo
 			portletURL="<%= restoreTrashEntriesURL %>"
 		/>
