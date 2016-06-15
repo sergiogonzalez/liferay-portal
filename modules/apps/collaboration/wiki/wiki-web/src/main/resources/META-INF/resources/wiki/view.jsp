@@ -136,6 +136,8 @@ if (portletTitleBasedNavigation) {
 %>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
+	<div class="lfr-alert-container"></div>
+
 	<liferay-frontend:info-bar>
 		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
 
@@ -211,7 +213,9 @@ if (portletTitleBasedNavigation) {
 				contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInstanceOverriddenConfiguration);
 				%>
 
-				<div class="lfr-alert-container"></div>
+				<c:if test="<%= !portletTitleBasedNavigation %>">
+					<div class="lfr-alert-container"></div>
+				</c:if>
 
 				<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
 					<div class="main-content-body">
