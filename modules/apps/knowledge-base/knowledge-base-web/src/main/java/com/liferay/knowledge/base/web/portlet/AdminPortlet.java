@@ -268,7 +268,7 @@ public class AdminPortlet extends BaseKBPortlet {
 				renderRequest, "parentResourcePrimKey");
 
 			if (parentResourcePrimKey > 0) {
-				if ((parentResourceClassNameId == kbFolderClassNameId)) {
+				if (parentResourceClassNameId == kbFolderClassNameId) {
 					parentKBFolder = kbFolderService.getKBFolder(
 						parentResourcePrimKey);
 				}
