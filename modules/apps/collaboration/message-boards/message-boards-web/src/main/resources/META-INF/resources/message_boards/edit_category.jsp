@@ -152,9 +152,9 @@ if (portletTitleBasedNavigation) {
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="mailing-list">
 				<aui:model-context bean="<%= mailingList %>" model="<%= MBMailingList.class %>" />
 
-				<aui:input fieldParam="mailingListActive" name="active" type="toggle-switch" />
+				<aui:input label="active" name="mailingListActive" type="toggle-switch" value='<%= ParamUtil.getBoolean(request, "mailingListActive", BeanPropertiesUtil.getBoolean(mailingList, "active")) %>' />
 
-				<aui:input label="allow-anonymous-emails" name="allowAnonymous" type="toggle-switch" />
+				<aui:input label="allow-anonymous-emails" name="allowAnonymous" type="toggle-switch" value='<%= BeanParamUtil.getBoolean(mailingList, request, "allowAnonymous") %>' />
 
 				<div id="<portlet:namespace />mailingListSettings">
 					<aui:input name="emailAddress" />
