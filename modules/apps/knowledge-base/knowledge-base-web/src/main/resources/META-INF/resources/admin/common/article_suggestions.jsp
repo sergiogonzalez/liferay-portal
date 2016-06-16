@@ -156,7 +156,7 @@ if (ratingsType == null) {
 				<liferay-ui:search-container
 					emptyResultsMessage="no-comments-found"
 					iteratorURL="<%= iteratorURL %>"
-					orderByComparator='<%= KnowledgeBaseUtil.getKBCommentOrderByComparator("modified-date", "desc") %>'
+					orderByComparator='<%= KBUtil.getKBCommentOrderByComparator("modified-date", "desc") %>'
 					total="<%= kbCommentsCount %>"
 				>
 					<liferay-ui:search-container-results
