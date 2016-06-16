@@ -14,18 +14,18 @@
  */
 --%>
 
-<%
-User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
-
-String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
-%>
-
 <liferay-ui:search-container-column-text>
 	<liferay-ui:user-portrait
 		cssClass="user-icon-lg"
 		userId="<%= statsUser.getUserId() %>"
 	/>
 </liferay-ui:search-container-column-text>
+
+<%
+User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
+
+String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+%>
 
 <liferay-ui:search-container-column-text colspan="<%= 2 %>">
 	<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
@@ -36,7 +36,15 @@ String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLang
 		<%= topUser.getFullName() %>
 	</h4>
 
-	<span class="h5 text-default"><liferay-ui:message key="posts" />:<%= statsUser.getMessageCount() %></span>
-	<span class="h5 text-default"><liferay-ui:message key="join-date" />: <%= dateFormatDate.format(topUser.getCreateDate()) %></span>
-	<span class="h5 text-default"><liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(statsUser.getLastPostDate()) %></span>
+	<span class="h5 text-default">
+		<liferay-ui:message key="posts" />:<%= statsUser.getMessageCount() %>
+	</span>
+
+	<span class="h5 text-default">
+		<liferay-ui:message key="join-date" />: <%= dateFormatDate.format(topUser.getCreateDate()) %>
+	</span>
+
+	<span class="h5 text-default">
+		<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
+	</span>
 </liferay-ui:search-container-column-text>
