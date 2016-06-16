@@ -157,12 +157,12 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 				<c:if test="<%= editable %>">
 
 					<%
+					boolean hasBanUserPermission = (messageUser != null) && (user.getUserId() != messageUser.getUserId()) && !PortalUtil.isGroupAdmin(messageUser, scopeGroupId) && MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER);
 					boolean hasDeletePermission = !thread.isLocked() && (thread.getMessageCount() > 1) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE);
 					boolean hasMoveThreadPermission = (message.getParentMessageId() != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, category.getCategoryId(), ActionKeys.MOVE_THREAD);
 					boolean hasPermissionsPermission = !thread.isLocked() && !message.isRoot() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS);
 					boolean hasReplyPermission = MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE);
 					boolean hasUpdatePermission = !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE);
-					boolean hasBanUserPermission = (messageUser != null) && (user.getUserId() != messageUser.getUserId()) && !PortalUtil.isGroupAdmin(messageUser, scopeGroupId) && MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER);
 
 					boolean showAnswerFlag = false;
 
