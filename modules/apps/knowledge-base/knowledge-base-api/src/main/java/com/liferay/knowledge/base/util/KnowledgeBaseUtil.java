@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.util;
 
-import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -53,7 +52,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -69,7 +67,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.InputStream;
@@ -87,79 +84,12 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
 public class KnowledgeBaseUtil {
-
-	public static void addPortletBreadcrumbEntries(
-			long originalParentResourceClassNameId,
-			long originalParentResourcePrimKey, long parentResourceClassNameId,
-			long parentResourcePrimKey, String mvcPath,
-			HttpServletRequest request, RenderResponse renderResponse)
-		throws PortalException {
-
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
-			"originalParentResourceClassNameId",
-			originalParentResourceClassNameId);
-		parameters.put(
-			"originalParentResourcePrimKey", originalParentResourcePrimKey);
-		parameters.put("parentResourceClassNameId", parentResourceClassNameId);
-		parameters.put("parentResourcePrimKey", parentResourcePrimKey);
-		parameters.put("mvcPath", mvcPath);
-
-		addPortletBreadcrumbEntries(parameters, request, renderResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			String mvcPath, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws PortalException {
-
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put("parentResourceClassNameId", parentResourceClassNameId);
-		parameters.put("parentResourcePrimKey", parentResourcePrimKey);
-
-		String mvcPathParameterValue = (String)parameters.get("mvcPath");
-
-		if (Validator.isNull(mvcPathParameterValue) ||
-			mvcPathParameterValue.equals("/admin/view.jsp") ||
-			mvcPathParameterValue.equals("/admin/view_articles.jsp") ||
-			mvcPathParameterValue.equals("/admin/view_folders.jsp")) {
-
-			if (parentResourceClassNameId ==
-					PortalUtil.getClassNameId(
-						KBFolderConstants.getClassName())) {
-
-				parameters.put("mvcPath", "/admin/view_folders.jsp");
-			}
-			else if (parentResourceClassNameId ==
-						PortalUtil.getClassNameId(
-							KBArticleConstants.getClassName())) {
-
-				parameters.put("mvcPath", "/admin/view_articles.jsp");
-				parameters.put("resourcePrimKey", parentResourcePrimKey);
-			}
-			else {
-				parameters.put("mvcPath", "/admin/view.jsp");
-			}
-		}
-		else {
-			parameters.put("mvcPath", mvcPath);
-		}
-
-		addPortletBreadcrumbEntries(parameters, request, renderResponse);
-	}
 
 	public static List<KBFolder> getAlternateRootKBFolders(
 			long groupId, long kbFolderId)
@@ -624,65 +554,6 @@ public class KnowledgeBaseUtil {
 		}
 
 		return s.substring(x, s.length());
-	}
-
-	protected static void addPortletBreadcrumbEntries(
-			Map<String, Object> parameters, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws PortalException {
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-			Object value = entry.getValue();
-
-			portletURL.setParameter(entry.getKey(), value.toString());
-		}
-
-		long kbFolderClassNameId = PortalUtil.getClassNameId(
-			KBFolderConstants.getClassName());
-
-		long parentResourceClassNameId = (Long)parameters.get(
-			"parentResourceClassNameId");
-		long parentResourcePrimKey = (Long)parameters.get(
-			"parentResourcePrimKey");
-
-		String mvcPath = (String)parameters.get("mvcPath");
-
-		if (parentResourcePrimKey ==
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			portletURL.setParameter("mvcPath", "/admin/view.jsp");
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString());
-		}
-		else if (parentResourceClassNameId == kbFolderClassNameId) {
-			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-				parentResourcePrimKey);
-
-			addPortletBreadcrumbEntries(
-				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
-				mvcPath, request, renderResponse);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbFolder.getName(), portletURL.toString());
-		}
-		else {
-			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
-				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-			addPortletBreadcrumbEntries(
-				kbArticle.getParentResourceClassNameId(),
-				kbArticle.getParentResourcePrimKey(), mvcPath, request,
-				renderResponse);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbArticle.getTitle(), portletURL.toString());
-		}
 	}
 
 	private static long _getCurrentRootKBFolder(
