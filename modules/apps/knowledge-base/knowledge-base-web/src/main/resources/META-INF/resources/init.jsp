@@ -104,6 +104,7 @@ page import="com.liferay.knowledge.base.web.search.KBArticleSearch" %><%@
 page import="com.liferay.knowledge.base.web.search.KBCommentsChecker" %><%@
 page import="com.liferay.knowledge.base.web.search.KBTemplateSearch" %><%@
 page import="com.liferay.knowledge.base.web.util.KBArticleAssetEntriesUtil" %><%@
+page import="com.liferay.knowledge.base.web.util.KBUtil" %><%@
 page import="com.liferay.message.boards.kernel.model.MBMessage" %><%@
 page import="com.liferay.portal.configuration.metatype.util.ParameterMapUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
