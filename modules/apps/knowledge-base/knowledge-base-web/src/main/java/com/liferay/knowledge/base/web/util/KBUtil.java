@@ -143,6 +143,65 @@ public class KBUtil {
 		addPortletBreadcrumbEntries(parameters, request, renderResponse);
 	}
 
+	public static void addPortletBreadcrumbEntries(
+			Map<String, Object> parameters, HttpServletRequest request,
+			RenderResponse renderResponse)
+		throws PortalException {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+			Object value = entry.getValue();
+
+			portletURL.setParameter(entry.getKey(), value.toString());
+		}
+
+		long kbFolderClassNameId = PortalUtil.getClassNameId(
+			KBFolderConstants.getClassName());
+
+		long parentResourceClassNameId = (Long)parameters.get(
+			"parentResourceClassNameId");
+		long parentResourcePrimKey = (Long)parameters.get(
+			"parentResourcePrimKey");
+
+		String mvcPath = (String)parameters.get("mvcPath");
+
+		if (parentResourcePrimKey ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			portletURL.setParameter("mvcPath", "/admin/view.jsp");
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, themeDisplay.translate("home"), portletURL.toString());
+		}
+		else if (parentResourceClassNameId == kbFolderClassNameId) {
+			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
+				parentResourcePrimKey);
+
+			addPortletBreadcrumbEntries(
+				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
+				mvcPath, request, renderResponse);
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, kbFolder.getName(), portletURL.toString());
+		}
+		else {
+			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+			addPortletBreadcrumbEntries(
+				kbArticle.getParentResourceClassNameId(),
+				kbArticle.getParentResourcePrimKey(), mvcPath, request,
+				renderResponse);
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, kbArticle.getTitle(), portletURL.toString());
+		}
+	}
+
 	public static List<KBFolder> getAlternateRootKBFolders(
 			long groupId, long kbFolderId)
 		throws PortalException {
@@ -406,65 +465,6 @@ public class KBUtil {
 		else {
 			throw new IllegalArgumentException(
 				String.format("Invalid suggestion status %s", status));
-		}
-	}
-
-	protected static void addPortletBreadcrumbEntries(
-			Map<String, Object> parameters, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws PortalException {
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-			Object value = entry.getValue();
-
-			portletURL.setParameter(entry.getKey(), value.toString());
-		}
-
-		long kbFolderClassNameId = PortalUtil.getClassNameId(
-			KBFolderConstants.getClassName());
-
-		long parentResourceClassNameId = (Long)parameters.get(
-			"parentResourceClassNameId");
-		long parentResourcePrimKey = (Long)parameters.get(
-			"parentResourcePrimKey");
-
-		String mvcPath = (String)parameters.get("mvcPath");
-
-		if (parentResourcePrimKey ==
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			portletURL.setParameter("mvcPath", "/admin/view.jsp");
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString());
-		}
-		else if (parentResourceClassNameId == kbFolderClassNameId) {
-			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-				parentResourcePrimKey);
-
-			addPortletBreadcrumbEntries(
-				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
-				mvcPath, request, renderResponse);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbFolder.getName(), portletURL.toString());
-		}
-		else {
-			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
-				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-			addPortletBreadcrumbEntries(
-				kbArticle.getParentResourceClassNameId(),
-				kbArticle.getParentResourcePrimKey(), mvcPath, request,
-				renderResponse);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbArticle.getTitle(), portletURL.toString());
 		}
 	}
 
