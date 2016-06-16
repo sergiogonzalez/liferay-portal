@@ -148,7 +148,8 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 						</dt>
 
 						<dd>
-							<span class="text-capitalize"><%= HtmlUtil.escape(KnowledgeBaseUtil.getStatusLabel(kbArticle.getStatus())) %></span>
+							<span class="text-capitalize"><%= HtmlUtil.escape(
+									KBUtil.getStatusLabel(kbArticle.getStatus())) %></span>
 						</dd>
 
 						<dt class="h5">

@@ -189,7 +189,7 @@ if (ratingsType == null) {
 							name="status"
 							orderable="<%= true %>"
 						>
-							<liferay-ui:message key="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
+							<liferay-ui:message key="<%= KBUtil.getStatusLabel(kbComment.getStatus()) %>" />
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
