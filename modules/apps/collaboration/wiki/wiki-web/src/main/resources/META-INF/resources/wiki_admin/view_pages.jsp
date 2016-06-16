@@ -25,8 +25,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, navigation), portletURL.toString());
-
 WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, node);
 
 SearchContainer wikiPagesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, wikiListPagesDisplayContext.getEmptyResultsMessage());
@@ -139,6 +137,19 @@ else {
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
+
+		<%
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "wiki"), backToNodeURL.toString());
+
+		PortalUtil.addPortletBreadcrumbEntry(request, node.getName(), portletURL.toString());
+		%>
+
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
 
 		<%
 		WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiGroupServiceConfiguration);
