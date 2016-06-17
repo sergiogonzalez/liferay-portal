@@ -387,14 +387,18 @@ public class AdminPortlet extends BaseKBPortlet {
 				resourceRequest.setAttribute(
 					KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS, kbFolders);
 
-				PortletSession portletSession = resourceRequest.getPortletSession();
+				PortletSession portletSession =
+					resourceRequest.getPortletSession();
 
-				PortletContext portletContext = portletSession.getPortletContext();
+				PortletContext portletContext =
+					portletSession.getPortletContext();
 
 				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher("/admin/info_panel.jsp");
+					portletContext.getRequestDispatcher(
+						"/admin/info_panel.jsp");
 
-				portletRequestDispatcher.include(resourceRequest, resourceResponse);
+				portletRequestDispatcher.include(
+					resourceRequest, resourceResponse);
 			}
 			catch (Exception e) {
 				throw new PortletException(e);
