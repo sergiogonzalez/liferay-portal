@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -433,6 +434,141 @@ public class KBArticleLocalServiceTest {
 		Assert.assertNull(
 			RatingsStatsLocalServiceUtil.fetchStats(
 				KBArticleConstants.getClassName(), kbArticle.getClassPK()));
+	}
+
+	@Test(expected = KBArticleParentException.class)
+	public void testMoveKBArticleToInvalidParentKbArticle() throws Exception {
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticle childBKArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), PortalUtil.getClassNameId(KBArticle.class),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle grandchildBKArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), PortalUtil.getClassNameId(KBArticle.class),
+			childBKArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticleLocalServiceUtil.moveKBArticle(
+			_user.getUserId(), parentKBArticle.getResourcePrimKey(),
+			PortalUtil.getClassNameId(KBArticle.class),
+			grandchildBKArticle.getResourcePrimKey(),
+			grandchildBKArticle.getPriority());
+	}
+
+	@Test
+	public void testMoveKBArticleToParentKbArticleInFolder() throws Exception {
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBFolder folder = KBFolderLocalServiceUtil.addKBFolder(
+			_user.getUserId(), _group.getGroupId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			_serviceContext);
+
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId, folder.getKbFolderId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticleLocalServiceUtil.moveKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			PortalUtil.getClassNameId(KBArticle.class),
+			parentKBArticle.getResourcePrimKey(),
+			parentKBArticle.getPriority());
+
+		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			PortalUtil.getClassNameId(KBArticle.class),
+			kbArticle.getParentResourceClassNameId());
+		Assert.assertEquals(
+			parentKBArticle.getResourcePrimKey(),
+			kbArticle.getParentResourcePrimKey());
+		Assert.assertEquals(folder.getKbFolderId(), kbArticle.getKbFolderId());
+	}
+
+	@Test
+	public void testMoveKBArticleToParentKbArticleInHomeFolder()
+		throws Exception {
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticleLocalServiceUtil.moveKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			PortalUtil.getClassNameId(KBArticle.class),
+			parentKBArticle.getResourcePrimKey(),
+			parentKBArticle.getPriority());
+
+		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			PortalUtil.getClassNameId(KBArticle.class),
+			kbArticle.getParentResourceClassNameId());
+		Assert.assertEquals(
+			parentKBArticle.getResourcePrimKey(),
+			kbArticle.getParentResourcePrimKey());
+	}
+
+	@Test
+	public void testMoveKBArticleToParentKbFolderInHomeFolder()
+		throws Exception {
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBFolder parentKBFolder = KBFolderLocalServiceUtil.addKBFolder(
+			_user.getUserId(), _group.getGroupId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			_serviceContext);
+
+		KBArticleLocalServiceUtil.moveKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			PortalUtil.getClassNameId(KBFolder.class),
+			parentKBFolder.getKbFolderId(), 1.0);
+
+		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			PortalUtil.getClassNameId(KBFolder.class),
+			kbArticle.getParentResourceClassNameId());
+		Assert.assertEquals(
+			parentKBFolder.getKbFolderId(),
+			kbArticle.getParentResourcePrimKey());
 	}
 
 	@DeleteAfterTestRun
