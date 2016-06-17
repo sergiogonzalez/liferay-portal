@@ -134,7 +134,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	<div class="sidenav-content">
 
 		<%
-		KBUtil.addPortletBreadcrumbEntries(parentResourceClassNameId, parentResourcePrimKey, StringPool.BLANK, request, renderResponse);
+		KBUtil.addPortletBreadcrumbEntries(parentResourceClassNameId, parentResourcePrimKey, request, liferayPortletResponse, currentURLObj);
 		%>
 
 		<liferay-ui:breadcrumb
