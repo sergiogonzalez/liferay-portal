@@ -17,11 +17,9 @@ package com.liferay.knowledge.base.web.util;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleCreateDateComparator;
@@ -45,23 +43,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -70,83 +62,11 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
  */
 public class KBUtil {
-
-	public static void addPortletBreadcrumbEntries(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			HttpServletRequest request,
-			LiferayPortletResponse liferayPortletResponse,
-			PortletURL portletURL)
-		throws Exception {
-
-		PortletURL currentURL = PortletURLUtil.clone(
-			portletURL, liferayPortletResponse);
-
-		currentURL.setParameter(
-			"parentResourceClassNameId",
-			String.valueOf(parentResourceClassNameId));
-		currentURL.setParameter(
-			"parentResourcePrimKey", String.valueOf(parentResourcePrimKey));
-
-		long kbFolderClassNameId = PortalUtil.getClassNameId(
-			KBFolderConstants.getClassName());
-
-		String mvcPath = ParamUtil.getString(request, "mvcPath");
-
-		if (parentResourcePrimKey ==
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			if (Validator.isNull(mvcPath) ||
-				mvcPath.equals("/admin/view.jsp") ||
-				mvcPath.equals("/admin/view_articles.jsp") ||
-				mvcPath.equals("/admin/view_folders.jsp")) {
-
-				currentURL = liferayPortletResponse.createActionURL();
-			}
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), currentURL.toString());
-		}
-		else if (parentResourceClassNameId == kbFolderClassNameId) {
-			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-				parentResourcePrimKey);
-
-			if (Validator.isNull(mvcPath) ||
-				mvcPath.equals("/admin/view_articles.jsp")) {
-
-				currentURL.setParameter("mvcPath", "/admin/view_folders.jsp");
-			}
-
-			addPortletBreadcrumbEntries(
-				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
-				request, liferayPortletResponse, currentURL);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbFolder.getName(), currentURL.toString());
-		}
-		else {
-			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
-				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-			addPortletBreadcrumbEntries(
-				kbArticle.getParentResourceClassNameId(),
-				kbArticle.getParentResourcePrimKey(), request,
-				liferayPortletResponse, currentURL);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbArticle.getTitle(), currentURL.toString());
-		}
-	}
 
 	public static List<KBFolder> getAlternateRootKBFolders(
 			long groupId, long kbFolderId)

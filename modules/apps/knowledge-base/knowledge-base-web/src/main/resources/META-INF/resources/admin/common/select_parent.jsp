@@ -65,7 +65,9 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	<aui:form method="post" name="fm">
 
 		<%
-		KBUtil.addPortletBreadcrumbEntries(parentResourceClassNameId, parentResourcePrimKey, request, liferayPortletResponse, currentURLObj);
+		KBSelectParentDisplayContext kbSelectParentDisplayContext = new KBSelectParentDisplayContext(parentResourceClassNameId, parentResourcePrimKey, request, liferayPortletResponse);
+
+		kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 		%>
 
 		<liferay-ui:breadcrumb
