@@ -25,7 +25,7 @@ KBComment kbComment = (KBComment)row.getObject();
 
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
 
-int previousStatus = KnowledgeBaseUtil.getPreviousStatus(kbComment.getStatus());
+int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
 int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 %>
 

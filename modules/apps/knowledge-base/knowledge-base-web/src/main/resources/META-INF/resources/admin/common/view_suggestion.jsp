@@ -83,7 +83,7 @@ renderResponse.setTitle(kbCommentTitle);
 </div>
 
 <%
-int previousStatus = KnowledgeBaseUtil.getPreviousStatus(kbComment.getStatus());
+int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
 int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 %>
 
