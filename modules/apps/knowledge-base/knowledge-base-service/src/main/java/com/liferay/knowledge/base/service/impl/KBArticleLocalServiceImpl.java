@@ -1982,8 +1982,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
-		if ((kbArticle != null) &&
-			(parentResourceClassNameId ==
+		if ((parentResourceClassNameId ==
 				classNameLocalService.getClassNameId(
 					KBArticleConstants.getClassName()))) {
 
@@ -2006,7 +2005,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	protected void validateParent(
-			long parentResourceClassNameId, long parentResourcePrimKey)
+			long resourceClassNameId, long resourcePrimKey)
 		throws PortalException {
 
 		long kbArticleClassNameId = classNameLocalService.getClassNameId(
@@ -2014,14 +2013,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long kbFolderClassNameId = classNameLocalService.getClassNameId(
 			KBFolderConstants.getClassName());
 
-		if ((parentResourceClassNameId != kbArticleClassNameId) &&
-			(parentResourceClassNameId != kbFolderClassNameId)) {
+		if ((resourceClassNameId != kbArticleClassNameId) &&
+			(resourceClassNameId != kbFolderClassNameId)) {
 
 			throw new KBArticleParentException(
 				String.format(
 					"Invalid parent with resource class name ID %s and " +
 						"resource primary key %s",
-					parentResourceClassNameId, parentResourcePrimKey));
+					resourceClassNameId, resourcePrimKey));
 		}
 	}
 
