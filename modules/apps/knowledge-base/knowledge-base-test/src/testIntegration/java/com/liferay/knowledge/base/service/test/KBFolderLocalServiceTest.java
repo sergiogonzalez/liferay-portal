@@ -70,24 +70,6 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testGetKBFoldersAndKBArticlesCountKBFolderImmediateChildren()
-		throws Exception {
-
-		KBArticle parentKBArticle = addKBArticle(
-			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
-
-		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
-
-		addKBFolder(_kbFolder.getKbFolderId());
-
-		Assert.assertEquals(
-			2,
-			KBFolderLocalServiceUtil.getKBFoldersAndKBArticlesCount(
-				_group.getGroupId(), _kbFolder.getKbFolderId(),
-				WorkflowConstants.STATUS_ANY));
-	}
-
-	@Test
 	public void testGetKBFoldersAndKBArticlesCountInKBFolder()
 		throws Exception {
 
@@ -149,6 +131,24 @@ public class KBFolderLocalServiceTest {
 			2,
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticlesCount(
 				_group.getGroupId(), parentKBArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_ANY));
+	}
+
+	@Test
+	public void testGetKBFoldersAndKBArticlesCountKBFolderImmediateChildren()
+		throws Exception {
+
+		KBArticle parentKBArticle = addKBArticle(
+			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
+
+		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
+
+		addKBFolder(_kbFolder.getKbFolderId());
+
+		Assert.assertEquals(
+			2,
+			KBFolderLocalServiceUtil.getKBFoldersAndKBArticlesCount(
+				_group.getGroupId(), _kbFolder.getKbFolderId(),
 				WorkflowConstants.STATUS_ANY));
 	}
 
