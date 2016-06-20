@@ -93,6 +93,7 @@ page import="com.liferay.knowledge.base.web.configuration.KBArticlePortletInstan
 page import="com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBSearchPortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.configuration.KBSectionPortletInstanceConfiguration" %><%@
+page import="com.liferay.knowledge.base.web.display.context.KBSelectParentDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.application.dao.search.KBCommentResultRowSplitter" %><%@
 page import="com.liferay.knowledge.base.web.internal.application.dao.search.KBResultRowSplitter" %><%@
 page import="com.liferay.knowledge.base.web.internal.constants.KBWebKeys" %><%@
