@@ -33,7 +33,7 @@ String title = BeanParamUtil.getString(kbArticle, request, "title", BeanProperti
 String urlTitle = BeanParamUtil.getString(kbArticle, request, "urlTitle");
 String content = BeanParamUtil.getString(kbArticle, request, "content", BeanPropertiesUtil.getString(kbTemplate, "content"));
 
-String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(kbSectionPortletInstanceConfiguration.adminKBArticleSections())));
+String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(kbSectionPortletInstanceConfiguration.adminKBArticleSectionsDefault())));
 
 String headerTitle = LanguageUtil.get(request, "new-article");
 

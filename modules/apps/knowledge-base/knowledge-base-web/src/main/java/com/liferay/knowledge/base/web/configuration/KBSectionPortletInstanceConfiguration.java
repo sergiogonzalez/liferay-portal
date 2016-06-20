@@ -88,4 +88,8 @@ public interface KBSectionPortletInstanceConfiguration {
 
 	@Meta.AD(required = false)
 	public String[] adminKBArticleSections();
+
+	@Meta.AD(required = false)
+	public String[] adminKBArticleSectionsDefault();
+
 }
