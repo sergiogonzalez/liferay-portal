@@ -73,8 +73,8 @@ public class KBFolderLocalServiceTest {
 	public void testGetKBFoldersAndKBArticlesCountDoNotCountChildArticles()
 		throws Exception {
 
-		KBArticle kbArticle = addKBArticle(_kbFolder.getKbFolderId(),
-			RandomTestUtil.randomString());
+		KBArticle kbArticle = addKBArticle(
+			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
 		addChildKBArticle(kbArticle, RandomTestUtil.randomString());
 
 		addKbFolder(_kbFolder.getKbFolderId());
@@ -136,8 +136,8 @@ public class KBFolderLocalServiceTest {
 	public void testGetKBFoldersAndKBArticlesCountKBArticleChildren()
 		throws Exception {
 
-		KBArticle parentKBArticle = addKBArticle(_kbFolder.getKbFolderId(),
-			RandomTestUtil.randomString());
+		KBArticle parentKBArticle = addKBArticle(
+			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
 
 		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
 		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
