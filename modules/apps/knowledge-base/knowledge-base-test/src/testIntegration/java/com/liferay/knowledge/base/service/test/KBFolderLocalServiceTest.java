@@ -66,18 +66,19 @@ public class KBFolderLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 		_user = TestPropsValues.getUser();
 
-		_kbFolder = addKbFolder(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		_kbFolder = addKBFolder(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Test
-	public void testGetKBFoldersAndKBArticlesCountDoNotCountChildArticles()
+	public void testGetKBFoldersAndKBArticlesCountKBFolderImmediateChildren()
 		throws Exception {
 
-		KBArticle kbArticle = addKBArticle(
+		KBArticle parentKBArticle = addKBArticle(
 			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
-		addChildKBArticle(kbArticle, RandomTestUtil.randomString());
 
-		addKbFolder(_kbFolder.getKbFolderId());
+		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
+
+		addKBFolder(_kbFolder.getKbFolderId());
 
 		Assert.assertEquals(
 			2,
@@ -93,7 +94,7 @@ public class KBFolderLocalServiceTest {
 		addKBArticle(_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
 		addKBArticle(_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
 
-		addKbFolder(_kbFolder.getKbFolderId());
+		addKBFolder(_kbFolder.getKbFolderId());
 
 		Assert.assertEquals(
 			3,
@@ -133,7 +134,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testGetKBFoldersAndKBArticlesCountKBArticleChildren()
+	public void testGetKBFoldersAndKBArticlesCountKBArticleImmediateChildren()
 		throws Exception {
 
 		KBArticle parentKBArticle = addKBArticle(
@@ -142,7 +143,7 @@ public class KBFolderLocalServiceTest {
 		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
 		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
 
-		addKbFolder(_kbFolder.getKbFolderId());
+		addKBFolder(_kbFolder.getKbFolderId());
 
 		Assert.assertEquals(
 			2,
@@ -175,9 +176,10 @@ public class KBFolderLocalServiceTest {
 
 		KBArticle kbArticle1 = addKBArticle(
 			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
-		addChildKBArticle(kbArticle1, RandomTestUtil.randomString());
 
-		KBFolder kbFolder = addKbFolder(_kbFolder.getKbFolderId());
+		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
+
+		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -201,7 +203,7 @@ public class KBFolderLocalServiceTest {
 		KBArticle kbArticle1 = addKBArticle(_kbFolder.getKbFolderId(), "A");
 		KBArticle kbArticle2 = addKBArticle(_kbFolder.getKbFolderId(), "B");
 
-		KBFolder kbFolder = addKbFolder(_kbFolder.getKbFolderId());
+		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -270,6 +272,7 @@ public class KBFolderLocalServiceTest {
 
 		KBArticle parentKBArticle = addKBArticle(
 			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
+
 		KBArticle kbArticle1 = addChildKBArticle(parentKBArticle, "A");
 		KBArticle kbArticle2 = addChildKBArticle(parentKBArticle, "B");
 
@@ -344,7 +347,7 @@ public class KBFolderLocalServiceTest {
 			serviceContext);
 	}
 
-	protected KBFolder addKbFolder(long parentResourcePrimKey)
+	protected KBFolder addKBFolder(long parentResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		ServiceContext serviceContext =
