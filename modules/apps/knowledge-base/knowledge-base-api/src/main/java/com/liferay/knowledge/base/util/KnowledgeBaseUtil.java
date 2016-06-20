@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.util;
 
-import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -131,18 +130,6 @@ public class KnowledgeBaseUtil {
 			ArrayUtil.subset(params, _SQL_DATA_MAX_PARAMETERS, params.length),
 			ArrayUtil.subset(params, 0, _SQL_DATA_MAX_PARAMETERS)
 		};
-	}
-
-	public static final int getPreviousStatus(int status) {
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return KBCommentConstants.STATUS_IN_PROGRESS;
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return KBCommentConstants.STATUS_NEW;
-		}
-		else {
-			return KBCommentConstants.STATUS_NONE;
-		}
 	}
 
 	public static String getUrlTitle(long id, String title) {
