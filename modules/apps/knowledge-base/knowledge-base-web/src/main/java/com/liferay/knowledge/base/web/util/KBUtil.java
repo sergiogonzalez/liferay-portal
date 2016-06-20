@@ -365,6 +365,18 @@ public class KBUtil {
 		return jsonObject.getString(contentRootPrefix, StringPool.BLANK);
 	}
 
+	public static final int getPreviousStatus(int status) {
+		if (status == KBCommentConstants.STATUS_COMPLETED) {
+			return KBCommentConstants.STATUS_IN_PROGRESS;
+		}
+		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
+			return KBCommentConstants.STATUS_NEW;
+		}
+		else {
+			return KBCommentConstants.STATUS_NONE;
+		}
+	}
+
 	public static long getRootResourcePrimKey(
 			PortletRequest portletRequest, long groupId,
 			long resourceClassNameId, long resourcePrimKey)
