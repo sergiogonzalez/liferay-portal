@@ -128,8 +128,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		validate(title, content, sourceURL);
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
-		long kbFolderId = KnowledgeBaseUtil.getKBFolderId(
-			parentResourceClassNameId, parentResourcePrimKey);
+		long kbFolderId = parentResourcePrimKey;
+
+		long kbArticleClassNameId = classNameLocalService.getClassNameId(
+			KBArticleConstants.getClassName());
+
+		if (parentResourceClassNameId == kbArticleClassNameId) {
+			KBArticle parentKBArticle = getLatestKBArticle(
+				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+			kbFolderId = parentKBArticle.getKbFolderId();
+		}
 
 		urlTitle = StringUtil.toLowerCase(urlTitle);
 
