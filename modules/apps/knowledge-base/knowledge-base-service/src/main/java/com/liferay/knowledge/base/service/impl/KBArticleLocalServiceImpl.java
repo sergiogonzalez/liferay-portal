@@ -1999,7 +1999,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					String.format(
 						"Cannot move KBArticle %s inside its descendant " +
 							"KBArticle %s",
-						kbArticle.getTitle(), parentKBArticle.getTitle()));
+						kbArticle.getResourcePrimKey(),
+						parentKBArticle.getResourcePrimKey()));
 			}
 		}
 	}
