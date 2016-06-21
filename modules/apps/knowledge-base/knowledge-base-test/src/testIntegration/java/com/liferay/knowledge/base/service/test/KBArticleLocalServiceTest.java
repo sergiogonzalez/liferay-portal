@@ -61,6 +61,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -442,7 +443,7 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test(expected = KBArticleParentException.class)
-	public void testMoveKBArticleToInvalidParentKbArticle() throws Exception {
+	public void testMoveKBArticleToInvalidParentKBArticle() throws Exception {
 		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -470,7 +471,7 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testMoveKBArticleToParentKbArticleInFolder() throws Exception {
+	public void testMoveKBArticleToParentKBArticleInFolder() throws Exception {
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -509,7 +510,7 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testMoveKBArticleToParentKbArticleInHomeFolder()
+	public void testMoveKBArticleToParentKBArticleInHomeFolder()
 		throws Exception {
 
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
@@ -544,7 +545,7 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testMoveKBArticleToParentKbFolderInHomeFolder()
+	public void testMoveKBArticleToParentKBFolderInHomeFolder()
 		throws Exception {
 
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
