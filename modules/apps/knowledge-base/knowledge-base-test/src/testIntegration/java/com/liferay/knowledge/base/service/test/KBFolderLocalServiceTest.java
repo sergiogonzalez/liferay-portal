@@ -174,7 +174,7 @@ public class KBFolderLocalServiceTest {
 	public void testGetKBFoldersAndKBArticlesDoNotReturnChildArticles()
 		throws Exception {
 
-		KBArticle kbArticle1 = addKBArticle(
+		KBArticle parentKBArticle = addKBArticle(
 			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
 
 		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
@@ -194,7 +194,7 @@ public class KBFolderLocalServiceTest {
 		Assert.assertEquals(
 			kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 		Assert.assertEquals(
-			kbArticle1.getKbArticleId(), currentKBArticle1.getKbArticleId());
+			parentKBArticle.getKbArticleId(), currentKBArticle1.getKbArticleId());
 		Assert.assertEquals(2, kbFolderAndKBArticles.size());
 	}
 
