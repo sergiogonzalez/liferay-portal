@@ -171,34 +171,6 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testGetKBFoldersAndKBArticlesReturnKBFolderImmediateChildren()
-		throws Exception {
-
-		KBArticle parentKBArticle = addKBArticle(
-			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
-
-		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
-
-		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
-
-		List<Object> kbFolderAndKBArticles =
-			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
-				_group.getGroupId(), _kbFolder.getKbFolderId(),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS,
-				new KBObjectsTitleComparator<KBArticle>(true, true));
-
-		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
-		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
-
-		Assert.assertEquals(
-			kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
-		Assert.assertEquals(
-			parentKBArticle.getKbArticleId(), currentKBArticle1.getKbArticleId());
-		Assert.assertEquals(2, kbFolderAndKBArticles.size());
-	}
-
-	@Test
 	public void testGetKBFoldersAndKBArticlesInKBFolder() throws Exception {
 		KBArticle kbArticle1 = addKBArticle(_kbFolder.getKbFolderId(), "A");
 		KBArticle kbArticle2 = addKBArticle(_kbFolder.getKbFolderId(), "B");
@@ -290,6 +262,35 @@ public class KBFolderLocalServiceTest {
 			kbArticle1.getKbArticleId(), currentKBArticle1.getKbArticleId());
 		Assert.assertEquals(
 			kbArticle2.getKbArticleId(), currentKBArticle2.getKbArticleId());
+	}
+
+	@Test
+	public void testGetKBFoldersAndKBArticlesReturnKBFolderImmediateChildren()
+		throws Exception {
+
+		KBArticle parentKBArticle = addKBArticle(
+			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
+
+		addChildKBArticle(parentKBArticle, RandomTestUtil.randomString());
+
+		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
+
+		List<Object> kbFolderAndKBArticles =
+			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
+				_group.getGroupId(), _kbFolder.getKbFolderId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new KBObjectsTitleComparator<KBArticle>(true, true));
+
+		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
+		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
+
+		Assert.assertEquals(
+			kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
+		Assert.assertEquals(
+			parentKBArticle.getKbArticleId(),
+			currentKBArticle1.getKbArticleId());
+		Assert.assertEquals(2, kbFolderAndKBArticles.size());
 	}
 
 	@Test
