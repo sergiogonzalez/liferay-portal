@@ -81,16 +81,13 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 
 	@Override
 	public String getParentTitle(Locale locale) throws PortalException {
-		if (getParentKBFolderId() ==
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		KBFolder parentKBFolder = getParentKBFolder();
 
+		if (parentKBFolder == null) {
 			return LanguageUtil.get(locale, "home");
 		}
 
-		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-			getParentKBFolderId());
-
-		return kbFolder.getName();
+		return parentKBFolder.getName();
 	}
 
 	@Override
