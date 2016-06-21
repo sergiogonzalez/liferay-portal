@@ -558,7 +558,7 @@ public class KBArticleLocalServiceTest {
 		KBArticleLocalServiceUtil.moveKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			PortalUtil.getClassNameId(KBFolder.class),
-			parentKBFolder.getKbFolderId(), 1.0);
+			parentKBFolder.getKbFolderId(), kbArticle.getPriority());
 
 		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
