@@ -19,12 +19,15 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -36,6 +39,26 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 	public KBFolderImpl() {
 	}
 
+	public List<Long> getAncestorFolderIds() throws PortalException {
+		List<Long> ancestorFolderIds = new ArrayList<>();
+
+		ancestorFolderIds.add(getKbFolderId());
+
+		KBFolder kbFolder = this;
+
+		while (!kbFolder.isRoot()) {
+			kbFolder = kbFolder.getParentKBFolder();
+
+			if (kbFolder == null) {
+				break;
+			}
+
+			ancestorFolderIds.add(kbFolder.getKbFolderId());
+		}
+
+		return ancestorFolderIds;
+	}
+
 	@Override
 	public long getClassNameId() {
 		if (_classNameId == 0) {
@@ -44,6 +67,16 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 		}
 
 		return _classNameId;
+	}
+
+	public KBFolder getParentKBFolder() throws PortalException {
+		long parentFolderId = getParentKBFolderId();
+
+		if (parentFolderId <= KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return null;
+		}
+
+		return KBFolderLocalServiceUtil.getKBFolder(parentFolderId);
 	}
 
 	@Override
@@ -77,6 +110,16 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 		}
 
 		return true;
+	}
+
+	public boolean isRoot() {
+		if (getParentKBFolderId() ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private long _classNameId;
