@@ -171,7 +171,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testGetKBFoldersAndKBArticlesDoNotReturnChildArticles()
+	public void testGetKBFoldersAndKBArticlesReturnKBFolderImmediateChildren()
 		throws Exception {
 
 		KBArticle parentKBArticle = addKBArticle(
@@ -267,7 +267,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testGetKBFoldersAndKBArticlesReturnKBArticleChildren()
+	public void testGetKBFoldersAndKBArticlesReturnKBArticleImmediateChildren()
 		throws Exception {
 
 		KBArticle parentKBArticle = addKBArticle(
