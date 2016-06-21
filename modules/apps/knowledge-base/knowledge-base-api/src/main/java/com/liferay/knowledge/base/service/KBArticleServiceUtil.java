@@ -195,6 +195,14 @@ public class KBArticleServiceUtil {
 		return getService().getTempAttachmentNames(groupId, tempFolderName);
 	}
 
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getAllDescendantKBArticles(
+		long groupId, long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return getService()
+				   .getAllDescendantKBArticles(groupId, resourcePrimKey,
+			status, orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getGroupKBArticles(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
