@@ -20,6 +20,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
@@ -99,6 +100,9 @@ public class WikiAttachmentEditorConfigContributor
 			getWikiAttachmentItemSelectorCriterion(
 				wikiPageResourcePrimKey, desiredItemSelectorReturnTypes);
 
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);
+
 		ItemSelectorCriterion urlItemSelectorCriterion =
 			getURLItemSelectorCriterion();
 
@@ -124,12 +128,24 @@ public class WikiAttachmentEditorConfigContributor
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, name + "selectItem",
-			attachmentItemSelectorCriterion, urlItemSelectorCriterion,
-			uploadItemSelectorCriterion);
+			attachmentItemSelectorCriterion, imageItemSelectorCriterion,
+			urlItemSelectorCriterion, uploadItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+	}
+
+	private ItemSelectorCriterion getImageItemSelectorCriterion(
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		return imageItemSelectorCriterion;
 	}
 
 	@Reference(unbind = "-")
@@ -189,6 +205,7 @@ public class WikiAttachmentEditorConfigContributor
 
 		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
+
 		return attachmentItemSelectorCriterion;
 	}
 
