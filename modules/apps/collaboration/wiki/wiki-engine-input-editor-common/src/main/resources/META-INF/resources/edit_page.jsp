@@ -29,7 +29,6 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 	<%@ include file="/editor_config.jspf" %>
 
 	<liferay-ui:input-editor
-		allowBrowseDocuments="<%= !wikiPage.isNew() %>"
 		configParams="<%= configParams %>"
 		contents="<%= content %>"
 		editorName="<%= baseInputEditorWikiEngine.getEditorName() %>"
