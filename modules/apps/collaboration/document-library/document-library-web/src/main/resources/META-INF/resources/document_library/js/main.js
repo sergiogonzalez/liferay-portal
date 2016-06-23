@@ -10,6 +10,10 @@ AUI.add(
 		var DocumentLibrary = A.Component.create(
 			{
 				ATTRS: {
+					downloadEntryUrl: {
+						validator: Lang.isString
+					},
+
 					editEntryUrl: {
 						validator: Lang.isString
 					},
@@ -90,6 +94,8 @@ AUI.add(
 					},
 
 					_editEntry: function(event) {
+						debugger;
+
 						var instance = this;
 
 						var action = event.action;
@@ -98,6 +104,10 @@ AUI.add(
 
 						if (action === 'move' || action === 'moveEntries') {
 							url = instance.get('moveEntryUrl');
+						}
+
+						if (action === 'download') {
+							url = instance.get('downloadEntryUrl');
 						}
 
 						instance._processAction(action, url);
