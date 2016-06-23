@@ -74,13 +74,14 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 		when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
-			"itemSelectorPortletURLWithWikiUrlUpload"
+			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews"
 		);
 
 		when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
+				Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
@@ -141,10 +142,10 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 
 		expectedJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithWikiUrlUpload");
+			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews");
 		expectedJSONObject.put(
 			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithWikiUrlUpload");
+			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews");
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
