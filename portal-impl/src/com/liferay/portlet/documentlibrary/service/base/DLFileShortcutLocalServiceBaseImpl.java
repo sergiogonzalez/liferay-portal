@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
+import com.liferay.document.library.kernel.service.persistence.DLFileShortcutFinder;
 import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderFinder;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
@@ -514,6 +515,25 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file shortcut finder.
+	 *
+	 * @return the document library file shortcut finder
+	 */
+	public DLFileShortcutFinder getDLFileShortcutFinder() {
+		return dlFileShortcutFinder;
+	}
+
+	/**
+	 * Sets the document library file shortcut finder.
+	 *
+	 * @param dlFileShortcutFinder the document library file shortcut finder
+	 */
+	public void setDLFileShortcutFinder(
+		DLFileShortcutFinder dlFileShortcutFinder) {
+		this.dlFileShortcutFinder = dlFileShortcutFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -923,6 +943,8 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	protected DLFileShortcutLocalService dlFileShortcutLocalService;
 	@BeanReference(type = DLFileShortcutPersistence.class)
 	protected DLFileShortcutPersistence dlFileShortcutPersistence;
+	@BeanReference(type = DLFileShortcutFinder.class)
+	protected DLFileShortcutFinder dlFileShortcutFinder;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)

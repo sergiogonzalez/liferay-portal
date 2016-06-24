@@ -1224,6 +1224,165 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	public int filterCountByG_F_A(long groupId, long folderId, boolean active);
 
 	/**
+	* Returns all the document library file shortcuts where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @return the matching document library file shortcuts
+	*/
+	public java.util.List<DLFileShortcut> findByF_A_S(long folderId,
+		boolean active, int status);
+
+	/**
+	* Returns a range of all the document library file shortcuts where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts
+	*/
+	public java.util.List<DLFileShortcut> findByF_A_S(long folderId,
+		boolean active, int status, int start, int end);
+
+	/**
+	* Returns an ordered range of all the document library file shortcuts where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library file shortcuts
+	*/
+	public java.util.List<DLFileShortcut> findByF_A_S(long folderId,
+		boolean active, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the document library file shortcuts where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching document library file shortcuts
+	*/
+	public java.util.List<DLFileShortcut> findByF_A_S(long folderId,
+		boolean active, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first document library file shortcut in the ordered set where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file shortcut
+	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	*/
+	public DLFileShortcut findByF_A_S_First(long folderId, boolean active,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+		throws NoSuchFileShortcutException;
+
+	/**
+	* Returns the first document library file shortcut in the ordered set where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	*/
+	public DLFileShortcut fetchByF_A_S_First(long folderId, boolean active,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+
+	/**
+	* Returns the last document library file shortcut in the ordered set where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file shortcut
+	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	*/
+	public DLFileShortcut findByF_A_S_Last(long folderId, boolean active,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+		throws NoSuchFileShortcutException;
+
+	/**
+	* Returns the last document library file shortcut in the ordered set where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	*/
+	public DLFileShortcut fetchByF_A_S_Last(long folderId, boolean active,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator);
+
+	/**
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* @param fileShortcutId the primary key of the current document library file shortcut
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library file shortcut
+	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	*/
+	public DLFileShortcut[] findByF_A_S_PrevAndNext(long fileShortcutId,
+		long folderId, boolean active, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut> orderByComparator)
+		throws NoSuchFileShortcutException;
+
+	/**
+	* Removes all the document library file shortcuts where folderId = &#63; and active = &#63; and status = &#63; from the database.
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	*/
+	public void removeByF_A_S(long folderId, boolean active, int status);
+
+	/**
+	* Returns the number of document library file shortcuts where folderId = &#63; and active = &#63; and status = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param active the active
+	* @param status the status
+	* @return the number of matching document library file shortcuts
+	*/
+	public int countByF_A_S(long folderId, boolean active, int status);
+
+	/**
 	* Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

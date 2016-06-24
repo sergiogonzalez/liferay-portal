@@ -1008,6 +1008,15 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long folderId, int status, int start, int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FileShortcut> getFileShortcuts(long folderId, boolean active,
+		int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FileShortcut> getFileShortcuts(long folderId, boolean active,
+		int status, int start, int end, OrderByComparator<FileShortcut> obc)
+		throws PortalException;
+
 	/**
 	* Returns all immediate subfolders of the parent folder.
 	*

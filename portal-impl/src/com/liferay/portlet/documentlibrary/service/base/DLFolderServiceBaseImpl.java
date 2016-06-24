@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence;
+import com.liferay.document.library.kernel.service.persistence.DLFileShortcutFinder;
 import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderFinder;
@@ -808,6 +809,25 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the document library file shortcut finder.
+	 *
+	 * @return the document library file shortcut finder
+	 */
+	public DLFileShortcutFinder getDLFileShortcutFinder() {
+		return dlFileShortcutFinder;
+	}
+
+	/**
+	 * Sets the document library file shortcut finder.
+	 *
+	 * @param dlFileShortcutFinder the document library file shortcut finder
+	 */
+	public void setDLFileShortcutFinder(
+		DLFileShortcutFinder dlFileShortcutFinder) {
+		this.dlFileShortcutFinder = dlFileShortcutFinder;
+	}
+
+	/**
 	 * Returns the document library file version local service.
 	 *
 	 * @return the document library file version local service
@@ -1141,6 +1161,8 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.document.library.kernel.service.DLFileShortcutService dlFileShortcutService;
 	@BeanReference(type = DLFileShortcutPersistence.class)
 	protected DLFileShortcutPersistence dlFileShortcutPersistence;
+	@BeanReference(type = DLFileShortcutFinder.class)
+	protected DLFileShortcutFinder dlFileShortcutFinder;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileVersionLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLFileVersionLocalService dlFileVersionLocalService;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileVersionService.class)

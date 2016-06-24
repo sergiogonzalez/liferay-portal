@@ -64,6 +64,7 @@
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileShortcutLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl" id="com.liferay.document.library.kernel.service.DLFileShortcutService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileShortcutPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileShortcutFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileShortcutFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileVersionLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileVersionLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileVersionServiceImpl" id="com.liferay.document.library.kernel.service.DLFileVersionService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileVersionPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence" parent="basePersistence" />

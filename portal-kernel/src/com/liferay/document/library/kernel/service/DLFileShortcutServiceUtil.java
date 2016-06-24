@@ -65,6 +65,13 @@ public class DLFileShortcutServiceUtil {
 			toFileEntryId, serviceContext);
 	}
 
+	public static int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileShortcutsCount(groupId, folderId, active, status);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -72,6 +79,16 @@ public class DLFileShortcutServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts(
+		long groupId, long folderId, boolean active, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileShortcut> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileShortcuts(groupId, folderId, active, status, start,
+			end, obc);
 	}
 
 	public static void deleteFileShortcut(long fileShortcutId)

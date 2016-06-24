@@ -209,6 +209,11 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().getDLFileShortcutsCount();
 	}
 
+	public static int getFileShortcutsCount(long folderId, boolean active,
+		int status) {
+		return getService().getFileShortcutsCount(folderId, active, status);
+	}
+
 	public static int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status) {
 		return getService()
@@ -318,6 +323,13 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService()
 				   .getDLFileShortcutsByUuidAndCompanyId(uuid, companyId,
 			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts(
+		long folderId, boolean active, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileShortcut> obc) {
+		return getService()
+				   .getFileShortcuts(folderId, active, status, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts(

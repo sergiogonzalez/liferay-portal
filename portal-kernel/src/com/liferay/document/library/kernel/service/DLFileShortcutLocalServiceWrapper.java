@@ -223,6 +223,12 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
+	public int getFileShortcutsCount(long folderId, boolean active, int status) {
+		return _dlFileShortcutLocalService.getFileShortcutsCount(folderId,
+			active, status);
+	}
+
+	@Override
 	public int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status) {
 		return _dlFileShortcutLocalService.getFileShortcutsCount(groupId,
@@ -339,6 +345,14 @@ public class DLFileShortcutLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileShortcut> orderByComparator) {
 		return _dlFileShortcutLocalService.getDLFileShortcutsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts(
+		long folderId, boolean active, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileShortcut> obc) {
+		return _dlFileShortcutLocalService.getFileShortcuts(folderId, active,
+			status, start, end, obc);
 	}
 
 	@Override
