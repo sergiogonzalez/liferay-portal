@@ -312,6 +312,30 @@
 				(DLFileEntry.folderId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileShortcutFinder.countByF_A">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT fileShortcutId) AS COUNT_VALUE
+			FROM
+				DLFileShortcut
+			WHERE
+				(DLFileShortcut.folderId = ?) AND
+				(DLFileShortcut.active_ = ?) AND
+				([$STATUS$])
+		]]>
+	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileShortcutFinder.findByF_A">
+	<![CDATA[
+			SELECT
+				{DLFileShortcut.*}
+			FROM
+				DLFileShortcut
+			WHERE
+				(DLFileShortcut.folderId = ?) AND
+				(DLFileShortcut.active_ = ?) AND
+				([$STATUS$])
+		]]>
+	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countF_ByG_M_F">
 		<![CDATA[
 			SELECT

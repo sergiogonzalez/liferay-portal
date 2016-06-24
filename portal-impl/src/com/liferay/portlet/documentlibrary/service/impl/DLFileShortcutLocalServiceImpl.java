@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutLocalServiceBaseImpl;
 
@@ -258,6 +260,28 @@ public class DLFileShortcutLocalServiceImpl
 	@Override
 	public List<DLFileShortcut> getFileShortcuts(long toFileEntryId) {
 		return dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
+	}
+
+	@Override
+	public List<DLFileShortcut> getFileShortcuts(
+		long folderId, boolean active, int status, int start,
+		int end, OrderByComparator<DLFileShortcut> obc) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return dlFileShortcutFinder.filterFindByF_A(
+			folderId, active, queryDefinition);
+	}
+
+	@Override
+	public int getFileShortcutsCount(
+		long folderId, boolean active, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition(status);
+
+		return dlFileShortcutFinder.countByF_A(
+			folderId, active, queryDefinition);
 	}
 
 	@Override

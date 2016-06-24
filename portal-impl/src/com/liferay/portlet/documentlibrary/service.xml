@@ -438,6 +438,11 @@
 			<finder-column name="folderId" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="F_A_S" return-type="Collection">
+			<finder-column name="folderId" />
+			<finder-column name="active" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_F_A_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />
