@@ -112,6 +112,11 @@ public interface DocumentRepository extends CapabilityProvider {
 	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException;
 
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
+		throws PortalException;
+
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException;
 

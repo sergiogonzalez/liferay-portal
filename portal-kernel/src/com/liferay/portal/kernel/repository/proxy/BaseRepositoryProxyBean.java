@@ -457,6 +457,15 @@ public class BaseRepositoryProxyBean
 		return newFileShortcutProxyBean(fileShortcut);
 	}
 
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
+		throws PortalException {
+
+		return _baseRepository.getFileShortcuts(
+			folderId, active, status, start, end, obc);
+	}
+
 	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {

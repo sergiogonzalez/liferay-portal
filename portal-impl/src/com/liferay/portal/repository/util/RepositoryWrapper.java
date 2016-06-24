@@ -410,6 +410,15 @@ public class RepositoryWrapper implements Repository {
 		return _repository.getFileShortcut(fileShortcutId);
 	}
 
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
+		throws PortalException {
+
+		return _repository.getFileShortcuts(
+			folderId, active, status, start, end, obc);
+	}
+
 	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {

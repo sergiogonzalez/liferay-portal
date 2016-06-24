@@ -213,6 +213,15 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
