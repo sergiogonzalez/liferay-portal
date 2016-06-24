@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,6 +33,7 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
+@ProviderType
 public interface DocumentRepository extends CapabilityProvider {
 
 	public FileEntry addFileEntry(
