@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1465496756127
+Bnd-LastModified: 1466774966517
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.8.0_74 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2123,7 +2123,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ,com.liferay.portal.kernel.repository.model,com.liferay.portal.kernel
  .service,com.liferay.portal.kernel.trash,com.liferay.portal.kernel.ut
  il,com.liferay.trash.kernel.model",com.liferay.document.library.kerne
- l.service;version="1.0.0";uses:="com.liferay.asset.kernel.model,com.l
+ l.service;version="1.1.0";uses:="com.liferay.asset.kernel.model,com.l
  iferay.document.library.kernel.exception,com.liferay.document.library
  .kernel.model,com.liferay.dynamic.data.mapping.kernel,com.liferay.exp
  ortimport.kernel.lar,com.liferay.portal.kernel.dao.orm,com.liferay.po
@@ -2134,7 +2134,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ess.control,com.liferay.portal.kernel.service,com.liferay.portal.kern
  el.service.permission,com.liferay.portal.kernel.systemevent,com.lifer
  ay.portal.kernel.transaction,com.liferay.portal.kernel.util",com.life
- ray.document.library.kernel.service.persistence;version="1.1.0";uses:
+ ray.document.library.kernel.service.persistence;version="1.2.0";uses:
  ="com.liferay.document.library.kernel.exception,com.liferay.document.
  library.kernel.model,com.liferay.portal.kernel.dao.orm,com.liferay.po
  rtal.kernel.service,com.liferay.portal.kernel.service.persistence,com
@@ -2690,7 +2690,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ernel.process.log;version="6.2.0";uses:="com.liferay.portal.kernel.io
  .unsync,com.liferay.portal.kernel.process",com.liferay.portal.kernel.
  regex;version="1.0.0",com.liferay.portal.kernel.repository;version="7
- .0.0";uses:="com.liferay.asset.kernel.service,com.liferay.document.li
+ .1.0";uses:="com.liferay.asset.kernel.service,com.liferay.document.li
  brary.kernel.service,com.liferay.portal.kernel.exception,com.liferay.
  portal.kernel.lock,com.liferay.portal.kernel.model,com.liferay.portal
  .kernel.repository.capabilities,com.liferay.portal.kernel.repository.
@@ -2707,7 +2707,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  liferay.portal.kernel.lock,com.liferay.portal.kernel.model,com.lifera
  y.portal.kernel.repository.capabilities,com.liferay.portal.kernel.sec
  urity.permission,com.liferay.portal.kernel.util",com.liferay.portal.k
- ernel.repository.proxy;version="1.0.0";uses:="com.liferay.asset.kerne
+ ernel.repository.proxy;version="1.1.0";uses:="com.liferay.asset.kerne
  l.service,com.liferay.document.library.kernel.service,com.liferay.exp
  ando.kernel.model,com.liferay.exportimport.kernel.lar,com.liferay.por
  tal.kernel.exception,com.liferay.portal.kernel.lock,com.liferay.porta
