@@ -316,6 +316,9 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void deleteCompanyMicroblogsEntries(long companyId)
+		throws PortalException;
+
 	public void deleteMicroblogsEntries(long creatorClassNameId,
 		long creatorClassPK) throws PortalException;
 

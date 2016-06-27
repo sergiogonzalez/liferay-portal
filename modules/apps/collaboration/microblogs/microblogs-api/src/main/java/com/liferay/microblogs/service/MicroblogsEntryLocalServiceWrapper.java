@@ -427,6 +427,12 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCompanyMicroblogsEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_microblogsEntryLocalService.deleteCompanyMicroblogsEntries(companyId);
+	}
+
+	@Override
 	public void deleteMicroblogsEntries(long creatorClassNameId,
 		long creatorClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
