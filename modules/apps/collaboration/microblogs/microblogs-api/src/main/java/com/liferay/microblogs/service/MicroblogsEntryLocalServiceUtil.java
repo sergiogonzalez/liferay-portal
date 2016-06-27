@@ -400,6 +400,11 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void deleteCompanyMicroblogsEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCompanyMicroblogsEntries(companyId);
+	}
+
 	public static void deleteMicroblogsEntries(long creatorClassNameId,
 		long creatorClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {

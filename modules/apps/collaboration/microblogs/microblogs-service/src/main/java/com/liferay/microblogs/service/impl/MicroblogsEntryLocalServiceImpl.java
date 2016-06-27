@@ -188,6 +188,13 @@ public class MicroblogsEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCompanyMicroblogsEntries(long companyId)
+		throws PortalException {
+
+		microblogsEntryPersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
 	public void deleteMicroblogsEntries(
 			long creatorClassNameId, long creatorClassPK)
 		throws PortalException {
