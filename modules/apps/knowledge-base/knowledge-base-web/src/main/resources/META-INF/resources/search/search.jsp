@@ -132,7 +132,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			>
 
 				<%
-				KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(GetterUtil.getLong((String)tuple.getObject(0)), WorkflowConstants.STATUS_APPROVED);
+				KBArticle kbArticle = KBArticleServiceUtil.fetchLatestKBArticle(GetterUtil.getLong((String)tuple.getObject(0)), WorkflowConstants.STATUS_APPROVED);
 
 				int viewCount = (kbArticle != null) ? kbArticle.getViewCount() : 0;
 

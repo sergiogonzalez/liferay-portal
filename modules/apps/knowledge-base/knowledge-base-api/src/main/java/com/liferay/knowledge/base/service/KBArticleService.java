@@ -159,6 +159,11 @@ public interface KBArticleService extends BaseService {
 		java.lang.String tempFolderName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBArticle> getAllDescendantKBArticles(long groupId,
+		long resourcePrimKey, int status,
+		OrderByComparator<KBArticle> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getGroupKBArticles(long groupId, int status,
 		int start, int end, OrderByComparator<KBArticle> orderByComparator);
 
