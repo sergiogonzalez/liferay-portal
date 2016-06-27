@@ -55,7 +55,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
+import com.liferay.wiki.translator.impl.MediaWikiToCreoleTranslator;
 import com.liferay.wiki.validator.WikiPageTitleValidator;
 
 import java.io.IOException;
@@ -692,6 +692,13 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	@Reference(unbind = "-")
+	protected void setClassicToCreoleTranslator(
+		MediaWikiToCreoleTranslator mediaWikiToCreoleTranslator) {
+
+		_mediaWikiToCreoleTranslator = mediaWikiToCreoleTranslator;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -733,9 +740,9 @@ public class MediaWikiImporter implements WikiImporter {
 	protected String translateMediaWikiToCreole(
 		String content, boolean strictImportMode) {
 
-		_translator.setStrictImportMode(strictImportMode);
+		_mediaWikiToCreoleTranslator.setStrictImportMode(strictImportMode);
 
-		return _translator.translate(content);
+		return _mediaWikiToCreoleTranslator.translate(content);
 	}
 
 	private static final String _WORK_IN_PROGRESS = "{{Work in progress}}";
@@ -757,8 +764,7 @@ public class MediaWikiImporter implements WikiImporter {
 		new String[] {"archive", "temp", "thumb"});
 
 	private AssetTagLocalService _assetTagLocalService;
-	private final MediaWikiToCreoleTranslator _translator =
-		new MediaWikiToCreoleTranslator();
+	private MediaWikiToCreoleTranslator _mediaWikiToCreoleTranslator;
 	private UserLocalService _userLocalService;
 	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
