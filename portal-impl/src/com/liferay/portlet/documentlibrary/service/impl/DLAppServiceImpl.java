@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -1189,6 +1190,32 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileShortcutId);
 
 		return repository.getFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status)
+		throws PortalException {
+
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
+
+		return repository.getFileShortcuts(
+			folderId, active, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new RepositoryModelCreateDateComparator<FileShortcut>(true));
+	}
+
+	@Override
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
+		throws PortalException {
+
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
+
+		return repository.getFileShortcuts(
+			folderId, active, status, start, end, obc);
 	}
 
 	/**

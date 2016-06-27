@@ -16,14 +16,19 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.document.library.kernel.exception.FileShortcutPermissionException;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,6 +73,36 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			getPermissionChecker(), fileShortcutId, ActionKeys.VIEW);
 
 		return dlFileShortcutLocalService.getFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public List<DLFileShortcut> getFileShortcuts(
+			long groupId, long folderId, boolean active, int status, int start,
+			int end, OrderByComparator<DLFileShortcut> obc)
+		throws PortalException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return dlFileShortcutFinder.filterFindByF_A(
+			folderId, active, queryDefinition);
+	}
+
+	@Override
+	public int getFileShortcutsCount(
+			long groupId, long folderId, boolean active, int status)
+		throws PortalException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition(status);
+
+		return dlFileShortcutFinder.filterCountByF_A(
+			folderId, active, queryDefinition);
 	}
 
 	@Override

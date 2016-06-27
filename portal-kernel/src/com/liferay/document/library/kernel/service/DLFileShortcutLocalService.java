@@ -196,6 +196,9 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	public int getDLFileShortcutsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileShortcutsCount(long folderId, boolean active, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status);
 
@@ -284,6 +287,10 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	public List<DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileShortcut> getFileShortcuts(long folderId, boolean active,
+		int status, int start, int end, OrderByComparator<DLFileShortcut> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileShortcut> getFileShortcuts(long groupId, long folderId,

@@ -308,6 +308,16 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
+		throws PortalException {
+
+		return getRepository().getFileShortcuts(
+			folderId, active, status, start, end, obc);
+	}
+
+	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 

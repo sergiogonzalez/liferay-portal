@@ -1244,6 +1244,22 @@ public class DLAppServiceWrapper implements DLAppService,
 			folderId, status, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileShortcut> getFileShortcuts(
+		long folderId, boolean active, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFileShortcuts(folderId, active, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileShortcut> getFileShortcuts(
+		long folderId, boolean active, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileShortcut> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFileShortcuts(folderId, active, status, start,
+			end, obc);
+	}
+
 	/**
 	* Returns all immediate subfolders of the parent folder.
 	*

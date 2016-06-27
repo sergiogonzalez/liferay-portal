@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for DLFileShortcut. Methods of this
@@ -62,12 +65,21 @@ public interface DLFileShortcutService extends BaseService {
 		long repositoryId, long folderId, long toFileEntryId,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileShortcut> getFileShortcuts(long groupId, long folderId,
+		boolean active, int status, int start, int end,
+		OrderByComparator<DLFileShortcut> obc) throws PortalException;
 
 	public void deleteFileShortcut(long fileShortcutId)
 		throws PortalException;

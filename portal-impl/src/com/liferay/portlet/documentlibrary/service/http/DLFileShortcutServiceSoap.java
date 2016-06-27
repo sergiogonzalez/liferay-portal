@@ -110,6 +110,40 @@ public class DLFileShortcutServiceSoap {
 		}
 	}
 
+	public static com.liferay.document.library.kernel.model.DLFileShortcutSoap[] getFileShortcuts(
+		long groupId, long folderId, boolean active, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileShortcut> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> returnValue =
+				DLFileShortcutServiceUtil.getFileShortcuts(groupId, folderId,
+					active, status, start, end, obc);
+
+			return com.liferay.document.library.kernel.model.DLFileShortcutSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status) throws RemoteException {
+		try {
+			int returnValue = DLFileShortcutServiceUtil.getFileShortcutsCount(groupId,
+					folderId, active, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.document.library.kernel.model.DLFileShortcutSoap updateFileShortcut(
 		long fileShortcutId, long repositoryId, long folderId,
 		long toFileEntryId,

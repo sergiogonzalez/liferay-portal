@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,6 +33,7 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
+@ProviderType
 public interface DocumentRepository extends CapabilityProvider {
 
 	public FileEntry addFileEntry(
@@ -110,6 +112,11 @@ public interface DocumentRepository extends CapabilityProvider {
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
 
 	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException;
+
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
 		throws PortalException;
 
 	public FileVersion getFileVersion(long fileVersionId)

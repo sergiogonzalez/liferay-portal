@@ -265,6 +265,14 @@ public class DLFileShortcutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByF_A_S() throws Exception {
+		_persistence.countByF_A_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByF_A_S(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
 	public void testCountByG_F_A_S() throws Exception {
 		_persistence.countByG_F_A_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),

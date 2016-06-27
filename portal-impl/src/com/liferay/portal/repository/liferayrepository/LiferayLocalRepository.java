@@ -52,6 +52,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryOrderByComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFileShortcutOrderByComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFolderOrderByComparator;
 
 import java.io.File;
@@ -330,6 +331,20 @@ public class LiferayLocalRepository
 			dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
 
 		return new LiferayFileShortcut(dlFileShortcut);
+	}
+
+	@Override
+	public List<FileShortcut> getFileShortcuts(
+			long folderId, boolean active, int status, int start, int end,
+			OrderByComparator<FileShortcut> obc)
+		throws PortalException {
+
+		List<DLFileShortcut> dlFileShortcuts =
+			dlFileShortcutLocalService.getFileShortcuts(
+				folderId, active, status, start, end,
+				DLFileShortcutOrderByComparator.getOrderByComparator(obc));
+
+		return RepositoryModelUtil.toFileShortcuts(dlFileShortcuts);
 	}
 
 	@Override
