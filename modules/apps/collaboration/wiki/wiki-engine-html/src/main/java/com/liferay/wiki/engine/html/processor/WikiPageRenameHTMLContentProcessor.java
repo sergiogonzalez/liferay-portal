@@ -36,14 +36,14 @@ public class WikiPageRenameHTMLContentProcessor
 	@Modified
 	public void activate() {
 		regexps.put(
-			"(<img [^s]*src=\"[^g]+get_page_attachment\\?[^t]+title=)" +
-				"@old_title@&",
-			"$1@new_title@&");
+			"(<img [^s]*src=\"[^g]+get_page_attachment\\?.*?title=)" +
+				"@old_title@(?=[&|\"])",
+			"$1@new_title@");
 
 		regexps.put(
-			"(<a [^h]*href=\"[^g]+get_page_attachment\\?[^t]+title=)" +
-				"@old_title@&",
-			"$1@new_title@&");
+			"(<a [^h]*href=\"[^g]+get_page_attachment\\?.*?title=)" +
+				"@old_title@(?=[&|\"])",
+			"$1@new_title@");
 	}
 
 }
