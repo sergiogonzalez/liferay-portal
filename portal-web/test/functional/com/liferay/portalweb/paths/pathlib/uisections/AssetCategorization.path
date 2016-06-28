@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@id,'categorizationTitle')]/a[contains(@class,'collapse-icon') and @data-toggle='collapse']</td>
+	<td>//div[contains(@id,'categorizationTitle')]/a[contains(@aria-expanded,'false') and contains(.,'Categorization')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_PANEL_EXPANDED</td>
-	<td>//div[contains(@id,'categorizationTitle')]/a[contains(@class,'collapse-icon') and @aria-expanded='true']</td>
+	<td>//div[contains(@id,'categorizationTitle')]/a[contains(@aria-expanded,'true') and contains(.,'Categorization')]</td>
 	<td></td>
 </tr>
 <tr>

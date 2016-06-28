@@ -7,7 +7,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" />
 			<then>
-				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS" value1="Details" />
+				<execute function="Click" locator1="DDMEditTemplate#DETAILS_TOGGLE" />
 			</then>
 		</if>
 
@@ -101,6 +101,18 @@
 		<var name="key_assetTitle" value="Templates" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="NavBar#ASSET_TITLE" value1="Templates" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="Add Form Template" />
+
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
+	</command>
+
+	<command name="addFormTemplateViaBackButton">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -222,7 +234,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="DDMEditStructure#DETAILS_MODE_SELECT" />
 			<then>
-				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS" value1="Details" />
+				<execute function="Click" locator1="DDMEditTemplate#DETAILS_TOGGLE" />
 			</then>
 		</if>
 

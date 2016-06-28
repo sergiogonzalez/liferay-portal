@@ -25,7 +25,6 @@
 			<var name="membershipType" value="${membershipType}" />
 			<var name="parentSiteName" value="${parentSiteName}" />
 			<var name="singleSiteTypePermission" value="${singleSiteTypePermission}" />
-			<var name="siteLimitMembership" value="${siteLimitMembership}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Blank" />
@@ -37,7 +36,6 @@
 		<execute macro="Site#addCP">
 			<var name="membershipType" value="${membershipType}" />
 			<var name="parentSiteName" value="${parentSiteName}" />
-			<var name="siteLimitMembership" value="${siteLimitMembership}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Community" />
@@ -145,37 +143,17 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="AssertTextEquals" locator1="SitesEditSite#DETAILS_NAME" value1="${siteName}" />
-
-		<if>
-			<isset var="siteLimitMembership" />
-			<then>
-				<if>
-					<equals arg1="${siteLimitMembership}" arg2="Yes" />
-					<then>
-						<execute function="Check#checkToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-					</then>
-					<elseif>
-						<equals arg1="${siteLimitMembership}" arg2="No" />
-						<then>
-							<execute function="Uncheck#uncheckToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-						</then>
-					</elseif>
-				</if>
-
-				<execute macro="Button#clickSave" />
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</if>
 	</command>
 
 	<command name="addIntranetCP">
 		<execute macro="Site#addCP">
 			<var name="membershipType" value="${membershipType}" />
 			<var name="parentSiteName" value="${parentSiteName}" />
-			<var name="siteLimitMembership" value="${siteLimitMembership}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Intranet" />
@@ -263,7 +241,6 @@
 		<execute macro="Site#addCP">
 			<var name="membershipType" value="${membershipType}" />
 			<var name="parentSiteName" value="${parentSiteName}" />
-			<var name="siteLimitMembership" value="${siteLimitMembership}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Site Template" />
@@ -418,6 +395,8 @@
 			<var name="rowEntry" value="${userGroupName}" />
 		</execute>
 
+		<var name="key_iframeTitle" value="Assign Site Roles" />
+
 		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Assign Site Roles" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -426,15 +405,17 @@
 
 		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-			<var name="rowEntry" value="roleName" />
-		</execute>
+		<var name="key_rowEntry" value="${roleName}" />
+
+		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" value1="${roleName}" />
+
+		<execute function="SelectFrameTop" />
 
 		<execute macro="Button#clickDone" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT_2" value1="${roleName}">
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${roleName}">
 			<var name="key_cardText" value="${userGroupName}" />
 		</execute>
 	</command>
@@ -797,6 +778,25 @@
 		</execute>
 
 		<execute function="AssertVisible" locator1="MenuItem#JOIN" />
+	</command>
+
+	<command name="limitMembership">
+		<if>
+			<equals arg1="${siteLimitMembership}" arg2="Yes" />
+			<then>
+				<execute function="Check#checkToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${siteLimitMembership}" arg2="No" />
+				<then>
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="manageMembershipOptions">

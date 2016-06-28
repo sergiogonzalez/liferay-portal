@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KNOWLEDGE_BASE_RATING</td>
+	<td>//select[contains(@id,'knowledge-base')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE</td>
 	<td>//div[label[contains(.,'Language')]]/select</td>
 	<td></td>

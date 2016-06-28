@@ -338,7 +338,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
-	<td>//input[contains(@id,'allRowIds')]</td>
+	<td>xpath=(//div[@class='checkbox']//input[@title='Select All'])[2]</td>
 	<td></td>
 </tr>
 <tr>

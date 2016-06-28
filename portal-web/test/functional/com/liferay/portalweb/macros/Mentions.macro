@@ -71,7 +71,7 @@
 
 		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 
-		<execute function="Type#sendKeys" locator1="CKEditor#BODY" value1="${threadBody} &#64;${mentionsUserScreenName}" />
+		<execute function="Type" locator1="CKEditor#BODY" value1="${threadBody} @${mentionsUserScreenName}" />
 
 		<execute function="SelectFrame#selectFrameTop" />
 
