@@ -59,6 +59,47 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 	}
 
 	@Test
+	public void testProcessContentDoNotChangeOtherImagesWithSamePrefix() {
+		String content =
+			"This is a test [[Image:ORIGINAL_NAME/image.jpg]] " +
+				"[[Image:ORIGINAL_NAME_COPY/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:FINAL_NAME/image.jpg]] " +
+				"[[Image:ORIGINAL_NAME_COPY/image.jpg]]",
+			content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeOtherImagesWithSameSuffix() {
+		String content =
+			"This is a test [[Image:ORIGINAL_NAME/image.jpg]] " +
+				"[[Image:COPY_ORIGINAL_NAME/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:FINAL_NAME/image.jpg]] " +
+				"[[Image:COPY_ORIGINAL_NAME/image.jpg]]",
+			content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeWithSamePartialTitle() {
+		String content = "This is a test [[Image:A_ORIGINAL_NAME_Z/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:A_ORIGINAL_NAME_Z/image.jpg]]", content);
+	}
+
+	@Test
 	public void testProcessContentWithComplexTitle() {
 		String content =
 			"This is a test [[Image:Complex.,() original title/image.jpg]]";

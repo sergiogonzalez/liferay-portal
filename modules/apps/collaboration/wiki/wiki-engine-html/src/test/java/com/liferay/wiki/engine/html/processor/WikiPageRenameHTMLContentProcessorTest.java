@@ -57,6 +57,59 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	}
 
 	@Test
+	public void testProcessContentImageDoNotChangeOtherImagesWithSamePrefix() {
+		String content =
+			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=ORIGINAL_NAME&fileName=image.jpeg\"/> " +
+					"<img src=\"wiki/get_page_attachment?p_l_id=1234\"" +
+						"&title=ORIGINAL_NAME_COPY&fileName=image.jpeg\"/>";
+
+		content = _wikiPageRenameHTMLContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=FINAL_NAME&fileName=image.jpeg\"/> " +
+					"<img src=\"wiki/get_page_attachment?p_l_id=1234\"" +
+					"&title=ORIGINAL_NAME_COPY&fileName=image.jpeg\"/>",
+			content);
+	}
+
+	@Test
+	public void testProcessContentImageDoNotChangeOtherImagesWithSameSuffix() {
+		String content =
+			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=ORIGINAL_NAME&fileName=image.jpeg\"/> " +
+					"<img src=\"wiki/get_page_attachment?p_l_id=1234\"" +
+						"&title=COPY_ORIGINAL_NAME&fileName=image.jpeg\"/>";
+
+		content = _wikiPageRenameHTMLContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=FINAL_NAME&fileName=image.jpeg\"/> " +
+					"<img src=\"wiki/get_page_attachment?p_l_id=1234\"" +
+					"&title=COPY_ORIGINAL_NAME&fileName=image.jpeg\"/>",
+			content);
+	}
+
+	@Test
+	public void testProcessContentImageDoNotChangeWithSamePartialTitle() {
+		String content =
+			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=A_ORIGINAL_NAME_Z&fileName=image.jpeg\"/>";
+
+		content = _wikiPageRenameHTMLContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=A_ORIGINAL_NAME_Z&fileName=image.jpeg\"/>",
+			content);
+	}
+
+	@Test
 	public void testProcessContentImageWithComplexTitle() {
 		String content =
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +

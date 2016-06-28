@@ -58,6 +58,47 @@ public class WikiPageRenameCreoleContentProcessorTest {
 	}
 
 	@Test
+	public void testProcessContentDoNotChangeOtherImagesWithSamePrefix() {
+		String content =
+			"This is a test {{ORIGINAL_NAME/image.jpg}} " +
+				"{{ORIGINAL_NAME_COPY/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test {{FINAL_NAME/image.jpg}} " +
+				"{{ORIGINAL_NAME_COPY/image.jpg}}",
+			content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeOtherImagesWithSameSuffix() {
+		String content =
+			"This is a test {{ORIGINAL_NAME/image.jpg}} " +
+				"{{COPY_ORIGINAL_NAME/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test {{FINAL_NAME/image.jpg}} " +
+				"{{COPY_ORIGINAL_NAME/image.jpg}}",
+			content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeWithSamePartialTitle() {
+		String content = "This is a test {{A_ORIGINAL_NAME_Z)/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test {{(A_ORIGINAL_NAME_Z)/image.jpg}}", content);
+	}
+
+	@Test
 	public void testProcessContentWithComplexTitle() {
 		String content =
 			"This is a test {{Complex.,() original title/image.jpg}}";
