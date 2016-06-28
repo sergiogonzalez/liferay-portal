@@ -424,7 +424,7 @@
 	<command name="subscribePG">
 		<execute function="Click" locator1="Icon#INFO" />
 
-		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
+		<execute function="Click" locator1="Icon#SUBSCRIBE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

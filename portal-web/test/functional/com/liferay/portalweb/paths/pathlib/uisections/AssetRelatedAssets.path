@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>HEADER_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed')]//span[contains(.,'Related Assets')]</td>
+	<td>//div[contains(@class,'panel-title')]/a[contains(.,'Related Assets') and contains(@aria-expanded,'false')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HEADER_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded')]//span[contains(.,'Related Assets')]</td>
+	<td>//div[contains(@class,'panel-title')]/a[contains(.,'Related Assets') and contains(@aria-expanded,'true')]</td>
 	<td></td>
 </tr>
 <tr>

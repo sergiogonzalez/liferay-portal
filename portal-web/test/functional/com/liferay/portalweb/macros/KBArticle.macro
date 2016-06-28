@@ -17,6 +17,15 @@
 		</execute>
 	</command>
 
+	<command name="_gotoChildArticle">
+		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#CHILD_PAGE_HEADER" value1="Child Article" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#CHILD_PAGE_TITLE" value1="${kbChildArticleTitle}" />
+
+		<execute function="AssertClick" locator1="KnowledgeBase#CHILD_PAGE_TITLE" value1="${kbChildArticleTitle}" />
+	</command>
+
 	<command name="_gotoImportArticle">
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -25,10 +34,19 @@
 		</execute>
 	</command>
 
-	<command name="addChildPGViaKBAdmin">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+	<command name="addChildArticleViaKBAdmin">
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+			</else>
+		</if>
+
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbChildArticleTitle}" />
@@ -452,9 +470,21 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="AssertClick" locator1="NavBar#ACTIONS" value1="Actions" />
-		<execute function="ClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
-		<execute function="Confirm" value1="Are you sure you want to delete the selected articles?" />
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#DELETE" />
+			<then>
+				<execute function="ClickNoError" locator1="Icon#DELETE" />
+			</then>
+			<else>
+				<var name="key_rowEntry" value="${kbArticleTitle}" />
+
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+				<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
+			</else>
+		</if>
+
+		<execute function="Confirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="An unexpected error occurred while importing articles: File name is null." />
@@ -773,7 +803,7 @@
 	</command>
 
 	<command name="selectAllCP">
-		<execute function="Check" locator1="KnowledgeBase#ARTICLE_TABLE_SELECT_ALL_CHECKBOX" />
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 	</command>
 
 	<command name="selectArticleCP">
@@ -799,9 +829,9 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="CPKnowledgebaseadminAddarticle#CATEGORIZATION_HEADER_EXPANDED" />
+			<condition function="IsElementNotPresent" locator1="AssetCategorization#CATEGORIZATION_PANEL_EXPANDED" />
 			<then>
-				<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#CATEGORIZATION_HEADER_COLLAPSED" />
+				<execute function="Click" locator1="AssetCategorization#CATEGORIZATION_PANEL_COLLAPSED" />
 			</then>
 		</if>
 
@@ -1054,18 +1084,9 @@
 	</command>
 
 	<command name="viewChildArticleCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Child Articles for ${kbArticleTitle}." />
-
-		<var name="key_kbArticleTitle" value="${kbChildArticleTitle}" />
-		<var name="key_rowEntry" value="${kbArticleTitle}" />
-
-		<execute function="AssertTextEquals#assertValue" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbChildArticleTitle}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_AUTHOR" value1="${kbAuthor}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+		<execute macro="KBArticle#_gotoChildArticle">
+			<var name="kbChildArticleTitle" value="${kbChildArticleTitle}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbChildArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbChildArticleContent}" />
@@ -1215,14 +1236,11 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
-		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
-
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
-		<execute function="AssertTextEquals" locator1="CKEditor#BODY" value1="${kbArticleContent}" />
-		<execute function="SelectFrame"  value1="relative=top" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
 
 		<if>
 			<condition function="IsElementNotPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_EXPANDED" />

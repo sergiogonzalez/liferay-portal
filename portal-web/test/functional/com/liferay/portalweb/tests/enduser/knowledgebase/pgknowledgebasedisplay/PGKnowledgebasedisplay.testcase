@@ -394,7 +394,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
+		<execute macro="KBArticle#addChildArticleViaKBAdmin">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Title 1 Child Content 1" />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
@@ -1000,9 +1000,19 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#configureKBRatingTypePG">
-			<var name="useStarRatings" value="true" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
 		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Social" />
+		</execute>
+
+		<execute function="Select" locator1="Select#KNOWLEDGE_BASE_RATING" value1="Stars" />
+
+		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="Confirm" value1="Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -1038,26 +1048,26 @@
 		</for>
 
 		<for list="${kbArticleCounterList}" param="articleCount" >
-			<execute macro="KBArticle#addChildPGViaKBAdmin">
+			<execute macro="KBArticle#addChildArticleViaKBAdmin">
 				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 				<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child ${articleCount}" />
 				<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child ${articleCount}" />
 			</execute>
 		</for>
 
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
+		<execute macro="KBArticle#addChildArticleViaKBAdmin">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 2 Child 1" />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 1" />
 		</execute>
 
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
+		<execute macro="KBArticle#addChildArticleViaKBAdmin">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 2 Child 2" />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
 		</execute>
 
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
+		<execute macro="KBArticle#addChildArticleViaKBAdmin">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 3 Child 1" />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 3 Child 1" />
@@ -1158,9 +1168,19 @@
 			<var name="rateUp" value="true" />
 		</execute>
 
-		<execute macro="KBArticle#configureKBRatingTypePG">
-			<var name="useStarRatings" value="true" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
 		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Social" />
+		</execute>
+
+		<execute function="Select" locator1="Select#KNOWLEDGE_BASE_RATING" value1="Stars" />
+
+		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="Confirm" value1="Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -1168,9 +1188,19 @@
 
 		<execute macro="KBArticle#viewArticle5StarRatingPG" />
 
-		<execute macro="KBArticle#configureKBRatingTypePG">
-			<var name="useThumbsRatings" value="true" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
 		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Social" />
+		</execute>
+
+		<execute function="Select" locator1="Select#KNOWLEDGE_BASE_RATING" value1="Thumbs" />
+
+		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="Confirm" value1="Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -1230,7 +1260,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
+		<execute macro="KBArticle#addChildArticleViaKBAdmin">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 			<var name="kbChildArticleContent" value="This is a child article. Lengthy articles are summarized on the KB Display portlet. When an article is summarized, a Read More link is present, which, when clicked, directs the reader to the rest of the article. Excerpt from Liferay.com: Modern portals include a full workflow enabled web content management system. Many portal websites include a great deal of content that requires regular updates. These updates are often accomplished by non-technical content contributors and need to be approved by content approvers in a workflow approval process. This last sentence of the child article should only be visible after clicking on Read More." />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />

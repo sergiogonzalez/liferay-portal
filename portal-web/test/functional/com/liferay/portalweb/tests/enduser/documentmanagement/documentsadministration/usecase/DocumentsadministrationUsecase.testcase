@@ -1344,13 +1344,13 @@
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
-		<execute function="AssertNotChecked" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="Checkbox#SELECT_ALL_CHECKBOX_TICK" />
 
 		<execute macro="DMDocument#uncheckDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
-		<execute function="AssertNotChecked" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
+		<execute function="AssertElementNotPresent" locator1="Checkbox#SELECT_ALL_CHECKBOX_TICK" />
 
 		<execute macro="DMDocument#checkDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
@@ -1360,6 +1360,6 @@
 			<var name="dmDocumentTitle" value="DM Document2 Title" />
 		</execute>
 
-		<execute function="AssertChecked" locator1="Checkbox#LEXICON_SELECT_ALL" />
+		<execute function="AssertChecked" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
 	</command>
 </definition>

@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
@@ -559,11 +560,19 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void reindex(String[] ids) throws SearchException {
+		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
+
 		try {
 			if (IndexWriterHelperUtil.isIndexReadOnly() ||
 				!isIndexerEnabled()) {
 
 				return;
+			}
+
+			if (ids.length > 0) {
+				long companyId = GetterUtil.getLong(ids[0]);
+
+				CompanyThreadLocal.setCompanyId(companyId);
 			}
 
 			doReindex(ids);
@@ -573,6 +582,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 		}
 	}
 

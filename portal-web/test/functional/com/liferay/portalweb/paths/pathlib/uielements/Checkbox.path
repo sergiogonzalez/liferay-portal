@@ -269,6 +269,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ALL_CHECKBOX_TICK</td>
+	<td>//div[@class='portlet-body']//div[contains(@class,'secondary-bar-open')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ALL_NOTIFICATIONS</td>
 	<td>//input[contains(@id,'notifications') and contains(@class,'select-all')]</td>
 	<td></td>

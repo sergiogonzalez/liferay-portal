@@ -41,6 +41,12 @@
 		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
 	</command>
 
+	<command name="gotoNavTab">
+		<var name="key_tab" value="${navTab}" />
+
+		<execute function="AssertClick" locator1="NavTab#TAB_LINK" value1="${navTab}" />
+	</command>
+
 	<command name="gotoPage" summary="Navigate to the page named '${pageName}'">
 		<execute macro="Navigator#openURL" />
 
