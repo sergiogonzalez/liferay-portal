@@ -186,7 +186,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	}
 
 	@Test
-	public void testProcessContentImageWithSrcAsFirstParameterDoNotChange() {
+	public void testProcessContentImageWithTitleAsFirstParameter() {
 		String content =
 			"This is a test <img src=\"wiki/get_page_attachment?" +
 				"title=ORIGINAL_NAME&fileName=image.jpeg\">";
@@ -196,12 +196,12 @@ public class WikiPageRenameHTMLContentProcessorTest {
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?" +
-				"title=ORIGINAL_NAME&fileName=image.jpeg\">",
+				"title=FINAL_NAME&fileName=image.jpeg\">",
 			content);
 	}
 
 	@Test
-	public void testProcessContentImageWithSrcAsLastParameterDoNotChange() {
+	public void testProcessContentImageWithTitleAsLastParameter() {
 		String content =
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=ORIGINAL_NAME\">";
@@ -211,7 +211,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=ORIGINAL_NAME\">",
+				"&title=FINAL_NAME\">",
 			content);
 	}
 
@@ -281,36 +281,6 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	}
 
 	@Test
-	public void testProcessContentLinkWithHrefAsFirstParameterDoNotChange() {
-		String content =
-			"This is a test <a href=\"wiki/get_page_attachment?" +
-				"title=ORIGINAL_NAME&fileName=image.jpeg\"/>";
-
-		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
-
-		Assert.assertEquals(
-			"This is a test <a href=\"wiki/get_page_attachment?" +
-				"title=ORIGINAL_NAME&fileName=image.jpeg\"/>",
-			content);
-	}
-
-	@Test
-	public void testProcessContentLinkWithHrefAsLastParameterDoNotChange() {
-		String content =
-			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=ORIGINAL_NAME\"/>";
-
-		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
-
-		Assert.assertEquals(
-			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=ORIGINAL_NAME\"/>",
-			content);
-	}
-
-	@Test
 	public void testProcessContentLinkWithNumbersInTitle() {
 		String content =
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -352,6 +322,36 @@ public class WikiPageRenameHTMLContentProcessorTest {
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=FINAL NAME PAGE&fileName=image.jpeg\"/>",
+			content);
+	}
+
+	@Test
+	public void testProcessContentLinkWithTitleAsFirstParameter() {
+		String content =
+			"This is a test <a href=\"wiki/get_page_attachment?" +
+				"title=ORIGINAL_NAME&fileName=image.jpeg\"/>";
+
+		content = _wikiPageRenameHTMLContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test <a href=\"wiki/get_page_attachment?" +
+				"title=FINAL_NAME&fileName=image.jpeg\"/>",
+			content);
+	}
+
+	@Test
+	public void testProcessContentLinkWithTitleAsLastParameter() {
+		String content =
+			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=ORIGINAL_NAME\"/>";
+
+		content = _wikiPageRenameHTMLContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
+				"&title=FINAL_NAME\"/>",
 			content);
 	}
 
