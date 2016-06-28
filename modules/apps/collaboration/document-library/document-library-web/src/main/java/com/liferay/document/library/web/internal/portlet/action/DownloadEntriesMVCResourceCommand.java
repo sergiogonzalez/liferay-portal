@@ -124,7 +124,10 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 				FileEntry fileEntry = fileEntries.get(0);
 
-				sendFileEntry(resourceRequest, resourceResponse, fileEntry);
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, fileEntry.getFileName(),
+					fileEntry.getContentStream(), 0, fileEntry.getMimeType(),
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 			}
 			else if ((fileShortcuts.size() == 1) && fileEntries.isEmpty() &&
 					 folders.isEmpty()) {
@@ -134,7 +137,10 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				FileEntry fileEntry = _dlAppService.getFileEntry(
 					fileShortcut.getToFileEntryId());
 
-				sendFileEntry(resourceRequest, resourceResponse, fileEntry);
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, fileEntry.getFileName(),
+					fileEntry.getContentStream(), 0, fileEntry.getMimeType(),
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 			}
 			else {
 				String zipFileName = getZipFileName(folderId, themeDisplay);
@@ -224,27 +230,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		else {
 			return LanguageUtil.get(
 				themeDisplay.getLocale(), "documents-and-media") + ".zip";
-		}
-	}
-
-	protected void sendFileEntry(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			FileEntry fileEntry)
-		throws Exception {
-
-		long size = fileEntry.getSize();
-
-		if (size > Integer.MAX_VALUE) {
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, fileEntry.getFileName(),
-				fileEntry.getContentStream(), ContentTypes.APPLICATION_ZIP);
-		}
-		else {
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, fileEntry.getFileName(),
-				fileEntry.getContentStream(), (int)size,
-				fileEntry.getMimeType(),
-				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
 	}
 
