@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -105,42 +106,66 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		InputStream inputStream = null;
 
 		try {
-			String zipFileName = getZipFileName(folderId, themeDisplay);
-
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
 			List<FileEntry> fileEntries = ActionUtil.getFileEntries(
 				resourceRequest);
-
-			for (FileEntry fileEntry : fileEntries) {
-				zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
-			}
 
 			List<FileShortcut> fileShortcuts = ActionUtil.getFileShortcuts(
 				resourceRequest);
 
-			for (FileShortcut fileShortcut : fileShortcuts) {
+			List<Folder> folders = ActionUtil.getFolders(resourceRequest);
+
+			if (fileEntries.isEmpty() && fileShortcuts.isEmpty() &&
+				folders.isEmpty()) {
+
+				return;
+			}
+			else if ((fileEntries.size() == 1) && fileShortcuts.isEmpty() &&
+					 folders.isEmpty()) {
+
+				FileEntry fileEntry = fileEntries.get(0);
+
+				sendFileEntry(resourceRequest, resourceResponse, fileEntry);
+			}
+			else if ((fileShortcuts.size() == 1) && fileEntries.isEmpty() &&
+					 folders.isEmpty()) {
+
+				FileShortcut fileShortcut = fileShortcuts.get(0);
+
 				FileEntry fileEntry = _dlAppService.getFileEntry(
 					fileShortcut.getToFileEntryId());
 
-				zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+				sendFileEntry(resourceRequest, resourceResponse, fileEntry);
 			}
+			else {
+				String zipFileName = getZipFileName(folderId, themeDisplay);
 
-			List<Folder> folders = ActionUtil.getFolders(resourceRequest);
+				ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-			for (Folder folder : folders) {
-				zipFolder(
-					folder.getRepositoryId(), folder.getFolderId(),
-					StringPool.SLASH.concat(folder.getName()), zipWriter);
+				for (FileEntry fileEntry : fileEntries) {
+					zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+				}
+
+				for (FileShortcut fileShortcut : fileShortcuts) {
+					FileEntry fileEntry = _dlAppService.getFileEntry(
+						fileShortcut.getToFileEntryId());
+
+					zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+				}
+
+				for (Folder folder : folders) {
+					zipFolder(
+						folder.getRepositoryId(), folder.getFolderId(),
+						StringPool.SLASH.concat(folder.getName()), zipWriter);
+				}
+
+				file = zipWriter.getFile();
+
+				inputStream = new FileInputStream(file);
+
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, zipFileName, inputStream,
+					ContentTypes.APPLICATION_ZIP);
 			}
-
-			file = zipWriter.getFile();
-
-			inputStream = new FileInputStream(file);
-
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, zipFileName, inputStream,
-				ContentTypes.APPLICATION_ZIP);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -199,6 +224,27 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		else {
 			return LanguageUtil.get(
 				themeDisplay.getLocale(), "documents-and-media") + ".zip";
+		}
+	}
+
+	protected void sendFileEntry(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			FileEntry fileEntry)
+		throws Exception {
+
+		long size = fileEntry.getSize();
+
+		if (size > Integer.MAX_VALUE) {
+			PortletResponseUtil.sendFile(
+				resourceRequest, resourceResponse, fileEntry.getFileName(),
+				fileEntry.getContentStream(), ContentTypes.APPLICATION_ZIP);
+		}
+		else {
+			PortletResponseUtil.sendFile(
+				resourceRequest, resourceResponse, fileEntry.getFileName(),
+				fileEntry.getContentStream(), (int)size,
+				fileEntry.getMimeType(),
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
 	}
 
