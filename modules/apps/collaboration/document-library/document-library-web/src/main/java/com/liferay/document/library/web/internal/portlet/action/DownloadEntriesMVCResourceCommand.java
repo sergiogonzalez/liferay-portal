@@ -131,7 +131,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			for (Folder folder : folders) {
 				zipFolder(
 					folder.getRepositoryId(), folder.getFolderId(),
-					StringPool.SLASH, zipWriter);
+					StringPool.SLASH.concat(folder.getName()), zipWriter);
 			}
 
 			file = zipWriter.getFile();
@@ -190,16 +190,16 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 	protected String getZipFileName(long folderId, ThemeDisplay themeDisplay)
 		throws PortalException {
-		String zipFileName = LanguageUtil.get(
-			themeDisplay.getLocale(), "documents-and-media");
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder folder = _dlAppService.getFolder(folderId);
 
-			zipFileName = folder.getName();
+			return folder.getName() + ".zip";
 		}
-
-		return zipFileName;
+		else {
+			return LanguageUtil.get(
+				themeDisplay.getLocale(), "documents-and-media") + ".zip";
+		}
 	}
 
 	@Reference(unbind = "-")
