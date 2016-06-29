@@ -59,6 +59,9 @@ public interface CommentManager {
 
 	public Comment fetchComment(long commentId);
 
+	public DiscussionComment fetchDiscussionComment(long userId, long commentId)
+		throws PortalException;
+
 	public int getCommentsCount(String className, long classPK);
 
 	public Discussion getDiscussion(
