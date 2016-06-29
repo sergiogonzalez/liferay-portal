@@ -136,7 +136,12 @@ public class WikiAttachmentEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
-	private ItemSelectorCriterion getImageItemSelectorCriterion(
+	@Reference(unbind = "-")
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	protected ItemSelectorCriterion getImageItemSelectorCriterion(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		ItemSelectorCriterion imageItemSelectorCriterion =
@@ -146,11 +151,6 @@ public class WikiAttachmentEditorConfigContributor
 			desiredItemSelectorReturnTypes);
 
 		return imageItemSelectorCriterion;
-	}
-
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
 	}
 
 	protected ItemSelectorCriterion getUploadItemSelectorCriterion(
@@ -178,6 +178,7 @@ public class WikiAttachmentEditorConfigContributor
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadDesiredItemSelectorReturnTypes);
+
 		return uploadItemSelectorCriterion;
 	}
 
