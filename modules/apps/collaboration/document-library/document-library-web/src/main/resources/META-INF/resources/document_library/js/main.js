@@ -206,7 +206,7 @@ AUI.add(
 
 						form.get(namespace + 'redirect').val(redirectUrl);
 
-						submitForm(form, url);
+						submitForm(form, url, false);
 					}
 				}
 			}
