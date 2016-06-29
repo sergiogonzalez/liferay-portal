@@ -24,8 +24,6 @@ public interface WorkflowableComment extends Comment {
 
 	public long getCompanyId();
 
-	public long getGroupId();
-
 	public long getPrimaryKey();
 
 	public int getStatus();
