@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.comment;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface WorkflowableComment extends Comment {
 
 	public long getCompanyId();

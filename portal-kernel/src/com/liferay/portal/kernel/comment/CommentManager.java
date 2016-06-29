@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.comment;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.Function;
 /**
  * @author André de Oliveira
  */
+@ProviderType
 public interface CommentManager {
 
 	public long addComment(
