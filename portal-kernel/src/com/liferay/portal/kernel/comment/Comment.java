@@ -37,6 +37,8 @@ public interface Comment {
 
 	public Date getCreateDate();
 
+	public long getGroupId();
+
 	public Class<?> getModelClass();
 
 	public String getModelClassName();
