@@ -39,7 +39,7 @@ public class LiferayProcessorCapability
 			   RepositoryWrapperAware {
 
 	public LiferayProcessorCapability() {
-		this(ResourceGenerationStrategy.COPY_UNMODIFIED);
+		this(ResourceGenerationStrategy.REUSE);
 	}
 
 	public LiferayProcessorCapability(
@@ -60,9 +60,7 @@ public class LiferayProcessorCapability
 
 	@Override
 	public void copy(FileEntry fileEntry, FileVersion fileVersion) {
-		if (_resourceGenerationStrategy ==
-				ResourceGenerationStrategy.COPY_UNMODIFIED) {
-
+		if (_resourceGenerationStrategy == ResourceGenerationStrategy.REUSE) {
 			registerDLProcessorCallback(fileEntry, fileVersion);
 		}
 		else {
@@ -107,7 +105,7 @@ public class LiferayProcessorCapability
 
 	public enum ResourceGenerationStrategy {
 
-		ALWAYS_GENERATE, COPY_UNMODIFIED
+		ALWAYS_GENERATE, REUSE
 
 	}
 
