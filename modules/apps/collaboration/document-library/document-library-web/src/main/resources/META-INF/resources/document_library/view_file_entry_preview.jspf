@@ -45,7 +45,7 @@
 		videoThumbnailURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 	}
 
-	if (status != WorkflowConstants.STATUS_ANY) {
+	if ((status != WorkflowConstants.STATUS_ANY) && (fileEntry.getSize() > 0)) {
 		previewQueryString = "&status=" + status;
 	}
 
