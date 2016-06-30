@@ -15,10 +15,6 @@
 --%>
 
 <%
-Map<String, String> configParams = new HashMap();
-
-configParams.put("emoticonsPath", themeDisplay.getPathThemeImages() + MBUtil.EMOTICONS);
-
 if (quote && Validator.isNull(body) && (curParentMessage != null)) {
 	StringBundler sb = new StringBundler(5);
 
@@ -42,10 +38,10 @@ else if (splitThread && Validator.isNull(body)) {
 	body = LanguageUtil.format(request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 }
 
-String bbcoceEditorName = PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+String bbcodeEditorName = PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
-if (bbcoceEditorName.equals("bbcode")) {
-	bbcoceEditorName = "ckeditor_bbcode";
+if (bbcodeEditorName.equals("bbcode")) {
+	bbcodeEditorName = "ckeditor_bbcode";
 
 	if (_log.isWarnEnabled()) {
 		_log.warn("Replacing unsupported BBCode editor with CKEditor BBCode");
@@ -53,7 +49,7 @@ if (bbcoceEditorName.equals("bbcode")) {
 }
 %>
 
-<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" configParams="<%= configParams %>" contents="<%= body %>" editorName="<%= bbcoceEditorName %>" toolbarSet="bbcode" />
+<liferay-ui:input-editor contents="<%= body %>" editorName="<%= bbcodeEditorName %>" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {
