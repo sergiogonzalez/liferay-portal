@@ -27,7 +27,7 @@
 		$('#<%= id %>Content').on(
 			'hide.bs.collapse show.bs.collapse',
 			function(event) {
-				if (event.target.id === '<%= id %>Content') {
+				if (event.target.id === '<%= namespace + id %>Content') {
 					storeTask(
 						{
 							'<%= id %>': (event.type === 'hide')
