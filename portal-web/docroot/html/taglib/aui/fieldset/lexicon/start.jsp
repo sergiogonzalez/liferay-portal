@@ -24,11 +24,11 @@ if (Validator.isNull(label)) {
 else if (collapsible) {
 	boolean defaultState = collapsed;
 
-	collapsed = GetterUtil.getBoolean(SessionClicks.get(request, id, null), defaultState);
+	collapsed = GetterUtil.getBoolean(SessionClicks.get(request, namespace + id, null), defaultState);
 }
 %>
 
-<fieldset aria-labelledby="<%= id %>Title" class="<%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
+<fieldset aria-labelledby="<%= namespace + id %>Title" class="<%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<liferay-util:buffer var="header">
 			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
@@ -44,11 +44,11 @@ else if (collapsible) {
 			</c:if>
 		</liferay-util:buffer>
 
-		<div class="panel-heading" id="<%= id %>Header" role="presentation">
-			<div class="panel-title" id="<%= id %>Title">
+		<div class="panel-heading" id="<%= namespace + id %>Header" role="presentation">
+			<div class="panel-title" id="<%= namespace + id %>Title">
 				<c:choose>
 					<c:when test="<%= collapsible %>">
-						<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
+						<a aria-controls="<%= namespace + id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= namespace + id %>Content" role="button">
 							<%= header %>
 						</a>
 					</c:when>
@@ -60,5 +60,5 @@ else if (collapsible) {
 		</div>
 	</c:if>
 
-	<div aria-labelledby="<%= id %>Header" class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row" : StringPool.BLANK %>" id="<%= id %>Content" role="presentation">
+	<div aria-labelledby="<%= namespace + id %>Header" class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row" : StringPool.BLANK %>" id="<%= namespace + id %>Content" role="presentation">
 		<div class="panel-body">
