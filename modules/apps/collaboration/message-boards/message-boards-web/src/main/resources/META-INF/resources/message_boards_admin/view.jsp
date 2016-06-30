@@ -17,6 +17,8 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);
@@ -40,6 +42,11 @@ if (Validator.isNotNull(keywords)) {
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
+
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+}
 %>
 
 <portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
