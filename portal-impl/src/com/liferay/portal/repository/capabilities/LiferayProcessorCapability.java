@@ -38,6 +38,16 @@ public class LiferayProcessorCapability
 	implements ProcessorCapability, RepositoryEventAware,
 			   RepositoryWrapperAware {
 
+	public LiferayProcessorCapability() {
+		this(ResourceGenerationStrategy.COPY_UNMODIFIED);
+	}
+
+	public LiferayProcessorCapability(
+		ResourceGenerationStrategy resourceGenerationStrategy) {
+
+		_resourceGenerationStrategy = resourceGenerationStrategy;
+	}
+
 	@Override
 	public void cleanUp(FileEntry fileEntry) {
 		DLProcessorRegistryUtil.cleanUp(fileEntry);
@@ -50,7 +60,14 @@ public class LiferayProcessorCapability
 
 	@Override
 	public void copy(FileEntry fileEntry, FileVersion fileVersion) {
-		registerDLProcessorCallback(fileEntry, fileVersion);
+		if (_resourceGenerationStrategy ==
+				ResourceGenerationStrategy.COPY_UNMODIFIED) {
+
+			registerDLProcessorCallback(fileEntry, fileVersion);
+		}
+		else {
+			generateNew(fileEntry);
+		}
 	}
 
 	@Override
@@ -88,6 +105,12 @@ public class LiferayProcessorCapability
 		return new LiferayProcessorRepositoryWrapper(repository, this);
 	}
 
+	public enum ResourceGenerationStrategy {
+
+		ALWAYS_GENERATE, COPY_UNMODIFIED
+
+	}
+
 	protected void registerDLProcessorCallback(
 		final FileEntry fileEntry, final FileVersion fileVersion) {
 
@@ -104,5 +127,7 @@ public class LiferayProcessorCapability
 
 			});
 	}
+
+	private final ResourceGenerationStrategy _resourceGenerationStrategy;
 
 }

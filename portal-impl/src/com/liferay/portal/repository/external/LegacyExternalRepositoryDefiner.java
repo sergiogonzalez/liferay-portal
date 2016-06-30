@@ -108,7 +108,9 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 
 	private final String _className;
 	private final LiferayProcessorCapability _processorCapability =
-		new LiferayProcessorCapability();
+		new LiferayProcessorCapability(
+			LiferayProcessorCapability.ResourceGenerationStrategy.
+				ALWAYS_GENERATE);
 	private RepositoryConfiguration _repositoryConfiguration;
 	private final RepositoryFactory _repositoryFactory;
 	private final ResourceBundleLoader _resourceBundleLoader;
