@@ -838,8 +838,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			kbArticles = new ArrayList<>();
 		}
 
-		kbArticles = ListUtil.copy(kbArticles);
-
 		Long[][] params = new Long[][] {new Long[] {resourcePrimKey}};
 
 		while ((params = KnowledgeBaseUtil.getParams(params[0])) != null) {
