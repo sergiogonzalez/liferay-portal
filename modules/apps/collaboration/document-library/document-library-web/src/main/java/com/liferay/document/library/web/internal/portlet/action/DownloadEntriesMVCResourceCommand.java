@@ -144,8 +144,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 			}
 			else {
-				String zipFileName = getZipFileName(
-					folderId, themeDisplay.getLocale());
+				String zipFileName = getZipFileName(folderId, themeDisplay);
 
 				ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
@@ -198,8 +197,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		InputStream inputStream = null;
 
 		try {
-			String zipFileName = getZipFileName(
-				folderId, themeDisplay.getLocale());
+			String zipFileName = getZipFileName(folderId, themeDisplay);
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
@@ -222,7 +220,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	protected String getZipFileName(long folderId, Locale locale)
+	protected String getZipFileName(long folderId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -231,7 +229,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			return folder.getName() + ".zip";
 		}
 		else {
-			return LanguageUtil.get(locale, "documents-and-media") + ".zip";
+			return themeDisplay.getScopeGroupName() + ".zip";
 		}
 	}
 
