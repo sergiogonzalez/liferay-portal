@@ -23,12 +23,23 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -52,23 +63,28 @@ public class AlloyEditorBBCodeConfigContributor
 
 		jsonObject.put("allowedContent", Boolean.TRUE);
 		jsonObject.put("enterMode", 2);
-		jsonObject.put("extraPlugins", "a11yhelpbtn,bbcode,itemselector");
-		jsonObject.put("fontSize_defaultLabel", "14");
-		jsonObject.put(
-			"fontSize_sizes",
-			"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48/48px");
-		jsonObject.put("format_tags", "p;pre");
-		jsonObject.put(
-			"imagesPath",
-			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
-				"/message_boards/");
+
+		String extraPlugins = jsonObject.getString("extraPlugins");
+
+		extraPlugins = extraPlugins.concat(",bbcode,itemselector,media");
+		jsonObject.put("extraPlugins", extraPlugins);
+
+		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
 		jsonObject.put("lang", getLangJSONObject(inputEditorTaglibAttributes));
 		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
+
+		String removePlugins = jsonObject.getString("removePlugins");
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("bidi,colorbutton,colordialog,div,flash,font,forms,");
+		sb.append("indentblock,keystrokes,maximize,newpage,pagebreak,");
+		sb.append("preview,print,save,showblocks,smiley,stylescombo,");
+		sb.append("templates,video");
+
 		jsonObject.put(
-			"removePlugins",
-			"bidi,div,elementspath,flash,forms,indentblock,keystrokes,link," +
-				"maximize,newpage,pagebreak,preview,print,save,showblocks," +
-					"templates,video");
+			"removePlugins", removePlugins.concat(",").concat(sb.toString()));
+
 		jsonObject.put(
 			"smiley_descriptions",
 			toJSONArray(BBCodeTranslatorUtil.getEmoticonDescriptions()));
@@ -83,8 +99,7 @@ public class AlloyEditorBBCodeConfigContributor
 			toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols()));
 
 		jsonObject.put(
-			"toolbar_bbcode",
-			getToolbarsBBCodeJSONArray(inputEditorTaglibAttributes));
+			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
 	}
 
 	protected JSONObject getLangJSONObject(
@@ -100,42 +115,180 @@ public class AlloyEditorBBCodeConfigContributor
 		return jsonObject;
 	}
 
-	protected JSONArray getToolbarsBBCodeJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes) {
+	protected JSONObject getStyleFormatJSONObject(
+		String styleFormatName, String element, String cssClass, int type) {
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("name", styleFormatName);
+		jsonObject.put("style", getStyleJSONObject(element, cssClass, type));
+
+		return jsonObject;
+	}
+
+	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put(toJSONArray("['Bold', 'Italic', 'Underline', 'Strike']"));
-		jsonArray.put(toJSONArray("['TextColor']"));
-		jsonArray.put(
-			toJSONArray(
-				"['JustifyLeft', 'JustifyCenter', 'JustifyRight', " +
-					"'JustifyBlock']"));
-		jsonArray.put(
-			toJSONArray(
-				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', " +
-					"'-', 'Blockquote', '-', 'Code']"));
-		jsonArray.put("/");
-		jsonArray.put(toJSONArray("['Format', 'Font', 'FontSize']"));
-		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
-		jsonArray.put(toJSONArray("['ImageSelector', '-', 'Smiley']"));
-		jsonArray.put("/");
-		jsonArray.put(
-			toJSONArray(
-				"['Cut', 'Copy', 'Paste', '-', 'SelectAll', '-', 'Undo', " +
-					"'Redo']"));
+		ResourceBundle resourceBundle = null;
 
-		boolean showSource = GetterUtil.getBoolean(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:showSource"));
-
-		if (showSource) {
-			jsonArray.put(toJSONArray("['Source']"));
+		try {
+			resourceBundle = _resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(locale));
+		}
+		catch (MissingResourceException mre) {
+			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
 		}
 
-		jsonArray.put(toJSONArray("['A11YBtn']"));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "normal"), "p", null,
+				_CKEDITOR_STYLE_BLOCK));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null,
+				_CKEDITOR_STYLE_INLINE));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "computer-code"), "code", null,
+				_CKEDITOR_STYLE_INLINE));
+		return jsonArray;
+	}
+
+	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
+		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
+
+		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
+
+		styleFormatsJSONObject.put("cfg", stylesJSONObject);
+		styleFormatsJSONObject.put("name", "styles");
+
+		return styleFormatsJSONObject;
+	}
+
+	protected JSONObject getStyleJSONObject(
+		String element, String cssClass, int type) {
+
+		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
+
+		if (Validator.isNotNull(cssClass)) {
+			JSONObject attributesJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			attributesJSONObject.put("class", cssClass);
+
+			styleJSONObject.put("attributes", attributesJSONObject);
+		}
+
+		styleJSONObject.put("element", element);
+		styleJSONObject.put("type", type);
+
+		return styleJSONObject;
+	}
+
+	protected JSONObject getToolbarsAddJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray buttonsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		buttonsJSONArray.put("image");
+
+		jsonObject.put("buttons", buttonsJSONArray);
+
+		jsonObject.put("tabIndex", 2);
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarsJSONObject(Locale locale) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("add", getToolbarsAddJSONObject());
+		jsonObject.put("styles", getToolbarsStylesJSONObject(locale));
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"selections", getToolbarsStylesSelectionsJSONArray(locale));
+		jsonObject.put("tabIndex", 1);
+
+		return jsonObject;
+	}
+
+	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(getToolbarsStylesSelectionsLinkJSONObject());
+		jsonArray.put(getToolbarsStylesSelectionsTextJSONObject(locale));
 
 		return jsonArray;
 	}
+
+	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
+		jsonObject.put("name", "link");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarsStylesSelectionsTextJSONObject(
+		Locale locale) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(getStyleFormatsJSONObject(locale));
+		jsonArray.put("bold");
+		jsonArray.put("italic");
+		jsonArray.put("underline");
+		jsonArray.put("strike");
+		jsonArray.put("ol");
+		jsonArray.put("ul");
+		jsonArray.put("link");
+		jsonArray.put("paragraphLeft");
+		jsonArray.put("paragraphCenter");
+		jsonArray.put("paragraphRight");
+		jsonArray.put("paragraphJustify");
+		jsonArray.put("quote");
+
+		jsonObject.put("buttons", jsonArray);
+
+		jsonObject.put("name", "text");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
+
+		return jsonObject;
+	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.frontend.editor.lang)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		ClassLoader classLoader =
+			AlloyEditorConfigContributor.class.getClassLoader();
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			ResourceBundleUtil.getResourceBundleLoader(
+				"content.Language", classLoader),
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
+	private static final int _CKEDITOR_STYLE_BLOCK = 1;
+
+	private static final int _CKEDITOR_STYLE_INLINE = 2;
+
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }
