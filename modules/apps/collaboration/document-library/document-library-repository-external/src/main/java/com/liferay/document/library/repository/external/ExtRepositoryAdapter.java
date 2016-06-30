@@ -1039,7 +1039,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			ExtRepositoryAdapterCache extRepositoryAdapterCache =
 				ExtRepositoryAdapterCache.getInstance();
 
-			extRepositoryAdapterCache.remove(extRepositoryFileEntryKey);
+			extRepositoryAdapterCache.clear();
 		}
 
 		if (needsCheckIn) {
