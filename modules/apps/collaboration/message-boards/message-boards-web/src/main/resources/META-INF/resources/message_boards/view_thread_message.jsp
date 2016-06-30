@@ -107,17 +107,27 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					</span>
 
 					<c:if test="<%= showRecentPosts %>">
-						<portlet:renderURL var="recentPostsURL">
-							<portlet:param name="mvcRenderCommandName" value="/message_boards/view_recent_posts" />
-							<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(messageUser.getUserId()) %>" />
-						</portlet:renderURL>
+
+						<%
+						PortletURL recentPostsURL = liferayPortletResponse.createRenderURL();
+
+						boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+						if (portletTitleBasedNavigation) {
+							recentPostsURL.setParameter("entriesNavigation", "recent");
+							recentPostsURL.setParameter("redirect", currentURL);
+						}
+						else {
+							recentPostsURL.setParameter("mvcRenderCommandName", "/message_boards/view_recent_posts");
+							recentPostsURL.setParameter("groupThreadsUserId", String.valueOf(messageUser.getUserId()));
+						}
+						%>
 
 						<span class="h5">
 							<liferay-ui:icon
 								iconCssClass="icon-search"
 								label="<%= true %>"
 								message="recent-posts"
-								method="get"
 								url="<%= recentPostsURL.toString() %>"
 							/>
 						</span>
