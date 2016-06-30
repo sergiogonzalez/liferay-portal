@@ -31,6 +31,10 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 		return _extRepositoryAdapterThreadLocal.get();
 	}
 
+	public void clear() {
+		_extRepositoryAdapters.clear();
+	}
+
 	@Override
 	public ExtRepositoryAdapterCache clone() {
 		if (_log.isInfoEnabled()) {
