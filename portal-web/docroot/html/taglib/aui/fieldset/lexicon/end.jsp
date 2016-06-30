@@ -30,7 +30,7 @@
 				if (event.target.id === '<%= namespace + id %>Content') {
 					storeTask(
 						{
-							'<%= id %>': (event.type === 'hide')
+							'<%= namespace + id %>': (event.type === 'hide')
 						}
 					);
 				}
