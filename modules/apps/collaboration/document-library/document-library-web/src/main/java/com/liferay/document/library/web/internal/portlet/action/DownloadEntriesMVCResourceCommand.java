@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.internal.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -43,7 +41,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -243,7 +240,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		throws Exception {
 
 		zipWriter.addEntry(
-			path + StringPool.SLASH + HtmlUtil.escapeURL(fileEntry.getTitle()),
+			path + StringPool.SLASH + fileEntry.getFileName(),
 			fileEntry.getContentStream());
 	}
 
