@@ -233,10 +233,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);
 
-		if (actionName.equals("deleteKBArticle") ||
-			actionName.equals("updateKBComment") ||
-			actionName.equals("updateRootKBFolderId")) {
-
+		if (actionName.equals("updateRootKBFolderId")) {
 			return;
 		}
 
