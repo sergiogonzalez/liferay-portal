@@ -83,11 +83,15 @@ if (entry == null) {
 		<aui:input name="url" />
 
 		<aui:field-wrapper label="content">
-			<div class="form-group">
-				<liferay-ui:input-editor contents="<%= content %>" cssClass="form-control" editorName="alloyeditor" name="contentEditor" />
 
-				<aui:input name="content" type="hidden" />
-			</div>
+			<%
+			String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp");
+			String cssClass = editorName.startsWith("alloyeditor") ? "form-control" : "";
+			%>
+
+			<liferay-ui:input-editor contents="<%= content %>" cssClass="<%= cssClass %>" editorName="<%= editorName %>" name="contentEditor" />
+
+			<aui:input name="content" type="hidden" />
 		</aui:field-wrapper>
 
 		<aui:select name="type">
