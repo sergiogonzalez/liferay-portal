@@ -41,15 +41,17 @@ else if (splitThread && Validator.isNull(body)) {
 String bbcodeEditorName = PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
 if (bbcodeEditorName.equals("bbcode")) {
-	bbcodeEditorName = "ckeditor_bbcode";
+	bbcodeEditorName = "alloyeditor_bbcode";
 
 	if (_log.isWarnEnabled()) {
-		_log.warn("Replacing unsupported BBCode editor with CKEditor BBCode");
+		_log.warn("Replacing unsupported BBCode editor with AlloyEditor BBCode");
 	}
 }
+
+String cssClass = bbcodeEditorName.startsWith("alloyeditor") ? "form-control" : "";
 %>
 
-<liferay-ui:input-editor contents="<%= body %>" editorName="<%= bbcodeEditorName %>" />
+<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" cssClass="<%= cssClass %>" editorName="<%= bbcodeEditorName %>" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {
