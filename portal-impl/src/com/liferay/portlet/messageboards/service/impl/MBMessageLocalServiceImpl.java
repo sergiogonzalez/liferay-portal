@@ -2040,7 +2040,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	protected MBSubscriptionSender getSubscriptionSender(
 		long userId, MBMessage message, String messageURL, String entryTitle,
 		boolean htmlFormat, String messageBody, String messageSubject,
-		String subjectHeading, String categoryName, String inReplyTo,
+		String subjectPrefix, String categoryName, String inReplyTo,
 		String fromName, String fromAddress, String replyToAddress,
 		String emailAddress, String fullName,
 		LocalizedValuesMap subjectLocalizedValuesMap,
@@ -2062,8 +2062,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			replyToAddress, "[$MESSAGE_ID$]", message.getMessageId(),
 			"[$MESSAGE_SUBJECT$]", messageSubject, "[$MESSAGE_URL$]",
 			messageURL, "[$MESSAGE_USER_ADDRESS$]", emailAddress,
-			"[$MESSAGE_USER_NAME$]", fullName, "[$SUBJECT_HEADING$]",
-			subjectHeading);
+			"[$MESSAGE_USER_NAME$]", fullName, "[$SUBJECT_PREFIX$]",
+			subjectPrefix);
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(messageURL);
@@ -2325,7 +2325,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String inReplyTo = null;
 		String messageSubject = message.getSubject();
-		String subjectHeading = StringPool.BLANK;
+		String subjectPrefix = StringPool.BLANK;
 
 		if (message.getParentMessageId() !=
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
@@ -2346,14 +2346,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				messageSubject = messageSubject.substring(
 					MBMessageConstants.DEFAULT_REPLY_SUBJECT_PREFIX.length());
 
-				subjectHeading =
-					MBMessageConstants.DEFAULT_REPLY_SUBJECT_PREFIX;
+				subjectPrefix = MBMessageConstants.DEFAULT_REPLY_SUBJECT_PREFIX;
 			}
 		}
 
 		SubscriptionSender subscriptionSender = getSubscriptionSender(
 			userId, message, messageURL, entryTitle, htmlFormat, messageBody,
-			messageSubject, subjectHeading, categoryName, inReplyTo, fromName,
+			messageSubject, subjectPrefix, categoryName, inReplyTo, fromName,
 			fromAddress, replyToAddress, emailAddress, fullName,
 			subjectLocalizedValuesMap, bodyLocalizedValuesMap, serviceContext);
 
@@ -2377,7 +2376,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				MBSubscriptionSender sourceMailingListSubscriptionSender =
 					getSubscriptionSender(
 						userId, message, messageURL, entryTitle, htmlFormat,
-						messageBody, messageSubject, subjectHeading,
+						messageBody, messageSubject, subjectPrefix,
 						categoryName, inReplyTo, fromName, fromAddress,
 						replyToAddress, emailAddress, fullName,
 						subjectLocalizedValuesMap, bodyLocalizedValuesMap,
