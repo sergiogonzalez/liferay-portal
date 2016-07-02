@@ -151,6 +151,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 				<aui:input name="newFolderId" type="hidden" />
 
+				<liferay-ui:error exception="<%= AuthenticationRepositoryException.class %>" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
 				<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />
 
 				<div class="document-container">
