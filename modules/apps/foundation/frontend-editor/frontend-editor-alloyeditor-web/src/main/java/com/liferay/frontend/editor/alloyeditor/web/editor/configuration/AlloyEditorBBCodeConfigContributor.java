@@ -66,6 +66,7 @@ public class AlloyEditorBBCodeConfigContributor
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
 		extraPlugins = extraPlugins.concat(",bbcode,itemselector,media");
+
 		jsonObject.put("extraPlugins", extraPlugins);
 
 		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
@@ -249,14 +250,9 @@ public class AlloyEditorBBCodeConfigContributor
 		jsonArray.put("bold");
 		jsonArray.put("italic");
 		jsonArray.put("underline");
-		jsonArray.put("strike");
 		jsonArray.put("ol");
 		jsonArray.put("ul");
 		jsonArray.put("link");
-		jsonArray.put("paragraphLeft");
-		jsonArray.put("paragraphCenter");
-		jsonArray.put("paragraphRight");
-		jsonArray.put("paragraphJustify");
 		jsonArray.put("quote");
 
 		jsonObject.put("buttons", jsonArray);
