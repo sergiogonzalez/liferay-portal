@@ -24,9 +24,9 @@
 	String[] previewFileURLs = null;
 	String videoThumbnailURL = null;
 
-	String previewQueryString = null;
-
 	if (hasAudio || hasImages || hasPDFImages || hasVideo) {
+		String previewQueryString = null;
+
 		if (hasAudio) {
 			previewQueryString = "&audioPreview=1";
 		}
