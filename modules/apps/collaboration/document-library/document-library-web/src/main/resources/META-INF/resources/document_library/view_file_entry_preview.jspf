@@ -47,7 +47,7 @@
 		}
 
 		if (status != WorkflowConstants.STATUS_ANY) {
-			previewQueryString = "&status=" + status;
+			previewQueryString += "&status=" + status;
 		}
 
 		if (hasAudio) {
