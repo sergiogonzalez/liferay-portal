@@ -1982,10 +1982,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
-		if (parentResourceClassNameId ==
-				classNameLocalService.getClassNameId(
-					KBArticleConstants.getClassName())) {
+		long kbArticleClassNameId = classNameLocalService.getClassNameId(
+			KBArticleConstants.getClassName());
 
+		if (parentResourceClassNameId == kbArticleClassNameId) {
 			KBArticle parentKBArticle = getLatestKBArticle(
 				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
