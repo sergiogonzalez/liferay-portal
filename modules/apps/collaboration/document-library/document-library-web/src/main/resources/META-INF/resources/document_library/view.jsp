@@ -26,11 +26,7 @@ String browseBy = ParamUtil.getString(request, "browseBy");
 
 Folder folder = (com.liferay.portal.kernel.repository.model.Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-long folderId = rootFolderId;
-
-if (folder != null) {
-	folderId = folder.getFolderId();
-}
+long folderId = BeanPropertiesUtil.getLong(folder, "folderId", rootFolderId);
 
 boolean defaultFolderView = false;
 
