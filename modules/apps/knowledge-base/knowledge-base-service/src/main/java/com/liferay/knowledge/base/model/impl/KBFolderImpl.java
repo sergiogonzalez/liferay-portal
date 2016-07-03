@@ -70,13 +70,13 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 	}
 
 	public KBFolder getParentKBFolder() throws PortalException {
-		long parentFolderId = getParentKBFolderId();
+		long parentKBFolderId = getParentKBFolderId();
 
-		if (parentFolderId <= KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (parentKBFolderId <= KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return null;
 		}
 
-		return KBFolderLocalServiceUtil.getKBFolder(parentFolderId);
+		return KBFolderLocalServiceUtil.getKBFolder(parentKBFolderId);
 	}
 
 	@Override
