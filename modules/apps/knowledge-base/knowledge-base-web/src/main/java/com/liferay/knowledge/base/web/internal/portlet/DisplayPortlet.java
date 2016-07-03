@@ -30,7 +30,7 @@ import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelection;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelector;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelectorFactory;
-import com.liferay.knowledge.base.web.util.KBUtil;
+import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
