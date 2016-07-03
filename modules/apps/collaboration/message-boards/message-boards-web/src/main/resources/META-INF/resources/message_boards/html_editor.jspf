@@ -41,10 +41,9 @@ if (Validator.isNull(body)) {
 }
 
 String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
-String cssClass = editorName.startsWith("alloyeditor") ? "form-control" : "";
 %>
 
-<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" cssClass="<%= cssClass %>" editorName='<%= editorName %>' />
+<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName='<%= editorName %>' />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {
