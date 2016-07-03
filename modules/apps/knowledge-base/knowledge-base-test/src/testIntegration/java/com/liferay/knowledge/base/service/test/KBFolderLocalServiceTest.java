@@ -333,7 +333,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchFolderException.class)
-	public void testMoveKBArticleToParentKBArticle() throws Exception {
+	public void testMoveKBFolderToParentKBArticle() throws Exception {
 		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
 		KBArticle kbArticle = addKBArticle(
 			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
