@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -446,23 +445,22 @@ public class KBArticleLocalServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
 			null, _serviceContext);
 
-		KBArticle childBKArticle = KBArticleLocalServiceUtil.addKBArticle(
-			_user.getUserId(), PortalUtil.getClassNameId(KBArticle.class),
+		KBArticle childKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
 			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), null, null, null, _serviceContext);
 
-		KBArticle grandchildBKArticle = KBArticleLocalServiceUtil.addKBArticle(
-			_user.getUserId(), PortalUtil.getClassNameId(KBArticle.class),
-			childBKArticle.getResourcePrimKey(), StringUtil.randomString(),
+		KBArticle grandChildKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			childKBArticle.getResourcePrimKey(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), null, null, null, _serviceContext);
 
 		KBArticleLocalServiceUtil.moveKBArticle(
 			_user.getUserId(), parentKBArticle.getResourcePrimKey(),
-			PortalUtil.getClassNameId(KBArticle.class),
-			grandchildBKArticle.getResourcePrimKey(),
-			grandchildBKArticle.getPriority());
+			_kbArticleClassNameId, grandChildKBArticle.getResourcePrimKey(),
+			grandChildKBArticle.getPriority());
 	}
 
 	@Test
@@ -488,16 +486,14 @@ public class KBArticleLocalServiceTest {
 
 		KBArticleLocalServiceUtil.moveKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
-			PortalUtil.getClassNameId(KBArticle.class),
-			parentKBArticle.getResourcePrimKey(),
+			_kbArticleClassNameId, parentKBArticle.getResourcePrimKey(),
 			parentKBArticle.getPriority());
 
 		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			PortalUtil.getClassNameId(KBArticle.class),
-			kbArticle.getParentResourceClassNameId());
+			_kbArticleClassNameId, kbArticle.getParentResourceClassNameId());
 		Assert.assertEquals(
 			parentKBArticle.getResourcePrimKey(),
 			kbArticle.getParentResourcePrimKey());
@@ -524,16 +520,14 @@ public class KBArticleLocalServiceTest {
 
 		KBArticleLocalServiceUtil.moveKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
-			PortalUtil.getClassNameId(KBArticle.class),
-			parentKBArticle.getResourcePrimKey(),
+			_kbArticleClassNameId, parentKBArticle.getResourcePrimKey(),
 			parentKBArticle.getPriority());
 
 		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			PortalUtil.getClassNameId(KBArticle.class),
-			kbArticle.getParentResourceClassNameId());
+			_kbArticleClassNameId, kbArticle.getParentResourceClassNameId());
 		Assert.assertEquals(
 			parentKBArticle.getResourcePrimKey(),
 			kbArticle.getParentResourcePrimKey());
@@ -558,15 +552,14 @@ public class KBArticleLocalServiceTest {
 
 		KBArticleLocalServiceUtil.moveKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
-			PortalUtil.getClassNameId(KBFolder.class),
-			parentKBFolder.getKbFolderId(), kbArticle.getPriority());
+			_kbFolderClassNameId, parentKBFolder.getKbFolderId(),
+			kbArticle.getPriority());
 
 		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			PortalUtil.getClassNameId(KBFolder.class),
-			kbArticle.getParentResourceClassNameId());
+			_kbFolderClassNameId, kbArticle.getParentResourceClassNameId());
 		Assert.assertEquals(
 			parentKBFolder.getKbFolderId(),
 			kbArticle.getParentResourcePrimKey());
