@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.util;
+package com.liferay.knowledge.base.web.internal;
 
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;

@@ -18,7 +18,7 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
-import com.liferay.knowledge.base.web.util.KBUtil;
+import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
