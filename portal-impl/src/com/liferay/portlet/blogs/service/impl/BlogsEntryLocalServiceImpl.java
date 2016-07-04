@@ -262,8 +262,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setUserName(user.getFullName());
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
-		entry.setUrlTitle(
-			getUniqueUrlTitle(entryId, title, null, serviceContext));
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1083,8 +1081,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
-		entry.setUrlTitle(
-			getUniqueUrlTitle(entryId, title, oldUrlTitle, serviceContext));
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1293,6 +1289,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setStatusByUserId(user.getUserId());
 		entry.setStatusByUserName(user.getFullName());
 		entry.setStatusDate(serviceContext.getModifiedDate(now));
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			Validator.isNull(entry.getUrlTitle())) {
+
+			entry.setUrlTitle(
+				getUniqueUrlTitle(
+					entryId, entry.getTitle(), null, serviceContext));
+		}
 
 		blogsEntryPersistence.update(entry);
 
