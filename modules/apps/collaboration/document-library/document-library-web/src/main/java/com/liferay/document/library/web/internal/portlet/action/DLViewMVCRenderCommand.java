@@ -55,17 +55,16 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_dlPortletToolbarContributor);
 
-		Exception folderRepositoryError = pingFolderRepository(renderRequest);
+		try {
+			pingFolderRepository(renderRequest);
+		}
+		catch (Exception e) {
+			SessionErrors.add(renderRequest, e.getClass(), e);
 
-		if (folderRepositoryError == null) {
-			return super.render(renderRequest, renderResponse);
+			return getPath();
 		}
 
-		SessionErrors.add(
-			renderRequest, folderRepositoryError.getClass(),
-			folderRepositoryError);
-
-		return getPath();
+		return super.render(renderRequest, renderResponse);
 	}
 
 	@Reference(unbind = "-")
@@ -85,35 +84,30 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		return "/document_library/view.jsp";
 	}
 
-	protected Exception pingFolderRepository(RenderRequest renderRequest) {
+	protected void pingFolderRepository(RenderRequest renderRequest)
+		throws Exception {
+
 		String mvcRenderCommandName = ParamUtil.getString(
 			renderRequest, "mvcRenderCommandName");
 
 		if (!mvcRenderCommandName.equals("/document_library/view_folder")) {
-			return null;
+			return;
 		}
 
 		long folderId = ParamUtil.getLong(renderRequest, "folderId");
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return null;
+			return;
 		}
 
 		DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(folderId);
 
 		if ((dlFolder == null) || !dlFolder.isMountPoint()) {
-			return null;
+			return;
 		}
 
-		try {
-			_dlAppService.getFileEntriesCount(
-				dlFolder.getRepositoryId(), dlFolder.getFolderId());
-		}
-		catch (Exception e) {
-			return e;
-		}
-
-		return null;
+		_dlAppService.getFileEntriesCount(
+			dlFolder.getRepositoryId(), dlFolder.getFolderId());
 	}
 
 	@Reference(unbind = "-")
