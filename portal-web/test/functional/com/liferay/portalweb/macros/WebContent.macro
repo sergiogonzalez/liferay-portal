@@ -892,6 +892,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
+
 		<execute function="Pause" locator1="5000" />
 
 		<var name="key_pageName" value="${pageName}" />
@@ -900,9 +901,9 @@
 
 		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_PAGES_SELECTION" value1="${pageName}" />
 
-		<execute function="AssertTextEquals" locator1="WCSelectDisplayPage#SELECTED_PAGE_INFO_MESSAGE" value1="Public Pages > ${pageName}" />
+		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
+		<execute macro="Button#clickDone" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -1863,7 +1864,7 @@
 
 		<var name="key_localizedLanguage" value="Spanish (Spain)" />
 
-		<execute function="Click" locator1="Translation#CURRENT_LOCALE" />
+		<execute function="Click" locator1="Translation#AVAILABLE_TRANSLATION" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />
 
@@ -1890,9 +1891,11 @@
 	</command>
 
 	<command name="viewWCViewableByPermissions">
-		<execute function="AssertClick" locator1="WCEditWebContent#PERMISSIONS_HEADER" value1="Permissions" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Permissions" />
+		</execute>
 
-		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />
+		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Anyone (Guest Role)" />
 	</command>
 
 	<command name="viewWithStructureCP">

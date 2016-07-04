@@ -1089,6 +1089,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixLineStartingWithCloseParenthesis(newContent, fileName);
 
+		matcher = _incorrectSynchronizedPattern.matcher(newContent);
+
+		newContent = matcher.replaceAll("$1$3 $2");
+
 		pos = newContent.indexOf("\npublic ");
 
 		if (pos != -1) {
@@ -2082,24 +2086,46 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						line.substring(x + 1));
 			}
 
+			if ((previousLineLength > 0) && previousLineIsStartCriteria &&
+				(previousLineLevel >= 0) && previousLine.matches(".*[|&^]")) {
+
+				Matcher matcher = _ifStatementCriteriaPattern.matcher(
+					trimmedLine);
+
+				while (matcher.find()) {
+					if (ToolsUtil.isInsideQuotes(trimmedLine, matcher.end())) {
+						continue;
+					}
+
+					String linePart = trimmedLine.substring(0, matcher.end());
+
+					int linePartLevel = getLevel(linePart);
+
+					if ((linePartLevel <= 0) &&
+						((previousLineLength + linePart.length()) <
+							_maxLineLength)) {
+
+						if (linePart.equals(trimmedLine)) {
+							return StringUtil.replace(
+								ifClause, previousLine + "\n" + originalLine,
+								previousLine + StringPool.SPACE + trimmedLine);
+						}
+						else {
+							String newPreviousLine =
+								previousLine + StringPool.SPACE + linePart;
+							String newLine = StringUtil.replaceFirst(
+								originalLine, linePart, StringPool.BLANK);
+
+							return StringUtil.replace(
+								ifClause, previousLine + "\n" + originalLine,
+								newPreviousLine + "\n" + newLine);
+						}
+					}
+				}
+			}
+
 			line = StringUtil.replace(
 				line, StringPool.TAB, StringPool.FOUR_SPACES);
-
-			int lineLevel = getLevel(trimmedLine);
-
-			if ((previousLineLength > 0) &&
-				(line.endsWith("|") || line.endsWith("&&") ||
-				 line.endsWith(") {")) &&
-				(previousLine.endsWith("|") || previousLine.endsWith("&&")) &&
-				((previousLineLength + trimmedLine.length()) <
-					_maxLineLength) &&
-				(lineLevel <= 0) && (previousLineLevel >= 0) &&
-				previousLineIsStartCriteria) {
-
-				return StringUtil.replace(
-					ifClause, previousLine + "\n" + originalLine,
-					previousLine + StringPool.SPACE + trimmedLine);
-			}
 
 			int leadingWhitespace = line.length() - trimmedLine.length();
 
@@ -2163,6 +2189,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (line.endsWith(") {")) {
 				return ifClause;
 			}
+
+			int lineLevel = getLevel(trimmedLine);
 
 			level += lineLevel;
 
@@ -2277,12 +2305,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					line = formatIncorrectSyntax(line, ",}", "}", false);
 
 					line = formatWhitespace(line, trimmedLine, true);
-				}
-
-				if (line.contains(StringPool.TAB + "for (") &&
-					line.contains(":") && !line.contains(" :")) {
-
-					line = StringUtil.replace(line, ":", " :");
 				}
 
 				// LPS-42924
@@ -4645,6 +4667,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private List<String> _fitOnSingleLineExcludes;
 	private List<String> _hibernateSQLQueryExcludes;
+	private final Pattern _ifStatementCriteriaPattern = Pattern.compile(
+		".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
 	private final Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private final Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
@@ -4663,6 +4687,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)\\{.+(?<!\\}(,|;)?)\n");
 	private final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
 		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
+	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
+		"([\n\t])(synchronized) (private|public|protected)");
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {
 			Pattern.compile(
