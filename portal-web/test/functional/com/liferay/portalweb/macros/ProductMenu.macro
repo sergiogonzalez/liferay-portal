@@ -187,6 +187,8 @@
 
 		<execute function="SelectFrameTop" />
 
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${site}" />
 	</command>
 
