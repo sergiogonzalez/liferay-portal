@@ -262,8 +262,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setUserName(user.getFullName());
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
-		entry.setUrlTitle(
-			getUniqueUrlTitle(entryId, title, null, serviceContext));
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1083,8 +1081,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
-		entry.setUrlTitle(
-			getUniqueUrlTitle(entryId, title, oldUrlTitle, serviceContext));
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1293,6 +1289,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setStatusByUserId(user.getUserId());
 		entry.setStatusByUserName(user.getFullName());
 		entry.setStatusDate(serviceContext.getModifiedDate(now));
+
+		String serviceContextUrlTitle = ParamUtil.getString(
+			serviceContext, "urlTitle");
+
+		if (((status == WorkflowConstants.STATUS_APPROVED) &&
+			Validator.isNull(entry.getUrlTitle())) ||
+			Validator.isNotNull(serviceContextUrlTitle)) {
+
+			entry.setUrlTitle(
+				getUniqueUrlTitle(
+					entryId, entry.getTitle(), serviceContext));
+		}
 
 		blogsEntryPersistence.update(entry);
 
@@ -1634,8 +1642,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected String getUniqueUrlTitle(
-		long entryId, String title, String oldUrlTitle,
-		ServiceContext serviceContext) {
+		long entryId, String title, ServiceContext serviceContext) {
 
 		String serviceContextUrlTitle = ParamUtil.getString(
 			serviceContext, "urlTitle");
@@ -1644,9 +1651,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (Validator.isNotNull(serviceContextUrlTitle)) {
 			urlTitle = BlogsUtil.getUrlTitle(entryId, serviceContextUrlTitle);
-		}
-		else if (Validator.isNotNull(oldUrlTitle)) {
-			return oldUrlTitle;
 		}
 		else {
 			urlTitle = getUniqueUrlTitle(
@@ -1865,8 +1869,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected void pingPingback(BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!PropsValues.BLOGS_PINGBACK_ENABLED ||
-			!entry.isAllowPingbacks() || !entry.isApproved()) {
+		if (!PropsValues.BLOGS_PINGBACK_ENABLED || !entry.isAllowPingbacks() ||
+			!entry.isApproved()) {
 
 			return;
 		}
