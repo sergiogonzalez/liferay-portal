@@ -262,8 +262,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setUserName(user.getFullName());
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
-		entry.setUrlTitle(
-			getUniqueUrlTitle(entryId, title, null, serviceContext));
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1083,8 +1081,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
-		entry.setUrlTitle(
-			getUniqueUrlTitle(entryId, title, oldUrlTitle, serviceContext));
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1293,6 +1289,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setStatusByUserId(user.getUserId());
 		entry.setStatusByUserName(user.getFullName());
 		entry.setStatusDate(serviceContext.getModifiedDate(now));
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			Validator.isNull(entry.getUrlTitle())) {
+
+			entry.setUrlTitle(
+				getUniqueUrlTitle(
+					entryId, entry.getGroupId(), entry.getTitle()));
+		}
 
 		blogsEntryPersistence.update(entry);
 
@@ -1633,39 +1637,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return urlTitle;
 	}
 
-	protected String getUniqueUrlTitle(
-		long entryId, String title, String oldUrlTitle,
-		ServiceContext serviceContext) {
-
-		String serviceContextUrlTitle = ParamUtil.getString(
-			serviceContext, "urlTitle");
-
-		String urlTitle = null;
-
-		if (Validator.isNotNull(serviceContextUrlTitle)) {
-			urlTitle = BlogsUtil.getUrlTitle(entryId, serviceContextUrlTitle);
-		}
-		else if (Validator.isNotNull(oldUrlTitle)) {
-			return oldUrlTitle;
-		}
-		else {
-			urlTitle = getUniqueUrlTitle(
-				entryId, serviceContext.getScopeGroupId(), title);
-		}
-
-		BlogsEntry urlTitleEntry = blogsEntryPersistence.fetchByG_UT(
-			serviceContext.getScopeGroupId(), urlTitle);
-
-		if ((urlTitleEntry != null) &&
-			(urlTitleEntry.getEntryId() != entryId)) {
-
-			urlTitle = getUniqueUrlTitle(
-				entryId, serviceContext.getScopeGroupId(), urlTitle);
-		}
-
-		return urlTitle;
-	}
-
 	protected void notifySubscribers(
 			long userId, BlogsEntry entry, ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
@@ -1865,8 +1836,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected void pingPingback(BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!PropsValues.BLOGS_PINGBACK_ENABLED ||
-			!entry.isAllowPingbacks() || !entry.isApproved()) {
+		if (!PropsValues.BLOGS_PINGBACK_ENABLED || !entry.isAllowPingbacks() ||
+			!entry.isApproved()) {
 
 			return;
 		}
