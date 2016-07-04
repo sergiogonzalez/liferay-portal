@@ -246,7 +246,9 @@ public class BlogsEntryStagedModelDataHandler
 		BlogsEntry importedEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			serviceContext.setAttribute("urlTitle", entry.getUrlTitle());
+			if (Validator.isNotNull(entry.getUrlTitle())) {
+				serviceContext.setAttribute("urlTitle", entry.getUrlTitle());
+			}
 
 			BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
 				entry.getUuid(), portletDataContext.getScopeGroupId());
