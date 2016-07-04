@@ -807,11 +807,11 @@ public class MBUtil {
 		String editorName = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
 		if (editorName.equals("bbcode")) {
-			editorName = "ckeditor_bbcode";
+			editorName = "alloyeditor_bbcode";
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Replacing unsupported BBCode editor with CKEditor BBCode");
+					"Replacing unsupported BBCode editor with AlloyEditor BBCode");
 			}
 		}
 
