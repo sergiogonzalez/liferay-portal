@@ -1290,12 +1290,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setStatusByUserName(user.getFullName());
 		entry.setStatusDate(serviceContext.getModifiedDate(now));
 
-		if ((status == WorkflowConstants.STATUS_APPROVED) &&
-			Validator.isNull(entry.getUrlTitle())) {
+		String serviceContextUrlTitle = ParamUtil.getString(
+			serviceContext, "urlTitle");
+
+		if (((status == WorkflowConstants.STATUS_APPROVED) &&
+			Validator.isNull(entry.getUrlTitle())) ||
+			Validator.isNotNull(serviceContextUrlTitle)) {
 
 			entry.setUrlTitle(
 				getUniqueUrlTitle(
-					entryId, entry.getTitle(), null, serviceContext));
+					entryId, entry.getTitle(), serviceContext));
 		}
 
 		blogsEntryPersistence.update(entry);
@@ -1638,8 +1642,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected String getUniqueUrlTitle(
-		long entryId, String title, String oldUrlTitle,
-		ServiceContext serviceContext) {
+		long entryId, String title, ServiceContext serviceContext) {
 
 		String serviceContextUrlTitle = ParamUtil.getString(
 			serviceContext, "urlTitle");
@@ -1648,9 +1651,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (Validator.isNotNull(serviceContextUrlTitle)) {
 			urlTitle = BlogsUtil.getUrlTitle(entryId, serviceContextUrlTitle);
-		}
-		else if (Validator.isNotNull(oldUrlTitle)) {
-			return oldUrlTitle;
 		}
 		else {
 			urlTitle = getUniqueUrlTitle(
