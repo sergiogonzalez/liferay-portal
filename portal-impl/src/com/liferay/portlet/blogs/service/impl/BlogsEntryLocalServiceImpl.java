@@ -1295,7 +1295,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			entry.setUrlTitle(
 				getUniqueUrlTitle(
-					entryId, entry.getTitle(), null, serviceContext));
+					entryId, entry.getGroupId(), entry.getTitle()));
 		}
 
 		blogsEntryPersistence.update(entry);
@@ -1632,39 +1632,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				urlTitle = prefix + suffix;
 			}
-		}
-
-		return urlTitle;
-	}
-
-	protected String getUniqueUrlTitle(
-		long entryId, String title, String oldUrlTitle,
-		ServiceContext serviceContext) {
-
-		String serviceContextUrlTitle = ParamUtil.getString(
-			serviceContext, "urlTitle");
-
-		String urlTitle = null;
-
-		if (Validator.isNotNull(serviceContextUrlTitle)) {
-			urlTitle = BlogsUtil.getUrlTitle(entryId, serviceContextUrlTitle);
-		}
-		else if (Validator.isNotNull(oldUrlTitle)) {
-			return oldUrlTitle;
-		}
-		else {
-			urlTitle = getUniqueUrlTitle(
-				entryId, serviceContext.getScopeGroupId(), title);
-		}
-
-		BlogsEntry urlTitleEntry = blogsEntryPersistence.fetchByG_UT(
-			serviceContext.getScopeGroupId(), urlTitle);
-
-		if ((urlTitleEntry != null) &&
-			(urlTitleEntry.getEntryId() != entryId)) {
-
-			urlTitle = getUniqueUrlTitle(
-				entryId, serviceContext.getScopeGroupId(), urlTitle);
 		}
 
 		return urlTitle;
