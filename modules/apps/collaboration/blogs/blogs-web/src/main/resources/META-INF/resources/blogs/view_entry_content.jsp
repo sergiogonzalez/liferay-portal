@@ -83,12 +83,13 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<portlet:renderURL var="viewEntryURL">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
+
 					<c:choose>
-						<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
-							<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+						<c:when test="<%= Validator.isNotNull(entry.getUrlTitle()) %>">
+							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 						</c:when>
 						<c:otherwise>
-							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+							<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 						</c:otherwise>
 					</c:choose>
 				</portlet:renderURL>
@@ -239,11 +240,11 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							<portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />
 
 							<c:choose>
-								<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
-									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								<c:when test="<%= Validator.isNotNull(entry.getUrlTitle()) %>">
+									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 								</c:when>
 								<c:otherwise>
-									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 								</c:otherwise>
 							</c:choose>
 						</portlet:renderURL>
@@ -266,16 +267,15 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</c:if>
 
 					<c:if test="<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() %>">
-
 						<portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 
 							<c:choose>
-								<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
-									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								<c:when test="<%= Validator.isNotNull(entry.getUrlTitle()) %>">
+									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 								</c:when>
 								<c:otherwise>
-									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 								</c:otherwise>
 							</c:choose>
 						</portlet:renderURL>
