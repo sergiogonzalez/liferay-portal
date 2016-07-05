@@ -49,11 +49,11 @@ public class KBSelectParentDisplayContext {
 	public void populatePortletBreadcrumbEntries(PortletURL portletURL)
 		throws Exception {
 
-		_doPopulatePortletBreadcrumbEntries(
+		_populatePortletBreadcrumbEntries(
 			_parentResourceClassNameId, _parentResourcePrimKey, portletURL);
 	}
 
-	private void _doPopulatePortletBreadcrumbEntries(
+	private void _populatePortletBreadcrumbEntries(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			PortletURL portletURL)
 		throws Exception {
@@ -84,7 +84,7 @@ public class KBSelectParentDisplayContext {
 			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
 				_parentResourcePrimKey);
 
-			_doPopulatePortletBreadcrumbEntries(
+			_populatePortletBreadcrumbEntries(
 				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
 				currentURL);
 
@@ -95,7 +95,7 @@ public class KBSelectParentDisplayContext {
 			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
 				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-			_doPopulatePortletBreadcrumbEntries(
+			_populatePortletBreadcrumbEntries(
 				kbArticle.getParentResourceClassNameId(),
 				kbArticle.getParentResourcePrimKey(), currentURL);
 
