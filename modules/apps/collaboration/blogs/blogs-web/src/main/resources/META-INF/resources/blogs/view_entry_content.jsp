@@ -81,25 +81,24 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</c:if>
 
-				<%
-				PortletURL viewEntryURL = liferayPortletResponse.createRenderURL();
-
-				viewEntryURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
-
-				if (Validator.isNull(entry.getUrlTitle())) {
-					viewEntryURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-				}
-				else {
-					viewEntryURL.setParameter("urlTitle", entry.getUrlTitle());
-				}
-				%>
+				<portlet:renderURL var="viewEntryURL">
+					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
+					<c:choose>
+						<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
+							<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+						</c:when>
+						<c:otherwise>
+							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+						</c:otherwise>
+					</c:choose>
+				</portlet:renderURL>
 
 				<div class="<%= colCssClass %>">
 					<div class="entry-title">
 						<c:choose>
 							<c:when test="<%= !viewSingleEntry %>">
 								<h2>
-									<aui:a href="<%= viewEntryURL.toString() %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
+									<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
 								</h2>
 
 								<c:if test="<%= !entry.isApproved() %>">
@@ -233,23 +232,24 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 						<%
 						int messagesCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
-
-						PortletURL viewEntryCommentsURL = liferayPortletResponse.createRenderURL();
-
-						viewEntryCommentsURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
-						viewEntryCommentsURL.setParameter("scroll", renderResponse.getNamespace() + "discussionContainer");
-
-						if (Validator.isNull(entry.getUrlTitle())) {
-							viewEntryCommentsURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-						}
-						else {
-							viewEntryCommentsURL.setParameter("urlTitle", entry.getUrlTitle());
-
-						}
 						%>
 
+						<portlet:renderURL var="viewEntryCommentsURL">
+							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
+							<portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />
+
+							<c:choose>
+								<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
+									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								</c:when>
+								<c:otherwise>
+									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+								</c:otherwise>
+							</c:choose>
+						</portlet:renderURL>
+
 						<div class="comments">
-							<a href="<%= viewEntryCommentsURL.toString() %>">
+							<a href="<%= viewEntryCommentsURL %>">
 								<i class="icon-comment icon-monospaced"></i>
 								<span><%= String.valueOf(messagesCount) %></span>
 							</a>
@@ -267,21 +267,18 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 					<c:if test="<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() %>">
 
-						<%
-						PortletURL bookmarkURL = liferayPortletResponse.createRenderURL();
+						<portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
+							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 
-						bookmarkURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
-
-						if (Validator.isNull(entry.getUrlTitle())) {
-							bookmarkURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-						}
-						else {
-							bookmarkURL.setParameter("urlTitle", entry.getUrlTitle());
-
-						}
-
-						bookmarkURL.setWindowState(WindowState.NORMAL);
-						%>
+							<c:choose>
+								<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
+									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								</c:when>
+								<c:otherwise>
+									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+								</c:otherwise>
+							</c:choose>
+						</portlet:renderURL>
 
 						<div class="social-bookmarks">
 							<liferay-ui:social-bookmarks
