@@ -243,7 +243,7 @@ AUI.add(
 						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
 						var description = window[instance.ns('descriptionEditor')].getHTML();
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
-						var title = window[instance.ns('titleEditor')].getHTML();
+						var title = window[instance.ns('titleEditor')].getText();
 
 						var form = instance._getPrincipalForm();
 
