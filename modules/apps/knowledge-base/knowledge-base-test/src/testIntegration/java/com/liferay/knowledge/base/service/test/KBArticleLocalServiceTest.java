@@ -464,7 +464,7 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testMoveKBArticleToParentKBArticleInFolder() throws Exception {
+	public void testMoveKBArticleToParentKBArticleInKBFolder() throws Exception {
 		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
 			_user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -472,14 +472,14 @@ public class KBArticleLocalServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
 			null, _serviceContext);
 
-		KBFolder folder = KBFolderLocalServiceUtil.addKBFolder(
+		KBFolder kbFolder = KBFolderLocalServiceUtil.addKBFolder(
 			_user.getUserId(), _group.getGroupId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			_serviceContext);
 
 		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
-			_user.getUserId(), _kbFolderClassNameId, folder.getKbFolderId(),
+			_user.getUserId(), _kbFolderClassNameId, kbFolder.getKbFolderId(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
 			null, _serviceContext);
@@ -497,7 +497,8 @@ public class KBArticleLocalServiceTest {
 		Assert.assertEquals(
 			parentKBArticle.getResourcePrimKey(),
 			kbArticle.getParentResourcePrimKey());
-		Assert.assertEquals(folder.getKbFolderId(), kbArticle.getKbFolderId());
+		Assert.assertEquals(
+			kbFolder.getKbFolderId(), kbArticle.getKbFolderId());
 	}
 
 	@Test

@@ -343,7 +343,7 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testMoveKBFolderToParentKBFolderInFolder() throws Exception {
+	public void testMoveKBFolderToParentKBFolderInKBFolder() throws Exception {
 		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
 		KBFolder parentKBFolder = addKBFolder(_kbFolder.getKbFolderId());
 
