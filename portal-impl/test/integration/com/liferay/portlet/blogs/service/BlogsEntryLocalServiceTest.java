@@ -116,7 +116,7 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), RandomTestUtil.randomString(), content,
-			new Date(), serviceContext);
+			serviceContext);
 	}
 
 	@Test(expected = EntryTitleException.class)
@@ -130,7 +130,7 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), title, RandomTestUtil.randomString(), new Date(),
+			_user.getUserId(), title, RandomTestUtil.randomString(),
 			serviceContext);
 	}
 
@@ -142,7 +142,7 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		FileEntry tempFileEntry = getTempFileEntry(
 			_user.getUserId(), _group.getGroupId(), "image.jpg");
@@ -513,7 +513,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUrlTitleIsNotSavedWhenAddingDraftEntry() throws Exception {
+	public void testURLTitleIsNotSavedWhenAddingDraftEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
@@ -521,13 +521,13 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		Assert.assertTrue(Validator.isNull(entry.getUrlTitle()));
 	}
 
 	@Test
-	public void testUrlTitleIsNotSavedWhenSubmitForPublicationNewEntry()
+	public void testURLTitleIsNotSavedWhenAddingDraftEntryWithWorkflow()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -541,7 +541,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUrlTitleIsNotUpdatedWhenUpdatingDraftEntryTitle()
+	public void testURLTitleIsNotUpdatedWhenUpdatingEntryTitleToDraftEntry()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -549,7 +549,7 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		String urlTitle = entry.getUrlTitle();
 
@@ -564,7 +564,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUrlTitleIsNotUpdatedWhenUpdatingEntryTitle()
+	public void testURLTitleIsNotUpdatedWhenUpdatingEntryTitle()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -572,7 +572,7 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		String urlTitle = entry.getUrlTitle();
 
@@ -585,14 +585,14 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUrlTitleIsSavedWhenAddingApprovedEntry() throws Exception {
+	public void testURLTitleIsSavedWhenAddingApprovedEntry() throws Exception {
 		String title = RandomTestUtil.randomString();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), title, RandomTestUtil.randomString(), new Date(),
+			_user.getUserId(), title, RandomTestUtil.randomString(),
 			serviceContext);
 
 		Assert.assertEquals(
@@ -601,7 +601,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUrlTitleIsSavedWhenApprovingPendingNewEntry()
+	public void testURLTitleIsSavedWhenAddingApprovedEntryWithWorkflow()
 		throws Exception {
 
 		String title = RandomTestUtil.randomString();
