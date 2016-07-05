@@ -58,95 +58,97 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 	</portlet:renderURL>
 
-	<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && !fileEntry.getLatestFileVersion().getVersion().equals(fileVersion.getVersion()) %>">
-		<portlet:actionURL name="/document_library/edit_file_entry" var="revertURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
-			<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-			<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
-		</portlet:actionURL>
+	<c:if test="<%= portletId.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletId.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) || portletId.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
+		<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && !fileEntry.getLatestFileVersion().getVersion().equals(fileVersion.getVersion()) %>">
+			<portlet:actionURL name="/document_library/edit_file_entry" var="revertURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
+				<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
+				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+				<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
+			</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="revert"
-			url="<%= revertURL %>"
-		/>
-	</c:if>
+			<liferay-ui:icon
+				message="revert"
+				url="<%= revertURL %>"
+			/>
+		</c:if>
 
-	<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && (fileEntry.getModel() instanceof DLFileEntry) && (((DLFileEntry)fileEntry.getModel()).getFileVersionsCount(WorkflowConstants.STATUS_APPROVED) > 1) %>">
-		<portlet:actionURL name="/document_library/edit_file_entry" var="deleteURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-			<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
-		</portlet:actionURL>
+		<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && (fileEntry.getModel() instanceof DLFileEntry) && (((DLFileEntry)fileEntry.getModel()).getFileVersionsCount(WorkflowConstants.STATUS_APPROVED) > 1) %>">
+			<portlet:actionURL name="/document_library/edit_file_entry" var="deleteURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+				<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
+				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+				<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
+			</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			message="delete-version"
-			url="<%= deleteURL %>"
-		/>
-	</c:if>
-
-	<%
-	boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
-	%>
-
-	<c:if test="<%= comparableFileEntry %>">
-		<portlet:renderURL var="selectFileVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_version" />
-			<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-			<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
-		</portlet:renderURL>
+			<liferay-ui:icon-delete
+				message="delete-version"
+				url="<%= deleteURL %>"
+			/>
+		</c:if>
 
 		<%
-		Map<String, Object> data = new HashMap<String, Object>();
-
-		data.put("uri", selectFileVersionURL);
+		boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
 		%>
 
-		<liferay-ui:icon
-			cssClass="compare-to-link"
-			data="<%= data %>"
-			label="<%= true %>"
-			message="compare-to"
-			url="javascript:;"
-		/>
+		<c:if test="<%= comparableFileEntry %>">
+			<portlet:renderURL var="selectFileVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_version" />
+				<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
+				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+				<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
+			</portlet:renderURL>
 
-		<aui:script sandbox="<%= true %>">
-			$('body').on(
-				'click',
-				'.compare-to-link a',
-				function(event) {
-					var currentTarget = $(event.currentTarget);
+			<%
+			Map<String, Object> data = new HashMap<String, Object>();
 
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
+			data.put("uri", selectFileVersionURL);
+			%>
+
+			<liferay-ui:icon
+				cssClass="compare-to-link"
+				data="<%= data %>"
+				label="<%= true %>"
+				message="compare-to"
+				url="javascript:;"
+			/>
+
+			<aui:script sandbox="<%= true %>">
+				$('body').on(
+					'click',
+					'.compare-to-link a',
+					function(event) {
+						var currentTarget = $(event.currentTarget);
+
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: '<portlet:namespace />selectFileVersionFm',
+								id: '<portlet:namespace />compareFileVersions' + currentTarget.attr('id'),
+								title: '<liferay-ui:message key="compare-versions" />',
+								uri: currentTarget.data('uri')
 							},
-							eventName: '<portlet:namespace />selectFileVersionFm',
-							id: '<portlet:namespace />compareFileVersions' + currentTarget.attr('id'),
-							title: '<liferay-ui:message key="compare-versions" />',
-							uri: currentTarget.data('uri')
-						},
-						function(event) {
-							<portlet:renderURL var="compareVersionURL">
-								<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
-								<portlet:param name="backURL" value="<%= currentURL %>" />
-							</portlet:renderURL>
+							function(event) {
+								<portlet:renderURL var="compareVersionURL">
+									<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
+									<portlet:param name="backURL" value="<%= currentURL %>" />
+								</portlet:renderURL>
 
-							var uri = '<%= compareVersionURL %>';
+								var uri = '<%= compareVersionURL %>';
 
-							uri = Liferay.Util.addParams('<portlet:namespace />sourceFileVersionId=' + event.sourceversion, uri);
-							uri = Liferay.Util.addParams('<portlet:namespace />targetFileVersionId=' + event.targetversion, uri);
+								uri = Liferay.Util.addParams('<portlet:namespace />sourceFileVersionId=' + event.sourceversion, uri);
+								uri = Liferay.Util.addParams('<portlet:namespace />targetFileVersionId=' + event.targetversion, uri);
 
-							location.href = uri;
-						}
-					);
-				}
-			);
-		</aui:script>
+								location.href = uri;
+							}
+						);
+					}
+				);
+			</aui:script>
+		</c:if>
 	</c:if>
 </liferay-ui:icon-menu>
