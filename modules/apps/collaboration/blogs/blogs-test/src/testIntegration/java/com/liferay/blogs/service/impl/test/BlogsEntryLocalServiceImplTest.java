@@ -83,6 +83,12 @@ public class BlogsEntryLocalServiceImplTest {
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(), serviceContext);
 
+		CommentManagerUtil.addComment(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			StringUtil.randomString(),
+			new IdentityServiceContextFunction(serviceContext));
+
 		Assert.assertTrue(
 			CommentManagerUtil.hasDiscussion(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
