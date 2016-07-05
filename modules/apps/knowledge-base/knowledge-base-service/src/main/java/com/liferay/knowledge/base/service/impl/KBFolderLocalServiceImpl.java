@@ -286,9 +286,10 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 					parentKBFolder.getKbFolderId(), kbFolder.getGroupId()));
 		}
 
-		List<Long> ancestorFolderIds = parentKBFolder.getAncestorFolderIds();
+		List<Long> ancestorKBFolderIds =
+			parentKBFolder.getAncestorKBFolderIds();
 
-		if (ancestorFolderIds.contains(kbFolder.getKbFolderId())) {
+		if (ancestorKBFolderIds.contains(kbFolder.getKbFolderId())) {
 			throw new KBFolderParentException(
 				String.format(
 					"Cannot move KBFolder %s inside its descendant KBFolder %s",

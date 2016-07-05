@@ -39,7 +39,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 	public KBFolderImpl() {
 	}
 
-	public List<Long> getAncestorFolderIds() throws PortalException {
+	public List<Long> getAncestorKBFolderIds() throws PortalException {
 		List<Long> ancestorFolderIds = new ArrayList<>();
 
 		ancestorFolderIds.add(getKbFolderId());

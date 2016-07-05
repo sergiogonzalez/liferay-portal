@@ -228,9 +228,10 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		KBFolder parentKBFolder = _kbFolderLocalService.getKBFolder(
 			kbArticle.getKbFolderId());
 
-		List<Long> ancestorFolderIds = parentKBFolder.getAncestorFolderIds();
+		List<Long> ancestorKBFolderIds =
+			parentKBFolder.getAncestorKBFolderIds();
 
-		if (ancestorFolderIds.contains(kbFolder.getKbFolderId())) {
+		if (ancestorKBFolderIds.contains(kbFolder.getKbFolderId())) {
 			return true;
 		}
 
