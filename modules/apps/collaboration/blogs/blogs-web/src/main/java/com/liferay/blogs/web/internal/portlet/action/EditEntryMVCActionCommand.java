@@ -214,8 +214,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
-			boolean updateRedirect = false;
-
 			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
 
 			int workflowAction = ParamUtil.getInteger(
@@ -260,7 +258,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					"coverImageFileEntryId", entry.getCoverImageFileEntryId());
 				jsonObject.put("entryId", entry.getEntryId());
 				jsonObject.put("redirect", redirect);
-				jsonObject.put("updateRedirect", updateRedirect);
 
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse, jsonObject);
