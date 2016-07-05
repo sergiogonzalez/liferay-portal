@@ -83,7 +83,14 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<portlet:renderURL var="viewEntryURL">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+					<c:choose>
+						<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
+							<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+						</c:when>
+						<c:otherwise>
+							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+						</c:otherwise>
+					</c:choose>
 				</portlet:renderURL>
 
 				<div class="<%= colCssClass %>">
@@ -230,7 +237,15 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<portlet:renderURL var="viewEntryCommentsURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 							<portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />
-							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+
+							<c:choose>
+								<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
+									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								</c:when>
+								<c:otherwise>
+									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+								</c:otherwise>
+							</c:choose>
 						</portlet:renderURL>
 
 						<div class="comments">
@@ -251,9 +266,18 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</c:if>
 
 					<c:if test="<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() %>">
+
 						<portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+
+							<c:choose>
+								<c:when test="<%= Validator.isNull(entry.getUrlTitle()) %>">
+									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								</c:when>
+								<c:otherwise>
+									<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+								</c:otherwise>
+							</c:choose>
 						</portlet:renderURL>
 
 						<div class="social-bookmarks">
