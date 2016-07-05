@@ -15,6 +15,7 @@
 --%>
 
 <%
+MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY);
 MBMessage replyMessage = null;
 
 long messageId = 0;
@@ -50,11 +51,17 @@ if (threadId > 0) {
 String body = BeanParamUtil.getString(replyMessage, request, "body");
 boolean quote = ParamUtil.getBoolean(request, "quote");
 boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
+
+String editorName = PropsUtil.get(
+		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
+
+MBMessage curMessage = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
+String curMessageId = String.valueOf(curMessage.getMessageId());
 %>
 
 <portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
-<aui:form action="<%= editMessageURL %>" method="post" name="addQuickReplyFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage();" %>'>
+<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + curMessageId %>' onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveReplyMessage" + curMessageId +"();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
@@ -68,19 +75,13 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 
 	<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
-	<aui:fieldset>
-		<aui:field-wrapper label="quick-reply">
-			<c:choose>
-				<c:when test='<%= messageFormat.equals("bbcode") %>'>
-					<%@ include file="/message_boards/bbcode_editor.jspf" %>
-				</c:when>
-				<c:otherwise>
-					<%@ include file="/message_boards/html_editor.jspf" %>
-				</c:otherwise>
-			</c:choose>
+	<div class="panel-body">
+		<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" autoCreate="<%= false %>" configKey="replyMBEditor"
+			cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName='<%= editorName %>'
+			name='<%= "replyMessageBody" + curMessageId %>' onChangeMethod='<%= "replyMessageOnChange" + curMessageId %>' showSource="<%= false %>"
+		/>
 
-			<aui:input name="body" type="hidden" />
-		</aui:field-wrapper>
+		<aui:input name="body" type="hidden" />
 
 		<c:if test="<%= themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
 			<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
@@ -94,32 +95,38 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 				label="<%= true %>"
 			/>
 		</liferay-ui:custom-attributes-available>
-	</aui:fieldset>
 
-	<aui:button-row>
+		<aui:button-row>
 
-		<%
-		String publishButtonLabel = "publish";
+			<%
+			String publishButtonLabel = "publish";
 
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
-			publishButtonLabel = "submit-for-publication";
-		}
-		%>
+			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
+				publishButtonLabel = "submit-for-publication";
+			}
+			%>
 
-		<aui:button cssClass="btn-lg" name="publishButton" type="submit" value="publish" />
+			<aui:button cssClass="btn-lg" name='<%= "replyMessageButton" + curMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
 
-		<%
-		String taglibCancelReply = renderResponse.getNamespace() + "addQuickReply('cancel', '');";
-		%>
+			<%
+			String taglibCancelReply = "javascript:" + renderResponse.getNamespace() + "hideReplyMessage('" + curMessageId + "');";
+			%>
 
-		<aui:button cssClass="btn-lg" onClick="<%= taglibCancelReply %>" type="cancel" />
-	</aui:button-row>
+			<aui:button cssClass="btn-lg" onClick="<%= taglibCancelReply %>" type="cancel" />
+		</aui:button-row>
+	</div>
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveMessage() {
-		document.<portlet:namespace />addQuickReplyFm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
+	function <portlet:namespace />saveReplyMessage<%= curMessageId %>() {
+		var form = AUI.$('#<portlet:namespace />addQuickReplyFm<%= curMessageId %>');
 
-		submitForm(document.<portlet:namespace />addQuickReplyFm);
+		form.fm('body').val(window['<portlet:namespace />replyMessageBody<%= curMessageId %>'].getHTML());
+
+		submitForm(form);
 	}
+
+	window['<portlet:namespace />replyMessageOnChange' + <%= curMessageId %>] = function(html) {
+		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton<%= curMessageId %>', html === '');
+	};
 </aui:script>

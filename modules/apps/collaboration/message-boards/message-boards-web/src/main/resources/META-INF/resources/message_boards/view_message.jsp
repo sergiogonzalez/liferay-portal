@@ -55,12 +55,6 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 			<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
 		</c:otherwise>
 	</c:choose>
-
-	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
-		<div class="hide" id="<portlet:namespace />addQuickReplyDiv">
-			<%@ include file="/message_boards/edit_message_quick.jspf" %>
-		</div>
-	</c:if>
 </div>
 
 <aui:script>
@@ -82,6 +76,28 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		}
 		else {
 			addQuickReplyDiv.addClass('hide');
+		}
+	}
+
+	function <portlet:namespace />addReplyToMessage(messageId) {
+		var addQuickReplyDiv = AUI.$('#<portlet:namespace />addReplyToMessage' + messageId);
+
+		addQuickReplyDiv.removeClass('hide');
+
+		addQuickReplyDiv.find('#<portlet:namespace />parentMessageId').val(messageId);
+
+		window['<portlet:namespace />replyMessageBody' + messageId].create();
+
+		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
+	}
+
+	function <portlet:namespace />hideReplyMessage(messageId) {
+		AUI.$('#<portlet:namespace />addReplyToMessage' + messageId).addClass('hide');
+
+		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
+
+		if (window[editorName]) {
+			window[editorName].dispose();
 		}
 	}
 
