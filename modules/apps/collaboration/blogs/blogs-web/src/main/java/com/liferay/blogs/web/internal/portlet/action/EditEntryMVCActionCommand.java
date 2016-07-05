@@ -159,7 +159,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			BlogsEntry entry = null;
-			String oldUrlTitle = StringPool.BLANK;
 			List<BlogsEntryAttachmentFileEntryReference>
 				blogsEntryAttachmentFileEntryReferences = null;
 
@@ -194,10 +193,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					_transactionConfig, updateEntryCallable);
 
 				entry = (BlogsEntry)returnValue[0];
-				oldUrlTitle = (String)returnValue[1];
 				blogsEntryAttachmentFileEntryReferences =
 					(List<BlogsEntryAttachmentFileEntryReference>)
-						returnValue[2];
+						returnValue[1];
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest, false);
@@ -219,35 +217,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			boolean updateRedirect = false;
 
 			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
-
-			if (Validator.isNotNull(oldUrlTitle)) {
-				String oldRedirectParam =
-					PortalUtil.getPortletNamespace(portletId) + "redirect";
-
-				String oldRedirect = HttpUtil.getParameter(
-					redirect, oldRedirectParam, false);
-
-				if (Validator.isNotNull(oldRedirect)) {
-					String newRedirect = HttpUtil.decodeURL(oldRedirect);
-
-					newRedirect = StringUtil.replace(
-						newRedirect, oldUrlTitle, entry.getUrlTitle());
-					newRedirect = StringUtil.replace(
-						newRedirect, oldRedirectParam, "redirect");
-
-					redirect = StringUtil.replace(
-						redirect, oldRedirect, newRedirect);
-				}
-				else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
-						 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
-						 redirect.contains("/blog/" + oldUrlTitle + "?")) {
-
-					redirect = StringUtil.replace(
-						redirect, oldUrlTitle, entry.getUrlTitle());
-				}
-
-				updateRedirect = true;
-			}
 
 			int workflowAction = ParamUtil.getInteger(
 				actionRequest, "workflowAction",
@@ -532,7 +501,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			BlogsEntry.class.getName(), actionRequest);
 
 		BlogsEntry entry = null;
-		String oldUrlTitle = StringPool.BLANK;
 		List<BlogsEntryAttachmentFileEntryReference>
 			blogsEntryAttachmentFileEntryReferences = new ArrayList<>();
 
@@ -599,8 +567,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			entry = _blogsEntryLocalService.getEntry(entryId);
 
-			String tempOldUrlTitle = entry.getUrlTitle();
-
 			BlogsEntryAttachmentFileEntryHelper blogsEntryAttachmentHelper =
 				new BlogsEntryAttachmentFileEntryHelper();
 
@@ -637,10 +603,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				PortletFileRepositoryUtil.deletePortletFileEntry(
 					tempBlogsEntryAttachmentFileEntry.getFileEntryId());
 			}
-
-			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
-				oldUrlTitle = tempOldUrlTitle;
-			}
 		}
 
 		if (blogsEntryCoverImageSelectorHelper.isFileEntryTempFile()) {
@@ -661,9 +623,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				smallImageFileEntryId);
 		}
 
-		return new Object[] {
-			entry, oldUrlTitle, blogsEntryAttachmentFileEntryReferences
-		};
+		return new Object[] {entry, blogsEntryAttachmentFileEntryReferences};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
