@@ -49,11 +49,11 @@ public class KBAdminViewDisplayContext {
 	public void populatePortletBreadcrumbEntries(PortletURL portletURL)
 		throws Exception {
 
-		_doPopulatePortletBreadcrumbEntries(
+		_populatePortletBreadcrumbEntries(
 			_parentResourceClassNameId, _parentResourcePrimKey, portletURL);
 	}
 
-	private void _doPopulatePortletBreadcrumbEntries(
+	private void _populatePortletBreadcrumbEntries(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			PortletURL portletURL)
 		throws Exception {
@@ -88,7 +88,7 @@ public class KBAdminViewDisplayContext {
 
 			currentURL.setParameter("mvcPath", "/admin/view_folders.jsp");
 
-			_doPopulatePortletBreadcrumbEntries(
+			_populatePortletBreadcrumbEntries(
 				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
 				currentURL);
 
@@ -99,7 +99,7 @@ public class KBAdminViewDisplayContext {
 			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
 				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-			_doPopulatePortletBreadcrumbEntries(
+			_populatePortletBreadcrumbEntries(
 				kbArticle.getParentResourceClassNameId(),
 				kbArticle.getParentResourcePrimKey(), currentURL);
 
