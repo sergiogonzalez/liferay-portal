@@ -129,18 +129,7 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1Names() {
-		String tabs1Names = "new,previous";
-
-		if (AnnouncementsEntryPermission.contains(
-				_announcementsRequestHelper.getPermissionChecker(),
-				_announcementsRequestHelper.getLayout(),
-				_announcementsRequestHelper.getPortletName(),
-				ActionKeys.ADD_ENTRY)) {
-
-			tabs1Names += ",manage-entries";
-		}
-
-		return tabs1Names;
+		return "new,previous";
 	}
 
 	@Override
