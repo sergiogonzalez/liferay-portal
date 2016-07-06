@@ -33,6 +33,8 @@ request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_INDEX, Integer.valueOf(index));
 if (message.getMessageId() == selMessage.getMessageId()) {
 	request.setAttribute("view_thread_tree.jsp-messageFound", true);
 }
+
+MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY);
 %>
 
 <c:if test="<%= (message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
@@ -93,6 +95,15 @@ if (message.getMessageId() == selMessage.getMessageId()) {
 
 	<%
 	}
+
+	long replyToMessageId = message.getMessageId();
 	%>
 
+	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
+		<div class="card-tab message-container">
+			<div class="card hide list-group-card panel" id="<portlet:namespace />addReplyToMessage<%= replyToMessageId %>">
+				<%@ include file="/message_boards/edit_message_quick.jspf" %>
+			</div>
+		</div>
+	</c:if>
 </c:if>
