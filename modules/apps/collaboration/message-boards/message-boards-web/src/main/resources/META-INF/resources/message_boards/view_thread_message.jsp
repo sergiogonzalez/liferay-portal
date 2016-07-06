@@ -480,12 +480,5 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 	</div>
 </div>
 
-<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
-	<div class="card-tab message-container">
-		<div class="card hide list-group-card panel" id="<portlet:namespace />addReplyToMessage<%= message.getMessageId() %>">
-			<%@ include file="/message_boards/edit_message_quick.jspf" %>
-		</div>
-	</div>
-</c:if>
 
 <liferay-util:dynamic-include key="com.liferay.message.boards.web#/message_boards/view_thread_message.jsp#post" />

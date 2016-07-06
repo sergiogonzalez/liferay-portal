@@ -51,6 +51,8 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(message.getSubject());
 }
+
+long replyToMessageId = message.getRootMessageId();
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
@@ -295,6 +297,13 @@ if (portletTitleBasedNavigation) {
 		}
 		%>
 
+		<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
+			<div class="card-tab message-container">
+				<div class="card hide list-group-card panel" id="<portlet:namespace />addReplyToMessage<%= replyToMessageId %>">
+					<%@ include file="/message_boards/edit_message_quick.jspf" %>
+				</div>
+			</div>
+		</c:if>
 	</div>
 
 	<%
