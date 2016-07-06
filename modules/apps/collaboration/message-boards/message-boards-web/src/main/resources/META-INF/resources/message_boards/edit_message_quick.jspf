@@ -52,8 +52,15 @@ String body = BeanParamUtil.getString(replyMessage, request, "body");
 boolean quote = ParamUtil.getBoolean(request, "quote");
 boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 
-String editorName = PropsUtil.get(
-		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
+String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
+
+if (messageFormat.equals("bbcode")) {
+	editorName = PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+
+	if (editorName.equals("bbcode")) {
+		editorName = "alloyeditor_bbcode";
+	}
+}
 
 MBMessage curMessage = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
 String curMessageId = String.valueOf(curMessage.getMessageId());
