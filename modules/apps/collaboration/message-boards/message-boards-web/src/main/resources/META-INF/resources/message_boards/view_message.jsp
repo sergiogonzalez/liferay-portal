@@ -58,35 +58,20 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 </div>
 
 <aui:script>
-	function <portlet:namespace />addQuickReply(cmd, messageId) {
-		var addQuickReplyDiv = AUI.$('#<portlet:namespace />addQuickReplyDiv');
-
-		if (cmd == 'reply') {
-			addQuickReplyDiv.removeClass('hide');
-
-			addQuickReplyDiv.find('#<portlet:namespace />parentMessageId').val(messageId);
-
-			var editorInput = addQuickReplyDiv.find('textarea');
-
-			var editorInstance = window[editorInput.attr('id')];
-
-			if (editorInstance) {
-				setTimeout(AUI._.bind(editorInstance.focus, editorInstance), 50);
-			}
-		}
-		else {
-			addQuickReplyDiv.addClass('hide');
-		}
-	}
-
 	function <portlet:namespace />addReplyToMessage(messageId) {
-		var addQuickReplyDiv = AUI.$('#<portlet:namespace />addReplyToMessage' + messageId);
+		var addQuickReplyContainer = AUI.$('#<portlet:namespace />addReplyToMessage' + messageId);
 
-		addQuickReplyDiv.removeClass('hide');
+		addQuickReplyContainer.removeClass('hide');
 
-		addQuickReplyDiv.find('#<portlet:namespace />parentMessageId').val(messageId);
+		addQuickReplyContainer.find('#<portlet:namespace />parentMessageId').val(messageId);
 
-		window['<portlet:namespace />replyMessageBody' + messageId].create();
+		addQuickReplyContainer.scrollTop();
+
+		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
+
+		window[editorName].create();
+
+		document.getElementById(editorName).focus();
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
 	}

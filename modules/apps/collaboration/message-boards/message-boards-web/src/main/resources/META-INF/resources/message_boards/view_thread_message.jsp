@@ -480,5 +480,4 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 	</div>
 </div>
 
-
 <liferay-util:dynamic-include key="com.liferay.message.boards.web#/message_boards/view_thread_message.jsp#post" />
