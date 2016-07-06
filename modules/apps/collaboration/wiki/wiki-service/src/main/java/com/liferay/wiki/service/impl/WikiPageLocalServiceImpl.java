@@ -472,6 +472,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
 		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalServiceImpl.class);
 
 		BundleContext _bundleContext = bundle.getBundleContext();
@@ -794,6 +796,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public void destroy() {
+		super.destroy();
+
 		_serviceTrackerMap.close();
 	}
 
