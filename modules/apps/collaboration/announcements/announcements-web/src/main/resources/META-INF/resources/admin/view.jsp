@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
 String distributionScope = ParamUtil.getString(request, "distributionScope");
 
@@ -30,6 +32,8 @@ if (distributionScopeArray.length == 2) {
 if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS)) {
 	throw new PrincipalException.MustHavePermission(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
 }
+
+PortletURL portletURL = currentURLObj;
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -131,7 +135,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 
 <aui:script>
 	function <portlet:namespace />addEntry() {
-		location.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /><portlet:param name="redirect" value="<%= announcementsRequestHelper.getCurrentURL() %>" /><portlet:param name="distributionScope" value="<%= distributionScope %>" /></portlet:renderURL>';
+		location.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="distributionScope" value="<%= distributionScope %>" /></portlet:renderURL>';
 	}
 
 	function <portlet:namespace />selectDistributionScope(distributionScope) {
