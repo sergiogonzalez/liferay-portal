@@ -206,18 +206,14 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							</c:if>
 
 							<c:if test="<%= hasReplyPermission && !thread.isLocked() %>">
-								<portlet:renderURL var="replyURL">
-									<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
-									<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-									<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-									<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
-								</portlet:renderURL>
+
+								<%
+								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "');";
+								%>
 
 								<liferay-ui:icon
 									message="reply"
-									url="<%= replyURL %>"
+									url="<%= taglibReplyToMessageURL %>"
 								/>
 
 								<portlet:renderURL var="quoteURL">
@@ -235,14 +231,6 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									url="<%= quoteURL %>"
 								/>
 
-								<%
-								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "');";
-								%>
-
-								<liferay-ui:icon
-									message="quick-reply"
-									url="<%= taglibReplyToMessageURL %>"
-								/>
 							</c:if>
 
 							<c:if test="<%= hasUpdatePermission %>">
