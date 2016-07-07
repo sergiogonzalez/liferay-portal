@@ -124,7 +124,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 			<div class="card-row card-row-padded">
 				<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
-				<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveReplyMessage" + replyToMessageId +"();" %>'>
+				<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveReplyMessage" + replyToMessageId +"();" %>'>
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
@@ -189,7 +189,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 						<aui:button cssClass="btn-lg" name='<%= "replyMessageButton" + replyToMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
 
 						<%
-						String taglibCancelReply = "javascript:" + renderResponse.getNamespace() + "hideReplyMessage('" + replyToMessageId + "');";
+						String taglibCancelReply = "javascript:" + liferayPortletResponse.getNamespace() + "hideReplyMessage('" + replyToMessageId + "');";
 						%>
 
 						<aui:button cssClass="btn-lg" onClick="<%= taglibCancelReply %>" type="cancel" />
