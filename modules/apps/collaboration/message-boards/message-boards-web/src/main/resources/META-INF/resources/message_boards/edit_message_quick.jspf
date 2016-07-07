@@ -60,10 +60,65 @@ if (messageFormat.equals("bbcode")) {
 		editorName = "alloyeditor_bbcode";
 	}
 }
+
+Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-showPermanentLink");
 %>
 
 <div class="card-tab message-container">
 	<div class="card hide list-group-card panel" id="<portlet:namespace />addReplyToMessage<%= replyToMessageId %>">
+		<div class="panel-heading">
+			<div class="card-row card-row-padded">
+				<div class="card-col-field">
+					<div class="list-group-card-icon">
+						<liferay-ui:user-portrait cssClass="user-icon-lg" userId="<%= themeDisplay.getUserId() %>" />
+					</div>
+				</div>
+
+				<div class="card-col-content card-col-gutters">
+
+					<%
+					User currentUser = themeDisplay.getUser();
+					String userDisplayText = LanguageUtil.format(request, "x-replying", new Object[] {currentUser.getFullName()});
+					%>
+
+					<h5 class="message-user-display text-default" title="<%= userDisplayText %>">
+						<%= userDisplayText %>
+					</h5>
+
+					<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
+						<c:choose>
+							<c:when test="<%= showPermanentLink %>">
+								<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />">
+									<%= HtmlUtil.escape(message.getSubject()) %>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(message.getSubject()) %>
+							</c:otherwise>
+						</c:choose>
+					</h4>
+
+					<%
+					MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, currentUser.getUserId());
+
+					String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+
+					User messageUser = UserLocalServiceUtil.fetchUser(currentUser.getUserId());
+					%>
+
+					<c:if test="<%= (messageUser != null) && !messageUser.isDefaultUser() %>">
+						<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
+							<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[0]) %>">
+								<%= HtmlUtil.escape(ranks[0]) %>
+							</span>
+						</c:if>
+					</c:if>
+				</div>
+			</div>
+		</div>
+
+		<div class="divider"></div>
+
 		<div class="panel-body">
 			<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
