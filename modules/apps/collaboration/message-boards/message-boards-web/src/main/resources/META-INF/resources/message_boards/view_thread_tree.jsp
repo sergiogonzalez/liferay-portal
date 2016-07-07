@@ -100,10 +100,6 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 	%>
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
-		<div class="card-tab message-container">
-			<div class="card hide list-group-card panel" id="<portlet:namespace />addReplyToMessage<%= replyToMessageId %>">
-				<%@ include file="/message_boards/edit_message_quick.jspf" %>
-			</div>
-		</div>
+		<%@ include file="/message_boards/edit_message_quick.jspf" %>
 	</c:if>
 </c:if>
