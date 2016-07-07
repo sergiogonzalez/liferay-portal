@@ -19,7 +19,6 @@ import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
