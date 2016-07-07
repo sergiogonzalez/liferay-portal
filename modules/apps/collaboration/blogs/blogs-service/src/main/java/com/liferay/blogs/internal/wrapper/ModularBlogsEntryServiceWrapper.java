@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -64,7 +65,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		return super.addEntry(
+		return _blogsEntryService.addEntry(
 			title, description, content, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
 			allowTrackbacks, trackbacks, smallImage, smallImageURL,
@@ -82,7 +83,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return super.addEntry(
+		return _blogsEntryService.addEntry(
 			title, subtitle, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
@@ -91,7 +92,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 
 	@Override
 	public void deleteEntry(long entryId) throws PortalException {
-		super.deleteEntry(entryId);
+		_blogsEntryService.deleteEntry(entryId);
 	}
 
 	@Override
@@ -99,7 +100,8 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			long companyId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		return super.getCompanyEntries(companyId, displayDate, status, max);
+		return _blogsEntryService.getCompanyEntries(
+			companyId, displayDate, status, max);
 	}
 
 	@Override
@@ -109,47 +111,49 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return super.getCompanyEntriesRSS(
+		return _blogsEntryService.getCompanyEntriesRSS(
 			companyId, displayDate, status, max, type, version, displayStyle,
 			feedURL, entryURL, themeDisplay);
 	}
 
 	@Override
 	public BlogsEntry getEntry(long entryId) throws PortalException {
-		return super.getEntry(entryId);
+		return _blogsEntryService.getEntry(entryId);
 	}
 
 	@Override
 	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException {
 
-		return super.getEntry(groupId, urlTitle);
+		return _blogsEntryService.getEntry(groupId, urlTitle);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate, int status, int max) {
 
-		return super.getGroupEntries(groupId, displayDate, status, max);
+		return _blogsEntryService.getGroupEntries(
+			groupId, displayDate, status, max);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate, int status, int start, int end) {
 
-		return super.getGroupEntries(groupId, displayDate, status, start, end);
+		return _blogsEntryService.getGroupEntries(
+			groupId, displayDate, status, start, end);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max) {
-		return super.getGroupEntries(groupId, status, max);
+		return _blogsEntryService.getGroupEntries(groupId, status, max);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end) {
 
-		return super.getGroupEntries(groupId, status, start, end);
+		return _blogsEntryService.getGroupEntries(groupId, status, start, end);
 	}
 
 	@Override
@@ -157,19 +161,21 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 		long groupId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		return super.getGroupEntries(groupId, status, start, end, obc);
+		return _blogsEntryService.getGroupEntries(
+			groupId, status, start, end, obc);
 	}
 
 	@Override
 	public int getGroupEntriesCount(
 		long groupId, Date displayDate, int status) {
 
-		return super.getGroupEntriesCount(groupId, displayDate, status);
+		return _blogsEntryService.getGroupEntriesCount(
+			groupId, displayDate, status);
 	}
 
 	@Override
 	public int getGroupEntriesCount(long groupId, int status) {
-		return super.getGroupEntriesCount(groupId, status);
+		return _blogsEntryService.getGroupEntriesCount(groupId, status);
 	}
 
 	@Override
@@ -179,7 +185,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return super.getGroupEntriesRSS(
+		return _blogsEntryService.getGroupEntriesRSS(
 			groupId, displayDate, status, max, type, version, displayStyle,
 			feedURL, entryURL, themeDisplay);
 	}
@@ -189,7 +195,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			long companyId, long groupId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		return super.getGroupsEntries(
+		return _blogsEntryService.getGroupsEntries(
 			companyId, groupId, displayDate, status, max);
 	}
 
@@ -198,7 +204,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 		long groupId, long userId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		return super.getGroupUserEntries(
+		return _blogsEntryService.getGroupUserEntries(
 			groupId, userId, status, start, end, obc);
 	}
 
@@ -207,20 +213,22 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 		long groupId, long userId, int[] statuses, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		return super.getGroupUserEntries(
+		return _blogsEntryService.getGroupUserEntries(
 			groupId, userId, statuses, start, end, obc);
 	}
 
 	@Override
 	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
-		return super.getGroupUserEntriesCount(groupId, userId, status);
+		return _blogsEntryService.getGroupUserEntriesCount(
+			groupId, userId, status);
 	}
 
 	@Override
 	public int getGroupUserEntriesCount(
 		long groupId, long userId, int[] statuses) {
 
-		return super.getGroupUserEntriesCount(groupId, userId, statuses);
+		return _blogsEntryService.getGroupUserEntriesCount(
+			groupId, userId, statuses);
 	}
 
 	@Override
@@ -228,7 +236,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			long organizationId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		return super.getOrganizationEntries(
+		return _blogsEntryService.getOrganizationEntries(
 			organizationId, displayDate, status, max);
 	}
 
@@ -239,14 +247,14 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return super.getOrganizationEntriesRSS(
+		return _blogsEntryService.getOrganizationEntriesRSS(
 			organizationId, displayDate, status, max, type, version,
 			displayStyle, feedURL, entryURL, themeDisplay);
 	}
 
 	@Override
 	public String getOSGiServiceIdentifier() {
-		return super.getOSGiServiceIdentifier();
+		return _blogsEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -256,12 +264,12 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 
 	@Override
 	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException {
-		return super.moveEntryToTrash(entryId);
+		return _blogsEntryService.moveEntryToTrash(entryId);
 	}
 
 	@Override
 	public void restoreEntryFromTrash(long entryId) throws PortalException {
-		super.restoreEntryFromTrash(entryId);
+		_blogsEntryService.restoreEntryFromTrash(entryId);
 	}
 
 	@Override
@@ -271,12 +279,12 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 
 	@Override
 	public void subscribe(long groupId) throws PortalException {
-		super.subscribe(groupId);
+		_blogsEntryService.subscribe(groupId);
 	}
 
 	@Override
 	public void unsubscribe(long groupId) throws PortalException {
-		super.unsubscribe(groupId);
+		_blogsEntryService.unsubscribe(groupId);
 	}
 
 	/**
@@ -296,7 +304,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		return super.updateEntry(
+		return _blogsEntryService.updateEntry(
 			entryId, title, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
@@ -316,11 +324,20 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return super.updateEntry(
+		return _blogsEntryService.updateEntry(
 			entryId, title, subtitle, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
+
+	@Reference
+	protected void setBlogsEntryLocalService(
+		com.liferay.blogs.service.BlogsEntryService blogsEntryService) {
+
+		_blogsEntryService = blogsEntryService;
+	}
+
+	private com.liferay.blogs.service.BlogsEntryService _blogsEntryService;
 
 }
