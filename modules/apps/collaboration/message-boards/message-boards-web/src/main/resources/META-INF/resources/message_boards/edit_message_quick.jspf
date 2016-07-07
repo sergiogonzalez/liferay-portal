@@ -139,7 +139,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 
 					<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" autoCreate="<%= false %>" configKey="replyMBEditor"
 						cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName='<%= editorName %>'
-						name='<%= "replyMessageBody" + replyToMessageId %>' onChangeMethod='<%= "replyMessageOnChange" + replyToMessageId %>' showSource="<%= false %>"
+						name='<%= "replyMessageBody" + replyToMessageId %>' onChangeMethod='<%= "replyMessageOnChange" + replyToMessageId %>' placeholder='<%= LanguageUtil.get(request, "type-here-your-reply") %>' showSource="<%= false %>"
 					/>
 
 					<aui:input name="body" type="hidden" />
