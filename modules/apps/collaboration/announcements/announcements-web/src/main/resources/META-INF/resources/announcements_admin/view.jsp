@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/announcements_admin/init.jsp" %>
 
 <%
 String distributionScope = ParamUtil.getString(request, "distributionScope");
@@ -43,7 +43,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 				boolean submitOnChange = true;
 				%>
 
-				<%@ include file="/entry_select_scope.jspf" %>
+				<%@ include file="/announcements/entry_select_scope.jspf" %>
 			</aui:fieldset>
 		</aui:fieldset-group>
 
