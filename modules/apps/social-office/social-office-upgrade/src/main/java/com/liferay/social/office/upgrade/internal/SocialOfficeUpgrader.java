@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Object.class
 )
-public class SocialOfficeUpgradeCommand {
+public class SocialOfficeUpgrader {
 
 	public void executeAll() throws PortalException {
 		hideTasksLayout();
