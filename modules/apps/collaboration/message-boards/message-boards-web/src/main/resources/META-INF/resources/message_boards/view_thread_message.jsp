@@ -236,12 +236,12 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								/>
 
 								<%
-								String taglibQuickReplyURL = "javascript:" + liferayPortletResponse.getNamespace() + "addQuickReply('reply', '" + message.getMessageId() + "');";
+								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "');";
 								%>
 
 								<liferay-ui:icon
 									message="quick-reply"
-									url="<%= taglibQuickReplyURL %>"
+									url="<%= taglibReplyToMessageURL %>"
 								/>
 							</c:if>
 
