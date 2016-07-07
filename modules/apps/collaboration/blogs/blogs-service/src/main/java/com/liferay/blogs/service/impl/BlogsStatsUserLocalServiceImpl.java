@@ -16,28 +16,223 @@ package com.liferay.blogs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
+import com.liferay.blogs.kernel.exception.NoSuchStatsUserException;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.model.BlogsStatsUser;
+import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
+import com.liferay.blogs.kernel.util.comparator.StatsUserLastPostDateComparator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * The implementation of the blogs stats user local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.blogs.service.BlogsStatsUserLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see BlogsStatsUserLocalServiceBaseImpl
- * @see com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil
+ * @author Mate Thurzo
  */
 @ProviderType
 public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil} to access the blogs stats user local service.
-	 */
+
+	@Override
+	public void deleteStatsUser(BlogsStatsUser statsUsers) {
+		blogsStatsUserPersistence.remove(statsUsers);
+	}
+
+	@Override
+	public void deleteStatsUser(long statsUserId) throws PortalException {
+		BlogsStatsUser statsUsers = blogsStatsUserPersistence.findByPrimaryKey(
+			statsUserId);
+
+		deleteStatsUser(statsUsers);
+	}
+
+	@Override
+	public void deleteStatsUserByGroupId(long groupId) {
+		List<BlogsStatsUser> statsUsers =
+			blogsStatsUserPersistence.findByGroupId(groupId);
+
+		for (BlogsStatsUser statsUser : statsUsers) {
+			deleteStatsUser(statsUser);
+		}
+	}
+
+	@Override
+	public void deleteStatsUserByUserId(long userId) {
+		List<BlogsStatsUser> statsUsers =
+			blogsStatsUserPersistence.findByUserId(userId);
+
+		for (BlogsStatsUser statsUser : statsUsers) {
+			deleteStatsUser(statsUser);
+		}
+	}
+
+	@Override
+	public List<BlogsStatsUser> getCompanyStatsUsers(
+		long companyId, int start, int end) {
+
+		return blogsStatsUserPersistence.findByC_NotE(
+			companyId, 0, start, end, new StatsUserLastPostDateComparator());
+	}
+
+	@Override
+	public List<BlogsStatsUser> getCompanyStatsUsers(
+		long companyId, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
+
+		return blogsStatsUserPersistence.findByC_NotE(
+			companyId, 0, start, end, obc);
+	}
+
+	@Override
+	public int getCompanyStatsUsersCount(long companyId) {
+		return blogsStatsUserPersistence.countByC_NotE(companyId, 0);
+	}
+
+	@Override
+	public List<BlogsStatsUser> getGroupsStatsUsers(
+		long companyId, long groupId, int start, int end) {
+
+		return blogsStatsUserFinder.findByGroupIds(
+			companyId, groupId, start, end);
+	}
+
+	@Override
+	public List<BlogsStatsUser> getGroupStatsUsers(
+		long groupId, int start, int end) {
+
+		return blogsStatsUserPersistence.findByG_NotE(
+			groupId, 0, start, end, new StatsUserLastPostDateComparator());
+	}
+
+	@Override
+	public List<BlogsStatsUser> getGroupStatsUsers(
+		long groupId, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
+
+		return blogsStatsUserPersistence.findByG_NotE(
+			groupId, 0, start, end, obc);
+	}
+
+	@Override
+	public int getGroupStatsUsersCount(long groupId) {
+		return blogsStatsUserPersistence.countByG_NotE(groupId, 0);
+	}
+
+	@Override
+	public List<BlogsStatsUser> getOrganizationStatsUsers(
+		long organizationId, int start, int end) {
+
+		return blogsStatsUserFinder.findByOrganizationId(
+			organizationId, start, end, new StatsUserLastPostDateComparator());
+	}
+
+	@Override
+	public List<BlogsStatsUser> getOrganizationStatsUsers(
+		long organizationId, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
+
+		return blogsStatsUserFinder.findByOrganizationId(
+			organizationId, start, end, obc);
+	}
+
+	@Override
+	public int getOrganizationStatsUsersCount(long organizationId) {
+		return blogsStatsUserFinder.countByOrganizationId(organizationId);
+	}
+
+	@Override
+	public BlogsStatsUser getStatsUser(long groupId, long userId)
+		throws PortalException {
+
+		BlogsStatsUser statsUser = blogsStatsUserPersistence.fetchByG_U(
+			groupId, userId);
+
+		if (statsUser == null) {
+			Group group = groupPersistence.findByPrimaryKey(groupId);
+
+			long statsUserId = counterLocalService.increment();
+
+			statsUser = blogsStatsUserPersistence.create(statsUserId);
+
+			statsUser.setCompanyId(group.getCompanyId());
+			statsUser.setGroupId(groupId);
+			statsUser.setUserId(userId);
+
+			blogsStatsUserPersistence.update(statsUser);
+		}
+
+		return statsUser;
+	}
+
+	@Override
+	public void updateStatsUser(long groupId, long userId)
+		throws PortalException {
+
+		updateStatsUser(groupId, userId, null);
+	}
+
+	@Override
+	public void updateStatsUser(long groupId, long userId, Date displayDate)
+		throws PortalException {
+
+		Date now = new Date();
+
+		int entryCount = blogsEntryPersistence.countByG_U_LtD_S(
+			groupId, userId, now, WorkflowConstants.STATUS_APPROVED);
+
+		if (entryCount == 0) {
+			try {
+				blogsStatsUserPersistence.removeByG_U(groupId, userId);
+			}
+			catch (NoSuchStatsUserException nssue) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nssue, nssue);
+				}
+			}
+
+			return;
+		}
+
+		BlogsStatsUser statsUser = getStatsUser(groupId, userId);
+
+		statsUser.setEntryCount(entryCount);
+
+		BlogsEntry blogsEntry = blogsEntryPersistence.findByG_U_LtD_S_First(
+			groupId, userId, now, WorkflowConstants.STATUS_APPROVED,
+			new EntryDisplayDateComparator());
+
+		Date lastDisplayDate = blogsEntry.getDisplayDate();
+
+		Date lastPostDate = statsUser.getLastPostDate();
+
+		if ((displayDate != null) && displayDate.before(now)) {
+			if (lastPostDate == null) {
+				statsUser.setLastPostDate(displayDate);
+			}
+			else if (displayDate.after(lastPostDate)) {
+				statsUser.setLastPostDate(displayDate);
+			}
+			else if (lastDisplayDate.before(lastPostDate)) {
+				statsUser.setLastPostDate(lastDisplayDate);
+			}
+		}
+		else if ((lastPostDate == null) ||
+				 lastPostDate.before(lastDisplayDate)) {
+
+			statsUser.setLastPostDate(lastDisplayDate);
+		}
+
+		blogsStatsUserPersistence.update(statsUser);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsStatsUserLocalServiceImpl.class);
+
 }
