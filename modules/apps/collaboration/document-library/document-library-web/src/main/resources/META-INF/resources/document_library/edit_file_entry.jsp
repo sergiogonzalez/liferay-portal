@@ -423,7 +423,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<c:if test="<%= (fileEntry != null) && !checkedOut %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="version">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
 					<aui:input
 						label="customize-the-version-number-increment-and-describe-my-changes"
 						name="updateVersionDetails"
@@ -438,7 +438,7 @@ if (portletTitleBasedNavigation) {
 
 						<aui:model-context />
 
-						<aui:input label="change-log" name="changeLog" type="textarea" />
+						<aui:input label="version-notes" name="changeLog" type="textarea" />
 
 						<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 					</div>
