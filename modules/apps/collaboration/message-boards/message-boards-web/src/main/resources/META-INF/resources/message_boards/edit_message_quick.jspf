@@ -77,8 +77,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 				<div class="card-col-content card-col-gutters">
 
 					<%
-					User currentUser = themeDisplay.getUser();
-					String userDisplayText = LanguageUtil.format(request, "x-replying", new Object[] {currentUser.getFullName()});
+					String userDisplayText = LanguageUtil.format(request, "x-replying", new Object[] {PortalUtil.getUserName(themeDisplay.getUserId(), StringPool.BLANK)});
 					%>
 
 					<h5 class="message-user-display text-default" title="<%= userDisplayText %>">
@@ -99,19 +98,21 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 					</h4>
 
 					<%
-					MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, currentUser.getUserId());
+					MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, themeDisplay.getUserId());
 
 					String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
-
-					User messageUser = UserLocalServiceUtil.fetchUser(currentUser.getUserId());
 					%>
 
-					<c:if test="<%= (messageUser != null) && !messageUser.isDefaultUser() %>">
-						<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
-							<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[0]) %>">
-								<%= HtmlUtil.escape(ranks[0]) %>
-							</span>
-						</c:if>
+					<c:if test="<%= Validator.isNotNull(ranks[1]) %>">
+						<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[1]) %>">
+							<%= HtmlUtil.escape(ranks[1]) %>
+						</span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
+						<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[0]) %>">
+							<%= HtmlUtil.escape(ranks[0]) %>
+						</span>
 					</c:if>
 				</div>
 			</div>
@@ -137,9 +138,16 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 
 					<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
-					<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" autoCreate="<%= false %>" configKey="replyMBEditor"
-						cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName='<%= editorName %>'
-						name='<%= "replyMessageBody" + replyToMessageId %>' onChangeMethod='<%= "replyMessageOnChange" + replyToMessageId %>' placeholder='<%= LanguageUtil.get(request, "type-here-your-reply") %>' showSource="<%= false %>"
+					<liferay-ui:input-editor
+						allowBrowseDocuments="<%= false %>"
+						autoCreate="<%= false %>"
+						configKey="replyMBEditor"
+						cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>'
+						editorName="<%= editorName %>"
+						name='<%= "replyMessageBody" + replyToMessageId %>'
+						onChangeMethod='<%= "replyMessageOnChange" + replyToMessageId %>'
+						placeholder='<%= LanguageUtil.get(request, "type-here-your-reply") %>'
+						showSource="<%= false %>"
 					/>
 
 					<aui:input name="body" type="hidden" />

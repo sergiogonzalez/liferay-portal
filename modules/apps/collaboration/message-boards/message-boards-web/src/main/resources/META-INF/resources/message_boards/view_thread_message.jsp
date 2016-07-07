@@ -230,7 +230,6 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									message="reply-with-quote"
 									url="<%= quoteURL %>"
 								/>
-
 							</c:if>
 
 							<c:if test="<%= hasUpdatePermission %>">
