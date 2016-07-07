@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -81,22 +82,22 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 
 	@Override
 	public void deleteStatsUser(BlogsStatsUser statsUsers) {
-		super.deleteStatsUser(statsUsers);
+		_blogsStatsUserLocalService.deleteStatsUser(statsUsers);
 	}
 
 	@Override
 	public void deleteStatsUser(long statsUserId) throws PortalException {
-		super.deleteStatsUser(statsUserId);
+		_blogsStatsUserLocalService.deleteStatsUser(statsUserId);
 	}
 
 	@Override
 	public void deleteStatsUserByGroupId(long groupId) {
-		super.deleteStatsUserByGroupId(groupId);
+		_blogsStatsUserLocalService.deleteStatsUserByGroupId(groupId);
 	}
 
 	@Override
 	public void deleteStatsUserByUserId(long userId) {
-		super.deleteStatsUserByUserId(userId);
+		_blogsStatsUserLocalService.deleteStatsUserByUserId(userId);
 	}
 
 	@Override
@@ -167,7 +168,8 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 	public List<BlogsStatsUser> getCompanyStatsUsers(
 		long companyId, int start, int end) {
 
-		return super.getCompanyStatsUsers(companyId, start, end);
+		return _blogsStatsUserLocalService.getCompanyStatsUsers(
+			companyId, start, end);
 	}
 
 	@Override
@@ -175,26 +177,29 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 		long companyId, int start, int end,
 		OrderByComparator<BlogsStatsUser> obc) {
 
-		return super.getCompanyStatsUsers(companyId, start, end, obc);
+		return _blogsStatsUserLocalService.getCompanyStatsUsers(
+			companyId, start, end, obc);
 	}
 
 	@Override
 	public int getCompanyStatsUsersCount(long companyId) {
-		return super.getCompanyStatsUsersCount(companyId);
+		return _blogsStatsUserLocalService.getCompanyStatsUsersCount(companyId);
 	}
 
 	@Override
 	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 
-		return super.getGroupsStatsUsers(companyId, groupId, start, end);
+		return _blogsStatsUserLocalService.getGroupsStatsUsers(
+			companyId, groupId, start, end);
 	}
 
 	@Override
 	public List<BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end) {
 
-		return super.getGroupStatsUsers(groupId, start, end);
+		return _blogsStatsUserLocalService.getGroupStatsUsers(
+			groupId, start, end);
 	}
 
 	@Override
@@ -202,12 +207,13 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 		long groupId, int start, int end,
 		OrderByComparator<BlogsStatsUser> obc) {
 
-		return super.getGroupStatsUsers(groupId, start, end, obc);
+		return _blogsStatsUserLocalService.getGroupStatsUsers(
+			groupId, start, end, obc);
 	}
 
 	@Override
 	public int getGroupStatsUsersCount(long groupId) {
-		return super.getGroupStatsUsersCount(groupId);
+		return _blogsStatsUserLocalService.getGroupStatsUsersCount(groupId);
 	}
 
 	@Override
@@ -221,7 +227,8 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 	public List<BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end) {
 
-		return super.getOrganizationStatsUsers(organizationId, start, end);
+		return _blogsStatsUserLocalService.getOrganizationStatsUsers(
+			organizationId, start, end);
 	}
 
 	@Override
@@ -229,17 +236,19 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 		long organizationId, int start, int end,
 		OrderByComparator<BlogsStatsUser> obc) {
 
-		return super.getOrganizationStatsUsers(organizationId, start, end, obc);
+		return _blogsStatsUserLocalService.getOrganizationStatsUsers(
+			organizationId, start, end, obc);
 	}
 
 	@Override
 	public int getOrganizationStatsUsersCount(long organizationId) {
-		return super.getOrganizationStatsUsersCount(organizationId);
+		return _blogsStatsUserLocalService.getOrganizationStatsUsersCount(
+			organizationId);
 	}
 
 	@Override
 	public String getOSGiServiceIdentifier() {
-		return super.getOSGiServiceIdentifier();
+		return _blogsStatsUserLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -253,7 +262,7 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException {
 
-		return super.getStatsUser(groupId, userId);
+		return _blogsStatsUserLocalService.getStatsUser(groupId, userId);
 	}
 
 	@Override
@@ -277,14 +286,29 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 	public void updateStatsUser(long groupId, long userId)
 		throws PortalException {
 
-		super.updateStatsUser(groupId, userId);
+		_blogsStatsUserLocalService.updateStatsUser(groupId, userId);
 	}
 
 	@Override
 	public void updateStatsUser(long groupId, long userId, Date displayDate)
 		throws PortalException {
 
-		super.updateStatsUser(groupId, userId, displayDate);
+		_blogsStatsUserLocalService.updateStatsUser(
+			groupId, userId, displayDate);
 	}
+
+	@Reference
+	protected void setBlogsStatsUserLocalService(
+		com.
+			liferay.
+				blogs.
+					service.
+						BlogsStatsUserLocalService blogsStatsUserLocalService) {
+
+		_blogsStatsUserLocalService = blogsStatsUserLocalService;
+	}
+
+	private com.liferay.blogs.service.BlogsStatsUserLocalService
+		_blogsStatsUserLocalService;
 
 }
