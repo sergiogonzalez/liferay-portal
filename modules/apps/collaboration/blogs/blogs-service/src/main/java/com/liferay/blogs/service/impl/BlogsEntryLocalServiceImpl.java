@@ -25,8 +25,11 @@ import com.liferay.blogs.kernel.exception.EntrySmallImageNameException;
 import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.kernel.exception.EntryTitleException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
 import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.kernel.util.comparator.EntryIdComparator;
+import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -81,13 +84,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
-import com.liferay.portlet.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.blogs.util.BlogsUtil;
@@ -2074,6 +2077,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				"Content has more than " + contentMaxLength + " characters");
 		}
 	}
+
+	@ServiceReference(type = BlogsEntryFinder.class)
+	protected BlogsEntryFinder blogsEntryFinder;
+
+	@ServiceReference(type = BlogsEntryPersistence.class)
+	protected BlogsEntryPersistence blogsEntryPersistence;
 
 	private static final String _COVER_IMAGE_FOLDER_NAME = "Cover Image";
 
