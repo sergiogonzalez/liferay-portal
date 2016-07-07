@@ -32,114 +32,119 @@ if (distributionScopeArray.length == 2) {
 if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS)) {
 	throw new PrincipalException.MustHavePermission(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
 }
-
-PortletURL portletURL = currentURLObj;
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:fieldset id="fieldSet">
+<div class="container-fluid-1280">
+	<aui:form action="<%= currentURL %>" method="post" name="fm">
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset id="fieldSet">
 
-		<%
-		boolean submitOnChange = true;
-		%>
+				<%
+				boolean submitOnChange = true;
+				%>
 
-		<%@ include file="/entry_select_scope.jspf" %>
-	</aui:fieldset>
+				<%@ include file="/entry_select_scope.jspf" %>
+			</aui:fieldset>
+		</aui:fieldset-group>
 
-	<c:choose>
-		<c:when test="<%= distributionScopeArray.length > 0 %>">
-			<aui:button onClick='<%= renderResponse.getNamespace() + "addEntry()" %>' value="add-entry" />
-		</c:when>
-		<c:otherwise>
-			<div class="alert alert-info">
-				<liferay-ui:message key="please-select-a-distribution-scope" />
-			</div>
-		</c:otherwise>
-	</c:choose>
+		<c:choose>
+			<c:when test="<%= distributionScopeArray.length > 0 %>">
+				<portlet:renderURL var="addEntryURL">
+					<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="distributionScope" value="<%= distributionScope %>" />
+				</portlet:renderURL>
 
-	<c:if test="<%= Validator.isNotNull(distributionScope) %>">
-		<div class="separator"><!-- --></div>
+				<liferay-frontend:add-menu>
+					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-entry") %>' url="<%= addEntryURL %>" />
+				</liferay-frontend:add-menu>
+			</c:when>
+			<c:otherwise>
+				<div class="alert alert-info">
+					<liferay-ui:message key="please-select-a-distribution-scope" />
+				</div>
+			</c:otherwise>
+		</c:choose>
 
-		<%
-		PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
+		<c:if test="<%= Validator.isNotNull(distributionScope) %>">
 
-		iteratorURL.setParameter("distributionScope", distributionScope);
+			<%
+			PortletURL iteratorURL = PortletURLUtil.clone(currentURLObj, renderResponse);
 
-		List<String> headerNames = new ArrayList<String>();
+			iteratorURL.setParameter("distributionScope", distributionScope);
 
-		headerNames.add("title");
-		headerNames.add("type");
-		headerNames.add("modified-date");
-		headerNames.add("display-date");
-		headerNames.add("expiration-date");
-		headerNames.add(StringPool.BLANK);
+			List<String> headerNames = new ArrayList<String>();
 
-		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, headerNames, "no-entries-were-found");
+			headerNames.add("title");
+			headerNames.add("type");
+			headerNames.add("modified-date");
+			headerNames.add("display-date");
+			headerNames.add("expiration-date");
+			headerNames.add(StringPool.BLANK);
 
-		int total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(classNameId, classPK, portletName.equals(AnnouncementsPortletKeys.ALERTS));
+			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, headerNames, "no-entries-were-found");
 
-		searchContainer.setTotal(total);
+			int total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(classNameId, classPK, portletName.equals(AnnouncementsPortletKeys.ALERTS));
 
-		List<AnnouncementsEntry> results = AnnouncementsEntryLocalServiceUtil.getEntries(classNameId, classPK, portletName.equals(AnnouncementsPortletKeys.ALERTS), searchContainer.getStart(), searchContainer.getEnd());
+			searchContainer.setTotal(total);
 
-		searchContainer.setResults(results);
+			List<AnnouncementsEntry> results = AnnouncementsEntryLocalServiceUtil.getEntries(classNameId, classPK, portletName.equals(AnnouncementsPortletKeys.ALERTS), searchContainer.getStart(), searchContainer.getEnd());
 
-		List resultRows = searchContainer.getResultRows();
+			searchContainer.setResults(results);
 
-		for (int i = 0; i < results.size(); i++) {
-			AnnouncementsEntry entry = results.get(i);
+			List resultRows = searchContainer.getResultRows();
 
-			entry = entry.toEscapedModel();
+			for (int i = 0; i < results.size(); i++) {
+				AnnouncementsEntry entry = results.get(i);
 
-			ResultRow row = new ResultRow(entry, entry.getEntryId(), i);
+				entry = entry.toEscapedModel();
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+				ResultRow row = new ResultRow(entry, entry.getEntryId(), i);
 
-			rowURL.setParameter("mvcRenderCommandName", "/announcements/edit_entry");
-			rowURL.setParameter("redirect", announcementsRequestHelper.getCurrentURL());
-			rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+				PortletURL rowURL = renderResponse.createRenderURL();
 
-			// Title
+				rowURL.setParameter("mvcRenderCommandName", "/announcements/edit_entry");
+				rowURL.setParameter("redirect", announcementsRequestHelper.getCurrentURL());
+				rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
-			row.addText(entry.getTitle(), rowURL);
+				// Title
 
-			// Type
+				row.addText(entry.getTitle(), rowURL);
 
-			row.addText(LanguageUtil.get(request, entry.getType()), rowURL);
+				// Type
 
-			// Modified date
+				row.addText(LanguageUtil.get(request, entry.getType()), rowURL);
 
-			row.addDate(entry.getModifiedDate(), rowURL);
+				// Modified date
 
-			// Display date
+				row.addDate(entry.getModifiedDate(), rowURL);
 
-			row.addDate(entry.getDisplayDate(), rowURL);
+				// Display date
 
-			// Expiration date
+				row.addDate(entry.getDisplayDate(), rowURL);
 
-			row.addDate(entry.getExpirationDate(), rowURL);
+				// Expiration date
 
-			// Action
+				row.addDate(entry.getExpirationDate(), rowURL);
 
-			row.addJSP("/view_manage_entries_entry_action.jsp", "entry-action", application, request, response);
+				// Action
 
-			// Add result row
+				row.addJSP("/view_manage_entries_entry_action.jsp", "entry-action", application, request, response);
 
-			resultRows.add(row);
-		}
-		%>
+				// Add result row
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-	</c:if>
-</aui:form>
+				resultRows.add(row);
+			}
+			%>
+
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
+		</c:if>
+	</aui:form>
+</div>
 
 <aui:script>
-	function <portlet:namespace />addEntry() {
-		location.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="distributionScope" value="<%= distributionScope %>" /></portlet:renderURL>';
-	}
-
 	function <portlet:namespace />selectDistributionScope(distributionScope) {
-		var url = '<%= portletURL.toString() %>&<portlet:namespace />distributionScope=' + distributionScope;
+		var url = '<%= currentURL %>&<portlet:namespace />distributionScope=' + distributionScope;
 
 		submitForm(document.<portlet:namespace />fm, url);
 	}

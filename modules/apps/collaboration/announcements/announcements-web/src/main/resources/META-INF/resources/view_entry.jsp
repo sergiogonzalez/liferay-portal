@@ -28,58 +28,66 @@ if (flagValue != AnnouncementsFlagConstants.HIDDEN) {
 		AnnouncementsFlagLocalServiceUtil.addFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
 	}
 }
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	renderResponse.setTitle(entry.getTitle());
+}
 %>
 
-<div class="panel" id="<portlet:namespace /><%= entry.getEntryId() %>">
-	<div class="panel-heading">
-		<div class="card-row">
-			<div class="card-col-field">
-				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait userId="<%= entry.getUserId() %>" />
-				</div>
-			</div>
-
-			<div class="card-col-content card-col-gutters">
-
-				<%
-				String userDisplayText = PortalUtil.getUserName(entry) + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, announcementsDisplayContext.getDateFormatDate());
-				%>
-
-				<h5 class="text-default" title="<%= userDisplayText %>">
-					<%= userDisplayText %>
-				</h5>
-
-				<h4 title="<%= HtmlUtil.escape(entry.getTitle()) %>">
-					<c:choose>
-						<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">
-							<a href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>">
-								<%= HtmlUtil.escape(entry.getTitle()) %>
-							</a>
-						</c:when>
-						<c:otherwise>
-							<%= HtmlUtil.escape(entry.getTitle()) %>
-						</c:otherwise>
-					</c:choose>
-
-					<c:if test="<%= entry.isAlert() || (entry.getPriority() > 0) %>">
-						<span class="badge badge-danger badge-sm">
-							<liferay-ui:message key="important" />
-						</span>
-					</c:if>
-				</h4>
-
-				<%@ include file="/entry_scope.jspf" %>
-			</div>
-
-			<c:if test="<%= !announcementsDisplayContext.isShowPreview() %>">
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<div class="panel" id="<portlet:namespace /><%= entry.getEntryId() %>">
+		<div class="panel-heading">
+			<div class="card-row">
 				<div class="card-col-field">
-					<%@ include file="/entry_action.jspf" %>
+					<div class="list-group-card-icon">
+						<liferay-ui:user-portrait userId="<%= entry.getUserId() %>" />
+					</div>
 				</div>
-			</c:if>
-		</div>
-	</div>
 
-	<div class="entry-content panel-body">
-		<%= entry.getContent() %>
+				<div class="card-col-content card-col-gutters">
+
+					<%
+					String userDisplayText = PortalUtil.getUserName(entry) + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, announcementsDisplayContext.getDateFormatDate());
+					%>
+
+					<h5 class="text-default" title="<%= userDisplayText %>">
+						<%= userDisplayText %>
+					</h5>
+
+					<h4 title="<%= HtmlUtil.escape(entry.getTitle()) %>">
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">
+								<a href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>">
+									<%= HtmlUtil.escape(entry.getTitle()) %>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(entry.getTitle()) %>
+							</c:otherwise>
+						</c:choose>
+
+						<c:if test="<%= entry.isAlert() || (entry.getPriority() > 0) %>">
+							<span class="badge badge-danger badge-sm">
+								<liferay-ui:message key="important" />
+							</span>
+						</c:if>
+					</h4>
+
+					<%@ include file="/entry_scope.jspf" %>
+				</div>
+
+				<c:if test="<%= !announcementsDisplayContext.isShowPreview() %>">
+					<div class="card-col-field">
+						<%@ include file="/entry_action.jspf" %>
+					</div>
+				</c:if>
+			</div>
+		</div>
+
+		<div class="entry-content panel-body">
+			<%= entry.getContent() %>
+		</div>
 	</div>
 </div>

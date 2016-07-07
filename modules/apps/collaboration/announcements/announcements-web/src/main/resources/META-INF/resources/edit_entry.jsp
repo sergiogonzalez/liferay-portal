@@ -30,101 +30,118 @@ boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately")
 if (entry == null) {
 	displayImmediately = true;
 }
+
+String headerTitle = (entry == null) ? LanguageUtil.get(resourceBundle, "new-entry") : entry.getTitle();
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
-<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-	<aui:input name="alert" type="hidden" value="<%= portletName.equals(AnnouncementsPortletKeys.ALERTS) %>" />
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+		<aui:input name="alert" type="hidden" value="<%= portletName.equals(AnnouncementsPortletKeys.ALERTS) %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="entry"
-	/>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				title="entry"
+			/>
+		</c:if>
 
-	<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
-	<liferay-ui:error exception="<%= EntryDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
-	<liferay-ui:error exception="<%= EntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
-	<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
-	<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
+		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
+		<liferay-ui:error exception="<%= EntryDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
+		<liferay-ui:error exception="<%= EntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+		<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
+		<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
 
-	<aui:model-context bean="<%= entry %>" model="<%= AnnouncementsEntry.class %>" />
+		<aui:model-context bean="<%= entry %>" model="<%= AnnouncementsEntry.class %>" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= entry != null %>">
-				<%@ include file="/entry_scope.jspf" %>
-			</c:when>
-			<c:otherwise>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<c:choose>
+					<c:when test="<%= entry != null %>">
+						<%@ include file="/entry_scope.jspf" %>
+					</c:when>
+					<c:otherwise>
 
-				<%
-				String distributionScope = ParamUtil.getString(request, "distributionScope");
+						<%
+						String distributionScope = ParamUtil.getString(request, "distributionScope");
 
-				long classNameId = -1;
-				long classPK = -1;
+						long classNameId = -1;
+						long classPK = -1;
 
-				String[] distributionScopeArray = StringUtil.split(distributionScope);
+						String[] distributionScopeArray = StringUtil.split(distributionScope);
 
-				if (distributionScopeArray.length == 2) {
-					classNameId = GetterUtil.getLong(distributionScopeArray[0]);
-					classPK = GetterUtil.getLong(distributionScopeArray[1]);
-				}
+						if (distributionScopeArray.length == 2) {
+							classNameId = GetterUtil.getLong(distributionScopeArray[0]);
+							classPK = GetterUtil.getLong(distributionScopeArray[1]);
+						}
 
-				boolean submitOnChange = false;
-				%>
+						boolean submitOnChange = false;
+						%>
 
-				<%@ include file="/entry_select_scope.jspf" %>
-			</c:otherwise>
-		</c:choose>
+						<%@ include file="/entry_select_scope.jspf" %>
+					</c:otherwise>
+				</c:choose>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
 
-		<aui:input name="url" />
+				<aui:input name="url" />
 
-		<aui:field-wrapper label="content">
+				<aui:field-wrapper label="content" required="<%= true %>">
 
-			<%
-			String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp");
-			%>
+					<%
+					String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp");
+					%>
 
-			<liferay-ui:input-editor contents="<%= content %>" cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName="<%= editorName %>" name="contentEditor" />
+					<liferay-ui:input-editor contents="<%= content %>" cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName="<%= editorName %>" name="contentEditor" />
 
-			<aui:input name="content" type="hidden" />
-		</aui:field-wrapper>
+					<aui:input name="content" type="hidden" />
+				</aui:field-wrapper>
 
-		<aui:select name="type">
+				<aui:select name="type">
 
-			<%
-			for (String curType : AnnouncementsEntryConstants.TYPES) {
-			%>
+					<%
+					for (String curType : AnnouncementsEntryConstants.TYPES) {
+					%>
 
-				<aui:option label="<%= curType %>" selected="<%= (entry != null) && curType.equals(entry.getType()) %>" />
+						<aui:option label="<%= curType %>" selected="<%= (entry != null) && curType.equals(entry.getType()) %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</aui:select>
+				</aui:select>
 
-		<aui:select name="priority">
-			<aui:option label="normal" selected="<%= (entry != null) && (entry.getPriority() == 0) %>" value="0" />
-			<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
-		</aui:select>
+				<aui:select name="priority">
+					<aui:option label="normal" selected="<%= (entry != null) && (entry.getPriority() == 0) %>" value="0" />
+					<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
+				</aui:select>
 
-		<aui:input dateTogglerCheckboxLabel="display-immediately" disabled="<%= displayImmediately %>" name="displayDate" />
+				<aui:input dateTogglerCheckboxLabel="display-immediately" disabled="<%= displayImmediately %>" name="displayDate" />
 
-		<aui:input name="expirationDate" />
-	</aui:fieldset>
+				<aui:input name="expirationDate" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
 
-		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
+			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <aui:script>
 	function <portlet:namespace />getContent() {
