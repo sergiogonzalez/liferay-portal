@@ -18,9 +18,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
  * @author Roberto Díaz
- * @deprecated As of 8.0.0, moved to {@link
- *             com.liferay.item.selector.criteria.
- *             FileEntryItemSelectorReturnType}
+ * @deprecated As of 2.0.2, replaced by {@link FileEntryItemSelectorReturnType}
  */
 @Deprecated
 public class UploadableFileReturnType implements ItemSelectorReturnType {
