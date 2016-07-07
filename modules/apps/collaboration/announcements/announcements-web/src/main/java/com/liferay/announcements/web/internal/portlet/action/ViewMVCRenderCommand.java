@@ -40,7 +40,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view.jsp";
+		return "/announcements/view.jsp";
 	}
 
 }

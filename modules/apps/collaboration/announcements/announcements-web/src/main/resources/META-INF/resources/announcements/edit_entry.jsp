@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/announcements/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -69,7 +69,7 @@ if (portletTitleBasedNavigation) {
 			<aui:fieldset>
 				<c:choose>
 					<c:when test="<%= entry != null %>">
-						<%@ include file="/entry_scope.jspf" %>
+						<%@ include file="/announcements/entry_scope.jspf" %>
 					</c:when>
 					<c:otherwise>
 
@@ -89,7 +89,7 @@ if (portletTitleBasedNavigation) {
 						boolean submitOnChange = false;
 						%>
 
-						<%@ include file="/entry_select_scope.jspf" %>
+						<%@ include file="/announcements/entry_select_scope.jspf" %>
 					</c:otherwise>
 				</c:choose>
 

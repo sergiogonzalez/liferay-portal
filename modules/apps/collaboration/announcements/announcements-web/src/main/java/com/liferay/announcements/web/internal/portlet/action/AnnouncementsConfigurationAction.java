@@ -15,13 +15,18 @@
 package com.liferay.announcements.web.internal.portlet.action;
 
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
@@ -29,5 +34,20 @@ import org.osgi.service.component.annotations.Component;
 	service = ConfigurationAction.class
 )
 public class AnnouncementsConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseJSPSettingsConfigurationAction {
+
+	@Override
+	public String getJspPath(HttpServletRequest httpServletRequest) {
+		return "/announcements/configuration.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.announcements.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 }

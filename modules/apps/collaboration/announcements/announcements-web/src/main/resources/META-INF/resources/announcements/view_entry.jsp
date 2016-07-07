@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/announcements/init.jsp" %>
 
 <%
 AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY);
@@ -75,12 +75,12 @@ if (portletTitleBasedNavigation) {
 						</c:if>
 					</h4>
 
-					<%@ include file="/entry_scope.jspf" %>
+					<%@ include file="/announcements/entry_scope.jspf" %>
 				</div>
 
 				<c:if test="<%= !announcementsDisplayContext.isShowPreview() %>">
 					<div class="card-col-field">
-						<%@ include file="/entry_action.jspf" %>
+						<%@ include file="/announcements/entry_action.jspf" %>
 					</div>
 				</c:if>
 			</div>

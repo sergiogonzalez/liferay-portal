@@ -37,7 +37,7 @@ public class ViewAdminMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/admin/view.jsp";
+		return "/announcements_admin/view.jsp";
 	}
 
 }

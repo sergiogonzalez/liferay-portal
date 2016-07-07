@@ -16,19 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/announcements/view");
-portletURL.setParameter("tabs1", announcementsRequestHelper.getTabs1());
-%>
-
-<c:if test="<%= announcementsDisplayContext.isTabs1Visible() %>">
-	<liferay-ui:tabs
-		names="<%= announcementsDisplayContext.getTabs1Names() %>"
-		type="tabs nav-tabs-default"
-		url="<%= announcementsDisplayContext.getTabs1PortletURL() %>"
-	/>
-</c:if>
-
-<%@ include file="/view_entries.jspf" %>
+<%@ include file="/announcements_admin/init-ext.jsp" %>
