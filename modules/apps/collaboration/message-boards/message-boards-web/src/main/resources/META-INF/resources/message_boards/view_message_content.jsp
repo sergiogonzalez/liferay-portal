@@ -324,8 +324,10 @@ long replyToMessageId = message.getRootMessageId();
 			<a class="btn btn-default" href="javascript:;" id="<portlet:namespace />moreMessages"><liferay-ui:message key="more-messages" /></a>
 		</div>
 
-		<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
-		<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+		<aui:form name="fm">
+			<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
+			<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+		</aui:form>
 	</c:if>
 
 	<%

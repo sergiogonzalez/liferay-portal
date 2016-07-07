@@ -41,20 +41,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<c:choose>
-		<c:when test="<%= includeFormTag %>">
-			<aui:form name="fm">
-				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= category.getCategoryId() %>" />
-				<aui:input name="breadcrumbsMessageId" type="hidden" value="<%= message.getMessageId() %>" />
-				<aui:input name="threadId" type="hidden" value="<%= message.getThreadId() %>" />
-
-				<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
-			</aui:form>
-		</c:when>
-		<c:otherwise>
-			<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
-		</c:otherwise>
-	</c:choose>
+	<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
 </div>
 
 <aui:script>
