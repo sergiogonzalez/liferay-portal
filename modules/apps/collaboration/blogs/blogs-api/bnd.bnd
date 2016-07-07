@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.blogs.api
 Bundle-Version: 3.0.2
 Export-Package:\
 	com.liferay.blogs.configuration,\
-	com.liferay.blogs.configuration.definition
+	com.liferay.blogs.configuration.definition,\
+	com.liferay.blogs.service
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
