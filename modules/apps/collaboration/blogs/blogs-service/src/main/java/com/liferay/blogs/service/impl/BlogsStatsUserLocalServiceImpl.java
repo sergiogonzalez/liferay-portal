@@ -19,15 +19,18 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.blogs.kernel.exception.NoSuchStatsUserException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.model.BlogsStatsUser;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
 import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.kernel.util.comparator.StatsUserLastPostDateComparator;
+import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -231,6 +234,12 @@ public class BlogsStatsUserLocalServiceImpl
 
 		blogsStatsUserPersistence.update(statsUser);
 	}
+
+	@ServiceReference(type = BlogsStatsUserFinder.class)
+	protected BlogsStatsUserFinder blogsStatsUserFinder;
+
+	@ServiceReference(type = BlogsStatsUserPersistence.class)
+	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsStatsUserLocalServiceImpl.class);
