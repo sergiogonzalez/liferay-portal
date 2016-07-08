@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
 		"mvc.command.name=/announcements/edit_entry"
 	}
 )
@@ -58,7 +59,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(e);
 		}
 
-		return "/edit_entry.jsp";
+		return "/announcements/edit_entry.jsp";
 	}
 
 }

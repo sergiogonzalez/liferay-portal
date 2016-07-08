@@ -48,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
 		"mvc.command.name=/announcements/edit_entry"
 	},
 	service = MVCActionCommand.class
@@ -81,6 +82,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   PrincipalException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcRenderCommandName", "/announcements/edit_entry");
 		}
 	}
 

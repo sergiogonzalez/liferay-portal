@@ -12,42 +12,42 @@
  * details.
  */
 
-package com.liferay.announcements.web.internal.portlet.action;
+package com.liferay.announcements.web.internal.application.list;
 
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
-import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.application.list.BasePanelApp;
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
  * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS},
-	service = ConfigurationAction.class
+	property = {
+		"panel.app.order:Integer=1000",
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION
+	},
+	service = PanelApp.class
 )
-public class AnnouncementsConfigurationAction
-	extends BaseJSPSettingsConfigurationAction {
+public class AnnouncementsPanelApp extends BasePanelApp {
 
 	@Override
-	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/announcements/configuration.jsp";
+	public String getPortletId() {
+		return AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.announcements.web)",
+		target = "(javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN + ")",
 		unbind = "-"
 	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }
