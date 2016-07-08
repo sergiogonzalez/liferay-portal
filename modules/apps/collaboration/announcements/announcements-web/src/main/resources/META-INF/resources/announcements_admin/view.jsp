@@ -129,7 +129,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 
 				// Action
 
-				row.addJSP("/view_manage_entries_entry_action.jsp", "entry-action", application, request, response);
+				row.addJSP("/announcements/view_manage_entries_entry_action.jsp", "entry-action", application, request, response);
 
 				// Add result row
 

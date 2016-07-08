@@ -50,7 +50,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		catch (NoSuchEntryException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/error.jsp";
+			return "/announcements/error.jsp";
 		}
 		catch (RuntimeException re) {
 			throw re;
