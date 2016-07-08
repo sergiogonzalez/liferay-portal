@@ -21,7 +21,11 @@ FileEntry fileEntry = ActionUtil.getFileEntry(liferayPortletRequest);
 
 FileVersion fileVersion = ActionUtil.getFileVersion(liferayPortletRequest, fileEntry);
 
-UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(request, fileVersion);
+ResourceBundleLoader moduleResourceBundleLoader = ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName("com.liferay.document.library.web");
+ResourceBundleLoader portalResourceBundleLoader = ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+ResourceBundleLoader resourceBundleLoader = new AggregateResourceBundleLoader(moduleResourceBundleLoader, portalResourceBundleLoader);
+
+UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(request, fileVersion, resourceBundleLoader);
 
 JavaScriptMenuItem javaScriptMenuItem = uiItemsBuilder.getJavacriptCheckinMenuItem();
 %>
