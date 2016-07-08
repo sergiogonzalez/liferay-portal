@@ -304,9 +304,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (AssetCategoryException | AssetTagException e) {
 			SessionErrors.add(actionRequest, e.getClass(), e);
-
-			actionResponse.setRenderParameter(
-				"mvcRenderCommandName", "/blogs/edit_entry");
 		}
 		catch (EntryContentException | EntryCoverImageCropException |
 			   EntryDescriptionException | EntryDisplayDateException |
@@ -316,9 +313,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   UploadRequestSizeException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
-
-			actionResponse.setRenderParameter(
-				"mvcRenderCommandName", "/blogs/edit_entry");
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
 			SessionErrors.add(actionRequest, e.getClass());
