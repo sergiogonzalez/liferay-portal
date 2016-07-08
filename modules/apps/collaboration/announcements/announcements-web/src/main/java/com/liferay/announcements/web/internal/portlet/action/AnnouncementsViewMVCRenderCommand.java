@@ -23,21 +23,24 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Roberto Díaz
+ * @author Thiago Moreira
+ * @author Raymond Augé
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
-		"mvc.command.name=/", "mvc.command.name=/announcements/view"
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"mvc.command.name=/", "mvc.command.name=/alerts/view",
+		"mvc.command.name=/announcements/view"
 	}
 )
-public class ViewAdminMVCRenderCommand implements MVCRenderCommand {
+public class AnnouncementsViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/announcements_admin/view.jsp";
+		return "/announcements/view.jsp";
 	}
 
 }
