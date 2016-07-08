@@ -36,9 +36,9 @@ String parentTitle = LanguageUtil.get(request, "home");
 
 if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	if (parentResourceClassNameId == kbFolderClassNameId) {
-		KBFolder parentKBFolder = KBFolderServiceUtil.fetchKBFolder(parentResourcePrimKey);
+		KBFolder parentKBFolder = KBFolderLocalServiceUtil.fetchKBFolder(parentResourcePrimKey);
 
-		if (parentKBFolder == null) {
+		if ((parentKBFolder == null) || !KBFolderPermission.contains(permissionChecker, parentKBFolder, ActionKeys.VIEW)) {
 			parentResourceClassNameId = kbFolderClassNameId;
 			parentResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
@@ -47,9 +47,9 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		}
 	}
 	else {
-		KBArticle parentKBArticle = KBArticleServiceUtil.fetchLatestKBArticle(parentResourcePrimKey, status);
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(parentResourcePrimKey, status);
 
-		if (parentKBArticle == null) {
+		if ((parentKBArticle == null) || !KBArticlePermission.contains(permissionChecker, parentKBArticle, ActionKeys.VIEW)) {
 			parentResourceClassNameId = kbFolderClassNameId;
 			parentResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
