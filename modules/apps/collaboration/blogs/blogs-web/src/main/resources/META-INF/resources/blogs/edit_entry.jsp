@@ -67,7 +67,9 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 	</liferay-frontend:info-bar>
 </c:if>
 
-<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+</portlet:actionURL>
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
