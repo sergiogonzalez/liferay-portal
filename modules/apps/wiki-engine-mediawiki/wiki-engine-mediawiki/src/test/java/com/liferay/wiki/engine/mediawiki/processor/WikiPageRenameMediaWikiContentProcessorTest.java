@@ -64,8 +64,8 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 			"This is a test [[Image:Complex.,() original title/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			0, "Complex.,() original title", "Complex.,() final title", content
-		);
+			0, "Complex.,() original title", "Complex.,() final title",
+			content);
 
 		Assert.assertEquals(
 			"This is a test [[Image:Complex.,() final title/image.jpg]]",
