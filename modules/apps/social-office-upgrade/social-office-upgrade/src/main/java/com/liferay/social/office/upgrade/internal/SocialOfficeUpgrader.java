@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=executeAll",
 		"osgi.command.function=hideTasksLayout",
 		"osgi.command.function=removeTasksPortlet",
-		"osgi.command.function=updateSocialSiteTheme", "osgi.command.scope=so"
+		"osgi.command.function=updateTheme", "osgi.command.scope=so"
 	},
 	service = Object.class
 )
@@ -46,7 +46,7 @@ public class SocialOfficeUpgrader {
 	public void executeAll() throws PortalException {
 		hideTasksLayout();
 		removeTasksPortlet();
-		updateSocialSiteTheme();
+		updateTheme();
 	}
 
 	public void hideTasksLayout() throws PortalException {
@@ -127,7 +127,7 @@ public class SocialOfficeUpgrader {
 			atomicInteger.get());
 	}
 
-	public void updateSocialSiteTheme() throws PortalException {
+	public void updateTheme() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_layoutLocalService.getActionableDynamicQuery();
 
@@ -162,8 +162,7 @@ public class SocialOfficeUpgrader {
 		actionableDynamicQuery.performActions();
 
 		System.out.printf(
-			"[so:updateSocialSiteTheme] %d layouts updated.%n",
-			atomicInteger.get());
+			"[so:updateTheme] %d layouts updated.%n", atomicInteger.get());
 	}
 
 	@Reference(unbind = "-")
