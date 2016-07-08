@@ -1,5 +1,5 @@
-Liferay-Releng-App-Description: Apps and Features: Social Office Upgrade
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Social Office
+Liferay-Releng-App-Description: Social Office Upgrade
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Social Office Upgrade
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Communication
 Liferay-Releng-Demo-Url:
