@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -97,10 +98,15 @@ public class DLDisplayContextProvider {
 			FileShortcut fileShortcut) {
 
 		try {
+			String languageId = LanguageUtil.getLanguageId(request);
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(languageId);
+
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlMimeTypeDisplayContext,
-					_resourceBundleLoader, _storageEngine);
+					resourceBundle, _storageEngine);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -127,10 +133,15 @@ public class DLDisplayContextProvider {
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
+		String languageId = LanguageUtil.getLanguageId(request);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(languageId);
+
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion, _dlMimeTypeDisplayContext,
-				_resourceBundleLoader, _storageEngine);
+				resourceBundle, _storageEngine);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;

@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
+import java.util.ResourceBundle;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,9 +49,14 @@ public class IGDisplayContextProvider {
 			FileShortcut fileShortcut) {
 
 		try {
+			String languageId = LanguageUtil.getLanguageId(request);
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(languageId);
+
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					request, response, fileShortcut, _resourceBundleLoader);
+					request, response, fileShortcut, resourceBundle);
 
 			if (fileShortcut == null) {
 				return igViewFileVersionDisplayContext;
@@ -77,9 +84,14 @@ public class IGDisplayContextProvider {
 			FileVersion fileVersion) {
 
 		try {
+			String languageId = LanguageUtil.getLanguageId(request);
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(languageId);
+
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					request, response, fileVersion, _resourceBundleLoader);
+					request, response, fileVersion, resourceBundle);
 
 			if (fileVersion == null) {
 				return igViewFileVersionDisplayContext;
