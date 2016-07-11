@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,19 +40,18 @@ public class DefaultIGViewFileVersionDisplayContext
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut,
-			ResourceBundleLoader resourceBundleLoader)
+			FileShortcut fileShortcut, ResourceBundle resourceBundle)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundleLoader);
+			resourceBundle);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion, FileShortcut fileShortcut,
-			ResourceBundleLoader resourceBundleLoader)
+			ResourceBundle resourceBundle)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(request);
@@ -62,20 +61,20 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		if (fileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
-				request, fileVersion, resourceBundleLoader);
+				request, fileVersion, resourceBundle);
 		}
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(
-				request, fileShortcut, resourceBundleLoader);
+				request, fileShortcut, resourceBundle);
 		}
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, ResourceBundleLoader resourceBundleLoader)
+			FileVersion fileVersion, ResourceBundle resourceBundle)
 		throws PortalException {
 
-		this(request, response, fileVersion, null, resourceBundleLoader);
+		this(request, response, fileVersion, null, resourceBundle);
 	}
 
 	@Override

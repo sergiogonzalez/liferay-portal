@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -58,8 +57,10 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+		String languageId = LanguageUtil.getLanguageId(portletRequest);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(languageId);
 
 		return LanguageUtil.get(resourceBundle, "open-in-ms-office");
 	}
@@ -118,8 +119,13 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			FileVersion fileVersion = ActionUtil.getFileVersion(
 				portletRequest, fileEntry);
 
+			String languageId = LanguageUtil.getLanguageId(portletRequest);
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(languageId);
+
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
-				request, fileVersion, _resourceBundleLoader);
+				request, fileVersion, resourceBundle);
 
 			return uiItemsBuilder.isOpenInMsOfficeActionAvailable();
 		}
