@@ -547,8 +547,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Child pages
 
-		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
-			page.getNodeId(), page.getTitle());
+		List<WikiPage> childPages = wikiPagePersistence.findByN_H_P(
+			page.getNodeId(), true, page.getTitle());
 
 		for (WikiPage childPage : childPages) {
 			if (childPage.isApproved() || childPage.isInTrashImplicitly()) {
