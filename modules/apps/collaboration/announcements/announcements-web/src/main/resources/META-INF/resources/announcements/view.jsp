@@ -36,9 +36,10 @@ portletURL.setParameter("tabs1", announcementsRequestHelper.getTabs1());
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="alert" value="<%= String.valueOf(portletName.equals(AnnouncementsPortletKeys.ALERTS)) %>" />
 		</portlet:renderURL>
 
-		<aui:button href="<%= addEntryURL %>" icon="icon-plus" value="add-entry" />
+		<aui:button href="<%= addEntryURL %>" icon="icon-plus" value='<%= portletName.equals(AnnouncementsPortletKeys.ALERTS) ? "add-alert" : "add-announcement" %>' />
 	</div>
 </c:if>
 
