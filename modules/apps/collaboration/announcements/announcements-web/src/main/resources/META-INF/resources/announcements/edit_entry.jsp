@@ -25,13 +25,15 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 String content = BeanParamUtil.getString(entry, request, "content");
 
+boolean alert = ParamUtil.getBoolean(request, "alert");
+
 boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately");
 
 if (entry == null) {
 	displayImmediately = true;
 }
 
-String headerTitle = (entry == null) ? LanguageUtil.get(resourceBundle, "new-entry") : entry.getTitle();
+String headerTitle = (entry == null) ? alert? LanguageUtil.get(resourceBundle, "new-alert") : LanguageUtil.get(resourceBundle, "new-announcement") : entry.getTitle();
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -48,7 +50,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-		<aui:input name="alert" type="hidden" value="<%= portletName.equals(AnnouncementsPortletKeys.ALERTS) %>" />
+		<aui:input name="alert" type="hidden" value="<%= alert %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<liferay-ui:header
@@ -76,8 +78,8 @@ if (portletTitleBasedNavigation) {
 						<%
 						String distributionScope = ParamUtil.getString(request, "distributionScope");
 
-						long classNameId = -1;
-						long classPK = -1;
+						long classNameId = 0;
+						long classPK = 0;
 
 						String[] distributionScopeArray = StringUtil.split(distributionScope);
 
