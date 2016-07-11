@@ -17,10 +17,12 @@
 <%@ include file="/announcements_admin/init.jsp" %>
 
 <%
+String navigation = ParamUtil.getString(request, "navigation", "announcements");
+
 String distributionScope = ParamUtil.getString(request, "distributionScope");
 
-long classNameId = -1;
-long classPK = -1;
+long classNameId = 0;
+long classPK = 0;
 
 String[] distributionScopeArray = StringUtil.split(distributionScope);
 
@@ -32,120 +34,157 @@ if (distributionScopeArray.length == 2) {
 if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS)) {
 	throw new PrincipalException.MustHavePermission(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
 }
+
+SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "no-entries-were-found");
+
+announcementsEntriesSearchContainer.setRowChecker(new AnnouncementsEntryChecker(liferayPortletRequest, liferayPortletResponse));
+
+announcementsEntriesSearchContainer.setTotal(AnnouncementsEntryLocalServiceUtil.getEntriesCount(classNameId, classPK, navigation.equals("alerts")));
+announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUtil.getEntries(classNameId, classPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()));
+
+List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContainer.getResults();
 %>
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<portlet:renderURL var="viewEntriesURL" />
+
+		<aui:nav-item
+			href="<%= viewEntriesURL %>"
+			label="announcements"
+			selected='<%= navigation.equals("announcements") %>'
+		/>
+
+		<portlet:renderURL var="viewAlertsURL">
+			<portlet:param name="navigation" value="alerts" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewAlertsURL %>"
+			label="alerts"
+			selected='<%= navigation.equals("alerts") %>'
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
+<liferay-frontend:management-bar
+	disabled="<%= announcementsEntries.isEmpty() %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="announcementsEntries"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= currentURLObj %>"
+			selectedDisplayStyle='<%= "list" %>'
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+
+		<%
+		AnnouncementsAdminViewDisplayContext announcementsAdminViewDisplayContext = new DefaultAnnouncementsAdminViewDisplayContext(request);
+		%>
+
+		<liferay-frontend:management-bar-navigation
+			disabled="<%= false %>"
+			label="<%= announcementsAdminViewDisplayContext.getCurrentDistributionScopeLabel() %>"
+			navigationKeys="<%= announcementsAdminViewDisplayContext.getDistributionScopes() %>"
+			navigationParam="distributionScope"
+			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon="times" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
+
 <div class="container-fluid-1280">
-	<aui:form action="<%= currentURL %>" method="post" name="fm">
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset id="fieldSet">
+	<aui:form action="<%= currentURL %>" method="get" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+		<liferay-ui:search-container
+			id="announcementsEntries"
+			searchContainer="<%= announcementsEntriesSearchContainer %>"
+			total="<%= announcementsEntriesSearchContainer.getTotal() %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= announcementsEntriesSearchContainer.getResults() %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.announcements.kernel.model.AnnouncementsEntry"
+				keyProperty="entryId"
+				modelVar="entry"
+			>
 
 				<%
-				boolean submitOnChange = true;
-				%>
-
-				<%@ include file="/announcements/entry_select_scope.jspf" %>
-			</aui:fieldset>
-		</aui:fieldset-group>
-
-		<c:choose>
-			<c:when test="<%= distributionScopeArray.length > 0 %>">
-				<portlet:renderURL var="addEntryURL">
-					<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="distributionScope" value="<%= distributionScope %>" />
-				</portlet:renderURL>
-
-				<liferay-frontend:add-menu>
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-entry") %>' url="<%= addEntryURL %>" />
-				</liferay-frontend:add-menu>
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-info">
-					<liferay-ui:message key="please-select-a-distribution-scope" />
-				</div>
-			</c:otherwise>
-		</c:choose>
-
-		<c:if test="<%= Validator.isNotNull(distributionScope) %>">
-
-			<%
-			PortletURL iteratorURL = PortletURLUtil.clone(currentURLObj, renderResponse);
-
-			iteratorURL.setParameter("distributionScope", distributionScope);
-
-			List<String> headerNames = new ArrayList<String>();
-
-			headerNames.add("title");
-			headerNames.add("type");
-			headerNames.add("modified-date");
-			headerNames.add("display-date");
-			headerNames.add("expiration-date");
-			headerNames.add(StringPool.BLANK);
-
-			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, headerNames, "no-entries-were-found");
-
-			int total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(classNameId, classPK, portletName.equals(AnnouncementsPortletKeys.ALERTS));
-
-			searchContainer.setTotal(total);
-
-			List<AnnouncementsEntry> results = AnnouncementsEntryLocalServiceUtil.getEntries(classNameId, classPK, portletName.equals(AnnouncementsPortletKeys.ALERTS), searchContainer.getStart(), searchContainer.getEnd());
-
-			searchContainer.setResults(results);
-
-			List resultRows = searchContainer.getResultRows();
-
-			for (int i = 0; i < results.size(); i++) {
-				AnnouncementsEntry entry = results.get(i);
-
-				entry = entry.toEscapedModel();
-
-				ResultRow row = new ResultRow(entry, entry.getEntryId(), i);
-
 				PortletURL rowURL = renderResponse.createRenderURL();
 
 				rowURL.setParameter("mvcRenderCommandName", "/announcements/edit_entry");
-				rowURL.setParameter("redirect", announcementsRequestHelper.getCurrentURL());
+				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+				%>
 
-				// Title
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="title"
+					value="<%= entry.getTitle() %>"
+				/>
 
-				row.addText(entry.getTitle(), rowURL);
+				<liferay-ui:search-container-column-text
+					name="type"
+					value="<%= entry.getType() %>"
+				/>
 
-				// Type
+				<liferay-ui:search-container-column-date
+					name="modified-date"
+					value="<%= entry.getModifiedDate() %>"
+				/>
 
-				row.addText(LanguageUtil.get(request, entry.getType()), rowURL);
+				<liferay-ui:search-container-column-date
+					name="display-date"
+					value="<%= entry.getDisplayDate() %>"
+				/>
 
-				// Modified date
+				<liferay-ui:search-container-column-date
+					name="expiration-date"
+					value="<%= entry.getExpirationDate() %>"
+				/>
 
-				row.addDate(entry.getModifiedDate(), rowURL);
+				<liferay-ui:search-container-column-jsp
+					path="/announcements_admin/entry_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-				// Display date
-
-				row.addDate(entry.getDisplayDate(), rowURL);
-
-				// Expiration date
-
-				row.addDate(entry.getExpirationDate(), rowURL);
-
-				// Action
-
-				row.addJSP("/announcements_admin/entry_action.jsp", "entry-action", application, request, response);
-
-				// Add result row
-
-				resultRows.add(row);
-			}
-			%>
-
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
-		</c:if>
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= announcementsEntriesSearchContainer %>" />
+		</liferay-ui:search-container>
 	</aui:form>
 </div>
 
-<aui:script>
-	function <portlet:namespace />selectDistributionScope(distributionScope) {
-		var url = '<%= currentURL %>&<portlet:namespace />distributionScope=' + distributionScope;
+<portlet:renderURL var="addEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="distributionScope" value="<%= distributionScope %>" />
+	<portlet:param name="alert" value='<%= String.valueOf(navigation.equals("alerts")) %>' />
+</portlet:renderURL>
 
-		submitForm(document.<portlet:namespace />fm, url);
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= navigation.equals("alerts") ? LanguageUtil.get(resourceBundle, "add-alert") : LanguageUtil.get(resourceBundle, "add-announcement") %>' url="<%= addEntryURL %>" />
+</liferay-frontend:add-menu>
+
+<aui:script>
+	function <portlet:namespace />deleteEntries() {
+		if (confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+
+			submitForm(form, '<portlet:actionURL name="/announcements/edit_entry" />');
+		}
 	}
 </aui:script>
