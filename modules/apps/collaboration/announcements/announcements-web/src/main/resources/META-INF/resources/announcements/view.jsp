@@ -31,4 +31,15 @@ portletURL.setParameter("tabs1", announcementsRequestHelper.getTabs1());
 	/>
 </c:if>
 
+<c:if test="<%= AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY) %>">
+	<div class="button-holder">
+		<portlet:renderURL var="addEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
+
+		<aui:button href="<%= addEntryURL %>" icon="icon-plus" value="add-entry" />
+	</div>
+</c:if>
+
 <%@ include file="/announcements/view_entries.jspf" %>
