@@ -6,7 +6,6 @@
 		<portlet-name>com_liferay_announcements_web_portlet_AlertsPortlet</portlet-name>
 		<permissions>
 			<supports>
-				<action-key>ADD_ENTRY</action-key>
 				<action-key>ADD_TO_PAGE</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
@@ -18,7 +17,6 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>ADD_ENTRY</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
 		</permissions>
@@ -27,7 +25,6 @@
 		<portlet-name>com_liferay_announcements_web_portlet_AnnouncementsPortlet</portlet-name>
 		<permissions>
 			<supports>
-				<action-key>ADD_ENTRY</action-key>
 				<action-key>ADD_TO_PAGE</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
@@ -39,7 +36,6 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>ADD_ENTRY</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
 		</permissions>
