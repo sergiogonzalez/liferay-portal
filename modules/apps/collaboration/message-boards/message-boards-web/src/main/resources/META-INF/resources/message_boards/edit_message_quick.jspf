@@ -61,6 +61,15 @@ if (messageFormat.equals("bbcode")) {
 	}
 }
 
+String quoteText;
+
+if (editorName.contains("bbcode")) {
+	quoteText = MBUtil.getBBCodeQuote(request, true, curMessage, false);
+}
+else {
+	quoteText = MBUtil.getHtmlQuote(request, true, curMessage, false);
+}
+
 Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-showPermanentLink");
 %>
 
@@ -201,6 +210,12 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 </div>
 
 <aui:script>
+	function <portlet:namespace />addQuote<%= replyToMessageId %>() {
+		var editorName = '<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>';
+
+		window[editorName].setHTML('<%= HtmlUtil.escapeJS(quoteText) %>');
+	}
+
 	function <portlet:namespace />saveReplyMessage<%= replyToMessageId %>() {
 		var form = AUI.$('#<portlet:namespace />addQuickReplyFm<%= replyToMessageId %>');
 
