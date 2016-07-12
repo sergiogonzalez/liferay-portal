@@ -45,7 +45,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 </div>
 
 <aui:script>
-	function <portlet:namespace />addReplyToMessage(messageId) {
+	function <portlet:namespace />addReplyToMessage(messageId, quote) {
 		var addQuickReplyContainer = AUI.$('#<portlet:namespace />addReplyToMessage' + messageId);
 
 		addQuickReplyContainer.removeClass('hide');
@@ -57,6 +57,15 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
 		window[editorName].create();
+
+		Liferay.once(
+			'editorReady',
+			function(event) {
+				if (event.editorName === editorName && quote) {
+					window['<portlet:namespace />addQuote' + messageId]();
+				}
+			}
+		);
 
 		document.getElementById(editorName).focus();
 
