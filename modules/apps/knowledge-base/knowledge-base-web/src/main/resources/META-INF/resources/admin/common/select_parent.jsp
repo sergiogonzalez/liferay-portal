@@ -40,6 +40,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 		if ((parentKBFolder == null) || !KBFolderPermission.contains(permissionChecker, parentKBFolder, ActionKeys.VIEW)) {
 			parentResourceClassNameId = kbFolderClassNameId;
+
 			parentResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 		else {
@@ -51,6 +52,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 		if ((parentKBArticle == null) || !KBArticlePermission.contains(permissionChecker, parentKBArticle, ActionKeys.VIEW)) {
 			parentResourceClassNameId = kbFolderClassNameId;
+
 			parentResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 		else {
