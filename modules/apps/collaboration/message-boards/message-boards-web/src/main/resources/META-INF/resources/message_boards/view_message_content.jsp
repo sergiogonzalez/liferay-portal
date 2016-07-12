@@ -298,6 +298,7 @@ if (portletTitleBasedNavigation) {
 		<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
 
 			<%
+			MBMessage curMessage = message;
 			long replyToMessageId = message.getRootMessageId();
 			%>
 
