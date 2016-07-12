@@ -3,6 +3,25 @@
 
 <resource-action-mapping>
 	<model-resource>
+		<model-name>com.liferay.announcements</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_announcements_web_portlet_AlertsPortlet</portlet-name>
+			<portlet-name>com_liferay_announcements_web_portlet_AnnouncementsPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_ENTRY</action-key>
+			</supports>
+			<site-member-defaults/>
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_ENTRY</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.announcements.kernel.model.AnnouncementsEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_announcements_web_portlet_AlertsPortlet</portlet-name>
