@@ -311,16 +311,12 @@ if (portletTitleBasedNavigation) {
 	%>
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, rootMessage.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
-		<portlet:renderURL var="replyURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="mbCategoryId" value="<%= String.valueOf(rootMessage.getCategoryId()) %>" />
-			<portlet:param name="threadId" value="<%= String.valueOf(rootMessage.getThreadId()) %>" />
-			<portlet:param name="parentMessageId" value="<%= String.valueOf(rootMessage.getMessageId()) %>" />
-			<portlet:param name="priority" value="<%= String.valueOf(rootMessage.getPriority()) %>" />
-		</portlet:renderURL>
 
-		<aui:button cssClass="btn-lg" href="<%= replyURL.toString() %>" primary="<%= true %>" value="reply-to-main-thread" />
+		<%
+		String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + rootMessage.getMessageId() + "', false);";
+		%>
+
+		<aui:button cssClass="btn-lg" onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply-to-main-thread" />
 	</c:if>
 
 	<c:if test="<%= moreMessagesPagination %>">
