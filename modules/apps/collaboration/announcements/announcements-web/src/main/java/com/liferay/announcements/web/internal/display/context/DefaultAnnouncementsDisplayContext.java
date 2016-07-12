@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission;
+import com.liferay.portlet.announcements.service.permission.AnnouncementsPermission;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -131,10 +131,9 @@ public class DefaultAnnouncementsDisplayContext
 	public String getTabs1Names() {
 		String tabs1Names = "new,previous";
 
-		if (AnnouncementsEntryPermission.contains(
+		if (AnnouncementsPermission.contains(
 				_announcementsRequestHelper.getPermissionChecker(),
-				_announcementsRequestHelper.getLayout(),
-				_announcementsRequestHelper.getPortletName(),
+				_announcementsRequestHelper.getScopeGroupId(),
 				ActionKeys.ADD_ENTRY)) {
 
 			tabs1Names += ",manage-entries";
@@ -245,10 +244,10 @@ public class DefaultAnnouncementsDisplayContext
 
 		if (!portletName.equals(AnnouncementsPortletKeys.ALERTS) ||
 			(portletName.equals(AnnouncementsPortletKeys.ALERTS) &&
-			 AnnouncementsEntryPermission.contains(
+			 AnnouncementsPermission.contains(
 				 _announcementsRequestHelper.getPermissionChecker(),
-				 _announcementsRequestHelper.getLayout(),
-				 AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY))) {
+				 _announcementsRequestHelper.getScopeGroupId(),
+				 ActionKeys.ADD_ENTRY))) {
 
 			return true;
 		}

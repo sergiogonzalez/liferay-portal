@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -156,21 +158,27 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 		boolean alert = ParamUtil.getBoolean(actionRequest, "alert");
 
+		Date displayDate = new Date();
+
+		if (!displayImmediately) {
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, themeDisplay.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
+
+		Date expirationDate = PortalUtil.getDate(
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute,
+			themeDisplay.getTimeZone(), EntryExpirationDateException.class);
+
 		if (entryId <= 0) {
-
-			// Add entry
-
 			_announcementsEntryService.addEntry(
-				themeDisplay.getPlid(), classNameId, classPK, title, content,
-				url, type, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, displayImmediately,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, priority, alert);
+				themeDisplay.getScopeGroupId(), classNameId, classPK, title,
+				content, url, type, displayDate, displayImmediately,
+				expirationDate, priority, alert);
 		}
 		else {
-
-			// Update entry
-
 			_announcementsEntryService.updateEntry(
 				entryId, title, content, url, type, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,

@@ -14,16 +14,17 @@
 
 package com.liferay.portlet.announcements.service.impl;
 
-import com.liferay.announcements.kernel.constants.AnnouncementsConstants;
+import com.liferay.announcements.kernel.exception.EntryDisplayDateException;
+import com.liferay.announcements.kernel.exception.EntryExpirationDateException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -36,42 +37,29 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portlet.announcements.service.base.AnnouncementsEntryServiceBaseImpl;
 import com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission;
+import com.liferay.portlet.announcements.service.permission.AnnouncementsPermission;
+
+import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
 public class AnnouncementsEntryServiceImpl
 	extends AnnouncementsEntryServiceBaseImpl {
 
 	@Override
 	public AnnouncementsEntry addEntry(
-			long plid, long classNameId, long classPK, String title,
-			String content, String url, String type, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean displayImmediately,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, int priority, boolean alert)
+			long groupId, long classNameId, long classPK, String title,
+			String content, String url, String type, Date displayDate,
+			boolean displayImmediately, Date expirationDate, int priority,
+			boolean alert)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (alert) {
-			String portletId = PortletProviderUtil.getPortletId(
-				AnnouncementsConstants.CLASS_NAME_ALERTS_ENTRY,
-				PortletProvider.Action.MANAGE);
-
-			AnnouncementsEntryPermission.check(
-				permissionChecker, plid, portletId, ActionKeys.ADD_ENTRY);
-		}
-		else {
-			String portletId = PortletProviderUtil.getPortletId(
-				AnnouncementsEntry.class.getName(),
-				PortletProvider.Action.MANAGE);
-
-			AnnouncementsEntryPermission.check(
-				permissionChecker, plid, portletId, ActionKeys.ADD_ENTRY);
-		}
+		AnnouncementsPermission.check(
+			permissionChecker, groupId, ActionKeys.ADD_ENTRY);
 
 		if (classNameId == 0) {
 			if (!PortalPermissionUtil.contains(
@@ -146,10 +134,48 @@ public class AnnouncementsEntryServiceImpl
 
 		return announcementsEntryLocalService.addEntry(
 			getUserId(), classNameId, classPK, title, content, url, type,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, displayImmediately, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, priority, alert);
+			displayDate, displayImmediately, expirationDate, priority, alert);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	 *               String, String, String, String, Date, boolean, Date, int,
+	 *               boolean)}
+	 */
+	@Deprecated
+	@Override
+	public AnnouncementsEntry addEntry(
+			long plid, long classNameId, long classPK, String title,
+			String content, String url, String type, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean displayImmediately,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, int priority, boolean alert)
+		throws PortalException {
+
+		User user = userLocalService.getUser(getUserId());
+
+		Date displayDate = new Date();
+
+		if (!displayImmediately) {
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, user.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
+
+		Date expirationDate = PortalUtil.getDate(
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, user.getTimeZone(),
+			EntryExpirationDateException.class);
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		return addEntry(
+			layout.getGroupId(), classNameId, classPK, title, content, url,
+			type, displayDate, displayImmediately, expirationDate, priority,
+			alert);
 	}
 
 	@Override
