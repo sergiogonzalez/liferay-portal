@@ -207,7 +207,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<c:if test="<%= hasReplyPermission && !thread.isLocked() %>">
 
 								<%
-								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "');";
+								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', false);";
 								%>
 
 								<liferay-ui:icon
@@ -225,9 +225,13 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									<portlet:param name="quote" value="<%= Boolean.TRUE.toString() %>" />
 								</portlet:renderURL>
 
+								<%
+								String taglibReplyWithQuoteToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', true);";
+								%>
+
 								<liferay-ui:icon
 									message="reply-with-quote"
-									url="<%= quoteURL %>"
+									url="<%= taglibReplyWithQuoteToMessageURL %>"
 								/>
 							</c:if>
 
