@@ -229,12 +229,12 @@ public class MBUtil {
 
 		String body = "";
 
-		String parentAuthor =
-			parentMessage.isAnonymous() ?
-				LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(
+		if (quote && parentMessage != null) {
+			String parentAuthor =
+				parentMessage.isAnonymous() ?
+					LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(
 					PortalUtil.getUserName(parentMessage));
 
-		if (quote && parentMessage != null) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("[quote=");
@@ -242,7 +242,7 @@ public class MBUtil {
 				StringUtil.replace(
 					parentAuthor, new String[] {"[", "]", "(", ")"},
 					new String[] {"&#91;", "&#93;", "&#40;", "&#41;"}));
-			sb.append("]");
+			sb.append("]\n");
 			sb.append(parentMessage.getBody(false));
 			sb.append("[/quote]\n\n\n");
 
