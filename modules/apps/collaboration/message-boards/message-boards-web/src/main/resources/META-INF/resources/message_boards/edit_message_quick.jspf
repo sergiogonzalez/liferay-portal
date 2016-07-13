@@ -161,16 +161,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 
 					<aui:input name="body" type="hidden" />
 
-					<portlet:renderURL var="replyURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
-						<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-						<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-						<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
-					</portlet:renderURL>
-
-					<aui:button cssClass="advanced-reply btn btn-link btn-sm" href="<%= replyURL.toString() %>" value="advanced-reply" />
+					<aui:button cssClass="advanced-reply btn btn-link btn-sm" onClick='<%= liferayPortletResponse.getNamespace() + "advancedReply" + replyToMessageId + "();" %>' value="advanced-reply" />
 
 					<c:if test="<%= themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
 						<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
@@ -209,6 +200,15 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 	</div>
 </div>
 
+<portlet:renderURL var="advanceReplyURL">
+	<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
+	<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+	<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+	<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
+</portlet:renderURL>
+
 <aui:script>
 	function <portlet:namespace />addQuote<%= replyToMessageId %>() {
 		var editorName = '<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>';
@@ -227,4 +227,23 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 	window['<portlet:namespace />replyMessageOnChange' + <%= replyToMessageId %>] = function(html) {
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton<%= replyToMessageId %>', html === '');
 	};
+
+	function <portlet:namespace />advancedReply<%= replyToMessageId %>() {
+		var editorName = '<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>';
+
+		var replyText = window[editorName].getHTML();
+
+		var url = '<%= advanceReplyURL.toString() %>&<portlet:namespace />body=' + encodeURI(replyText);
+
+		var form = document.createElement('form');
+
+		form.setAttribute('action', url);
+		form.setAttribute('method', 'post');
+
+		document.body.appendChild(form);
+
+		submitForm(form);
+
+		document.body.removeChild(form);
+	}
 </aui:script>
