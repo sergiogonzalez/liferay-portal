@@ -38,8 +38,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 
 	protected void addResourcePermission(
 			long companyId, String name, int scope, String primKey,
-			long primKeyId, long roleId, long ownerId, long actionBitwiseValue,
-			int viewActionId)
+			long primKeyId, long roleId, long ownerId, long actionBitwiseValue)
 		throws Exception {
 
 		PreparedStatement ps = null;
@@ -69,7 +68,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 			ps.setLong(8, roleId);
 			ps.setLong(9, ownerId);
 			ps.setLong(10, actionBitwiseValue);
-			ps.setInt(11, viewActionId);
+			ps.setInt(11, 0);
 
 			ps.executeUpdate();
 		}
@@ -150,7 +149,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		StringBundler sb2 = new StringBundler(5);
 
 		sb2.append("select resourcePermissionId, companyId, scope, primKey, ");
-		sb2.append("primKeyId, roleId, ownerId, actionIds, viewActionId from ");
+		sb2.append("primKeyId, roleId, ownerId, actionIds, from ");
 		sb2.append("ResourcePermission where name = '");
 		sb2.append(name);
 		sb2.append("'");
@@ -186,7 +185,6 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 					long roleId = rs.getLong("roleId");
 					long ownerId = rs.getLong("ownerId");
 					long actionIds = rs.getLong("actionIds");
-					int viewActionId = rs.getInt("viewActionId");
 
 					if ((bitwiseValue & actionIds) == 0) {
 						continue;
@@ -201,7 +199,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								String.valueOf(groupId), groupId, roleId,
-								ownerId, 2, viewActionId);
+								ownerId, 2);
 
 							_groupRoleList.add(groupRole);
 						}
@@ -213,8 +211,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 						if (!_companyRoleList.contains(companyRole)) {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
-								primKey, primKeyId, roleId, ownerId, 2,
-								viewActionId);
+								primKey, primKeyId, roleId, ownerId, 2);
 
 							_companyRoleList.add(companyRole);
 						}
@@ -223,8 +220,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 						if (!_roleList.contains(roleId)) {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
-								primKey, primKeyId, roleId, ownerId, 2,
-								viewActionId);
+								primKey, primKeyId, roleId, ownerId, 2);
 
 							_roleList.add(roleId);
 						}
