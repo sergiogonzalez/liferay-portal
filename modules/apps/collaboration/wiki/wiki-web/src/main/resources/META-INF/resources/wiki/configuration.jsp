@@ -49,7 +49,7 @@
 			</div>
 		</aui:fieldset>
 
-		<aui:fieldset collapsible="<%= true %>" id="<%= renderResponse.getNamespace() %>visibleWikis" label="visible-wikis">
+		<aui:fieldset collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "visibleWikis" %>' label="visible-wikis">
 			<aui:input name="preferences--visibleNodes--" type="hidden" />
 			<aui:input name="preferences--hiddenNodes--" type="hidden" />
 
