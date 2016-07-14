@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_2;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -35,6 +36,40 @@ import java.util.Set;
  * @author Roberto Díaz
  */
 public class UpgradeAnnouncements extends UpgradeProcess {
+
+	protected void addResourceAction() {
+		PreparedStatement ps = null;
+
+		try {
+			long resourceActionId = increment(ResourceAction.class.getName());
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("insert into ResourceAction (mvccVersion, ");
+			sb.append("resourceActionId, name, actionId, bitwiseValue)");
+			sb.append("values (?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = connection.prepareStatement(sql);
+
+			ps.setLong(1, 0);
+			ps.setLong(2, resourceActionId);
+			ps.setString(3, "com.liferay.announcements");
+			ps.setString(4, "ADD_ENTRY");
+			ps.setLong(5, _NEW_ADD_ENTRY_BITWISE_VALUE);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to add resource action", e);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps);
+		}
+	}
 
 	protected void addResourcePermission(
 			long companyId, String name, int scope, String primKey,
@@ -95,6 +130,8 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		addResourceAction();
+
 		upgradeAlertsResourcePermission();
 		upgradeAnnouncementsResourcePermission();
 	}
@@ -200,7 +237,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								String.valueOf(groupId), groupId, roleId,
-								ownerId, 2);
+								ownerId, _NEW_ADD_ENTRY_BITWISE_VALUE);
 
 							_groupRoleSet.add(layoutRoleKey);
 						}
@@ -213,7 +250,8 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 						if (!_companyRoleSet.contains(companyRoleKey)) {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
-								primKey, primKeyId, roleId, ownerId, 2);
+								primKey, primKeyId, roleId, ownerId,
+								_NEW_ADD_ENTRY_BITWISE_VALUE);
 
 							_companyRoleSet.add(companyRoleKey);
 						}
@@ -226,7 +264,8 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 						if (!_roleSet.contains(groupTemplateRoleKey)) {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
-								primKey, primKeyId, roleId, ownerId, 2);
+								primKey, primKeyId, roleId, ownerId,
+								_NEW_ADD_ENTRY_BITWISE_VALUE);
 
 							_roleSet.add(groupTemplateRoleKey);
 						}
@@ -256,6 +295,8 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 
 		return sb.toString();
 	}
+
+	private static final int _NEW_ADD_ENTRY_BITWISE_VALUE = 2;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeAnnouncements.class);
