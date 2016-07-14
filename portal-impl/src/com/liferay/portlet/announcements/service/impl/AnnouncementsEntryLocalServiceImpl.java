@@ -333,6 +333,10 @@ public class AnnouncementsEntryLocalServiceImpl
 		return announcementsEntryPersistence.countByUserId(userId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	 *             String, String, String, Date, boolean, Date, int)}
+	 */
 	@Override
 	public AnnouncementsEntry updateEntry(
 			long userId, long entryId, String title, String content, String url,
@@ -360,6 +364,22 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
 			EntryExpirationDateException.class);
+
+		return updateEntry(
+			entryId, title, content, url, type, displayDate, displayImmediately,
+			expirationDate, priority);
+	}
+
+	@Override
+	public AnnouncementsEntry updateEntry(
+			long entryId, String title, String content, String url, String type,
+			Date displayDate, boolean displayImmediately, Date expirationDate,
+			int priority)
+		throws PortalException {
+
+		if (displayImmediately) {
+			displayDate = new Date();
+		}
 
 		validate(title, content, url, displayDate, expirationDate);
 

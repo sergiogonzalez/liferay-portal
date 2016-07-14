@@ -200,6 +200,25 @@ public class AnnouncementsEntryServiceImpl
 	@Override
 	public AnnouncementsEntry updateEntry(
 			long entryId, String title, String content, String url, String type,
+			Date displayDate, boolean displayImmediately, Date expirationDate,
+			int priority)
+		throws PortalException {
+
+		AnnouncementsEntryPermission.check(
+			getPermissionChecker(), entryId, ActionKeys.UPDATE);
+
+		return announcementsEntryLocalService.updateEntry(
+			entryId, title, content, url, type, displayDate,
+			displayImmediately, expirationDate, priority);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	 *             String, String, String, Date, boolean, Date, int)}
+	 */
+	@Override
+	public AnnouncementsEntry updateEntry(
+			long entryId, String title, String content, String url, String type,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute,
 			boolean displayImmediately, int expirationDateMonth,
@@ -207,15 +226,25 @@ public class AnnouncementsEntryServiceImpl
 			int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException {
 
-		AnnouncementsEntryPermission.check(
-			getPermissionChecker(), entryId, ActionKeys.UPDATE);
+		User user = userLocalService.getUser(getUserId());
 
-		return announcementsEntryLocalService.updateEntry(
-			getUserId(), entryId, title, content, url, type, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			displayImmediately, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			priority);
+		Date displayDate = new Date();
+
+		if (!displayImmediately) {
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, user.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
+
+		Date expirationDate = PortalUtil.getDate(
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, user.getTimeZone(),
+			EntryExpirationDateException.class);
+
+		return updateEntry(
+			entryId, title, content, url, type, displayDate, displayImmediately,
+			expirationDate, priority);
 	}
 
 }
