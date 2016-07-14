@@ -105,6 +105,13 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= navigationPortletURL %>"
 			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= kbObjectsSearchContainer.getOrderByCol() %>"
+				orderByType="<%= kbObjectsSearchContainer.getOrderByType() %>"
+				orderColumns='<%= new String[] {"priority", "modified-date", "title", "view-count"} %>'
+				portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
+			/>
 		</liferay-frontend:management-bar-filters>
 	</c:if>
 
