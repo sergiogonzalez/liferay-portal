@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -101,6 +102,11 @@ public class AnnouncementsEntryPermission {
 			VirtualLayout virtualLayout = (VirtualLayout)layout;
 
 			layout = virtualLayout.getSourceLayout();
+		}
+
+		if (actionId.equals(ActionKeys.ADD_ENTRY)) {
+			return AnnouncementsPermission.contains(
+				permissionChecker, layout.getGroupId(), actionId);
 		}
 
 		String primKey = PortletPermissionUtil.getPrimaryKey(
