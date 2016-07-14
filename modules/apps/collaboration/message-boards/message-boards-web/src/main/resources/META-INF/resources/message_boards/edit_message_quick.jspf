@@ -197,7 +197,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 	</div>
 </div>
 
-<portlet:renderURL var="advanceReplyURL">
+<portlet:renderURL var="advancedReplyURL">
 	<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
@@ -208,9 +208,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 
 <aui:script>
 	function <portlet:namespace />addQuote<%= replyToMessageId %>() {
-		var editorName = '<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>';
-
-		window[editorName].setHTML('<%= HtmlUtil.escapeJS(quoteText) %>');
+		window['<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>'].setHTML('<%= HtmlUtil.escapeJS(quoteText) %>');
 	}
 
 	function <portlet:namespace />saveReplyMessage<%= replyToMessageId %>() {
@@ -226,11 +224,9 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 	};
 
 	function <portlet:namespace />advancedReply<%= replyToMessageId %>() {
-		var editorName = '<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>';
+		var replyText = window['<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>'].getHTML();
 
-		var replyText = window[editorName].getHTML();
-
-		var url = '<%= advanceReplyURL.toString() %>&<portlet:namespace />body=' + encodeURI(replyText);
+		var url = '<%= advancedReplyURL.toString() %>&<portlet:namespace />body=' + encodeURI(replyText);
 
 		var form = document.createElement('form');
 
