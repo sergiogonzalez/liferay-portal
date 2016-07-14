@@ -149,7 +149,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		StringBundler sb2 = new StringBundler(5);
 
 		sb2.append("select resourcePermissionId, companyId, scope, primKey, ");
-		sb2.append("primKeyId, roleId, ownerId, actionIds, from ");
+		sb2.append("primKeyId, roleId, ownerId, actionIds from ");
 		sb2.append("ResourcePermission where name = '");
 		sb2.append(name);
 		sb2.append("'");
