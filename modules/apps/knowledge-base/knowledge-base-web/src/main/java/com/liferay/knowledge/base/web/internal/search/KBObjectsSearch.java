@@ -39,11 +39,11 @@ import javax.portlet.PortletURL;
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
-public class KBArticleSearch extends SearchContainer<Object> {
+public class KBObjectsSearch extends SearchContainer<Object> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-articles-were-found";
 
-	public KBArticleSearch(
+	public KBObjectsSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
@@ -115,6 +115,6 @@ public class KBArticleSearch extends SearchContainer<Object> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KBArticleSearch.class);
+		KBObjectsSearch.class);
 
 }
