@@ -28,8 +28,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Roberto Díaz
@@ -85,7 +85,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 	protected void deleteResourceAction(long resourceActionId)
 		throws SQLException {
 
- 		PreparedStatement ps = connection.prepareStatement(
+		PreparedStatement ps = connection.prepareStatement(
 			"delete from ResourceAction where resourceActionId = ?");
 
 		ps.setLong(1, resourceActionId);
@@ -193,36 +193,42 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 					if (primKey.contains("_LAYOUT_")) {
 						long groupId = getLayoutGroupId(primKey);
 
-						String groupRole = groupId + StringPool.COMMA + roleId;
+						String layoutRoleKey = _getKey(
+							companyId, scope, String.valueOf(groupId), roleId);
 
-						if (!_groupRoleList.contains(groupRole)) {
+						if (!_groupRoleSet.contains(layoutRoleKey)) {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								String.valueOf(groupId), groupId, roleId,
 								ownerId, 2);
 
-							_groupRoleList.add(groupRole);
+							_groupRoleSet.add(layoutRoleKey);
 						}
 					}
 					else if (scope == ResourceConstants.SCOPE_COMPANY) {
-						String companyRole =
-							companyId + StringPool.COMMA + roleId;
+						String companyRoleKey = _getKey(
+							companyId, ResourceConstants.SCOPE_COMPANY, primKey,
+							roleId);
 
-						if (!_companyRoleList.contains(companyRole)) {
+						if (!_companyRoleSet.contains(companyRoleKey)) {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								primKey, primKeyId, roleId, ownerId, 2);
 
-							_companyRoleList.add(companyRole);
+							_companyRoleSet.add(companyRoleKey);
 						}
 					}
 					else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-						if (!_roleList.contains(roleId)) {
+						String groupTemplateRoleKey = _getKey(
+							companyId, ResourceConstants.SCOPE_GROUP_TEMPLATE,
+							primKey, roleId);
+
+						if (!_roleSet.contains(groupTemplateRoleKey)) {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								primKey, primKeyId, roleId, ownerId, 2);
 
-							_roleList.add(roleId);
+							_roleSet.add(groupTemplateRoleKey);
 						}
 					}
 
@@ -235,11 +241,27 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		}
 	}
 
+	private String _getKey(
+		long companyId, int scope, String primKey, long roleId) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(companyId);
+		sb.append(StringPool.PERIOD);
+		sb.append(scope);
+		sb.append(StringPool.PERIOD);
+		sb.append(primKey);
+		sb.append(StringPool.PERIOD);
+		sb.append(roleId);
+
+		return sb.toString();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeAnnouncements.class);
 
-	private final List<String> _companyRoleList = new ArrayList<>();
-	private final List<String> _groupRoleList = new ArrayList<>();
-	private final List<Long> _roleList = new ArrayList<>();
+	private final Set<String> _companyRoleSet = new HashSet<>();
+	private final Set<String> _groupRoleSet = new HashSet<>();
+	private final Set<String> _roleSet = new HashSet<>();
 
 }
