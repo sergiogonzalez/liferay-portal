@@ -24,12 +24,15 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,10 +98,15 @@ public class DLDisplayContextProvider {
 			FileShortcut fileShortcut) {
 
 		try {
+			String languageId = LanguageUtil.getLanguageId(request);
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(languageId);
+
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlMimeTypeDisplayContext,
-					_resourceBundleLoader, _storageEngine);
+					resourceBundle, _storageEngine);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -125,10 +133,15 @@ public class DLDisplayContextProvider {
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
+		String languageId = LanguageUtil.getLanguageId(request);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(languageId);
+
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion, _dlMimeTypeDisplayContext,
-				_resourceBundleLoader, _storageEngine);
+				resourceBundle, _storageEngine);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -188,7 +201,8 @@ public class DLDisplayContextProvider {
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 
-		_resourceBundleLoader = resourceBundleLoader;
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageUtil.getPortalResourceBundleLoader());
 	}
 
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
