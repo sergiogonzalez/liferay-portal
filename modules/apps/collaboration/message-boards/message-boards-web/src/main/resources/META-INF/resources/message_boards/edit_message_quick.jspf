@@ -26,7 +26,6 @@ String subject = BeanParamUtil.getString(replyMessage, request, "subject");
 double priority = messageDisplay.getMessage().getPriority();
 
 MBMessage curParentMessage = null;
-String parentAuthor = null;
 
 if (threadId > 0) {
 	try {
@@ -40,8 +39,6 @@ if (threadId > 0) {
 				subject = "RE: " + curParentMessage.getSubject();
 			}
 		}
-
-		parentAuthor = curParentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(curParentMessage.getUserId(), curParentMessage.getUserName(), StringPool.BLANK));
 	}
 	catch (Exception e) {
 	}
