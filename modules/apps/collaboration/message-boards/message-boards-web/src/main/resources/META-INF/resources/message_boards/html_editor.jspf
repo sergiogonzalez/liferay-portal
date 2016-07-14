@@ -16,7 +16,12 @@
 
 <%
 if (Validator.isNull(body)) {
-	body = MBUtil.getHtmlQuote(request, quote, curParentMessage, splitThread);
+	if (quote && (curParentMessage != null)) {
+		body = MBUtil.getHtmlQuoteBody(request, curParentMessage);
+	}
+	else if (splitThread) {
+		body = MBUtil.getHtmlSplitThreadBody(request);
+	}
 }
 
 String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
