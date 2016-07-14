@@ -224,13 +224,14 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 	};
 
 	function <portlet:namespace />advancedReply<%= replyToMessageId %>() {
-		var replyText = window['<portlet:namespace /><%= "replyMessageBody" + replyToMessageId %>'].getHTML();
+		var inputNode = AUI.$('#<portlet:namespace />addQuickReplyFm<%= replyToMessageId %>').fm('body');
 
-		var url = '<%= advancedReplyURL.toString() %>&<portlet:namespace />body=' + encodeURI(replyText);
+		inputNode.val(window['<portlet:namespace />replyMessageBody<%= replyToMessageId %>'].getHTML());
 
 		var form = document.createElement('form');
 
-		form.setAttribute('action', url);
+		form.appendChild(inputNode.clone().get(0));
+		form.setAttribute('action', '<%= advancedReplyURL.toString() %>');
 		form.setAttribute('method', 'post');
 
 		document.body.appendChild(form);
