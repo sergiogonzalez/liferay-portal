@@ -46,6 +46,12 @@ public class AnnouncementsEntryLocalServiceWrapper
 		return _announcementsEntryLocalService.addAnnouncementsEntry(announcementsEntry);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	String, String, String, String, Date, boolean, Date, int,
+	boolean)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
 		long userId, long classNameId, long classPK, java.lang.String title,
@@ -62,6 +68,18 @@ public class AnnouncementsEntryLocalServiceWrapper
 			displayDateMinute, displayImmediately, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, priority, alert);
+	}
+
+	@Override
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
+		long userId, long classNameId, long classPK, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		java.util.Date displayDate, java.util.Date expirationDate,
+		int priority, boolean alert)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsEntryLocalService.addEntry(userId, classNameId,
+			classPK, title, content, url, type, displayDate, expirationDate,
+			priority, alert);
 	}
 
 	/**
@@ -171,6 +189,20 @@ public class AnnouncementsEntryLocalServiceWrapper
 		return _announcementsEntryLocalService.updateAnnouncementsEntry(announcementsEntry);
 	}
 
+	@Override
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
+		long entryId, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type,
+		java.util.Date displayDate, java.util.Date expirationDate, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsEntryLocalService.updateEntry(entryId, title,
+			content, url, type, displayDate, expirationDate, priority);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	String, String, String, Date, boolean, Date, int)}
+	*/
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
 		long userId, long entryId, java.lang.String title,
