@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.Date;
+
 /**
  * Provides the remote service interface for AnnouncementsEntry. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -49,6 +51,18 @@ public interface AnnouncementsEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsEntryServiceUtil} to access the announcements entry remote service. Add custom service methods to {@link com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public AnnouncementsEntry addEntry(long groupId, long classNameId,
+		long classPK, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type, Date displayDate,
+		boolean displayImmediately, Date expirationDate, int priority,
+		boolean alert) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	String, String, String, String, Date, boolean, Date, int,
+	boolean)}
+	*/
+	@java.lang.Deprecated
 	public AnnouncementsEntry addEntry(long plid, long classNameId,
 		long classPK, java.lang.String title, java.lang.String content,
 		java.lang.String url, java.lang.String type, int displayDateMonth,
@@ -61,6 +75,10 @@ public interface AnnouncementsEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry getEntry(long entryId) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	String, String, String, Date, boolean, Date, int)}
+	*/
 	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
 		java.lang.String content, java.lang.String url, java.lang.String type,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -68,6 +86,11 @@ public interface AnnouncementsEntryService extends BaseService {
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException;
+
+	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		Date displayDate, boolean displayImmediately, Date expirationDate,
+		int priority) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
