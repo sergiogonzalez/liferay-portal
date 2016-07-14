@@ -207,6 +207,9 @@ public class KBFolderFinderImpl
 			q.addScalar("modelId", Type.LONG);
 			q.addScalar("modelFolder", Type.LONG);
 			q.addScalar("title", Type.STRING);
+			q.addScalar("priority", Type.DOUBLE);
+			q.addScalar("modifiedDate", Type.DATE);
+			q.addScalar("viewCount", Type.INTEGER);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
