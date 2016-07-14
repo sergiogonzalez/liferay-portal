@@ -99,10 +99,6 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		upgradeAnnouncementsResourcePermission();
 	}
 
-	protected long getBinaryValue(Long actionId) {
-		return Long.valueOf(Long.toBinaryString(actionId));
-	}
-
 	protected long getLayoutGroup(String primKey) throws Exception {
 		String layoutId = StringUtil.split(primKey, StringPool.UNDERLINE)[0];
 
@@ -174,8 +170,6 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 				return;
 			}
 
-			long bitwiseBinaryValue = getBinaryValue(bitwiseValue);
-
 			try (PreparedStatement ps2 = connection.prepareStatement(
 					sb2.toString());
 
@@ -193,9 +187,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 					long actionIds = rs.getLong("actionIds");
 					int viewActionId = rs.getInt("viewActionId");
 
-					long actionIdsBinaryValue = getBinaryValue(actionIds);
-
-					if ((bitwiseBinaryValue & actionIdsBinaryValue) == 0) {
+					if ((bitwiseValue & actionIds) == 0) {
 						continue;
 					}
 
