@@ -17,6 +17,8 @@
 <%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
@@ -75,9 +77,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 	portletURL.setParameter("topLink", topLink);
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 
-	String redirect = ParamUtil.getString(request, "redirect");
-
-	if (redirect != null) {
+	if (Validator.isNotNull(redirect)) {
 		portletURL.setParameter("redirect", redirect);
 	}
 
