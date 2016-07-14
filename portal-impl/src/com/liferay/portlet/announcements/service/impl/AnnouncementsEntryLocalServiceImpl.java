@@ -66,17 +66,12 @@ public class AnnouncementsEntryLocalServiceImpl
 	public AnnouncementsEntry addEntry(
 			long userId, long classNameId, long classPK, String title,
 			String content, String url, String type, Date displayDate,
-			boolean displayImmediately, Date expirationDate, int priority,
-			boolean alert)
+			Date expirationDate, int priority, boolean alert)
 		throws PortalException {
 
 		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		if (displayImmediately) {
-			displayDate = new Date();
-		}
 
 		validate(title, content, url, displayDate, expirationDate);
 
@@ -113,8 +108,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
-	 *             String, String, String, String, Date, boolean, Date, int,
-	 *             boolean)}
+	 *             String, String, String, String, Date, Date, int, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -144,9 +138,9 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
 			EntryExpirationDateException.class);
 
-		return announcementsEntryLocalService.addEntry(
+		return addEntry(
 			userId, classNameId, classPK, title, content, url, type,
-			displayDate, displayImmediately, expirationDate, priority, alert);
+			displayDate, expirationDate, priority, alert);
 	}
 
 	@Override
@@ -335,7 +329,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
-	 *             String, String, String, Date, boolean, Date, int)}
+	 *             String, String, String, Date, Date, int)}
 	 */
 	@Override
 	public AnnouncementsEntry updateEntry(
@@ -366,20 +360,15 @@ public class AnnouncementsEntryLocalServiceImpl
 			EntryExpirationDateException.class);
 
 		return updateEntry(
-			entryId, title, content, url, type, displayDate, displayImmediately,
-			expirationDate, priority);
+			entryId, title, content, url, type, displayDate, expirationDate,
+			priority);
 	}
 
 	@Override
 	public AnnouncementsEntry updateEntry(
 			long entryId, String title, String content, String url, String type,
-			Date displayDate, boolean displayImmediately, Date expirationDate,
-			int priority)
+			Date displayDate, Date expirationDate, int priority)
 		throws PortalException {
-
-		if (displayImmediately) {
-			displayDate = new Date();
-		}
 
 		validate(title, content, url, displayDate, expirationDate);
 
