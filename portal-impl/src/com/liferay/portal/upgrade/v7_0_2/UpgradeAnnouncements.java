@@ -86,11 +86,12 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 	protected void deleteResourceAction(long resourceActionId)
 		throws SQLException {
 
-		PreparedStatement ps4 = connection.prepareStatement(
-			"DELETE FROM ResourceAction WHERE resourceActionId = " +
-				resourceActionId);
+ 		PreparedStatement ps = connection.prepareStatement(
+			"delete from ResourceAction where resourceActionId = ?");
 
-		ps4.executeUpdate();
+		ps.setLong(1, resourceActionId);
+
+		ps.executeUpdate();
 	}
 
 	@Override
@@ -99,11 +100,11 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		upgradeAnnouncementsResourcePermission();
 	}
 
-	protected long getLayoutGroup(String primKey) throws Exception {
+	protected long getLayoutGroupId(String primKey) throws Exception {
 		String layoutId = StringUtil.split(primKey, StringPool.UNDERLINE)[0];
 
 		PreparedStatement ps = connection.prepareStatement(
-			"SELECT groupId FROM Layout WHERE plid = " + layoutId);
+			"select groupId from Layout where plid = " + layoutId);
 
 		ResultSet rs = ps.executeQuery();
 
@@ -119,7 +120,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		throws Exception {
 
 		PreparedStatement ps = connection.prepareStatement(
-			"UPDATE ResourcePermission SET actionIds = ? WHERE " +
+			"update ResourcePermission set actionIds = ? where " +
 				"resourcePermissionId = ?");
 
 		ps.setLong(1, bitwiseValue);
@@ -141,16 +142,16 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 	protected void upgradeResourcePermission(String name) throws Exception {
 		StringBundler sb1 = new StringBundler(4);
 
-		sb1.append("SELECT resourceActionId, bitwiseValue FROM ");
-		sb1.append("ResourceAction WHERE actionId =  'ADD_ENTRY' AND name = '");
+		sb1.append("select resourceActionId, bitwiseValue from ");
+		sb1.append("ResourceAction where actionId = 'ADD_ENTRY' and name = '");
 		sb1.append(name);
 		sb1.append("'");
 
 		StringBundler sb2 = new StringBundler(5);
 
-		sb2.append("SELECT resourcePermissionId, companyId, scope, primKey, ");
-		sb2.append("primKeyId, roleId, ownerId, actionIds, viewActionId FROM ");
-		sb2.append("ResourcePermission WHERE name = '");
+		sb2.append("select resourcePermissionId, companyId, scope, primKey, ");
+		sb2.append("primKeyId, roleId, ownerId, actionIds, viewActionId from ");
+		sb2.append("ResourcePermission where name = '");
 		sb2.append(name);
 		sb2.append("'");
 
@@ -162,7 +163,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 			long resourceActionId = 0;
 			long bitwiseValue = 0;
 
-			if (rs1.first()) {
+			if (rs1.next()) {
 				resourceActionId = rs1.getLong("resourceActionId");
 				bitwiseValue = rs1.getLong("bitwiseValue");
 			}
@@ -192,7 +193,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 					}
 
 					if (primKey.contains("_LAYOUT_")) {
-						long groupId = getLayoutGroup(primKey);
+						long groupId = getLayoutGroupId(primKey);
 
 						String groupRole = groupId + StringPool.COMMA + roleId;
 
