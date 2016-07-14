@@ -58,13 +58,13 @@ if (messageFormat.equals("bbcode")) {
 	}
 }
 
-String quoteText;
+String quoteText = null;
 
 if (editorName.contains("bbcode")) {
-	quoteText = MBUtil.getBBCodeQuote(request, true, curMessage, false);
+	quoteText = MBUtil.getBBCodeQuoteBody(request, curMessage);
 }
 else {
-	quoteText = MBUtil.getHtmlQuote(request, true, curMessage, false);
+	quoteText = MBUtil.getHtmlQuoteBody(request, curMessage);
 }
 
 Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-showPermanentLink");
