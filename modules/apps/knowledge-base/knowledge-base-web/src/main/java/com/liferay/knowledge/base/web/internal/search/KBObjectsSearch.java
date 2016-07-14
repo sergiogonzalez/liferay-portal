@@ -16,8 +16,6 @@ package com.liferay.knowledge.base.web.internal.search;
 
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
 import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Objects;
 
@@ -59,9 +56,9 @@ public class KBObjectsSearch extends SearchContainer<Object> {
 				PortletPreferencesFactoryUtil.getPortletSetup(portletRequest);
 
 			String portletOrderByCol = portletPreferences.getValue(
-				"kbArticlesOrderByCol", StringPool.BLANK);
+				"kbArticlesOrderByCol", "priority");
 			String portletOrderByType = portletPreferences.getValue(
-				"kbArticlesOrderByType", StringPool.BLANK);
+				"kbArticlesOrderByType", "asc");
 
 			String oldOrderByCol = preferences.getValue(
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-articles-order-by-col",
@@ -95,10 +92,9 @@ public class KBObjectsSearch extends SearchContainer<Object> {
 
 			OrderByComparator<Object> orderByComparator = null;
 
-			if (parentResourceClassNameId ==
-					PortalUtil.getClassNameId(KBFolder.class)) {
-
-				orderByComparator = new KBObjectsTitleComparator<>(false, true);
+			if (parentResourceClassNameId == kbFolderClassNameId) {
+				orderByComparator = KBUtil.getKBObjectsOrderByComparator(
+					orderByCol, orderByType);
 			}
 			else {
 				orderByComparator = KBUtil.getKBArticleOrderByComparator(
