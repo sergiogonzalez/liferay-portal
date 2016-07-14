@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -75,6 +76,12 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public AnnouncementsEntry addAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	String, String, String, String, Date, boolean, Date, int,
+	boolean)}
+	*/
+	@java.lang.Deprecated
 	public AnnouncementsEntry addEntry(long userId, long classNameId,
 		long classPK, java.lang.String title, java.lang.String content,
 		java.lang.String url, java.lang.String type, int displayDateMonth,
@@ -82,6 +89,12 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
+		boolean alert) throws PortalException;
+
+	public AnnouncementsEntry addEntry(long userId, long classNameId,
+		long classPK, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type, Date displayDate,
+		boolean displayImmediately, Date expirationDate, int priority,
 		boolean alert) throws PortalException;
 
 	/**
@@ -163,6 +176,15 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public AnnouncementsEntry updateAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
 
+	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		Date displayDate, boolean displayImmediately, Date expirationDate,
+		int priority) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	String, String, String, Date, boolean, Date, int)}
+	*/
 	public AnnouncementsEntry updateEntry(long userId, long entryId,
 		java.lang.String title, java.lang.String content, java.lang.String url,
 		java.lang.String type, int displayDateMonth, int displayDateDay,
