@@ -61,7 +61,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		Liferay.once(
 			'editorReady',
 			function(event) {
-				if (event.editorName === editorName && quote) {
+				if ((event.editorName === editorName) && quote) {
 					window['<portlet:namespace />addQuote' + messageId]();
 				}
 			}
