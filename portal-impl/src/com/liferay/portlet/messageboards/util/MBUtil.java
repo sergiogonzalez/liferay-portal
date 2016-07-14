@@ -223,51 +223,44 @@ public class MBUtil {
 			pathThemeImages + EMOTICONS);
 	}
 
-	public static String getBBCodeQuote(
-		HttpServletRequest request, boolean quote, MBMessage parentMessage,
-		boolean splitThread) {
+	public static String getBBCodeQuoteBody(
+		HttpServletRequest request, MBMessage parentMessage) {
 
-		String body = null;
+		String parentAuthor = null;
 
-		if (quote && (parentMessage != null)) {
-			String parentAuthor = null;
-
-			if (parentMessage.isAnonymous()) {
-				parentAuthor = LanguageUtil.get(request, "anonymous");
-			}
-			else {
-				parentAuthor = HtmlUtil.escape(
-					PortalUtil.getUserName(parentMessage));
-			}
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("[quote=");
-			sb.append(
-				StringUtil.replace(
-					parentAuthor, new String[] {"[", "]", "(", ")"},
-					new String[] {"&#91;", "&#93;", "&#40;", "&#41;"}));
-			sb.append("]\n");
-			sb.append(parentMessage.getBody(false));
-			sb.append("[/quote]\n\n\n");
-
-			body = sb.toString();
+		if (parentMessage.isAnonymous()) {
+			parentAuthor = LanguageUtil.get(request, "anonymous");
 		}
-		else if (splitThread) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("[url=");
-			sb.append(MBThreadConstants.NEW_THREAD_URL);
-			sb.append("]");
-			sb.append(MBThreadConstants.NEW_THREAD_URL);
-			sb.append("[/url]");
-
-			body = LanguageUtil.format(
-				request, "the-new-thread-can-be-found-at-x", sb.toString(),
-				false);
+		else {
+			parentAuthor = HtmlUtil.escape(
+				PortalUtil.getUserName(parentMessage));
 		}
 
-		return body;
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("[quote=");
+		sb.append(
+			StringUtil.replace(
+				parentAuthor, new String[] {"[", "]", "(", ")"},
+				new String[] {"&#91;", "&#93;", "&#40;", "&#41;"}));
+		sb.append("]\n");
+		sb.append(parentMessage.getBody(false));
+		sb.append("[/quote]\n\n\n");
+
+		return sb.toString();
+	}
+
+	public static String getBBCodeSplitThreadBody(HttpServletRequest request) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("[url=");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append("]");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append("[/url]");
+
+		return LanguageUtil.format(
+			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 
 	public static long getCategoryId(
@@ -540,44 +533,43 @@ public class MBUtil {
 		return entries;
 	}
 
-	public static String getHtmlQuote(
-		HttpServletRequest request, boolean quote, MBMessage parentMessage,
-		boolean splitThread) {
+	public static String getHtmlQuoteBody(
+		HttpServletRequest request, MBMessage parentMessage) {
 
-		String body = "";
+		String parentAuthor = null;
 
-		String parentAuthor =
-			parentMessage.isAnonymous() ?
-				LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(
-					PortalUtil.getUserName(parentMessage));
-
-		if (quote && (parentMessage != null)) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("<blockquote><div class=\"quote-title\">");
-			sb.append(parentAuthor);
-			sb.append(
-				": </div><div class=\"quote\"><div class=\"quote-content\">");
-			sb.append(parentMessage.getBody(false));
-			sb.append("</div></blockquote><br /><br /><br />");
-
-			body = sb.toString();
+		if (parentMessage.isAnonymous()) {
+			parentAuthor = LanguageUtil.get(request, "anonymous");
 		}
-		else if (splitThread) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("<a href=");
-			sb.append(MBThreadConstants.NEW_THREAD_URL);
-			sb.append(">");
-			sb.append(MBThreadConstants.NEW_THREAD_URL);
-			sb.append("</a>");
-
-			body = LanguageUtil.format(
-				request, "the-new-thread-can-be-found-at-x", sb.toString(),
-				false);
+		else {
+			parentAuthor = HtmlUtil.escape(
+				PortalUtil.getUserName(parentMessage));
 		}
 
-		return body;
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<blockquote><div class=\"quote-title\">");
+		sb.append(parentAuthor);
+		sb.append(
+			": </div><div class=\"quote\"><div class=\"quote-content\">");
+		sb.append(parentMessage.getBody(false));
+		sb.append("</div></blockquote><br /><br /><br />");
+
+		return sb.toString();
+	}
+
+	public static String getHtmlSplitThreadBody(HttpServletRequest request) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<a href=");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append(">");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append("</a>");
+
+		return LanguageUtil.format(
+			request, "the-new-thread-can-be-found-at-x", sb.toString(),
+			false);
 	}
 
 	public static long getMessageId(String messageIdString) {
