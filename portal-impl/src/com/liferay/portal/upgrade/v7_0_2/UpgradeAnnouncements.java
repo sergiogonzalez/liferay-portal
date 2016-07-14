@@ -50,25 +50,26 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append("insert into ResourcePermission (resourcePermissionId, ");
-			sb.append("companyId, name, scope, primKey, primKeyId, roleId, ");
-			sb.append("ownerId, actionIds, viewActionId) values");
-			sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("insert into ResourcePermission (mvccVersion, ");
+			sb.append("resourcePermissionId, companyId, name, scope, ");
+			sb.append("primKey, primKeyId, roleId, ownerId, actionIds, ");
+			sb.append("viewActionId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
 			ps = connection.prepareStatement(sql);
 
-			ps.setLong(1, resourcePermissionId);
-			ps.setLong(2, companyId);
-			ps.setString(3, name);
-			ps.setInt(4, scope);
-			ps.setString(5, primKey);
-			ps.setLong(6, primKeyId);
-			ps.setLong(7, roleId);
-			ps.setLong(8, ownerId);
-			ps.setLong(9, actionBitwiseValue);
-			ps.setInt(10, viewActionId);
+			ps.setLong(1, 0);
+			ps.setLong(2, resourcePermissionId);
+			ps.setLong(3, companyId);
+			ps.setString(4, name);
+			ps.setInt(5, scope);
+			ps.setString(6, primKey);
+			ps.setLong(7, primKeyId);
+			ps.setLong(8, roleId);
+			ps.setLong(9, ownerId);
+			ps.setLong(10, actionBitwiseValue);
+			ps.setInt(11, viewActionId);
 
 			ps.executeUpdate();
 		}
