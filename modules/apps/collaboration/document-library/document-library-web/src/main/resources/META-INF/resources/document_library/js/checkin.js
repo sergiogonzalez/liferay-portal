@@ -2,7 +2,7 @@ AUI.add(
 	'document-library-checkin',
 	function(A) {
 		var DocumentLibraryCheckin = {
-			showDialog: function(contentId, title, saveButton, cancelLabel) {
+			showDialog: function(contentId, title, saveButton, cancelButton) {
 				var versionDetailsDialog = Liferay.Util.Window.getWindow(
 					{
 						dialog: {
@@ -19,7 +19,7 @@ AUI.add(
 								},
 								{
 									cssClass: 'btn-lg btn-link',
-									label: cancelLabel,
+									label: cancelButton,
 									on: {
 										click: function() {
 											Liferay.Util.getWindow(contentId + 'Dialog').destroy();
