@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.announcements.service.permission;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -48,7 +48,7 @@ public class AnnouncementsPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.EDIT);
+			AnnouncementsEntry.class.getName(), PortletProvider.Action.EDIT);
 
 		return contains(
 			permissionChecker, RESOURCE_NAME, portletId, classPK, actionId);
