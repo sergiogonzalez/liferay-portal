@@ -52,8 +52,7 @@ public class AnnouncementsEntryServiceImpl
 	public AnnouncementsEntry addEntry(
 			long groupId, long classNameId, long classPK, String title,
 			String content, String url, String type, Date displayDate,
-			boolean displayImmediately, Date expirationDate, int priority,
-			boolean alert)
+			Date expirationDate, int priority, boolean alert)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -134,12 +133,12 @@ public class AnnouncementsEntryServiceImpl
 
 		return announcementsEntryLocalService.addEntry(
 			getUserId(), classNameId, classPK, title, content, url, type,
-			displayDate, displayImmediately, expirationDate, priority, alert);
+			displayDate, expirationDate, priority, alert);
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
-	 *               String, String, String, String, Date, boolean, Date, int,
+	 *               String, String, String, String, Date, Date, int,
 	 *               boolean)}
 	 */
 	@Deprecated
@@ -174,8 +173,7 @@ public class AnnouncementsEntryServiceImpl
 
 		return addEntry(
 			layout.getGroupId(), classNameId, classPK, title, content, url,
-			type, displayDate, displayImmediately, expirationDate, priority,
-			alert);
+			type, displayDate, expirationDate, priority, alert);
 	}
 
 	@Override
@@ -200,21 +198,20 @@ public class AnnouncementsEntryServiceImpl
 	@Override
 	public AnnouncementsEntry updateEntry(
 			long entryId, String title, String content, String url, String type,
-			Date displayDate, boolean displayImmediately, Date expirationDate,
-			int priority)
+			Date displayDate, Date expirationDate, int priority)
 		throws PortalException {
 
 		AnnouncementsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		return announcementsEntryLocalService.updateEntry(
-			entryId, title, content, url, type, displayDate,
-			displayImmediately, expirationDate, priority);
+			entryId, title, content, url, type, displayDate, expirationDate,
+			priority);
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
-	 *             String, String, String, Date, boolean, Date, int)}
+	 *             String, String, String, Date, Date, int)}
 	 */
 	@Override
 	public AnnouncementsEntry updateEntry(
@@ -243,8 +240,8 @@ public class AnnouncementsEntryServiceImpl
 			EntryExpirationDateException.class);
 
 		return updateEntry(
-			entryId, title, content, url, type, displayDate, displayImmediately,
-			expirationDate, priority);
+			entryId, title, content, url, type, displayDate, expirationDate,
+			priority);
 	}
 
 }

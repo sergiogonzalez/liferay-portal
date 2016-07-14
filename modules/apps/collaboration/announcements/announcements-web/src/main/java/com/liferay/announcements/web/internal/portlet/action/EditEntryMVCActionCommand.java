@@ -176,13 +176,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (entryId <= 0) {
 			_announcementsEntryService.addEntry(
 				themeDisplay.getScopeGroupId(), classNameId, classPK, title,
-				content, url, type, displayDate, displayImmediately,
-				expirationDate, priority, alert);
+				content, url, type, displayDate, expirationDate, priority,
+				alert);
 		}
 		else {
 			_announcementsEntryService.updateEntry(
-				entryId, title, content, url, type, displayDate,
-				displayImmediately, expirationDate, priority);
+				entryId, title, content, url, type, displayDate, expirationDate,
+				priority);
 		}
 	}
 
