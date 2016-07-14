@@ -227,13 +227,18 @@ public class MBUtil {
 		HttpServletRequest request, boolean quote, MBMessage parentMessage,
 		boolean splitThread) {
 
-		String body = "";
+		String body = null;
 
-		if (quote && parentMessage != null) {
-			String parentAuthor =
-				parentMessage.isAnonymous() ?
-					LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(
+		if (quote && (parentMessage != null)) {
+			String parentAuthor = null;
+
+			if (parentMessage.isAnonymous()) {
+				parentAuthor = LanguageUtil.get(request, "anonymous");
+			}
+			else {
+				parentAuthor = HtmlUtil.escape(
 					PortalUtil.getUserName(parentMessage));
+			}
 
 			StringBundler sb = new StringBundler(5);
 
