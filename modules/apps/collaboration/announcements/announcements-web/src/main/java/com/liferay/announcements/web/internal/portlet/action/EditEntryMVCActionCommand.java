@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 @Component(
 	property = {
@@ -180,11 +181,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			_announcementsEntryService.updateEntry(
-				entryId, title, content, url, type, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, displayImmediately, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, priority);
+				entryId, title, content, url, type, displayDate,
+				displayImmediately, expirationDate, priority);
 		}
 	}
 
