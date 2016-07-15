@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class KBObjectsViewCountComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =
-		"modelFolder DESC, priority ASC, title ASC";
+		"modelFolder DESC, viewCount ASC, title ASC";
 
 	public static final String ORDER_BY_DESC =
-		"modelFolder DESC, priority DESC, title ASC";
+		"modelFolder DESC, viewCount DESC, title ASC";
 
 	public static final String[] ORDER_BY_FIELDS = {"viewCount, title"};
 
