@@ -1061,8 +1061,9 @@ public class PortalImpl implements Portal {
 
 			long companyId = PortalInstances.getCompanyId(request);
 
-			List<FriendlyURLResolver> friendlyURLResolvers =
-				FriendlyURLResolverRegistryUtil.getFriendlyURLResolvers();
+			Collection<FriendlyURLResolver> friendlyURLResolvers =
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolversAsCollection();
 
 			for (FriendlyURLResolver friendlyURLResolver :
 					friendlyURLResolvers) {
@@ -2833,8 +2834,9 @@ public class PortalImpl implements Portal {
 
 			long companyId = PortalInstances.getCompanyId(request);
 
-			List<FriendlyURLResolver> friendlyURLResolvers =
-				FriendlyURLResolverRegistryUtil.getFriendlyURLResolvers();
+			Collection<FriendlyURLResolver> friendlyURLResolvers =
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolversAsCollection();
 
 			for (FriendlyURLResolver friendlyURLResolver :
 					friendlyURLResolvers) {
