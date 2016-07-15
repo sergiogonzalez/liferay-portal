@@ -278,14 +278,31 @@ if (showSource) {
 		boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
 		%>
 
-		<c:if test="<%= useCustomDataProcessor %>">
-			alloyEditor.getNativeEditor().on(
-				'customDataProcessorLoaded',
-				function() {
-					alloyEditor.setHTML(getInitialContent());
-				}
-			);
-		</c:if>
+		<c:choose>
+			<c:when test="<%= useCustomDataProcessor %>">
+				alloyEditor.getNativeEditor().on(
+					'customDataProcessorLoaded',
+					function() {
+						alloyEditor.setHTML(getInitialContent());
+
+						Liferay.fire(
+							'editorReady',
+							{
+								editorName: '<%= name %>'
+							}
+						);
+					}
+				);
+			</c:when>
+			<c:otherwise>
+				Liferay.fire(
+					'editorReady',
+					{
+						editorName: '<%= name %>'
+					}
+				);
+			</c:otherwise>
+		</c:choose>
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#onEditorCreate" %>' />
 	};
@@ -300,6 +317,14 @@ if (showSource) {
 				editorContainer.appendChild(editorNode);
 
 				window['<%= name %>'].initEditor();
+			}
+			else {
+				Liferay.fire(
+					'editorReady',
+					{
+						editorName: '<%= name %>'
+					}
+				);
 			}
 		},
 

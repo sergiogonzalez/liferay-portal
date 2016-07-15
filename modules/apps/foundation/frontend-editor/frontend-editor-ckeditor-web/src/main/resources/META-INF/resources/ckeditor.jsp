@@ -178,6 +178,14 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 				createEditor();
 			}
+			else {
+				Liferay.fire(
+					'editorReady',
+					{
+						editorName: '<%= name %>'
+					}
+				);
+			}
 		},
 
 		destroy: function() {
@@ -428,6 +436,13 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
+
+			Liferay.fire(
+				'editorReady',
+				{
+					editorName: '<%= name %>'
+				}
+			);
 		}
 
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
