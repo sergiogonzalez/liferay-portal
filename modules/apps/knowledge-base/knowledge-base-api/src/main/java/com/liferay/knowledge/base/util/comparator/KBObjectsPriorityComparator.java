@@ -46,10 +46,10 @@ public class KBObjectsPriorityComparator<T> extends OrderByComparator<T> {
 		double priority1 = getPriority(t1);
 		double priority2 = getPriority(t2);
 
-		String title1 = getName(t1);
-		String title2 = getName(t1);
+		String title1 = getTitle(t1);
+		String title2 = getTitle(t1);
 
-		if (t1 instanceof KBFolder && t2 instanceof KBFolder) {
+		if ((t1 instanceof KBFolder) && (t2 instanceof KBFolder)) {
 			value = title1.compareToIgnoreCase(title2);
 		}
 		else if (t1 instanceof KBFolder) {
@@ -98,7 +98,18 @@ public class KBObjectsPriorityComparator<T> extends OrderByComparator<T> {
 		return _ascending;
 	}
 
-	protected String getName(Object obj) {
+	protected double getPriority(Object obj) {
+		if (obj instanceof KBArticle) {
+			KBArticle kbArticle = (KBArticle)obj;
+
+			return kbArticle.getPriority();
+		}
+		else {
+			return 0.0;
+		}
+	}
+
+	protected String getTitle(Object obj) {
 		if (obj instanceof KBArticle) {
 			KBArticle kbArticle = (KBArticle)obj;
 
@@ -108,17 +119,6 @@ public class KBObjectsPriorityComparator<T> extends OrderByComparator<T> {
 			KBFolder kbFolder = (KBFolder)obj;
 
 			return kbFolder.getName();
-		}
-	}
-
-	protected double getPriority(Object obj) {
-		if (obj instanceof KBArticle) {
-			KBArticle kbArticle = (KBArticle)obj;
-
-			return kbArticle.getPriority();
-		}
-		else {
-			return 0.0;
 		}
 	}
 
