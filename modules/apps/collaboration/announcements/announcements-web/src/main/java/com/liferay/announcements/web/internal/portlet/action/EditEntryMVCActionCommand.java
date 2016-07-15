@@ -48,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
 		"mvc.command.name=/announcements/edit_entry"
 	},
 	service = MVCActionCommand.class
@@ -57,7 +58,19 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void deleteEntry(ActionRequest actionRequest) throws Exception {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
-		_announcementsEntryService.deleteEntry(entryId);
+		long[] deleteEntryIds = null;
+
+		if (entryId > 0) {
+			deleteEntryIds = new long[] {entryId};
+		}
+		else {
+			deleteEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIdsAnnouncementsEntry");
+		}
+
+		for (long deleteEntryId : deleteEntryIds) {
+			_announcementsEntryService.deleteEntry(deleteEntryId);
+		}
 	}
 
 	@Override

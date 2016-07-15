@@ -15,13 +15,13 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -51,8 +51,14 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 		_label = label;
 	}
 
-	public void setNavigationKeys(String[] navigationKeys) {
+	public void setNavigationKeys(Map<String, String> navigationKeys) {
 		_navigationKeys = navigationKeys;
+	}
+
+	public void setNavigationKeys(String[] navigationKeys) {
+		for (String navigationKey : navigationKeys) {
+			_navigationKeys.put(navigationKey, navigationKey);
+		}
 	}
 
 	public void setNavigationParam(String navigationParam) {
@@ -124,17 +130,17 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 		String navigationKey = ParamUtil.getString(request, _navigationParam);
 
-		if (ArrayUtil.isNotEmpty(_navigationKeys)) {
-			for (String curNavigationKey : _navigationKeys) {
-				_portletURL.setParameter(_navigationParam, curNavigationKey);
+		for (Map.Entry<String, String> entry : _navigationKeys.entrySet()) {
+			String label = entry.getKey();
+			String value = entry.getValue();
 
-				ManagementBarFilterItem managementBarFilterItem =
-					new ManagementBarFilterItem(
-						curNavigationKey.equals(navigationKey),
-						curNavigationKey, _portletURL.toString());
+			_portletURL.setParameter(_navigationParam, value);
 
-				_managementBarFilterItems.add(managementBarFilterItem);
-			}
+			ManagementBarFilterItem managementBarFilterItem =
+				new ManagementBarFilterItem(
+					value.equals(navigationKey), label, _portletURL.toString());
+
+			_managementBarFilterItems.add(managementBarFilterItem);
 		}
 
 		request.setAttribute(
@@ -162,7 +168,7 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 	private String _label;
 	private List<ManagementBarFilterItem> _managementBarFilterItems =
 		new ArrayList<>();
-	private String[] _navigationKeys;
+	private Map<String, String> _navigationKeys;
 	private String _navigationParam = "navigation";
 	private PortletURL _portletURL;
 
