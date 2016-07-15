@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
 		"mvc.command.name=/announcements/preview_entry"
 	}
 )
@@ -60,7 +61,7 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 			AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
 			AnnouncementsFlagConstants.NOT_HIDDEN);
 
-		return "/view_entry.jsp";
+		return "/announcements/view_entry.jsp";
 	}
 
 	private AnnouncementsEntry _getAnnouncementsEntry(

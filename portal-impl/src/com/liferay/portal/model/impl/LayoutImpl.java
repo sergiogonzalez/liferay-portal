@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -862,10 +863,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		LayoutType layoutType = getLayoutType();
-
 		LayoutTypeController layoutTypeController =
-			layoutType.getLayoutTypeController();
+			LayoutTypeControllerTracker.getLayoutTypeController(getType());
 
 		return layoutTypeController.includeLayoutContent(
 			request, response, this);
