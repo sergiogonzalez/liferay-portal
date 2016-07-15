@@ -110,6 +110,14 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 				window['<%= name %>'].initEditor();
 			}
+			else {
+				Liferay.fire(
+					'editorReady',
+					{
+						editorName: '<%= name %>'
+					}
+				);
+			}
 		},
 
 		destroy: function() {
@@ -234,6 +242,13 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
+
+			Liferay.fire(
+				'editorReady',
+				{
+					editorName: '<%= name %>'
+				}
+			);
 		},
 
 		instanceReady: false,
