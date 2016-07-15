@@ -60,9 +60,16 @@ public class KBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 		Date modifiedDate1 = getModifiedDate(t1);
 		Date modifiedDate2 = getModifiedDate(t2);
 
+		String title1 = getTitle(t1);
+		String title2 = getTitle(t2);
+
 		if (_orderByModel) {
 			if (t1 instanceof KBFolder && t2 instanceof KBFolder) {
 				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+
+				if (value == 0) {
+					value = title1.compareToIgnoreCase(title2);
+				}
 			}
 			else if (t1 instanceof KBFolder) {
 				value = -1;
@@ -72,10 +79,18 @@ public class KBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 			}
 			else {
 				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+
+				if (value == 0) {
+					value = title1.compareToIgnoreCase(title2);
+				}
 			}
 		}
 		else {
 			value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+
+			if (value == 0) {
+				value = title1.compareToIgnoreCase(title2);
+			}
 		}
 
 		if (_ascending) {
@@ -126,6 +141,19 @@ public class KBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 			KBFolder kbFolder = (KBFolder)obj;
 
 			return kbFolder.getModifiedDate();
+		}
+	}
+
+	protected String getTitle(Object obj) {
+		if (obj instanceof KBArticle) {
+			KBArticle kbArticle = (KBArticle)obj;
+
+			return kbArticle.getTitle();
+		}
+		else {
+			KBFolder kbFolder = (KBFolder)obj;
+
+			return kbFolder.getName();
 		}
 	}
 
