@@ -56,16 +56,21 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
-		window[editorName].create();
-
 		Liferay.once(
 			'editorReady',
 			function(event) {
-				if (event.editorName === editorName && quote) {
-					window['<portlet:namespace />addQuote' + messageId]();
+				if (event.editorName === editorName) {
+					if (quote) {
+						window['<portlet:namespace />addQuote' + messageId]();
+					}
+					else {
+						window[editorName].setHTML('');
+					}
 				}
 			}
 		);
+
+		window[editorName].create();
 
 		document.getElementById(editorName).focus();
 

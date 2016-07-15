@@ -318,6 +318,14 @@ if (showSource) {
 
 				window['<%= name %>'].initEditor();
 			}
+			else {
+				Liferay.fire(
+					'editorReady',
+					{
+						editorName: '<%= name %>'
+					}
+				);
+			}
 		},
 
 		destroy: function() {
