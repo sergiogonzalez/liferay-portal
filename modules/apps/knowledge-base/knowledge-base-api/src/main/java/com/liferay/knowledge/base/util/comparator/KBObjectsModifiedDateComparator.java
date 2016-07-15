@@ -28,7 +28,7 @@ public class KBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC = "modifiedDate ASC, title ASC";
 
-	public static final String ORDER_BY_DESC = "modifiedDate DESC, title DESC";
+	public static final String ORDER_BY_DESC = "modifiedDate DESC, title ASC";
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate, title"};
 
@@ -36,7 +36,7 @@ public class KBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 		"modelFolder DESC, modifiedDate ASC, title ASC";
 
 	public static final String ORDER_BY_MODEL_DESC =
-		"modelFolder DESC, modifiedDate DESC, title DESC";
+		"modelFolder DESC, modifiedDate DESC, title ASC";
 
 	public KBObjectsModifiedDateComparator() {
 		this(false, false);
