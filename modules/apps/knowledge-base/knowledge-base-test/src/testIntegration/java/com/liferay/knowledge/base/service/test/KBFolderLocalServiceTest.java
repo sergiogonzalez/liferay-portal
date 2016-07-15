@@ -349,8 +349,8 @@ public class KBFolderLocalServiceTest {
 				QueryUtil.ALL_POS, new KBObjectsViewCountComparator(true));
 
 		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
-		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
-		KBArticle currentKBArticle2 = (KBArticle)kbFolderAndKBArticles.get(2);
+		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(2);
+		KBArticle currentKBArticle2 = (KBArticle)kbFolderAndKBArticles.get(1);
 
 		Assert.assertEquals(
 			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
@@ -466,8 +466,8 @@ public class KBFolderLocalServiceTest {
 				QueryUtil.ALL_POS, new KBObjectsViewCountComparator(false));
 
 		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
-		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(2);
-		KBArticle currentKBArticle2 = (KBArticle)kbFolderAndKBArticles.get(1);
+		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
+		KBArticle currentKBArticle2 = (KBArticle)kbFolderAndKBArticles.get(2);
 
 		Assert.assertEquals(
 			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
