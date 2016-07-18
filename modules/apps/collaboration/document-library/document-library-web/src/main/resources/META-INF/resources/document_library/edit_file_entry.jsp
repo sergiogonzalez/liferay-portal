@@ -77,6 +77,10 @@ if (fileEntryTypeId >= 0) {
 	dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 }
 
+boolean majorVersion = ParamUtil.getBoolean(request, "majorVersion");
+
+boolean updateVersionDetails = ParamUtil.getBoolean(request, "updateVersionDetails");
+
 long assetClassPK = 0;
 
 if ((fileVersion != null) && !fileVersion.isApproved() && Validator.isNotNull(fileVersion.getVersion()) && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)) {
@@ -428,13 +432,13 @@ if (portletTitleBasedNavigation) {
 						label="customize-the-version-number-increment-and-describe-my-changes"
 						name="updateVersionDetails"
 						type="toggle-switch"
-						value="<%= false %>"
+						value="<%= updateVersionDetails %>"
 					/>
 
-					<div id="<portlet:namespace />versionDetails" style="display: none">
-						<aui:input label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
+					<div id="<portlet:namespace />versionDetails" style="<%= (updateVersionDetails) ? StringPool.BLANK : "display: none" %>">
+						<aui:input checked="<%= majorVersion %>" label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
 
-						<aui:input checked="<%= true %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
+						<aui:input checked="<%= !majorVersion %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
 
 						<aui:model-context />
 
