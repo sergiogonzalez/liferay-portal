@@ -44,7 +44,10 @@ import java.util.Map;
  * @author Thiago Moreira
  * @author Juan Fernández
  * @author Zsolt Berentey
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl}
  */
+@Deprecated
 public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
