@@ -30,10 +30,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * <p>
@@ -124,9 +125,8 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyBlogsTrackbacks.class);
 
+	private BlogsEntryLocalService _blogsEntryLocalService;
 	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
-
-	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }
