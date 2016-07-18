@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.service.http;
+package com.liferay.blogs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.blogs.kernel.service.BlogsEntryServiceUtil;
+import com.liferay.blogs.service.BlogsEntryServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,11 +51,8 @@ import com.liferay.portal.kernel.util.MethodKey;
  * @see BlogsEntryServiceSoap
  * @see HttpPrincipal
  * @see BlogsEntryServiceUtil
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
  * @generated
  */
-@Deprecated
 @ProviderType
 public class BlogsEntryServiceHttp {
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(

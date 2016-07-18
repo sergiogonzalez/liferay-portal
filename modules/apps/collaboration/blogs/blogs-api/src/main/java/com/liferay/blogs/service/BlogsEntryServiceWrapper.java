@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.kernel.service;
+package com.liferay.blogs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,11 +23,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see BlogsEntryService
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
  * @generated
  */
-@Deprecated
 @ProviderType
 public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	ServiceWrapper<BlogsEntryService> {

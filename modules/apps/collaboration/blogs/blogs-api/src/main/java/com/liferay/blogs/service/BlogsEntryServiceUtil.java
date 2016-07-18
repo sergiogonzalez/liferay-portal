@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.blogs.kernel.service;
+package com.liferay.blogs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for BlogsEntry. This utility wraps
- * {@link com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl} and is the
+ * {@link com.liferay.blogs.service.impl.BlogsEntryServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -29,19 +30,16 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  *
  * @author Brian Wing Shun Chan
  * @see BlogsEntryService
- * @see com.liferay.portlet.blogs.service.base.BlogsEntryServiceBaseImpl
- * @see com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
+ * @see com.liferay.blogs.service.base.BlogsEntryServiceBaseImpl
+ * @see com.liferay.blogs.service.impl.BlogsEntryServiceImpl
  * @generated
  */
-@Deprecated
 @ProviderType
 public class BlogsEntryServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.blogs.service.impl.BlogsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -298,15 +296,9 @@ public class BlogsEntryServiceUtil {
 	}
 
 	public static BlogsEntryService getService() {
-		if (_service == null) {
-			_service = (BlogsEntryService)PortalBeanLocatorUtil.locate(BlogsEntryService.class.getName());
-
-			ReferenceRegistry.registerReference(BlogsEntryServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static BlogsEntryService _service;
+	private static ServiceTracker<BlogsEntryService, BlogsEntryService> _serviceTracker =
+		ServiceTrackerFactory.open(BlogsEntryService.class);
 }

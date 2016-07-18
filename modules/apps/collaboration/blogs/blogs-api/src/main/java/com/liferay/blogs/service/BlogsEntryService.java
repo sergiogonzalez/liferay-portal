@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.kernel.service;
+package com.liferay.blogs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -43,15 +44,14 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see BlogsEntryServiceUtil
- * @see com.liferay.portlet.blogs.service.base.BlogsEntryServiceBaseImpl
- * @see com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
+ * @see com.liferay.blogs.service.base.BlogsEntryServiceBaseImpl
+ * @see com.liferay.blogs.service.impl.BlogsEntryServiceImpl
  * @generated
  */
-@Deprecated
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=blogs", "json.web.service.context.path=BlogsEntry"}, service = BlogsEntryService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
@@ -59,7 +59,7 @@ public interface BlogsEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link BlogsEntryServiceUtil} to access the blogs entry remote service. Add custom service methods to {@link com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link BlogsEntryServiceUtil} to access the blogs entry remote service. Add custom service methods to {@link com.liferay.blogs.service.impl.BlogsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**

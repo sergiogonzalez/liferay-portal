@@ -12,33 +12,41 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.service.impl;
+package com.liferay.blogs.internal.wrapper;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryService;
+import com.liferay.blogs.kernel.service.BlogsEntryServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.blogs.service.base.BlogsEntryServiceBaseImpl;
 
 import java.io.InputStream;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * Provides the remote service for accessing, adding, deleting, subscription
- * handling of, trash handling of, and updating blog entries. Its methods
- * include permission checks.
- *
- * @author Brian Wing Shun Chan
- * @author Mate Thurzo
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
+ * @author Sergio González
  */
-@Deprecated
-public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
+@Component(immediate = true, service = ServiceWrapper.class)
+public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
+
+	public ModularBlogsEntryServiceWrapper() {
+		super(null);
+	}
+
+	public ModularBlogsEntryServiceWrapper(
+		BlogsEntryService blogsEntryService) {
+
+		super(blogsEntryService);
+	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
@@ -57,9 +65,11 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.addEntry(
+			title, description, content, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
+			allowTrackbacks, trackbacks, smallImage, smallImageURL,
+			smallImageFileName, smallImageInputStream, serviceContext);
 	}
 
 	@Override
@@ -73,16 +83,16 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.addEntry(
+			title, subtitle, description, content, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
 	@Override
 	public void deleteEntry(long entryId) throws PortalException {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		_blogsEntryService.deleteEntry(entryId);
 	}
 
 	@Override
@@ -90,9 +100,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long companyId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getCompanyEntries(
+			companyId, displayDate, status, max);
 	}
 
 	@Override
@@ -102,59 +111,49 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getCompanyEntriesRSS(
+			companyId, displayDate, status, max, type, version, displayStyle,
+			feedURL, entryURL, themeDisplay);
 	}
 
 	@Override
 	public BlogsEntry getEntry(long entryId) throws PortalException {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getEntry(entryId);
 	}
 
 	@Override
 	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getEntry(groupId, urlTitle);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate, int status, int max) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntries(
+			groupId, displayDate, status, max);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate, int status, int start, int end) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntries(
+			groupId, displayDate, status, start, end);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max) {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntries(groupId, status, max);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntries(groupId, status, start, end);
 	}
 
 	@Override
@@ -162,25 +161,21 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		long groupId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntries(
+			groupId, status, start, end, obc);
 	}
 
 	@Override
 	public int getGroupEntriesCount(
 		long groupId, Date displayDate, int status) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntriesCount(
+			groupId, displayDate, status);
 	}
 
 	@Override
 	public int getGroupEntriesCount(long groupId, int status) {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntriesCount(groupId, status);
 	}
 
 	@Override
@@ -190,9 +185,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupEntriesRSS(
+			groupId, displayDate, status, max, type, version, displayStyle,
+			feedURL, entryURL, themeDisplay);
 	}
 
 	@Override
@@ -200,9 +195,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long companyId, long groupId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupsEntries(
+			companyId, groupId, displayDate, status, max);
 	}
 
 	@Override
@@ -210,9 +204,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		long groupId, long userId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupUserEntries(
+			groupId, userId, status, start, end, obc);
 	}
 
 	@Override
@@ -220,25 +213,22 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		long groupId, long userId, int[] statuses, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupUserEntries(
+			groupId, userId, statuses, start, end, obc);
 	}
 
 	@Override
 	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupUserEntriesCount(
+			groupId, userId, status);
 	}
 
 	@Override
 	public int getGroupUserEntriesCount(
 		long groupId, long userId, int[] statuses) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getGroupUserEntriesCount(
+			groupId, userId, statuses);
 	}
 
 	@Override
@@ -246,9 +236,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long organizationId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getOrganizationEntries(
+			organizationId, displayDate, status, max);
 	}
 
 	@Override
@@ -258,37 +247,44 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.getOrganizationEntriesRSS(
+			organizationId, displayDate, status, max, type, version,
+			displayStyle, feedURL, entryURL, themeDisplay);
+	}
+
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return _blogsEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public BlogsEntryService getWrappedService() {
+		return super.getWrappedService();
 	}
 
 	@Override
 	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.moveEntryToTrash(entryId);
 	}
 
 	@Override
 	public void restoreEntryFromTrash(long entryId) throws PortalException {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		_blogsEntryService.restoreEntryFromTrash(entryId);
+	}
+
+	@Override
+	public void setWrappedService(BlogsEntryService blogsEntryService) {
+		super.setWrappedService(blogsEntryService);
 	}
 
 	@Override
 	public void subscribe(long groupId) throws PortalException {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		_blogsEntryService.subscribe(groupId);
 	}
 
 	@Override
 	public void unsubscribe(long groupId) throws PortalException {
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		_blogsEntryService.unsubscribe(groupId);
 	}
 
 	/**
@@ -308,9 +304,12 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.updateEntry(
+			entryId, title, description, content, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
+			smallImageURL, smallImageFileName, smallImageInputStream,
+			serviceContext);
 	}
 
 	@Override
@@ -325,9 +324,20 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.blogs.service.impl.BlogsEntryServiceImpl");
+		return _blogsEntryService.updateEntry(
+			entryId, title, subtitle, description, content, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
+
+	@Reference
+	protected void setBlogsEntryLocalService(
+		com.liferay.blogs.service.BlogsEntryService blogsEntryService) {
+
+		_blogsEntryService = blogsEntryService;
+	}
+
+	private com.liferay.blogs.service.BlogsEntryService _blogsEntryService;
 
 }
