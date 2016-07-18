@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.blogs.verify;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
@@ -27,7 +27,10 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -40,11 +43,23 @@ import java.util.List;
  *
  * @author Alexander Chow
  */
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.blogs.trackbacks"},
+	service = VerifyProcess.class
+)
 public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
 		verifyMBDiscussions();
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
 	protected void verifyMBDiscussions() {
@@ -55,7 +70,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 			for (MBDiscussion mbDiscussion : mbDiscussions) {
 				try {
-					BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+					BlogsEntry entry = _blogsEntryLocalService.getEntry(
 						mbDiscussion.getClassPK());
 
 					List<MBMessage> mbMessages =
@@ -107,5 +122,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyBlogsTrackbacks.class);
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }
