@@ -65,7 +65,7 @@ public class CommentJSONWS {
 	}
 
 	@JSON
-	public int getThreadCommentsCount() {
+	public int getDescendantCommentsCount() {
 		return _threadCommentsCount;
 	}
 
