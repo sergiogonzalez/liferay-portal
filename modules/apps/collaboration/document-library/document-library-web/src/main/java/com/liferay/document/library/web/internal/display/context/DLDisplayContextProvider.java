@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -98,10 +100,12 @@ public class DLDisplayContextProvider {
 			FileShortcut fileShortcut) {
 
 		try {
-			String languageId = LanguageUtil.getLanguageId(request);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(languageId);
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLanguageId());
 
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
@@ -133,10 +137,12 @@ public class DLDisplayContextProvider {
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
-		String languageId = LanguageUtil.getLanguageId(request);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(languageId);
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(

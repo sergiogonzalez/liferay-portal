@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
 
@@ -49,10 +51,12 @@ public class IGDisplayContextProvider {
 			FileShortcut fileShortcut) {
 
 		try {
-			String languageId = LanguageUtil.getLanguageId(request);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(languageId);
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLanguageId());
 
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
@@ -84,10 +88,12 @@ public class IGDisplayContextProvider {
 			FileVersion fileVersion) {
 
 		try {
-			String languageId = LanguageUtil.getLanguageId(request);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(languageId);
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLanguageId());
 
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(

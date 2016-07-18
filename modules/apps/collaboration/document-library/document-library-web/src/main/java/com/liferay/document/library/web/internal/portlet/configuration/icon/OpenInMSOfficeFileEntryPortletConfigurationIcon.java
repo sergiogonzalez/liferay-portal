@@ -57,10 +57,12 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		String languageId = LanguageUtil.getLanguageId(portletRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(languageId);
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
 
 		return LanguageUtil.get(resourceBundle, "open-in-ms-office");
 	}
@@ -119,10 +121,13 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			FileVersion fileVersion = ActionUtil.getFileVersion(
 				portletRequest, fileEntry);
 
-			String languageId = LanguageUtil.getLanguageId(portletRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(languageId);
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLanguageId());
 
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
 				request, fileVersion, resourceBundle);
