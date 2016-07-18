@@ -40,9 +40,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -247,17 +249,17 @@ public class KBFolderLocalServiceTest {
 	public void testGetKBFoldersAndKBArticlesOrderedByAscendingModifiedDate()
 		throws Exception {
 
+		Date date = new Date();
+
 		KBArticle kbArticle1 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
+			new Date(date.getTime() + Time.SECOND));
 		KBArticle kbArticle2 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
+			new Date(date.getTime() + Time.SECOND * 3));
 		KBArticle kbArticle3 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
-
-		updateKBArticle(kbArticle2, RandomTestUtil.randomString());
+			new Date(date.getTime() + Time.SECOND * 2));
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -391,17 +393,17 @@ public class KBFolderLocalServiceTest {
 	public void testGetKBFoldersAndKBArticlesOrderedByDescendingModifiedDate()
 		throws Exception {
 
+		Date date = new Date();
+
 		KBArticle kbArticle1 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
+			new Date(date.getTime() + Time.SECOND));
 		KBArticle kbArticle2 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
+			new Date(date.getTime() + Time.SECOND * 3));
 		KBArticle kbArticle3 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
-
-		updateKBArticle(kbArticle2, RandomTestUtil.randomString());
+			new Date(date.getTime() + Time.SECOND * 2));
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -705,6 +707,25 @@ public class KBFolderLocalServiceTest {
 			kbArticle.getResourcePrimKey(), title, title,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			new String[0], new String[0], serviceContext);
+	}
+
+	protected KBArticle addKBArticle(long parentKbFolderId, Date createDate)
+		throws Exception {
+
+		String title = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		serviceContext.setCreateDate(createDate);
+		serviceContext.setModifiedDate(createDate);
+
+		return KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(),
+			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
+			parentKbFolderId, title, title, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, new String[0], new String[0],
+			serviceContext);
 	}
 
 	protected KBArticle addKBArticle(long parentKbFolderId, String title)
