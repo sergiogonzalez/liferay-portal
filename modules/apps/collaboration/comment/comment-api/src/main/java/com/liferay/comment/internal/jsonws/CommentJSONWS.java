@@ -55,6 +55,11 @@ public class CommentJSONWS {
 	}
 
 	@JSON
+	public int getDescendantCommentsCount() {
+		return _threadCommentsCount;
+	}
+
+	@JSON
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -62,11 +67,6 @@ public class CommentJSONWS {
 	@JSON
 	public long getParentCommentId() {
 		return _parentCommentId;
-	}
-
-	@JSON
-	public int getDescendantCommentsCount() {
-		return _threadCommentsCount;
 	}
 
 	@JSON
