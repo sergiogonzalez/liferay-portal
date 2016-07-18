@@ -46,7 +46,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("insert into ResourceAction (mvccVersion, ");
-			sb.append("resourceActionId, name, actionId, bitwiseValue)");
+			sb.append("resourceActionId, name, actionId, bitwiseValue) ");
 			sb.append("values (?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
@@ -296,7 +296,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		return sb.toString();
 	}
 
-	private static final int _NEW_ADD_ENTRY_BITWISE_VALUE = 2;
+	private static final long _NEW_ADD_ENTRY_BITWISE_VALUE = 2;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeAnnouncements.class);
