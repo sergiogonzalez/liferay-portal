@@ -34,7 +34,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
  */
+@Deprecated
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	/**
