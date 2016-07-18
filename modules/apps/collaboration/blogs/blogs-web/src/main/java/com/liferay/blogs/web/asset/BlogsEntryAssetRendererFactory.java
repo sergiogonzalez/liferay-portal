@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.blogs.kernel.service.BlogsEntryService;
+import com.liferay.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.PortletRequest;
