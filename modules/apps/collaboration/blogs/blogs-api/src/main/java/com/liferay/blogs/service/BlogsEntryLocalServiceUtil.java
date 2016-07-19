@@ -124,6 +124,22 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().deleteEntry(entry);
 	}
 
+	public static com.liferay.blogs.kernel.model.BlogsEntry fetchBlogsEntry(
+		long entryId) {
+		return getService().fetchBlogsEntry(entryId);
+	}
+
+	public static com.liferay.blogs.kernel.model.BlogsEntry fetchBlogsEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchBlogsEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.blogs.kernel.model.BlogsEntry getBlogsEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getBlogsEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.blogs.kernel.model.BlogsEntry getEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -175,6 +191,11 @@ public class BlogsEntryLocalServiceUtil {
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().restoreEntryFromTrash(userId, entryId);
+	}
+
+	public static com.liferay.blogs.kernel.model.BlogsEntry updateBlogsEntry(
+		com.liferay.blogs.kernel.model.BlogsEntry blogsEntry) {
+		return getService().updateBlogsEntry(blogsEntry);
 	}
 
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
@@ -276,6 +297,11 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().getEntriesPrevAndNext(entryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -330,6 +356,14 @@ public class BlogsEntryLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> orderByComparator) {
+		return getService()
+				   .getBlogsEntriesByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getCompanyEntries(

@@ -18,6 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -111,6 +115,17 @@ public interface BlogsEntryLocalService extends BaseLocalService {
 	public BlogsEntry deleteEntry(BlogsEntry entry) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry fetchBlogsEntry(long entryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry getBlogsEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -150,6 +165,8 @@ public interface BlogsEntryLocalService extends BaseLocalService {
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException;
+
+	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry);
 
 	public BlogsEntry updateEntry(long userId, long entryId,
 		java.lang.String title, java.lang.String content,
@@ -211,6 +228,10 @@ public interface BlogsEntryLocalService extends BaseLocalService {
 	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
 	public Folder addAttachmentsFolder(long userId, long groupId)
 		throws PortalException;
 
@@ -243,6 +264,11 @@ public interface BlogsEntryLocalService extends BaseLocalService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
