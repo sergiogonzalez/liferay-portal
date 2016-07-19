@@ -121,6 +121,27 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.blogs.kernel.model.BlogsEntry fetchBlogsEntry(
+		long entryId) {
+		return _blogsEntryLocalService.fetchBlogsEntry(entryId);
+	}
+
+	@Override
+	public com.liferay.blogs.kernel.model.BlogsEntry fetchBlogsEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _blogsEntryLocalService.fetchBlogsEntryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.blogs.kernel.model.BlogsEntry getBlogsEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.getBlogsEntryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.getEntry(entryId);
@@ -175,6 +196,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.restoreEntryFromTrash(userId, entryId);
+	}
+
+	@Override
+	public com.liferay.blogs.kernel.model.BlogsEntry updateBlogsEntry(
+		com.liferay.blogs.kernel.model.BlogsEntry blogsEntry) {
+		return _blogsEntryLocalService.updateBlogsEntry(blogsEntry);
 	}
 
 	@Override
@@ -280,6 +307,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _blogsEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -338,6 +371,14 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _blogsEntryLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> orderByComparator) {
+		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	@Override
