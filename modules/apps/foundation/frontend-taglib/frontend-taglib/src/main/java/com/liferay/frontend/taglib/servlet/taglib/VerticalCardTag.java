@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -81,10 +80,6 @@ public class VerticalCardTag extends CardTag {
 			"liferay-frontend:card:stickerBottom", _stickerBottom);
 		request.setAttribute("liferay-frontend:card:subtitle", _subtitle);
 		request.setAttribute("liferay-frontend:card:title", _title);
-
-		if (Validator.isNotNull(_onClick)) {
-			request.setAttribute("liferay-frontend:card:url", "javascript:;");
-		}
 	}
 
 	private boolean _backgroundImage = true;

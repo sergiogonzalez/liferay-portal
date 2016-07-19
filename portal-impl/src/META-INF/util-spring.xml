@@ -25,13 +25,8 @@
 		<property name="expandoBridgeIndexer" ref="com.liferay.expando.kernel.util.ExpandoBridgeIndexer" />
 	</bean>
 	<bean class="com.liferay.mail.util.DummyHook" id="com.liferay.mail.util.DummyHook" />
-	<bean class="com.liferay.portal.convert.database.DatabaseConvertProcess" />
-	<bean class="com.liferay.portal.convert.database.PortalDatabaseConverter" >
-		<property name="modelMigrator" ref="com.liferay.portal.convert.util.ModelMigrator" />
-	</bean>
 	<bean class="com.liferay.portal.convert.documentlibrary.DocumentLibraryConvertProcess" />
 	<bean class="com.liferay.portal.convert.documentlibrary.DocumentLibraryExtraSettingsConvertProcess" />
-	<bean class="com.liferay.portal.convert.util.ModelMigratorImpl" id="com.liferay.portal.convert.util.ModelMigrator" />
 	<bean class="com.liferay.portal.events.StartupHelperUtil" id="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">
 			<bean class="com.liferay.portal.events.StartupHelper" />
@@ -557,7 +552,6 @@
 	<bean class="com.liferay.portlet.asset.util.AssetCategoryIndexer" id="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean class="com.liferay.portlet.asset.util.AssetEntryIndexer" id="com.liferay.portlet.asset.util.AssetEntryIndexer" />
 	<bean class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
-	<bean class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
 	<bean class="com.liferay.portlet.blogs.service.permission.BlogsPermission" id="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
 	<bean class="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" id="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" />
 	<bean class="com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil" id="com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil">
