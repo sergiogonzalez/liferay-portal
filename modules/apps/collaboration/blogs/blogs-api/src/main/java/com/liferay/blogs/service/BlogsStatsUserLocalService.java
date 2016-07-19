@@ -54,6 +54,10 @@ public interface BlogsStatsUserLocalService extends BaseLocalService {
 	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException;
 
+	public BlogsStatsUser updateStatsUser(long groupId, long userId,
+		int ratingsTotalEntries, double ratingsTotalScore,
+		double ratingsAverageScore) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyStatsUsersCount(long companyId);
 
