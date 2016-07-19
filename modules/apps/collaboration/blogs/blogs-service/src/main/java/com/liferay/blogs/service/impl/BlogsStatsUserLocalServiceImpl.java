@@ -235,6 +235,21 @@ public class BlogsStatsUserLocalServiceImpl
 		blogsStatsUserPersistence.update(statsUser);
 	}
 
+	@Override
+	public BlogsStatsUser updateStatsUser(
+			long groupId, long userId, int ratingsTotalEntries,
+			double ratingsTotalScore, double ratingsAverageScore)
+		throws PortalException {
+
+		BlogsStatsUser blogsStatsUser = getStatsUser(groupId, userId);
+
+		blogsStatsUser.setRatingsTotalEntries(ratingsTotalEntries);
+		blogsStatsUser.setRatingsTotalScore(ratingsTotalScore);
+		blogsStatsUser.setRatingsAverageScore(ratingsAverageScore);
+
+		return blogsStatsUserPersistence.update(blogsStatsUser);
+	}
+
 	@ServiceReference(type = BlogsStatsUserFinder.class)
 	protected BlogsStatsUserFinder blogsStatsUserFinder;
 
