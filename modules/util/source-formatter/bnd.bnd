@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Source Formatter
 Bundle-SymbolicName: com.liferay.source.formatter
-Bundle-Version: 1.0.243
+Bundle-Version: 1.0.244
 Import-Package:\
 	!javax.portlet,\
 	\
@@ -10,6 +10,7 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 -includeresource:\
+	@biz.aQute.bndlib-[0-9]*!/aQute/bnd/osgi/Constants.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\

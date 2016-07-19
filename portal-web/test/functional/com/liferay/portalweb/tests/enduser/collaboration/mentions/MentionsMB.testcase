@@ -149,8 +149,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute macro="Mentions#addMentionViaMessageBoardThread">
-			<var name="editMBThread" value="True" />
+		<execute macro="Mentions#addMentionViaMessageBoardThreadEdit">
 			<var name="mentionsUserFullName" value="userfn userln" />
 			<var name="mentionsUserScreenName" value="usersn" />
 			<var name="threadBody" value="Thread Body" />

@@ -107,6 +107,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['sortable']
+		requires: ['liferay-dd-proxy', 'sortable']
 	}
 );

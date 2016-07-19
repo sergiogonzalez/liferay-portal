@@ -5,8 +5,6 @@ Export-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache.thread.local,\
 	com.liferay.portal.cluster,\
-	com.liferay.portal.convert.database,\
-	com.liferay.portal.convert.util,\
 	com.liferay.portal.dao.jdbc.aop,\
 	com.liferay.portal.dao.orm.hibernate,\
 	com.liferay.portal.deploy.hot,\
@@ -23,6 +21,7 @@ Export-Package:\
 	com.liferay.portal.security.lang,\
 	com.liferay.portal.service.http,\
 	com.liferay.portal.service.permission,\
+	com.liferay.portal.service.persistence.constants,\
 	com.liferay.portal.servlet,\
 	com.liferay.portal.servlet.filters.authverifier,\
 	com.liferay.portal.spring.aop,\

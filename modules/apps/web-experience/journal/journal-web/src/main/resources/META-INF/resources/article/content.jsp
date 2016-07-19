@@ -67,12 +67,14 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	String message = nsle.getMessage();
 	%>
 
-	<c:when test="<%= message.equals(JournalArticleConstants.DISPLAY_PAGE) %>">
-		<liferay-ui:message key="please-select-an-existing-display-page" />
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:message key="the-content-references-a-missing-page" />
-	</c:otherwise>
+	<c:choose>
+		<c:when test="<%= Objects.equals(message, JournalArticleConstants.DISPLAY_PAGE) %>">
+			<liferay-ui:message key="please-select-an-existing-display-page" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="the-content-references-a-missing-page" />
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="please-select-an-existing-structure" />
@@ -102,14 +104,16 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 	<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" name="description" wrapperCssClass="article-content-description" />
 
-	<liferay-ddm:html
-		checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
-		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-		classPK="<%= ddmStructure.getStructureId() %>"
-		ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
-		ignoreRequestValue="<%= changeStructure %>"
-		requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
-	/>
+	<div class="article-content-content">
+		<liferay-ddm:html
+			checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
+			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+			classPK="<%= ddmStructure.getStructureId() %>"
+			ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
+			ignoreRequestValue="<%= changeStructure %>"
+			requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
+		/>
+	</div>
 
 	<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
 </aui:fieldset>
