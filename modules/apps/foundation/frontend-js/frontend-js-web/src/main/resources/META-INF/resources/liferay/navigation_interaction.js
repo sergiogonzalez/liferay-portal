@@ -260,6 +260,8 @@ AUI.add(
 
 						focusManager.after(['activeDescendantChange', 'focusedChange'], instance._showMenu, instance);
 
+						Liferay.once('startNavigate', focusManager.destroy, focusManager);
+
 						instance._focusManager = focusManager;
 					},
 

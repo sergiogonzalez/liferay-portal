@@ -34,4 +34,6 @@ public @interface DDMForm {
 
 	public String localization() default StringPool.BLANK;
 
+	public DDMFormRule[] rules() default {};
+
 }

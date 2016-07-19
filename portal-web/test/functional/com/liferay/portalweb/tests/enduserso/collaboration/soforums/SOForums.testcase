@@ -633,7 +633,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#quickReplyPG">
+		<execute macro="MessageboardsThread#replyPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="${threadSubject}" />

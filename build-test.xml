@@ -471,6 +471,15 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="ip.address" value="${ip.address}" />
 				</then>
 				<elseif>
+					<os family="mac" />
+					<then>
+						<exec executable="/bin/bash" outputproperty="ip.address">
+							<arg value="-c" />
+							<arg value="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2" />
+						</exec>
+					</then>
+				</elseif>
+				<elseif>
 					<os family="unix" />
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}" outputproperty="ip.address">
@@ -2257,9 +2266,12 @@ ${tomcat-gc-log}
 						directoryScanner.setBasedir(project.getBaseDir());
 						directoryScanner.setExcludes(
 							new String[] {
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/overwrite/LPKGOverwriteTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeLogAssertorTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/overwrite/test/LPKGOverwriteVerifyTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/overwrite/test/LPKGRevertOverwriteVerifyTest.java",
 								"portal-kernel/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
 								"*/pacl/test/[\\w]+Test.class",
 								"**/*ServiceHttpTest.java",
@@ -8355,10 +8367,23 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="remote.elasticsearch.enabled" />
+
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
+				<print-file file.name="${elasticsearch.dir}/logs/LiferayElasticsearchCluster.log" />
+
 				<ant antfile="build-test-elasticsearch.xml" target="stop-elasticsearch" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="solr.enabled" />
+
+		<if>
+			<equals arg1="${solr.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 			</then>
 		</if>
 
