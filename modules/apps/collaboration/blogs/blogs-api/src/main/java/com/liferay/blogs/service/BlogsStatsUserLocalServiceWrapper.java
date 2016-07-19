@@ -42,6 +42,15 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.blogs.kernel.model.BlogsStatsUser updateStatsUser(
+		long groupId, long userId, int ratingsTotalEntries,
+		double ratingsTotalScore, double ratingsAverageScore)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsStatsUserLocalService.updateStatsUser(groupId, userId,
+			ratingsTotalEntries, ratingsTotalScore, ratingsAverageScore);
+	}
+
+	@Override
 	public int getCompanyStatsUsersCount(long companyId) {
 		return _blogsStatsUserLocalService.getCompanyStatsUsersCount(companyId);
 	}

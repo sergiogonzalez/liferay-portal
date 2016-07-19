@@ -47,6 +47,15 @@ public class BlogsStatsUserLocalServiceUtil {
 		return getService().getStatsUser(groupId, userId);
 	}
 
+	public static com.liferay.blogs.kernel.model.BlogsStatsUser updateStatsUser(
+		long groupId, long userId, int ratingsTotalEntries,
+		double ratingsTotalScore, double ratingsAverageScore)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatsUser(groupId, userId, ratingsTotalEntries,
+			ratingsTotalScore, ratingsAverageScore);
+	}
+
 	public static int getCompanyStatsUsersCount(long companyId) {
 		return getService().getCompanyStatsUsersCount(companyId);
 	}
