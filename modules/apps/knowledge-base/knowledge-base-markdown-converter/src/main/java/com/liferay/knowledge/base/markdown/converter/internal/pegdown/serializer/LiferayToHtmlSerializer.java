@@ -40,44 +40,6 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 	}
 
 	@Override
-	public void visit(HeaderNode node) {
-		boolean anchorInserted = false;
-
-		if (node.getLevel() != 1) {
-			List<Node> childNodes = node.getChildren();
-
-			if (!childNodes.isEmpty()) {
-				Node childNode = childNodes.get(0);
-
-				if (childNode instanceof TextNode) {
-					TextNode textNode = (TextNode)childNodes.get(0);
-
-					String text = textNode.getText();
-
-					text = StringUtil.toLowerCase(text);
-
-					text = text.replaceAll("[^a-z0-9 ]", "");
-
-					text = text.trim();
-
-					text = text.replace(' ', '-');
-
-					printer.print(
-						"<a href=\"#" + text + "\" id=\"" + text + "\">");
-
-					anchorInserted = true;
-				}
-			}
-		}
-
-		super.visit(node);
-
-		if (anchorInserted) {
-			printer.print("</a>");
-		}
-	}
-
-	@Override
 	public void visit(ParaNode node) {
 		boolean printParagraphTag = true;
 
