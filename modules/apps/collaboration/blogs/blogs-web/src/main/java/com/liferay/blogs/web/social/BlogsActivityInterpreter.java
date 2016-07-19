@@ -15,7 +15,7 @@
 package com.liferay.blogs.web.social;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
