@@ -15,13 +15,11 @@
 package com.liferay.knowledge.base.markdown.converter.internal.pegdown.serializer;
 
 import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
 import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
-import org.pegdown.ast.HeaderNode;
 import org.pegdown.ast.Node;
 import org.pegdown.ast.ParaNode;
 import org.pegdown.ast.SuperNode;
