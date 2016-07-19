@@ -1012,7 +1012,7 @@
 			<var name="siteName" value="Blank Site Name" />
 		</execute>
 
-		<execute macro="MessageboardsThread#quickReplyPG">
+		<execute macro="MessageboardsThread#replyPG">
 			<var name="threadReplyBody" value="MB Thread Message Subject Reply" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
@@ -1171,7 +1171,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#banUser">
-			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="threadReplyBody" value="MB Thread1 Reply Body" />
 			<var name="userName" value="userfn1 userln1" />
 		</execute>
 
@@ -1187,7 +1187,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#banUser">
-			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="threadReplyBody" value="MB Thread2 Reply Body" />
 			<var name="userName" value="userfn2 userln2" />
 		</execute>
 

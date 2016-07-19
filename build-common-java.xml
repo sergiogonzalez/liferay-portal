@@ -93,7 +93,7 @@
 		<property name="src.dir" value="${basedir}" />
 
 		<condition property="deploy.uptodate">
-			<uptodate targetfile="${deploy.dir}/${jar.file}.jar" srcfile="${jar.file}.jar" />
+			<uptodate srcfile="${jar.file}.jar" targetfile="${deploy.dir}/${jar.file}.jar" />
 		</condition>
 	</target>
 

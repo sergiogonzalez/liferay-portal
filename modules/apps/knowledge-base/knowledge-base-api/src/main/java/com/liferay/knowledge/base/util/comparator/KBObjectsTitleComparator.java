@@ -52,12 +52,12 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 	public int compare(T t1, T t2) {
 		int value = 0;
 
-		String name1 = getName(t1);
-		String name2 = getName(t2);
+		String title1 = getTitle(t1);
+		String title2 = getTitle(t2);
 
 		if (_orderByModel) {
-			if (t1 instanceof KBFolder && t2 instanceof KBFolder) {
-				name1.compareToIgnoreCase(name2);
+			if ((t1 instanceof KBFolder) && (t2 instanceof KBFolder)) {
+				title1.compareToIgnoreCase(title2);
 			}
 			else if (t1 instanceof KBFolder) {
 				value = -1;
@@ -66,11 +66,11 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 				value = 1;
 			}
 			else {
-				name1.compareToIgnoreCase(name2);
+				title1.compareToIgnoreCase(title2);
 			}
 		}
 		else {
-			value = name1.compareToIgnoreCase(name2);
+			value = title1.compareToIgnoreCase(title2);
 		}
 
 		if (_ascending) {
@@ -111,7 +111,7 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 		return _ascending;
 	}
 
-	protected String getName(Object obj) {
+	protected String getTitle(Object obj) {
 		if (obj instanceof KBArticle) {
 			KBArticle kbArticle = (KBArticle)obj;
 
