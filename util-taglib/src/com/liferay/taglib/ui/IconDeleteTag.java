@@ -65,7 +65,7 @@ public class IconDeleteTag extends IconTag {
 					icon = "trash";
 				}
 				else {
-					icon = "remove";
+					icon = _markupView.equals("lexicon") ? "times" : "remove";
 				}
 			}
 		}
