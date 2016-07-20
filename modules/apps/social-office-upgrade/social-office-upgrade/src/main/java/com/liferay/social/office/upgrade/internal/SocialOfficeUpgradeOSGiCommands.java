@@ -15,7 +15,6 @@
 package com.liferay.social.office.upgrade.internal;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -56,32 +55,21 @@ public class SocialOfficeUpgradeOSGiCommands {
 			_layoutLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.eq("friendlyURL", "/so/tasks"));
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.eq("hidden", false));
-				}
-
+			dynamicQuery -> {
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.eq("friendlyURL", "/so/tasks"));
+				dynamicQuery.add(RestrictionsFactoryUtil.eq("hidden", false));
 			});
 
-		final AtomicInteger atomicInteger = new AtomicInteger(0);
+		AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
+			(Layout layout) -> {
+				layout.setHidden(true);
 
-				public void performAction(Layout layout)
-					throws PortalException {
+				_layoutLocalService.updateLayout(layout);
 
-					layout.setHidden(true);
-
-					_layoutLocalService.updateLayout(layout);
-
-					atomicInteger.incrementAndGet();
-				}
-
+				atomicInteger.incrementAndGet();
 			});
 
 		actionableDynamicQuery.performActions();
@@ -96,31 +84,19 @@ public class SocialOfficeUpgradeOSGiCommands {
 			_portletPreferencesLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery ->
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.like(
+						"portletId", "%tasksportlet%")));
 
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.like(
-							"portletId", "%tasksportlet%"));
-				}
-
-			});
-
-		final AtomicInteger atomicInteger = new AtomicInteger(0);
+		AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<PortletPreferences>() {
+			(PortletPreferences portletPreferences) -> {
+				_portletPreferencesLocalService.deletePersistedModel(
+					portletPreferences);
 
-				public void performAction(PortletPreferences portletPreferences)
-					throws PortalException {
-
-					_portletPreferencesLocalService.deletePersistedModel(
-						portletPreferences);
-
-					atomicInteger.incrementAndGet();
-				}
-
+				atomicInteger.incrementAndGet();
 			});
 
 		actionableDynamicQuery.performActions();
@@ -170,31 +146,19 @@ public class SocialOfficeUpgradeOSGiCommands {
 			_layoutSetLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery ->
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.eq("themeId", "so_WAR_sotheme")));
 
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.eq(
-							"themeId", "so_WAR_sotheme"));
-				}
-
-			});
-
-		final AtomicInteger atomicInteger = new AtomicInteger(0);
+		AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<LayoutSet>() {
+			(LayoutSet layoutSet) -> {
+				layoutSet.setThemeId("classic_WAR_classictheme");
 
-				public void performAction(LayoutSet layoutSet)
-					throws PortalException {
+				_layoutSetLocalService.updateLayoutSet(layoutSet);
 
-					layoutSet.setThemeId("classic_WAR_classictheme");
-
-					_layoutSetLocalService.updateLayoutSet(layoutSet);
-
-					atomicInteger.incrementAndGet();
-				}
-
+				atomicInteger.incrementAndGet();
 			});
 
 		actionableDynamicQuery.performActions();
@@ -207,31 +171,19 @@ public class SocialOfficeUpgradeOSGiCommands {
 			_layoutLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery ->
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.eq("themeId", "so_WAR_sotheme")));
 
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.eq(
-							"themeId", "so_WAR_sotheme"));
-				}
-
-			});
-
-		final AtomicInteger atomicInteger = new AtomicInteger(0);
+		AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
+			(Layout layout) -> {
+				layout.setThemeId("classic_WAR_classictheme");
 
-				public void performAction(Layout layout)
-					throws PortalException {
+				_layoutLocalService.updateLayout(layout);
 
-					layout.setThemeId("classic_WAR_classictheme");
-
-					_layoutLocalService.updateLayout(layout);
-
-					atomicInteger.incrementAndGet();
-				}
-
+				atomicInteger.incrementAndGet();
 			});
 
 		actionableDynamicQuery.performActions();
