@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,21 +12,4 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.announcements.web.constants;
-
-/**
- * @author Adolfo Pérez
- */
-public class AnnouncementsPortletKeys {
-
-	public static final String ALERTS =
-		"com_liferay_announcements_web_portlet_AlertsPortlet";
-
-	public static final String ANNOUNCEMENTS =
-		"com_liferay_announcements_web_portlet_AnnouncementsPortlet";
-
-	public static final String ANNOUNCEMENTS_ADMIN =
-		"com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet";
-
-}
+--%>

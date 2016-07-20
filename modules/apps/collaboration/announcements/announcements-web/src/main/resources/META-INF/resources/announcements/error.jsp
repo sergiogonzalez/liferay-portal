@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,21 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.announcements.web.constants;
+<%@ include file="/announcements/init.jsp" %>
 
-/**
- * @author Adolfo Pérez
- */
-public class AnnouncementsPortletKeys {
+<liferay-ui:error-header />
 
-	public static final String ALERTS =
-		"com_liferay_announcements_web_portlet_AlertsPortlet";
+<liferay-ui:error exception="<%= NoSuchEntryException.class %>" message="the-entry-could-not-be-found" />
 
-	public static final String ANNOUNCEMENTS =
-		"com_liferay_announcements_web_portlet_AnnouncementsPortlet";
-
-	public static final String ANNOUNCEMENTS_ADMIN =
-		"com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet";
-
-}
+<liferay-ui:error-principal />

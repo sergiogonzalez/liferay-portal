@@ -12,20 +12,19 @@
  * details.
  */
 
-package com.liferay.announcements.web.constants;
+package com.liferay.announcements.web.internal.display.context;
+
+import com.liferay.portal.kernel.display.context.DisplayContext;
+
+import java.util.Map;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class AnnouncementsPortletKeys {
+public interface AnnouncementsAdminViewDisplayContext extends DisplayContext {
 
-	public static final String ALERTS =
-		"com_liferay_announcements_web_portlet_AlertsPortlet";
+	public String getCurrentDistributionScopeLabel() throws Exception;
 
-	public static final String ANNOUNCEMENTS =
-		"com_liferay_announcements_web_portlet_AnnouncementsPortlet";
-
-	public static final String ANNOUNCEMENTS_ADMIN =
-		"com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet";
+	public Map<String, String> getDistributionScopes() throws Exception;
 
 }
