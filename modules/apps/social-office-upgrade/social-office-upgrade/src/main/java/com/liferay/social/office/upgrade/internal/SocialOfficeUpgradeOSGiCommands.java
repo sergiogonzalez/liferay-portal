@@ -132,16 +132,16 @@ public class SocialOfficeUpgradeOSGiCommands {
 	}
 
 	public void updateTheme() throws PortalException {
-		int layoutCount = _updateLayoutTheme();
+		int layoutsCount = _updateLayoutTheme();
 
 		System.out.printf(
-			"[socialOffice:updateTheme] %d layouts updated.%n", layoutCount);
+			"[socialOffice:updateTheme] %d layouts updated.%n", layoutsCount);
 
-		int layoutSetCount = _updateLayoutSetTheme();
+		int layoutSetsCount = _updateLayoutSetTheme();
 
 		System.out.printf(
 			"[socialOffice:updateTheme] %d layout sets updated.%n",
-			layoutSetCount);
+			layoutSetsCount);
 	}
 
 	@Reference(unbind = "-")
