@@ -234,10 +234,6 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 		form.setAttribute('action', '<%= advancedReplyURL.toString() %>');
 		form.setAttribute('method', 'post');
 
-		document.body.appendChild(form);
-
 		submitForm(form);
-
-		document.body.removeChild(form);
 	}
 </aui:script>
