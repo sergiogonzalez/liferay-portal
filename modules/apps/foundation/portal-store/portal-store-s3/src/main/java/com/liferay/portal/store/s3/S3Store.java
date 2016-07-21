@@ -50,13 +50,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -655,19 +655,13 @@ public class S3Store extends BaseStore {
 		clientConfiguration.setProxyHost(proxyHost);
 		clientConfiguration.setProxyPort(proxyPort);
 
-		String proxyAuthType = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.auth.type"));
+		String proxyAuthType = PropsValues.HTTP_IMPL_PROXY_AUTH_TYPE;
 
-		String proxyPassword = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.password"));
-		String proxyUsername = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.username"));
+		String proxyPassword = PropsValues.HTTP_IMPL_PROXY_PASSWORD;
+		String proxyUsername = PropsValues.HTTP_IMPL_PROXY_USERNAME;
 
-		String ntlmProxyDomain = GetterUtil.getString(
-			PropsUtil.get(
-				"com.liferay.portal.util.HttpImpl.proxy.ntlm.domain"));
-		String ntlmProxyHost = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.ntlm.host"));
+		String ntlmProxyDomain = PropsValues.HTTP_IMPL_PROXY_NTLM_DOMAIN;
+		String ntlmProxyHost = PropsValues.HTTP_IMPL_PROXY_NTLM_HOST;
 
 		if ((proxyAuthType != null) &&
 			proxyAuthType.equals("username-password") &&
