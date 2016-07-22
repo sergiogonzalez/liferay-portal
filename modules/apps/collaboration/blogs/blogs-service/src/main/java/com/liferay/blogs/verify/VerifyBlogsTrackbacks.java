@@ -18,11 +18,11 @@ import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,10 +63,22 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void verifyMBDiscussions() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<MBDiscussion> mbDiscussions =
-				MBMessageLocalServiceUtil.getDiscussions(
+				_mbMessageLocalService.getDiscussions(
 					BlogsEntry.class.getName());
 
 			for (MBDiscussion mbDiscussion : mbDiscussions) {
@@ -75,7 +87,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 						mbDiscussion.getClassPK());
 
 					List<MBMessage> mbMessages =
-						MBMessageLocalServiceUtil.getThreadMessages(
+						_mbMessageLocalService.getThreadMessages(
 							mbDiscussion.getThreadId(),
 							WorkflowConstants.STATUS_APPROVED);
 
@@ -111,7 +123,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 		}
 
 		if (Validator.isNotNull(url)) {
-			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			long defaultUserId = _userLocalService.getDefaultUserId(
 				mbMessage.getCompanyId());
 
 			if (mbMessage.getUserId() == defaultUserId) {
@@ -125,5 +137,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 		VerifyBlogsTrackbacks.class);
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private UserLocalService _userLocalService;
 
 }

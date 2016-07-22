@@ -29,18 +29,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ServiceWrapper.class)
 public class BlogsUserLocalServiceWrapper extends UserLocalServiceWrapper {
+
 	public BlogsUserLocalServiceWrapper() {
 		super(null);
+	}
+
+	public BlogsUserLocalServiceWrapper(UserLocalService userLocalService) {
+		super(userLocalService);
 	}
 
 	public User deleteUser(User user) throws PortalException {
 		_blogsStatsUserLocalService.deleteStatsUserByUserId(user.getUserId());
 
 		return super.deleteUser(user);
-	}
-
-	public BlogsUserLocalServiceWrapper(UserLocalService userLocalService) {
-		super(userLocalService);
 	}
 
 	@Reference(unbind = "-")
