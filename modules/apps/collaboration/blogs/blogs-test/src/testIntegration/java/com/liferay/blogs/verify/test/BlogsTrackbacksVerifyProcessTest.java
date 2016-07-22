@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.blogs.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -47,7 +47,7 @@ public class BlogsTrackbacksVerifyProcessTest
 
 		Filter filter = registry.getFilter(
 			"(&(objectClass=" + VerifyProcess.class.getName() +
-			")(verify.process.name=com.liferay.blogs.trackbacks))");
+				")(verify.process.name=com.liferay.blogs.trackbacks))");
 
 		_serviceTracker = registry.trackServices(filter);
 
