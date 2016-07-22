@@ -56,20 +56,12 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
-		var editorReadyHandler = Liferay.on(
-			'editorReady',
-			function(event) {
-				if (event.editorName === editorName) {
-					window[editorName].setHTML(quote);
+		if (!window[editorName].instanceReady) {
+			window[editorName].create();
+		}
 
-					editorReadyHandler.detach();
-				}
-			}
-		);
-
-		window[editorName].create();
-
-		document.getElementById(editorName).focus();
+		window[editorName].setHTML(quote);
+		window[editorName].focus();
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
 	}
