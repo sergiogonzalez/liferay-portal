@@ -876,7 +876,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
 		return
 			com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.
 				getIndexableActionableDynamicQuery();

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceWrapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,7 +60,7 @@ public class BlogsRatingsEntryLocalServiceWrapper
 			int ratingsTotalEntries = blogsStatsUser.getRatingsTotalEntries();
 			double ratingsTotalScore = blogsStatsUser.getRatingsTotalScore();
 
-			RatingsEntry ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(
+			RatingsEntry ratingsEntry = _ratingsEntryLocalService.fetchEntry(
 				userId, className, classPK);
 
 			if (ratingsEntry == null) {
@@ -81,8 +80,8 @@ public class BlogsRatingsEntryLocalServiceWrapper
 				ratingsTotalEntries, ratingsTotalScore, ratingsAverageScore);
 		}
 
-		return super.updateEntry(userId, className, classPK, score,
-			serviceContext);
+		return super.updateEntry(
+			userId, className, classPK, score, serviceContext);
 	}
 
 	@Reference(unbind = "-")
@@ -99,7 +98,15 @@ public class BlogsRatingsEntryLocalServiceWrapper
 		_blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
+
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private BlogsStatsUserLocalService _blogsStatsUserLocalService;
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }
