@@ -622,11 +622,11 @@ public class PropsValues {
 
 	public static final int HTTP_IMPL_MAX_TOTAL_CONNECTIONS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.HTTP_IMPL_MAX_TOTAL_CONNECTIONS), 20);
 
+	public static final String HTTP_IMPL_PROXY_AUTH_TYPE = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_AUTH_TYPE);
+
 	public static final String HTTP_IMPL_PROXY_NTLM_DOMAIN = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_NTLM_DOMAIN);
 
 	public static final String HTTP_IMPL_PROXY_NTLM_HOST = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_NTLM_HOST);
-
-	public static final String HTTP_IMPL_PROXY_AUTH_TYPE = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_AUTH_TYPE);
 
 	public static final String HTTP_IMPL_PROXY_PASSWORD = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_PASSWORD);
 
