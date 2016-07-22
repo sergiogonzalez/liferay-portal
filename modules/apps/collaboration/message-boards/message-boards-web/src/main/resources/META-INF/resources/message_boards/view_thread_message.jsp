@@ -207,7 +207,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<c:if test="<%= hasReplyPermission && !thread.isLocked() %>">
 
 								<%
-								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', false);";
+								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', '');";
 								%>
 
 								<liferay-ui:icon
@@ -226,7 +226,18 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								</portlet:renderURL>
 
 								<%
-								String taglibReplyWithQuoteToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', true);";
+								String quoteText = null;
+
+								if (messageFormat.equals("bbcode")) {
+									quoteText = MBUtil.getBBCodeQuoteBody(request, message);
+								}
+								else {
+									quoteText = MBUtil.getHtmlQuoteBody(request, message);
+								}
+
+								quoteText = HtmlUtil.escapeJS(quoteText);
+
+								String taglibReplyWithQuoteToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', '" + quoteText + "');";
 								%>
 
 								<liferay-ui:icon

@@ -60,12 +60,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 			'editorReady',
 			function(event) {
 				if (event.editorName === editorName) {
-					if (quote) {
-						window['<portlet:namespace />addQuote' + messageId]();
-					}
-					else {
-						window[editorName].setHTML('');
-					}
+					window[editorName].setHTML(quote);
 				}
 			}
 		);
