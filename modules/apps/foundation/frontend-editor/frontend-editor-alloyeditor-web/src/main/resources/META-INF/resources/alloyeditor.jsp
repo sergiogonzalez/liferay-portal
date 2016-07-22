@@ -261,6 +261,10 @@ if (showSource) {
 			plugins.push(A.Plugin.LiferayAlloyEditorSource);
 		</c:if>
 
+		<%
+		boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
+		%>
+
 		alloyEditor = new A.LiferayAlloyEditor(
 			{
 				contents: '<%= HtmlUtil.escapeJS(contents) %>',
@@ -271,39 +275,10 @@ if (showSource) {
 				onFocusMethod: window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'],
 				onInitMethod: window['<%= HtmlUtil.escapeJS(onInitMethod) %>'],
 				plugins: plugins,
-				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>
+				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>,
+				useCustomDataProcessor: <%= useCustomDataProcessor %>
 			}
 		).render();
-
-		<%
-		boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
-		%>
-
-		<c:choose>
-			<c:when test="<%= useCustomDataProcessor %>">
-				alloyEditor.getNativeEditor().on(
-					'customDataProcessorLoaded',
-					function() {
-						alloyEditor.setHTML(getInitialContent());
-
-						Liferay.fire(
-							'editorReady',
-							{
-								editorName: '<%= name %>'
-							}
-						);
-					}
-				);
-			</c:when>
-			<c:otherwise>
-				Liferay.fire(
-					'editorReady',
-					{
-						editorName: '<%= name %>'
-					}
-				);
-			</c:otherwise>
-		</c:choose>
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#onEditorCreate" %>' />
 	};
@@ -318,14 +293,6 @@ if (showSource) {
 				editorContainer.appendChild(editorNode);
 
 				window['<%= name %>'].initEditor();
-			}
-			else {
-				Liferay.fire(
-					'editorReady',
-					{
-						editorName: '<%= name %>'
-					}
-				);
 			}
 		},
 
@@ -402,7 +369,6 @@ if (showSource) {
 				alloyEditor.setHTML(value);
 			}
 		}
-
 	};
 
 	Liferay.fire(

@@ -109,14 +109,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 				window['<%= name %>'].initEditor();
 			}
-			else {
-				Liferay.fire(
-					'editorReady',
-					{
-						editorName: '<%= name %>'
-					}
-				);
-			}
 		},
 
 		destroy: function() {
@@ -241,13 +233,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
-
-			Liferay.fire(
-				'editorReady',
-				{
-					editorName: '<%= name %>'
-				}
-			);
 		},
 
 		instanceReady: false,

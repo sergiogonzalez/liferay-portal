@@ -87,14 +87,6 @@ if (resizable) {
 
 				window['<%= name %>'].initEditor();
 			}
-			else {
-				Liferay.fire(
-					'editorReady',
-					{
-						editorName: '<%= name %>'
-					}
-				);
-			}
 		},
 
 		destroy: function() {
@@ -177,13 +169,6 @@ if (resizable) {
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
-
-			Liferay.fire(
-				'editorReady',
-				{
-					editorName: '<%= name %>'
-				}
-			);
 		},
 
 		instanceReady: false,
