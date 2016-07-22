@@ -34,6 +34,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -648,19 +649,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public BlogsEntry fetchBlogsEntry(long entryId) {
+		return
+			com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.
+				fetchBlogsEntry(entryId);
+	}
+
+	@Override
 	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return
 			com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.
 				fetchBlogsEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
-	public BlogsEntry fetchBlogsEntry(long entryId) {
-		return
-			com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.
-				fetchBlogsEntry(entryId);
 	}
 
 	@Override
@@ -872,6 +873,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return blogsEntryPersistence.countByG_U_LtD_S(
 				groupId, userId, displayDate, queryDefinition.getStatus());
 		}
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return
+			com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.
+				getIndexableActionableDynamicQuery();
 	}
 
 	@Override
