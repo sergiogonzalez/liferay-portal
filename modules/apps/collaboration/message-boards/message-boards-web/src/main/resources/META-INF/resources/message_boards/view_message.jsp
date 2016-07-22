@@ -56,11 +56,13 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
-		Liferay.once(
+		var editorReadyHandler = Liferay.on(
 			'editorReady',
 			function(event) {
 				if (event.editorName === editorName) {
 					window[editorName].setHTML(quote);
+
+					editorReadyHandler.detach();
 				}
 			}
 		);
