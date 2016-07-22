@@ -436,6 +436,10 @@ public class S3Store extends BaseStore {
 
 		ClientConfiguration clientConfiguration = getClientConfiguration();
 
+		int connectionTimeout = PropsValues.HTTP_IMPL_TIMEOUT;
+
+		clientConfiguration.setConnectionTimeout(connectionTimeout);
+
 		setProxyConfiguration(clientConfiguration);
 
 		AmazonS3 amazonS3 = new AmazonS3Client(
