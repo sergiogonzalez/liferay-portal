@@ -67,15 +67,13 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 				if(matcher.find()) {
 					matchString = matcher.group(1);
-				}
-				else{
-					matchString = "unknow"+System.currentTimeMillis();
-				}
 
-				printer.print(
-					"<a href=\"#" + matchString + "\" id=\"" + matchString + "\">");
+					printer.print(
+						"<a href=\"#" + matchString + "\" id=\"" + matchString +
+							"\">");
 
-				anchorInserted = true;
+					anchorInserted = true;
+				}
 			}
 		}
 
