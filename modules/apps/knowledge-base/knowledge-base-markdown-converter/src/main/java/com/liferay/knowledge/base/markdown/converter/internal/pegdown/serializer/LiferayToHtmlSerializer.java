@@ -48,29 +48,23 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			List<Node> childNodes = node.getChildren();
 
 			if (!childNodes.isEmpty()) {
-
 				StringBuilder strb = new StringBuilder();
 
-				for(Node child : childNodes){
-					if(child instanceof TextNode){
-						strb.append(((TextNode) child).getText());
+				for (Node child : childNodes) {
+					if (child instanceof TextNode) {
+						strb.append(((TextNode)child).getText());
 					}
 				}
 
 				String nodeText = strb.toString();
 
-				String find = "\\[\\]\\(id=([^\\s]+?)\\)";
-				Pattern pattern = Pattern.compile(find);
-				Matcher matcher = pattern.matcher(nodeText);
+				Matcher matcher = _headerIdPattern.matcher(nodeText);
 
-				String matchString = null;
-
-				if(matcher.find()) {
-					matchString = matcher.group(1);
+				if (matcher.find()) {
+					String match = matcher.group(1);
 
 					printer.print(
-						"<a href=\"#" + matchString + "\" id=\"" + matchString +
-							"\">");
+						"<a href=\"#" + match + "\" id=\"" + match + "\">");
 
 					anchorInserted = true;
 				}
@@ -158,5 +152,8 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 		printer.print("</p>");
 	}
+
+	private final Pattern _headerIdPattern = Pattern.compile(
+		"\\[\\]\\(id=([^\\s]+?)\\)");
 
 }
