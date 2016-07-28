@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.markdown.converter.test;
+package com.liferay.knowledge.base.markdown.converter;
 
 import static org.junit.Assert.assertNotSame;
 
