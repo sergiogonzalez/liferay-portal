@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.markdown.converter.internal.pegdown.serializer;
 
 import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -48,17 +49,15 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			List<Node> childNodes = node.getChildren();
 
 			if (!childNodes.isEmpty()) {
-				StringBuilder strb = new StringBuilder();
+				StringBundler sb = new StringBundler();
 
 				for (Node child : childNodes) {
 					if (child instanceof TextNode) {
-						strb.append(((TextNode)child).getText());
+						sb.append(((TextNode)child).getText());
 					}
 				}
 
-				String nodeText = strb.toString();
-
-				Matcher matcher = _headerIdPattern.matcher(nodeText);
+				Matcher matcher = _headerIdPattern.matcher(sb.toString());
 
 				if (matcher.find()) {
 					String match = matcher.group(1);
