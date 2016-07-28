@@ -1762,41 +1762,39 @@ public class HttpImpl implements Http {
 
 	private static final int _MAX_BYTE_ARRAY_LENGTH = Integer.MAX_VALUE - 8;
 
-	private static final int _MAX_CONNECTIONS_PER_HOST = GetterUtil.getInteger(
-		PropsUtil.get(HttpImpl.class.getName() + ".max.connections.per.host"),
-		2);
+	private static final int _MAX_CONNECTIONS_PER_HOST =
+		PropsValues.HTTP_IMPL_MAX_CONNECTIONS_PER_HOST;
 
-	private static final int _MAX_TOTAL_CONNECTIONS = GetterUtil.getInteger(
-		PropsUtil.get(HttpImpl.class.getName() + ".max.total.connections"), 20);
+	private static final int _MAX_TOTAL_CONNECTIONS =
+		PropsValues.HTTP_IMPL_MAX_TOTAL_CONNECTIONS;
 
 	private static final String _NON_PROXY_HOSTS = SystemProperties.get(
 		"http.nonProxyHosts");
 
-	private static final String _PROXY_AUTH_TYPE = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.auth.type"));
+	private static final String _PROXY_AUTH_TYPE =
+		PropsValues.HTTP_IMPL_PROXY_AUTH_TYPE;
 
 	private static final String _PROXY_HOST = GetterUtil.getString(
 		SystemProperties.get("http.proxyHost"));
 
-	private static final String _PROXY_NTLM_DOMAIN = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.ntlm.domain"));
+	private static final String _PROXY_NTLM_DOMAIN =
+		PropsValues.HTTP_IMPL_PROXY_NTLM_DOMAIN;
 
-	private static final String _PROXY_NTLM_HOST = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.ntlm.host"));
+	private static final String _PROXY_NTLM_HOST =
+		PropsValues.HTTP_IMPL_PROXY_NTLM_HOST;
 
-	private static final String _PROXY_PASSWORD = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.password"));
+	private static final String _PROXY_PASSWORD =
+		PropsValues.HTTP_IMPL_PROXY_PASSWORD;
 
 	private static final int _PROXY_PORT = GetterUtil.getInteger(
 		SystemProperties.get("http.proxyPort"));
 
-	private static final String _PROXY_USERNAME = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.username"));
+	private static final String _PROXY_USERNAME =
+		PropsValues.HTTP_IMPL_PROXY_USERNAME;
 
 	private static final String _TEMP_SLASH = "_LIFERAY_TEMP_SLASH_";
 
-	private static final int _TIMEOUT = GetterUtil.getInteger(
-		PropsUtil.get(HttpImpl.class.getName() + ".timeout"), 5000);
+	private static final int _TIMEOUT = PropsValues.HTTP_IMPL_TIMEOUT;
 
 	private static final Log _log = LogFactoryUtil.getLog(HttpImpl.class);
 

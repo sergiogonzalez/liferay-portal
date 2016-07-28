@@ -618,6 +618,22 @@ public class PropsValues {
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = PropsUtil.get(PropsKeys.HTTP_HEADER_VERSION_VERBOSITY);
 
+	public static final int HTTP_IMPL_MAX_CONNECTIONS_PER_HOST = GetterUtil.getInteger(PropsUtil.get(PropsKeys.HTTP_IMPL_MAX_CONNECTIONS_PER_HOST), 2);
+
+	public static final int HTTP_IMPL_MAX_TOTAL_CONNECTIONS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.HTTP_IMPL_MAX_TOTAL_CONNECTIONS), 20);
+
+	public static final String HTTP_IMPL_PROXY_AUTH_TYPE = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_AUTH_TYPE);
+
+	public static final String HTTP_IMPL_PROXY_NTLM_DOMAIN = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_NTLM_DOMAIN);
+
+	public static final String HTTP_IMPL_PROXY_NTLM_HOST = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_NTLM_HOST);
+
+	public static final String HTTP_IMPL_PROXY_PASSWORD = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_PASSWORD);
+
+	public static final String HTTP_IMPL_PROXY_USERNAME = PropsUtil.get(PropsKeys.HTTP_IMPL_PROXY_USERNAME);
+
+	public static final int HTTP_IMPL_TIMEOUT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.HTTP_IMPL_TIMEOUT), 5000);
+
 	public static final String IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE = PropsUtil.get(PropsKeys.IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE);
 
 	public static final boolean IMAGE_AUTO_SCALE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGE_AUTO_SCALE));

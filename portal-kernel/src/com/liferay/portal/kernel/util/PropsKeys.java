@@ -825,6 +825,22 @@ public interface PropsKeys {
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = "http.header.version.verbosity";
 
+	public static final String HTTP_IMPL_MAX_CONNECTIONS_PER_HOST = "com.liferay.portal.util.HttpImpl.max.connections.per.host";
+
+	public static final String HTTP_IMPL_MAX_TOTAL_CONNECTIONS = "com.liferay.portal.util.HttpImpl.max.total.connections";
+
+	public static final String HTTP_IMPL_PROXY_AUTH_TYPE = "com.liferay.portal.util.HttpImpl.proxy.auth.type";
+
+	public static final String HTTP_IMPL_PROXY_NTLM_DOMAIN = "com.liferay.portal.util.HttpImpl.proxy.ntlm.domain";
+
+	public static final String HTTP_IMPL_PROXY_NTLM_HOST = "com.liferay.portal.util.HttpImpl.proxy.ntlm.host";
+
+	public static final String HTTP_IMPL_PROXY_PASSWORD = "com.liferay.portal.util.HttpImpl.proxy.password";
+
+	public static final String HTTP_IMPL_PROXY_USERNAME = "com.liferay.portal.util.HttpImpl.proxy.username";
+
+	public static final String HTTP_IMPL_TIMEOUT = "com.liferay.portal.util.HttpImpl.timeout";
+
 	public static final String IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE = "iframe.password.token.role";
 
 	public static final String IMAGE_AUTO_SCALE = "image.auto.scale";
