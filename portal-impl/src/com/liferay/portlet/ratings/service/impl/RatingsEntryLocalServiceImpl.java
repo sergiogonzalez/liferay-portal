@@ -156,8 +156,6 @@ public class RatingsEntryLocalServiceImpl
 
 		// Entry
 
-		boolean newEntry = false;
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 		double oldScore = 0;
 
@@ -189,8 +187,6 @@ public class RatingsEntryLocalServiceImpl
 			reindex(stats);
 		}
 		else {
-			newEntry = true;
-
 			User user = userPersistence.findByPrimaryKey(userId);
 
 			long entryId = counterLocalService.increment();
