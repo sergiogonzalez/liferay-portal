@@ -14,10 +14,9 @@
 
 package com.liferay.knowledge.base.markdown.converter;
 
-import static org.junit.Assert.assertNotSame;
-
 import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactoryUtil;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -35,11 +34,11 @@ public class MarkdownConverterTest {
 		String html =
 			MarkdownConverterFactoryUtil.create().convert(markdownString);
 
-		int find = html.indexOf(
+		int pos = html.indexOf(
 			"id=\"the-liferay-uilogo-selector-tag-" +
 				"requires-parameter-changes\"");
 
-		assertNotSame(-1, find);
+		Assert.assertNotEquals(-1, pos);
 	}
 
 }
