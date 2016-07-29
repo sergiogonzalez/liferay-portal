@@ -134,7 +134,7 @@ public class DefaultAnnouncementsDisplayContext
 		if (AnnouncementsPermission.contains(
 				_announcementsRequestHelper.getPermissionChecker(),
 				_announcementsRequestHelper.getScopeGroupId(),
-				ActionKeys.ADD_ENTRY)) {
+				ActionKeys.VIEW_ANNOUNCEMENTS_ADMINISTRATION)) {
 
 			tabs1Names += ",manage-entries";
 		}
@@ -247,7 +247,7 @@ public class DefaultAnnouncementsDisplayContext
 			 AnnouncementsPermission.contains(
 				 _announcementsRequestHelper.getPermissionChecker(),
 				 _announcementsRequestHelper.getScopeGroupId(),
-				 ActionKeys.ADD_ENTRY))) {
+				 ActionKeys.VIEW_ANNOUNCEMENTS_ADMINISTRATION))) {
 
 			return true;
 		}
