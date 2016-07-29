@@ -47,7 +47,7 @@
 </c:if>
 
 <%
-if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
+if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.VIEW_ANNOUNCEMENTS_ADMINISTRATION)) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 }
 %>
