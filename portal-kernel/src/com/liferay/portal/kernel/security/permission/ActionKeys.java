@@ -242,6 +242,9 @@ public class ActionKeys {
 
 	public static final String VIEW = "VIEW";
 
+	public static final String VIEW_ANNOUNCEMENTS_ADMINISTRATION =
+		"VIEW_ANNOUNCEMENTS_ADMINISTRATION";
+
 	public static final String VIEW_CONTROL_PANEL = "VIEW_CONTROL_PANEL";
 
 	public static final String VIEW_MEMBERS = "VIEW_MEMBERS";
