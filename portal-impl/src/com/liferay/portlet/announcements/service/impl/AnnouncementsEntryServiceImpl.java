@@ -47,11 +47,51 @@ import java.util.Date;
 public class AnnouncementsEntryServiceImpl
 	extends AnnouncementsEntryServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long,
+	 *               String, String, String, String, Date, Date, int,
+	 *               boolean)}
+	 */
+	@Deprecated
 	@Override
 	public AnnouncementsEntry addEntry(
-			long classNameId, long classPK, String title,
-			String content, String url, String type, Date displayDate,
-			Date expirationDate, int priority, boolean alert)
+			long plid, long classNameId, long classPK, String title,
+			String content, String url, String type, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean displayImmediately,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, int priority, boolean alert)
+		throws PortalException {
+
+		User user = userLocalService.getUser(getUserId());
+
+		Date displayDate = new Date();
+
+		if (!displayImmediately) {
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, user.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
+
+		Date expirationDate = PortalUtil.getDate(
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, user.getTimeZone(),
+			EntryExpirationDateException.class);
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		return addEntry(
+			classNameId, classPK, title, content, url, type, displayDate,
+			expirationDate, priority, alert);
+	}
+
+	@Override
+	public AnnouncementsEntry addEntry(
+			long classNameId, long classPK, String title, String content,
+			String url, String type, Date displayDate, Date expirationDate,
+			int priority, boolean alert)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -130,46 +170,6 @@ public class AnnouncementsEntryServiceImpl
 		return announcementsEntryLocalService.addEntry(
 			getUserId(), classNameId, classPK, title, content, url, type,
 			displayDate, expirationDate, priority, alert);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long,
-	 *               String, String, String, String, Date, Date, int,
-	 *               boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AnnouncementsEntry addEntry(
-			long plid, long classNameId, long classPK, String title,
-			String content, String url, String type, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean displayImmediately,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, int priority, boolean alert)
-		throws PortalException {
-
-		User user = userLocalService.getUser(getUserId());
-
-		Date displayDate = new Date();
-
-		if (!displayImmediately) {
-			displayDate = PortalUtil.getDate(
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, user.getTimeZone(),
-				EntryDisplayDateException.class);
-		}
-
-		Date expirationDate = PortalUtil.getDate(
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, user.getTimeZone(),
-			EntryExpirationDateException.class);
-
-		Layout layout = layoutLocalService.getLayout(plid);
-
-		return addEntry(
-			classNameId, classPK, title, content, url,
-			type, displayDate, expirationDate, priority, alert);
 	}
 
 	@Override
