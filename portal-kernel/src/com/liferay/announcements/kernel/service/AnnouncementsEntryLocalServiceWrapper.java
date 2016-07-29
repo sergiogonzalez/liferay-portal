@@ -48,8 +48,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
-	String, String, String, String, Date, boolean, Date, int,
-	boolean)}
+	String, String, String, String, Date, Date, int, boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -201,7 +200,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
-	String, String, String, Date, boolean, Date, int)}
+	String, String, String, Date, Date, int)}
 	*/
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
