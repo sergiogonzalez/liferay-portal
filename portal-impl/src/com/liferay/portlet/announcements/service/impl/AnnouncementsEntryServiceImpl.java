@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portlet.announcements.service.base.AnnouncementsEntryServiceBaseImpl;
 import com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission;
-import com.liferay.portlet.announcements.service.permission.AnnouncementsPermission;
 
 import java.util.Date;
 
@@ -50,15 +49,12 @@ public class AnnouncementsEntryServiceImpl
 
 	@Override
 	public AnnouncementsEntry addEntry(
-			long groupId, long classNameId, long classPK, String title,
+			long classNameId, long classPK, String title,
 			String content, String url, String type, Date displayDate,
 			Date expirationDate, int priority, boolean alert)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
-
-		AnnouncementsPermission.check(
-			permissionChecker, groupId, ActionKeys.ADD_ENTRY);
 
 		if (classNameId == 0) {
 			if (!PortalPermissionUtil.contains(
@@ -137,7 +133,7 @@ public class AnnouncementsEntryServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long,
 	 *               String, String, String, String, Date, Date, int,
 	 *               boolean)}
 	 */
@@ -172,7 +168,7 @@ public class AnnouncementsEntryServiceImpl
 		Layout layout = layoutLocalService.getLayout(plid);
 
 		return addEntry(
-			layout.getGroupId(), classNameId, classPK, title, content, url,
+			classNameId, classPK, title, content, url,
 			type, displayDate, expirationDate, priority, alert);
 	}
 
