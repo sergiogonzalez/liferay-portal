@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1468488922913
+Bnd-LastModified: 1469727082625
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.8.0_74 (Oracle Corporation)
+Created-By: 1.8.0_77 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2832,7 +2832,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  liferay.portal.kernel.util",com.liferay.portal.kernel.security.pacl;v
  ersion="6.2.0",com.liferay.portal.kernel.security.pacl.permission;ver
  sion="7.0.0";uses:="com.liferay.portal.kernel.util",com.liferay.porta
- l.kernel.security.permission;version="1.1.0";uses:="com.liferay.porta
+ l.kernel.security.permission;version="1.2.0";uses:="com.liferay.porta
  l.kernel.exception,com.liferay.portal.kernel.model,javax.portlet,java
  x.servlet.http",com.liferay.portal.kernel.security.permission.compara
  tor;version="1.0.0",com.liferay.portal.kernel.security.pwd;version="1
@@ -4247,6 +4247,8 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  5.0",org.apache.naming.java;version="1.0.0",org.apache.xml.serializer
  ;version="2.7.1",org.objectweb.asm.attrs;version="5.0.1",sun.misc;ver
  sion="1.0.0",sun.security.provider;version="1.0.0"
+Git-Descriptor: ant-all-34931-g6c821e2-dirty
+Git-SHA: 6c821e2348a1fe43369b7cf9371348f3cd9d649e
 Javac-Debug: on
 Javac-Deprecation: off
 Javac-Encoding: UTF-8
