@@ -54,8 +54,7 @@ public class AnnouncementsEntryLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
-	String, String, String, String, Date, boolean, Date, int,
-	boolean)}
+	String, String, String, String, Date, Date, int, boolean)}
 	*/
 	@Deprecated
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
@@ -196,7 +195,7 @@ public class AnnouncementsEntryLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
-	String, String, String, Date, boolean, Date, int)}
+	String, String, String, Date, Date, int)}
 	*/
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
 		long userId, long entryId, java.lang.String title,
