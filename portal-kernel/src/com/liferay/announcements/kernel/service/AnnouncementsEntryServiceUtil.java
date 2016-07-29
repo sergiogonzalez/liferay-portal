@@ -41,19 +41,19 @@ public class AnnouncementsEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		long groupId, long classNameId, long classPK, java.lang.String title,
+		long classNameId, long classPK, java.lang.String title,
 		java.lang.String content, java.lang.String url, java.lang.String type,
 		java.util.Date displayDate, java.util.Date expirationDate,
 		int priority, boolean alert)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addEntry(groupId, classNameId, classPK, title, content,
-			url, type, displayDate, expirationDate, priority, alert);
+				   .addEntry(classNameId, classPK, title, content, url, type,
+			displayDate, expirationDate, priority, alert);
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
-	String, String, String, String, Date, boolean, Date, int,
+	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long,
+	String, String, String, String, Date, Date, int,
 	boolean)}
 	*/
 	@Deprecated
@@ -82,7 +82,7 @@ public class AnnouncementsEntryServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
-	String, String, String, Date, boolean, Date, int)}
+	String, String, String, Date, Date, int)}
 	*/
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
 		long entryId, java.lang.String title, java.lang.String content,

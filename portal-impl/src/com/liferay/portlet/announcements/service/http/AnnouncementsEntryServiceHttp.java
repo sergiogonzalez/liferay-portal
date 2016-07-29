@@ -56,19 +56,24 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class AnnouncementsEntryServiceHttp {
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		HttpPrincipal httpPrincipal, long groupId, long classNameId,
-		long classPK, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type,
-		java.util.Date displayDate, java.util.Date expirationDate,
-		int priority, boolean alert)
+		HttpPrincipal httpPrincipal, long plid, long classNameId, long classPK,
+		java.lang.String title, java.lang.String content, java.lang.String url,
+		java.lang.String type, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean displayImmediately, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, int priority, boolean alert)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
 					classNameId, classPK, title, content, url, type,
-					displayDate, expirationDate, priority, alert);
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, displayImmediately,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, priority, alert);
 
 			Object returnObj = null;
 
@@ -93,24 +98,18 @@ public class AnnouncementsEntryServiceHttp {
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		HttpPrincipal httpPrincipal, long plid, long classNameId, long classPK,
+		HttpPrincipal httpPrincipal, long classNameId, long classPK,
 		java.lang.String title, java.lang.String content, java.lang.String url,
-		java.lang.String type, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean displayImmediately, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, int priority, boolean alert)
+		java.lang.String type, java.util.Date displayDate,
+		java.util.Date expirationDate, int priority, boolean alert)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
+			MethodHandler methodHandler = new MethodHandler(methodKey,
 					classNameId, classPK, title, content, url, type,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, displayImmediately,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, priority, alert);
+					displayDate, expirationDate, priority, alert);
 
 			Object returnObj = null;
 
@@ -271,15 +270,15 @@ public class AnnouncementsEntryServiceHttp {
 	private static final Class<?>[] _addEntryParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.util.Date.class, java.util.Date.class,
-			int.class, boolean.class
-		};
-	private static final Class<?>[] _addEntryParameterTypes1 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, int.class, int.class,
 			int.class, boolean.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, boolean.class
+		};
+	private static final Class<?>[] _addEntryParameterTypes1 = new Class[] {
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.util.Date.class, java.util.Date.class,
+			int.class, boolean.class
 		};
 	private static final Class<?>[] _deleteEntryParameterTypes2 = new Class[] {
 			long.class
