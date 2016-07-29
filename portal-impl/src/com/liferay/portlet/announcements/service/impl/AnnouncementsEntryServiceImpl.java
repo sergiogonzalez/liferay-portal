@@ -19,7 +19,6 @@ import com.liferay.announcements.kernel.exception.EntryExpirationDateException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
@@ -79,8 +78,6 @@ public class AnnouncementsEntryServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
 			EntryExpirationDateException.class);
-
-		Layout layout = layoutLocalService.getLayout(plid);
 
 		return addEntry(
 			classNameId, classPK, title, content, url, type, displayDate,
