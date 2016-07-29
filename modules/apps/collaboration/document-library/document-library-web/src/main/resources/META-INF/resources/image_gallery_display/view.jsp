@@ -82,6 +82,12 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 	portletURL.setParameter("topLink", topLink);
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 
+	String redirect = ParamUtil.getString(request, "redirect");
+
+	if (redirect != null) {
+		portletURL.setParameter("redirect", redirect);
+	}
+
 	request.setAttribute("view.jsp-folder", folder);
 
 	request.setAttribute("view.jsp-rootFolderId", String.valueOf(rootFolderId));
