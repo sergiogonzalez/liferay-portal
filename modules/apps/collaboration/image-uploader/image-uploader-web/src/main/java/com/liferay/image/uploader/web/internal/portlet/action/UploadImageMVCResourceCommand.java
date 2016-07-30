@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -94,7 +95,12 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 		String contentType = MimeTypesUtil.getExtensionContentType(
 			imageBag.getType());
 
-		mimeResponse.setContentType(contentType);
+		if (contentType.equals("image/x-ms-bmp")) {
+			mimeResponse.setContentType(ContentTypes.IMAGE_BMP);
+		}
+		else {
+			mimeResponse.setContentType(contentType);
+		}
 
 		PortletResponseUtil.write(mimeResponse, bytes);
 	}
