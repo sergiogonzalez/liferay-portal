@@ -1233,14 +1233,13 @@ public class WebServerServlet extends HttpServlet {
 		if (!type.equals(ImageConstants.TYPE_NOT_AVAILABLE)) {
 			contentType = MimeTypesUtil.getExtensionContentType(type);
 
-			if (contentType.equals("image/x-ms-bmp") &&
+			if (contentType.equals(ContentTypes.IMAGE_X_MS_BMP) &&
 				BrowserSnifferUtil.isIe(request)) {
 
-				response.setContentType(ContentTypes.IMAGE_BMP);
+				contentType = ContentTypes.IMAGE_BMP;
 			}
-			else {
-				response.setContentType(contentType);
-			}
+
+			response.setContentType(contentType);
 		}
 
 		String fileName = ParamUtil.getString(request, "fileName");

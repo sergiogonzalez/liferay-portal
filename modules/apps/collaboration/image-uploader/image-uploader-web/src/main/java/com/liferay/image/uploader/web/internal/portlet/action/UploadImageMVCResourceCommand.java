@@ -95,12 +95,11 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 		String contentType = MimeTypesUtil.getExtensionContentType(
 			imageBag.getType());
 
-		if (contentType.equals("image/x-ms-bmp")) {
-			mimeResponse.setContentType(ContentTypes.IMAGE_BMP);
+		if (contentType.equals(ContentTypes.IMAGE_X_MS_BMP)) {
+			contentType = ContentTypes.IMAGE_BMP;
 		}
-		else {
-			mimeResponse.setContentType(contentType);
-		}
+
+		mimeResponse.setContentType(contentType);
 
 		PortletResponseUtil.write(mimeResponse, bytes);
 	}
