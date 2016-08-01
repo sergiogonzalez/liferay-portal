@@ -1,0 +1,29 @@
+Bundle-Name: Liferay Document Library JAX-RS API
+Bundle-SymbolicName: com.liferay.document.library.jaxrs
+Bundle-Version: 1.0.0
+ConfigurationPath: /configuration
+Import-Package:\
+	!com.google.gson,\
+	!javassist.*,\
+	!org.apache.commons.vfs2.*,\
+	*
+Include-Resource: configuration=src/main/resources/configuration
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+-includeresource:\
+	@commons-lang3*.jar,\
+	@guava*.jar,\
+	@jackson-annotations*.jar,\
+	@jackson-core*.jar,\
+	@jackson-databind*.jar,\
+	@jackson-dataformat-yaml*.jar,\
+	@jackson-datatype-joda*.jar,\
+	@reflections*.jar,\
+	@snakeyaml*.jar,\
+	@validation-api*.jar,\
+	@joda-convert*.jar,\
+	@joda-time*.jar,\
+	@swagger-annotations*.jar,\
+	@swagger-core*.jar,\
+	@swagger-models*.jar,\
+	@swagger-jaxrs*.jar
