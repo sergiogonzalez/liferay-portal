@@ -56,8 +56,8 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 			ps.setLong(1, 0);
 			ps.setLong(2, resourceActionId);
 			ps.setString(3, "com.liferay.announcements");
-			ps.setString(4, "ADD_ENTRY");
-			ps.setLong(5, _NEW_ADD_ENTRY_BITWISE_VALUE);
+			ps.setString(4, "VIEW_ANNOUNCEMENTS_ADMINISTRATION");
+			ps.setLong(5, _NEW_VIEW_ANNOUNCEMENTS_ADMININISTRATION_VALUE);
 
 			ps.executeUpdate();
 		}
@@ -237,7 +237,8 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								String.valueOf(groupId), groupId, roleId,
-								ownerId, _NEW_ADD_ENTRY_BITWISE_VALUE);
+								ownerId,
+								_NEW_VIEW_ANNOUNCEMENTS_ADMININISTRATION_VALUE);
 
 							_groupRoleSet.add(layoutRoleKey);
 						}
@@ -251,7 +252,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								primKey, primKeyId, roleId, ownerId,
-								_NEW_ADD_ENTRY_BITWISE_VALUE);
+								_NEW_VIEW_ANNOUNCEMENTS_ADMININISTRATION_VALUE);
 
 							_companyRoleSet.add(companyRoleKey);
 						}
@@ -265,7 +266,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 							addResourcePermission(
 								companyId, "com.liferay.announcements", scope,
 								primKey, primKeyId, roleId, ownerId,
-								_NEW_ADD_ENTRY_BITWISE_VALUE);
+								_NEW_VIEW_ANNOUNCEMENTS_ADMININISTRATION_VALUE);
 
 							_roleSet.add(groupTemplateRoleKey);
 						}
@@ -296,7 +297,8 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 		return sb.toString();
 	}
 
-	private static final long _NEW_ADD_ENTRY_BITWISE_VALUE = 2;
+	private static final long _NEW_VIEW_ANNOUNCEMENTS_ADMININISTRATION_VALUE =
+		2;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeAnnouncements.class);
