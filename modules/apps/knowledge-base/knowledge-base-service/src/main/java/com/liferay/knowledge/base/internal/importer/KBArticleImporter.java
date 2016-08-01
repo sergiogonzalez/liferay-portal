@@ -131,7 +131,7 @@ public class KBArticleImporter {
 				KBArticle introKBArticle = introFileNameKBArticleMap.get(
 					introFileName);
 
-				if (Validator.isNull(introKBArticle)) {
+				if (introKBArticle == null) {
 					introKBArticle = addKBArticleMarkdown(
 						userId, groupId, parentKBFolderId,
 						sectionResourceClassNameId, sectionResourcePrimaryKey,
@@ -385,12 +385,7 @@ public class KBArticleImporter {
 					}
 				}
 
-				if (Validator.isNull(
-						folderNameIntroFileNameMap.get(folderName))) {
-
-					folderNameIntroFileNameMap.put(
-						folderName, StringPool.BLANK);
-				}
+				folderNameIntroFileNameMap.put(folderName, StringPool.BLANK);
 			}
 		}
 
