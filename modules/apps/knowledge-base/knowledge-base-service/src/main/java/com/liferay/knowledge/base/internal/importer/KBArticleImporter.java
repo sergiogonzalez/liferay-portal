@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -111,7 +112,9 @@ public class KBArticleImporter {
 			String introFileName = folderNameIntroFileNameMap.get(folderName);
 
 			if (Validator.isNotNull(introFileName)) {
-				for (String path : _extractPaths(folderName)) {
+				String[] paths = StringUtil.split(folderName, StringPool.SLASH);
+
+				for (String path : paths) {
 					String parentIntroFileName = folderNameIntroFileNameMap.get(
 						path);
 
@@ -373,7 +376,9 @@ public class KBArticleImporter {
 			String introFileName = folderNameIntroFileNameMap.get(folderName);
 
 			if (Validator.isNull(introFileName)) {
-				for (String path : _extractPaths(folderName)) {
+				String[] paths = StringUtil.split(folderName, StringPool.SLASH);
+
+				for (String path : paths) {
 					String parentIntroFileName = folderNameIntroFileNameMap.get(
 						path);
 
@@ -474,29 +479,6 @@ public class KBArticleImporter {
 		ConfigurationProvider configurationProvider) {
 
 		_configurationProvider = configurationProvider;
-	}
-
-	private List<String> _extractPaths(String folderName) {
-		List<String> paths = new ArrayList<>();
-
-		int length = folderName.length();
-
-		for (int from = 0; from < length;) {
-			int index = folderName.indexOf('/', from);
-
-			if (index == -1) {
-				break;
-			}
-			else {
-				String path = folderName.substring(0, index);
-
-				paths.add(0, path);
-			}
-
-			from = index + 1;
-		}
-
-		return paths;
 	}
 
 	private List<String> _getEntries(ZipReader zipReader)
