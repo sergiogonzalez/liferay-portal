@@ -53,7 +53,13 @@ portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
-SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+int searchContainerDelta = dlPortletInstanceSettings.getEntriesPerPage();
+
+if (searchContainerDelta <= 0) {
+	searchContainerDelta = SearchContainer.DEFAULT_DELTA;
+}
+
+SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", searchContainerDelta, portletURL, null, null);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
