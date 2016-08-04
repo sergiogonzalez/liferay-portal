@@ -307,6 +307,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter(
 				"mvcRenderCommandName", "/blogs/edit_entry");
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 		catch (EntryContentException | EntryCoverImageCropException |
 			   EntryDescriptionException | EntryDisplayDateException |
@@ -319,16 +321,22 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter(
 				"mvcRenderCommandName", "/blogs/edit_entry");
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
 			SessionErrors.add(actionRequest, e.getClass());
 
 			actionResponse.setRenderParameter("mvcPath", "/blogs/error.jsp");
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
 
 			actionResponse.setRenderParameter("mvcPath", "/blogs/error.jsp");
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

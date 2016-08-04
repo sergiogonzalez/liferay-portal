@@ -45,8 +45,6 @@ public class UploadCoverImageMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_uploadHandler.upload(actionRequest, actionResponse);
-
-		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private final UploadHandler _uploadHandler =
