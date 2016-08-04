@@ -65,14 +65,12 @@ public class IconDeleteTag extends IconTag {
 					icon = "trash";
 				}
 				else {
-					icon = "times";
+					icon = _markupView.equals("lexicon") ? "times" : "remove";
 				}
 			}
 		}
 
 		setIcon(icon);
-
-		setMarkupView("lexicon");
 
 		if (Validator.isNull(getMessage())) {
 			if (_trash) {
@@ -144,6 +142,7 @@ public class IconDeleteTag extends IconTag {
 	private static final String _PAGE = "/html/taglib/ui/icon_delete/page.jsp";
 
 	private String _confirmation;
+	private String _markupView;
 	private boolean _showIcon;
 	private boolean _trash;
 

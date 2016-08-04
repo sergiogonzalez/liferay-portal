@@ -1877,6 +1877,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Text to display on mouse over of the icon.</description>
 			<name>message</name>
 			<required>false</required>

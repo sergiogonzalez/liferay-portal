@@ -203,6 +203,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 
 			<liferay-ui:icon-delete
 				label="<%= true %>"
+				showIcon="<%= true %>"
 				url="<%= deleteURL %>"
 			/>
 		</c:if>
