@@ -25,6 +25,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -36,12 +37,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"item.selector.view.order:Integer=100",
+		"item.selector.view.order:Integer=150",
 		"overwrite.view.key=document-library"
 	},
 	service = ItemSelectorView.class
 )
-public class DLImageItemSelectorView
+public class DLImageItemSelectorView3
 	extends BaseDLItemSelectorView<ImageItemSelectorCriterion> {
 
 	@Override
@@ -57,6 +58,10 @@ public class DLImageItemSelectorView
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
+	}
+
+	public String getTitle(Locale locale) {
+		return "150 OW";
 	}
 
 	@Override
