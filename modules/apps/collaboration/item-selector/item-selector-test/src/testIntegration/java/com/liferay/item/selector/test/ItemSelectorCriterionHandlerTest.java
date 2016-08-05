@@ -81,13 +81,13 @@ public class ItemSelectorCriterionHandlerTest {
 	}
 
 	@Test
-	public void testItemSelectorAreAddedIfRegularViews() {
+	public void testItemSelectorAreAddedIfItemSelectorViewKeysAreDifferent() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
-				new TestItemSelectorView1(), 200, false);
+				new TestItemSelectorView1(), 200, "view1");
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
-				new TestItemSelectorView2(), 100, false);
+				new TestItemSelectorView2(), 100, "view2");
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -119,13 +119,13 @@ public class ItemSelectorCriterionHandlerTest {
 	}
 
 	@Test
-	public void testItemSelectorAreOverwritedIfOverwriteable() {
+	public void testItemSelectorAreOverridenIfItemSelectorViewKeysAreTheSame() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
-				new TestItemSelectorView1(), 100, true);
+				new TestItemSelectorView1(), 100, "view");
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
-				new TestItemSelectorView2(), 200, true);
+				new TestItemSelectorView2(), 200, "view");
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -155,19 +155,19 @@ public class ItemSelectorCriterionHandlerTest {
 	}
 
 	@Test
-	public void testItemSelectorWhenOverwriteableAndRegularViews() {
+	public void testItemSelectorWithOverridenViewsAndUniqueViews() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
-				new TestItemSelectorView1(), 100, true);
+				new TestItemSelectorView1(), 100, "view1");
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
-				new TestItemSelectorView2(), 200, false);
+				new TestItemSelectorView2(), 200, "view2");
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration3 = registerItemSelectorView(
-				new TestItemSelectorView3(), 50, false);
+				new TestItemSelectorView3(), 50, "view3");
 		ServiceRegistration<ItemSelectorView>
-			itemSelectorViewServiceRegistration4 = registerItemSelectorView(
-				new TestItemSelectorView4(), 200, true);
+			itemSelectorViewServiceRegistration1Bis = registerItemSelectorView(
+				new TestItemSelectorView4(), 200, "view1");
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -198,7 +198,7 @@ public class ItemSelectorCriterionHandlerTest {
 			itemSelectorViewServiceRegistration1.unregister();
 			itemSelectorViewServiceRegistration2.unregister();
 			itemSelectorViewServiceRegistration3.unregister();
-			itemSelectorViewServiceRegistration4.unregister();
+			itemSelectorViewServiceRegistration1Bis.unregister();
 		}
 	}
 
@@ -206,24 +206,22 @@ public class ItemSelectorCriterionHandlerTest {
 	public Bundle bundle;
 
 	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
-		ItemSelectorView itemSelectorView, int order, boolean overwritable) {
+		ItemSelectorView itemSelectorView, int itemSelectorViewOrder,
+		String itemSelectorViewKey) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
-		properties.put("item.selector.view.order", order);
-
-		if (overwritable) {
-			properties.put("item.selector.view.key", "test");
-		}
+		properties.put("item.selector.view.order", itemSelectorViewOrder);
+		properties.put("item.selector.view.key", itemSelectorViewKey);
 
 		return _bundleContext.registerService(
 			ItemSelectorView.class, itemSelectorView, properties);
 	}
 
 	private BundleContext _bundleContext;
-	private TestItemSelectorCriterionHandler _testItemSelectorCriterionHandler;
 	private ServiceReference<TestItemSelectorCriterionHandler>
 		_serviceReference;
+	private TestItemSelectorCriterionHandler _testItemSelectorCriterionHandler;
 
 	private static abstract class BaseTestItemSelectorView
 		implements ItemSelectorView<TestItemSelectorCriterion> {
