@@ -69,10 +69,10 @@ public class ItemSelectorCriterionHandlerTest {
 		_serviceReference = _bundleContext.getServiceReference(
 			TestItemSelectorCriterionHandler.class);
 
-		_itemSelectorCriterionHandler = _bundleContext.getService(
+		_testItemSelectorCriterionHandler = _bundleContext.getService(
 			_serviceReference);
 
-		_itemSelectorCriterionHandler.doActivate(_bundleContext);
+		_testItemSelectorCriterionHandler.activate(_bundleContext);
 	}
 
 	@After
@@ -103,7 +103,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
-					_itemSelectorCriterionHandler.getItemSelectorViews(
+					_testItemSelectorCriterionHandler.getItemSelectorViews(
 						testItemSelectorCriterion);
 
 			Assert.assertEquals(2, itemSelectorViews.size());
@@ -141,7 +141,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
-					_itemSelectorCriterionHandler.getItemSelectorViews(
+					_testItemSelectorCriterionHandler.getItemSelectorViews(
 						testItemSelectorCriterion);
 
 			Assert.assertEquals(1, itemSelectorViews.size());
@@ -183,7 +183,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
-					_itemSelectorCriterionHandler.getItemSelectorViews(
+					_testItemSelectorCriterionHandler.getItemSelectorViews(
 						testItemSelectorCriterion);
 
 			Assert.assertEquals(3, itemSelectorViews.size());
@@ -213,7 +213,7 @@ public class ItemSelectorCriterionHandlerTest {
 		properties.put("item.selector.view.order", order);
 
 		if (overwritable) {
-			properties.put("overwrite.view.key", "test");
+			properties.put("item.selector.view.key", "test");
 		}
 
 		return _bundleContext.registerService(
@@ -221,7 +221,7 @@ public class ItemSelectorCriterionHandlerTest {
 	}
 
 	private BundleContext _bundleContext;
-	private TestItemSelectorCriterionHandler _itemSelectorCriterionHandler;
+	private TestItemSelectorCriterionHandler _testItemSelectorCriterionHandler;
 	private ServiceReference<TestItemSelectorCriterionHandler>
 		_serviceReference;
 

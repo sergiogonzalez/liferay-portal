@@ -24,10 +24,12 @@ import org.osgi.framework.BundleContext;
 public class TestItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<TestItemSelectorCriterion> {
 
-	public void doActivate(BundleContext bundleContext) {
+	@Override
+	public void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
 	}
 
+	@Override
 	public Class getItemSelectorCriterionClass() {
 		return TestItemSelectorCriterion.class;
 	}

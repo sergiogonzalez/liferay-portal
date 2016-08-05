@@ -98,10 +98,10 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 				ServiceReference<ItemSelectorView> serviceReference =
 					serviceReferenceServiceTuple.getServiceReference();
 
-				String overwriteViewKey = GetterUtil.getString(
-					serviceReference.getProperty("overwrite.view.key"));
+				String itemSelectorViewKey = GetterUtil.getString(
+					serviceReference.getProperty("item.selector.view.key"));
 
-				if (Validator.isNotNull(overwriteViewKey)) {
+				if (Validator.isNotNull(itemSelectorViewKey)) {
 					_rebuildOverwritableServices(serviceReferenceServiceTuple);
 				}
 				else {
@@ -128,10 +128,10 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 			ServiceReference<ItemSelectorView> serviceReference =
 				serviceReferenceServiceTuple.getServiceReference();
 
-			String overwriteViewKey = GetterUtil.getString(
-				serviceReference.getProperty("overwrite.view.key"));
+			String itemSelectorViewKey = GetterUtil.getString(
+				serviceReference.getProperty("item.selector.view.key"));
 
-			int viewOrder = GetterUtil.getInteger(
+			int itemSelectorViewOrder = GetterUtil.getInteger(
 				serviceReference.getProperty("item.selector.view.order"));
 
 			ItemSelectorView curService =
@@ -140,13 +140,13 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 			ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
 				activeServiceReferenceTuple =
 					_activeOverwritableServiceReferencesTuplesMap.get(
-						overwriteViewKey);
+						itemSelectorViewKey);
 
 			if (activeServiceReferenceTuple == null) {
 				_services.add(curService);
 
 				_activeOverwritableServiceReferencesTuplesMap.put(
-					overwriteViewKey, serviceReferenceServiceTuple);
+					itemSelectorViewKey, serviceReferenceServiceTuple);
 
 				return;
 			}
@@ -158,13 +158,13 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 				activedServiceReference.getProperty(
 					"item.selector.view.order"));
 
-			if (activeItemSelectorViewOrder > viewOrder) {
+			if (activeItemSelectorViewOrder > itemSelectorViewOrder) {
 				_services.remove(activeServiceReferenceTuple.getService());
 
 				_services.add(curService);
 
 				_activeOverwritableServiceReferencesTuplesMap.put(
-					overwriteViewKey, serviceReferenceServiceTuple);
+					itemSelectorViewKey, serviceReferenceServiceTuple);
 
 				return;
 			}
