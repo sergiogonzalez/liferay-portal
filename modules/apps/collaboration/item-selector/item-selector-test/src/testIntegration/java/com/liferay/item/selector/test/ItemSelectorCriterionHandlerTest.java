@@ -223,46 +223,6 @@ public class ItemSelectorCriterionHandlerTest {
 		_serviceReference;
 	private TestItemSelectorCriterionHandler _testItemSelectorCriterionHandler;
 
-	private static abstract class BaseTestItemSelectorView
-		implements ItemSelectorView<TestItemSelectorCriterion> {
-
-		public Class<TestItemSelectorCriterion>
-			getItemSelectorCriterionClass() {
-
-			return TestItemSelectorCriterion.class;
-		}
-
-		public List<ItemSelectorReturnType>
-			getSupportedItemSelectorReturnTypes() {
-
-			return _supportedItemSelectorReturnTypes;
-		}
-
-		public boolean isShowSearch() {
-			return false;
-		}
-
-		public boolean isVisible(ThemeDisplay themeDisplay) {
-			return false;
-		}
-
-		public void renderHTML(
-				ServletRequest servletRequest, ServletResponse servletResponse,
-				TestItemSelectorCriterion itemSelectorCriterion,
-				PortletURL portletURL, String itemSelectedEventName,
-				boolean search)
-			throws IOException, ServletException {
-		}
-
-		private static final List<ItemSelectorReturnType>
-			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-				ListUtil.fromArray(
-					new ItemSelectorReturnType[] {
-						new TestItemSelectorReturnType()
-					}));
-
-	}
-
 	private static class TestItemSelectorReturnType
 		implements ItemSelectorReturnType {
 	}
@@ -300,6 +260,46 @@ public class ItemSelectorCriterionHandlerTest {
 		public String getTitle(Locale locale) {
 			return "Test 4";
 		}
+
+	}
+
+	private abstract static class BaseTestItemSelectorView
+		implements ItemSelectorView<TestItemSelectorCriterion> {
+
+		public Class<TestItemSelectorCriterion>
+			getItemSelectorCriterionClass() {
+
+			return TestItemSelectorCriterion.class;
+		}
+
+		public List<ItemSelectorReturnType>
+			getSupportedItemSelectorReturnTypes() {
+
+			return _supportedItemSelectorReturnTypes;
+		}
+
+		public boolean isShowSearch() {
+			return false;
+		}
+
+		public boolean isVisible(ThemeDisplay themeDisplay) {
+			return false;
+		}
+
+		public void renderHTML(
+				ServletRequest servletRequest, ServletResponse servletResponse,
+				TestItemSelectorCriterion itemSelectorCriterion,
+				PortletURL portletURL, String itemSelectedEventName,
+				boolean search)
+			throws IOException, ServletException {
+		}
+
+		private static final List<ItemSelectorReturnType>
+			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+				ListUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						new TestItemSelectorReturnType()
+					}));
 
 	}
 
