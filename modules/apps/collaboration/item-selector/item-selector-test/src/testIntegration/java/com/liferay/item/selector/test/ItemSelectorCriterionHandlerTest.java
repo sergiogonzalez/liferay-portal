@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -81,7 +82,51 @@ public class ItemSelectorCriterionHandlerTest {
 	}
 
 	@Test
-	public void testItemSelectorAreAddedIfItemSelectorViewKeysAreDifferent() {
+	public void testItemSelectorViewsAreAddedWhenNoViewKeys() {
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
+				new TestItemSelectorView1(), 100, null);
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
+				new TestItemSelectorView2(), 200, null);
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration3 = registerItemSelectorView(
+				new TestItemSelectorView3(), 50, null);
+
+		try {
+			ItemSelectorCriterion testItemSelectorCriterion =
+				new TestItemSelectorCriterion();
+
+			List<ItemSelectorReturnType> itemSelectorReturnTypes =
+				new ArrayList<>();
+
+			itemSelectorReturnTypes.add(new TestItemSelectorReturnType());
+
+			testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				itemSelectorReturnTypes);
+
+			List<ItemSelectorView<TestItemSelectorCriterion>>
+				itemSelectorViews =
+					_testItemSelectorCriterionHandler.getItemSelectorViews(
+						testItemSelectorCriterion);
+
+			Assert.assertEquals(3, itemSelectorViews.size());
+			Assert.assertTrue(
+				itemSelectorViews.get(0) instanceof TestItemSelectorView3);
+			Assert.assertTrue(
+				itemSelectorViews.get(1) instanceof TestItemSelectorView1);
+			Assert.assertTrue(
+				itemSelectorViews.get(2) instanceof TestItemSelectorView2);
+		}
+		finally {
+			itemSelectorViewServiceRegistration1.unregister();
+			itemSelectorViewServiceRegistration2.unregister();
+			itemSelectorViewServiceRegistration3.unregister();
+		}
+	}
+
+	@Test
+	public void testItemSelectorViewsAreAddedWhenViewKeysAreDifferent() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
 				new TestItemSelectorView1(), 200, "view1");
@@ -119,7 +164,7 @@ public class ItemSelectorCriterionHandlerTest {
 	}
 
 	@Test
-	public void testItemSelectorAreOverridenIfItemSelectorViewKeysAreTheSame() {
+	public void testItemSelectorViewsAreOverridenWhenViewKeysAreTheSame() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
 				new TestItemSelectorView1(), 100, "view");
@@ -212,7 +257,10 @@ public class ItemSelectorCriterionHandlerTest {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put("item.selector.view.order", itemSelectorViewOrder);
-		properties.put("item.selector.view.key", itemSelectorViewKey);
+
+		if (Validator.isNotNull(itemSelectorViewKey)) {
+			properties.put("item.selector.view.key", itemSelectorViewKey);
+		}
 
 		return _bundleContext.registerService(
 			ItemSelectorView.class, itemSelectorView, properties);
