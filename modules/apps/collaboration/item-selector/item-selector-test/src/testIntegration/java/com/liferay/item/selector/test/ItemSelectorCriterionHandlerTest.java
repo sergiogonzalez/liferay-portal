@@ -85,13 +85,13 @@ public class ItemSelectorCriterionHandlerTest {
 	public void testItemSelectorViewsAreAddedWhenNoViewKeys() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
-				new TestItemSelectorView1(), 100, null);
+				new TestItemSelectorView1(), 100, null, 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
-				new TestItemSelectorView2(), 200, null);
+				new TestItemSelectorView2(), 200, null, 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration3 = registerItemSelectorView(
-				new TestItemSelectorView3(), 50, null);
+				new TestItemSelectorView3(), 50, null, 0);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -121,10 +121,10 @@ public class ItemSelectorCriterionHandlerTest {
 	public void testItemSelectorViewsAreAddedWhenViewKeysAreDifferent() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
-				new TestItemSelectorView1(), 200, "view1");
+				new TestItemSelectorView1(), 200, "view1", 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
-				new TestItemSelectorView2(), 100, "view2");
+				new TestItemSelectorView2(), 100, "view2", 0);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -151,10 +151,10 @@ public class ItemSelectorCriterionHandlerTest {
 	public void testItemSelectorViewsAreOverridenWhenViewKeysAreTheSame() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
-				new TestItemSelectorView1(), 100, "view");
+				new TestItemSelectorView1(), 100, "view", 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
-				new TestItemSelectorView2(), 200, "view");
+				new TestItemSelectorView2(), 200, "view", 0);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -179,16 +179,16 @@ public class ItemSelectorCriterionHandlerTest {
 	public void testItemSelectorWithOverridenViewsAndUniqueViews() {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
-				new TestItemSelectorView1(), 100, "view1");
+				new TestItemSelectorView1(), 100, "view1", 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
-				new TestItemSelectorView2(), 200, "view2");
+				new TestItemSelectorView2(), 200, "view2", 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration3 = registerItemSelectorView(
-				new TestItemSelectorView3(), 50, "view3");
+				new TestItemSelectorView3(), 50, "view3", 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1Bis = registerItemSelectorView(
-				new TestItemSelectorView4(), 200, "view1");
+				new TestItemSelectorView4(), 200, "view1", 0);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -215,6 +215,44 @@ public class ItemSelectorCriterionHandlerTest {
 		}
 	}
 
+	@Test
+	public void testServiceRankingOrderMattersWhenOverridingViews() {
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
+				new TestItemSelectorView1(), 100, "view1", 0);
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration1Bis = registerItemSelectorView(
+				new TestItemSelectorView2(), 200, "view1", 100);
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
+				new TestItemSelectorView3(), 200, "view2", 100);
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration2Bis = registerItemSelectorView(
+				new TestItemSelectorView4(), 100, "view2", 0);
+
+		try {
+			ItemSelectorCriterion testItemSelectorCriterion =
+				getTestItemSelectorCriterion();
+
+			List<ItemSelectorView<TestItemSelectorCriterion>>
+				itemSelectorViews =
+					_testItemSelectorCriterionHandler.getItemSelectorViews(
+						testItemSelectorCriterion);
+
+			Assert.assertEquals(2, itemSelectorViews.size());
+			Assert.assertTrue(
+				itemSelectorViews.get(0) instanceof TestItemSelectorView2);
+			Assert.assertTrue(
+				itemSelectorViews.get(1) instanceof TestItemSelectorView3);
+		}
+		finally {
+			itemSelectorViewServiceRegistration1.unregister();
+			itemSelectorViewServiceRegistration1Bis.unregister();
+			itemSelectorViewServiceRegistration2.unregister();
+			itemSelectorViewServiceRegistration2Bis.unregister();
+		}
+	}
+
 	@ArquillianResource
 	public Bundle bundle;
 
@@ -235,7 +273,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
 		ItemSelectorView itemSelectorView, int itemSelectorViewOrder,
-		String itemSelectorViewKey) {
+		String itemSelectorViewKey, int serviceRanking) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -243,6 +281,10 @@ public class ItemSelectorCriterionHandlerTest {
 
 		if (Validator.isNotNull(itemSelectorViewKey)) {
 			properties.put("item.selector.view.key", itemSelectorViewKey);
+		}
+
+		if (serviceRanking != 0) {
+			properties.put("service.ranking", serviceRanking);
 		}
 
 		return _bundleContext.registerService(
