@@ -95,15 +95,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
-				new TestItemSelectorCriterion();
-
-			List<ItemSelectorReturnType> itemSelectorReturnTypes =
-				new ArrayList<>();
-
-			itemSelectorReturnTypes.add(new TestItemSelectorReturnType());
-
-			testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				itemSelectorReturnTypes);
+				getTestItemSelectorCriterion();
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
@@ -136,15 +128,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
-				new TestItemSelectorCriterion();
-
-			List<ItemSelectorReturnType> itemSelectorReturnTypes =
-				new ArrayList<>();
-
-			itemSelectorReturnTypes.add(new TestItemSelectorReturnType());
-
-			testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				itemSelectorReturnTypes);
+				getTestItemSelectorCriterion();
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
@@ -174,15 +158,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
-				new TestItemSelectorCriterion();
-
-			List<ItemSelectorReturnType> itemSelectorReturnTypes =
-				new ArrayList<>();
-
-			itemSelectorReturnTypes.add(new TestItemSelectorReturnType());
-
-			testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				itemSelectorReturnTypes);
+				getTestItemSelectorCriterion();
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
@@ -216,15 +192,7 @@ public class ItemSelectorCriterionHandlerTest {
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
-				new TestItemSelectorCriterion();
-
-			List<ItemSelectorReturnType> itemSelectorReturnTypes =
-				new ArrayList<>();
-
-			itemSelectorReturnTypes.add(new TestItemSelectorReturnType());
-
-			testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				itemSelectorReturnTypes);
+				getTestItemSelectorCriterion();
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
@@ -249,6 +217,21 @@ public class ItemSelectorCriterionHandlerTest {
 
 	@ArquillianResource
 	public Bundle bundle;
+
+	protected ItemSelectorCriterion getTestItemSelectorCriterion() {
+		ItemSelectorCriterion testItemSelectorCriterion =
+			new TestItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> itemSelectorReturnTypes =
+			new ArrayList<>();
+
+		itemSelectorReturnTypes.add(new TestItemSelectorReturnType());
+
+		testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			itemSelectorReturnTypes);
+
+		return testItemSelectorCriterion;
+	}
 
 	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
 		ItemSelectorView itemSelectorView, int itemSelectorViewOrder,
