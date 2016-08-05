@@ -21,15 +21,15 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Roberto Díaz
  */
-class TestItemSelectorCriterionHandler
+public class TestItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<TestItemSelectorCriterion> {
-
-	public Class getItemSelectorCriterionClass() {
-		return TestItemSelectorCriterion.class;
-	}
 
 	public void doActivate(BundleContext bundleContext) {
 		super.activate(bundleContext);
+	}
+
+	public Class getItemSelectorCriterionClass() {
+		return TestItemSelectorCriterion.class;
 	}
 
 }
