@@ -17,13 +17,17 @@ package com.liferay.item.selector.test;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
+@Component(service = TestItemSelectorCriterionHandler.class)
 public class TestItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<TestItemSelectorCriterion> {
 
+	@Activate
 	@Override
 	public void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
