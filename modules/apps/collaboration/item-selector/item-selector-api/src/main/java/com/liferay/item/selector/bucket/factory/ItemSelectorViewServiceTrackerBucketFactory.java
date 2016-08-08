@@ -57,7 +57,8 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 	private final Comparator<ServiceReference<ItemSelectorView>> _comparator;
 
 	private class ListServiceTrackerBucket
-		implements ServiceTrackerBucket<ItemSelectorView, ItemSelectorView, List<ItemSelectorView>> {
+		implements ServiceTrackerBucket<
+			ItemSelectorView, ItemSelectorView, List<ItemSelectorView>> {
 
 		@Override
 		public List<ItemSelectorView> getContent() {
@@ -92,8 +93,25 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 		protected void rebuild() {
 			_services = new ArrayList<>(_serviceReferenceServiceTuples.size());
 
-			for (ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
-					serviceReferenceServiceTuple : _serviceReferenceServiceTuples) {
+			ServiceReferenceServiceTupleComparator<ItemSelectorView>
+				serviceReferenceServiceTupleComparator =
+					new ServiceReferenceServiceTupleComparator<>(
+						_comparator);
+
+			Set<
+				ServiceReferenceServiceTuple<
+					ItemSelectorView, ItemSelectorView>>
+						filteredServiceReferenceServiceTuples =
+							new TreeSet<>(
+								serviceReferenceServiceTupleComparator);
+
+			Map<String, Integer> itemSelectorViewKeyServiceRankingMap =
+				new HashMap<>();
+
+			for (ServiceReferenceServiceTuple<
+					ItemSelectorView, ItemSelectorView>
+						serviceReferenceServiceTuple :
+							_serviceReferenceServiceTuples) {
 
 				ServiceReference<ItemSelectorView> serviceReference =
 					serviceReferenceServiceTuple.getServiceReference();
@@ -101,12 +119,84 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 				String itemSelectorViewKey = GetterUtil.getString(
 					serviceReference.getProperty("item.selector.view.key"));
 
-				if (Validator.isNotNull(itemSelectorViewKey)) {
-					_rebuildOverwritableServices(serviceReferenceServiceTuple);
+				if (Validator.isNull(itemSelectorViewKey)) {
+					filteredServiceReferenceServiceTuples.add(
+						serviceReferenceServiceTuple);
 				}
 				else {
-					_services.add(serviceReferenceServiceTuple.getService());
+					int serviceReferenceServiceRanking = GetterUtil.getInteger(
+						serviceReference.getProperty("service.ranking"), 0);
+
+					if (!itemSelectorViewKeyServiceRankingMap.containsKey(
+							itemSelectorViewKey)) {
+
+						filteredServiceReferenceServiceTuples.add(
+							serviceReferenceServiceTuple);
+
+						itemSelectorViewKeyServiceRankingMap.put(
+							itemSelectorViewKey,
+							serviceReferenceServiceRanking);
+
+						continue;
+					}
+
+					Integer itemSelectorViewServiceRanking =
+						itemSelectorViewKeyServiceRankingMap.get(
+							itemSelectorViewKey);
+
+					if (itemSelectorViewServiceRanking <
+							serviceReferenceServiceRanking) {
+
+						ServiceReferenceServiceTuple<
+							ItemSelectorView, ItemSelectorView>
+								overwritableServiceReferenceServiceTuple = null;
+
+						for (ServiceReferenceServiceTuple<
+								ItemSelectorView, ItemSelectorView>
+									filteredServiceReferenceServiceTuple :
+										filteredServiceReferenceServiceTuples) {
+
+							ServiceReference<ItemSelectorView>
+								filteredServiceReference =
+									filteredServiceReferenceServiceTuple.
+										getServiceReference();
+
+							String filteredServiceReferenceItemSelectorViewKey =
+								GetterUtil.getString(
+									filteredServiceReference.getProperty(
+										"item.selector.view.key"));
+
+							if (filteredServiceReferenceItemSelectorViewKey.
+									equals(itemSelectorViewKey)) {
+
+								overwritableServiceReferenceServiceTuple =
+									filteredServiceReferenceServiceTuple;
+
+								break;
+							}
+						}
+
+						if (overwritableServiceReferenceServiceTuple != null) {
+							filteredServiceReferenceServiceTuples.remove(
+								overwritableServiceReferenceServiceTuple);
+
+							filteredServiceReferenceServiceTuples.add(
+								serviceReferenceServiceTuple);
+
+							itemSelectorViewKeyServiceRankingMap.put(
+								itemSelectorViewKey,
+								serviceReferenceServiceRanking);
+						}
+					}
 				}
+			}
+
+			for (ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
+					filteredServiceReferenceServiceTuple :
+						filteredServiceReferenceServiceTuples) {
+
+				_services.add(
+					filteredServiceReferenceServiceTuple.getService());
 			}
 
 			_services = Collections.unmodifiableList(_services);
@@ -120,67 +210,10 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 			_serviceReferenceServiceTuples = new TreeSet<>(
 				serviceReferenceServiceTupleComparator);
 		}
-
-		private void _rebuildOverwritableServices(
-			ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
-				serviceReferenceServiceTuple) {
-
-			ServiceReference<ItemSelectorView> serviceReference =
-				serviceReferenceServiceTuple.getServiceReference();
-
-			String itemSelectorViewKey = GetterUtil.getString(
-				serviceReference.getProperty("item.selector.view.key"));
-
-			int itemSelectorViewOrder = GetterUtil.getInteger(
-				serviceReference.getProperty("item.selector.view.order"));
-
-			ItemSelectorView curService =
-				serviceReferenceServiceTuple.getService();
-
-			ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
-				activeServiceReferenceTuple =
-					_activeOverwritableServiceReferencesTuplesMap.get(
-						itemSelectorViewKey);
-
-			if (activeServiceReferenceTuple == null) {
-				_services.add(curService);
-
-				_activeOverwritableServiceReferencesTuplesMap.put(
-					itemSelectorViewKey, serviceReferenceServiceTuple);
-
-				return;
-			}
-
-			ServiceReference<ItemSelectorView> activedServiceReference =
-				activeServiceReferenceTuple.getServiceReference();
-
-			int activeItemSelectorViewOrder = GetterUtil.getInteger(
-				activedServiceReference.getProperty(
-					"item.selector.view.order"));
-
-			if (activeItemSelectorViewOrder > itemSelectorViewOrder) {
-				_services.remove(activeServiceReferenceTuple.getService());
-
-				_services.add(curService);
-
-				_activeOverwritableServiceReferencesTuplesMap.put(
-					itemSelectorViewKey, serviceReferenceServiceTuple);
-
-				return;
-			}
-
-			ItemSelectorView activeService =
-				activeServiceReferenceTuple.getService();
-
-			if (!_services.contains(activeService)) {
-				_services.add(activeService);
-			}
-		}
-
-		private final Map<String, ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>>
-			_activeOverwritableServiceReferencesTuplesMap = new HashMap<>();
-		private final Set<ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>>
-			_serviceReferenceServiceTuples;
+		private final Set<
+			ServiceReferenceServiceTuple<
+				ItemSelectorView, ItemSelectorView>>
+					_serviceReferenceServiceTuples;
 		private List<ItemSelectorView> _services = new ArrayList<>();
 
 	}
