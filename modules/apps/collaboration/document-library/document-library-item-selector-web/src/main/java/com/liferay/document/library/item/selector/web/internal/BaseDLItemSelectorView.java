@@ -16,6 +16,7 @@ package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -35,11 +36,20 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Roberto Díaz
  */
 public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	implements DLItemSelectorView<T> {
+
+	@Override
+	public ItemSelectorReturnTypeResolverHandler
+		getItemSelectorReturnTypeResolverHandler() {
+
+		return _itemSelectorReturnTypeResolverHandler;
+	}
 
 	@Override
 	public String[] getMimeTypes() {
@@ -93,6 +103,19 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		requestDispatcher.include(request, response);
 	}
 
+	@Reference(unbind = "-")
+	public void setItemSelectorReturnTypeResolverHandler(
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler) {
+
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)",
+		unbind = "-"
+	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
@@ -101,6 +124,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
 
+	private ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;
 
 }
