@@ -29,6 +29,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletURL;
 
@@ -61,19 +62,11 @@ public class ItemSelectorCriterionHandlerTest {
 	public void setUp() throws Exception {
 		_bundleContext = bundle.getBundleContext();
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		_bundleContext.registerService(
-			TestItemSelectorCriterionHandler.class,
-			new TestItemSelectorCriterionHandler(), properties);
-
 		_serviceReference = _bundleContext.getServiceReference(
 			TestItemSelectorCriterionHandler.class);
 
 		_testItemSelectorCriterionHandler = _bundleContext.getService(
 			_serviceReference);
-
-		_testItemSelectorCriterionHandler.activate(_bundleContext);
 	}
 
 	@After
@@ -93,6 +86,13 @@ public class ItemSelectorCriterionHandlerTest {
 			itemSelectorViewServiceRegistration3 = registerItemSelectorView(
 				new TestItemSelectorView3(), 50, null, 0);
 
+		List<ServiceRegistration> serviceRegistrations =
+			new CopyOnWriteArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration2);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration3);
+
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
 				getTestItemSelectorCriterion();
@@ -111,9 +111,7 @@ public class ItemSelectorCriterionHandlerTest {
 				itemSelectorViews.get(2) instanceof TestItemSelectorView2);
 		}
 		finally {
-			itemSelectorViewServiceRegistration1.unregister();
-			itemSelectorViewServiceRegistration2.unregister();
-			itemSelectorViewServiceRegistration3.unregister();
+			unregister(serviceRegistrations);
 		}
 	}
 
@@ -125,6 +123,12 @@ public class ItemSelectorCriterionHandlerTest {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
 				new TestItemSelectorView2(), 100, "view2", 0);
+
+		List<ServiceRegistration> serviceRegistrations =
+			new CopyOnWriteArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration2);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -142,8 +146,7 @@ public class ItemSelectorCriterionHandlerTest {
 				itemSelectorViews.get(1) instanceof TestItemSelectorView1);
 		}
 		finally {
-			itemSelectorViewServiceRegistration1.unregister();
-			itemSelectorViewServiceRegistration2.unregister();
+			unregister(serviceRegistrations);
 		}
 	}
 
@@ -155,6 +158,12 @@ public class ItemSelectorCriterionHandlerTest {
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
 				new TestItemSelectorView2(), 200, "view", 0);
+
+		List<ServiceRegistration> serviceRegistrations =
+			new CopyOnWriteArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration2);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -170,8 +179,7 @@ public class ItemSelectorCriterionHandlerTest {
 				itemSelectorViews.get(0) instanceof TestItemSelectorView1);
 		}
 		finally {
-			itemSelectorViewServiceRegistration1.unregister();
-			itemSelectorViewServiceRegistration2.unregister();
+			unregister(serviceRegistrations);
 		}
 	}
 
@@ -188,7 +196,15 @@ public class ItemSelectorCriterionHandlerTest {
 				new TestItemSelectorView3(), 50, "view3", 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1Bis = registerItemSelectorView(
-				new TestItemSelectorView4(), 200, "view1", 0);
+				new TestItemSelectorView4(), 150, "view1", 0);
+
+		List<ServiceRegistration> serviceRegistrations =
+			new CopyOnWriteArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration2);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration3);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1Bis);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -208,10 +224,7 @@ public class ItemSelectorCriterionHandlerTest {
 				itemSelectorViews.get(2) instanceof TestItemSelectorView2);
 		}
 		finally {
-			itemSelectorViewServiceRegistration1.unregister();
-			itemSelectorViewServiceRegistration2.unregister();
-			itemSelectorViewServiceRegistration3.unregister();
-			itemSelectorViewServiceRegistration1Bis.unregister();
+			unregister(serviceRegistrations);
 		}
 	}
 
@@ -222,13 +235,21 @@ public class ItemSelectorCriterionHandlerTest {
 				new TestItemSelectorView1(), 100, "view1", 0);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration1Bis = registerItemSelectorView(
-				new TestItemSelectorView2(), 200, "view1", 100);
+				new TestItemSelectorView2(), 150, "view1", 100);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2 = registerItemSelectorView(
 				new TestItemSelectorView3(), 200, "view2", 100);
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration2Bis = registerItemSelectorView(
 				new TestItemSelectorView4(), 100, "view2", 0);
+
+		List<ServiceRegistration> serviceRegistrations =
+			new CopyOnWriteArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1Bis);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration2);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration2Bis);
 
 		try {
 			ItemSelectorCriterion testItemSelectorCriterion =
@@ -246,10 +267,7 @@ public class ItemSelectorCriterionHandlerTest {
 				itemSelectorViews.get(1) instanceof TestItemSelectorView3);
 		}
 		finally {
-			itemSelectorViewServiceRegistration1.unregister();
-			itemSelectorViewServiceRegistration1Bis.unregister();
-			itemSelectorViewServiceRegistration2.unregister();
-			itemSelectorViewServiceRegistration2Bis.unregister();
+			unregister(serviceRegistrations);
 		}
 	}
 
@@ -289,6 +307,12 @@ public class ItemSelectorCriterionHandlerTest {
 
 		return _bundleContext.registerService(
 			ItemSelectorView.class, itemSelectorView, properties);
+	}
+
+	protected void unregister(List<ServiceRegistration> serviceRegistrations) {
+		for (ServiceRegistration serviceRegistration : serviceRegistrations) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private BundleContext _bundleContext;
