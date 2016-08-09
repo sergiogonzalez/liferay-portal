@@ -178,6 +178,12 @@
 			<then>
 				<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 			</then>
+			<elseif>
+				<equals arg1="${saveAsDraft}" arg2="true" />
+				<then>
+					<execute macro="Button#clickSaveAsDraft" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 			</else>
@@ -259,6 +265,15 @@
 		</for>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
+	<command name="cancelAddKBArticle">
+		<execute macro="KBArticle#_gotoAddBasicArticle" />
+
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
+
+		<execute macro="Button#clickCancel" />
 	</command>
 
 	<command name="configureEmailCP">
@@ -598,7 +613,25 @@
 			</then>
 		</if>
 
-		<execute macro="PortletEntry#publish" />
+		<if>
+			<equals arg1="${cancel}" arg2="true" />
+			<then>
+				<execute macro="Button#clickCancel" />
+			</then>
+			<elseif>
+				<equals arg1="${saveAsDraft}" arg2="true" />
+				<then>
+					<execute macro="Button#clickSaveAsDraft" />
+
+					<execute macro="Alert#viewSuccessMessage" />
+				</then>
+			</elseif>
+			<else>
+				<execute macro="PortletEntry#publish" />
+
+				<execute macro="Alert#viewSuccessMessage" />
+			</else>
+		</if>
 	</command>
 
 	<command name="editKBArticlePriorityCP">
@@ -1201,6 +1234,13 @@
 			<equals arg1="${kbWorkflowStatus}" arg2="Pending" />
 			<then>
 				<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_STATUS" value1="Pending" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${kbStatus}" arg2="Draft" />
+			<then>
+				<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_STATUS" value1="Draft" />
 			</then>
 		</if>
 

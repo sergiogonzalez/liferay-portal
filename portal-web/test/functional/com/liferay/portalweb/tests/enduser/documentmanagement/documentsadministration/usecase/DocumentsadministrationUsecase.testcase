@@ -238,8 +238,6 @@
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
-		<execute macro="IFrame#closeFrame" />
-
 		<execute macro="DMDocument#checkoutPG">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
@@ -298,9 +296,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<var name="key_dmDocumentTitle" value="Document_1.doc" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Document1" />
+		<execute macro="DMNavigator#gotoCheckedOutDocument">
+			<var name="dmCheckedOutDocumentTitle" value="Document1" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+		</execute>
 
 		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
 			<var name="dmDocumentVersionNumber" value="PWC" />

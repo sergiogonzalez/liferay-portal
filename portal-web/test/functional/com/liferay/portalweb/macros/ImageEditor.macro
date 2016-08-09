@@ -100,6 +100,12 @@
 		</if>
 	</command>
 
+	<command name="viewBaseControls">
+		<execute function="AssertElementPresent" locator1="Button#TRANSFORM" />
+		<execute function="AssertElementPresent" locator1="Button#FILTER_EFFECT" />
+		<execute function="AssertElementPresent" locator1="Button#COLOR_EFFECT" />
+	</command>
+
 	<command name="viewImageEditorPortletHeader">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#H3_MODAL_TITLE" value1="${imageFileName} (Copy)" />
 	</command>

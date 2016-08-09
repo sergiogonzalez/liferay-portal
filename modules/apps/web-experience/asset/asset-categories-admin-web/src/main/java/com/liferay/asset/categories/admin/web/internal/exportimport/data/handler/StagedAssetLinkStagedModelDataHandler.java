@@ -113,15 +113,16 @@ public class StagedAssetLinkStagedModelDataHandler
 				stagedAssetLink.getEntry1Uuid(),
 				stagedAssetLink.getEntry2Uuid());
 
-		if (existingStagedAssetLink != null) {
+		if ((existingStagedAssetLink == null) ||
+			!portletDataContext.isDataStrategyMirror()) {
+
+			_stagedAssetLinkStagedModelRepository.addStagedModel(
+				portletDataContext, stagedAssetLink);
+		}
+		else {
 			_stagedAssetLinkStagedModelRepository.updateStagedModel(
 				portletDataContext, existingStagedAssetLink);
-
-			return;
 		}
-
-		_stagedAssetLinkStagedModelRepository.addStagedModel(
-			portletDataContext, stagedAssetLink);
 	}
 
 	@Override

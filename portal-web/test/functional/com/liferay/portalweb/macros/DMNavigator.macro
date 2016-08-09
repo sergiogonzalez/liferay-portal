@@ -23,6 +23,12 @@
 		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
 	</command>
 
+	<command name="gotoCheckedOutDocument">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmCheckedOutDocumentTitle}" />
+	</command>
+
 	<command name="gotoDocumentCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

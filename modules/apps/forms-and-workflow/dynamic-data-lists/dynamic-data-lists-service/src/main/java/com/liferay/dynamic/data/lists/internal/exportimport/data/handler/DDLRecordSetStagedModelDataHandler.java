@@ -161,7 +161,9 @@ public class DDLRecordSetStagedModelDataHandler
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				recordSet.getUuid(), portletDataContext.getScopeGroupId());
 
-		if (existingRecordSet == null) {
+		if ((existingRecordSet == null) ||
+			!portletDataContext.isDataStrategyMirror()) {
+
 			importedRecordSet = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedRecordSet);
 		}

@@ -366,7 +366,7 @@
 						function() {
 							if (imageSrc) {
 								if (callback) {
-									callback(imageSrc);
+									callback(imageSrc, selectedItem);
 								}
 								else {
 									var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');

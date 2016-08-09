@@ -91,7 +91,9 @@ public class BookmarksFolderStagedModelDataHandler
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				folder.getUuid(), portletDataContext.getScopeGroupId());
 
-		if (existingFolder == null) {
+		if ((existingFolder == null) ||
+			!portletDataContext.isDataStrategyMirror()) {
+
 			importedFolder = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedFolder);
 		}
