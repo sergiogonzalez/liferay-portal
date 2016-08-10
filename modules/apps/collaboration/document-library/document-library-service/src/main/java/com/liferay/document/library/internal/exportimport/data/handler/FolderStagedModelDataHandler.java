@@ -29,6 +29,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RepositoryEntry;
@@ -40,16 +41,16 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -154,10 +155,7 @@ public class FolderStagedModelDataHandler
 			portletDataContext.addClassedModel(
 				folderElement, folderPath, folder);
 
-			long portletRepositoryClassNameId = PortalUtil.getClassNameId(
-				PortletRepository.class.getName());
-
-			if (repository.getClassNameId() != portletRepositoryClassNameId) {
+			if (_isExternalRepositoryFolder(portletDataContext, folder)) {
 				return;
 			}
 		}
@@ -200,7 +198,7 @@ public class FolderStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Folder.class + ".folderIdsAndRepositoryEntryIds");
 
-		if (!folder.isDefaultRepository()) {
+		if (_isExternalRepositoryFolder(portletDataContext, folder)) {
 			Map<Long, Long> repositoryEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					RepositoryEntry.class);
@@ -513,6 +511,46 @@ public class FolderStagedModelDataHandler
 				throw pde;
 			}
 		}
+	}
+
+	private boolean _isExternalRepositoryFolder(
+			PortletDataContext portletDataContext, Folder folder)
+		throws PortalException {
+
+		if (folder.isDefaultRepository()) {
+			return false;
+		}
+
+		Map<Long, Long> newPrimaryKeysMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Repository.class);
+
+		Long repositoryId = MapUtil.getLong(
+			newPrimaryKeysMap, folder.getRepositoryId(),
+			folder.getRepositoryId());
+
+		Repository repository = _repositoryLocalService.fetchRepository(
+			repositoryId);
+
+		if (repository == null) {
+			throw new NoSuchRepositoryException();
+		}
+
+		String className = repository.getClassName();
+
+		Collection<String> externalRepositoryClassNames =
+			RepositoryClassDefinitionCatalogUtil.
+				getExternalRepositoryClassNames();
+
+		for (String externalRepositoryClassName :
+				externalRepositoryClassNames) {
+
+			if (className.equals(externalRepositoryClassName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private DLAppLocalService _dlAppLocalService;

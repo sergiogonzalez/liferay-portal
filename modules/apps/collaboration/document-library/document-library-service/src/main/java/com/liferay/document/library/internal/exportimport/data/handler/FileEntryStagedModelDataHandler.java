@@ -59,11 +59,10 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portal.verify.extender.marker.VerifyProcessCompletionMarker;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -72,6 +71,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -211,10 +211,7 @@ public class FileEntryStagedModelDataHandler
 			portletDataContext.addClassedModel(
 				fileEntryElement, fileEntryPath, fileEntry);
 
-			long portletRepositoryClassNameId = PortalUtil.getClassNameId(
-				PortletRepository.class.getName());
-
-			if (repository.getClassNameId() != portletRepositoryClassNameId) {
+			if (_isExternalRepositoryFileEntry(portletDataContext, fileEntry)) {
 				return;
 			}
 		}
@@ -313,7 +310,7 @@ public class FileEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
 
-		if (!fileEntry.isDefaultRepository()) {
+		if (_isExternalRepositoryFileEntry(portletDataContext, fileEntry)) {
 
 			// References has been automatically imported, nothing to do here
 
@@ -871,6 +868,46 @@ public class FileEntryStagedModelDataHandler
 
 			throw pde;
 		}
+	}
+
+	private boolean _isExternalRepositoryFileEntry(
+			PortletDataContext portletDataContext, FileEntry fileEntry)
+		throws PortalException {
+
+		if (fileEntry.isDefaultRepository()) {
+			return false;
+		}
+
+		Map<Long, Long> newPrimaryKeysMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Repository.class);
+
+		long repositoryId = MapUtil.getLong(
+			newPrimaryKeysMap, fileEntry.getRepositoryId(),
+			fileEntry.getRepositoryId());
+
+		Repository repository = _repositoryLocalService.fetchRepository(
+			repositoryId);
+
+		if (repository == null) {
+			throw new NoSuchRepositoryException();
+		}
+
+		String className = repository.getClassName();
+
+		Collection<String> externalRepositoryClassNames =
+			RepositoryClassDefinitionCatalogUtil.
+				getExternalRepositoryClassNames();
+
+		for (String externalRepositoryClassName :
+				externalRepositoryClassNames) {
+
+			if (className.equals(externalRepositoryClassName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
