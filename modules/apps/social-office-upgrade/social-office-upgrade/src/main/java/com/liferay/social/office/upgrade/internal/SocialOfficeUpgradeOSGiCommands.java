@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.command.function=executeAll",
+		"osgi.command.function=updateEventsDisplay",
 		"osgi.command.function=hideTasksLayout",
 		"osgi.command.function=removeTasksPortlet",
 		"osgi.command.function=updateTheme", "osgi.command.scope=socialOffice"
@@ -46,6 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SocialOfficeUpgradeOSGiCommands {
 
 	public void executeAll() throws PortalException {
+		updateEventsDisplay();
 		hideTasksLayout();
 		removeTasksPortlet();
 		updateTheme();
@@ -129,6 +131,9 @@ public class SocialOfficeUpgradeOSGiCommands {
 			"[socialOffice:removeTasksPortlet] %d Tasks portlet " +
 				"preferences deleted.%n",
 			atomicInteger.get());
+	}
+
+	public void updateEventDisplay() throws PortalException {
 	}
 
 	public void updateTheme() throws PortalException {
