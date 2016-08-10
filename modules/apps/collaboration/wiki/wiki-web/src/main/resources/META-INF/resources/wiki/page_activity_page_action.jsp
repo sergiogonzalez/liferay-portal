@@ -30,11 +30,18 @@ else {
 
 JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(HtmlUtil.unescape(socialActivity.getExtraData()));
 
-double version = extraDataJSONObject.getDouble("version");
+double version = extraDataJSONObject.getDouble("version", 0);
 
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
+WikiPage socialActivityWikiPage = null;
+
+if (version == 0) {
+	socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle());
+}
+else {
+	socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
+}
 %>
 
 <c:if test="<%= socialActivityWikiPage != null %>">
