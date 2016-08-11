@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -37,13 +38,23 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = DLDisplayContextFactory.class)
+@Component(
+	immediate = true, property = "service.ranking:Integer=0",
+	service = DLDisplayContextFactory.class
+)
 public class GoogleDocsDLDisplayContextFactory
 	implements DLDisplayContextFactory {
 
