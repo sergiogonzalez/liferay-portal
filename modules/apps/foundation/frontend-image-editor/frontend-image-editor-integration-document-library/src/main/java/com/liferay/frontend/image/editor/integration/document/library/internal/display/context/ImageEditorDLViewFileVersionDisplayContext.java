@@ -80,7 +80,9 @@ public class ImageEditorDLViewFileVersionDisplayContext
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		if (!_imageEditorDLDisplayContextHelper.isShowImageEditorAction()) {
+		if (!_imageEditorDLDisplayContextHelper.isShowImageEditorAction() ||
+			!hasPreview()) {
+
 			return menu;
 		}
 
