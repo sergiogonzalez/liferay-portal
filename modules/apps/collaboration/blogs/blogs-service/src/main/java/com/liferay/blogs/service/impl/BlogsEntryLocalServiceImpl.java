@@ -669,6 +669,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId());
 
+		// Friendly URL
+
+		friendlyURLLocalService.deleteFriendlyURL(
+			entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+			entry.getEntryId());
+
 		return entry;
 	}
 
