@@ -29,20 +29,25 @@
 				<finder-column name="classNameId" />
 				<finder-column name="classPK" />
 		  	</finder>
-
-			<finder name="C_G_C_F" return-type="FriendlyURL">
+			<finder name="C_G_C_C_F" return-type="FriendlyURL">
 				<finder-column name="companyId" />
 				<finder-column name="groupId" />
 				<finder-column name="classNameId" />
+				<finder-column name="classPK" />
 				<finder-column name="friendlyUrl" />
 			</finder>
-
 			<finder name="C_G_C_C_M" return-type="FriendlyURL">
 				<finder-column name="companyId" />
 				<finder-column name="groupId" />
 				<finder-column name="classNameId" />
 				<finder-column name="classPK" />
 				<finder-column name="main" />
+			</finder>
+			<finder name="C_G_C_F" return-type="FriendlyURL">
+				<finder-column name="companyId" />
+				<finder-column name="groupId" />
+				<finder-column name="classNameId" />
+				<finder-column name="friendlyUrl" />
 			</finder>
 	</entity>
 
