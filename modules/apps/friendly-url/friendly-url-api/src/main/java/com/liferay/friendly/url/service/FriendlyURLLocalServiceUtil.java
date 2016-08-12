@@ -98,6 +98,14 @@ public class FriendlyURLLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
+		long companyId, long groupId, java.lang.Class<?> clazz,
+		java.lang.String friendlyUrl)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchFriendlyURL(companyId, groupId, clazz, friendlyUrl);
+	}
+
+	public static com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
 		long friendlyUrlId) {
 		return getService().fetchFriendlyURL(friendlyUrlId);
 	}
@@ -315,6 +323,11 @@ public class FriendlyURLLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, long classPK) {
+		getService().deleteFriendlyURL(companyId, groupId, clazz, classPK);
 	}
 
 	public static void validate(long companyId, long groupId,
