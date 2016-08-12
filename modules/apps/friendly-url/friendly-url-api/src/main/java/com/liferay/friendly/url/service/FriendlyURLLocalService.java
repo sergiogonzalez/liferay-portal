@@ -103,6 +103,11 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURL fetchFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, java.lang.String friendlyUrl)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURL fetchFriendlyURL(long friendlyUrlId);
 
 	/**
@@ -279,6 +284,9 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, long classPK);
 
 	public void validate(long companyId, long groupId,
 		java.lang.Class<?> clazz, java.lang.String friendlyUrl)

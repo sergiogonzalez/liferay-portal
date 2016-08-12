@@ -94,6 +94,15 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
+		long companyId, long groupId, java.lang.Class<?> clazz,
+		java.lang.String friendlyUrl)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _friendlyURLLocalService.fetchFriendlyURL(companyId, groupId,
+			clazz, friendlyUrl);
+	}
+
+	@Override
+	public com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
 		long friendlyUrlId) {
 		return _friendlyURLLocalService.fetchFriendlyURL(friendlyUrlId);
 	}
@@ -333,6 +342,13 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _friendlyURLLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, long classPK) {
+		_friendlyURLLocalService.deleteFriendlyURL(companyId, groupId, clazz,
+			classPK);
 	}
 
 	@Override
