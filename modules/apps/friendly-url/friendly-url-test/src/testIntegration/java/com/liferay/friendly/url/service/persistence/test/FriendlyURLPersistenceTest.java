@@ -196,6 +196,17 @@ public class FriendlyURLPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_G_C_F() throws Exception {
+		_persistence.countByC_G_C_F(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
+
+		_persistence.countByC_G_C_F(0L, 0L, 0L, StringPool.NULL);
+
+		_persistence.countByC_G_C_F(0L, 0L, 0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_G_C_C_F() throws Exception {
 		_persistence.countByC_G_C_C_F(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -214,17 +225,6 @@ public class FriendlyURLPersistenceTest {
 
 		_persistence.countByC_G_C_C_M(0L, 0L, 0L, 0L,
 			RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByC_G_C_F() throws Exception {
-		_persistence.countByC_G_C_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			StringPool.BLANK);
-
-		_persistence.countByC_G_C_F(0L, 0L, 0L, StringPool.NULL);
-
-		_persistence.countByC_G_C_F(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
@@ -474,6 +474,19 @@ public class FriendlyURLPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
 				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingFriendlyURL.getFriendlyUrl(),
+				ReflectionTestUtil.invoke(existingFriendlyURL,
+					"getOriginalFriendlyUrl", new Class<?>[0])));
+
+		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
+				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
 				"getOriginalClassPK", new Class<?>[0]));
@@ -496,19 +509,6 @@ public class FriendlyURLPersistenceTest {
 		Assert.assertEquals(Boolean.valueOf(existingFriendlyURL.getMain()),
 			ReflectionTestUtil.<Boolean>invoke(existingFriendlyURL,
 				"getOriginalMain", new Class<?>[0]));
-
-		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
-				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingFriendlyURL.getFriendlyUrl(),
-				ReflectionTestUtil.invoke(existingFriendlyURL,
-					"getOriginalFriendlyUrl", new Class<?>[0])));
 	}
 
 	protected FriendlyURL addFriendlyURL() throws Exception {
