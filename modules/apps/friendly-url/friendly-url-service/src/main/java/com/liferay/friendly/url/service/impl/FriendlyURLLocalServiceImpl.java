@@ -87,6 +87,16 @@ public class FriendlyURLLocalServiceImpl
 	}
 
 	@Override
+	public FriendlyURL fetchFriendlyURL(
+			long companyId, long groupId, Class<?> clazz, String friendlyUrl)
+		throws PortalException {
+
+		return friendlyURLPersistence.fetchByC_G_C_F(
+			companyId, groupId, classNameLocalService.getClassNameId(clazz),
+			friendlyUrl);
+	}
+
+	@Override
 	public void validate(
 			long companyId, long groupId, Class<?> clazz, String friendlyUrl)
 		throws PortalException {
