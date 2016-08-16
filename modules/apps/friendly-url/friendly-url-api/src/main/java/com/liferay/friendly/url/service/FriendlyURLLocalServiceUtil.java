@@ -328,6 +328,13 @@ public class FriendlyURLLocalServiceUtil {
 		getService().deleteFriendlyURL(companyId, groupId, clazz, classPK);
 	}
 
+	public static void deleteFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
+		getService()
+			.deleteFriendlyURL(companyId, groupId, clazz, classPK, urlTitle);
+	}
+
 	public static void validate(long companyId, long groupId,
 		java.lang.Class<?> clazz, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {

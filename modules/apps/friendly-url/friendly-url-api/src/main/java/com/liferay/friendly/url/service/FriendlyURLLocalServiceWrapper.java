@@ -352,6 +352,14 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 	}
 
 	@Override
+	public void deleteFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
+		_friendlyURLLocalService.deleteFriendlyURL(companyId, groupId, clazz,
+			classPK, urlTitle);
+	}
+
+	@Override
 	public void validate(long companyId, long groupId,
 		java.lang.Class<?> clazz, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
