@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.item.selector.web.internal.display.context;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
-import com.liferay.item.selector.ItemSelectorReturnTypeUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
 import com.liferay.knowledge.base.item.selector.web.internal.KBAttachmentItemSelectorView;
@@ -68,24 +67,15 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			_kbAttachmentItemSelectorCriterion.
-				getDesiredItemSelectorReturnTypes();
-
-		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
-				desiredItemSelectorReturnTypes,
-				_kbAttachmentItemSelectorView.
-					getSupportedItemSelectorReturnTypes());
-
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =
-				_kbAttachmentItemSelectorView.
-					getItemSelectorReturnTypeResolverHandler();
+			_kbAttachmentItemSelectorView.
+				getItemSelectorReturnTypeResolverHandler();
 
 		return itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
-				itemSelectorReturnType.getClass(), FileEntry.class);
+				_kbAttachmentItemSelectorCriterion, _kbAttachmentItemSelectorView,
+				FileEntry.class);
 	}
 
 	public KBAttachmentItemSelectorCriterion
