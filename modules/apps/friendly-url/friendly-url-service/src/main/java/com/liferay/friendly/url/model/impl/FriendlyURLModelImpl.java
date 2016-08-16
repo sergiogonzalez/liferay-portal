@@ -37,6 +37,7 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,8 +66,9 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "friendlyUrlId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "createDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "urlTitle", Types.VARCHAR },
@@ -77,15 +79,16 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("friendlyUrlId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyUrlId LONG not null primary key,companyId LONG,groupId LONG,classNameId LONG,classPK LONG,urlTitle VARCHAR(75) null,main BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyUrlId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(150) null,main BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURL";
 	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURL.friendlyUrlId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURL.friendlyUrlId ASC";
@@ -151,8 +154,9 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("friendlyUrlId", getFriendlyUrlId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("urlTitle", getUrlTitle());
@@ -178,16 +182,22 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 			setFriendlyUrlId(friendlyUrlId);
 		}
 
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
 		}
 
-		Long groupId = (Long)attributes.get("groupId");
+		Date createDate = (Date)attributes.get("createDate");
 
-		if (groupId != null) {
-			setGroupId(groupId);
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -249,6 +259,28 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	}
 
 	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -271,25 +303,13 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	}
 
 	@Override
-	public long getGroupId() {
-		return _groupId;
+	public Date getCreateDate() {
+		return _createDate;
 	}
 
 	@Override
-	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
-		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	@Override
@@ -441,8 +461,9 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		friendlyURLImpl.setUuid(getUuid());
 		friendlyURLImpl.setFriendlyUrlId(getFriendlyUrlId());
-		friendlyURLImpl.setCompanyId(getCompanyId());
 		friendlyURLImpl.setGroupId(getGroupId());
+		friendlyURLImpl.setCompanyId(getCompanyId());
+		friendlyURLImpl.setCreateDate(getCreateDate());
 		friendlyURLImpl.setClassNameId(getClassNameId());
 		friendlyURLImpl.setClassPK(getClassPK());
 		friendlyURLImpl.setUrlTitle(getUrlTitle());
@@ -511,13 +532,13 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		friendlyURLModelImpl._originalUuid = friendlyURLModelImpl._uuid;
 
-		friendlyURLModelImpl._originalCompanyId = friendlyURLModelImpl._companyId;
-
-		friendlyURLModelImpl._setOriginalCompanyId = false;
-
 		friendlyURLModelImpl._originalGroupId = friendlyURLModelImpl._groupId;
 
 		friendlyURLModelImpl._setOriginalGroupId = false;
+
+		friendlyURLModelImpl._originalCompanyId = friendlyURLModelImpl._companyId;
+
+		friendlyURLModelImpl._setOriginalCompanyId = false;
 
 		friendlyURLModelImpl._originalClassNameId = friendlyURLModelImpl._classNameId;
 
@@ -550,9 +571,18 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		friendlyURLCacheModel.friendlyUrlId = getFriendlyUrlId();
 
+		friendlyURLCacheModel.groupId = getGroupId();
+
 		friendlyURLCacheModel.companyId = getCompanyId();
 
-		friendlyURLCacheModel.groupId = getGroupId();
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			friendlyURLCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			friendlyURLCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		friendlyURLCacheModel.classNameId = getClassNameId();
 
@@ -573,16 +603,18 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", friendlyUrlId=");
 		sb.append(getFriendlyUrlId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
@@ -598,7 +630,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.friendly.url.model.FriendlyURL");
@@ -613,12 +645,16 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		sb.append(getFriendlyUrlId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
@@ -649,12 +685,13 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	private String _uuid;
 	private String _originalUuid;
 	private long _friendlyUrlId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private Date _createDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

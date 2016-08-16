@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -59,8 +60,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("friendlyUrlId", getFriendlyUrlId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("urlTitle", getUrlTitle());
@@ -83,16 +85,22 @@ public class FriendlyURLWrapper implements FriendlyURL,
 			setFriendlyUrlId(friendlyUrlId);
 		}
 
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
 		}
 
-		Long groupId = (Long)attributes.get("groupId");
+		Date createDate = (Date)attributes.get("createDate");
 
-		if (groupId != null) {
-			setGroupId(groupId);
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -236,6 +244,16 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
+	* Returns the create date of this friendly u r l.
+	*
+	* @return the create date of this friendly u r l
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _friendlyURL.getCreateDate();
+	}
+
+	/**
 	* Returns the class name ID of this friendly u r l.
 	*
 	* @return the class name ID of this friendly u r l
@@ -338,6 +356,16 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	@Override
 	public void setCompanyId(long companyId) {
 		_friendlyURL.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this friendly u r l.
+	*
+	* @param createDate the create date of this friendly u r l
+	*/
+	@Override
+	public void setCreateDate(Date createDate) {
+		_friendlyURL.setCreateDate(createDate);
 	}
 
 	@Override

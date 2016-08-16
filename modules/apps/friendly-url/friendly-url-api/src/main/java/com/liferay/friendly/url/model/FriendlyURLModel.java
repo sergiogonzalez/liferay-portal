@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The base model interface for the FriendlyURL service. Represents a row in the &quot;FriendlyURL&quot; database table, with each column mapped to a property of this class.
  *
@@ -93,6 +95,20 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	public void setFriendlyUrlId(long friendlyUrlId);
 
 	/**
+	 * Returns the group ID of this friendly u r l.
+	 *
+	 * @return the group ID of this friendly u r l
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this friendly u r l.
+	 *
+	 * @param groupId the group ID of this friendly u r l
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this friendly u r l.
 	 *
 	 * @return the company ID of this friendly u r l
@@ -109,18 +125,18 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the group ID of this friendly u r l.
+	 * Returns the create date of this friendly u r l.
 	 *
-	 * @return the group ID of this friendly u r l
+	 * @return the create date of this friendly u r l
 	 */
-	public long getGroupId();
+	public Date getCreateDate();
 
 	/**
-	 * Sets the group ID of this friendly u r l.
+	 * Sets the create date of this friendly u r l.
 	 *
-	 * @param groupId the group ID of this friendly u r l
+	 * @param createDate the create date of this friendly u r l
 	 */
-	public void setGroupId(long groupId);
+	public void setCreateDate(Date createDate);
 
 	/**
 	 * Returns the fully qualified class name of this friendly u r l.

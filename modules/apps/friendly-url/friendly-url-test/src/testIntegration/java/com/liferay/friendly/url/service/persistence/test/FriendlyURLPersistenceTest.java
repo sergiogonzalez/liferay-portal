@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -125,9 +126,11 @@ public class FriendlyURLPersistenceTest {
 
 		newFriendlyURL.setUuid(RandomTestUtil.randomString());
 
+		newFriendlyURL.setGroupId(RandomTestUtil.nextLong());
+
 		newFriendlyURL.setCompanyId(RandomTestUtil.nextLong());
 
-		newFriendlyURL.setGroupId(RandomTestUtil.nextLong());
+		newFriendlyURL.setCreateDate(RandomTestUtil.nextDate());
 
 		newFriendlyURL.setClassNameId(RandomTestUtil.nextLong());
 
@@ -145,10 +148,13 @@ public class FriendlyURLPersistenceTest {
 			newFriendlyURL.getUuid());
 		Assert.assertEquals(existingFriendlyURL.getFriendlyUrlId(),
 			newFriendlyURL.getFriendlyUrlId());
-		Assert.assertEquals(existingFriendlyURL.getCompanyId(),
-			newFriendlyURL.getCompanyId());
 		Assert.assertEquals(existingFriendlyURL.getGroupId(),
 			newFriendlyURL.getGroupId());
+		Assert.assertEquals(existingFriendlyURL.getCompanyId(),
+			newFriendlyURL.getCompanyId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFriendlyURL.getCreateDate()),
+			Time.getShortTimestamp(newFriendlyURL.getCreateDate()));
 		Assert.assertEquals(existingFriendlyURL.getClassNameId(),
 			newFriendlyURL.getClassNameId());
 		Assert.assertEquals(existingFriendlyURL.getClassPK(),
@@ -251,8 +257,9 @@ public class FriendlyURLPersistenceTest {
 
 	protected OrderByComparator<FriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FriendlyURL", "uuid", true,
-			"friendlyUrlId", true, "companyId", true, "groupId", true,
-			"classNameId", true, "classPK", true, "urlTitle", true, "main", true);
+			"friendlyUrlId", true, "groupId", true, "companyId", true,
+			"createDate", true, "classNameId", true, "classPK", true,
+			"urlTitle", true, "main", true);
 	}
 
 	@Test
@@ -517,9 +524,11 @@ public class FriendlyURLPersistenceTest {
 
 		friendlyURL.setUuid(RandomTestUtil.randomString());
 
+		friendlyURL.setGroupId(RandomTestUtil.nextLong());
+
 		friendlyURL.setCompanyId(RandomTestUtil.nextLong());
 
-		friendlyURL.setGroupId(RandomTestUtil.nextLong());
+		friendlyURL.setCreateDate(RandomTestUtil.nextDate());
 
 		friendlyURL.setClassNameId(RandomTestUtil.nextLong());
 
