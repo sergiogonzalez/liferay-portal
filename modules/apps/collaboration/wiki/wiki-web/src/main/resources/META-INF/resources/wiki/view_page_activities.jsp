@@ -71,9 +71,16 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
 
-			double version = extraDataJSONObject.getDouble("version");
+			double version = extraDataJSONObject.getDouble("version", 0);
 
-			WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
+			WikiPage socialActivityWikiPage = null;
+
+			if (version == 0) {
+				socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle());
+			}
+			else {
+				socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
+			}
 			%>
 
 			<liferay-ui:search-container-column-text
