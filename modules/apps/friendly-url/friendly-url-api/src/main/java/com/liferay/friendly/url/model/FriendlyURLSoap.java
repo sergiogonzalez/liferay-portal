@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,8 +35,9 @@ public class FriendlyURLSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFriendlyUrlId(model.getFriendlyUrlId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setUrlTitle(model.getUrlTitle());
@@ -108,6 +110,14 @@ public class FriendlyURLSoap implements Serializable {
 		_friendlyUrlId = friendlyUrlId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -116,12 +126,12 @@ public class FriendlyURLSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public long getGroupId() {
-		return _groupId;
+	public Date getCreateDate() {
+		return _createDate;
 	}
 
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	public long getClassNameId() {
@@ -162,8 +172,9 @@ public class FriendlyURLSoap implements Serializable {
 
 	private String _uuid;
 	private long _friendlyUrlId;
-	private long _companyId;
 	private long _groupId;
+	private long _companyId;
+	private Date _createDate;
 	private long _classNameId;
 	private long _classPK;
 	private String _urlTitle;

@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing FriendlyURL in entity cache.
  *
@@ -64,16 +66,18 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", friendlyUrlId=");
 		sb.append(friendlyUrlId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", createDate=");
+		sb.append(createDate);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -99,8 +103,16 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 		}
 
 		friendlyURLImpl.setFriendlyUrlId(friendlyUrlId);
-		friendlyURLImpl.setCompanyId(companyId);
 		friendlyURLImpl.setGroupId(groupId);
+		friendlyURLImpl.setCompanyId(companyId);
+
+		if (createDate == Long.MIN_VALUE) {
+			friendlyURLImpl.setCreateDate(null);
+		}
+		else {
+			friendlyURLImpl.setCreateDate(new Date(createDate));
+		}
+
 		friendlyURLImpl.setClassNameId(classNameId);
 		friendlyURLImpl.setClassPK(classPK);
 
@@ -124,9 +136,10 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		friendlyUrlId = objectInput.readLong();
 
-		companyId = objectInput.readLong();
-
 		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+		createDate = objectInput.readLong();
 
 		classNameId = objectInput.readLong();
 
@@ -148,9 +161,10 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		objectOutput.writeLong(friendlyUrlId);
 
-		objectOutput.writeLong(companyId);
-
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(createDate);
 
 		objectOutput.writeLong(classNameId);
 
@@ -168,8 +182,9 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 	public String uuid;
 	public long friendlyUrlId;
-	public long companyId;
 	public long groupId;
+	public long companyId;
+	public long createDate;
 	public long classNameId;
 	public long classPK;
 	public String urlTitle;

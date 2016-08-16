@@ -3618,8 +3618,9 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 		friendlyURLImpl.setUuid(friendlyURL.getUuid());
 		friendlyURLImpl.setFriendlyUrlId(friendlyURL.getFriendlyUrlId());
-		friendlyURLImpl.setCompanyId(friendlyURL.getCompanyId());
 		friendlyURLImpl.setGroupId(friendlyURL.getGroupId());
+		friendlyURLImpl.setCompanyId(friendlyURL.getCompanyId());
+		friendlyURLImpl.setCreateDate(friendlyURL.getCreateDate());
 		friendlyURLImpl.setClassNameId(friendlyURL.getClassNameId());
 		friendlyURLImpl.setClassPK(friendlyURL.getClassPK());
 		friendlyURLImpl.setUrlTitle(friendlyURL.getUrlTitle());
