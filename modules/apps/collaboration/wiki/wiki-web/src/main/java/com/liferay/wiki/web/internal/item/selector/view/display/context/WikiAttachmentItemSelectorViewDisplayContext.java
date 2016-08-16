@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.web.internal.item.selector.view.display.context;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +26,6 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.internal.item.selector.view.WikiAttachmentItemSelectorView;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -62,13 +60,13 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =
-			_wikiAttachmentItemSelectorView.
-				getItemSelectorReturnTypeResolverHandler();
+				_wikiAttachmentItemSelectorView.
+					getItemSelectorReturnTypeResolverHandler();
 
 		return itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
-				_wikiAttachmentItemSelectorCriterion, _wikiAttachmentItemSelectorView,
-				FileEntry.class);
+				_wikiAttachmentItemSelectorCriterion,
+				_wikiAttachmentItemSelectorView, FileEntry.class);
 	}
 
 	public PortletURL getPortletURL(

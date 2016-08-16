@@ -14,7 +14,6 @@
 
 package com.liferay.journal.item.selector.web.internal.context;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
