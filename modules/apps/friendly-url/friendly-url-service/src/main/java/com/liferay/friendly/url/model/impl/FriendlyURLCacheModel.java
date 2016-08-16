@@ -78,8 +78,8 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", friendlyUrl=");
-		sb.append(friendlyUrl);
+		sb.append(", urlTitle=");
+		sb.append(urlTitle);
 		sb.append(", main=");
 		sb.append(main);
 		sb.append("}");
@@ -104,11 +104,11 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 		friendlyURLImpl.setClassNameId(classNameId);
 		friendlyURLImpl.setClassPK(classPK);
 
-		if (friendlyUrl == null) {
-			friendlyURLImpl.setFriendlyUrl(StringPool.BLANK);
+		if (urlTitle == null) {
+			friendlyURLImpl.setUrlTitle(StringPool.BLANK);
 		}
 		else {
-			friendlyURLImpl.setFriendlyUrl(friendlyUrl);
+			friendlyURLImpl.setUrlTitle(urlTitle);
 		}
 
 		friendlyURLImpl.setMain(main);
@@ -131,7 +131,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		friendlyUrl = objectInput.readUTF();
+		urlTitle = objectInput.readUTF();
 
 		main = objectInput.readBoolean();
 	}
@@ -156,11 +156,11 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		objectOutput.writeLong(classPK);
 
-		if (friendlyUrl == null) {
+		if (urlTitle == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(friendlyUrl);
+			objectOutput.writeUTF(urlTitle);
 		}
 
 		objectOutput.writeBoolean(main);
@@ -172,6 +172,6 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 	public long groupId;
 	public long classNameId;
 	public long classPK;
-	public String friendlyUrl;
+	public String urlTitle;
 	public boolean main;
 }

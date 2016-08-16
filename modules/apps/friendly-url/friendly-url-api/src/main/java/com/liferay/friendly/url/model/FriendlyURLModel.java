@@ -165,19 +165,19 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the friendly url of this friendly u r l.
+	 * Returns the url title of this friendly u r l.
 	 *
-	 * @return the friendly url of this friendly u r l
+	 * @return the url title of this friendly u r l
 	 */
 	@AutoEscape
-	public String getFriendlyUrl();
+	public String getUrlTitle();
 
 	/**
-	 * Sets the friendly url of this friendly u r l.
+	 * Sets the url title of this friendly u r l.
 	 *
-	 * @param friendlyUrl the friendly url of this friendly u r l
+	 * @param urlTitle the url title of this friendly u r l
 	 */
-	public void setFriendlyUrl(String friendlyUrl);
+	public void setUrlTitle(String urlTitle);
 
 	/**
 	 * Returns the main of this friendly u r l.

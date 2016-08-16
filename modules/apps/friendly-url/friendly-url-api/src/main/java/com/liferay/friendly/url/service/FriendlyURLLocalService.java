@@ -71,7 +71,7 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	public FriendlyURL addFriendlyURL(FriendlyURL friendlyURL);
 
 	public FriendlyURL addFriendlyURL(long companyId, long groupId,
-		java.lang.Class<?> clazz, long classPK, java.lang.String friendlyUrl)
+		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
 		throws PortalException;
 
 	/**
@@ -104,7 +104,7 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURL fetchFriendlyURL(long companyId, long groupId,
-		java.lang.Class<?> clazz, java.lang.String friendlyUrl)
+		java.lang.Class<?> clazz, java.lang.String urlTitle)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -289,6 +289,6 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		java.lang.Class<?> clazz, long classPK);
 
 	public void validate(long companyId, long groupId,
-		java.lang.Class<?> clazz, java.lang.String friendlyUrl)
+		java.lang.Class<?> clazz, java.lang.String urlTitle)
 		throws PortalException;
 }

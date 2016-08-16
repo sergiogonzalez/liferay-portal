@@ -69,7 +69,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 			{ "groupId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "friendlyUrl", Types.VARCHAR },
+			{ "urlTitle", Types.VARCHAR },
 			{ "main", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -81,11 +81,11 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("friendlyUrl", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyUrlId LONG not null primary key,companyId LONG,groupId LONG,classNameId LONG,classPK LONG,friendlyUrl VARCHAR(150) null,main BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyUrlId LONG not null primary key,companyId LONG,groupId LONG,classNameId LONG,classPK LONG,urlTitle VARCHAR(75) null,main BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURL";
 	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURL.friendlyUrlId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURL.friendlyUrlId ASC";
@@ -104,9 +104,9 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long FRIENDLYURL_COLUMN_BITMASK = 8L;
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
-	public static final long MAIN_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long MAIN_COLUMN_BITMASK = 16L;
+	public static final long URLTITLE_COLUMN_BITMASK = 32L;
 	public static final long UUID_COLUMN_BITMASK = 64L;
 	public static final long FRIENDLYURLID_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.friendly.url.service.util.ServiceProps.get(
@@ -155,7 +155,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		attributes.put("groupId", getGroupId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("friendlyUrl", getFriendlyUrl());
+		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("main", getMain());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -202,10 +202,10 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 			setClassPK(classPK);
 		}
 
-		String friendlyUrl = (String)attributes.get("friendlyUrl");
+		String urlTitle = (String)attributes.get("urlTitle");
 
-		if (friendlyUrl != null) {
-			setFriendlyUrl(friendlyUrl);
+		if (urlTitle != null) {
+			setUrlTitle(urlTitle);
 		}
 
 		Boolean main = (Boolean)attributes.get("main");
@@ -357,28 +357,28 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	}
 
 	@Override
-	public String getFriendlyUrl() {
-		if (_friendlyUrl == null) {
+	public String getUrlTitle() {
+		if (_urlTitle == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _friendlyUrl;
+			return _urlTitle;
 		}
 	}
 
 	@Override
-	public void setFriendlyUrl(String friendlyUrl) {
-		_columnBitmask |= FRIENDLYURL_COLUMN_BITMASK;
+	public void setUrlTitle(String urlTitle) {
+		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
 
-		if (_originalFriendlyUrl == null) {
-			_originalFriendlyUrl = _friendlyUrl;
+		if (_originalUrlTitle == null) {
+			_originalUrlTitle = _urlTitle;
 		}
 
-		_friendlyUrl = friendlyUrl;
+		_urlTitle = urlTitle;
 	}
 
-	public String getOriginalFriendlyUrl() {
-		return GetterUtil.getString(_originalFriendlyUrl);
+	public String getOriginalUrlTitle() {
+		return GetterUtil.getString(_originalUrlTitle);
 	}
 
 	@Override
@@ -445,7 +445,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		friendlyURLImpl.setGroupId(getGroupId());
 		friendlyURLImpl.setClassNameId(getClassNameId());
 		friendlyURLImpl.setClassPK(getClassPK());
-		friendlyURLImpl.setFriendlyUrl(getFriendlyUrl());
+		friendlyURLImpl.setUrlTitle(getUrlTitle());
 		friendlyURLImpl.setMain(getMain());
 
 		friendlyURLImpl.resetOriginalValues();
@@ -527,7 +527,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		friendlyURLModelImpl._setOriginalClassPK = false;
 
-		friendlyURLModelImpl._originalFriendlyUrl = friendlyURLModelImpl._friendlyUrl;
+		friendlyURLModelImpl._originalUrlTitle = friendlyURLModelImpl._urlTitle;
 
 		friendlyURLModelImpl._originalMain = friendlyURLModelImpl._main;
 
@@ -558,12 +558,12 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		friendlyURLCacheModel.classPK = getClassPK();
 
-		friendlyURLCacheModel.friendlyUrl = getFriendlyUrl();
+		friendlyURLCacheModel.urlTitle = getUrlTitle();
 
-		String friendlyUrl = friendlyURLCacheModel.friendlyUrl;
+		String urlTitle = friendlyURLCacheModel.urlTitle;
 
-		if ((friendlyUrl != null) && (friendlyUrl.length() == 0)) {
-			friendlyURLCacheModel.friendlyUrl = null;
+		if ((urlTitle != null) && (urlTitle.length() == 0)) {
+			friendlyURLCacheModel.urlTitle = null;
 		}
 
 		friendlyURLCacheModel.main = getMain();
@@ -587,8 +587,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
-		sb.append(", friendlyUrl=");
-		sb.append(getFriendlyUrl());
+		sb.append(", urlTitle=");
+		sb.append(getUrlTitle());
 		sb.append(", main=");
 		sb.append(getMain());
 		sb.append("}");
@@ -629,8 +629,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>friendlyUrl</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyUrl());
+			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
+		sb.append(getUrlTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>main</column-name><column-value><![CDATA[");
@@ -661,8 +661,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
-	private String _friendlyUrl;
-	private String _originalFriendlyUrl;
+	private String _urlTitle;
+	private String _originalUrlTitle;
 	private boolean _main;
 	private boolean _originalMain;
 	private boolean _setOriginalMain;

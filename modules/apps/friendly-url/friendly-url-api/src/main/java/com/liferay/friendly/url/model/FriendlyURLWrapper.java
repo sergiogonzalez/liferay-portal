@@ -63,7 +63,7 @@ public class FriendlyURLWrapper implements FriendlyURL,
 		attributes.put("groupId", getGroupId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("friendlyUrl", getFriendlyUrl());
+		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("main", getMain());
 
 		return attributes;
@@ -107,10 +107,10 @@ public class FriendlyURLWrapper implements FriendlyURL,
 			setClassPK(classPK);
 		}
 
-		String friendlyUrl = (String)attributes.get("friendlyUrl");
+		String urlTitle = (String)attributes.get("urlTitle");
 
-		if (friendlyUrl != null) {
-			setFriendlyUrl(friendlyUrl);
+		if (urlTitle != null) {
+			setUrlTitle(urlTitle);
 		}
 
 		Boolean main = (Boolean)attributes.get("main");
@@ -206,13 +206,13 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the friendly url of this friendly u r l.
+	* Returns the url title of this friendly u r l.
 	*
-	* @return the friendly url of this friendly u r l
+	* @return the url title of this friendly u r l
 	*/
 	@Override
-	public java.lang.String getFriendlyUrl() {
-		return _friendlyURL.getFriendlyUrl();
+	public java.lang.String getUrlTitle() {
+		return _friendlyURL.getUrlTitle();
 	}
 
 	/**
@@ -357,16 +357,6 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the friendly url of this friendly u r l.
-	*
-	* @param friendlyUrl the friendly url of this friendly u r l
-	*/
-	@Override
-	public void setFriendlyUrl(java.lang.String friendlyUrl) {
-		_friendlyURL.setFriendlyUrl(friendlyUrl);
-	}
-
-	/**
 	* Sets the friendly url ID of this friendly u r l.
 	*
 	* @param friendlyUrlId the friendly url ID of this friendly u r l
@@ -414,6 +404,16 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_friendlyURL.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the url title of this friendly u r l.
+	*
+	* @param urlTitle the url title of this friendly u r l
+	*/
+	@Override
+	public void setUrlTitle(java.lang.String urlTitle) {
+		_friendlyURL.setUrlTitle(urlTitle);
 	}
 
 	/**
