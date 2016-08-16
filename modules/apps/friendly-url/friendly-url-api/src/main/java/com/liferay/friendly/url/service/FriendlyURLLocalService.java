@@ -16,6 +16,7 @@ package com.liferay.friendly.url.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.friendly.url.exception.NoSuchFriendlyURLException;
 import com.liferay.friendly.url.model.FriendlyURL;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -287,6 +288,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 
 	public void deleteFriendlyURL(long companyId, long groupId,
 		java.lang.Class<?> clazz, long classPK);
+
+	public void deleteFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
+		throws NoSuchFriendlyURLException;
 
 	public void validate(long companyId, long groupId,
 		java.lang.Class<?> clazz, java.lang.String urlTitle)
