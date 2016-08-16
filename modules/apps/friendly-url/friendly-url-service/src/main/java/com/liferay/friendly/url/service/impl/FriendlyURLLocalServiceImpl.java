@@ -34,13 +34,13 @@ public class FriendlyURLLocalServiceImpl
 	@Override
 	public FriendlyURL addFriendlyURL(
 			long companyId, long groupId, Class<?> clazz, long classPK,
-			String friendlyUrl)
+			String urlTitle)
 		throws PortalException {
 
-		String normalizedFriendlyUrl = FriendlyURLNormalizerUtil.normalize(
-			friendlyUrl);
+		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
+			urlTitle);
 
-		validate(companyId, groupId, clazz, normalizedFriendlyUrl);
+		validate(companyId, groupId, clazz, normalizedUrlTitle);
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
@@ -53,8 +53,8 @@ public class FriendlyURLLocalServiceImpl
 			friendlyURLPersistence.update(mainFriendlyURL);
 		}
 
-		FriendlyURL oldFriendlyURL = friendlyURLPersistence.fetchByC_G_C_C_F(
-			companyId, groupId, classNameId, classPK, normalizedFriendlyUrl);
+		FriendlyURL oldFriendlyURL = friendlyURLPersistence.fetchByC_G_C_C_U(
+			companyId, groupId, classNameId, classPK, normalizedUrlTitle);
 
 		if (oldFriendlyURL != null) {
 			oldFriendlyURL.setMain(true);
@@ -70,7 +70,7 @@ public class FriendlyURLLocalServiceImpl
 		friendlyURL.setGroupId(groupId);
 		friendlyURL.setClassNameId(classNameId);
 		friendlyURL.setClassPK(classPK);
-		friendlyURL.setFriendlyUrl(normalizedFriendlyUrl);
+		friendlyURL.setUrlTitle(normalizedUrlTitle);
 		friendlyURL.setMain(true);
 
 		return friendlyURLPersistence.update(friendlyURL);
@@ -88,33 +88,33 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL fetchFriendlyURL(
-			long companyId, long groupId, Class<?> clazz, String friendlyUrl)
+			long companyId, long groupId, Class<?> clazz, String urlTitle)
 		throws PortalException {
 
-		return friendlyURLPersistence.fetchByC_G_C_F(
+		return friendlyURLPersistence.fetchByC_G_C_U(
 			companyId, groupId, classNameLocalService.getClassNameId(clazz),
-			friendlyUrl);
+			urlTitle);
 	}
 
 	@Override
 	public void validate(
-			long companyId, long groupId, Class<?> clazz, String friendlyUrl)
+			long companyId, long groupId, Class<?> clazz, String urlTitle)
 		throws PortalException {
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURL.class.getName(), "friendlyUrl");
+			FriendlyURL.class.getName(), "urlTitle");
 
-		if (friendlyUrl.length() > maxLength) {
+		if (urlTitle.length() > maxLength) {
 			throw new FriendlyURLLengthException();
 		}
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		String normalizedFriendlyUrl = FriendlyURLNormalizerUtil.normalize(
-			friendlyUrl);
+		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
+			urlTitle);
 
-		int count = friendlyURLPersistence.countByC_G_C_F(
-			companyId, groupId, classNameId, normalizedFriendlyUrl);
+		int count = friendlyURLPersistence.countByC_G_C_U(
+			companyId, groupId, classNameId, normalizedUrlTitle);
 
 		if (count > 0) {
 			throw new DuplicateFriendlyURLException();
