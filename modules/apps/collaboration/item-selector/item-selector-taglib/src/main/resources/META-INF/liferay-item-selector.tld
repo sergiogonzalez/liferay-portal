@@ -106,7 +106,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>An Object that contains the item selector return type custom logic</description>
+			<description>An <![CDATA[<code>ItemSelectorReturnTypeResolver</code>]]> that resolves the value of the model based on the desired return type.</description>
 			<name>itemSelectorReturnTypeResolver</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
