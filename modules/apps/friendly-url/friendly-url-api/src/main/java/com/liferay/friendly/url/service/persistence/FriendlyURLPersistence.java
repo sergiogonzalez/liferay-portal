@@ -543,139 +543,138 @@ public interface FriendlyURLPersistence extends BasePersistence<FriendlyURL> {
 		long classPK);
 
 	/**
-	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
+	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the matching friendly u r l
 	* @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
 	*/
-	public FriendlyURL findByC_G_C_F(long companyId, long groupId,
-		long classNameId, java.lang.String friendlyUrl)
+	public FriendlyURL findByC_G_C_U(long companyId, long groupId,
+		long classNameId, java.lang.String urlTitle)
 		throws NoSuchFriendlyURLException;
 
 	/**
-	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	*/
-	public FriendlyURL fetchByC_G_C_F(long companyId, long groupId,
-		long classNameId, java.lang.String friendlyUrl);
+	public FriendlyURL fetchByC_G_C_U(long companyId, long groupId,
+		long classNameId, java.lang.String urlTitle);
 
 	/**
-	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	*/
-	public FriendlyURL fetchByC_G_C_F(long companyId, long groupId,
-		long classNameId, java.lang.String friendlyUrl,
-		boolean retrieveFromCache);
+	public FriendlyURL fetchByC_G_C_U(long companyId, long groupId,
+		long classNameId, java.lang.String urlTitle, boolean retrieveFromCache);
 
 	/**
-	* Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; from the database.
+	* Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the friendly u r l that was removed
 	*/
-	public FriendlyURL removeByC_G_C_F(long companyId, long groupId,
-		long classNameId, java.lang.String friendlyUrl)
+	public FriendlyURL removeByC_G_C_U(long companyId, long groupId,
+		long classNameId, java.lang.String urlTitle)
 		throws NoSuchFriendlyURLException;
 
 	/**
-	* Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63;.
+	* Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the number of matching friendly u r ls
 	*/
-	public int countByC_G_C_F(long companyId, long groupId, long classNameId,
-		java.lang.String friendlyUrl);
+	public int countByC_G_C_U(long companyId, long groupId, long classNameId,
+		java.lang.String urlTitle);
 
 	/**
-	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
+	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the matching friendly u r l
 	* @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
 	*/
-	public FriendlyURL findByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String friendlyUrl)
+	public FriendlyURL findByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle)
 		throws NoSuchFriendlyURLException;
 
 	/**
-	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	*/
-	public FriendlyURL fetchByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String friendlyUrl);
+	public FriendlyURL fetchByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle);
 
 	/**
-	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	*/
-	public FriendlyURL fetchByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String friendlyUrl,
+	public FriendlyURL fetchByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle,
 		boolean retrieveFromCache);
 
 	/**
-	* Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; from the database.
+	* Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the friendly u r l that was removed
 	*/
-	public FriendlyURL removeByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String friendlyUrl)
+	public FriendlyURL removeByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle)
 		throws NoSuchFriendlyURLException;
 
 	/**
-	* Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63;.
+	* Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63;.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @param friendlyUrl the friendly url
+	* @param urlTitle the url title
 	* @return the number of matching friendly u r ls
 	*/
-	public int countByC_G_C_C_F(long companyId, long groupId, long classNameId,
-		long classPK, java.lang.String friendlyUrl);
+	public int countByC_G_C_C_U(long companyId, long groupId, long classNameId,
+		long classPK, java.lang.String urlTitle);
 
 	/**
 	* Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.

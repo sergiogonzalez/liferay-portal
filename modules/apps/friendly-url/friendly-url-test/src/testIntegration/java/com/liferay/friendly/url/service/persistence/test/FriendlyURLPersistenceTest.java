@@ -133,7 +133,7 @@ public class FriendlyURLPersistenceTest {
 
 		newFriendlyURL.setClassPK(RandomTestUtil.nextLong());
 
-		newFriendlyURL.setFriendlyUrl(RandomTestUtil.randomString());
+		newFriendlyURL.setUrlTitle(RandomTestUtil.randomString());
 
 		newFriendlyURL.setMain(RandomTestUtil.randomBoolean());
 
@@ -153,8 +153,8 @@ public class FriendlyURLPersistenceTest {
 			newFriendlyURL.getClassNameId());
 		Assert.assertEquals(existingFriendlyURL.getClassPK(),
 			newFriendlyURL.getClassPK());
-		Assert.assertEquals(existingFriendlyURL.getFriendlyUrl(),
-			newFriendlyURL.getFriendlyUrl());
+		Assert.assertEquals(existingFriendlyURL.getUrlTitle(),
+			newFriendlyURL.getUrlTitle());
 		Assert.assertEquals(existingFriendlyURL.getMain(),
 			newFriendlyURL.getMain());
 	}
@@ -196,25 +196,25 @@ public class FriendlyURLPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_G_C_F() throws Exception {
-		_persistence.countByC_G_C_F(RandomTestUtil.nextLong(),
+	public void testCountByC_G_C_U() throws Exception {
+		_persistence.countByC_G_C_U(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			StringPool.BLANK);
 
-		_persistence.countByC_G_C_F(0L, 0L, 0L, StringPool.NULL);
+		_persistence.countByC_G_C_U(0L, 0L, 0L, StringPool.NULL);
 
-		_persistence.countByC_G_C_F(0L, 0L, 0L, (String)null);
+		_persistence.countByC_G_C_U(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByC_G_C_C_F() throws Exception {
-		_persistence.countByC_G_C_C_F(RandomTestUtil.nextLong(),
+	public void testCountByC_G_C_C_U() throws Exception {
+		_persistence.countByC_G_C_C_U(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByC_G_C_C_F(0L, 0L, 0L, 0L, StringPool.NULL);
+		_persistence.countByC_G_C_C_U(0L, 0L, 0L, 0L, StringPool.NULL);
 
-		_persistence.countByC_G_C_C_F(0L, 0L, 0L, 0L, (String)null);
+		_persistence.countByC_G_C_C_U(0L, 0L, 0L, 0L, (String)null);
 	}
 
 	@Test
@@ -252,8 +252,7 @@ public class FriendlyURLPersistenceTest {
 	protected OrderByComparator<FriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FriendlyURL", "uuid", true,
 			"friendlyUrlId", true, "companyId", true, "groupId", true,
-			"classNameId", true, "classPK", true, "friendlyUrl", true, "main",
-			true);
+			"classNameId", true, "classPK", true, "urlTitle", true, "main", true);
 	}
 
 	@Test
@@ -474,9 +473,9 @@ public class FriendlyURLPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingFriendlyURL.getFriendlyUrl(),
+		Assert.assertTrue(Objects.equals(existingFriendlyURL.getUrlTitle(),
 				ReflectionTestUtil.invoke(existingFriendlyURL,
-					"getOriginalFriendlyUrl", new Class<?>[0])));
+					"getOriginalUrlTitle", new Class<?>[0])));
 
 		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
@@ -490,9 +489,9 @@ public class FriendlyURLPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
 				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingFriendlyURL.getFriendlyUrl(),
+		Assert.assertTrue(Objects.equals(existingFriendlyURL.getUrlTitle(),
 				ReflectionTestUtil.invoke(existingFriendlyURL,
-					"getOriginalFriendlyUrl", new Class<?>[0])));
+					"getOriginalUrlTitle", new Class<?>[0])));
 
 		Assert.assertEquals(Long.valueOf(existingFriendlyURL.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(existingFriendlyURL,
@@ -526,7 +525,7 @@ public class FriendlyURLPersistenceTest {
 
 		friendlyURL.setClassPK(RandomTestUtil.nextLong());
 
-		friendlyURL.setFriendlyUrl(RandomTestUtil.randomString());
+		friendlyURL.setUrlTitle(RandomTestUtil.randomString());
 
 		friendlyURL.setMain(RandomTestUtil.randomBoolean());
 

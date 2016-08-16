@@ -2100,9 +2100,9 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	private static final String _FINDER_COLUMN_C_G_C_C_GROUPID_2 = "friendlyURL.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_C_C_CLASSNAMEID_2 = "friendlyURL.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_C_C_CLASSPK_2 = "friendlyURL.classPK = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_C_F = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_C_U = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, FriendlyURLImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_G_C_F",
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_G_C_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -2110,30 +2110,30 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			FriendlyURLModelImpl.COMPANYID_COLUMN_BITMASK |
 			FriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
 			FriendlyURLModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			FriendlyURLModelImpl.FRIENDLYURL_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_C_F = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			FriendlyURLModelImpl.URLTITLE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_C_U = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_C_F",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_C_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 
 	/**
-	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
+	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the matching friendly u r l
 	 * @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
 	 */
 	@Override
-	public FriendlyURL findByC_G_C_F(long companyId, long groupId,
-		long classNameId, String friendlyUrl) throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = fetchByC_G_C_F(companyId, groupId,
-				classNameId, friendlyUrl);
+	public FriendlyURL findByC_G_C_U(long companyId, long groupId,
+		long classNameId, String urlTitle) throws NoSuchFriendlyURLException {
+		FriendlyURL friendlyURL = fetchByC_G_C_U(companyId, groupId,
+				classNameId, urlTitle);
 
 		if (friendlyURL == null) {
 			StringBundler msg = new StringBundler(10);
@@ -2149,8 +2149,8 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			msg.append(", classNameId=");
 			msg.append(classNameId);
 
-			msg.append(", friendlyUrl=");
-			msg.append(friendlyUrl);
+			msg.append(", urlTitle=");
+			msg.append(urlTitle);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2165,41 +2165,41 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	}
 
 	/**
-	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	 */
 	@Override
-	public FriendlyURL fetchByC_G_C_F(long companyId, long groupId,
-		long classNameId, String friendlyUrl) {
-		return fetchByC_G_C_F(companyId, groupId, classNameId, friendlyUrl, true);
+	public FriendlyURL fetchByC_G_C_U(long companyId, long groupId,
+		long classNameId, String urlTitle) {
+		return fetchByC_G_C_U(companyId, groupId, classNameId, urlTitle, true);
 	}
 
 	/**
-	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	 */
 	@Override
-	public FriendlyURL fetchByC_G_C_F(long companyId, long groupId,
-		long classNameId, String friendlyUrl, boolean retrieveFromCache) {
+	public FriendlyURL fetchByC_G_C_U(long companyId, long groupId,
+		long classNameId, String urlTitle, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				companyId, groupId, classNameId, friendlyUrl
+				companyId, groupId, classNameId, urlTitle
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_G_C_F,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_G_C_U,
 					finderArgs, this);
 		}
 
@@ -2209,7 +2209,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			if ((companyId != friendlyURL.getCompanyId()) ||
 					(groupId != friendlyURL.getGroupId()) ||
 					(classNameId != friendlyURL.getClassNameId()) ||
-					!Objects.equals(friendlyUrl, friendlyURL.getFriendlyUrl())) {
+					!Objects.equals(urlTitle, friendlyURL.getUrlTitle())) {
 				result = null;
 			}
 		}
@@ -2219,24 +2219,24 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 			query.append(_SQL_SELECT_FRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_C_F_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_G_C_U_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_F_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_C_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_F_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_C_G_C_U_CLASSNAMEID_2);
 
-			boolean bindFriendlyUrl = false;
+			boolean bindUrlTitle = false;
 
-			if (friendlyUrl == null) {
-				query.append(_FINDER_COLUMN_C_G_C_F_FRIENDLYURL_1);
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_C_G_C_U_URLTITLE_1);
 			}
-			else if (friendlyUrl.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_G_C_F_FRIENDLYURL_3);
+			else if (urlTitle.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_G_C_U_URLTITLE_3);
 			}
 			else {
-				bindFriendlyUrl = true;
+				bindUrlTitle = true;
 
-				query.append(_FINDER_COLUMN_C_G_C_F_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_C_G_C_U_URLTITLE_2);
 			}
 
 			String sql = query.toString();
@@ -2256,20 +2256,20 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 				qPos.add(classNameId);
 
-				if (bindFriendlyUrl) {
-					qPos.add(friendlyUrl);
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
 				}
 
 				List<FriendlyURL> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_F,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_U,
 						finderArgs, list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"FriendlyURLPersistenceImpl.fetchByC_G_C_F(long, long, long, String, boolean) with parameters (" +
+							"FriendlyURLPersistenceImpl.fetchByC_G_C_U(long, long, long, String, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -2283,15 +2283,15 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 					if ((friendlyURL.getCompanyId() != companyId) ||
 							(friendlyURL.getGroupId() != groupId) ||
 							(friendlyURL.getClassNameId() != classNameId) ||
-							(friendlyURL.getFriendlyUrl() == null) ||
-							!friendlyURL.getFriendlyUrl().equals(friendlyUrl)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_F,
+							(friendlyURL.getUrlTitle() == null) ||
+							!friendlyURL.getUrlTitle().equals(urlTitle)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_U,
 							finderArgs, friendlyURL);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_F,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_U,
 					finderArgs);
 
 				throw processException(e);
@@ -2310,39 +2310,39 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	}
 
 	/**
-	 * Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63; from the database.
+	 * Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the friendly u r l that was removed
 	 */
 	@Override
-	public FriendlyURL removeByC_G_C_F(long companyId, long groupId,
-		long classNameId, String friendlyUrl) throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = findByC_G_C_F(companyId, groupId,
-				classNameId, friendlyUrl);
+	public FriendlyURL removeByC_G_C_U(long companyId, long groupId,
+		long classNameId, String urlTitle) throws NoSuchFriendlyURLException {
+		FriendlyURL friendlyURL = findByC_G_C_U(companyId, groupId,
+				classNameId, urlTitle);
 
 		return remove(friendlyURL);
 	}
 
 	/**
-	 * Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and friendlyUrl = &#63;.
+	 * Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the number of matching friendly u r ls
 	 */
 	@Override
-	public int countByC_G_C_F(long companyId, long groupId, long classNameId,
-		String friendlyUrl) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_C_F;
+	public int countByC_G_C_U(long companyId, long groupId, long classNameId,
+		String urlTitle) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_C_U;
 
 		Object[] finderArgs = new Object[] {
-				companyId, groupId, classNameId, friendlyUrl
+				companyId, groupId, classNameId, urlTitle
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -2352,24 +2352,24 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 			query.append(_SQL_COUNT_FRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_C_F_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_G_C_U_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_F_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_C_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_F_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_C_G_C_U_CLASSNAMEID_2);
 
-			boolean bindFriendlyUrl = false;
+			boolean bindUrlTitle = false;
 
-			if (friendlyUrl == null) {
-				query.append(_FINDER_COLUMN_C_G_C_F_FRIENDLYURL_1);
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_C_G_C_U_URLTITLE_1);
 			}
-			else if (friendlyUrl.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_G_C_F_FRIENDLYURL_3);
+			else if (urlTitle.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_G_C_U_URLTITLE_3);
 			}
 			else {
-				bindFriendlyUrl = true;
+				bindUrlTitle = true;
 
-				query.append(_FINDER_COLUMN_C_G_C_F_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_C_G_C_U_URLTITLE_2);
 			}
 
 			String sql = query.toString();
@@ -2389,8 +2389,8 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 				qPos.add(classNameId);
 
-				if (bindFriendlyUrl) {
-					qPos.add(friendlyUrl);
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -2410,15 +2410,15 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_G_C_F_COMPANYID_2 = "friendlyURL.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_C_F_GROUPID_2 = "friendlyURL.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_C_F_CLASSNAMEID_2 = "friendlyURL.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_C_F_FRIENDLYURL_1 = "friendlyURL.friendlyUrl IS NULL";
-	private static final String _FINDER_COLUMN_C_G_C_F_FRIENDLYURL_2 = "friendlyURL.friendlyUrl = ?";
-	private static final String _FINDER_COLUMN_C_G_C_F_FRIENDLYURL_3 = "(friendlyURL.friendlyUrl IS NULL OR friendlyURL.friendlyUrl = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_C_C_F = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_C_G_C_U_COMPANYID_2 = "friendlyURL.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_C_U_GROUPID_2 = "friendlyURL.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_C_U_CLASSNAMEID_2 = "friendlyURL.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_C_U_URLTITLE_1 = "friendlyURL.urlTitle IS NULL";
+	private static final String _FINDER_COLUMN_C_G_C_U_URLTITLE_2 = "friendlyURL.urlTitle = ?";
+	private static final String _FINDER_COLUMN_C_G_C_U_URLTITLE_3 = "(friendlyURL.urlTitle IS NULL OR friendlyURL.urlTitle = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_C_C_U = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, FriendlyURLImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_G_C_C_F",
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_G_C_C_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), String.class.getName()
@@ -2427,32 +2427,32 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			FriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
 			FriendlyURLModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			FriendlyURLModelImpl.CLASSPK_COLUMN_BITMASK |
-			FriendlyURLModelImpl.FRIENDLYURL_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_C_C_F = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			FriendlyURLModelImpl.URLTITLE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_C_C_U = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_C_C_F",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_C_C_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), String.class.getName()
 			});
 
 	/**
-	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
+	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the matching friendly u r l
 	 * @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
 	 */
 	@Override
-	public FriendlyURL findByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, String friendlyUrl)
+	public FriendlyURL findByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, String urlTitle)
 		throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = fetchByC_G_C_C_F(companyId, groupId,
-				classNameId, classPK, friendlyUrl);
+		FriendlyURL friendlyURL = fetchByC_G_C_C_U(companyId, groupId,
+				classNameId, classPK, urlTitle);
 
 		if (friendlyURL == null) {
 			StringBundler msg = new StringBundler(12);
@@ -2471,8 +2471,8 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			msg.append(", classPK=");
 			msg.append(classPK);
 
-			msg.append(", friendlyUrl=");
-			msg.append(friendlyUrl);
+			msg.append(", urlTitle=");
+			msg.append(urlTitle);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2487,45 +2487,45 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	}
 
 	/**
-	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	 */
 	@Override
-	public FriendlyURL fetchByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, String friendlyUrl) {
-		return fetchByC_G_C_C_F(companyId, groupId, classNameId, classPK,
-			friendlyUrl, true);
+	public FriendlyURL fetchByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, String urlTitle) {
+		return fetchByC_G_C_C_U(companyId, groupId, classNameId, classPK,
+			urlTitle, true);
 	}
 
 	/**
-	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
 	 */
 	@Override
-	public FriendlyURL fetchByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, String friendlyUrl,
+	public FriendlyURL fetchByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, String urlTitle,
 		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				companyId, groupId, classNameId, classPK, friendlyUrl
+				companyId, groupId, classNameId, classPK, urlTitle
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_G_C_C_F,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_G_C_C_U,
 					finderArgs, this);
 		}
 
@@ -2536,7 +2536,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 					(groupId != friendlyURL.getGroupId()) ||
 					(classNameId != friendlyURL.getClassNameId()) ||
 					(classPK != friendlyURL.getClassPK()) ||
-					!Objects.equals(friendlyUrl, friendlyURL.getFriendlyUrl())) {
+					!Objects.equals(urlTitle, friendlyURL.getUrlTitle())) {
 				result = null;
 			}
 		}
@@ -2546,26 +2546,26 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 			query.append(_SQL_SELECT_FRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_CLASSPK_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_CLASSPK_2);
 
-			boolean bindFriendlyUrl = false;
+			boolean bindUrlTitle = false;
 
-			if (friendlyUrl == null) {
-				query.append(_FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_1);
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_C_G_C_C_U_URLTITLE_1);
 			}
-			else if (friendlyUrl.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_3);
+			else if (urlTitle.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_G_C_C_U_URLTITLE_3);
 			}
 			else {
-				bindFriendlyUrl = true;
+				bindUrlTitle = true;
 
-				query.append(_FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_C_G_C_C_U_URLTITLE_2);
 			}
 
 			String sql = query.toString();
@@ -2587,20 +2587,20 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 				qPos.add(classPK);
 
-				if (bindFriendlyUrl) {
-					qPos.add(friendlyUrl);
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
 				}
 
 				List<FriendlyURL> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_F,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_U,
 						finderArgs, list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"FriendlyURLPersistenceImpl.fetchByC_G_C_C_F(long, long, long, long, String, boolean) with parameters (" +
+							"FriendlyURLPersistenceImpl.fetchByC_G_C_C_U(long, long, long, long, String, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -2615,15 +2615,15 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 							(friendlyURL.getGroupId() != groupId) ||
 							(friendlyURL.getClassNameId() != classNameId) ||
 							(friendlyURL.getClassPK() != classPK) ||
-							(friendlyURL.getFriendlyUrl() == null) ||
-							!friendlyURL.getFriendlyUrl().equals(friendlyUrl)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_F,
+							(friendlyURL.getUrlTitle() == null) ||
+							!friendlyURL.getUrlTitle().equals(urlTitle)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_U,
 							finderArgs, friendlyURL);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_C_F,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_C_U,
 					finderArgs);
 
 				throw processException(e);
@@ -2642,42 +2642,42 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	}
 
 	/**
-	 * Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63; from the database.
+	 * Removes the friendly u r l where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the friendly u r l that was removed
 	 */
 	@Override
-	public FriendlyURL removeByC_G_C_C_F(long companyId, long groupId,
-		long classNameId, long classPK, String friendlyUrl)
+	public FriendlyURL removeByC_G_C_C_U(long companyId, long groupId,
+		long classNameId, long classPK, String urlTitle)
 		throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = findByC_G_C_C_F(companyId, groupId,
-				classNameId, classPK, friendlyUrl);
+		FriendlyURL friendlyURL = findByC_G_C_C_U(companyId, groupId,
+				classNameId, classPK, urlTitle);
 
 		return remove(friendlyURL);
 	}
 
 	/**
-	 * Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and friendlyUrl = &#63;.
+	 * Returns the number of friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63; and urlTitle = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @param friendlyUrl the friendly url
+	 * @param urlTitle the url title
 	 * @return the number of matching friendly u r ls
 	 */
 	@Override
-	public int countByC_G_C_C_F(long companyId, long groupId, long classNameId,
-		long classPK, String friendlyUrl) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_C_C_F;
+	public int countByC_G_C_C_U(long companyId, long groupId, long classNameId,
+		long classPK, String urlTitle) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_C_C_U;
 
 		Object[] finderArgs = new Object[] {
-				companyId, groupId, classNameId, classPK, friendlyUrl
+				companyId, groupId, classNameId, classPK, urlTitle
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -2687,26 +2687,26 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 			query.append(_SQL_COUNT_FRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_C_G_C_C_F_CLASSPK_2);
+			query.append(_FINDER_COLUMN_C_G_C_C_U_CLASSPK_2);
 
-			boolean bindFriendlyUrl = false;
+			boolean bindUrlTitle = false;
 
-			if (friendlyUrl == null) {
-				query.append(_FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_1);
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_C_G_C_C_U_URLTITLE_1);
 			}
-			else if (friendlyUrl.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_3);
+			else if (urlTitle.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_G_C_C_U_URLTITLE_3);
 			}
 			else {
-				bindFriendlyUrl = true;
+				bindUrlTitle = true;
 
-				query.append(_FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_C_G_C_C_U_URLTITLE_2);
 			}
 
 			String sql = query.toString();
@@ -2728,8 +2728,8 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 
 				qPos.add(classPK);
 
-				if (bindFriendlyUrl) {
-					qPos.add(friendlyUrl);
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -2749,13 +2749,13 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_G_C_C_F_COMPANYID_2 = "friendlyURL.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_C_C_F_GROUPID_2 = "friendlyURL.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_C_C_F_CLASSNAMEID_2 = "friendlyURL.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_C_C_F_CLASSPK_2 = "friendlyURL.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_1 = "friendlyURL.friendlyUrl IS NULL";
-	private static final String _FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_2 = "friendlyURL.friendlyUrl = ?";
-	private static final String _FINDER_COLUMN_C_G_C_C_F_FRIENDLYURL_3 = "(friendlyURL.friendlyUrl IS NULL OR friendlyURL.friendlyUrl = '')";
+	private static final String _FINDER_COLUMN_C_G_C_C_U_COMPANYID_2 = "friendlyURL.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_C_C_U_GROUPID_2 = "friendlyURL.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_C_C_U_CLASSNAMEID_2 = "friendlyURL.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_C_C_U_CLASSPK_2 = "friendlyURL.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_C_C_U_URLTITLE_1 = "friendlyURL.urlTitle IS NULL";
+	private static final String _FINDER_COLUMN_C_G_C_C_U_URLTITLE_2 = "friendlyURL.urlTitle = ?";
+	private static final String _FINDER_COLUMN_C_G_C_C_U_URLTITLE_3 = "(friendlyURL.urlTitle IS NULL OR friendlyURL.urlTitle = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_C_C_M = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, FriendlyURLImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_G_C_C_M",
@@ -3083,17 +3083,17 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			new Object[] { friendlyURL.getUuid(), friendlyURL.getGroupId() },
 			friendlyURL);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_F,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_U,
 			new Object[] {
 				friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
-				friendlyURL.getClassNameId(), friendlyURL.getFriendlyUrl()
+				friendlyURL.getClassNameId(), friendlyURL.getUrlTitle()
 			}, friendlyURL);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_F,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_U,
 			new Object[] {
 				friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
 				friendlyURL.getClassNameId(), friendlyURL.getClassPK(),
-				friendlyURL.getFriendlyUrl()
+				friendlyURL.getUrlTitle()
 			}, friendlyURL);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_M,
@@ -3189,12 +3189,12 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 					friendlyURLModelImpl.getCompanyId(),
 					friendlyURLModelImpl.getGroupId(),
 					friendlyURLModelImpl.getClassNameId(),
-					friendlyURLModelImpl.getFriendlyUrl()
+					friendlyURLModelImpl.getUrlTitle()
 				};
 
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_F, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_U, args,
 				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_F, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_U, args,
 				friendlyURLModelImpl);
 
 			args = new Object[] {
@@ -3202,12 +3202,12 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 					friendlyURLModelImpl.getGroupId(),
 					friendlyURLModelImpl.getClassNameId(),
 					friendlyURLModelImpl.getClassPK(),
-					friendlyURLModelImpl.getFriendlyUrl()
+					friendlyURLModelImpl.getUrlTitle()
 				};
 
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_C_F, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_C_U, args,
 				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_F, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_U, args,
 				friendlyURLModelImpl);
 
 			args = new Object[] {
@@ -3238,33 +3238,33 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			}
 
 			if ((friendlyURLModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_G_C_F.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_C_G_C_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						friendlyURLModelImpl.getCompanyId(),
 						friendlyURLModelImpl.getGroupId(),
 						friendlyURLModelImpl.getClassNameId(),
-						friendlyURLModelImpl.getFriendlyUrl()
+						friendlyURLModelImpl.getUrlTitle()
 					};
 
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_F, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_U, args,
 					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_F, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_U, args,
 					friendlyURLModelImpl);
 			}
 
 			if ((friendlyURLModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_G_C_C_F.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_C_G_C_C_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						friendlyURLModelImpl.getCompanyId(),
 						friendlyURLModelImpl.getGroupId(),
 						friendlyURLModelImpl.getClassNameId(),
 						friendlyURLModelImpl.getClassPK(),
-						friendlyURLModelImpl.getFriendlyUrl()
+						friendlyURLModelImpl.getUrlTitle()
 					};
 
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_C_F, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_C_C_U, args,
 					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_F, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_C_C_U, args,
 					friendlyURLModelImpl);
 			}
 
@@ -3311,23 +3311,23 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 				friendlyURLModelImpl.getCompanyId(),
 				friendlyURLModelImpl.getGroupId(),
 				friendlyURLModelImpl.getClassNameId(),
-				friendlyURLModelImpl.getFriendlyUrl()
+				friendlyURLModelImpl.getUrlTitle()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_F, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_F, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_U, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_U, args);
 
 		if ((friendlyURLModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_G_C_F.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_C_G_C_U.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					friendlyURLModelImpl.getOriginalCompanyId(),
 					friendlyURLModelImpl.getOriginalGroupId(),
 					friendlyURLModelImpl.getOriginalClassNameId(),
-					friendlyURLModelImpl.getOriginalFriendlyUrl()
+					friendlyURLModelImpl.getOriginalUrlTitle()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_F, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_F, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_U, args);
 		}
 
 		args = new Object[] {
@@ -3335,24 +3335,24 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 				friendlyURLModelImpl.getGroupId(),
 				friendlyURLModelImpl.getClassNameId(),
 				friendlyURLModelImpl.getClassPK(),
-				friendlyURLModelImpl.getFriendlyUrl()
+				friendlyURLModelImpl.getUrlTitle()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_C_F, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_C_F, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_C_U, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_C_U, args);
 
 		if ((friendlyURLModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_G_C_C_F.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_C_G_C_C_U.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					friendlyURLModelImpl.getOriginalCompanyId(),
 					friendlyURLModelImpl.getOriginalGroupId(),
 					friendlyURLModelImpl.getOriginalClassNameId(),
 					friendlyURLModelImpl.getOriginalClassPK(),
-					friendlyURLModelImpl.getOriginalFriendlyUrl()
+					friendlyURLModelImpl.getOriginalUrlTitle()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_C_F, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_C_F, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_C_C_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_C_C_U, args);
 		}
 
 		args = new Object[] {
@@ -3622,7 +3622,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 		friendlyURLImpl.setGroupId(friendlyURL.getGroupId());
 		friendlyURLImpl.setClassNameId(friendlyURL.getClassNameId());
 		friendlyURLImpl.setClassPK(friendlyURL.getClassPK());
-		friendlyURLImpl.setFriendlyUrl(friendlyURL.getFriendlyUrl());
+		friendlyURLImpl.setUrlTitle(friendlyURL.getUrlTitle());
 		friendlyURLImpl.setMain(friendlyURL.isMain());
 
 		return friendlyURLImpl;

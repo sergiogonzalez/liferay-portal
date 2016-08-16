@@ -5,6 +5,6 @@ create table FriendlyURL (
 	groupId LONG,
 	classNameId LONG,
 	classPK LONG,
-	friendlyUrl VARCHAR(150) null,
+	urlTitle VARCHAR(150) null,
 	main BOOLEAN
 );

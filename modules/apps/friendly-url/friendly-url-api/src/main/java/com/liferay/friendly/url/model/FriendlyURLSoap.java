@@ -38,7 +38,7 @@ public class FriendlyURLSoap implements Serializable {
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setFriendlyUrl(model.getFriendlyUrl());
+		soapModel.setUrlTitle(model.getUrlTitle());
 		soapModel.setMain(model.getMain());
 
 		return soapModel;
@@ -140,12 +140,12 @@ public class FriendlyURLSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public String getFriendlyUrl() {
-		return _friendlyUrl;
+	public String getUrlTitle() {
+		return _urlTitle;
 	}
 
-	public void setFriendlyUrl(String friendlyUrl) {
-		_friendlyUrl = friendlyUrl;
+	public void setUrlTitle(String urlTitle) {
+		_urlTitle = urlTitle;
 	}
 
 	public boolean getMain() {
@@ -166,6 +166,6 @@ public class FriendlyURLSoap implements Serializable {
 	private long _groupId;
 	private long _classNameId;
 	private long _classPK;
-	private String _friendlyUrl;
+	private String _urlTitle;
 	private boolean _main;
 }

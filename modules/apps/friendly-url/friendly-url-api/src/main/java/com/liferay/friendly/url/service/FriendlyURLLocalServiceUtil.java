@@ -55,11 +55,10 @@ public class FriendlyURLLocalServiceUtil {
 
 	public static com.liferay.friendly.url.model.FriendlyURL addFriendlyURL(
 		long companyId, long groupId, java.lang.Class<?> clazz, long classPK,
-		java.lang.String friendlyUrl)
+		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addFriendlyURL(companyId, groupId, clazz, classPK,
-			friendlyUrl);
+				   .addFriendlyURL(companyId, groupId, clazz, classPK, urlTitle);
 	}
 
 	/**
@@ -99,10 +98,9 @@ public class FriendlyURLLocalServiceUtil {
 
 	public static com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
 		long companyId, long groupId, java.lang.Class<?> clazz,
-		java.lang.String friendlyUrl)
+		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .fetchFriendlyURL(companyId, groupId, clazz, friendlyUrl);
+		return getService().fetchFriendlyURL(companyId, groupId, clazz, urlTitle);
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
@@ -331,9 +329,9 @@ public class FriendlyURLLocalServiceUtil {
 	}
 
 	public static void validate(long companyId, long groupId,
-		java.lang.Class<?> clazz, java.lang.String friendlyUrl)
+		java.lang.Class<?> clazz, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().validate(companyId, groupId, clazz, friendlyUrl);
+		getService().validate(companyId, groupId, clazz, urlTitle);
 	}
 
 	public static FriendlyURLLocalService getService() {
