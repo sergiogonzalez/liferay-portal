@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.item.selector.web.internal.display.context;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -69,13 +67,13 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =
-			_kbAttachmentItemSelectorView.
-				getItemSelectorReturnTypeResolverHandler();
+				_kbAttachmentItemSelectorView.
+					getItemSelectorReturnTypeResolverHandler();
 
 		return itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
-				_kbAttachmentItemSelectorCriterion, _kbAttachmentItemSelectorView,
-				FileEntry.class);
+				_kbAttachmentItemSelectorCriterion,
+				_kbAttachmentItemSelectorView, FileEntry.class);
 	}
 
 	public KBAttachmentItemSelectorCriterion

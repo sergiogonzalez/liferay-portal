@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.List;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -58,6 +58,14 @@ public class ItemSelectorReturnTypeResolverHandler {
 			itemSelectorReturnType.getClass(), modelClass);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ItemSelectorReturnTypeResolver.class, null,
+			new ItemSelectorReturnTypeResolverServiceReferenceMapper(
+				bundleContext));
+	}
+
 	protected ItemSelectorReturnType getFirstAvailableItemSelectorReturnType(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes,
 		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes) {
@@ -66,7 +74,7 @@ public class ItemSelectorReturnTypeResolverHandler {
 			supportedItemSelectorReturnTypes, ClassUtil::getClassName);
 
 		for (ItemSelectorReturnType itemSelectorReturnType :
-			desiredItemSelectorReturnTypes) {
+				desiredItemSelectorReturnTypes) {
 
 			String className = ClassUtil.getClassName(itemSelectorReturnType);
 
@@ -76,14 +84,6 @@ public class ItemSelectorReturnTypeResolverHandler {
 		}
 
 		return null;
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ItemSelectorReturnTypeResolver.class, null,
-			new ItemSelectorReturnTypeResolverServiceReferenceMapper(
-				bundleContext));
 	}
 
 	private String _getKey(

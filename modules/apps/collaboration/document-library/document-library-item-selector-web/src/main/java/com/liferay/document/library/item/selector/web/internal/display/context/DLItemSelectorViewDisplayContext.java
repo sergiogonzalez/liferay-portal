@@ -17,7 +17,6 @@ package com.liferay.document.library.item.selector.web.internal.display.context;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
