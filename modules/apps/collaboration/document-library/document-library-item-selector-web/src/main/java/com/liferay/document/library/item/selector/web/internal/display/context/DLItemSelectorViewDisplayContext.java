@@ -20,7 +20,6 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
-import com.liferay.item.selector.ItemSelectorReturnTypeUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -66,21 +65,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			_itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
-
-		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
-				desiredItemSelectorReturnTypes,
-				_dlItemSelectorView.getSupportedItemSelectorReturnTypes());
-
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =
 				_dlItemSelectorView.getItemSelectorReturnTypeResolverHandler();
 
 		return itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
-				itemSelectorReturnType.getClass(), FileEntry.class);
+				_itemSelectorCriterion, _dlItemSelectorView, FileEntry.class);
 	}
 
 	public String[] getMimeTypes() {

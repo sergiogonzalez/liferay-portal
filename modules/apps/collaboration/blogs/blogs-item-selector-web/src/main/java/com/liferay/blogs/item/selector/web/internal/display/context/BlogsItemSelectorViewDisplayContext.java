@@ -20,7 +20,6 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
-import com.liferay.item.selector.ItemSelectorReturnTypeUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -68,14 +67,6 @@ public class BlogsItemSelectorViewDisplayContext {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			_blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
-
-		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
-				desiredItemSelectorReturnTypes,
-				_blogsItemSelectorView.getSupportedItemSelectorReturnTypes());
-
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =
 				_blogsItemSelectorView.
@@ -83,7 +74,8 @@ public class BlogsItemSelectorViewDisplayContext {
 
 		return itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
-				itemSelectorReturnType.getClass(), FileEntry.class);
+				_blogsItemSelectorCriterion, _blogsItemSelectorView,
+				FileEntry.class);
 	}
 
 	public PortletURL getPortletURL(

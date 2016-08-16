@@ -17,7 +17,6 @@ package com.liferay.journal.item.selector.web.internal.context;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
-import com.liferay.item.selector.ItemSelectorReturnTypeUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.internal.JournalItemSelectorView;
@@ -64,14 +63,6 @@ public class JournalItemSelectorViewDisplayContext {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			_journalItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
-
-		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
-				desiredItemSelectorReturnTypes,
-				_journalItemSelectorView.getSupportedItemSelectorReturnTypes());
-
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =
 				_journalItemSelectorView.
@@ -79,7 +70,8 @@ public class JournalItemSelectorViewDisplayContext {
 
 		return itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
-				itemSelectorReturnType.getClass(), FileEntry.class);
+				_journalItemSelectorCriterion, _journalItemSelectorView,
+				FileEntry.class);
 	}
 
 	public JournalArticle getJournalArticle() throws PortalException {

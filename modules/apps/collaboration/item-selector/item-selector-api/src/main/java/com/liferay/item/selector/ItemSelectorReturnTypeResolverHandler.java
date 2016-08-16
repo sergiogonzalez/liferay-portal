@@ -17,12 +17,16 @@ package com.liferay.item.selector;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+
+import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -36,6 +40,42 @@ public class ItemSelectorReturnTypeResolverHandler {
 
 		return _serviceTrackerMap.getService(
 			_getKey(itemSelectorReturnTypeClass, modelClass));
+	}
+
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver(
+		ItemSelectorCriterion itemSelectorCriterion,
+		ItemSelectorView itemSelectorView, Class<?> modelClass) {
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+		ItemSelectorReturnType itemSelectorReturnType =
+			getFirstAvailableItemSelectorReturnType(
+				desiredItemSelectorReturnTypes,
+				itemSelectorView.getSupportedItemSelectorReturnTypes());
+
+		return getItemSelectorReturnTypeResolver(
+			itemSelectorReturnType.getClass(), modelClass);
+	}
+
+	protected ItemSelectorReturnType getFirstAvailableItemSelectorReturnType(
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes,
+		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes) {
+
+		List<String> supportedItemSelectorReturnTypeNames = ListUtil.toList(
+			supportedItemSelectorReturnTypes, ClassUtil::getClassName);
+
+		for (ItemSelectorReturnType itemSelectorReturnType :
+			desiredItemSelectorReturnTypes) {
+
+			String className = ClassUtil.getClassName(itemSelectorReturnType);
+
+			if (supportedItemSelectorReturnTypeNames.contains(className)) {
+				return itemSelectorReturnType;
+			}
+		}
+
+		return null;
 	}
 
 	@Activate
