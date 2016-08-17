@@ -58,12 +58,6 @@ public class BlogsItemSelectorView
 		return BlogsItemSelectorCriterion.class;
 	}
 
-	public ItemSelectorReturnTypeResolverHandler
-		getItemSelectorReturnTypeResolverHandler() {
-
-		return _itemSelectorReturnTypeResolverHandler;
-	}
-
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -98,8 +92,10 @@ public class BlogsItemSelectorView
 		BlogsItemSelectorViewDisplayContext
 			blogsItemSelectorViewDisplayContext =
 				new BlogsItemSelectorViewDisplayContext(
-					blogsItemSelectorCriterion, this, itemSelectedEventName,
-					search, portletURL, _blogsEntryLocalService);
+					blogsItemSelectorCriterion, this,
+					_itemSelectorReturnTypeResolverHandler,
+					itemSelectedEventName, search, portletURL,
+					_blogsEntryLocalService);
 
 		request.setAttribute(
 			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

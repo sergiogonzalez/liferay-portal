@@ -60,12 +60,6 @@ public class JournalItemSelectorView
 		return JournalItemSelectorCriterion.class;
 	}
 
-	public ItemSelectorReturnTypeResolverHandler
-		getItemSelectorReturnTypeResolverHandler() {
-
-		return _itemSelectorReturnTypeResolverHandler;
-	}
-
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -100,8 +94,9 @@ public class JournalItemSelectorView
 		JournalItemSelectorViewDisplayContext
 			journalItemSelectorViewDisplayContext =
 				new JournalItemSelectorViewDisplayContext(
-					journalItemSelectorCriterion, this, itemSelectedEventName,
-					search, portletURL);
+					journalItemSelectorCriterion, this,
+					_itemSelectorReturnTypeResolverHandler,
+					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
 			JOURNAL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

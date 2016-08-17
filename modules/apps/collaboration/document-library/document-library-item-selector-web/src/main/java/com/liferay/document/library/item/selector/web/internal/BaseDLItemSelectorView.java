@@ -45,13 +45,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	implements DLItemSelectorView<T> {
 
 	@Override
-	public ItemSelectorReturnTypeResolverHandler
-		getItemSelectorReturnTypeResolverHandler() {
-
-		return _itemSelectorReturnTypeResolverHandler;
-	}
-
-	@Override
 	public String[] getMimeTypes() {
 		return new String[0];
 	}
@@ -94,7 +87,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext(
-				t, this, itemSelectedEventName, search, portletURL);
+				t, this, _itemSelectorReturnTypeResolverHandler,
+				itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
 			DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

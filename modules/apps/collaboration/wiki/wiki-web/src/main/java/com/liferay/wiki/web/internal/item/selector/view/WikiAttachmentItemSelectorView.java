@@ -59,12 +59,6 @@ public class WikiAttachmentItemSelectorView
 		return WikiAttachmentItemSelectorCriterion.class;
 	}
 
-	public ItemSelectorReturnTypeResolverHandler
-		getItemSelectorReturnTypeResolverHandler() {
-
-		return _itemSelectorReturnTypeResolverHandler;
-	}
-
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -101,6 +95,7 @@ public class WikiAttachmentItemSelectorView
 			wikiAttachmentItemSelectorViewDisplayContext =
 				new WikiAttachmentItemSelectorViewDisplayContext(
 					wikiAttachmentItemSelectorCriterion, this,
+					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(

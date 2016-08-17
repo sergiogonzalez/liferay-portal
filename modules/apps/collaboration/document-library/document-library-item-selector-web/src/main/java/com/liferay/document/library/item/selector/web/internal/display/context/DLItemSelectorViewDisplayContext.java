@@ -40,10 +40,14 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public DLItemSelectorViewDisplayContext(
 		T itemSelectorCriterion, DLItemSelectorView<T> dlItemSelectorView,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_dlItemSelectorView = dlItemSelectorView;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -63,11 +67,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler =
-				_dlItemSelectorView.getItemSelectorReturnTypeResolverHandler();
-
-		return itemSelectorReturnTypeResolverHandler.
+		return _itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
 				_itemSelectorCriterion, _dlItemSelectorView, FileEntry.class);
 	}
@@ -118,6 +118,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	private final DLItemSelectorView<T> _dlItemSelectorView;
 	private final String _itemSelectedEventName;
 	private final T _itemSelectorCriterion;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 

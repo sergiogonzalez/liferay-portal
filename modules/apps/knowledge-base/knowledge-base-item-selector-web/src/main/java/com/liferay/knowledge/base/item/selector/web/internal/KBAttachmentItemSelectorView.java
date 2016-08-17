@@ -65,12 +65,6 @@ public class KBAttachmentItemSelectorView
 		return KBAttachmentItemSelectorCriterion.class;
 	}
 
-	public ItemSelectorReturnTypeResolverHandler
-		getItemSelectorReturnTypeResolverHandler() {
-
-		return _itemSelectorReturnTypeResolverHandler;
-	}
-
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -110,6 +104,7 @@ public class KBAttachmentItemSelectorView
 			kbAttachmentItemSelectorViewDisplayContext =
 				new KBAttachmentItemSelectorViewDisplayContext(
 					kbAttachmentItemSelectorCriterion, this,
+					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(

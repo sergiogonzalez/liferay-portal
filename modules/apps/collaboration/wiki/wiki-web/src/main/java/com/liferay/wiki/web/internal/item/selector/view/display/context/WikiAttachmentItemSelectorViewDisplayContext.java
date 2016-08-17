@@ -43,11 +43,15 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
 		WikiAttachmentItemSelectorView
 			wikiAttachmentItemSelectorView,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_wikiAttachmentItemSelectorCriterion =
 			wikiAttachmentItemSelectorCriterion;
 		_wikiAttachmentItemSelectorView = wikiAttachmentItemSelectorView;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -58,12 +62,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler =
-				_wikiAttachmentItemSelectorView.
-					getItemSelectorReturnTypeResolverHandler();
-
-		return itemSelectorReturnTypeResolverHandler.
+		return _itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
 				_wikiAttachmentItemSelectorCriterion,
 				_wikiAttachmentItemSelectorView, FileEntry.class);
@@ -119,6 +118,8 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 	}
 
 	private final String _itemSelectedEventName;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 	private final WikiAttachmentItemSelectorCriterion

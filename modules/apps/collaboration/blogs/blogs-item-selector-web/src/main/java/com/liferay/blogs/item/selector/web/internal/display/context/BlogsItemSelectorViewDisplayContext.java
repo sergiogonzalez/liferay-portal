@@ -41,11 +41,15 @@ public class BlogsItemSelectorViewDisplayContext {
 	public BlogsItemSelectorViewDisplayContext(
 		BlogsItemSelectorCriterion blogsItemSelectorCriterion,
 		BlogsItemSelectorView blogsItemSelectorView,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL,
 		BlogsEntryLocalService blogsEntryLocalService) {
 
 		_blogsItemSelectorCriterion = blogsItemSelectorCriterion;
 		_blogsItemSelectorView = blogsItemSelectorView;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -65,12 +69,7 @@ public class BlogsItemSelectorViewDisplayContext {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler =
-				_blogsItemSelectorView.
-					getItemSelectorReturnTypeResolverHandler();
-
-		return itemSelectorReturnTypeResolverHandler.
+		return _itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
 				_blogsItemSelectorCriterion, _blogsItemSelectorView,
 				FileEntry.class);
@@ -114,6 +113,8 @@ public class BlogsItemSelectorViewDisplayContext {
 	private final BlogsItemSelectorCriterion _blogsItemSelectorCriterion;
 	private final BlogsItemSelectorView _blogsItemSelectorView;
 	private final String _itemSelectedEventName;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 

@@ -43,10 +43,14 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	public KBAttachmentItemSelectorViewDisplayContext(
 		KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
 		KBAttachmentItemSelectorView kbAttachmentItemSelectorView,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_kbAttachmentItemSelectorCriterion = kbAttachmentItemSelectorCriterion;
 		_kbAttachmentItemSelectorView = kbAttachmentItemSelectorView;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -65,12 +69,7 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	}
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler =
-				_kbAttachmentItemSelectorView.
-					getItemSelectorReturnTypeResolverHandler();
-
-		return itemSelectorReturnTypeResolverHandler.
+		return _itemSelectorReturnTypeResolverHandler.
 			getItemSelectorReturnTypeResolver(
 				_kbAttachmentItemSelectorCriterion,
 				_kbAttachmentItemSelectorView, FileEntry.class);
@@ -121,6 +120,8 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	}
 
 	private final String _itemSelectedEventName;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final KBAttachmentItemSelectorCriterion
 		_kbAttachmentItemSelectorCriterion;
 	private final KBAttachmentItemSelectorView _kbAttachmentItemSelectorView;
