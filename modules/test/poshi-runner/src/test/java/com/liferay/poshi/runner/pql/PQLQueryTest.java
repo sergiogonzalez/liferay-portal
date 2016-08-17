@@ -54,7 +54,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("priority <= 5.1");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -75,7 +75,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("priority >= 5.1");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("true OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -130,7 +130,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("false OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -162,6 +162,30 @@ public class PQLQueryTest extends TestCase {
 	}
 
 	@Test
+	public void testGetPQLResultModifier() throws Exception {
+		Properties properties = new Properties();
+
+		properties.setProperty("portal.smoke", "true");
+
+		_validateGetPQLResult(
+			"NOT portal.smoke == true", Boolean.FALSE, properties);
+		_validateGetPQLResult(
+			"NOT portal.smoke == false", Boolean.TRUE, properties);
+	}
+
+	@Test
+	public void testGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"portal.smoke == true NOT", "Invalid value: true NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == false NOT", "Invalid value: false NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == true NOT AND true", "Invalid value: true NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == false NOT AND true", "Invalid value: false NOT");
+	}
+
+	@Test
 	public void testGetPQLResultParenthesis() throws Exception {
 		Properties properties = new Properties();
 
@@ -180,7 +204,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("(true AND true) OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -194,7 +218,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("(false AND true) OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -221,6 +245,13 @@ public class PQLQueryTest extends TestCase {
 	}
 
 	private static void _validateGetPQLResultError(
+			String pql, String expectedError)
+		throws Exception {
+
+		_validateGetPQLResultError(pql, expectedError, new Properties());
+	}
+
+	private static void _validateGetPQLResultError(
 			String pql, String expectedError, Properties properties)
 		throws Exception {
 
@@ -229,7 +260,7 @@ public class PQLQueryTest extends TestCase {
 		try {
 			PQLQuery pqlQuery = new PQLQuery(pql);
 
-			Object result = pqlQuery.getPQLResult(properties);
+			pqlQuery.getPQLResult(properties);
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();

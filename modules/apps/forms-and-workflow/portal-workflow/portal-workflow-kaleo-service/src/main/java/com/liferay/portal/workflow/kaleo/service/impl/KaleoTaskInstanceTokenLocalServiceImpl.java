@@ -186,6 +186,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 		kaleoTaskAssignmentInstanceLocalService.
 			deleteCompanyKaleoTaskAssignmentInstances(companyId);
+
+		// Kaleo task form instances
+
+		kaleoTaskFormInstanceLocalService.deleteCompanyKaleoTaskFormInstances(
+			companyId);
 	}
 
 	@Override
@@ -202,6 +207,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		kaleoTaskAssignmentInstanceLocalService.
 			deleteKaleoDefinitionKaleoTaskAssignmentInstances(
 				kaleoDefinitionId);
+
+		// Kaleo task form instances
+
+		kaleoTaskFormInstanceLocalService.
+			deleteKaleoDefinitionKaleoTaskFormInstances(kaleoDefinitionId);
 	}
 
 	@Override
@@ -217,6 +227,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 		kaleoTaskAssignmentInstanceLocalService.
 			deleteKaleoInstanceKaleoTaskAssignmentInstances(kaleoInstanceId);
+
+		// Kaleo task form instances
+
+		kaleoTaskFormInstanceLocalService.
+			deleteKaleoInstanceKaleoTaskFormInstances(kaleoInstanceId);
 	}
 
 	@Override
@@ -437,6 +452,27 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		addCompletedCriterion(dynamicQuery, completed);
 
 		return (int)dynamicQueryCount(dynamicQuery);
+	}
+
+	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
+		throws PortalException {
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
+				kaleoTaskInstanceTokenId);
+
+		int kaleoTaskFormsCount = kaleoTaskFormPersistence.countByKaleoTaskId(
+			kaleoTaskInstanceToken.getKaleoTaskId());
+
+		int kaleoTaskFormInstancesCount =
+			kaleoTaskFormInstancePersistence.countByKaleoTaskInstanceTokenId(
+				kaleoTaskInstanceTokenId);
+
+		if (kaleoTaskFormsCount > kaleoTaskFormInstancesCount) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

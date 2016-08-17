@@ -25,6 +25,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -54,6 +55,10 @@ public class DLImageItemSelectorView
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
+	}
+
+	public String getTitle(Locale locale) {
+		return "vista por defecto, order 100";
 	}
 
 	@Override

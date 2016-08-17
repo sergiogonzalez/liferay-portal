@@ -18,6 +18,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import com.liferay.poshi.runner.pql.PQLEntity;
+import com.liferay.poshi.runner.pql.PQLEntityFactory;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.MathUtil;
@@ -26,13 +28,19 @@ import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import java.lang.reflect.Method;
+
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +52,9 @@ import java.util.TreeSet;
 
 import org.apache.tools.ant.DirectoryScanner;
 
+import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Karen Dang
@@ -230,6 +240,10 @@ public class PoshiRunnerContext {
 		return _rootElements.containsKey(rootElementKey);
 	}
 
+	public static boolean isTestToggle(String toggleName) {
+		return _testToggleNames.contains(toggleName);
+	}
+
 	public static void main(String[] args) throws Exception {
 		readFiles();
 
@@ -242,6 +256,7 @@ public class PoshiRunnerContext {
 	public static void readFiles() throws Exception {
 		_readPoshiFiles();
 		_readSeleniumFiles();
+		_readTestToggleFiles();
 	}
 
 	public static void setTestCaseCommandName(String testClassCommandName) {
@@ -400,87 +415,55 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
-	private static Set<String> _getRunTestCaseCommandNames(
-			String propertyName, String propertyValue)
-		throws Exception {
-
-		Set<String> runTestClassCommandNames = new TreeSet<>();
-
-		for (String testCaseClassCommandName : _testCaseClassCommandNames) {
-			String className =
-				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-					testCaseClassCommandName);
-
-			Element rootElement = getTestCaseRootElement(className);
-
-			List<Element> rootPropertyElements = rootElement.elements(
-				"property");
-
-			String runAttributeValue = null;
-
-			for (Element rootPropertyElement : rootPropertyElements) {
-				String attributeName = rootPropertyElement.attributeValue(
-					"name");
-
-				if (attributeName.equals(propertyName)) {
-					runAttributeValue = rootPropertyElement.attributeValue(
-						"value");
-
-					break;
-				}
-			}
-
-			Element commandElement = getTestCaseCommandElement(
-				testCaseClassCommandName);
-
-			if (Validator.isNotNull(
-					commandElement.attributeValue(propertyName))) {
-
-				runAttributeValue = commandElement.attributeValue(propertyName);
-			}
-
-			List<Element> commandPropertyElements = commandElement.elements(
-				"property");
-
-			for (Element commandPropertyElement : commandPropertyElements) {
-				String attributeName = commandPropertyElement.attributeValue(
-					"name");
-
-				if (attributeName.equals(propertyName)) {
-					runAttributeValue = commandPropertyElement.attributeValue(
-						"value");
-
-					break;
-				}
-			}
-
-			if ((runAttributeValue != null) &&
-				runAttributeValue.equals(propertyValue)) {
-
-				runTestClassCommandNames.add(testCaseClassCommandName);
-			}
-		}
-
-		return runTestClassCommandNames;
-	}
-
 	private static String _getTestBatchGroups() throws Exception {
-		String[] propertyNames = PropsValues.TEST_BATCH_PROPERTY_NAMES;
-		String[] propertyValues = PropsValues.TEST_BATCH_PROPERTY_VALUES;
+		String propertyQuery = PropsValues.TEST_BATCH_PROPERTY_QUERY;
+
+		if (propertyQuery == null) {
+			String[] propertyNames = PropsValues.TEST_BATCH_PROPERTY_NAMES;
+			String[] propertyValues = PropsValues.TEST_BATCH_PROPERTY_VALUES;
+
+			if (propertyNames.length != propertyValues.length) {
+				throw new Exception(
+					"'test.batch.property.names'/'test.batch.property.values'" +
+						" must have matching amounts of entries!");
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < propertyNames.length; i++) {
+				sb.append(propertyNames[i]);
+				sb.append(" == \"");
+				sb.append(propertyValues[i]);
+				sb.append("\"");
+
+				if (i < (propertyNames.length - 1)) {
+					sb.append(" OR ");
+				}
+			}
+
+			propertyQuery = sb.toString();
+		}
 
 		List<String> classCommandNames = new ArrayList<>();
 
-		if (propertyNames.length != propertyValues.length) {
-			throw new Exception(
-				"'test.batch.property.names'/'test.batch.property.values' " +
-					"must have matching amounts of entries!");
+		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(propertyQuery);
+
+		for (String testCaseClassCommandName : _testCaseClassCommandNames) {
+			Properties properties = _classCommandNamePropertiesMap.get(
+				testCaseClassCommandName);
+
+			Boolean pqlResultBoolean = (Boolean)pqlEntity.getPQLResult(
+				properties);
+
+			if (pqlResultBoolean) {
+				classCommandNames.add(testCaseClassCommandName);
+			}
 		}
 
-		for (int i = 0; i < propertyNames.length; i++) {
-			classCommandNames.addAll(
-				_getRunTestCaseCommandNames(
-					propertyNames[i], propertyValues[i]));
-		}
+		System.out.println(
+			"The following query returned " + classCommandNames.size() +
+				" test class command names:");
+		System.out.println(propertyQuery);
 
 		if (PropsValues.TEST_BATCH_RUN_TYPE.equals("sequential")) {
 			return _getTestBatchSequentialGroups(classCommandNames);
@@ -653,27 +636,6 @@ public class PoshiRunnerContext {
 		return sb.toString();
 	}
 
-	private static List<String> _getTestCaseClassProperties(String className)
-		throws Exception {
-
-		List<String> classProperties = new ArrayList<>();
-		Element rootElement = getTestCaseRootElement(className);
-
-		List<Element> rootPropertyElements = rootElement.elements("property");
-
-		for (Element rootPropertyElement : rootPropertyElements) {
-			StringBuilder sb = new StringBuilder(3);
-
-			sb.append(rootPropertyElement.attributeValue("name"));
-			sb.append("=");
-			sb.append(rootPropertyElement.attributeValue("value"));
-
-			classProperties.add(sb.toString());
-		}
-
-		return classProperties;
-	}
-
 	private static Set<String> _getTestCaseCommandNames(String className)
 		throws Exception {
 
@@ -689,39 +651,6 @@ public class PoshiRunnerContext {
 		}
 
 		return commandNames;
-	}
-
-	private static List<String> _getTestCaseCommandProperties(
-			String classCommandName)
-		throws Exception {
-
-		Element commandElement = getTestCaseCommandElement(classCommandName);
-		List<String> commandProperties = new ArrayList<>();
-
-		List<Element> commandPropertyElements = commandElement.elements(
-			"property");
-
-		for (Element commandPropertyElement : commandPropertyElements) {
-			StringBuilder sb = new StringBuilder(3);
-
-			sb.append(commandPropertyElement.attributeValue("name"));
-			sb.append("=");
-			sb.append(commandPropertyElement.attributeValue("value"));
-
-			commandProperties.add(sb.toString());
-		}
-
-		return commandProperties;
-	}
-
-	private static List<String> _getTestCaseCommandProperties(
-			String className, String commandName)
-		throws Exception {
-
-		String classCommandName = PoshiRunnerGetterUtil.getClassCommandName(
-			className, commandName);
-
-		return _getTestCaseCommandProperties(classCommandName);
 	}
 
 	private static void _initComponentCommandNamesMap() {
@@ -1054,12 +983,89 @@ public class PoshiRunnerContext {
 		_seleniumParameterCounts.put("open", 1);
 	}
 
+	private static void _readTestToggleFiles() throws Exception {
+		System.out.println("Active Toggles:");
+
+		for (String testToggleFileName : PropsValues.TEST_TOGGLE_FILE_NAMES) {
+			if (!FileUtil.exists(testToggleFileName)) {
+				continue;
+			}
+
+			String content = FileUtil.read(testToggleFileName);
+
+			InputStream inputStream = new ByteArrayInputStream(
+				content.getBytes("UTF-8"));
+
+			SAXReader saxReader = new SAXReader();
+
+			Document document = saxReader.read(inputStream);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> toggleElements = rootElement.elements("toggle");
+
+			for (Element toggleElement : toggleElements) {
+				String toggleName = toggleElement.attributeValue("name");
+
+				System.out.println("* " + toggleName);
+
+				Element dateElement = toggleElement.element("date");
+
+				if (dateElement == null) {
+					Exception exception = new Exception(
+						"Please set a date for this toggle:\n" +
+							testToggleFileName + ":" + toggleName);
+
+					exception.printStackTrace();
+
+					throw exception;
+				}
+				else {
+					try {
+						SimpleDateFormat simpleDateFormat =
+							new SimpleDateFormat("YYYY-MM-dd");
+
+						simpleDateFormat.parse(dateElement.getText());
+					}
+					catch (Exception e) {
+						Exception exception = new Exception(
+							"Please use the date format, YYYY-MM-dd, for " +
+								"this toggle:\n" + testToggleFileName + ":" +
+									toggleName,
+							e);
+
+						exception.printStackTrace();
+
+						throw exception;
+					}
+				}
+
+				Element ownerElement = toggleElement.element("owner");
+
+				if ((ownerElement == null) ||
+					Validator.isNull(ownerElement.getText())) {
+
+					Exception exception = new Exception(
+						"Please set an author for this toggle:\n" +
+							testToggleFileName + ":" + toggleName);
+
+					exception.printStackTrace();
+
+					throw exception;
+				}
+
+				_testToggleNames.add(toggleName);
+			}
+		}
+	}
+
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
-			(PropsValues.TEST_BATCH_PROPERTY_NAMES != null) &&
-			(PropsValues.TEST_BATCH_PROPERTY_VALUES != null)) {
+			(((PropsValues.TEST_BATCH_PROPERTY_NAMES != null) &&
+			  (PropsValues.TEST_BATCH_PROPERTY_VALUES != null)) ||
+			 (PropsValues.TEST_BATCH_PROPERTY_QUERY != null))) {
 
 			sb.append(_getTestBatchGroups());
 		}
@@ -1165,6 +1171,7 @@ public class PoshiRunnerContext {
 		new ArrayList<>();
 	private static String _testClassCommandName;
 	private static String _testClassName;
+	private static final Set<String> _testToggleNames = new HashSet<>();
 
 	static {
 		_componentNames.addAll(
