@@ -36,10 +36,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"item.selector.view.order:Integer=100"},
+	property = {
+		"item.selector.view.order:Integer=150",
+		"item.selector.view.key=document-library",
+		"service.ranking:Integer=50"
+	},
 	service = ItemSelectorView.class
 )
-public class DLImageItemSelectorView
+public class DLImageItemSelectorView3
 	extends BaseDLItemSelectorView<ImageItemSelectorCriterion> {
 
 	@Override
@@ -58,7 +62,7 @@ public class DLImageItemSelectorView
 	}
 
 	public String getTitle(Locale locale) {
-		return "vista por defecto, order 100";
+		return "view 3, ranking 50, order 150, key document-library";
 	}
 
 	@Override
