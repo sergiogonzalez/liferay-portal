@@ -26,6 +26,7 @@ import java.net.SocketException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -114,6 +115,7 @@ public class SocketTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testConnect1() throws IOException, SecurityException {
 		try {

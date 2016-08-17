@@ -54,7 +54,7 @@ public class PQLEntityFactoryTest extends TestCase {
 		queries.add("priority <= 5.1");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -75,7 +75,7 @@ public class PQLEntityFactoryTest extends TestCase {
 		queries.add("priority >= 5.1");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class PQLEntityFactoryTest extends TestCase {
 		queries.add("true OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -132,7 +132,7 @@ public class PQLEntityFactoryTest extends TestCase {
 		queries.add("false OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -166,6 +166,30 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	@Test
+	public void testPQLQueryGetPQLResultModifier() throws Exception {
+		Properties properties = new Properties();
+
+		properties.setProperty("portal.smoke", "true");
+
+		_validateGetPQLResult(
+			"NOT portal.smoke == true", Boolean.FALSE, properties);
+		_validateGetPQLResult(
+			"NOT portal.smoke == false", Boolean.TRUE, properties);
+	}
+
+	@Test
+	public void testPQLQueryGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"portal.smoke == true NOT", "Invalid value: true NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == false NOT", "Invalid value: false NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == true NOT AND true", "Invalid value: true NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == false NOT AND true", "Invalid value: false NOT");
+	}
+
+	@Test
 	public void testPQLQueryGetPQLResultParenthesis() throws Exception {
 		Properties properties = new Properties();
 
@@ -184,7 +208,7 @@ public class PQLEntityFactoryTest extends TestCase {
 		queries.add("(true AND true) OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -198,29 +222,29 @@ public class PQLEntityFactoryTest extends TestCase {
 		queries.add("(false AND true) OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
 	@Test
 	public void testPQLValueGetPQLResult() throws Exception {
-		_validateGetPQLResult("false", Boolean.valueOf(false));
-		_validateGetPQLResult("'false'", Boolean.valueOf(false));
-		_validateGetPQLResult("\"false\"", Boolean.valueOf(false));
-		_validateGetPQLResult("true", Boolean.valueOf(true));
-		_validateGetPQLResult("'true'", Boolean.valueOf(true));
-		_validateGetPQLResult("\"true\"", Boolean.valueOf(true));
+		_validateGetPQLResult("false", Boolean.FALSE);
+		_validateGetPQLResult("'false'", Boolean.FALSE);
+		_validateGetPQLResult("\"false\"", Boolean.FALSE);
+		_validateGetPQLResult("true", Boolean.TRUE);
+		_validateGetPQLResult("'true'", Boolean.TRUE);
+		_validateGetPQLResult("\"true\"", Boolean.TRUE);
 
-		_validateGetPQLResult("3.2", Double.valueOf(3.2));
-		_validateGetPQLResult("'3.2'", Double.valueOf(3.2));
-		_validateGetPQLResult("\"3.2\"", Double.valueOf(3.2));
-		_validateGetPQLResult("2016.0", Double.valueOf(2016));
-		_validateGetPQLResult("'2016.0'", Double.valueOf(2016));
-		_validateGetPQLResult("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResult("3.2", 3.2D);
+		_validateGetPQLResult("'3.2'", 3.2D);
+		_validateGetPQLResult("\"3.2\"", 3.2D);
+		_validateGetPQLResult("2016.0", 2016D);
+		_validateGetPQLResult("'2016.0'", 2016D);
+		_validateGetPQLResult("\"2016.0\"", 2016D);
 
-		_validateGetPQLResult("2016", Integer.valueOf(2016));
-		_validateGetPQLResult("'2016'", Integer.valueOf(2016));
-		_validateGetPQLResult("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResult("2016", 2016);
+		_validateGetPQLResult("'2016'", 2016);
+		_validateGetPQLResult("\"2016\"", 2016);
 
 		_validateGetPQLResult("test", "test");
 		_validateGetPQLResult("'test'", "test");
@@ -231,24 +255,43 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	@Test
+	public void testPQLValueGetPQLResultModifier() throws Exception {
+		_validateGetPQLResult("NOT true", Boolean.FALSE);
+		_validateGetPQLResult("NOT false", Boolean.TRUE);
+	}
+
+	@Test
+	public void testPQLValueGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"NOT 3.2", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 2016", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT test", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 'test test'",
+			"Modifier must be used with a boolean value: NOT");
+	}
+
+	@Test
 	public void testPQLVariableGetPQLResult() throws Exception {
-		_validateGetPQLResultFromVariable("false", Boolean.valueOf(false));
-		_validateGetPQLResultFromVariable("'false'", Boolean.valueOf(false));
-		_validateGetPQLResultFromVariable("\"false\"", Boolean.valueOf(false));
-		_validateGetPQLResultFromVariable("true", Boolean.valueOf(true));
-		_validateGetPQLResultFromVariable("'true'", Boolean.valueOf(true));
-		_validateGetPQLResultFromVariable("\"true\"", Boolean.valueOf(true));
+		_validateGetPQLResultFromVariable("false", Boolean.FALSE);
+		_validateGetPQLResultFromVariable("'false'", Boolean.FALSE);
+		_validateGetPQLResultFromVariable("\"false\"", Boolean.FALSE);
+		_validateGetPQLResultFromVariable("true", Boolean.TRUE);
+		_validateGetPQLResultFromVariable("'true'", Boolean.TRUE);
+		_validateGetPQLResultFromVariable("\"true\"", Boolean.TRUE);
 
-		_validateGetPQLResultFromVariable("3.2", Double.valueOf(3.2));
-		_validateGetPQLResultFromVariable("'3.2'", Double.valueOf(3.2));
-		_validateGetPQLResultFromVariable("\"3.2\"", Double.valueOf(3.2));
-		_validateGetPQLResultFromVariable("2016.0", Double.valueOf(2016));
-		_validateGetPQLResultFromVariable("'2016.0'", Double.valueOf(2016));
-		_validateGetPQLResultFromVariable("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResultFromVariable("3.2", 3.2D);
+		_validateGetPQLResultFromVariable("'3.2'", 3.2D);
+		_validateGetPQLResultFromVariable("\"3.2\"", 3.2D);
+		_validateGetPQLResultFromVariable("2016.0", 2016D);
+		_validateGetPQLResultFromVariable("'2016.0'", 2016D);
+		_validateGetPQLResultFromVariable("\"2016.0\"", 2016D);
 
-		_validateGetPQLResultFromVariable("2016", Integer.valueOf(2016));
-		_validateGetPQLResultFromVariable("'2016'", Integer.valueOf(2016));
-		_validateGetPQLResultFromVariable("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResultFromVariable("2016", 2016);
+		_validateGetPQLResultFromVariable("'2016'", 2016);
+		_validateGetPQLResultFromVariable("\"2016\"", 2016);
 
 		_validateGetPQLResultFromVariable("test", "test");
 		_validateGetPQLResultFromVariable("'test'", "test");
@@ -288,6 +331,13 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	private static void _validateGetPQLResultError(
+			String pql, String expectedError)
+		throws Exception {
+
+		_validateGetPQLResultError(pql, expectedError, new Properties());
+	}
+
+	private static void _validateGetPQLResultError(
 			String pql, String expectedError, Properties properties)
 		throws Exception {
 
@@ -296,7 +346,7 @@ public class PQLEntityFactoryTest extends TestCase {
 		try {
 			PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(pql);
 
-			Object objectValue = pqlEntity.getPQLResult(properties);
+			pqlEntity.getPQLResult(properties);
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();

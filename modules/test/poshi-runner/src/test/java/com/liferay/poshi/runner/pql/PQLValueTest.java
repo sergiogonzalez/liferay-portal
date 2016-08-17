@@ -29,23 +29,23 @@ public class PQLValueTest extends TestCase {
 
 	@Test
 	public void testGetPQLResult() throws Exception {
-		_validateGetPQLResult("false", Boolean.valueOf(false));
-		_validateGetPQLResult("'false'", Boolean.valueOf(false));
-		_validateGetPQLResult("\"false\"", Boolean.valueOf(false));
-		_validateGetPQLResult("true", Boolean.valueOf(true));
-		_validateGetPQLResult("'true'", Boolean.valueOf(true));
-		_validateGetPQLResult("\"true\"", Boolean.valueOf(true));
+		_validateGetPQLResult("false", Boolean.FALSE);
+		_validateGetPQLResult("'false'", Boolean.FALSE);
+		_validateGetPQLResult("\"false\"", Boolean.FALSE);
+		_validateGetPQLResult("true", Boolean.TRUE);
+		_validateGetPQLResult("'true'", Boolean.TRUE);
+		_validateGetPQLResult("\"true\"", Boolean.TRUE);
 
-		_validateGetPQLResult("3.2", Double.valueOf(3.2));
-		_validateGetPQLResult("'3.2'", Double.valueOf(3.2));
-		_validateGetPQLResult("\"3.2\"", Double.valueOf(3.2));
-		_validateGetPQLResult("2016.0", Double.valueOf(2016));
-		_validateGetPQLResult("'2016.0'", Double.valueOf(2016));
-		_validateGetPQLResult("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResult("3.2", 3.2D);
+		_validateGetPQLResult("'3.2'", 3.2D);
+		_validateGetPQLResult("\"3.2\"", 3.2D);
+		_validateGetPQLResult("2016.0", 2016D);
+		_validateGetPQLResult("'2016.0'", 2016D);
+		_validateGetPQLResult("\"2016.0\"", 2016D);
 
-		_validateGetPQLResult("2016", Integer.valueOf(2016));
-		_validateGetPQLResult("'2016'", Integer.valueOf(2016));
-		_validateGetPQLResult("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResult("2016", 2016);
+		_validateGetPQLResult("'2016'", 2016);
+		_validateGetPQLResult("\"2016\"", 2016);
 
 		_validateGetPQLResult("test", "test");
 		_validateGetPQLResult("'test'", "test");
@@ -69,6 +69,25 @@ public class PQLValueTest extends TestCase {
 	}
 
 	@Test
+	public void testGetPQLResultModifier() throws Exception {
+		_validateGetPQLResult("NOT true", Boolean.FALSE);
+		_validateGetPQLResult("NOT false", Boolean.TRUE);
+	}
+
+	@Test
+	public void testGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"NOT 3.2", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 2016", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT test", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 'test test'",
+			"Modifier must be used with a boolean value: NOT");
+	}
+
+	@Test
 	public void testGetPQLResultNull() throws Exception {
 		_validateGetPQLResultNull(null);
 		_validateGetPQLResultNull("'null'");
@@ -80,7 +99,7 @@ public class PQLValueTest extends TestCase {
 
 		Properties properties = new Properties();
 
-		Class clazz = expectedResult.getClass();
+		Class<?> clazz = expectedResult.getClass();
 
 		PQLValue pqlValue = new PQLValue(pql);
 
@@ -112,7 +131,7 @@ public class PQLValueTest extends TestCase {
 		try {
 			PQLValue pqlValue = new PQLValue(pql);
 
-			Object valueObject = pqlValue.getPQLResult(new Properties());
+			pqlValue.getPQLResult(new Properties());
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();
