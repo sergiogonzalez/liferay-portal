@@ -419,5 +419,5 @@ private long _getClassPK(Object bean, long classPK) {
 
 private static final String _TEXTAREA_WIDTH_HEIGHT_PREFIX = "liferay_resize_";
 
-private static final String[] _TYPES = ("color", "email", "number", "range", "tel", "text", "textarea");
+private static final String[] _TYPES = {"color", "email", "number", "range", "tel", "text", "textarea"};
 %>
