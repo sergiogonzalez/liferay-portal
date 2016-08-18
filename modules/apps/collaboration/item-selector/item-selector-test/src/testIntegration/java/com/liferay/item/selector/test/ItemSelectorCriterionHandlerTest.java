@@ -271,6 +271,70 @@ public class ItemSelectorCriterionHandlerTest {
 		}
 	}
 
+	@Test
+	public void testServiceRankingOrderMattersWhenUnregisteringViews() {
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration1 = registerItemSelectorView(
+				new TestItemSelectorView1(), 100, "view1", 0);
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration1Bis = registerItemSelectorView(
+				new TestItemSelectorView2(), 150, "view1", 100);
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration1BisBis =
+				registerItemSelectorView(
+					new TestItemSelectorView3(), 200, "view1", 50);
+
+		List<ServiceRegistration> serviceRegistrations =
+			new CopyOnWriteArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1Bis);
+		serviceRegistrations.add(itemSelectorViewServiceRegistration1BisBis);
+
+		try {
+			ItemSelectorCriterion testItemSelectorCriterion =
+				getTestItemSelectorCriterion();
+
+			List<ItemSelectorView<TestItemSelectorCriterion>>
+				itemSelectorViews =
+					_testItemSelectorCriterionHandler.getItemSelectorViews(
+						testItemSelectorCriterion);
+
+			Assert.assertEquals(1, itemSelectorViews.size());
+			Assert.assertTrue(
+				itemSelectorViews.get(0) instanceof TestItemSelectorView2);
+
+			serviceRegistrations.remove(
+				itemSelectorViewServiceRegistration1Bis);
+
+			itemSelectorViewServiceRegistration1Bis.unregister();
+
+			itemSelectorViews =
+				_testItemSelectorCriterionHandler.getItemSelectorViews(
+					testItemSelectorCriterion);
+
+			Assert.assertEquals(1, itemSelectorViews.size());
+			Assert.assertTrue(
+				itemSelectorViews.get(0) instanceof TestItemSelectorView3);
+
+			serviceRegistrations.remove(
+				itemSelectorViewServiceRegistration1BisBis);
+
+			itemSelectorViewServiceRegistration1BisBis.unregister();
+
+			itemSelectorViews =
+				_testItemSelectorCriterionHandler.getItemSelectorViews(
+					testItemSelectorCriterion);
+
+			Assert.assertEquals(1, itemSelectorViews.size());
+			Assert.assertTrue(
+				itemSelectorViews.get(0) instanceof TestItemSelectorView1);
+		}
+		finally {
+			unregister(serviceRegistrations);
+		}
+	}
+
 	@ArquillianResource
 	public Bundle bundle;
 
