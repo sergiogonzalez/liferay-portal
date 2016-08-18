@@ -57,8 +57,8 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 	private final Comparator<ServiceReference<ItemSelectorView>> _comparator;
 
 	private class ListServiceTrackerBucket
-		implements ServiceTrackerBucket<
-			ItemSelectorView, ItemSelectorView, List<ItemSelectorView>> {
+		implements ServiceTrackerBucket
+			<ItemSelectorView, ItemSelectorView, List<ItemSelectorView>> {
 
 		@Override
 		public List<ItemSelectorView> getContent() {
@@ -95,21 +95,18 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 
 			ServiceReferenceServiceTupleComparator<ItemSelectorView>
 				serviceReferenceServiceTupleComparator =
-					new ServiceReferenceServiceTupleComparator<>(
-						_comparator);
+					new ServiceReferenceServiceTupleComparator<>(_comparator);
 
-			Set<
-				ServiceReferenceServiceTuple<
-					ItemSelectorView, ItemSelectorView>>
-						filteredServiceReferenceServiceTuples =
-							new TreeSet<>(
-								serviceReferenceServiceTupleComparator);
+			Set<ServiceReferenceServiceTuple
+				<ItemSelectorView, ItemSelectorView>>
+					filteredServiceReferenceServiceTuples = new TreeSet<>(
+						serviceReferenceServiceTupleComparator);
 
 			Map<String, Integer> itemSelectorViewKeyServiceRankingMap =
 				new HashMap<>();
 
-			for (ServiceReferenceServiceTuple<
-					ItemSelectorView, ItemSelectorView>
+			for (ServiceReferenceServiceTuple
+					<ItemSelectorView, ItemSelectorView>
 						serviceReferenceServiceTuple :
 							_serviceReferenceServiceTuples) {
 
@@ -119,81 +116,22 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 				String itemSelectorViewKey = GetterUtil.getString(
 					serviceReference.getProperty("item.selector.view.key"));
 
-				if (Validator.isNull(itemSelectorViewKey)) {
+				if (Validator.isNotNull(itemSelectorViewKey)) {
+					_overrideFilteredServiceReferenceServiceTuples(
+						filteredServiceReferenceServiceTuples,
+						serviceReferenceServiceTuple,
+						itemSelectorViewKeyServiceRankingMap);
+				}
+				else {
 					filteredServiceReferenceServiceTuples.add(
 						serviceReferenceServiceTuple);
 				}
-				else {
-					int serviceReferenceServiceRanking = GetterUtil.getInteger(
-						serviceReference.getProperty("service.ranking"), 0);
-
-					if (!itemSelectorViewKeyServiceRankingMap.containsKey(
-							itemSelectorViewKey)) {
-
-						filteredServiceReferenceServiceTuples.add(
-							serviceReferenceServiceTuple);
-
-						itemSelectorViewKeyServiceRankingMap.put(
-							itemSelectorViewKey,
-							serviceReferenceServiceRanking);
-
-						continue;
-					}
-
-					Integer itemSelectorViewServiceRanking =
-						itemSelectorViewKeyServiceRankingMap.get(
-							itemSelectorViewKey);
-
-					if (itemSelectorViewServiceRanking <
-							serviceReferenceServiceRanking) {
-
-						ServiceReferenceServiceTuple<
-							ItemSelectorView, ItemSelectorView>
-								overwritableServiceReferenceServiceTuple = null;
-
-						for (ServiceReferenceServiceTuple<
-								ItemSelectorView, ItemSelectorView>
-									filteredServiceReferenceServiceTuple :
-										filteredServiceReferenceServiceTuples) {
-
-							ServiceReference<ItemSelectorView>
-								filteredServiceReference =
-									filteredServiceReferenceServiceTuple.
-										getServiceReference();
-
-							String filteredServiceReferenceItemSelectorViewKey =
-								GetterUtil.getString(
-									filteredServiceReference.getProperty(
-										"item.selector.view.key"));
-
-							if (filteredServiceReferenceItemSelectorViewKey.
-									equals(itemSelectorViewKey)) {
-
-								overwritableServiceReferenceServiceTuple =
-									filteredServiceReferenceServiceTuple;
-
-								break;
-							}
-						}
-
-						if (overwritableServiceReferenceServiceTuple != null) {
-							filteredServiceReferenceServiceTuples.remove(
-								overwritableServiceReferenceServiceTuple);
-
-							filteredServiceReferenceServiceTuples.add(
-								serviceReferenceServiceTuple);
-
-							itemSelectorViewKeyServiceRankingMap.put(
-								itemSelectorViewKey,
-								serviceReferenceServiceRanking);
-						}
-					}
-				}
 			}
 
-			for (ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
-					filteredServiceReferenceServiceTuple :
-						filteredServiceReferenceServiceTuples) {
+			for (ServiceReferenceServiceTuple
+					<ItemSelectorView, ItemSelectorView>
+						filteredServiceReferenceServiceTuple :
+							filteredServiceReferenceServiceTuples) {
 
 				_services.add(
 					filteredServiceReferenceServiceTuple.getService());
@@ -210,10 +148,87 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 			_serviceReferenceServiceTuples = new TreeSet<>(
 				serviceReferenceServiceTupleComparator);
 		}
-		private final Set<
-			ServiceReferenceServiceTuple<
-				ItemSelectorView, ItemSelectorView>>
-					_serviceReferenceServiceTuples;
+
+		private void _overrideFilteredServiceReferenceServiceTuples(
+			Set
+				<ServiceReferenceServiceTuple
+					<ItemSelectorView, ItemSelectorView>>
+						filteredServiceReferenceServiceTuples,
+			ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
+				serviceReferenceServiceTuple,
+			Map<String, Integer> itemSelectorViewKeyServiceRankingMap) {
+
+			ServiceReference<ItemSelectorView> serviceReference =
+				serviceReferenceServiceTuple.getServiceReference();
+
+			String itemSelectorViewKey = GetterUtil.getString(
+				serviceReference.getProperty("item.selector.view.key"));
+
+			int serviceReferenceServiceRanking = GetterUtil.getInteger(
+				serviceReference.getProperty("service.ranking"));
+
+			if (!itemSelectorViewKeyServiceRankingMap.containsKey(
+					itemSelectorViewKey)) {
+
+				filteredServiceReferenceServiceTuples.add(
+					serviceReferenceServiceTuple);
+
+				itemSelectorViewKeyServiceRankingMap.put(
+					itemSelectorViewKey, serviceReferenceServiceRanking);
+
+				return;
+			}
+
+			Integer itemSelectorViewServiceRanking =
+				itemSelectorViewKeyServiceRankingMap.get(itemSelectorViewKey);
+
+			if (itemSelectorViewServiceRanking <
+					serviceReferenceServiceRanking) {
+
+				ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
+					overwritableServiceReferenceServiceTuple = null;
+
+				for (ServiceReferenceServiceTuple
+						<ItemSelectorView, ItemSelectorView>
+							filteredServiceReferenceServiceTuple :
+								filteredServiceReferenceServiceTuples) {
+
+					ServiceReference<ItemSelectorView>
+						filteredServiceReference =
+							filteredServiceReferenceServiceTuple.
+								getServiceReference();
+
+					String filteredServiceReferenceItemSelectorViewKey =
+						GetterUtil.getString(
+							filteredServiceReference.getProperty(
+								"item.selector.view.key"));
+
+					if (filteredServiceReferenceItemSelectorViewKey.equals(
+							itemSelectorViewKey)) {
+
+						overwritableServiceReferenceServiceTuple =
+							filteredServiceReferenceServiceTuple;
+
+						break;
+					}
+				}
+
+				if (overwritableServiceReferenceServiceTuple != null) {
+					filteredServiceReferenceServiceTuples.remove(
+						overwritableServiceReferenceServiceTuple);
+
+					filteredServiceReferenceServiceTuples.add(
+						serviceReferenceServiceTuple);
+
+					itemSelectorViewKeyServiceRankingMap.put(
+						itemSelectorViewKey, serviceReferenceServiceRanking);
+				}
+			}
+		}
+
+		private final Set
+			<ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>>
+				_serviceReferenceServiceTuples;
 		private List<ItemSelectorView> _services = new ArrayList<>();
 
 	}
