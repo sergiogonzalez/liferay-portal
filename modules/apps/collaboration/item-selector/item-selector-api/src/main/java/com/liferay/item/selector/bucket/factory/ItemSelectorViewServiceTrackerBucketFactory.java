@@ -149,6 +149,42 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 				serviceReferenceServiceTupleComparator);
 		}
 
+		private ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
+			_getItemSelectorViewServiceReferenceServiceTuple(
+				Set<ServiceReferenceServiceTuple
+					<ItemSelectorView, ItemSelectorView>>
+						serviceReferenceServiceTuples,
+				String itemSelectorViewKey) {
+
+			ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
+				serviceReferenceServiceTuple = null;
+
+			for (ServiceReferenceServiceTuple
+					<ItemSelectorView, ItemSelectorView>
+						curServiceReferenceServiceTuple :
+							serviceReferenceServiceTuples) {
+
+				ServiceReference<ItemSelectorView> curServiceReference =
+					curServiceReferenceServiceTuple.getServiceReference();
+
+				String curServiceReferenceItemSelectorViewKey =
+					GetterUtil.getString(
+						curServiceReference.getProperty(
+							"item.selector.view.key"));
+
+				if (curServiceReferenceItemSelectorViewKey.equals(
+						itemSelectorViewKey)) {
+
+					serviceReferenceServiceTuple =
+						curServiceReferenceServiceTuple;
+
+					break;
+				}
+			}
+
+			return serviceReferenceServiceTuple;
+		}
+
 		private void _overrideFilteredServiceReferenceServiceTuples(
 			Set
 				<ServiceReferenceServiceTuple
@@ -189,34 +225,14 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 			}
 
 			ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
-				overwritableServiceReferenceServiceTuple = null;
+				overwrittenServiceReferenceServiceTuple =
+					_getItemSelectorViewServiceReferenceServiceTuple(
+						filteredServiceReferenceServiceTuples,
+						itemSelectorViewKey);
 
-			for (ServiceReferenceServiceTuple
-					<ItemSelectorView, ItemSelectorView>
-						filteredServiceReferenceServiceTuple :
-							filteredServiceReferenceServiceTuples) {
-
-				ServiceReference<ItemSelectorView> filteredServiceReference =
-					filteredServiceReferenceServiceTuple.getServiceReference();
-
-				String filteredServiceReferenceItemSelectorViewKey =
-					GetterUtil.getString(
-						filteredServiceReference.getProperty(
-							"item.selector.view.key"));
-
-				if (filteredServiceReferenceItemSelectorViewKey.equals(
-						itemSelectorViewKey)) {
-
-					overwritableServiceReferenceServiceTuple =
-						filteredServiceReferenceServiceTuple;
-
-					break;
-				}
-			}
-
-			if (overwritableServiceReferenceServiceTuple != null) {
+			if (overwrittenServiceReferenceServiceTuple != null) {
 				filteredServiceReferenceServiceTuples.remove(
-					overwritableServiceReferenceServiceTuple);
+					overwrittenServiceReferenceServiceTuple);
 
 				filteredServiceReferenceServiceTuples.add(
 					serviceReferenceServiceTuple);
