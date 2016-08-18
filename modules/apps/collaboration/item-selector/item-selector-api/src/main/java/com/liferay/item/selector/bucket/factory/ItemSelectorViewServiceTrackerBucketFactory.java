@@ -182,47 +182,47 @@ public class ItemSelectorViewServiceTrackerBucketFactory
 			Integer itemSelectorViewServiceRanking =
 				itemSelectorViewKeyServiceRankingMap.get(itemSelectorViewKey);
 
-			if (itemSelectorViewServiceRanking <
+			if (itemSelectorViewServiceRanking >=
 					serviceReferenceServiceRanking) {
 
-				ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
-					overwritableServiceReferenceServiceTuple = null;
+				return;
+			}
 
-				for (ServiceReferenceServiceTuple
-						<ItemSelectorView, ItemSelectorView>
-							filteredServiceReferenceServiceTuple :
-								filteredServiceReferenceServiceTuples) {
+			ServiceReferenceServiceTuple<ItemSelectorView, ItemSelectorView>
+				overwritableServiceReferenceServiceTuple = null;
 
-					ServiceReference<ItemSelectorView>
-						filteredServiceReference =
-							filteredServiceReferenceServiceTuple.
-								getServiceReference();
+			for (ServiceReferenceServiceTuple
+					<ItemSelectorView, ItemSelectorView>
+						filteredServiceReferenceServiceTuple :
+							filteredServiceReferenceServiceTuples) {
 
-					String filteredServiceReferenceItemSelectorViewKey =
-						GetterUtil.getString(
-							filteredServiceReference.getProperty(
-								"item.selector.view.key"));
+				ServiceReference<ItemSelectorView> filteredServiceReference =
+					filteredServiceReferenceServiceTuple.getServiceReference();
 
-					if (filteredServiceReferenceItemSelectorViewKey.equals(
-							itemSelectorViewKey)) {
+				String filteredServiceReferenceItemSelectorViewKey =
+					GetterUtil.getString(
+						filteredServiceReference.getProperty(
+							"item.selector.view.key"));
 
-						overwritableServiceReferenceServiceTuple =
-							filteredServiceReferenceServiceTuple;
+				if (filteredServiceReferenceItemSelectorViewKey.equals(
+						itemSelectorViewKey)) {
 
-						break;
-					}
+					overwritableServiceReferenceServiceTuple =
+						filteredServiceReferenceServiceTuple;
+
+					break;
 				}
+			}
 
-				if (overwritableServiceReferenceServiceTuple != null) {
-					filteredServiceReferenceServiceTuples.remove(
-						overwritableServiceReferenceServiceTuple);
+			if (overwritableServiceReferenceServiceTuple != null) {
+				filteredServiceReferenceServiceTuples.remove(
+					overwritableServiceReferenceServiceTuple);
 
-					filteredServiceReferenceServiceTuples.add(
-						serviceReferenceServiceTuple);
+				filteredServiceReferenceServiceTuples.add(
+					serviceReferenceServiceTuple);
 
-					itemSelectorViewKeyServiceRankingMap.put(
-						itemSelectorViewKey, serviceReferenceServiceRanking);
-				}
+				itemSelectorViewKeyServiceRankingMap.put(
+					itemSelectorViewKey, serviceReferenceServiceRanking);
 			}
 		}
 
