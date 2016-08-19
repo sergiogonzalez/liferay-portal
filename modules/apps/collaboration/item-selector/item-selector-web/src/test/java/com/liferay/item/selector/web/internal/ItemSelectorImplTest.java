@@ -14,10 +14,12 @@
 
 package com.liferay.item.selector.web.internal;
 
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.web.internal.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -25,11 +27,18 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.impl.GroupImpl;
+import com.liferay.portal.util.HttpImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletURL;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,6 +95,49 @@ public class ItemSelectorImplTest extends PowerMockito {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	@Test
+	public void testGetItemSelectorParameterObjects() {
+		PortletURL itemSelectorURL = getItemSelectorURL();
+
+		setUpItemSelectionCriterionHandlers();
+
+		Tuple itemSelectorURLParameterObjects =
+			_itemSelectorImpl.getItemSelectorURLParameterObjects(
+				itemSelectorURL);
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			(List<ItemSelectorCriterion>)
+				itemSelectorURLParameterObjects.getObject(0);
+
+		Assert.assertEquals(2, itemSelectorCriteria.size());
+
+		MediaItemSelectorCriterion mediaItemSelectorCriterion =
+			(MediaItemSelectorCriterion)itemSelectorCriteria.get(0);
+
+		Assert.assertEquals(
+			"jpg", mediaItemSelectorCriterion.getFileExtension());
+		Assert.assertEquals(2048, mediaItemSelectorCriterion.getMaxSize());
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			mediaItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+		Assert.assertEquals(2, desiredItemSelectorReturnTypes.size());
+
+		Assert.assertTrue(
+			desiredItemSelectorReturnTypes.get(0) instanceof
+				TestFileEntryItemSelectorReturnType);
+		Assert.assertTrue(
+			desiredItemSelectorReturnTypes.get(1) instanceof
+				TestURLItemSelectorReturnType);
+
+		Assert.assertTrue(
+			itemSelectorCriteria.get(1) instanceof FlickrItemSelectorCriterion);
+
+		Assert.assertEquals(
+			"itemSelectedEventName",
+			itemSelectorURLParameterObjects.getObject(1));
 	}
 
 	@Test
@@ -192,12 +244,51 @@ public class ItemSelectorImplTest extends PowerMockito {
 			requestBackedPortletURLFactory, parameters, themeDisplay);
 	}
 
+	protected PortletURL getItemSelectorURL() {
+		PortletURL portletURL = PowerMockito.mock(PortletURL.class);
+
+		HttpUtil httpUtil = new HttpUtil();
+
+		httpUtil.setHttp(new HttpImpl());
+
+		Map<String, String[]> itemSelectorParameters =
+			_itemSelectorImpl.getItemSelectorParameters(
+				"itemSelectedEventName", _mediaItemSelectorCriterion,
+				_flickrItemSelectorCriterion);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("http://localhost/?p_p_state=popup&p_p_mode=view");
+
+		for (String itemSelectorParameterKey :
+				itemSelectorParameters.keySet()) {
+
+			sb.append("&");
+			sb.append(_ITEM_SELECTOR_PARAMETER_PREFIX);
+			sb.append(itemSelectorParameterKey);
+			sb.append("=");
+			sb.append(itemSelectorParameters.get(itemSelectorParameterKey));
+		}
+
+		Mockito.when(
+			portletURL.toString()
+		).thenReturn(
+			sb.toString()
+		);
+
+		return portletURL;
+	}
+
 	protected void setUpItemSelectionCriterionHandlers() {
 		_itemSelectorImpl.setItemSelectionCriterionHandler(
 			new FlickrItemSelectorCriterionHandler());
 		_itemSelectorImpl.setItemSelectionCriterionHandler(
 			new MediaItemSelectorCriterionHandler());
 	}
+
+	private static final String _ITEM_SELECTOR_PARAMETER_PREFIX =
+		StringPool.UNDERLINE + ItemSelectorPortletKeys.ITEM_SELECTOR +
+			StringPool.UNDERLINE;
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
 	private final ItemSelectorCriterionSerializer
