@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
@@ -449,27 +448,28 @@ public class BlogsEntryStagedModelDataHandler
 			List<Element> attachmentElements)
 		throws Exception {
 
-		FileEntry oldImageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
+		FileEntry fileEntry = null;
+		byte[] bytes = null;
 
 		for (Element attachmentElement : attachmentElements) {
-			Attribute uuidAttribute = attachmentElement.attribute("uuid");
+			String path = attachmentElement.attributeValue("path");
 
-			String uuidAttributeValue = uuidAttribute.getValue();
+			FileEntry oldFileEntry = (FileEntry)portletDataContext.fromXML(
+				portletDataContext.getZipEntryAsString(path));
 
-			if (uuidAttributeValue.equals(oldImageFileEntry.getUuid())) {
-				String path = attachmentElement.attributeValue("path");
+			if (fileEntryId == oldFileEntry.getFileEntryId()) {
+				fileEntry = oldFileEntry;
 
-				FileEntry fileEntry =
-					(FileEntry)portletDataContext.getZipEntryAsObject(path);
+				String binPath = attachmentElement.attributeValue("bin-path");
 
-				return new ImageSelector(
-					FileUtil.getBytes(fileEntry.getContentStream()),
-					fileEntry.getFileName(), fileEntry.getMimeType(), null);
+				bytes = portletDataContext.getZipEntryAsByteArray(binPath);
+
+				break;
 			}
 		}
 
-		return null;
+		return new ImageSelector(
+			bytes, fileEntry.getTitle(), fileEntry.getMimeType(), null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
