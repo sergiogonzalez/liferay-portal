@@ -76,7 +76,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		return HttpUtil.getParameter(
 			itemSelectorURL,
-			namespace.concat(PARAMETER_ITEM_SELECTED_EVENT_NAME));
+			namespace.concat(PARAMETER_ITEM_SELECTED_EVENT_NAME), false);
 	}
 
 	@Override
