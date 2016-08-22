@@ -14,6 +14,8 @@
 
 package com.liferay.item.selector;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -31,6 +33,7 @@ import javax.portlet.PortletURL;
  * @author Iván Zaera
  * @author Roberto Díaz
  */
+@ProviderType
 public interface ItemSelector {
 
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
