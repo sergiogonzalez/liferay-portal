@@ -286,8 +286,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		validate(title, urlTitle, content);
 
 		if (Validator.isNotNull(urlTitle)) {
+			long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
+
 			friendlyURLLocalService.validate(
-				user.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+				user.getCompanyId(), groupId, classNameId, urlTitle);
 		}
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
@@ -1252,8 +1254,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		validate(title, urlTitle, content);
 
 		if (Validator.isNotNull(urlTitle)) {
+			long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
+
 			friendlyURLLocalService.validate(
-				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				entry.getCompanyId(), entry.getGroupId(), classNameId,
 				urlTitle);
 		}
 
