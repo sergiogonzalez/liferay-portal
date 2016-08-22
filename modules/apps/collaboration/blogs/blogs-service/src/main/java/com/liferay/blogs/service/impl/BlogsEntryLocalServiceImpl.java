@@ -25,6 +25,7 @@ import com.liferay.blogs.kernel.exception.EntryDisplayDateException;
 import com.liferay.blogs.kernel.exception.EntrySmallImageNameException;
 import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.kernel.exception.EntryTitleException;
+import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
 import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
@@ -33,6 +34,8 @@ import com.liferay.blogs.kernel.util.comparator.EntryIdComparator;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.friendly.url.model.FriendlyURL;
+import com.liferay.friendly.url.service.FriendlyURLLocalService;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -282,6 +285,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		validate(title, urlTitle, content);
 
+		if (Validator.isNotNull(urlTitle)) {
+			friendlyURLLocalService.validate(
+				user.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+		}
+
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
 		entry.setUuid(serviceContext.getUuid());
@@ -293,7 +301,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setSubtitle(subtitle);
 
 		if (Validator.isNotNull(urlTitle)) {
-			entry.setUrlTitle(getUniqueUrlTitle(entryId, groupId, urlTitle));
+			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+				user.getCompanyId(), groupId, BlogsEntry.class, entryId,
+				urlTitle);
+
+			entry.setUrlTitle(friendlyURL.getFriendlyUrl());
 		}
 
 		entry.setDescription(description);
@@ -658,6 +670,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId());
 
+		// Friendly URL
+
+		friendlyURLLocalService.deleteFriendlyURL(
+			entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+			entry.getEntryId());
+
 		return entry;
 	}
 
@@ -798,6 +816,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@Override
 	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		FriendlyURL friendlyURL = friendlyURLLocalService.fetchFriendlyURL(
+			group.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+
+		if (friendlyURL != null) {
+			return blogsEntryPersistence.findByPrimaryKey(
+				friendlyURL.getClassPK());
+		}
 
 		return blogsEntryPersistence.findByG_UT(groupId, urlTitle);
 	}
@@ -1223,14 +1251,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		validate(title, urlTitle, content);
 
+		if (Validator.isNotNull(urlTitle)) {
+			friendlyURLLocalService.validate(
+				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				urlTitle);
+		}
+
 		String oldUrlTitle = entry.getUrlTitle();
 
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 
 		if (Validator.isNotNull(urlTitle)) {
-			entry.setUrlTitle(
-				getUniqueUrlTitle(entryId, entry.getGroupId(), urlTitle));
+			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				entry.getEntryId(), urlTitle);
+
+			entry.setUrlTitle(friendlyURL.getFriendlyUrl());
 		}
 
 		entry.setDescription(description);
@@ -1466,9 +1503,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			Validator.isNull(entry.getUrlTitle())) {
 
-			entry.setUrlTitle(
-				getUniqueUrlTitle(
-					entryId, entry.getGroupId(), entry.getTitle()));
+			String uniqueUrlTitle = getUniqueUrlTitle(
+				entryId, entry.getGroupId(), entry.getTitle());
+
+			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				entry.getEntryId(), uniqueUrlTitle);
+
+			entry.setUrlTitle(friendlyURL.getFriendlyUrl());
 		}
 
 		blogsEntryPersistence.update(entry);
@@ -2244,6 +2286,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				"Content has more than " + contentMaxLength + " characters");
 		}
 	}
+
+	@ServiceReference(type = FriendlyURLLocalService.class)
+	protected FriendlyURLLocalService friendlyURLLocalService;
 
 	@ServiceReference(type = BlogsEntryFinder.class)
 	protected BlogsEntryFinder blogsEntryFinder;
