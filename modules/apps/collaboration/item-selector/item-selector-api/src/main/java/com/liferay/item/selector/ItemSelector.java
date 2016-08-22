@@ -35,13 +35,13 @@ import javax.portlet.PortletURL;
 @ProviderType
 public interface ItemSelector {
 
-	public String getItemSelectedEventName(PortletURL itemSelectorPortletURL);
+	public String getItemSelectedEventName(String itemSelectorURL);
 
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
 		Map<String, String[]> parameters);
 
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
-		PortletURL itemSelectorPortletURL);
+		String itemSelectorURL);
 
 	/**
 	 * Returns the {@link ItemSelectorRendering} according to the parameters.

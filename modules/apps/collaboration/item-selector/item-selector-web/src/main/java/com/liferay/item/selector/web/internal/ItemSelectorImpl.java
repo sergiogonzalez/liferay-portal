@@ -70,12 +70,12 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
 	@Override
-	public String getItemSelectedEventName(PortletURL itemSelectorPortletURL) {
+	public String getItemSelectedEventName(String itemSelectorURL) {
 		String namespace = PortalUtil.getPortletNamespace(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
 		return HttpUtil.getParameter(
-			itemSelectorPortletURL.toString(),
+			itemSelectorURL,
 			namespace.concat(PARAMETER_ITEM_SELECTED_EVENT_NAME));
 	}
 
@@ -106,10 +106,10 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
-		PortletURL itemSelectorPortletURL) {
+		String itemSelectorURL) {
 
 		Map<String, String[]> parameters = HttpUtil.getParameterMap(
-			itemSelectorPortletURL.toString());
+			itemSelectorURL);
 
 		Map<String, String[]> itemSelectorURLParameterMap = new HashMap<>();
 
@@ -126,10 +126,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			}
 		}
 
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			getItemSelectorCriteria(itemSelectorURLParameterMap);
-
-		return itemSelectorCriteria;
+		return getItemSelectorCriteria(itemSelectorURLParameterMap);
 	}
 
 	@Override

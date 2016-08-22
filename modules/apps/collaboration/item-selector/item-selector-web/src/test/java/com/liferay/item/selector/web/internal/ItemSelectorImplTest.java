@@ -103,7 +103,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 		setUpItemSelectionCriterionHandlers();
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
-			_itemSelectorImpl.getItemSelectorCriteria(itemSelectorURL);
+			_itemSelectorImpl.getItemSelectorCriteria(
+				itemSelectorURL.toString());
 
 		Assert.assertEquals(2, itemSelectorCriteria.size());
 
@@ -131,7 +132,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		Assert.assertEquals(
 			"itemSelectedEventName",
-			_itemSelectorImpl.getItemSelectedEventName(itemSelectorURL));
+			_itemSelectorImpl.getItemSelectedEventName(
+				itemSelectorURL.toString()));
 	}
 
 	@Test
