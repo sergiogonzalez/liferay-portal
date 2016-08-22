@@ -14,6 +14,8 @@
 
 package com.liferay.item.selector;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,10 +32,29 @@ import javax.portlet.PortletURL;
  * @author Iván Zaera
  * @author Roberto Díaz
  */
+@ProviderType
 public interface ItemSelector {
+
+	/**
+	 * Returns the selected event name used to create the item selector URL.
+	 *
+	 * @param  itemSelectorURL the unescaped item selector URL
+	 * @return the selected event name
+	 */
+	public String getItemSelectedEventName(String itemSelectorURL);
 
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
 		Map<String, String[]> parameters);
+
+	/**
+	 * Returns the item selector criteria that was used to create the item
+	 * selector URL.
+	 *
+	 * @param  itemSelectorURL the unescaped item selector URL
+	 * @return the item selector criteria
+	 */
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		String itemSelectorURL);
 
 	/**
 	 * Returns the {@link ItemSelectorRendering} according to the parameters.
@@ -50,11 +71,10 @@ public interface ItemSelector {
 		Map<String, String[]> parameters, ThemeDisplay themeDisplay);
 
 	/**
-	 * Returns a generated item selector {@link PortletURL} according to the
-	 * parameters. This method is not recommended for external use. The client
-	 * should use it to render the item selector and show the selection views
-	 * scoped to the group matching the {@link ItemSelectorCriterion} and {@link
-	 * ItemSelectorReturnType}.
+	 * Returns a generated item selector {@link PortletURL} to render the item
+	 * selector and show the selection views, scoped to the group matching the
+	 * {@link ItemSelectorCriterion} and {@link ItemSelectorReturnType}. This
+	 * method is not recommended for external use.
 	 *
 	 * @param  requestBackedPortletURLFactory the factory used to generate the
 	 *         {@link PortletURL}
@@ -71,8 +91,7 @@ public interface ItemSelector {
 		ItemSelectorCriterion... itemSelectorCriteria);
 
 	/**
-	 * Returns a generated item selector {@link PortletURL} according to the
-	 * parameters. The client should call this method to render the item
+	 * Returns a generated item selector {@link PortletURL} to render the item
 	 * selector and show the selection views matching the {@link
 	 * ItemSelectorCriterion} and {@link ItemSelectorReturnType}.
 	 *
