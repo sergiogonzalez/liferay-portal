@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.util.HttpImpl;
+import com.liferay.portal.util.PortalImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,9 +90,17 @@ public class ItemSelectorImplTest extends PowerMockito {
 		_mediaItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
+		HttpUtil httpUtil = new HttpUtil();
+
+		httpUtil.setHttp(new HttpImpl());
+
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(new PortalImpl());
 	}
 
 	@Test
@@ -250,10 +259,6 @@ public class ItemSelectorImplTest extends PowerMockito {
 	protected String getItemSelectorURL(
 		String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(new HttpImpl());
 
 		Map<String, String[]> itemSelectorParameters =
 			_itemSelectorImpl.getItemSelectorParameters(
