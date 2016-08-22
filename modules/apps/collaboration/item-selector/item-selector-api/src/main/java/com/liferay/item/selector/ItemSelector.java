@@ -17,6 +17,7 @@ package com.liferay.item.selector;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.List;
 import java.util.Map;
@@ -87,5 +88,7 @@ public interface ItemSelector {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria);
+
+	public Tuple getItemSelectorURLParameterObjects(PortletURL portletURL);
 
 }
