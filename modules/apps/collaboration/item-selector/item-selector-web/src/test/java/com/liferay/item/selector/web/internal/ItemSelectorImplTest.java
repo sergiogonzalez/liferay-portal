@@ -98,13 +98,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 	@Test
 	public void testGetItemSelectorParameterObjects() {
-		PortletURL itemSelectorURL = getItemSelectorURL();
+		String itemSelectorURL = getItemSelectorURL(
+			"itemSelectedEventName", _mediaItemSelectorCriterion,
+			_flickrItemSelectorCriterion);
 
 		setUpItemSelectionCriterionHandlers();
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			_itemSelectorImpl.getItemSelectorCriteria(
-				itemSelectorURL.toString());
+				itemSelectorURL);
 
 		Assert.assertEquals(2, itemSelectorCriteria.size());
 
@@ -133,7 +135,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(
 			"itemSelectedEventName",
 			_itemSelectorImpl.getItemSelectedEventName(
-				itemSelectorURL.toString()));
+				itemSelectorURL));
 	}
 
 	@Test
@@ -240,8 +242,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 			requestBackedPortletURLFactory, parameters, themeDisplay);
 	}
 
-	protected PortletURL getItemSelectorURL() {
-		PortletURL portletURL = PowerMockito.mock(PortletURL.class);
+	protected String getItemSelectorURL(
+		String itemSelectedEventName,
+		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		HttpUtil httpUtil = new HttpUtil();
 
@@ -249,12 +252,10 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		Map<String, String[]> itemSelectorParameters =
 			_itemSelectorImpl.getItemSelectorParameters(
-				"itemSelectedEventName", _mediaItemSelectorCriterion,
-				_flickrItemSelectorCriterion);
+				itemSelectedEventName, itemSelectorCriteria);
 
-		StringBundler sb = new StringBundler();
-
-		sb.append("http://localhost/?p_p_state=popup&p_p_mode=view");
+		String itemSelectorURL =
+			"http://localhost?p_p_state=popup&p_p_mode=view";
 
 		String namespace = PortalUtil.getPortletNamespace(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
@@ -262,20 +263,12 @@ public class ItemSelectorImplTest extends PowerMockito {
 		for (String itemSelectorParameterKey :
 				itemSelectorParameters.keySet()) {
 
-			sb.append("&");
-			sb.append(namespace);
-			sb.append(itemSelectorParameterKey);
-			sb.append("=");
-			sb.append(itemSelectorParameters.get(itemSelectorParameterKey));
+			itemSelectorURL = HttpUtil.addParameter(
+				itemSelectorURL, namespace + itemSelectorParameterKey,
+				itemSelectorParameters.get(itemSelectorParameterKey)[0]);
 		}
 
-		Mockito.when(
-			portletURL.toString()
-		).thenReturn(
-			sb.toString()
-		);
-
-		return portletURL;
+		return itemSelectorURL;
 	}
 
 	protected void setUpItemSelectionCriterionHandlers() {
