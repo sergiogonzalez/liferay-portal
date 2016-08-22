@@ -66,7 +66,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -78,6 +78,8 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -113,6 +115,13 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 			friendlyURLImpl.setCreateDate(new Date(createDate));
 		}
 
+		if (modifiedDate == Long.MIN_VALUE) {
+			friendlyURLImpl.setModifiedDate(null);
+		}
+		else {
+			friendlyURLImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		friendlyURLImpl.setClassNameId(classNameId);
 		friendlyURLImpl.setClassPK(classPK);
 
@@ -140,6 +149,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		classNameId = objectInput.readLong();
 
@@ -165,6 +175,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(classNameId);
 
@@ -185,6 +196,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 	public long groupId;
 	public long companyId;
 	public long createDate;
+	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
 	public String urlTitle;

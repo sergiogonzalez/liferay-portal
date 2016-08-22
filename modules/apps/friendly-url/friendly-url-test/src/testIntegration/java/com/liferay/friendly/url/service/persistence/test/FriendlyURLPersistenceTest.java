@@ -132,6 +132,8 @@ public class FriendlyURLPersistenceTest {
 
 		newFriendlyURL.setCreateDate(RandomTestUtil.nextDate());
 
+		newFriendlyURL.setModifiedDate(RandomTestUtil.nextDate());
+
 		newFriendlyURL.setClassNameId(RandomTestUtil.nextLong());
 
 		newFriendlyURL.setClassPK(RandomTestUtil.nextLong());
@@ -155,6 +157,9 @@ public class FriendlyURLPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingFriendlyURL.getCreateDate()),
 			Time.getShortTimestamp(newFriendlyURL.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFriendlyURL.getModifiedDate()),
+			Time.getShortTimestamp(newFriendlyURL.getModifiedDate()));
 		Assert.assertEquals(existingFriendlyURL.getClassNameId(),
 			newFriendlyURL.getClassNameId());
 		Assert.assertEquals(existingFriendlyURL.getClassPK(),
@@ -190,6 +195,14 @@ public class FriendlyURLPersistenceTest {
 		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
@@ -258,8 +271,8 @@ public class FriendlyURLPersistenceTest {
 	protected OrderByComparator<FriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FriendlyURL", "uuid", true,
 			"friendlyUrlId", true, "groupId", true, "companyId", true,
-			"createDate", true, "classNameId", true, "classPK", true,
-			"urlTitle", true, "main", true);
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "urlTitle", true, "main", true);
 	}
 
 	@Test
@@ -529,6 +542,8 @@ public class FriendlyURLPersistenceTest {
 		friendlyURL.setCompanyId(RandomTestUtil.nextLong());
 
 		friendlyURL.setCreateDate(RandomTestUtil.nextDate());
+
+		friendlyURL.setModifiedDate(RandomTestUtil.nextDate());
 
 		friendlyURL.setClassNameId(RandomTestUtil.nextLong());
 

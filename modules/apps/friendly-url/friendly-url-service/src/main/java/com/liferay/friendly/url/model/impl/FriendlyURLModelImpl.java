@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLModel;
 
@@ -69,6 +71,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "urlTitle", Types.VARCHAR },
@@ -82,13 +85,14 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyUrlId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(150) null,main BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyUrlId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(150) null,main BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURL";
 	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURL.friendlyUrlId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURL.friendlyUrlId ASC";
@@ -157,6 +161,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("urlTitle", getUrlTitle());
@@ -198,6 +203,12 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -310,6 +321,22 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -428,6 +455,12 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		return _originalMain;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				FriendlyURL.class.getName()), getClassNameId());
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -464,6 +497,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		friendlyURLImpl.setGroupId(getGroupId());
 		friendlyURLImpl.setCompanyId(getCompanyId());
 		friendlyURLImpl.setCreateDate(getCreateDate());
+		friendlyURLImpl.setModifiedDate(getModifiedDate());
 		friendlyURLImpl.setClassNameId(getClassNameId());
 		friendlyURLImpl.setClassPK(getClassPK());
 		friendlyURLImpl.setUrlTitle(getUrlTitle());
@@ -540,6 +574,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		friendlyURLModelImpl._setOriginalCompanyId = false;
 
+		friendlyURLModelImpl._setModifiedDate = false;
+
 		friendlyURLModelImpl._originalClassNameId = friendlyURLModelImpl._classNameId;
 
 		friendlyURLModelImpl._setOriginalClassNameId = false;
@@ -584,6 +620,15 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 			friendlyURLCacheModel.createDate = Long.MIN_VALUE;
 		}
 
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			friendlyURLCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			friendlyURLCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
 		friendlyURLCacheModel.classNameId = getClassNameId();
 
 		friendlyURLCacheModel.classPK = getClassPK();
@@ -603,7 +648,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -615,6 +660,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
@@ -630,7 +677,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.friendly.url.model.FriendlyURL");
@@ -655,6 +702,10 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
@@ -692,6 +743,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

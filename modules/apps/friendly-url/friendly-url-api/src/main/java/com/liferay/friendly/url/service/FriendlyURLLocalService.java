@@ -16,11 +16,14 @@ package com.liferay.friendly.url.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLException;
 import com.liferay.friendly.url.model.FriendlyURL;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,6 +76,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 
 	public FriendlyURL addFriendlyURL(long companyId, long groupId,
 		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
+		throws PortalException;
+
+	public FriendlyURL addFriendlyURL(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle)
 		throws PortalException;
 
 	/**
@@ -160,6 +167,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -242,6 +253,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FriendlyURL> getFriendlyURLs(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FriendlyURL> getFriendlyURLs(long companyId, long groupId,
+		long classNameId, long classPK);
+
 	/**
 	* Returns all the friendly u r ls matching the UUID and company.
 	*
@@ -293,7 +308,12 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
 		throws NoSuchFriendlyURLException;
 
-	public void validate(long companyId, long groupId,
-		java.lang.Class<?> clazz, java.lang.String urlTitle)
-		throws PortalException;
+	public void deleteFriendlyURL(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle)
+		throws NoSuchFriendlyURLException;
+
+	public void deleteGroupFriendlyURLs(long groupId, long classNameId);
+
+	public void validate(long companyId, long groupId, long classNameId,
+		java.lang.String urlTitle) throws PortalException;
 }

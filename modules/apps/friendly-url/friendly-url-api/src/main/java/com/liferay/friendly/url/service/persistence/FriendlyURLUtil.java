@@ -502,6 +502,179 @@ public class FriendlyURLUtil {
 	}
 
 	/**
+	* Returns all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the matching friendly u r ls
+	*/
+	public static List<FriendlyURL> findByG_C(long groupId, long classNameId) {
+		return getPersistence().findByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns a range of all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of friendly u r ls
+	* @param end the upper bound of the range of friendly u r ls (not inclusive)
+	* @return the range of matching friendly u r ls
+	*/
+	public static List<FriendlyURL> findByG_C(long groupId, long classNameId,
+		int start, int end) {
+		return getPersistence().findByG_C(groupId, classNameId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of friendly u r ls
+	* @param end the upper bound of the range of friendly u r ls (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching friendly u r ls
+	*/
+	public static List<FriendlyURL> findByG_C(long groupId, long classNameId,
+		int start, int end, OrderByComparator<FriendlyURL> orderByComparator) {
+		return getPersistence()
+				   .findByG_C(groupId, classNameId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of friendly u r ls
+	* @param end the upper bound of the range of friendly u r ls (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching friendly u r ls
+	*/
+	public static List<FriendlyURL> findByG_C(long groupId, long classNameId,
+		int start, int end, OrderByComparator<FriendlyURL> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_C(groupId, classNameId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly u r l
+	* @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
+	*/
+	public static FriendlyURL findByG_C_First(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
+		return getPersistence()
+				   .findByG_C_First(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the first friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
+	*/
+	public static FriendlyURL fetchByG_C_First(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_First(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly u r l
+	* @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
+	*/
+	public static FriendlyURL findByG_C_Last(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
+		return getPersistence()
+				   .findByG_C_Last(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
+	*/
+	public static FriendlyURL fetchByG_C_Last(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_Last(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the friendly u r ls before and after the current friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param friendlyUrlId the primary key of the current friendly u r l
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next friendly u r l
+	* @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
+	*/
+	public static FriendlyURL[] findByG_C_PrevAndNext(long friendlyUrlId,
+		long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
+		return getPersistence()
+				   .findByG_C_PrevAndNext(friendlyUrlId, groupId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the friendly u r ls where groupId = &#63; and classNameId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	*/
+	public static void removeByG_C(long groupId, long classNameId) {
+		getPersistence().removeByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns the number of friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the number of matching friendly u r ls
+	*/
+	public static int countByG_C(long groupId, long classNameId) {
+		return getPersistence().countByG_C(groupId, classNameId);
+	}
+
+	/**
 	* Returns all the friendly u r ls where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param companyId the company ID

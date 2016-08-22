@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
-	ShardedModel {
+	ShardedModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,6 +72,7 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	 * @return the uuid of this friendly u r l
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -78,6 +80,7 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	 *
 	 * @param uuid the uuid of this friendly u r l
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -129,6 +132,7 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	 *
 	 * @return the create date of this friendly u r l
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -136,7 +140,24 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	 *
 	 * @param createDate the create date of this friendly u r l
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this friendly u r l.
+	 *
+	 * @return the modified date of this friendly u r l
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this friendly u r l.
+	 *
+	 * @param modifiedDate the modified date of this friendly u r l
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the fully qualified class name of this friendly u r l.

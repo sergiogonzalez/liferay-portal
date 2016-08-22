@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -63,6 +65,7 @@ public class FriendlyURLWrapper implements FriendlyURL,
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("urlTitle", getUrlTitle());
@@ -101,6 +104,12 @@ public class FriendlyURLWrapper implements FriendlyURL,
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -251,6 +260,16 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	@Override
 	public Date getCreateDate() {
 		return _friendlyURL.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this friendly u r l.
+	*
+	* @return the modified date of this friendly u r l
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _friendlyURL.getModifiedDate();
 	}
 
 	/**
@@ -414,6 +433,16 @@ public class FriendlyURLWrapper implements FriendlyURL,
 		_friendlyURL.setMain(main);
 	}
 
+	/**
+	* Sets the modified date of this friendly u r l.
+	*
+	* @param modifiedDate the modified date of this friendly u r l
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_friendlyURL.setModifiedDate(modifiedDate);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_friendlyURL.setNew(n);
@@ -471,6 +500,11 @@ public class FriendlyURLWrapper implements FriendlyURL,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _friendlyURL.getStagedModelType();
 	}
 
 	@Override

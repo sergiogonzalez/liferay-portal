@@ -61,6 +61,15 @@ public class FriendlyURLLocalServiceUtil {
 				   .addFriendlyURL(companyId, groupId, clazz, classPK, urlTitle);
 	}
 
+	public static com.liferay.friendly.url.model.FriendlyURL addFriendlyURL(
+		long companyId, long groupId, long classNameId, long classPK,
+		java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFriendlyURL(companyId, groupId, classNameId, classPK,
+			urlTitle);
+	}
+
 	/**
 	* Creates a new friendly u r l with the primary key. Does not add the friendly u r l to the database.
 	*
@@ -166,6 +175,11 @@ public class FriendlyURLLocalServiceUtil {
 		return getService().dynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
 	}
@@ -269,6 +283,12 @@ public class FriendlyURLLocalServiceUtil {
 		return getService().getFriendlyURLs(start, end);
 	}
 
+	public static java.util.List<com.liferay.friendly.url.model.FriendlyURL> getFriendlyURLs(
+		long companyId, long groupId, long classNameId, long classPK) {
+		return getService()
+				   .getFriendlyURLs(companyId, groupId, classNameId, classPK);
+	}
+
 	/**
 	* Returns all the friendly u r ls matching the UUID and company.
 	*
@@ -335,10 +355,22 @@ public class FriendlyURLLocalServiceUtil {
 			.deleteFriendlyURL(companyId, groupId, clazz, classPK, urlTitle);
 	}
 
-	public static void validate(long companyId, long groupId,
-		java.lang.Class<?> clazz, java.lang.String urlTitle)
+	public static void deleteFriendlyURL(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLException {
+		getService()
+			.deleteFriendlyURL(companyId, groupId, classNameId, classPK,
+			urlTitle);
+	}
+
+	public static void deleteGroupFriendlyURLs(long groupId, long classNameId) {
+		getService().deleteGroupFriendlyURLs(groupId, classNameId);
+	}
+
+	public static void validate(long companyId, long groupId, long classNameId,
+		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().validate(companyId, groupId, clazz, urlTitle);
+		getService().validate(companyId, groupId, classNameId, urlTitle);
 	}
 
 	public static FriendlyURLLocalService getService() {

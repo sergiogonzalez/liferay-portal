@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -46,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1471,6 +1474,548 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "friendlyURL.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(friendlyURL.uuid IS NULL OR friendlyURL.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "friendlyURL.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, FriendlyURLImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, FriendlyURLImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			FriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
+			FriendlyURLModelImpl.CLASSNAMEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the matching friendly u r ls
+	 */
+	@Override
+	public List<FriendlyURL> findByG_C(long groupId, long classNameId) {
+		return findByG_C(groupId, classNameId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly u r ls
+	 * @param end the upper bound of the range of friendly u r ls (not inclusive)
+	 * @return the range of matching friendly u r ls
+	 */
+	@Override
+	public List<FriendlyURL> findByG_C(long groupId, long classNameId,
+		int start, int end) {
+		return findByG_C(groupId, classNameId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly u r ls
+	 * @param end the upper bound of the range of friendly u r ls (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly u r ls
+	 */
+	@Override
+	public List<FriendlyURL> findByG_C(long groupId, long classNameId,
+		int start, int end, OrderByComparator<FriendlyURL> orderByComparator) {
+		return findByG_C(groupId, classNameId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly u r ls
+	 * @param end the upper bound of the range of friendly u r ls (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching friendly u r ls
+	 */
+	@Override
+	public List<FriendlyURL> findByG_C(long groupId, long classNameId,
+		int start, int end, OrderByComparator<FriendlyURL> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C;
+			finderArgs = new Object[] { groupId, classNameId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C;
+			finderArgs = new Object[] {
+					groupId, classNameId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<FriendlyURL> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<FriendlyURL>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (FriendlyURL friendlyURL : list) {
+					if ((groupId != friendlyURL.getGroupId()) ||
+							(classNameId != friendlyURL.getClassNameId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_FRIENDLYURL_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_CLASSNAMEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(FriendlyURLModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				if (!pagination) {
+					list = (List<FriendlyURL>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<FriendlyURL>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching friendly u r l
+	 * @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
+	 */
+	@Override
+	public FriendlyURL findByG_C_First(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator)
+		throws NoSuchFriendlyURLException {
+		FriendlyURL friendlyURL = fetchByG_C_First(groupId, classNameId,
+				orderByComparator);
+
+		if (friendlyURL != null) {
+			return friendlyURL;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFriendlyURLException(msg.toString());
+	}
+
+	/**
+	 * Returns the first friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
+	 */
+	@Override
+	public FriendlyURL fetchByG_C_First(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator) {
+		List<FriendlyURL> list = findByG_C(groupId, classNameId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching friendly u r l
+	 * @throws NoSuchFriendlyURLException if a matching friendly u r l could not be found
+	 */
+	@Override
+	public FriendlyURL findByG_C_Last(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator)
+		throws NoSuchFriendlyURLException {
+		FriendlyURL friendlyURL = fetchByG_C_Last(groupId, classNameId,
+				orderByComparator);
+
+		if (friendlyURL != null) {
+			return friendlyURL;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFriendlyURLException(msg.toString());
+	}
+
+	/**
+	 * Returns the last friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
+	 */
+	@Override
+	public FriendlyURL fetchByG_C_Last(long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator) {
+		int count = countByG_C(groupId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<FriendlyURL> list = findByG_C(groupId, classNameId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the friendly u r ls before and after the current friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param friendlyUrlId the primary key of the current friendly u r l
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next friendly u r l
+	 * @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
+	 */
+	@Override
+	public FriendlyURL[] findByG_C_PrevAndNext(long friendlyUrlId,
+		long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator)
+		throws NoSuchFriendlyURLException {
+		FriendlyURL friendlyURL = findByPrimaryKey(friendlyUrlId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			FriendlyURL[] array = new FriendlyURLImpl[3];
+
+			array[0] = getByG_C_PrevAndNext(session, friendlyURL, groupId,
+					classNameId, orderByComparator, true);
+
+			array[1] = friendlyURL;
+
+			array[2] = getByG_C_PrevAndNext(session, friendlyURL, groupId,
+					classNameId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected FriendlyURL getByG_C_PrevAndNext(Session session,
+		FriendlyURL friendlyURL, long groupId, long classNameId,
+		OrderByComparator<FriendlyURL> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_FRIENDLYURL_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_CLASSNAMEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(FriendlyURLModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(friendlyURL);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<FriendlyURL> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the friendly u r ls where groupId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 */
+	@Override
+	public void removeByG_C(long groupId, long classNameId) {
+		for (FriendlyURL friendlyURL : findByG_C(groupId, classNameId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(friendlyURL);
+		}
+	}
+
+	/**
+	 * Returns the number of friendly u r ls where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching friendly u r ls
+	 */
+	@Override
+	public int countByG_C(long groupId, long classNameId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C;
+
+		Object[] finderArgs = new Object[] { groupId, classNameId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_FRIENDLYURL_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_CLASSNAMEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "friendlyURL.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_CLASSNAMEID_2 = "friendlyURL.classNameId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_C_C = new FinderPath(FriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLModelImpl.FINDER_CACHE_ENABLED, FriendlyURLImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_G_C_C",
@@ -3502,6 +4047,28 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			friendlyURL.setUuid(uuid);
 		}
 
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (friendlyURL.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				friendlyURL.setCreateDate(now);
+			}
+			else {
+				friendlyURL.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!friendlyURLModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				friendlyURL.setModifiedDate(now);
+			}
+			else {
+				friendlyURL.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
+
 		Session session = null;
 
 		try {
@@ -3569,6 +4136,27 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 			}
 
 			if ((friendlyURLModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						friendlyURLModelImpl.getOriginalGroupId(),
+						friendlyURLModelImpl.getOriginalClassNameId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+					args);
+
+				args = new Object[] {
+						friendlyURLModelImpl.getGroupId(),
+						friendlyURLModelImpl.getClassNameId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+					args);
+			}
+
+			if ((friendlyURLModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						friendlyURLModelImpl.getOriginalCompanyId(),
@@ -3621,6 +4209,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 		friendlyURLImpl.setGroupId(friendlyURL.getGroupId());
 		friendlyURLImpl.setCompanyId(friendlyURL.getCompanyId());
 		friendlyURLImpl.setCreateDate(friendlyURL.getCreateDate());
+		friendlyURLImpl.setModifiedDate(friendlyURL.getModifiedDate());
 		friendlyURLImpl.setClassNameId(friendlyURL.getClassNameId());
 		friendlyURLImpl.setClassPK(friendlyURL.getClassPK());
 		friendlyURLImpl.setUrlTitle(friendlyURL.getUrlTitle());

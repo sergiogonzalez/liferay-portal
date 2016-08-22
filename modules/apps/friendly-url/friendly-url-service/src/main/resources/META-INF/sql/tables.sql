@@ -4,6 +4,7 @@ create table FriendlyURL (
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,
+	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
 	urlTitle VARCHAR(150) null,
