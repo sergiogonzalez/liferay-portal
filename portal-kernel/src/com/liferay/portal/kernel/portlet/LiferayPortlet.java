@@ -98,9 +98,6 @@ public class LiferayPortlet extends GenericPortlet {
 				return;
 			}
 
-			boolean emptySessionMessages = isEmptySessionMessages(
-				actionRequest);
-
 			if (_isAddSuccessMessage(actionRequest)) {
 				addSuccessMessage(actionRequest, actionResponse);
 			}
@@ -110,7 +107,9 @@ public class LiferayPortlet extends GenericPortlet {
 					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT)) {
 
-				if (emptySessionMessages || isAlwaysSendRedirect()) {
+				if (isEmptySessionMessages(actionRequest) ||
+					isAlwaysSendRedirect()) {
+
 					sendRedirect(actionRequest, actionResponse);
 				}
 			}
@@ -639,23 +638,7 @@ public class LiferayPortlet extends GenericPortlet {
 			return false;
 		}
 
-		if (SessionMessages.isEmpty(actionRequest)) {
-			return true;
-		}
-
-		int sessionMessagesSize = SessionMessages.size(actionRequest);
-
-		for (String suffix : _IGNORED_SESSION_MESSAGE_SUFFIXES) {
-			if (SessionMessages.contains(actionRequest, portletId + suffix)) {
-				sessionMessagesSize--;
-			}
-		}
-
-		if (sessionMessagesSize == 0) {
-			return true;
-		}
-
-		return false;
+		return isEmptySessionMessages(actionRequest);
 	}
 
 	private static final String[] _IGNORED_SESSION_MESSAGE_SUFFIXES = {
