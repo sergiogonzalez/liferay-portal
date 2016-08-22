@@ -307,7 +307,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				user.getCompanyId(), groupId, BlogsEntry.class, entryId,
 				urlTitle);
 
-			entry.setUrlTitle(friendlyURL.getFriendlyUrl());
+			entry.setUrlTitle(friendlyURL.getUrlTitle());
 		}
 
 		entry.setDescription(description);
@@ -1271,7 +1271,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
 				entry.getEntryId(), urlTitle);
 
-			entry.setUrlTitle(friendlyURL.getFriendlyUrl());
+			entry.setUrlTitle(friendlyURL.getUrlTitle());
 		}
 
 		entry.setDescription(description);
@@ -1514,7 +1514,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
 				entry.getEntryId(), uniqueUrlTitle);
 
-			entry.setUrlTitle(friendlyURL.getFriendlyUrl());
+			entry.setUrlTitle(friendlyURL.getUrlTitle());
 		}
 
 		blogsEntryPersistence.update(entry);
