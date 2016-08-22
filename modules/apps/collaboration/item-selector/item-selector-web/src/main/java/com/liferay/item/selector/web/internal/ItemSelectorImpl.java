@@ -200,9 +200,19 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	@Override
-	public Tuple getItemSelectorURLParameterObjects(PortletURL portletURL) {
+	public String getItemSelectedEventName(PortletURL itemSelectorPortletURL) {
+		return HttpUtil.getParameter(
+			itemSelectorPortletURL.toString(),
+			_ITEM_SELECTOR_PARAMETER_PREFIX.concat(
+				PARAMETER_ITEM_SELECTED_EVENT_NAME));
+	}
+
+	@Override
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		PortletURL itemSelectorPortletURL) {
+
 		Map<String, String[]> parameters = HttpUtil.getParameterMap(
-			portletURL.toString());
+			itemSelectorPortletURL.toString());
 
 		Map<String, String[]> itemSelectorURLParameterMap = new HashMap<>();
 
@@ -219,10 +229,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			getItemSelectorCriteria(itemSelectorURLParameterMap);
 
-		String itemSelectedEventName = getValue(
-			itemSelectorURLParameterMap, PARAMETER_ITEM_SELECTED_EVENT_NAME);
-
-		return new Tuple(itemSelectorCriteria, itemSelectedEventName);
+		return itemSelectorCriteria;
 	}
 
 	protected List<Class<? extends ItemSelectorCriterion>>

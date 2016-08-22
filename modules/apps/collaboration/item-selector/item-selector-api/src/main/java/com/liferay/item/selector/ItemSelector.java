@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.List;
 import java.util.Map;
@@ -36,8 +35,13 @@ import javax.portlet.PortletURL;
 @ProviderType
 public interface ItemSelector {
 
+	public String getItemSelectedEventName(PortletURL itemSelectorPortletURL);
+
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
 		Map<String, String[]> parameters);
+
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		PortletURL itemSelectorPortletURL);
 
 	/**
 	 * Returns the {@link ItemSelectorRendering} according to the parameters.
@@ -91,7 +95,5 @@ public interface ItemSelector {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria);
-
-	public Tuple getItemSelectorURLParameterObjects(PortletURL portletURL);
 
 }
