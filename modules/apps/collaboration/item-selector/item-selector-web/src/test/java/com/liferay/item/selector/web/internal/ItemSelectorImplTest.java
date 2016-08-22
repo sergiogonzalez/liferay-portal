@@ -29,15 +29,13 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.util.HttpImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,16 +95,28 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetItemSelectorParameterObjects() {
+	public void testGetItemSelectedEventName() {
 		String itemSelectorURL = getItemSelectorURL(
-			"itemSelectedEventName", _mediaItemSelectorCriterion,
+			"testItemSelectedEventName", _mediaItemSelectorCriterion,
+			_flickrItemSelectorCriterion);
+
+		setUpItemSelectionCriterionHandlers();
+
+		Assert.assertEquals(
+			"testItemSelectedEventName",
+			_itemSelectorImpl.getItemSelectedEventName(itemSelectorURL));
+	}
+
+	@Test
+	public void testGetItemSelectorCriteriaFromItemSelectorURL() {
+		String itemSelectorURL = getItemSelectorURL(
+			StringUtil.randomString(), _mediaItemSelectorCriterion,
 			_flickrItemSelectorCriterion);
 
 		setUpItemSelectionCriterionHandlers();
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
-			_itemSelectorImpl.getItemSelectorCriteria(
-				itemSelectorURL);
+			_itemSelectorImpl.getItemSelectorCriteria(itemSelectorURL);
 
 		Assert.assertEquals(2, itemSelectorCriteria.size());
 
@@ -131,11 +141,6 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		Assert.assertTrue(
 			itemSelectorCriteria.get(1) instanceof FlickrItemSelectorCriterion);
-
-		Assert.assertEquals(
-			"itemSelectedEventName",
-			_itemSelectorImpl.getItemSelectedEventName(
-				itemSelectorURL));
 	}
 
 	@Test
