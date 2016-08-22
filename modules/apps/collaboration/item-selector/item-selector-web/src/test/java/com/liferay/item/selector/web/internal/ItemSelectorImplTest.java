@@ -28,9 +28,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.util.HttpImpl;
 
@@ -104,8 +103,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		setUpItemSelectionCriterionHandlers();
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
-			_itemSelectorImpl.getItemSelectorCriteria(
-				itemSelectorURL);
+			_itemSelectorImpl.getItemSelectorCriteria(itemSelectorURL);
 
 		Assert.assertEquals(2, itemSelectorCriteria.size());
 
@@ -256,11 +254,14 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		sb.append("http://localhost/?p_p_state=popup&p_p_mode=view");
 
+		String namespace = PortalUtil.getPortletNamespace(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
+
 		for (String itemSelectorParameterKey :
 				itemSelectorParameters.keySet()) {
 
 			sb.append("&");
-			sb.append(_ITEM_SELECTOR_PARAMETER_PREFIX);
+			sb.append(namespace);
 			sb.append(itemSelectorParameterKey);
 			sb.append("=");
 			sb.append(itemSelectorParameters.get(itemSelectorParameterKey));
@@ -281,10 +282,6 @@ public class ItemSelectorImplTest extends PowerMockito {
 		_itemSelectorImpl.setItemSelectionCriterionHandler(
 			new MediaItemSelectorCriterionHandler());
 	}
-
-	private static final String _ITEM_SELECTOR_PARAMETER_PREFIX =
-		StringPool.UNDERLINE + ItemSelectorPortletKeys.ITEM_SELECTOR +
-			StringPool.UNDERLINE;
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
 	private final ItemSelectorCriterionSerializer

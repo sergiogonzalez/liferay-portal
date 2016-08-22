@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -70,6 +70,16 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
 	@Override
+	public String getItemSelectedEventName(PortletURL itemSelectorPortletURL) {
+		String namespace = PortalUtil.getPortletNamespace(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
+
+		return HttpUtil.getParameter(
+			itemSelectorPortletURL.toString(),
+			namespace.concat(PARAMETER_ITEM_SELECTED_EVENT_NAME));
+	}
+
+	@Override
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
 		Map<String, String[]> parameters) {
 
@@ -90,6 +100,34 @@ public class ItemSelectorImpl implements ItemSelector {
 				_itemSelectionCriterionSerializer.deserialize(
 					itemSelectorCriterionClass, json));
 		}
+
+		return itemSelectorCriteria;
+	}
+
+	@Override
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		PortletURL itemSelectorPortletURL) {
+
+		Map<String, String[]> parameters = HttpUtil.getParameterMap(
+			itemSelectorPortletURL.toString());
+
+		Map<String, String[]> itemSelectorURLParameterMap = new HashMap<>();
+
+		String namespace = PortalUtil.getPortletNamespace(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
+
+		for (String parameterName : parameters.keySet()) {
+			if (parameterName.contains(namespace)) {
+				String key = StringUtil.removeSubstring(
+					parameterName, namespace);
+
+				itemSelectorURLParameterMap.put(
+					key, parameters.get(parameterName));
+			}
+		}
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			getItemSelectorCriteria(itemSelectorURLParameterMap);
 
 		return itemSelectorCriteria;
 	}
@@ -197,39 +235,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		return getItemSelectorURL(
 			requestBackedPortletURLFactory, null, 0, itemSelectedEventName,
 			itemSelectorCriteria);
-	}
-
-	@Override
-	public String getItemSelectedEventName(PortletURL itemSelectorPortletURL) {
-		return HttpUtil.getParameter(
-			itemSelectorPortletURL.toString(),
-			_ITEM_SELECTOR_PARAMETER_PREFIX.concat(
-				PARAMETER_ITEM_SELECTED_EVENT_NAME));
-	}
-
-	@Override
-	public List<ItemSelectorCriterion> getItemSelectorCriteria(
-		PortletURL itemSelectorPortletURL) {
-
-		Map<String, String[]> parameters = HttpUtil.getParameterMap(
-			itemSelectorPortletURL.toString());
-
-		Map<String, String[]> itemSelectorURLParameterMap = new HashMap<>();
-
-		for (String parameterName : parameters.keySet()) {
-			if (parameterName.contains(_ITEM_SELECTOR_PARAMETER_PREFIX)) {
-				String key = StringUtil.removeSubstring(
-					parameterName, _ITEM_SELECTOR_PARAMETER_PREFIX);
-
-				itemSelectorURLParameterMap.put(
-					key, parameters.get(parameterName));
-			}
-		}
-
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			getItemSelectorCriteria(itemSelectorURLParameterMap);
-
-		return itemSelectorCriteria;
 	}
 
 	protected List<Class<? extends ItemSelectorCriterion>>
@@ -389,10 +394,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		_itemSelectionCriterionHandlers.remove(
 			itemSelectorCriterionClass.getName());
 	}
-
-	private static final String _ITEM_SELECTOR_PARAMETER_PREFIX =
-		StringPool.UNDERLINE + ItemSelectorPortletKeys.ITEM_SELECTOR +
-			StringPool.UNDERLINE;
 
 	private final ConcurrentMap
 		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
