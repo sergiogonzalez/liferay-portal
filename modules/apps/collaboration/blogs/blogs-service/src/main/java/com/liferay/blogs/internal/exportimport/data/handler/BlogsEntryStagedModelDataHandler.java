@@ -437,6 +437,17 @@ public class BlogsEntryStagedModelDataHandler
 		return inputStream;
 	}
 
+	@Override
+	protected boolean isExplicitlyImportedReference(Element referenceElement) {
+		String className = referenceElement.attributeValue("class-name");
+
+		if (className.equals(FriendlyURL.class.getName())) {
+			return true;
+		}
+
+		return super.isExplicitlyImportedReference(referenceElement);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */
