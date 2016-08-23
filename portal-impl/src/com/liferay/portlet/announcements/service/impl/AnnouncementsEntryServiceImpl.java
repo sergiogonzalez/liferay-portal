@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.announcements.service.impl;
 
-import com.liferay.announcements.kernel.constants.AnnouncementsConstants;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -55,23 +52,6 @@ public class AnnouncementsEntryServiceImpl
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (alert) {
-			String portletId = PortletProviderUtil.getPortletId(
-				AnnouncementsConstants.CLASS_NAME_ALERTS_ENTRY,
-				PortletProvider.Action.MANAGE);
-
-			AnnouncementsEntryPermission.check(
-				permissionChecker, plid, portletId, ActionKeys.ADD_ENTRY);
-		}
-		else {
-			String portletId = PortletProviderUtil.getPortletId(
-				AnnouncementsEntry.class.getName(),
-				PortletProvider.Action.MANAGE);
-
-			AnnouncementsEntryPermission.check(
-				permissionChecker, plid, portletId, ActionKeys.ADD_ENTRY);
-		}
 
 		if (classNameId == 0) {
 			if (!PortalPermissionUtil.contains(
