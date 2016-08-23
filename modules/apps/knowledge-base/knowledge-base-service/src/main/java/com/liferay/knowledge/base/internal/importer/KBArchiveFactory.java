@@ -19,6 +19,7 @@ import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.zip.ZipReader;
 
 import java.nio.file.Path;
@@ -196,6 +197,10 @@ public class KBArchiveFactory {
 		}
 
 		public void setCurrentFolder(Path folderPath) {
+			if (folderPath == null) {
+				folderPath = _ROOT_FOLDER_PATH;
+			}
+
 			if (folderPath.equals(_currentFolderPath)) {
 				return;
 			}
@@ -245,6 +250,9 @@ public class KBArchiveFactory {
 
 			_folders.put(_currentFolderPath, folder);
 		}
+
+		private static final Path _ROOT_FOLDER_PATH = Paths.get(
+			StringPool.SLASH);
 
 		private Collection<KBArchive.File> _currentFolderFiles;
 		private KBArchive.File _currentFolderIntroFile;
