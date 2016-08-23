@@ -776,6 +776,23 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
+		List<Element> referenceElements = referencesElement.elements();
+
+		for (Element referenceElement : referenceElements) {
+			if (isExplicitlyImportedReference(referenceElement)) {
+				continue;
+			}
+
+			String className = referenceElement.attributeValue("class-name");
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, stagedModel, className, classPK);
+		}
+	}
+
+	protected boolean isExplicitlyImportedReference(Element referenceElement) {
 		DiscussionStagingHandler discussionStagingHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
@@ -785,24 +802,16 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			stagedModelClassName = discussionStagingHandler.getClassName();
 		}
 
-		List<Element> referenceElements = referencesElement.elements();
+		String className = referenceElement.attributeValue("class-name");
 
-		for (Element referenceElement : referenceElements) {
-			String className = referenceElement.attributeValue("class-name");
+		if (className.equals(AssetCategory.class.getName()) ||
+			className.equals(RatingsEntry.class.getName()) ||
+			className.equals(stagedModelClassName)) {
 
-			if (className.equals(AssetCategory.class.getName()) ||
-				className.equals(RatingsEntry.class.getName()) ||
-				className.equals(stagedModelClassName)) {
-
-				continue;
-			}
-
-			long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, stagedModel, className, classPK);
+			return true;
 		}
+
+		return false;
 	}
 
 	protected boolean isStagedModelInTrash(T stagedModel) {
