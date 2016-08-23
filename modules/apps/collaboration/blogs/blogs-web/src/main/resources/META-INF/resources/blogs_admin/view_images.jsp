@@ -46,6 +46,8 @@ if (delta > 0) {
 	portletURL.setParameter("delta", String.valueOf(delta));
 }
 
+PortletURL sortURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
 portletURL.setParameter("orderBycol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
@@ -78,7 +80,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				orderByCol="<%= orderByCol %>"
 				orderByType="<%= orderByType %>"
 				orderColumns='<%= new String[] {"title", "size"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				portletURL="<%= sortURL %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 	</c:if>

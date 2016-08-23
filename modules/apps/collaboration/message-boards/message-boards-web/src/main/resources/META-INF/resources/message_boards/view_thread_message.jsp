@@ -451,6 +451,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									label="<%= true %>"
 									markupView="lexicon"
 									message="<%= sb.toString() %>"
+									method="get"
 									url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
 								/>
 							</li>
