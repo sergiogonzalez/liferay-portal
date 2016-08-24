@@ -68,6 +68,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT MBCategory.categoryId AS modelId,
+				MBCategory.lastPostDate,
 				0 AS priority,
 				0 AS modelCategory
 			FROM
@@ -81,6 +82,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT MBCategory.categoryId AS modelId,
+				MBCategory.lastPostDate,
 				0 AS priority,
 				0 AS modelCategory
 			FROM
@@ -114,6 +116,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT MBThread.threadId AS modelId,
+				MBThread.lastPublishDate,
 				MBThread.priority AS priority,
 				1 AS modelCategory
 			FROM
@@ -127,6 +130,7 @@
 		<![CDATA[
 			SELECT
 				DISTINCT MBThread.threadId AS modelId,
+				MBThread.lastPostDate,
 				MBThread.priority AS priority,
 				1 AS modelCategory
 			FROM
