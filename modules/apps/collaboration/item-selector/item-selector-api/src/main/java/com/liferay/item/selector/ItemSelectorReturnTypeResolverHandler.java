@@ -27,6 +27,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -49,13 +50,32 @@ public class ItemSelectorReturnTypeResolverHandler {
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
+		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+			ListUtil.copy(
+				itemSelectorView.getSupportedItemSelectorReturnTypes());
+
+		if (_itemSelectorReturnTypeProviderHandler != null) {
+			supportedItemSelectorReturnTypes =
+				_itemSelectorReturnTypeProviderHandler.
+					getItemSelectorReturnTypes(itemSelectorView);
+		}
+
 		ItemSelectorReturnType itemSelectorReturnType =
 			getFirstAvailableItemSelectorReturnType(
 				desiredItemSelectorReturnTypes,
-				itemSelectorView.getSupportedItemSelectorReturnTypes());
+				supportedItemSelectorReturnTypes);
 
 		return getItemSelectorReturnTypeResolver(
 			itemSelectorReturnType.getClass(), modelClass);
+	}
+
+	@Reference(unbind = "-")
+	public void setItemSelectorReturnTypeProviderHandler(
+		ItemSelectorReturnTypeProviderHandler
+			itemSelectorReturnTypeProviderHandler) {
+
+		_itemSelectorReturnTypeProviderHandler =
+			itemSelectorReturnTypeProviderHandler;
 	}
 
 	@Activate
@@ -98,6 +118,8 @@ public class ItemSelectorReturnTypeResolverHandler {
 			itemSelectorResolverModelName;
 	}
 
+	private ItemSelectorReturnTypeProviderHandler
+		_itemSelectorReturnTypeProviderHandler;
 	private ServiceTrackerMap<String, ItemSelectorReturnTypeResolver>
 		_serviceTrackerMap;
 
