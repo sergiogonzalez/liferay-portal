@@ -240,8 +240,6 @@ public class DocumentLibraryConvertProcess
 					dynamicQuery.add(
 						classNameIdProperty.ne(backgroundTaskClassNameId));
 					dynamicQuery.add(
-						classNameIdProperty.ne(mbAttachmentClassNameId));
-					dynamicQuery.add(
 						classNameIdProperty.ne(wikiAttachmentClassNameId));
 				}
 
@@ -251,9 +249,21 @@ public class DocumentLibraryConvertProcess
 
 				@Override
 				public void performAction(DLFileEntry dlFileEntry) {
+					long classNameId = dlFileEntry.getClassNameId();
+					long dataRepositoryId;
+
+					if (classNameId == mbAttachmentClassNameId) {
+						dataRepositoryId =
+							DLFolderConstants.getDataRepositoryId(
+								dlFileEntry.getRepositoryId(),
+								dlFileEntry.getFolderId());
+					}
+					else {
+						dataRepositoryId = dlFileEntry.getDataRepositoryId();
+					}
+
 					migrateDLFileEntry(
-						dlFileEntry.getCompanyId(),
-						dlFileEntry.getDataRepositoryId(),
+						dlFileEntry.getCompanyId(), dataRepositoryId,
 						new LiferayFileEntry(dlFileEntry));
 				}
 
@@ -317,46 +327,9 @@ public class DocumentLibraryConvertProcess
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void migrateMB() throws PortalException {
-		int count = MBMessageLocalServiceUtil.getMBMessagesCount();
-
-		MaintenanceUtil.appendStatus(
-			"Migrating message boards attachments in " + count + " messages");
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			MBMessageLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
-
-				@Override
-				public void performAction(MBMessage mbMessage)
-					throws PortalException {
-
-					for (FileEntry fileEntry :
-							mbMessage.getAttachmentsFileEntries()) {
-
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
-						migrateDLFileEntry(
-							mbMessage.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							new LiferayFileEntry(dlFileEntry));
-					}
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-	}
-
 	protected void migratePortlets() throws Exception {
 		migrateImages();
 		migrateDL();
-		migrateMB();
 
 		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
 			_getDLStoreConvertProcesses();
