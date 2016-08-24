@@ -14,9 +14,11 @@
 
 package com.liferay.item.selector.web.internal.util;
 
+import com.liferay.item.selector.ItemSelectorReturnTypeProvider;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorReturnTypeProviderHandler;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -43,6 +45,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -229,7 +232,14 @@ public class ItemSelectorCriterionSerializer {
 				serviceReference);
 
 			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-				itemSelectorView.getSupportedItemSelectorReturnTypes();
+				ListUtil.copy(
+					itemSelectorView.getSupportedItemSelectorReturnTypes());
+
+			if (_itemSelectorReturnTypeProviderHandler != null) {
+				supportedItemSelectorReturnTypes =
+					_itemSelectorReturnTypeProviderHandler.
+						getItemSelectorReturnTypes(itemSelectorView);
+			}
 
 			for (ItemSelectorReturnType supportedItemSelectorReturnType :
 					supportedItemSelectorReturnTypes) {
@@ -275,5 +285,17 @@ public class ItemSelectorCriterionSerializer {
 		}
 
 	}
+
+	@Reference
+	public void setItemSelectorReturnTypeProviderHandler(
+		ItemSelectorReturnTypeProviderHandler
+			itemSelectorReturnTypeProviderHandler) {
+
+		_itemSelectorReturnTypeProviderHandler =
+			itemSelectorReturnTypeProviderHandler;
+	}
+
+	private ItemSelectorReturnTypeProviderHandler
+		_itemSelectorReturnTypeProviderHandler;
 
 }
