@@ -79,7 +79,7 @@ else {
 searchContainer.setResults(results);
 %>
 
-<c:if test="<%= notPublishedEntriesCount > 0 %>">
+<c:if test="<%= (notPublishedEntriesCount > 0) || mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>">
 	<aui:nav-bar markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 			<aui:nav-item
