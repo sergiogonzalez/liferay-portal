@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -160,21 +159,6 @@ public class UpgradePermissions extends UpgradeProcess {
 		upgradeAnnouncementsResourcePermission();
 	}
 
-	protected long getLayoutGroupId(String primKey) throws Exception {
-		String layoutId = StringUtil.split(primKey, StringPool.UNDERLINE)[0];
-
-		PreparedStatement ps = connection.prepareStatement(
-			"select groupId from Layout where plid = " + layoutId);
-
-		ResultSet rs = ps.executeQuery();
-
-		if (rs.next()) {
-			return rs.getLong("groupId");
-		}
-
-		return 0;
-	}
-
 	protected void updateResourcePermission(
 			long resourcePermissionId, long bitwiseValue)
 		throws Exception {
@@ -255,11 +239,9 @@ public class UpgradePermissions extends UpgradeProcess {
 
 					if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
 						if (primKey.contains("_LAYOUT_")) {
-							long groupId = getLayoutGroupId(primKey);
-
-							primKey = String.valueOf(groupId);
-							primKeyId = groupId;
-							scope = ResourceConstants.SCOPE_GROUP;
+							primKey = String.valueOf(companyId);
+							primKeyId = companyId;
+							scope = ResourceConstants.SCOPE_COMPANY;
 						}
 						else {
 							continue;
