@@ -38,7 +38,8 @@ import java.util.Set;
 public class UpgradePermissions extends UpgradeProcess {
 
 	protected void addAnnouncementsAdminResourceActions() {
-		addResourceAction(ActionKeys.PERMISSIONS, _PERMISSIONS_VALUE);
+		addResourceAction(
+			ActionKeys.ACCESS_IN_CONTROL_PANEL, _ACCESS_IN_CONTROL_PANEL_VALUE);
 		addResourceAction(ActionKeys.VIEW, _VIEW_VALUE);
 	}
 
@@ -61,7 +62,8 @@ public class UpgradePermissions extends UpgradeProcess {
 			long resourcePermissionId = increment(
 				ResourcePermission.class.getName());
 
-			long actionBitwiseValue = _VIEW_VALUE;
+			long actionBitwiseValue =
+				_VIEW_VALUE | _ACCESS_IN_CONTROL_PANEL_VALUE;
 
 			String name =
 				"com_liferay_announcements_web_portlet_" +
@@ -273,7 +275,7 @@ public class UpgradePermissions extends UpgradeProcess {
 		return sb.toString();
 	}
 
-	private static final long _PERMISSIONS_VALUE;
+	private static final long _ACCESS_IN_CONTROL_PANEL_VALUE;
 
 	private static final boolean _VIEW_ACTION_SUPPORTED = true;
 
@@ -290,7 +292,7 @@ public class UpgradePermissions extends UpgradeProcess {
 
 		long nextBitwiseValue = viewActionReservedBitwiseValue << 1;
 
-		_PERMISSIONS_VALUE = nextBitwiseValue;
+		_ACCESS_IN_CONTROL_PANEL_VALUE = nextBitwiseValue;
 	}
 
 	private final Set<String> _resourcePermissions = new HashSet<>();
