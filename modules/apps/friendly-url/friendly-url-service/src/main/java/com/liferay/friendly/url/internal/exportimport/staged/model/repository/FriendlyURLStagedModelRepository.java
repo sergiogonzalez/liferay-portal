@@ -21,9 +21,11 @@ import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.service.FriendlyURLLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +89,20 @@ public class FriendlyURLStagedModelRepository
 
 		_friendlyURLLocalService.deleteGroupFriendlyURLs(
 			portletDataContext.getGroupId(), classNameId);
+	}
+
+	@Override
+	public List<StagedModel> fetchChildrenStagedModels(
+		PortletDataContext portletDataContext, FriendlyURL friendlyURL) {
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<StagedModel> fetchDependencyStagedModels(
+		PortletDataContext portletDataContext, FriendlyURL friendlyURL) {
+
+		return Collections.emptyList();
 	}
 
 	@Override
