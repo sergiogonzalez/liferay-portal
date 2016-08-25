@@ -14,7 +14,6 @@
 
 package com.liferay.item.selector.web.internal.util;
 
-import com.liferay.item.selector.ItemSelectorReturnTypeProvider;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
