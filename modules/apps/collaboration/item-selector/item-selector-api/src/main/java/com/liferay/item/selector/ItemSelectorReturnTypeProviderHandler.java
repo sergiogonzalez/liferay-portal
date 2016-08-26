@@ -54,11 +54,6 @@ public class ItemSelectorReturnTypeProviderHandler {
 				bundleContext));
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_serviceTracker.close();
-	}
-
 	public List<ItemSelectorReturnType> getItemSelectorReturnTypes(
 		ItemSelectorView itemSelectorView) {
 
@@ -71,6 +66,14 @@ public class ItemSelectorReturnTypeProviderHandler {
 
 		String itemSelectorViewKey = _itemSelectorViewKeysMap.get(
 			itemSelectorViewClass.getName());
+
+		return getItemSelectorReturnTypes(
+			supportedItemSelectorReturnTypes, itemSelectorViewKey);
+	}
+
+	public List<ItemSelectorReturnType> getItemSelectorReturnTypes(
+		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes,
+		String itemSelectorViewKey) {
 
 		if (Validator.isNull(itemSelectorViewKey)) {
 			return supportedItemSelectorReturnTypes;
@@ -92,6 +95,11 @@ public class ItemSelectorReturnTypeProviderHandler {
 		}
 
 		return supportedItemSelectorReturnTypes;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
 	}
 
 	private BundleContext _bundleContext;
