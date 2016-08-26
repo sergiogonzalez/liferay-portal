@@ -20,7 +20,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
-import com.liferay.item.selector.web.internal.util.ItemSelectorCriterionSerializer;
+import com.liferay.item.selector.web.internal.util.ItemSelectorCriterionSerializerImpl;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -286,9 +286,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
-	private final ItemSelectorCriterionSerializer
+	private final StubItemSelectorCriterionSerializerImpl
 		_itemSelectorCriterionSerializer =
-			new ItemSelectorCriterionSerializer();
+			new StubItemSelectorCriterionSerializerImpl();
 	private ItemSelectorImpl _itemSelectorImpl;
 	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;
 	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
@@ -297,5 +297,17 @@ public class ItemSelectorImplTest extends PowerMockito {
 		new TestStringItemSelectorReturnType();
 	private final ItemSelectorReturnType _testURLItemSelectorReturnType =
 		new TestURLItemSelectorReturnType();
+
+	private class StubItemSelectorCriterionSerializerImpl
+		extends ItemSelectorCriterionSerializerImpl {
+
+		@Override
+		public void addItemSelectorReturnType(
+			ItemSelectorReturnType itemSelectorReturnType) {
+
+			super.addItemSelectorReturnType(itemSelectorReturnType);
+		}
+
+	}
 
 }

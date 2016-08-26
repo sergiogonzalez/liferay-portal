@@ -32,8 +32,9 @@ import org.junit.Test;
 
 /**
  * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public class ItemSelectorCriterionSerializerTest {
+public class ItemSelectorCriterionSerializerImplTest {
 
 	@Before
 	public void setUp() {
@@ -48,11 +49,11 @@ public class ItemSelectorCriterionSerializerTest {
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_itemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testFileEntryItemSelectorReturnType);
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_itemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testStringItemSelectorReturnType);
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_itemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
@@ -70,7 +71,7 @@ public class ItemSelectorCriterionSerializerTest {
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
-		String json = _itemSelectorCriterionSerializer.serialize(
+		String json = _itemSelectorCriterionSerializerImpl.serialize(
 			_flickrItemSelectorCriterion);
 
 		Class<? extends ItemSelectorReturnType>
@@ -99,7 +100,7 @@ public class ItemSelectorCriterionSerializerTest {
 					"[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"Joe Bloggs\"}";
 
 		_flickrItemSelectorCriterion =
-			_itemSelectorCriterionSerializer.deserialize(
+			_itemSelectorCriterionSerializerImpl.deserialize(
 				_flickrItemSelectorCriterion.getClass(), json);
 
 		Assert.assertEquals(
@@ -126,14 +127,26 @@ public class ItemSelectorCriterionSerializerTest {
 	}
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
-	private final ItemSelectorCriterionSerializer
-		_itemSelectorCriterionSerializer =
-			new ItemSelectorCriterionSerializer();
+	private final StubItemSelectorCriterionSerializerImpl
+		_itemSelectorCriterionSerializerImpl =
+			new StubItemSelectorCriterionSerializerImpl();
 	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
 		new TestFileEntryItemSelectorReturnType();
 	private final ItemSelectorReturnType _testStringItemSelectorReturnType =
 		new TestStringItemSelectorReturnType();
 	private final ItemSelectorReturnType _testURLItemSelectorReturnType =
 		new TestURLItemSelectorReturnType();
+
+	private class StubItemSelectorCriterionSerializerImpl
+		extends ItemSelectorCriterionSerializerImpl {
+
+		@Override
+		public void addItemSelectorReturnType(
+			ItemSelectorReturnType itemSelectorReturnType) {
+
+			super.addItemSelectorReturnType(itemSelectorReturnType);
+		}
+
+	}
 
 }
