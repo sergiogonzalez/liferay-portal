@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -250,10 +251,16 @@ public class ItemSelectorCriterionSerializerImpl
 				ListUtil.copy(
 					itemSelectorView.getSupportedItemSelectorReturnTypes());
 
+			String itemSelectorViewKey = GetterUtil.getString(
+				serviceReference.getProperty("item.selector.view.key"));
+
 			if (_itemSelectorReturnTypeProviderHandler != null) {
 				supportedItemSelectorReturnTypes =
 					_itemSelectorReturnTypeProviderHandler.
-						getItemSelectorReturnTypes(itemSelectorView);
+						getItemSelectorReturnTypes(
+							itemSelectorView.
+								getSupportedItemSelectorReturnTypes(),
+							itemSelectorViewKey);
 			}
 
 			for (ItemSelectorReturnType supportedItemSelectorReturnType :
