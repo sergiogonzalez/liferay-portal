@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.web.internal.portlet;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
@@ -166,6 +167,13 @@ public class ArticlePortlet extends BaseKBPortlet {
 
 		long defaultValue = GetterUtil.getLong(
 			preferences.getValue("resourcePrimKey", null));
+
+		KBArticle defaultKBArticle = kbArticleService.fetchLatestKBArticle(
+			defaultValue, WorkflowConstants.STATUS_ANY);
+
+		if (defaultKBArticle == null) {
+			defaultValue = 0;
+		}
 
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
