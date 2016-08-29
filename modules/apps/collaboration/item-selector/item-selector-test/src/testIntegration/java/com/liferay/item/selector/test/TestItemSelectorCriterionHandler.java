@@ -19,6 +19,7 @@ import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Roberto Díaz
@@ -36,6 +37,11 @@ public class TestItemSelectorCriterionHandler
 	@Override
 	public Class getItemSelectorCriterionClass() {
 		return TestItemSelectorCriterion.class;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

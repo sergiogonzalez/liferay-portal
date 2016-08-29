@@ -81,6 +81,10 @@ public abstract class BaseItemSelectorCriterionHandler
 			bundleContext, ItemSelectorReturnTypeProviderHandler.class, null);
 	}
 
+	protected void deactivate() {
+		_serviceTracker.close();
+	}
+
 	private boolean _isItemSelectorViewSupported(
 		ItemSelectorView itemSelectorView,
 		ItemSelectorReturnType itemSelectorReturnType) {
