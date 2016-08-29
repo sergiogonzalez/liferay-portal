@@ -506,11 +506,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			nodeId, title, false);
 
 		for (WikiPage oldPage : oldPages) {
-			if (!WorkflowThreadLocal.isEnabled()) {
-				oldPage.setParentTitle(originalParentTitle);
+			oldPage.setParentTitle(newParentTitle);
 
-				wikiPagePersistence.update(oldPage);
-			}
+			wikiPagePersistence.update(oldPage);
 		}
 
 		return page;
