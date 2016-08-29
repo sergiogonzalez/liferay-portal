@@ -78,7 +78,8 @@ public abstract class BaseItemSelectorCriterionHandler
 					"item.selector.view.order")));
 
 		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, ItemSelectorReturnTypeProviderHandler.class, null);
+			bundleContext, ItemSelectorViewReturnTypeProviderHandler.class,
+			null);
 	}
 
 	protected void deactivate() {
@@ -94,13 +95,13 @@ public abstract class BaseItemSelectorCriterionHandler
 
 		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes = null;
 
-		ItemSelectorReturnTypeProviderHandler
-			itemSelectorReturnTypeProviderHandler =
+		ItemSelectorViewReturnTypeProviderHandler
+			itemSelectorViewReturnTypeProviderHandler =
 				_serviceTracker.getService();
 
-		if (itemSelectorReturnTypeProviderHandler != null) {
+		if (itemSelectorViewReturnTypeProviderHandler != null) {
 			supportedItemSelectorReturnTypes =
-				itemSelectorReturnTypeProviderHandler.
+				itemSelectorViewReturnTypeProviderHandler.
 					getSupportedItemSelectorReturnTypes(itemSelectorView);
 		}
 		else {
@@ -125,8 +126,8 @@ public abstract class BaseItemSelectorCriterionHandler
 	}
 
 	private ServiceTracker
-		<ItemSelectorReturnTypeProviderHandler,
-			ItemSelectorReturnTypeProviderHandler> _serviceTracker;
+		<ItemSelectorViewReturnTypeProviderHandler,
+			ItemSelectorViewReturnTypeProviderHandler> _serviceTracker;
 	private ServiceTrackerMap<Class, List<ItemSelectorView>> _serviceTrackerMap;
 
 	private class ItemSelectorViewServiceReferenceMapper

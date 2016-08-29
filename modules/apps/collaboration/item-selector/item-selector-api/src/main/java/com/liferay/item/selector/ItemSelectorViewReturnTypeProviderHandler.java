@@ -36,8 +36,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Roberto Díaz
  */
-@Component(service = ItemSelectorReturnTypeProviderHandler.class)
-public class ItemSelectorReturnTypeProviderHandler {
+@Component(service = ItemSelectorViewReturnTypeProviderHandler.class)
+public class ItemSelectorViewReturnTypeProviderHandler {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -48,7 +48,7 @@ public class ItemSelectorReturnTypeProviderHandler {
 			new ItemSelectorViewServiceTrackerCustomizer());
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ItemSelectorReturnTypeProvider.class,
+			bundleContext, ItemSelectorViewReturnTypeProvider.class,
 			"item.selector.view.key");
 	}
 
@@ -77,19 +77,22 @@ public class ItemSelectorReturnTypeProviderHandler {
 			return supportedItemSelectorReturnTypes;
 		}
 
-		List<ItemSelectorReturnTypeProvider> itemSelectorReturnTypeProviders =
-			_serviceTrackerMap.getService(itemSelectorViewKey);
+		List<ItemSelectorViewReturnTypeProvider>
+			itemSelectorViewReturnTypeProviders = _serviceTrackerMap.getService(
+				itemSelectorViewKey);
 
-		if (itemSelectorReturnTypeProviders == null) {
+		if (itemSelectorViewReturnTypeProviders == null) {
 			return supportedItemSelectorReturnTypes;
 		}
 
-		for (ItemSelectorReturnTypeProvider itemSelectorReturnTypeProvider :
-				itemSelectorReturnTypeProviders) {
+		for (ItemSelectorViewReturnTypeProvider
+				itemSelectorViewReturnTypeProvider :
+					itemSelectorViewReturnTypeProviders) {
 
 			supportedItemSelectorReturnTypes =
-				itemSelectorReturnTypeProvider.populateItemSelectorReturnTypes(
-					supportedItemSelectorReturnTypes);
+				itemSelectorViewReturnTypeProvider.
+					populateSupportedItemSelectorReturnTypes(
+						supportedItemSelectorReturnTypes);
 		}
 
 		return supportedItemSelectorReturnTypes;
@@ -104,7 +107,7 @@ public class ItemSelectorReturnTypeProviderHandler {
 	private final Map<String, String> _itemSelectorViewKeysMap =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
-	private ServiceTrackerMap<String, List<ItemSelectorReturnTypeProvider>>
+	private ServiceTrackerMap<String, List<ItemSelectorViewReturnTypeProvider>>
 		_serviceTrackerMap;
 
 	private class ItemSelectorViewServiceTrackerCustomizer
