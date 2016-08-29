@@ -15,8 +15,8 @@
 package com.liferay.item.selector.test;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.ItemSelectorReturnTypeProviderHandler;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewReturnTypeProviderHandler;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -41,16 +41,16 @@ import org.osgi.framework.ServiceRegistration;
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
-public class ItemSelectorReturnTypeProviderHandlerTest {
+public class ItemSelectorViewReturnTypeProviderHandlerTest {
 
 	@Before
 	public void setUp() throws Exception {
 		_bundleContext = bundle.getBundleContext();
 
 		_serviceReference = _bundleContext.getServiceReference(
-			ItemSelectorReturnTypeProviderHandler.class);
+			ItemSelectorViewReturnTypeProviderHandler.class);
 
-		_itemSelectorReturnTypeProviderHandler = _bundleContext.getService(
+		_itemSelectorViewReturnTypeProviderHandler = _bundleContext.getService(
 			_serviceReference);
 	}
 
@@ -60,7 +60,7 @@ public class ItemSelectorReturnTypeProviderHandlerTest {
 	}
 
 	@Test
-	public void testItemSelectorReturnTypeProviderHandler() {
+	public void testItemSelectorViewReturnTypeProviderHandler() {
 		TestItemSelectorView testItemSelectorView = new TestItemSelectorView();
 
 		ServiceRegistration<ItemSelectorView>
@@ -69,7 +69,7 @@ public class ItemSelectorReturnTypeProviderHandlerTest {
 
 		try {
 			List<ItemSelectorReturnType> itemSelectorReturnTypes =
-				_itemSelectorReturnTypeProviderHandler.
+				_itemSelectorViewReturnTypeProviderHandler.
 					getSupportedItemSelectorReturnTypes(testItemSelectorView);
 
 			Assert.assertEquals(1, itemSelectorReturnTypes.size());
@@ -100,9 +100,9 @@ public class ItemSelectorReturnTypeProviderHandlerTest {
 	}
 
 	private BundleContext _bundleContext;
-	private ItemSelectorReturnTypeProviderHandler
-		_itemSelectorReturnTypeProviderHandler;
-	private ServiceReference<ItemSelectorReturnTypeProviderHandler>
+	private ItemSelectorViewReturnTypeProviderHandler
+		_itemSelectorViewReturnTypeProviderHandler;
+	private ServiceReference<ItemSelectorViewReturnTypeProviderHandler>
 		_serviceReference;
 
 }
