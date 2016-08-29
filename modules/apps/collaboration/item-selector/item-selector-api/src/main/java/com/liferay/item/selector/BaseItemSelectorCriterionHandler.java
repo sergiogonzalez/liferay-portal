@@ -97,7 +97,7 @@ public abstract class BaseItemSelectorCriterionHandler
 		if (itemSelectorReturnTypeProviderHandler != null) {
 			supportedItemSelectorReturnTypes =
 				itemSelectorReturnTypeProviderHandler.
-					getItemSelectorReturnTypes(itemSelectorView);
+					getSupportedItemSelectorReturnTypes(itemSelectorView);
 		}
 		else {
 			supportedItemSelectorReturnTypes =
