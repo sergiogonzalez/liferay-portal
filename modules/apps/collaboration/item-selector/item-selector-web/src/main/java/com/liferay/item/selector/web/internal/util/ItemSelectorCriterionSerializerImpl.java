@@ -16,8 +16,8 @@ package com.liferay.item.selector.web.internal.util;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.ItemSelectorReturnTypeProviderHandler;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewReturnTypeProviderHandler;
 import com.liferay.item.selector.web.ItemSelectorCriterionSerializer;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.json.JSONContext;
@@ -86,12 +86,12 @@ public class ItemSelectorCriterionSerializerImpl
 	}
 
 	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeProviderHandler(
-		ItemSelectorReturnTypeProviderHandler
-			itemSelectorReturnTypeProviderHandler) {
+	public void setItemSelectorViewReturnTypeProviderHandler(
+		ItemSelectorViewReturnTypeProviderHandler
+			itemSelectorViewReturnTypeProviderHandler) {
 
-		_itemSelectorReturnTypeProviderHandler =
-			itemSelectorReturnTypeProviderHandler;
+		_itemSelectorViewReturnTypeProviderHandler =
+			itemSelectorViewReturnTypeProviderHandler;
 	}
 
 	@Activate
@@ -146,10 +146,10 @@ public class ItemSelectorCriterionSerializerImpl
 	private final DesiredItemSelectorReturnTypesJSONTransformer
 		_desiredItemSelectorReturnTypesJSONTransformer =
 			new DesiredItemSelectorReturnTypesJSONTransformer();
-	private ItemSelectorReturnTypeProviderHandler
-		_itemSelectorReturnTypeProviderHandler;
 	private final ConcurrentMap<String, List<ItemSelectorReturnType>>
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
+	private ItemSelectorViewReturnTypeProviderHandler
+		_itemSelectorViewReturnTypeProviderHandler;
 	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
 
 	private static class DesiredItemSelectorReturnTypesJSONTransformer
@@ -251,7 +251,7 @@ public class ItemSelectorCriterionSerializerImpl
 				serviceReference.getProperty("item.selector.view.key"));
 
 			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-				_itemSelectorReturnTypeProviderHandler.
+				_itemSelectorViewReturnTypeProviderHandler.
 					getSupportedItemSelectorReturnTypes(
 						itemSelectorView.
 							getSupportedItemSelectorReturnTypes(),
