@@ -498,20 +498,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		populateServiceContext(serviceContext, page);
 
-		page = updatePage(
+		serviceContext.setCommand(Constants.CHANGE_PARENT);
+
+		return updatePage(
 			userId, nodeId, title, version, content, summary, minorEdit, format,
 			newParentTitle, redirectTitle, serviceContext);
-
-		List<WikiPage> oldPages = wikiPagePersistence.findByN_T_H(
-			nodeId, title, false);
-
-		for (WikiPage oldPage : oldPages) {
-			oldPage.setParentTitle(newParentTitle);
-
-			wikiPagePersistence.update(oldPage);
-		}
-
-		return page;
 	}
 
 	@Override
@@ -2090,6 +2081,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				page = doRenamePage(
 					userId, page.getNodeId(), oldPage.getTitle(),
 					page.getTitle(), serviceContext);
+			}
+			else if (cmd.equals(Constants.CHANGE_PARENT)) {
+				List<WikiPage> pageVersions = wikiPagePersistence.findByN_T_H(
+					page.getNodeId(), page.getTitle(), false);
+
+				for (WikiPage pageVersion : pageVersions) {
+					pageVersion.setParentTitle(page.getParentTitle());
+
+					wikiPagePersistence.update(pageVersion);
+				}
 			}
 
 			// Asset
