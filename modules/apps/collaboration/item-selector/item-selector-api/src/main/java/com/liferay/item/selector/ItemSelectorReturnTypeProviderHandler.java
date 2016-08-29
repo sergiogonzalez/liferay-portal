@@ -52,7 +52,7 @@ public class ItemSelectorReturnTypeProviderHandler {
 			"item.selector.view.key");
 	}
 
-	public List<ItemSelectorReturnType> getItemSelectorReturnTypes(
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes(
 		ItemSelectorView itemSelectorView) {
 
 		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
@@ -65,11 +65,11 @@ public class ItemSelectorReturnTypeProviderHandler {
 		String itemSelectorViewKey = _itemSelectorViewKeysMap.get(
 			itemSelectorViewClass.getName());
 
-		return getItemSelectorReturnTypes(
+		return getSupportedItemSelectorReturnTypes(
 			supportedItemSelectorReturnTypes, itemSelectorViewKey);
 	}
 
-	public List<ItemSelectorReturnType> getItemSelectorReturnTypes(
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes,
 		String itemSelectorViewKey) {
 
