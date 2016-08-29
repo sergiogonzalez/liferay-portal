@@ -15,7 +15,6 @@
 package com.liferay.knowledge.base.web.internal.portlet;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
-import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
