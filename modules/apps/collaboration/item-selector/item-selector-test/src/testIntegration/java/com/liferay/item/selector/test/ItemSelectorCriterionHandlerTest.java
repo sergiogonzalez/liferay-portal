@@ -14,10 +14,11 @@
 
 package com.liferay.item.selector.test;
 
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -67,29 +68,19 @@ public class ItemSelectorCriterionHandlerTest {
 
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration = registerItemSelectorView(
-				testItemSelectorView);
-
-		List serviceRegistrations = new ArrayList<>();
-
-		serviceRegistrations.add(itemSelectorViewServiceRegistration);
+				testItemSelectorView, "test-view");
 
 		try {
-			TestItemSelectorCriterion testItemSelectorCriterion =
+			ItemSelectorCriterion itemSelectorCriterion =
 				new TestItemSelectorCriterion();
 
-			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-				new ArrayList<>();
-
-			desiredItemSelectorReturnTypes.add(
-				new TestItemSelectorReturnType());
-
-			testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				desiredItemSelectorReturnTypes);
+			itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				Arrays.asList(new TestItemSelectorReturnType()));
 
 			List<ItemSelectorView<TestItemSelectorCriterion>>
 				itemSelectorViews =
 					_itemSelectorCriterionHandler.getItemSelectorViews(
-						testItemSelectorCriterion);
+						itemSelectorCriterion);
 
 			Assert.assertEquals(1, itemSelectorViews.size());
 
@@ -108,26 +99,22 @@ public class ItemSelectorCriterionHandlerTest {
 				itemSelectorReturnType instanceof TestItemSelectorReturnType);
 		}
 		finally {
-			_unregister(serviceRegistrations);
+			itemSelectorViewServiceRegistration.unregister();
 		}
 	}
 
 	@ArquillianResource
 	public Bundle bundle;
 
-	protected ServiceRegistration<ItemSelectorView>
-		registerItemSelectorView(ItemSelectorView itemSelectorView) {
+	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
+		ItemSelectorView itemSelectorView, String itemSelectorViewKey) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
-		properties.put("item.selector.view.key", "test-view");
+		properties.put("item.selector.view.key", itemSelectorViewKey);
 
 		return _bundleContext.registerService(
 			ItemSelectorView.class, itemSelectorView, properties);
-	}
-
-	private void _unregister(List<ServiceRegistration> serviceRegistrations) {
-		serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
 
 	private BundleContext _bundleContext;
