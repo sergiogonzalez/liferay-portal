@@ -66,15 +66,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		_itemSelectorImpl = new ItemSelectorImpl();
 
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
 			_testFileEntryItemSelectorReturnType);
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
 			_testStringItemSelectorReturnType);
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
 
 		_itemSelectorImpl.setItemSelectorCriterionSerializer(
-			_itemSelectorCriterionSerializer);
+			_stubItemSelectorCriterionSerializer);
 
 		_mediaItemSelectorCriterion = new MediaItemSelectorCriterion();
 
@@ -287,7 +287,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
 	private final StubItemSelectorCriterionSerializerImpl
-		_itemSelectorCriterionSerializer =
+		_stubItemSelectorCriterionSerializer =
 			new StubItemSelectorCriterionSerializerImpl();
 	private ItemSelectorImpl _itemSelectorImpl;
 	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;

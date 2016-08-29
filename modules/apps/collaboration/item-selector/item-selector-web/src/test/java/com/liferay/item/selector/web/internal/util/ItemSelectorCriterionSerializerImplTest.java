@@ -49,11 +49,11 @@ public class ItemSelectorCriterionSerializerImplTest {
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
-		_itemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testFileEntryItemSelectorReturnType);
-		_itemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testStringItemSelectorReturnType);
-		_itemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
@@ -71,7 +71,7 @@ public class ItemSelectorCriterionSerializerImplTest {
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
-		String json = _itemSelectorCriterionSerializerImpl.serialize(
+		String json = _stubItemSelectorCriterionSerializerImpl.serialize(
 			_flickrItemSelectorCriterion);
 
 		Class<? extends ItemSelectorReturnType>
@@ -100,7 +100,7 @@ public class ItemSelectorCriterionSerializerImplTest {
 					"[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"Joe Bloggs\"}";
 
 		_flickrItemSelectorCriterion =
-			_itemSelectorCriterionSerializerImpl.deserialize(
+			_stubItemSelectorCriterionSerializerImpl.deserialize(
 				_flickrItemSelectorCriterion.getClass(), json);
 
 		Assert.assertEquals(
@@ -128,7 +128,7 @@ public class ItemSelectorCriterionSerializerImplTest {
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
 	private final StubItemSelectorCriterionSerializerImpl
-		_itemSelectorCriterionSerializerImpl =
+		_stubItemSelectorCriterionSerializerImpl =
 			new StubItemSelectorCriterionSerializerImpl();
 	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
 		new TestFileEntryItemSelectorReturnType();
