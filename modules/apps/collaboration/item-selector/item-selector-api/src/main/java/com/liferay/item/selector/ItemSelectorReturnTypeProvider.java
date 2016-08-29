@@ -21,8 +21,6 @@ import java.util.List;
  */
 public interface ItemSelectorReturnTypeProvider {
 
-	public List<String> getItemSelectorViewKeys();
-
 	public List<ItemSelectorReturnType> populateItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> itemSelectorReturnTypes);
 
