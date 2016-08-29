@@ -75,7 +75,7 @@ public class ItemSelectorReturnTypeProviderHandlerTest {
 		try {
 			List<ItemSelectorReturnType> itemSelectorReturnTypes =
 				_itemSelectorReturnTypeProviderHandler.
-					getItemSelectorReturnTypes(testItemSelectorView);
+					getSupportedItemSelectorReturnTypes(testItemSelectorView);
 
 			Assert.assertEquals(1, itemSelectorReturnTypes.size());
 
