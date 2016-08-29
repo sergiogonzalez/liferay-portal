@@ -247,21 +247,15 @@ public class ItemSelectorCriterionSerializerImpl
 			ItemSelectorView itemSelectorView = _bundleContext.getService(
 				serviceReference);
 
-			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-				ListUtil.copy(
-					itemSelectorView.getSupportedItemSelectorReturnTypes());
-
 			String itemSelectorViewKey = GetterUtil.getString(
 				serviceReference.getProperty("item.selector.view.key"));
 
-			if (_itemSelectorReturnTypeProviderHandler != null) {
-				supportedItemSelectorReturnTypes =
-					_itemSelectorReturnTypeProviderHandler.
-						getItemSelectorReturnTypes(
-							itemSelectorView.
-								getSupportedItemSelectorReturnTypes(),
-							itemSelectorViewKey);
-			}
+			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+				_itemSelectorReturnTypeProviderHandler.
+					getItemSelectorReturnTypes(
+						itemSelectorView.
+							getSupportedItemSelectorReturnTypes(),
+						itemSelectorViewKey);
 
 			for (ItemSelectorReturnType supportedItemSelectorReturnType :
 					supportedItemSelectorReturnTypes) {
