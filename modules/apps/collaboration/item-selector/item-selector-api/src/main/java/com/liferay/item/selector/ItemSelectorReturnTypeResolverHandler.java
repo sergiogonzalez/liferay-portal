@@ -51,7 +51,7 @@ public class ItemSelectorReturnTypeResolverHandler {
 			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-			_itemSelectorReturnTypeProviderHandler.
+			_itemSelectorViewReturnTypeProviderHandler.
 				getSupportedItemSelectorReturnTypes(itemSelectorView);
 
 		ItemSelectorReturnType itemSelectorReturnType =
@@ -64,12 +64,12 @@ public class ItemSelectorReturnTypeResolverHandler {
 	}
 
 	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeProviderHandler(
-		ItemSelectorReturnTypeProviderHandler
-			itemSelectorReturnTypeProviderHandler) {
+	public void setItemSelectorViewReturnTypeProviderHandler(
+		ItemSelectorViewReturnTypeProviderHandler
+			itemSelectorViewReturnTypeProviderHandler) {
 
-		_itemSelectorReturnTypeProviderHandler =
-			itemSelectorReturnTypeProviderHandler;
+		_itemSelectorViewReturnTypeProviderHandler =
+			itemSelectorViewReturnTypeProviderHandler;
 	}
 
 	@Activate
@@ -112,8 +112,8 @@ public class ItemSelectorReturnTypeResolverHandler {
 			itemSelectorResolverModelName;
 	}
 
-	private ItemSelectorReturnTypeProviderHandler
-		_itemSelectorReturnTypeProviderHandler;
+	private ItemSelectorViewReturnTypeProviderHandler
+		_itemSelectorViewReturnTypeProviderHandler;
 	private ServiceTrackerMap<String, ItemSelectorReturnTypeResolver>
 		_serviceTrackerMap;
 
