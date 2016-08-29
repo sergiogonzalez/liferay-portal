@@ -19,7 +19,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.web.ItemSelectorCriterionSerializer;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -62,37 +62,30 @@ public class ItemSelectorCriterionSerializerTest {
 	}
 
 	@Test
-	public void test() {
+	public void
+		testSerializationAndDeserializationWithProvidedSupportedReturnTypes() {
+
 		TestItemSelectorView testItemSelectorView = new TestItemSelectorView();
 
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration = registerItemSelectorView(
-				testItemSelectorView);
-
-		List serviceRegistrations = new ArrayList<>();
-
-		serviceRegistrations.add(itemSelectorViewServiceRegistration);
+				testItemSelectorView, "test-view");
 
 		try {
 			ItemSelectorCriterion itemSelectorCriterion =
 				new TestItemSelectorCriterion();
 
-			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-				new ArrayList<>();
-
-			desiredItemSelectorReturnTypes.add(
-				new TestItemSelectorReturnType());
-
 			itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				desiredItemSelectorReturnTypes);
+				Arrays.asList(new TestItemSelectorReturnType()));
 
-			String itemSelectorJson =
+			String serializedItemSelectorCriterionJSON =
 				_itemSelectorCriterionSerializer.serialize(
 					itemSelectorCriterion);
 
 			ItemSelectorCriterion deserializedItemSelectorCriterion =
 				_itemSelectorCriterionSerializer.deserialize(
-					itemSelectorCriterion.getClass(), itemSelectorJson);
+					itemSelectorCriterion.getClass(),
+					serializedItemSelectorCriterionJSON);
 
 			List<ItemSelectorReturnType>
 				deserializedDesiredItemSelectorReturnTypes =
@@ -118,26 +111,22 @@ public class ItemSelectorCriterionSerializerTest {
 				deserializedItemSelectorReturnTypeClass.getName());
 		}
 		finally {
-			_unregister(serviceRegistrations);
+			itemSelectorViewServiceRegistration.unregister();
 		}
 	}
 
 	@ArquillianResource
 	public Bundle bundle;
 
-	protected ServiceRegistration<ItemSelectorView>
-		registerItemSelectorView(ItemSelectorView itemSelectorView) {
+	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
+		ItemSelectorView itemSelectorView, String itemSelectorViewKey) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
-		properties.put("item.selector.view.key", "test-view");
+		properties.put("item.selector.view.key", itemSelectorViewKey);
 
 		return _bundleContext.registerService(
 			ItemSelectorView.class, itemSelectorView, properties);
-	}
-
-	private void _unregister(List<ServiceRegistration> serviceRegistrations) {
-		serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
 
 	private BundleContext _bundleContext;
