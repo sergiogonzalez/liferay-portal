@@ -2083,8 +2083,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					page.getTitle(), serviceContext);
 			}
 			else if (cmd.equals(Constants.CHANGE_PARENT)) {
-				List<WikiPage> pageVersions = wikiPagePersistence.findByN_T_H(
-					page.getNodeId(), page.getTitle(), false);
+				List<WikiPage> pageVersions = wikiPagePersistence.findByN_T(
+					page.getNodeId(), page.getTitle());
 
 				for (WikiPage pageVersion : pageVersions) {
 					pageVersion.setParentTitle(page.getParentTitle());
