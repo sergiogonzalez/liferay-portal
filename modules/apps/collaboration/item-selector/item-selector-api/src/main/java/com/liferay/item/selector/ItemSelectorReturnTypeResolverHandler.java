@@ -51,14 +51,8 @@ public class ItemSelectorReturnTypeResolverHandler {
 			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-			ListUtil.copy(
-				itemSelectorView.getSupportedItemSelectorReturnTypes());
-
-		if (_itemSelectorReturnTypeProviderHandler != null) {
-			supportedItemSelectorReturnTypes =
-				_itemSelectorReturnTypeProviderHandler.
-					getItemSelectorReturnTypes(itemSelectorView);
-		}
+			_itemSelectorReturnTypeProviderHandler.getItemSelectorReturnTypes(
+				itemSelectorView);
 
 		ItemSelectorReturnType itemSelectorReturnType =
 			getFirstAvailableItemSelectorReturnType(
