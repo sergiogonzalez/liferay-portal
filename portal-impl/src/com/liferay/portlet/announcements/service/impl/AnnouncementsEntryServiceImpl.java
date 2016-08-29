@@ -63,7 +63,7 @@ public class AnnouncementsEntryServiceImpl
 			int expirationDateMinute, int priority, boolean alert)
 		throws PortalException {
 
-		User user = userLocalService.getUser(getUserId());
+		User user = getUser();
 
 		Date displayDate = new Date();
 
@@ -217,7 +217,7 @@ public class AnnouncementsEntryServiceImpl
 			int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException {
 
-		User user = userLocalService.getUser(getUserId());
+		User user = getUser();
 
 		Date displayDate = new Date();
 
