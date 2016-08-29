@@ -20,8 +20,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.comparator.FileVersionVersionComparator;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.convert.BaseConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -34,6 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -212,6 +211,16 @@ public class DocumentLibraryConvertProcess
 	protected void migrateDL() throws PortalException {
 		int count = DLFileEntryLocalServiceUtil.getFileEntriesCount();
 
+		final long backgroundTaskClassNameId =
+			ClassNameLocalServiceUtil.getClassNameId(
+				"com.liferay.portal.background.task.model.BackgroundTask");
+		final long mbAttachmentClassNameId =
+			ClassNameLocalServiceUtil.getClassNameId(
+				"com.liferay.message.boards.kernel.model.MBMessage");
+		final long wikiAttachmentClassNameId =
+			ClassNameLocalServiceUtil.getClassNameId(
+				"com.liferay.wiki.model.WikiPage");
+
 		MaintenanceUtil.appendStatus(
 			"Migrating " + count + " documents and media files");
 
@@ -226,7 +235,10 @@ public class DocumentLibraryConvertProcess
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
 						"classNameId");
 
-					dynamicQuery.add(classNameIdProperty.eq(0L));
+					dynamicQuery.add(
+						classNameIdProperty.ne(backgroundTaskClassNameId));
+					dynamicQuery.add(
+						classNameIdProperty.ne(wikiAttachmentClassNameId));
 				}
 
 			});
@@ -235,9 +247,21 @@ public class DocumentLibraryConvertProcess
 
 				@Override
 				public void performAction(DLFileEntry dlFileEntry) {
+					long classNameId = dlFileEntry.getClassNameId();
+					long dataRepositoryId;
+
+					if (classNameId == mbAttachmentClassNameId) {
+						dataRepositoryId =
+							DLFolderConstants.getDataRepositoryId(
+								dlFileEntry.getRepositoryId(),
+								dlFileEntry.getFolderId());
+					}
+					else {
+						dataRepositoryId = dlFileEntry.getDataRepositoryId();
+					}
+
 					migrateDLFileEntry(
-						dlFileEntry.getCompanyId(),
-						dlFileEntry.getDataRepositoryId(),
+						dlFileEntry.getCompanyId(), dataRepositoryId,
 						new LiferayFileEntry(dlFileEntry));
 				}
 
@@ -301,46 +325,9 @@ public class DocumentLibraryConvertProcess
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void migrateMB() throws PortalException {
-		int count = MBMessageLocalServiceUtil.getMBMessagesCount();
-
-		MaintenanceUtil.appendStatus(
-			"Migrating message boards attachments in " + count + " messages");
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			MBMessageLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
-
-				@Override
-				public void performAction(MBMessage mbMessage)
-					throws PortalException {
-
-					for (FileEntry fileEntry :
-							mbMessage.getAttachmentsFileEntries()) {
-
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
-						migrateDLFileEntry(
-							mbMessage.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							new LiferayFileEntry(dlFileEntry));
-					}
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-	}
-
 	protected void migratePortlets() throws Exception {
 		migrateImages();
 		migrateDL();
-		migrateMB();
 
 		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
 			_getDLStoreConvertProcesses();
