@@ -14,7 +14,6 @@
 
 package com.liferay.item.selector;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
@@ -49,9 +48,8 @@ public class ItemSelectorReturnTypeProviderHandler {
 			new ItemSelectorViewServiceTrackerCustomizer());
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ItemSelectorReturnTypeProvider.class, null,
-			new ItemSelectorReturnTypeProviderServiceReferenceMapper(
-				bundleContext));
+			bundleContext, ItemSelectorReturnTypeProvider.class,
+			"item.selector.view.key");
 	}
 
 	public List<ItemSelectorReturnType> getItemSelectorReturnTypes(
@@ -108,38 +106,6 @@ public class ItemSelectorReturnTypeProviderHandler {
 	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
 	private ServiceTrackerMap<String, List<ItemSelectorReturnTypeProvider>>
 		_serviceTrackerMap;
-
-	private class ItemSelectorReturnTypeProviderServiceReferenceMapper
-		implements
-			ServiceReferenceMapper<String, ItemSelectorReturnTypeProvider> {
-
-		public ItemSelectorReturnTypeProviderServiceReferenceMapper(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
-		public void map(
-			ServiceReference<ItemSelectorReturnTypeProvider> serviceReference,
-			Emitter<String> emitter) {
-
-			ItemSelectorReturnTypeProvider itemSelectorReturnTypeProvider =
-				_bundleContext.getService(serviceReference);
-
-			try {
-				List<String> itemSelectorViewKeys =
-					itemSelectorReturnTypeProvider.getItemSelectorViewKeys();
-
-				itemSelectorViewKeys.forEach(emitter::emit);
-			}
-			finally {
-				_bundleContext.ungetService(serviceReference);
-			}
-		}
-
-		private final BundleContext _bundleContext;
-
-	}
 
 	private class ItemSelectorViewServiceTrackerCustomizer
 		implements

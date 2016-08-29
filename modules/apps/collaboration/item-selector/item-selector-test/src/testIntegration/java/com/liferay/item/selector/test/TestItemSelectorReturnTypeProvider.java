@@ -16,7 +16,6 @@ package com.liferay.item.selector.test;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeProvider;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -25,13 +24,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component
+@Component(property = {"item.selector.view.key=test-view"})
 public class TestItemSelectorReturnTypeProvider
 	implements ItemSelectorReturnTypeProvider {
-
-	public List<String> getItemSelectorViewKeys() {
-		return ListUtil.fromArray(new String[] {"test-view"});
-	}
 
 	public List<ItemSelectorReturnType> populateItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> itemSelectorReturnTypes) {
