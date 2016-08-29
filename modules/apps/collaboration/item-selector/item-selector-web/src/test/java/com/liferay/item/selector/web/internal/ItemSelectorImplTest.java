@@ -286,11 +286,11 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
+	private ItemSelectorImpl _itemSelectorImpl;
+	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;
 	private final StubItemSelectorCriterionSerializerImpl
 		_stubItemSelectorCriterionSerializer =
 			new StubItemSelectorCriterionSerializerImpl();
-	private ItemSelectorImpl _itemSelectorImpl;
-	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;
 	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
 		new TestFileEntryItemSelectorReturnType();
 	private final ItemSelectorReturnType _testStringItemSelectorReturnType =
