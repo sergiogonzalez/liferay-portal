@@ -382,7 +382,7 @@ public class KBArticleStagedModelDataHandler
 			try {
 				String binPath = dlFileEntryElement.attributeValue("bin-path");
 
-				if (Validator.isNotNull(binPath) &&
+				if (Validator.isNull(binPath) &&
 					portletDataContext.isPerformDirectBinaryImport()) {
 
 					try {
