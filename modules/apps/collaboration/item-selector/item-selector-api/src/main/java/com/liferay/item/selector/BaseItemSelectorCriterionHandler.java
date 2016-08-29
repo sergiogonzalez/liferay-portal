@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -89,9 +88,7 @@ public abstract class BaseItemSelectorCriterionHandler
 		String itemSelectorReturnTypeClassName = ClassUtil.getClassName(
 			itemSelectorReturnType);
 
-		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-			ListUtil.copy(
-				itemSelectorView.getSupportedItemSelectorReturnTypes());
+		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes = null;
 
 		ItemSelectorReturnTypeProviderHandler
 			itemSelectorReturnTypeProviderHandler =
@@ -101,6 +98,10 @@ public abstract class BaseItemSelectorCriterionHandler
 			supportedItemSelectorReturnTypes =
 				itemSelectorReturnTypeProviderHandler.
 					getItemSelectorReturnTypes(itemSelectorView);
+		}
+		else {
+			supportedItemSelectorReturnTypes =
+				itemSelectorView.getSupportedItemSelectorReturnTypes();
 		}
 
 		for (ItemSelectorReturnType supportedItemSelectorReturnType :
