@@ -163,6 +163,34 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteParentPageWithChangedParentChild() throws Exception {
+		WikiPage parentPage1 = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"ParentPage1", true);
+		WikiPage parentPage2 = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"ParentPage2", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPage childPage1 = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage1",
+			RandomTestUtil.randomString(), "ParentPage1", true, serviceContext);
+
+		WikiPageLocalServiceUtil.changeParent(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			childPage1.getTitle(), parentPage2.getTitle(), serviceContext);
+
+		WikiPageLocalServiceUtil.deletePage(parentPage1);
+
+		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), childPage1.getTitle());
+
+		Assert.assertEquals("ChildPage1", childPage.getTitle());
+	}
+
+	@Test
 	public void testDeleteTrashedPageWithExplicitTrashedRedirectPage()
 		throws Exception {
 
