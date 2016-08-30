@@ -55,10 +55,6 @@ public class ItemSelectorViewReturnTypeProviderHandler {
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes(
 		ItemSelectorView itemSelectorView) {
 
-		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-			ListUtil.copy(
-				itemSelectorView.getSupportedItemSelectorReturnTypes());
-
 		Class<? extends ItemSelectorView> itemSelectorViewClass =
 			itemSelectorView.getClass();
 
@@ -66,12 +62,16 @@ public class ItemSelectorViewReturnTypeProviderHandler {
 			itemSelectorViewClass.getName());
 
 		return getSupportedItemSelectorReturnTypes(
-			supportedItemSelectorReturnTypes, itemSelectorViewKey);
+			itemSelectorView.getSupportedItemSelectorReturnTypes(),
+			itemSelectorViewKey);
 	}
 
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes(
-		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes,
+		List<ItemSelectorReturnType> itemSelectorReturnTypes,
 		String itemSelectorViewKey) {
+
+		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+			ListUtil.copy(itemSelectorReturnTypes);
 
 		if (Validator.isNull(itemSelectorViewKey)) {
 			return supportedItemSelectorReturnTypes;
