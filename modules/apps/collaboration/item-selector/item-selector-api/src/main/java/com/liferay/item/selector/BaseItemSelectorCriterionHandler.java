@@ -70,22 +70,22 @@ public abstract class BaseItemSelectorCriterionHandler
 	}
 
 	protected void activate(BundleContext bundleContext) {
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, ItemSelectorViewReturnTypeProviderHandler.class,
+			null);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ItemSelectorView.class, null,
 			new ItemSelectorViewServiceReferenceMapper(bundleContext),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator(
 					"item.selector.view.order")));
-
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, ItemSelectorViewReturnTypeProviderHandler.class,
-			null);
 	}
 
 	protected void deactivate() {
-		_serviceTrackerMap.close();
-
 		_serviceTracker.close();
+
+		_serviceTrackerMap.close();
 	}
 
 	private boolean _isItemSelectorViewSupported(
