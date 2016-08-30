@@ -19,12 +19,9 @@ import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Roberto Díaz
  */
-@Component(property = {"item.selector.view.key=test-view"})
 public class TestItemSelectorViewReturnTypeProvider
 	implements ItemSelectorViewReturnTypeProvider {
 
