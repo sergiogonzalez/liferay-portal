@@ -17,8 +17,10 @@ package com.liferay.item.selector.test;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.item.selector.web.ItemSelectorCriterionSerializer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -71,6 +73,20 @@ public class ItemSelectorCriterionSerializerTest {
 			itemSelectorViewServiceRegistration = registerItemSelectorView(
 				testItemSelectorView, "test-view");
 
+		ItemSelectorViewReturnTypeProvider itemSelectorViewReturnTypeProvider =
+			new TestItemSelectorViewReturnTypeProvider();
+
+		ServiceRegistration<ItemSelectorViewReturnTypeProvider>
+			itemSelectorViewReturnTypeProviderServiceRegistration =
+				registerItemSelectorViewProvider(
+					itemSelectorViewReturnTypeProvider, "test-view");
+
+		List serviceRegistrations = new ArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration);
+		serviceRegistrations.add(
+			itemSelectorViewReturnTypeProviderServiceRegistration);
+
 		try {
 			ItemSelectorCriterion itemSelectorCriterion =
 				new TestItemSelectorCriterion();
@@ -111,7 +127,7 @@ public class ItemSelectorCriterionSerializerTest {
 				deserializedItemSelectorReturnTypeClass.getName());
 		}
 		finally {
-			itemSelectorViewServiceRegistration.unregister();
+			_unregister(serviceRegistrations);
 		}
 	}
 
@@ -127,6 +143,25 @@ public class ItemSelectorCriterionSerializerTest {
 
 		return _bundleContext.registerService(
 			ItemSelectorView.class, itemSelectorView, properties);
+	}
+
+	protected ServiceRegistration<ItemSelectorViewReturnTypeProvider>
+		registerItemSelectorViewProvider(
+			ItemSelectorViewReturnTypeProvider
+				itemSelectorViewReturnTypeProvider,
+			String itemSelectorViewKey) {
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("item.selector.view.key", itemSelectorViewKey);
+
+		return _bundleContext.registerService(
+			ItemSelectorViewReturnTypeProvider.class,
+			itemSelectorViewReturnTypeProvider, properties);
+	}
+
+	private void _unregister(List<ServiceRegistration> serviceRegistrations) {
+		serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
 
 	private BundleContext _bundleContext;
