@@ -101,6 +101,8 @@ public class ItemSelectorViewReturnTypeProviderHandler {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
+
+		_serviceTrackerMap.close();
 	}
 
 	private BundleContext _bundleContext;
