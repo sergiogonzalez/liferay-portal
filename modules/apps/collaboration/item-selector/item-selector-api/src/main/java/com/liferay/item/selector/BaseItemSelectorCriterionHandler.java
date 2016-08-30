@@ -83,6 +83,8 @@ public abstract class BaseItemSelectorCriterionHandler
 	}
 
 	protected void deactivate() {
+		_serviceTrackerMap.close();
+
 		_serviceTracker.close();
 	}
 
