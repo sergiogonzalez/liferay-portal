@@ -69,13 +69,10 @@ public class ItemSelectorViewReturnTypeProviderHandlerTest {
 			itemSelectorViewServiceRegistration = registerItemSelectorView(
 				testItemSelectorView, "test-view");
 
-		ItemSelectorViewReturnTypeProvider itemSelectorViewReturnTypeProvider =
-			new TestItemSelectorViewReturnTypeProvider();
-
 		ServiceRegistration<ItemSelectorViewReturnTypeProvider>
 			itemSelectorViewReturnTypeProviderServiceRegistration =
 				registerItemSelectorViewProvider(
-					itemSelectorViewReturnTypeProvider, "test-view");
+					new TestItemSelectorViewReturnTypeProvider(), "test-view");
 
 		List serviceRegistrations = new ArrayList<>();
 
