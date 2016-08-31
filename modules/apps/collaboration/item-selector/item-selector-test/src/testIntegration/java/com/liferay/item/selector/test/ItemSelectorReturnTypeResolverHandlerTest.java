@@ -14,11 +14,14 @@
 
 package com.liferay.item.selector.test;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -59,6 +62,59 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 	@After
 	public void tearDown() throws BundleException {
 		_bundleContext.ungetService(_serviceReference);
+	}
+
+	@Test
+	public void
+		testItemSelectorCriterionHandlerReturnsViewsWithProvidedReturnTypes() {
+
+		TestItemSelectorView testItemSelectorView = new TestItemSelectorView();
+
+		ServiceRegistration<ItemSelectorView>
+			itemSelectorViewServiceRegistration = registerItemSelectorView(
+				testItemSelectorView, "test-view");
+
+		ServiceRegistration<ItemSelectorReturnTypeResolver>
+			itemSelectorReturnTypeResolverServiceRegistration =
+				registerReturnTypeResolver(
+					new TestItemSelectorReturnTypeResolver(), 50);
+
+		ItemSelectorViewReturnTypeProvider itemSelectorViewReturnTypeProvider =
+			new TestItemSelectorViewReturnTypeProvider();
+
+		ServiceRegistration<ItemSelectorViewReturnTypeProvider>
+			itemSelectorViewReturnTypeProviderServiceRegistration =
+				registerItemSelectorViewProvider(
+					itemSelectorViewReturnTypeProvider, "test-view");
+
+		List serviceRegistrations = new ArrayList<>();
+
+		serviceRegistrations.add(itemSelectorViewServiceRegistration);
+		serviceRegistrations.add(
+			itemSelectorReturnTypeResolverServiceRegistration);
+		serviceRegistrations.add(
+			itemSelectorViewReturnTypeProviderServiceRegistration);
+
+		try {
+			TestItemSelectorCriterion testItemSelectorCriterion =
+				new TestItemSelectorCriterion();
+
+			testItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				Arrays.asList(new TestItemSelectorReturnType()));
+
+			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver =
+				_itemSelectorReturnTypeResolverHandler.
+					getItemSelectorReturnTypeResolver(
+						testItemSelectorCriterion, testItemSelectorView,
+						String.class);
+
+			Assert.assertTrue(
+				itemSelectorReturnTypeResolver instanceof
+					TestItemSelectorReturnTypeResolver);
+		}
+		finally {
+			_unregister(serviceRegistrations);
+		}
 	}
 
 	@Test
@@ -158,6 +214,32 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 	@ArquillianResource
 	public Bundle bundle;
 
+	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
+		ItemSelectorView itemSelectorView, String itemSelectorViewKey) {
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("item.selector.view.key", itemSelectorViewKey);
+
+		return _bundleContext.registerService(
+			ItemSelectorView.class, itemSelectorView, properties);
+	}
+
+	protected ServiceRegistration<ItemSelectorViewReturnTypeProvider>
+		registerItemSelectorViewProvider(
+			ItemSelectorViewReturnTypeProvider
+				itemSelectorViewReturnTypeProvider,
+			String itemSelectorViewKey) {
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("item.selector.view.key", itemSelectorViewKey);
+
+		return _bundleContext.registerService(
+			ItemSelectorViewReturnTypeProvider.class,
+			itemSelectorViewReturnTypeProvider, properties);
+	}
+
 	protected ServiceRegistration<ItemSelectorReturnTypeResolver>
 		registerReturnTypeResolver(
 			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver,
@@ -173,9 +255,7 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 	}
 
 	private void _unregister(List<ServiceRegistration> serviceRegistrations) {
-		for (ServiceRegistration serviceRegistration : serviceRegistrations) {
-			serviceRegistration.unregister();
-		}
+		serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
 
 	private BundleContext _bundleContext;
@@ -198,9 +278,6 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 			return String.class;
 		}
 
-	}
-
-	private class TestItemSelectorReturnType implements ItemSelectorReturnType {
 	}
 
 	private class TestItemSelectorReturnTypeResolver1
