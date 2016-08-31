@@ -76,7 +76,7 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 
 		ServiceRegistration<ItemSelectorReturnTypeResolver>
 			itemSelectorReturnTypeResolverServiceRegistration =
-				registerReturnTypeResolver(
+				registerItemSelectorReturnTypeResolver(
 					new TestItemSelectorReturnTypeResolver(), 50);
 
 		ServiceRegistration<ItemSelectorViewReturnTypeProvider>
@@ -117,21 +117,27 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 	@Test
 	public void testItemSelectorReturnTypeResolverIsReplacedByServiceRanking() {
 		ServiceRegistration<ItemSelectorReturnTypeResolver>
-			returnTypeResolverServiceRegistration1 = registerReturnTypeResolver(
-				new TestItemSelectorReturnTypeResolver1(), 100);
+			itemSelectorReturnTypeResolverServiceRegistration1 =
+				registerItemSelectorReturnTypeResolver(
+					new TestItemSelectorReturnTypeResolver1(), 100);
 		ServiceRegistration<ItemSelectorReturnTypeResolver>
-			returnTypeResolverServiceRegistration2 = registerReturnTypeResolver(
-				new TestItemSelectorReturnTypeResolver2(), 200);
+			itemSelectorReturnTypeResolverServiceRegistration2 =
+				registerItemSelectorReturnTypeResolver(
+					new TestItemSelectorReturnTypeResolver2(), 200);
 		ServiceRegistration<ItemSelectorReturnTypeResolver>
-			returnTypeResolverServiceRegistration3 = registerReturnTypeResolver(
-				new TestItemSelectorReturnTypeResolver3(), 50);
+			itemSelectorReturnTypeResolverServiceRegistration3 =
+				registerItemSelectorReturnTypeResolver(
+					new TestItemSelectorReturnTypeResolver3(), 50);
 
 		List<ServiceRegistration> serviceRegistrations =
 			new CopyOnWriteArrayList<>();
 
-		serviceRegistrations.add(returnTypeResolverServiceRegistration1);
-		serviceRegistrations.add(returnTypeResolverServiceRegistration2);
-		serviceRegistrations.add(returnTypeResolverServiceRegistration3);
+		serviceRegistrations.add(
+			itemSelectorReturnTypeResolverServiceRegistration1);
+		serviceRegistrations.add(
+			itemSelectorReturnTypeResolverServiceRegistration2);
+		serviceRegistrations.add(
+			itemSelectorReturnTypeResolverServiceRegistration3);
 
 		try {
 			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver =
@@ -143,9 +149,10 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 				itemSelectorReturnTypeResolver instanceof
 					TestItemSelectorReturnTypeResolver2);
 
-			serviceRegistrations.remove(returnTypeResolverServiceRegistration2);
+			serviceRegistrations.remove(
+				itemSelectorReturnTypeResolverServiceRegistration2);
 
-			returnTypeResolverServiceRegistration2.unregister();
+			itemSelectorReturnTypeResolverServiceRegistration2.unregister();
 
 			itemSelectorReturnTypeResolver =
 				_itemSelectorReturnTypeResolverHandler.
@@ -156,9 +163,10 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 				itemSelectorReturnTypeResolver instanceof
 					TestItemSelectorReturnTypeResolver1);
 
-			serviceRegistrations.remove(returnTypeResolverServiceRegistration1);
+			serviceRegistrations.remove(
+				itemSelectorReturnTypeResolverServiceRegistration1);
 
-			returnTypeResolverServiceRegistration1.unregister();
+			itemSelectorReturnTypeResolverServiceRegistration1.unregister();
 
 			itemSelectorReturnTypeResolver =
 				_itemSelectorReturnTypeResolverHandler.
@@ -177,21 +185,27 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 	@Test
 	public void testItemSelectorReturnTypeResolverIsReturnedByServiceRanking() {
 		ServiceRegistration<ItemSelectorReturnTypeResolver>
-			returnTypeResolverServiceRegistration1 = registerReturnTypeResolver(
-				new TestItemSelectorReturnTypeResolver1(), 100);
+			itemSelectorReturnTypeResolverServiceRegistration1 =
+				registerItemSelectorReturnTypeResolver(
+					new TestItemSelectorReturnTypeResolver1(), 100);
 		ServiceRegistration<ItemSelectorReturnTypeResolver>
-			returnTypeResolverServiceRegistration2 = registerReturnTypeResolver(
-				new TestItemSelectorReturnTypeResolver2(), 200);
+			itemSelectorReturnTypeResolverServiceRegistration2 =
+				registerItemSelectorReturnTypeResolver(
+					new TestItemSelectorReturnTypeResolver2(), 200);
 		ServiceRegistration<ItemSelectorReturnTypeResolver>
-			returnTypeResolverServiceRegistration3 = registerReturnTypeResolver(
-				new TestItemSelectorReturnTypeResolver3(), 50);
+			itemSelectorReturnTypeResolverServiceRegistration3 =
+				registerItemSelectorReturnTypeResolver(
+					new TestItemSelectorReturnTypeResolver3(), 50);
 
 		List<ServiceRegistration> serviceRegistrations =
 			new CopyOnWriteArrayList<>();
 
-		serviceRegistrations.add(returnTypeResolverServiceRegistration1);
-		serviceRegistrations.add(returnTypeResolverServiceRegistration2);
-		serviceRegistrations.add(returnTypeResolverServiceRegistration3);
+		serviceRegistrations.add(
+			itemSelectorReturnTypeResolverServiceRegistration1);
+		serviceRegistrations.add(
+			itemSelectorReturnTypeResolverServiceRegistration2);
+		serviceRegistrations.add(
+			itemSelectorReturnTypeResolverServiceRegistration3);
 
 		try {
 			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver =
@@ -210,6 +224,20 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 
 	@ArquillianResource
 	public Bundle bundle;
+
+	protected ServiceRegistration<ItemSelectorReturnTypeResolver>
+		registerItemSelectorReturnTypeResolver(
+			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver,
+			int serviceRanking) {
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("service.ranking", serviceRanking);
+
+		return _bundleContext.registerService(
+			ItemSelectorReturnTypeResolver.class,
+			itemSelectorReturnTypeResolver, properties);
+	}
 
 	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
 		ItemSelectorView itemSelectorView, String itemSelectorViewKey) {
@@ -235,20 +263,6 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 		return _bundleContext.registerService(
 			ItemSelectorViewReturnTypeProvider.class,
 			itemSelectorViewReturnTypeProvider, properties);
-	}
-
-	protected ServiceRegistration<ItemSelectorReturnTypeResolver>
-		registerReturnTypeResolver(
-			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver,
-			int serviceRanking) {
-
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("service.ranking", serviceRanking);
-
-		return _bundleContext.registerService(
-			ItemSelectorReturnTypeResolver.class,
-			itemSelectorReturnTypeResolver, properties);
 	}
 
 	private void _unregister(List<ServiceRegistration> serviceRegistrations) {
