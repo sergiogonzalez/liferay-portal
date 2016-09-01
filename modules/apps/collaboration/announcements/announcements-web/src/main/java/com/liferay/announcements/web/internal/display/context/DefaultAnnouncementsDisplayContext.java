@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -129,18 +128,7 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1Names() {
-		String tabs1Names = "new,previous";
-
-		if (AnnouncementsEntryPermission.contains(
-				_announcementsRequestHelper.getPermissionChecker(),
-				_announcementsRequestHelper.getLayout(),
-				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
-				ActionKeys.VIEW)) {
-
-			tabs1Names += ",manage-entries";
-		}
-
-		return tabs1Names;
+		return "new,previous";
 	}
 
 	@Override
@@ -240,16 +228,18 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public boolean isTabs1Visible() {
+	public boolean isTabs1Visible() throws PortalException {
 		String portletName = _announcementsRequestHelper.getPortletName();
+
+		ThemeDisplay themeDisplay =
+			_announcementsRequestHelper.getThemeDisplay();
 
 		if (!portletName.equals(AnnouncementsPortletKeys.ALERTS) ||
 			(portletName.equals(AnnouncementsPortletKeys.ALERTS) &&
-			 AnnouncementsEntryPermission.contains(
+			 PortletPermissionUtil.hasControlPanelAccessPermission(
 				 _announcementsRequestHelper.getPermissionChecker(),
-				 _announcementsRequestHelper.getLayout(),
-				 AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
-				 ActionKeys.VIEW))) {
+				 themeDisplay.getCompanyGroupId(),
+				 AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN))) {
 
 			return true;
 		}
