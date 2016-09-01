@@ -69,6 +69,11 @@ public class ItemSelectorCriterionSerializerTest {
 
 		TestItemSelectorView testItemSelectorView = new TestItemSelectorView();
 
+		ServiceRegistration<ItemSelectorReturnType>
+			itemSelectorReturnTypeServiceRegistration =
+				registerItemSelectorReturnType(
+					new TestItemSelectorReturnType());
+
 		ServiceRegistration<ItemSelectorView>
 			itemSelectorViewServiceRegistration = registerItemSelectorView(
 				testItemSelectorView, "test-view");
@@ -81,6 +86,7 @@ public class ItemSelectorCriterionSerializerTest {
 		List serviceRegistrations = new ArrayList<>();
 
 		serviceRegistrations.add(itemSelectorViewServiceRegistration);
+		serviceRegistrations.add(itemSelectorReturnTypeServiceRegistration);
 		serviceRegistrations.add(
 			itemSelectorViewReturnTypeProviderServiceRegistration);
 
@@ -130,6 +136,17 @@ public class ItemSelectorCriterionSerializerTest {
 
 	@ArquillianResource
 	public Bundle bundle;
+
+	protected ServiceRegistration<ItemSelectorReturnType>
+		registerItemSelectorReturnType(
+			TestItemSelectorReturnType testItemSelectorReturnType) {
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		return _bundleContext.registerService(
+			ItemSelectorReturnType.class, testItemSelectorReturnType,
+			properties);
+	}
 
 	protected ServiceRegistration<ItemSelectorView> registerItemSelectorView(
 		ItemSelectorView itemSelectorView, String itemSelectorViewKey) {
