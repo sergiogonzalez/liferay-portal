@@ -3062,6 +3062,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/thumbnailator.jar</file-name>
+				<version>0.4.8</version>
+				<project-name>Thumbnailator</project-name>
+				<project-url>https://github.com/coobird/thumbnailator</project-url>
+				<licenses>
+					<license>
+						<license-name>MIT License</license-name>
+						<license-url>http://opensource.org/licenses/MIT</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/tika-core.jar</file-name>
 				<version>1.10</version>
 				<project-name>Tika</project-name>
