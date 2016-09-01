@@ -98,9 +98,13 @@ public class ItemSelectorCriterionSerializerImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, ItemSelectorView.class,
+		_itemSelectorReturnTypeServiceTracker = ServiceTrackerFactory.open(
+			bundleContext, ItemSelectorReturnType.class,
 			new ItemSelectorReturnTypeServiceTrackerCustomizer());
+
+		_itemSelectorViewServiceTracker = ServiceTrackerFactory.open(
+			bundleContext, ItemSelectorView.class,
+			new ItemSelectorViewReturnTypeServiceTrackerCustomizer());
 	}
 
 	protected void addItemSelectorReturnType(
@@ -130,7 +134,9 @@ public class ItemSelectorCriterionSerializerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		_itemSelectorReturnTypeServiceTracker.close();
+
+		_itemSelectorViewServiceTracker.close();
 	}
 
 	private static final String[] _EXCLUDED_FIELD_NAMES =
@@ -148,9 +154,12 @@ public class ItemSelectorCriterionSerializerImpl
 			new DesiredItemSelectorReturnTypesJSONTransformer();
 	private final ConcurrentMap<String, List<ItemSelectorReturnType>>
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
+	private ServiceTracker<ItemSelectorReturnType, ItemSelectorReturnType>
+		_itemSelectorReturnTypeServiceTracker;
 	private ItemSelectorViewReturnTypeProviderHandler
 		_itemSelectorViewReturnTypeProviderHandler;
-	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
+	private ServiceTracker<ItemSelectorView, ItemSelectorView>
+		_itemSelectorViewServiceTracker;
 
 	private static class DesiredItemSelectorReturnTypesJSONTransformer
 		implements JSONTransformer {
@@ -237,6 +246,59 @@ public class ItemSelectorCriterionSerializerImpl
 	}
 
 	private class ItemSelectorReturnTypeServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ItemSelectorReturnType, ItemSelectorReturnType> {
+
+		@Override
+		public ItemSelectorReturnType addingService(
+			ServiceReference<ItemSelectorReturnType> serviceReference) {
+
+			ItemSelectorReturnType itemSelectorReturnType =
+				_bundleContext.getService(serviceReference);
+
+			try {
+				addItemSelectorReturnType(itemSelectorReturnType);
+			}
+			finally {
+				_bundleContext.ungetService(serviceReference);
+			}
+
+			return itemSelectorReturnType;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ItemSelectorReturnType> serviceReference,
+			ItemSelectorReturnType service) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ItemSelectorReturnType> serviceReference,
+			ItemSelectorReturnType service) {
+
+			try {
+				ItemSelectorReturnType itemSelectorReturnType =
+					_bundleContext.getService(serviceReference);
+
+				Class<? extends ItemSelectorReturnType>
+					supportedItemSelectorReturnTypeClass =
+						itemSelectorReturnType.getClass();
+
+				List<ItemSelectorReturnType> itemSelectorReturnTypes =
+					_itemSelectorReturnTypes.get(
+						supportedItemSelectorReturnTypeClass.getName());
+
+				itemSelectorReturnTypes.remove(0);
+			}
+			finally {
+				_bundleContext.ungetService(serviceReference);
+			}
+		}
+
+	}
+
+	private class ItemSelectorViewReturnTypeServiceTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer<ItemSelectorView, ItemSelectorView> {
 
