@@ -16,6 +16,8 @@ package com.liferay.item.selector.criteria;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * This return type should return the following information of a file entry as a
  * JSON object:
@@ -32,5 +34,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  *
  * @author Sergio González
  */
+@Component(service = FileEntryItemSelectorReturnType.class)
 public class FileEntryItemSelectorReturnType implements ItemSelectorReturnType {
 }
