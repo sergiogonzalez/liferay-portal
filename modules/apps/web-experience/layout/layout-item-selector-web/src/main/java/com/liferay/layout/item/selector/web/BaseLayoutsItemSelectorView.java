@@ -36,6 +36,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Roberto Díaz
  */
@@ -54,6 +56,14 @@ public abstract class BaseLayoutsItemSelectorView
 
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+		if (_supportedItemSelectorReturnTypes == null) {
+			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+				ListUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						_urlItemSelectorReturnType, _uuidItemSelectorReturnType
+					}));
+		}
+
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -89,12 +99,13 @@ public abstract class BaseLayoutsItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
-	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new URLItemSelectorReturnType(),
-					new UUIDItemSelectorReturnType()
-				}));
+	private static List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes;
+
+	@Reference(service = URLItemSelectorReturnType.class)
+	private URLItemSelectorReturnType _urlItemSelectorReturnType;
+
+	@Reference(service = UUIDItemSelectorReturnType.class)
+	private UUIDItemSelectorReturnType _uuidItemSelectorReturnType;
 
 }

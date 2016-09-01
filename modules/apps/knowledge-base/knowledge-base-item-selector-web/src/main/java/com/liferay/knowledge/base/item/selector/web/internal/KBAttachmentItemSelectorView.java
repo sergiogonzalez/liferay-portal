@@ -71,6 +71,15 @@ public class KBAttachmentItemSelectorView
 
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+		if (_supportedItemSelectorReturnTypes == null) {
+			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+				ListUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						_fileEntryItemSelectorReturnType,
+						_urlItemSelectorReturnType
+					}));
+		}
+
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -147,17 +156,18 @@ public class KBAttachmentItemSelectorView
 			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
 	}
 
-	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new FileEntryItemSelectorReturnType(),
-					new URLItemSelectorReturnType()
-				}));
+	private static List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes;
+
+	@Reference(service = FileEntryItemSelectorReturnType.class)
+	private FileEntryItemSelectorReturnType _fileEntryItemSelectorReturnType;
 
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
+
+	@Reference(service = URLItemSelectorReturnType.class)
+	private URLItemSelectorReturnType _urlItemSelectorReturnType;
 
 }

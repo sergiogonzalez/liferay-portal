@@ -65,6 +65,14 @@ public class WikiAttachmentItemSelectorView
 
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+		if (_supportedItemSelectorReturnTypes == null) {
+			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+				ListUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						_fileEntryItemSelectorReturnType
+					}));
+		}
+
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -127,12 +135,11 @@ public class WikiAttachmentItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new FileEntryItemSelectorReturnType()
-				}));
+	private static List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes;
+
+	@Reference(service = FileEntryItemSelectorReturnType.class)
+	private FileEntryItemSelectorReturnType _fileEntryItemSelectorReturnType;
 
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;

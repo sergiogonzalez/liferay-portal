@@ -16,8 +16,12 @@ package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -25,6 +29,8 @@ import com.liferay.portal.language.LanguageResources;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -51,6 +57,20 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	public ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Override
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+		if (_supportedItemSelectorReturnTypes == null) {
+			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+				ListUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						_fileEntryItemSelectorReturnType,
+						_urlItemSelectorReturnType
+					}));
+		}
+
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -97,6 +117,13 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		requestDispatcher.include(request, response);
 	}
 
+	@Reference(service = FileEntryItemSelectorReturnType.class)
+	public void setFileEntryItemSelectorReturnType(
+		FileEntryItemSelectorReturnType fileEntryItemSelectorReturnType) {
+
+		_fileEntryItemSelectorReturnType = fileEntryItemSelectorReturnType;
+	}
+
 	@Reference(unbind = "-")
 	public void setItemSelectorReturnTypeResolverHandler(
 		ItemSelectorReturnTypeResolverHandler
@@ -114,12 +141,24 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		_servletContext = servletContext;
 	}
 
+	@Reference(service = URLItemSelectorReturnType.class)
+	public void setUrlItemSelectorReturnType(
+		URLItemSelectorReturnType urlItemSelectorReturnType) {
+
+		_urlItemSelectorReturnType = urlItemSelectorReturnType;
+	}
+
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
 
+	private static List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes;
+
+	private FileEntryItemSelectorReturnType _fileEntryItemSelectorReturnType;
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;
+	private URLItemSelectorReturnType _urlItemSelectorReturnType;
 
 }
