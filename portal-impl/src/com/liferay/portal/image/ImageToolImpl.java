@@ -36,7 +36,6 @@ import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -68,6 +67,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 import net.jmge.gif.Gif89Encoder;
 
@@ -694,25 +695,19 @@ public class ImageToolImpl implements ImageTool {
 	protected RenderedImage doScale(
 		RenderedImage renderedImage, int scaledHeight, int scaledWidth) {
 
-		// See http://www.oracle.com/technetwork/java/index-137037.html
-
 		BufferedImage originalBufferedImage = getBufferedImage(renderedImage);
 
-		BufferedImage scaledBufferedImage = new BufferedImage(
-			scaledWidth, scaledHeight, originalBufferedImage.getType());
+		BufferedImage scaledBufferedImage = null;
 
-		Graphics2D scaledGraphics2D = scaledBufferedImage.createGraphics();
-
-		ColorModel originalColorModel = originalBufferedImage.getColorModel();
-
-		if (originalColorModel.hasAlpha()) {
-			scaledGraphics2D.setComposite(AlphaComposite.Src);
+		try {
+			scaledBufferedImage = Thumbnails.of(originalBufferedImage).size(
+				scaledWidth, scaledHeight).asBufferedImage();
 		}
-
-		scaledGraphics2D.drawImage(
-			originalBufferedImage, 0, 0, scaledWidth, scaledHeight, null);
-
-		scaledGraphics2D.dispose();
+		catch (IOException ioe) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to process image: " + ioe.getMessage());
+			}
+		}
 
 		return scaledBufferedImage;
 	}
