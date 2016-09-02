@@ -21,7 +21,6 @@ import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eduardo Garcia
@@ -39,12 +38,6 @@ public class JournalItemSelectorCriterionHandler
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
-	}
-
-	@Deactivate
-	@Override
-	protected void deactivate() {
-		super.deactivate();
 	}
 
 }
