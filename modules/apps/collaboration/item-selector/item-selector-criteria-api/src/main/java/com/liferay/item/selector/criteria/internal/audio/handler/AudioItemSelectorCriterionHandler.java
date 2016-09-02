@@ -42,6 +42,7 @@ public class AudioItemSelectorCriterionHandler
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}
