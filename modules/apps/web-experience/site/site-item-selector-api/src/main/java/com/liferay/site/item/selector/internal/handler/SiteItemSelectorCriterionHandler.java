@@ -42,6 +42,7 @@ public class SiteItemSelectorCriterionHandler
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}
