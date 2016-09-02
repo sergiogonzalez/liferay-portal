@@ -21,6 +21,7 @@ import com.liferay.friendly.url.exportimport.util.FriendlyURLExportImportHelper;
 import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.service.FriendlyURLLocalService;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -41,19 +42,23 @@ public class FriendlyURLExportImportHelperImpl
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws PortletDataException {
 
-		long classNameId = PortalUtil.getClassNameId(
-			stagedModel.getModelClassName());
+		try (ContextClassLoaderSetter contextClassLoaderSetter =
+				new ContextClassLoaderSetter(portletDataContext)) {
 
-		List<FriendlyURL> friendlyURLs =
-			_friendlyURLLocalService.getFriendlyURLs(
-				stagedModel.getCompanyId(),
-				portletDataContext.getScopeGroupId(), classNameId,
-				(long)stagedModel.getPrimaryKeyObj());
+			long classNameId = PortalUtil.getClassNameId(
+				stagedModel.getModelClassName());
 
-		for (FriendlyURL friendlyURL : friendlyURLs) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, friendlyURL,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			List<FriendlyURL> friendlyURLs =
+				_friendlyURLLocalService.getFriendlyURLs(
+					stagedModel.getCompanyId(),
+					portletDataContext.getScopeGroupId(), classNameId,
+					(long)stagedModel.getPrimaryKeyObj());
+
+			for (FriendlyURL friendlyURL : friendlyURLs) {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, stagedModel, friendlyURL,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
 		}
 	}
 
@@ -62,18 +67,22 @@ public class FriendlyURLExportImportHelperImpl
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws PortletDataException {
 
-		List<Element> friendlyURLElements =
-			portletDataContext.getReferenceDataElements(
-				stagedModel, FriendlyURL.class);
+		try (ContextClassLoaderSetter contextClassLoaderSetter =
+				new ContextClassLoaderSetter(portletDataContext)) {
 
-		for (Element friendlyURLElement : friendlyURLElements) {
-			String path = friendlyURLElement.attributeValue("path");
+			List<Element> friendlyURLElements =
+				portletDataContext.getReferenceDataElements(
+					stagedModel, FriendlyURL.class);
 
-			FriendlyURL friendlyURL =
-				(FriendlyURL)portletDataContext.getZipEntryAsObject(path);
+			for (Element friendlyURLElement : friendlyURLElements) {
+				String path = friendlyURLElement.attributeValue("path");
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, friendlyURL);
+				FriendlyURL friendlyURL =
+					(FriendlyURL)portletDataContext.getZipEntryAsObject(path);
+
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, friendlyURL);
+			}
 		}
 	}
 
@@ -85,5 +94,30 @@ public class FriendlyURLExportImportHelperImpl
 	}
 
 	private FriendlyURLLocalService _friendlyURLLocalService;
+
+	private static class ContextClassLoaderSetter implements AutoCloseable {
+
+		public ContextClassLoaderSetter(PortletDataContext portletDataContext) {
+			_classLoader = ClassLoaderUtil.getContextClassLoader();
+			_portletDataContext = portletDataContext;
+
+			ClassLoaderUtil.setContextClassLoader(
+				FriendlyURLExportImportHelperImpl.class.getClassLoader());
+
+			_portletDataContext.setClassLoader(
+				FriendlyURLExportImportHelperImpl.class.getClassLoader());
+		}
+
+		@Override
+		public void close() {
+			ClassLoaderUtil.setContextClassLoader(_classLoader);
+
+			_portletDataContext.setClassLoader(_classLoader);
+		}
+
+		private final ClassLoader _classLoader;
+		private final PortletDataContext _portletDataContext;
+
+	}
 
 }
