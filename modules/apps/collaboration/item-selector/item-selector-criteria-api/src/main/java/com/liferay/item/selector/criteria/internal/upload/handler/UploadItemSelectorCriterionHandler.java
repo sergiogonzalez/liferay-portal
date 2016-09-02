@@ -42,6 +42,7 @@ public class UploadItemSelectorCriterionHandler
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}
