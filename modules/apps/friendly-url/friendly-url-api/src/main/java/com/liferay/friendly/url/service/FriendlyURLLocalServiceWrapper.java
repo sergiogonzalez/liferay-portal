@@ -159,6 +159,14 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 			groupId);
 	}
 
+	@Override
+	public com.liferay.friendly.url.model.FriendlyURL getMainFriendlyURL(
+		long companyId, long groupId, java.lang.Class<?> clazz, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _friendlyURLLocalService.getMainFriendlyURL(companyId, groupId,
+			clazz, classPK);
+	}
+
 	/**
 	* Updates the friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
