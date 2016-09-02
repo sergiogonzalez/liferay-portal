@@ -42,6 +42,7 @@ public class ImageItemSelectorCriterionHandler
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}

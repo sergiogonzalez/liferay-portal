@@ -42,6 +42,7 @@ public class LayoutItemSelectorCriterionHandler
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}
