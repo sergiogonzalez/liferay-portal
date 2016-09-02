@@ -17,8 +17,12 @@ package com.liferay.item.selector.web.internal.util;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProviderHandler;
 import com.liferay.item.selector.web.ItemSelectorCriterionSerializer;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -98,9 +102,15 @@ public class ItemSelectorCriterionSerializerImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, ItemSelectorView.class,
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ItemSelectorView.class, null,
+			new PropertyServiceReferenceMapper<String, ItemSelectorView>(
+				"item.selector.view.key"),
 			new ItemSelectorReturnTypeServiceTrackerCustomizer());
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, ItemSelectorViewReturnTypeProvider.class,
+			new ItemSelectorViewReturnTypeProviderServiceTrackerCustomizer());
 	}
 
 	protected void addItemSelectorReturnType(
@@ -150,7 +160,10 @@ public class ItemSelectorCriterionSerializerImpl
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
 	private ItemSelectorViewReturnTypeProviderHandler
 		_itemSelectorViewReturnTypeProviderHandler;
-	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
+	private ServiceTracker
+		<ItemSelectorViewReturnTypeProvider,
+			ItemSelectorViewReturnTypeProvider> _serviceTracker;
+	private ServiceTrackerMap<String, ItemSelectorView> _serviceTrackerMap;
 
 	private static class DesiredItemSelectorReturnTypesJSONTransformer
 		implements JSONTransformer {
@@ -298,6 +311,66 @@ public class ItemSelectorCriterionSerializerImpl
 			finally {
 				_bundleContext.ungetService(serviceReference);
 			}
+		}
+
+	}
+
+	private class ItemSelectorViewReturnTypeProviderServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ItemSelectorViewReturnTypeProvider,
+				ItemSelectorViewReturnTypeProvider> {
+
+		@Override
+		public ItemSelectorViewReturnTypeProvider addingService(
+			ServiceReference<ItemSelectorViewReturnTypeProvider>
+				serviceReference) {
+
+			ItemSelectorViewReturnTypeProvider
+				itemSelectorViewReturnTypeProvider = _bundleContext.getService(
+					serviceReference);
+
+			String itemSelectorViewKey = GetterUtil.getString(
+				serviceReference.getProperty("item.selector.view.key"));
+
+			ItemSelectorView itemSelectorView = _serviceTrackerMap.getService(
+				itemSelectorViewKey);
+
+			if (itemSelectorView == null) {
+				return null;
+			}
+
+			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+				itemSelectorViewReturnTypeProvider.
+					populateSupportedItemSelectorReturnTypes(
+						ListUtil.copy(
+							itemSelectorView.
+								getSupportedItemSelectorReturnTypes()));
+
+			for (ItemSelectorReturnType supportedItemSelectorReturnType :
+					supportedItemSelectorReturnTypes) {
+
+				addItemSelectorReturnType(supportedItemSelectorReturnType);
+			}
+
+			return itemSelectorViewReturnTypeProvider;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ItemSelectorViewReturnTypeProvider>
+				serviceReference,
+			ItemSelectorViewReturnTypeProvider
+				itemSelectorViewReturnTypeProvider) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ItemSelectorViewReturnTypeProvider>
+				serviceReference,
+			ItemSelectorViewReturnTypeProvider
+				itemSelectorViewReturnTypeProvider) {
+
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}
