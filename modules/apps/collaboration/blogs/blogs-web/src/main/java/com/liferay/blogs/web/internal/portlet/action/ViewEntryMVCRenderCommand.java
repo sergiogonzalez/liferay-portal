@@ -93,6 +93,8 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 						themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 				liferayPortletURL.setParameter(
+					"mvcRenderCommandName", "/blogs/view_entry");
+				liferayPortletURL.setParameter(
 					"urlTitle", mainFriendlyURL.getUrlTitle());
 
 				HttpServletResponse response =
