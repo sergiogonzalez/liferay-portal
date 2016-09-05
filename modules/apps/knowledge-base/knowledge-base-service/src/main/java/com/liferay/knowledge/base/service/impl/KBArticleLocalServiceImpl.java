@@ -921,6 +921,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		validateParent(
 			kbArticle, parentResourceClassNameId, parentResourcePrimKey);
+		_validateParentStatus(
+			parentResourceClassNameId, parentResourcePrimKey,
+			kbArticle.getStatus());
 
 		validate(priority);
 
