@@ -24,6 +24,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,10 +127,32 @@ public class WikiAttachmentEditorConfigContributor
 			name = namespace + name;
 		}
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, name + "selectItem",
-			attachmentItemSelectorCriterion, imageItemSelectorCriterion,
-			urlItemSelectorCriterion, uploadItemSelectorCriterion);
+		String format = "";
+
+		try {
+			WikiPage wikiPage = _wikiPageLocalService.getPage(
+				wikiPageResourcePrimKey);
+
+			format = wikiPage.getFormat();
+		}
+		catch (PortalException pe) {
+			pe.printStackTrace();
+		}
+
+		PortletURL itemSelectorURL;
+
+		if (format.equals("creole")) {
+			itemSelectorURL = _itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, name + "selectItem",
+				attachmentItemSelectorCriterion, urlItemSelectorCriterion,
+				uploadItemSelectorCriterion);
+		}
+		else {
+			itemSelectorURL = _itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, name + "selectItem",
+				attachmentItemSelectorCriterion, imageItemSelectorCriterion,
+				urlItemSelectorCriterion, uploadItemSelectorCriterion);
+		}
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
@@ -208,6 +233,14 @@ public class WikiAttachmentEditorConfigContributor
 		return attachmentItemSelectorCriterion;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	private ItemSelector _itemSelector;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }
