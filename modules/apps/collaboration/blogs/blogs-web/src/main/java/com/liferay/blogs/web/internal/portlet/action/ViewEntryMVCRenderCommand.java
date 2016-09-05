@@ -80,7 +80,9 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 			String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 
-			if (!urlTitle.equals(mainFriendlyURL.getUrlTitle())) {
+			if (Validator.isNotNull(urlTitle) &&
+				urlTitle.equals(mainFriendlyURL.getUrlTitle())) {
+
 				HttpServletRequest request = PortalUtil.getHttpServletRequest(
 					renderRequest);
 
