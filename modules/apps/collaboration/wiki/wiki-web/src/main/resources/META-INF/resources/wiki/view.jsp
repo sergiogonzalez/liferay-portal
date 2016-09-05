@@ -236,7 +236,7 @@ if (portletTitleBasedNavigation) {
 						<c:if test="<%= !print && !portletTitleBasedNavigation %>">
 							<div class="page-actions top-actions">
 								<c:if test="<%= followRedirect || (redirectPage == null) %>">
-									<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
+									<c:if test="<%= (wikiPage != null) && WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
 										<liferay-ui:icon
 											iconCssClass="icon-plus"
 											label="<%= true %>"
@@ -313,7 +313,7 @@ if (portletTitleBasedNavigation) {
 							/>
 						</liferay-ui:custom-attributes-available>
 
-						<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
+						<c:if test="<%= (wikiPage != null) &&  (followRedirect || (redirectPage == null)) %>">
 							<div class="page-actions">
 								<div class="stats">
 
