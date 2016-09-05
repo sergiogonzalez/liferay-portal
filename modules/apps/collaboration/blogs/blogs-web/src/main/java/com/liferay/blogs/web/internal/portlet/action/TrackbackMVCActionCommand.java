@@ -132,7 +132,7 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			ActionUtil.getEntry(actionRequest);
+			return ActionUtil.getEntry(actionRequest);
 		}
 		catch (PrincipalException pe) {
 			throw new TrackbackValidationException(
@@ -140,8 +140,6 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 					"trackbacks",
 				pe);
 		}
-
-		return (BlogsEntry)actionRequest.getAttribute(WebKeys.BLOGS_ENTRY);
 	}
 
 	protected boolean isCommentsEnabled(ActionRequest actionRequest)

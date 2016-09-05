@@ -26,6 +26,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.friendly.url.exportimport.util.FriendlyURLExportImportHelper;
+import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -172,6 +174,9 @@ public class BlogsEntryStagedModelDataHandler
 				portletDataContext, entry, fileEntry,
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 		}
+
+		_friendlyURLExportImportHelper.exportFriendlyURLs(
+			portletDataContext, entry);
 
 		String content =
 			_exportImportContentProcessorController.
@@ -363,6 +368,15 @@ public class BlogsEntryStagedModelDataHandler
 				importedEntry.getEntryId());
 		}
 
+		Map<Long, Long> newPrimaryKeysMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				BlogsEntry.class);
+
+		newPrimaryKeysMap.put(entry.getEntryId(), importedEntry.getEntryId());
+
+		_friendlyURLExportImportHelper.importFriendlyURLs(
+			portletDataContext, entry);
+
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
 
@@ -423,6 +437,17 @@ public class BlogsEntryStagedModelDataHandler
 		return inputStream;
 	}
 
+	@Override
+	protected boolean isExplicitlyImportedReference(Element referenceElement) {
+		String className = referenceElement.attributeValue("class-name");
+
+		if (className.equals(FriendlyURL.class.getName())) {
+			return true;
+		}
+
+		return super.isExplicitlyImportedReference(referenceElement);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */
@@ -437,6 +462,13 @@ public class BlogsEntryStagedModelDataHandler
 		BlogsEntryLocalService blogsEntryLocalService) {
 
 		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setFriendlyURLExportImportHelper(
+		FriendlyURLExportImportHelper friendlyURLExportImportHelper) {
+
+		_friendlyURLExportImportHelper = friendlyURLExportImportHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -510,6 +542,7 @@ public class BlogsEntryStagedModelDataHandler
 	private ExportImportContentProcessorController
 		_exportImportContentProcessorController;
 
+	private FriendlyURLExportImportHelper _friendlyURLExportImportHelper;
 	private ImageLocalService _imageLocalService;
 
 }
