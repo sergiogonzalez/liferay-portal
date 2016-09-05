@@ -83,11 +83,9 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 			if (Validator.isNotNull(urlTitle) &&
 				urlTitle.equals(mainFriendlyURL.getUrlTitle())) {
 
-				HttpServletRequest request = PortalUtil.getHttpServletRequest(
-					renderRequest);
-
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				LiferayPortletURL liferayPortletURL =
 					PortletURLFactoryUtil.create(
