@@ -125,6 +125,26 @@ public class FriendlyURLStagedModelRepository
 	public FriendlyURL saveStagedModel(FriendlyURL friendlyURL)
 		throws PortalException {
 
+		if (friendlyURL.isMain()) {
+			List<FriendlyURL> friendlyURLs =
+				_friendlyURLLocalService.getFriendlyURLs(
+					friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
+					friendlyURL.getClassNameId(), friendlyURL.getClassPK());
+
+			for (FriendlyURL curFriendlyURL : friendlyURLs) {
+				if (curFriendlyURL.isMain()) {
+					if (!curFriendlyURL.equals(friendlyURL)) {
+						curFriendlyURL.setMain(false);
+
+						_friendlyURLLocalService.updateFriendlyURL(
+							curFriendlyURL);
+					}
+
+					break;
+				}
+			}
+		}
+
 		return _friendlyURLLocalService.updateFriendlyURL(friendlyURL);
 	}
 
