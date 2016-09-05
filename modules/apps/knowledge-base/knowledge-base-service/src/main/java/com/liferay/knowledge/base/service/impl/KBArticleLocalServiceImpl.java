@@ -28,6 +28,7 @@ import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticlePriorityException;
 import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
+import com.liferay.knowledge.base.exception.KBArticleStatusException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
@@ -1249,6 +1250,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBArticle kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
+		_validateParentStatus(
+			kbArticle.getParentResourceClassNameId(),
+			kbArticle.getParentResourcePrimKey(), status);
+
 		kbArticle.setModifiedDate(serviceContext.getModifiedDate(now));
 		kbArticle.setMain(main);
 		kbArticle.setStatus(status);
@@ -2076,6 +2081,28 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			_getAllDescendantKBArticles(
 				kbArticles, curKBArticle.getResourcePrimKey(), status,
 				orderByComparator);
+		}
+	}
+
+	private void _validateParentStatus(
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			int status)
+		throws PortalException {
+
+		long kbFolderClassNameId = classNameLocalService.getClassNameId(
+			KBFolder.class);
+
+		if (parentResourceClassNameId == kbFolderClassNameId) {
+			return;
+		}
+
+		KBArticle kbArticle = getLatestKBArticle(
+			parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		if ((kbArticle.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			(status == WorkflowConstants.STATUS_APPROVED)) {
+
+			throw new KBArticleStatusException();
 		}
 	}
 
