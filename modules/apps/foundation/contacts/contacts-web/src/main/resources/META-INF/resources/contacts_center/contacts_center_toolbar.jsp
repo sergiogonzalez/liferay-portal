@@ -179,12 +179,10 @@ if (user2 != null) {
 	);
 
 	<%
-	ServletContext servletContext = ServletContextPool.get("private-messaging-portlet");
-
 	String privateMessagingPortletId = PortletProviderUtil.getPortletId("com.liferay.social.privatemessaging.model.UserThread", PortletProvider.Action.EDIT);
 	%>
 
-	<c:if test="<%= Validator.isNotNull(privateMessagingPortletId) && Validator.isNotNull(servletContext) && ((user2 == null) || (user2.getUserId() != themeDisplay.getUserId())) %>">
+	<c:if test="<%= Validator.isNotNull(privateMessagingPortletId) && ((user2 == null) || (user2.getUserId() != themeDisplay.getUserId())) %>">
 		contactsToolbarChildren.push(
 			{
 				icon: 'icon-envelope',
