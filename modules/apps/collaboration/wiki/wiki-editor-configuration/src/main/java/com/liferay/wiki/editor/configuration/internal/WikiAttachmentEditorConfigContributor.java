@@ -27,9 +27,12 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.model.WikiPage;
@@ -101,9 +104,6 @@ public class WikiAttachmentEditorConfigContributor
 			getWikiAttachmentItemSelectorCriterion(
 				wikiPageResourcePrimKey, desiredItemSelectorReturnTypes);
 
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);
-
 		ItemSelectorCriterion urlItemSelectorCriterion =
 			getURLItemSelectorCriterion();
 
@@ -127,7 +127,7 @@ public class WikiAttachmentEditorConfigContributor
 			name = namespace + name;
 		}
 
-		String format = "";
+		String format = StringPool.BLANK;
 
 		try {
 			WikiPage wikiPage = _wikiPageLocalService.getPage(
@@ -136,22 +136,27 @@ public class WikiAttachmentEditorConfigContributor
 			format = wikiPage.getFormat();
 		}
 		catch (PortalException pe) {
-			pe.printStackTrace();
+			_log.error(
+				"Unable to get page format for page " + wikiPageResourcePrimKey,
+				pe);
 		}
 
-		PortletURL itemSelectorURL;
+		PortletURL itemSelectorURL = null;
 
-		if (format.equals("creole")) {
-			itemSelectorURL = _itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, name + "selectItem",
-				attachmentItemSelectorCriterion, urlItemSelectorCriterion,
-				uploadItemSelectorCriterion);
-		}
-		else {
+		if (format.equals("html")) {
+			ItemSelectorCriterion imageItemSelectorCriterion =
+				getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);
+
 			itemSelectorURL = _itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, name + "selectItem",
 				attachmentItemSelectorCriterion, imageItemSelectorCriterion,
 				urlItemSelectorCriterion, uploadItemSelectorCriterion);
+		}
+		else {
+			itemSelectorURL = _itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, name + "selectItem",
+				attachmentItemSelectorCriterion, urlItemSelectorCriterion,
+				uploadItemSelectorCriterion);
 		}
 
 		jsonObject.put(
@@ -239,6 +244,9 @@ public class WikiAttachmentEditorConfigContributor
 
 		_wikiPageLocalService = wikiPageLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiAttachmentEditorConfigContributor.class);
 
 	private ItemSelector _itemSelector;
 	private WikiPageLocalService _wikiPageLocalService;
