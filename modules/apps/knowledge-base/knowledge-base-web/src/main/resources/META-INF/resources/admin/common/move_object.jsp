@@ -29,7 +29,6 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey")
 String title = null;
 String parentTitle = null;
 double priority = KBArticleConstants.DEFAULT_PRIORITY;
-int targetStatus = status;
 
 if (resourceClassNameId == kbArticleClassNameId) {
 	KBArticle kbArticle = KBArticleServiceUtil.fetchLatestKBArticle(resourcePrimKey, status);
@@ -37,10 +36,6 @@ if (resourceClassNameId == kbArticleClassNameId) {
 	title = kbArticle.getTitle();
 	parentTitle = kbArticle.getParentTitle(locale, status);
 	priority = kbArticle.getPriority();
-
-	if (kbArticle.isApproved()) {
-		targetStatus = WorkflowConstants.STATUS_APPROVED;
-	}
 }
 else {
 	KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(resourcePrimKey);
@@ -133,7 +128,6 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 						<portlet:param name="priority" value="<%= String.valueOf(priority) %>" />
 						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-						<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
 					</liferay-portlet:renderURL>
 
 					uri: '<%= selectKBObjectURL %>'

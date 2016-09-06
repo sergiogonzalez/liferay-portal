@@ -25,7 +25,6 @@ long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClass
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 long originalParentResourcePrimKey = ParamUtil.getLong(request, "originalParentResourcePrimKey");
 double priority = ParamUtil.getDouble(request, "priority", KBArticleConstants.DEFAULT_PRIORITY);
-int targetStatus = ParamUtil.getInteger(request, "targetStatus", status);
 
 long kbArticleClassNameId = PortalUtil.getClassNameId(KBArticleConstants.getClassName());
 
@@ -71,8 +70,8 @@ if (kbFolderView) {
 	kbObjectSearchContainer.setResults(KBFolderServiceUtil.getKBFolders(scopeGroupId, parentResourcePrimKey, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd()));
 }
 else {
-	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, targetStatus));
-	kbObjectSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, targetStatus, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd(), new KBObjectsTitleComparator<Object>()));
+	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED));
+	kbObjectSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd(), new KBObjectsTitleComparator<Object>()));
 }
 %>
 
@@ -207,12 +206,11 @@ else {
 							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(originalParentResourcePrimKey) %>" />
 							<portlet:param name="selectableClassNameIds" value="<%= StringUtil.merge(selectableClassNameIds) %>" />
 							<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-							<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
 							<portlet:param name="eventName" value="<%= eventName %>" />
 						</liferay-portlet:renderURL>
 
 						<%
-						int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), targetStatus);
+						int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 
 						if ((kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticlesCount == 0)) {
 							rowURL = null;
