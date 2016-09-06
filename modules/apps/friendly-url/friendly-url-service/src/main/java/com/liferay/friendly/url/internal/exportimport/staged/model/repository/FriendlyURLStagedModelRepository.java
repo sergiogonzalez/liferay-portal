@@ -22,8 +22,8 @@ import com.liferay.friendly.url.service.FriendlyURLLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
 import java.util.List;
@@ -145,6 +145,8 @@ public class FriendlyURLStagedModelRepository
 			}
 		}
 
+		friendlyURL.setUrlTitle(_getUniqueUrlTitle(friendlyURL));
+
 		return _friendlyURLLocalService.updateFriendlyURL(friendlyURL);
 	}
 
@@ -161,6 +163,36 @@ public class FriendlyURLStagedModelRepository
 		FriendlyURLLocalService friendlyURLLocalService) {
 
 		_friendlyURLLocalService = friendlyURLLocalService;
+	}
+
+	private String _getUniqueUrlTitle(FriendlyURL friendlyURL) {
+		String urlTitle = friendlyURL.getUrlTitle();
+
+		for (int i = 1;; i++) {
+			FriendlyURL curFriendlyURL =
+				_friendlyURLLocalService.fetchFriendlyURL(
+					friendlyURL.getCompanyId(), friendlyURL.getGroupId(),
+					friendlyURL.getClassNameId(), urlTitle);
+
+			if ((curFriendlyURL == null) ||
+				friendlyURL.equals(curFriendlyURL)) {
+
+				break;
+			}
+
+			String suffix = StringPool.DASH + i;
+
+			String prefix = urlTitle;
+
+			if (urlTitle.length() > suffix.length()) {
+				prefix = urlTitle.substring(
+					0, urlTitle.length() - suffix.length());
+			}
+
+			urlTitle = prefix + suffix;
+		}
+
+		return urlTitle;
 	}
 
 	private FriendlyURLLocalService _friendlyURLLocalService;
