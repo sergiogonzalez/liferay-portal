@@ -157,20 +157,12 @@ public class FriendlyURLStagedModelRepository
 	}
 
 	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setFriendlyURLLocalService(
 		FriendlyURLLocalService friendlyURLLocalService) {
 
 		_friendlyURLLocalService = friendlyURLLocalService;
 	}
 
-	private ClassNameLocalService _classNameLocalService;
 	private FriendlyURLLocalService _friendlyURLLocalService;
 
 }
