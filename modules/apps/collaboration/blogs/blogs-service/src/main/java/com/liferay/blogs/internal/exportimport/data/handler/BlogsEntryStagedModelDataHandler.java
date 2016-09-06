@@ -286,17 +286,6 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
 
-		if ((entry.getCoverImageFileEntryId() == 0) &&
-			Validator.isNull(entry.getCoverImageURL()) &&
-			(entry.getSmallImageFileEntryId() == 0) &&
-			Validator.isNull(entry.getSmallImageURL()) &&
-			!entry.isSmallImage()) {
-
-			portletDataContext.importClassedModel(entry, importedEntry);
-
-			return;
-		}
-
 		// Cover image
 
 		ImageSelector coverImageSelector = null;
