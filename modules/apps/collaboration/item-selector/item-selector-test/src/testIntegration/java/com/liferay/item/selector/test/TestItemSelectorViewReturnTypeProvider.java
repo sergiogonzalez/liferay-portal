@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria;
+package com.liferay.item.selector.test;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 
-import org.osgi.service.component.annotations.Component;
+import java.util.List;
 
 /**
- * This return type should return the following information of a file entry as a
- * JSON object:
- *
- * <code>
- * {
- * 		fileEntryId: The ID of the selected file entry
- * 		groupId: The group ID of the selected file entry
- * 		title: The title of the selected file entry
- * 		url: The URL of the selected FileEntry
- * 		uuid: The UUID of the selected file entry
- * }
- * </code>
- *
- * @author Sergio González
+ * @author Roberto Díaz
  */
-@Component(service = FileEntryItemSelectorReturnType.class)
-public class FileEntryItemSelectorReturnType implements ItemSelectorReturnType {
+public class TestItemSelectorViewReturnTypeProvider
+	implements ItemSelectorViewReturnTypeProvider {
+
+	public List<ItemSelectorReturnType>
+		populateSupportedItemSelectorReturnTypes(
+			List<ItemSelectorReturnType> itemSelectorReturnTypes) {
+
+		itemSelectorReturnTypes.clear();
+
+		itemSelectorReturnTypes.add(new TestItemSelectorReturnType());
+
+		return itemSelectorReturnTypes;
+	}
+
 }

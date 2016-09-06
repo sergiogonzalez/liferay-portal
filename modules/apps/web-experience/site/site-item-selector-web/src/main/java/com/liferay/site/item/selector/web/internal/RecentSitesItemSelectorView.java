@@ -69,6 +69,14 @@ public class RecentSitesItemSelectorView
 
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+		if (_supportedItemSelectorReturnTypes == null) {
+			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+				ListUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						_urlItemSelectorReturnType, _uuidItemSelectorReturnType
+					}));
+		}
+
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -134,16 +142,17 @@ public class RecentSitesItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new URLItemSelectorReturnType(),
-					new UUIDItemSelectorReturnType()
-				}));
+	private static List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes;
 
 	private GroupURLProvider _groupURLProvider;
 	private RecentGroupManager _recentGroupManager;
 	private ServletContext _servletContext;
+
+	@Reference(service = URLItemSelectorReturnType.class)
+	private URLItemSelectorReturnType _urlItemSelectorReturnType;
+
+	@Reference(service = UUIDItemSelectorReturnType.class)
+	private UUIDItemSelectorReturnType _uuidItemSelectorReturnType;
 
 }

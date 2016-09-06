@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria;
+package com.liferay.item.selector.web;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.item.selector.ItemSelectorCriterion;
 
 /**
- * This return type should return the URL of the entity as a string.
- *
- * @author Sergio González
+ * @author Roberto Díaz
  */
-@Component(service = URLItemSelectorReturnType.class)
-public class URLItemSelectorReturnType implements ItemSelectorReturnType {
+public interface ItemSelectorCriterionSerializer {
+
+	public <T extends ItemSelectorCriterion> T deserialize(
+		Class<T> itemSelectorCriterionClass, String json);
+
+	public String serialize(ItemSelectorCriterion itemSelectorCriterion);
+
 }

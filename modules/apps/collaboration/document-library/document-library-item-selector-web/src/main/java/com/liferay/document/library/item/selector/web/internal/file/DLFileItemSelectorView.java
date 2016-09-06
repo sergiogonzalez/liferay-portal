@@ -15,15 +15,8 @@
 package com.liferay.document.library.item.selector.web.internal.file;
 
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
-import com.liferay.portal.kernel.util.ListUtil;
-
-import java.util.Collections;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -41,18 +34,5 @@ public class DLFileItemSelectorView
 	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return FileItemSelectorCriterion.class;
 	}
-
-	@Override
-	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
-		return _supportedItemSelectorReturnTypes;
-	}
-
-	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new FileEntryItemSelectorReturnType(),
-					new URLItemSelectorReturnType()
-				}));
 
 }

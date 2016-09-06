@@ -12,17 +12,29 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria;
+package com.liferay.item.selector.test;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
- * This return type should return the Base64 encoding of the entity as a string.
- *
  * @author Roberto Díaz
  */
-@Component(service = Base64ItemSelectorReturnType.class)
-public class Base64ItemSelectorReturnType implements ItemSelectorReturnType {
+public class TestItemSelectorReturnTypeResolver implements
+	ItemSelectorReturnTypeResolver<TestItemSelectorReturnType, String> {
+
+	public Class<TestItemSelectorReturnType> getItemSelectorReturnTypeClass() {
+		return TestItemSelectorReturnType.class;
+	}
+
+	public Class<String> getModelClass() {
+		return String.class;
+	}
+
+	public String getValue(String s, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return "Success Value";
+	}
+
 }

@@ -16,11 +16,14 @@ package com.liferay.item.selector.criteria;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * This return type should return the Universally Unique Identifier (UUID) of
  * the entity as a string.
  *
  * @author Sergio González
  */
+@Component(service = UUIDItemSelectorReturnType.class)
 public class UUIDItemSelectorReturnType implements ItemSelectorReturnType {
 }

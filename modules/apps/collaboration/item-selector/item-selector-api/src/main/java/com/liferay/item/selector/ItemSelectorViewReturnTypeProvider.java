@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria;
+package com.liferay.item.selector;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
-
-import org.osgi.service.component.annotations.Component;
+import java.util.List;
 
 /**
- * This return type should return the URL of the entity as a string.
- *
- * @author Sergio González
+ * @author Roberto Díaz
  */
-@Component(service = URLItemSelectorReturnType.class)
-public class URLItemSelectorReturnType implements ItemSelectorReturnType {
+public interface ItemSelectorViewReturnTypeProvider {
+
+	public List<ItemSelectorReturnType>
+		populateSupportedItemSelectorReturnTypes(
+			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes);
+
 }

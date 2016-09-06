@@ -66,6 +66,15 @@ public class JournalItemSelectorView
 
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+		if (_supportedItemSelectorReturnTypes == null) {
+			_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+				ListUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						_fileEntryItemSelectorReturnType,
+						_urlItemSelectorReturnType
+					}));
+		}
+
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -127,16 +136,17 @@ public class JournalItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new FileEntryItemSelectorReturnType(),
-					new URLItemSelectorReturnType()
-				}));
+	private static List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes;
+
+	@Reference(service = FileEntryItemSelectorReturnType.class)
+	private FileEntryItemSelectorReturnType _fileEntryItemSelectorReturnType;
 
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;
+
+	@Reference(service = URLItemSelectorReturnType.class)
+	private URLItemSelectorReturnType _urlItemSelectorReturnType;
 
 }
