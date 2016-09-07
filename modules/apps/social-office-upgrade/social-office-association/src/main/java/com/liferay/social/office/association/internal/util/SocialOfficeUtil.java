@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.office.internal.listeners.util;
+package com.liferay.social.office.association.internal.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;

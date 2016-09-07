@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.office.internal.listeners.constants;
+package com.liferay.social.office.association.internal.constants;
 
 /**
  * @author Jonathan Lee

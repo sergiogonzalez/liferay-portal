@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.office.internal.listeners.util;
+package com.liferay.social.office.association.internal.util;
 
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
-import com.liferay.social.office.internal.listeners.constants.SocialOfficeConstants;
+import com.liferay.social.office.association.internal.constants.SocialOfficeConstants;
 
 import java.util.List;
 

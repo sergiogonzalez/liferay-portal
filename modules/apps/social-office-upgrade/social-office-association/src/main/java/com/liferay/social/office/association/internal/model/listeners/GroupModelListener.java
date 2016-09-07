@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.office.internal.listeners;
+package com.liferay.social.office.association.internal.model.listeners;
 
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;

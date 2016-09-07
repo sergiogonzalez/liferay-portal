@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.office.internal.listeners;
+package com.liferay.social.office.association.internal.model.listeners;
 
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
-import com.liferay.social.office.internal.listeners.constants.RoleConstants;
-import com.liferay.social.office.internal.listeners.constants.SocialOfficeConstants;
-import com.liferay.social.office.internal.listeners.util.LayoutSetPrototypeUtil;
-import com.liferay.social.office.internal.listeners.util.SocialOfficeUtil;
+import com.liferay.social.office.association.internal.constants.RoleConstants;
+import com.liferay.social.office.association.internal.constants.SocialOfficeConstants;
+import com.liferay.social.office.association.internal.util.LayoutSetPrototypeUtil;
+import com.liferay.social.office.association.internal.util.SocialOfficeUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
