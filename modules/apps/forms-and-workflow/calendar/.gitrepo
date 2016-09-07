@@ -1,10 +1,9 @@
 ;
-; Do not manually edit this file. See
-; https://github.com/git-commands/git-subrepo#readme for more information.
+; Do not manually edit this file.
 ;
 [subrepo]
 	cmdver = liferay
-	commit = be25424b361a23dfea50a69d7d328e338bdd90cb
+	commit = e9aa08622a04f38a99743d939081f44c5e2c3cb9
 	mode = push
-	parent = 8beaf7d7d48e0b07fc656f9a73b2fd7ca84da6f4
+	parent = 68b6c395a091770d2695e4cba780a4abe9193c3d
 	remote = git@github.com:liferay/com-liferay-calendar.git
