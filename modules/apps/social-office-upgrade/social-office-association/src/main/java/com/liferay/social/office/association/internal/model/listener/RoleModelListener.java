@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.office.association.internal.model.listeners;
+package com.liferay.social.office.association.internal.model.listener;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
