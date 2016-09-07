@@ -1598,8 +1598,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	protected KBArticle[] getPreviousAndNextKBArticles(KBArticle kbArticle) {
 		List<KBArticle> kbArticles = kbArticlePersistence.findByG_P_M(
-			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(),
-			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new KBArticlePriorityComparator(true));
 
 		int index = kbArticles.indexOf(kbArticle);
