@@ -1583,9 +1583,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			KBArticle kbArticle, KBArticle nextKBArticle)
 		throws PortalException {
 
-		KBArticle firstChildKBArticle = kbArticlePersistence.fetchByG_P_S_First(
-			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
-			WorkflowConstants.STATUS_APPROVED,
+		KBArticle firstChildKBArticle = kbArticlePersistence.fetchByG_P_M_First(
+			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
 			new KBArticlePriorityComparator(true));
 
 		if (firstChildKBArticle != null) {
@@ -1597,10 +1596,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	protected KBArticle[] getPreviousAndNextKBArticles(KBArticle kbArticle) {
-		List<KBArticle> kbArticles = kbArticlePersistence.findByG_P_S(
-			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(),
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+		List<KBArticle> kbArticles = kbArticlePersistence.findByG_P_M(
+			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new KBArticlePriorityComparator(true));
 
 		int index = kbArticles.indexOf(kbArticle);
 
@@ -1626,10 +1625,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		KBArticle lastSiblingChildKBArticle =
-			kbArticlePersistence.fetchByG_P_S_Last(
+			kbArticlePersistence.fetchByG_P_M_Last(
 				kbArticle.getGroupId(), previousKBArticle.getResourcePrimKey(),
-				WorkflowConstants.STATUS_APPROVED,
-				new KBArticlePriorityComparator(true));
+				true, new KBArticlePriorityComparator(true));
 
 		if (lastSiblingChildKBArticle == null) {
 			return previousKBArticle;
