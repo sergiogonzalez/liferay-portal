@@ -732,6 +732,69 @@ public class KBArticleLocalServiceTest {
 			kbArticle.getParentResourcePrimKey());
 	}
 
+	@Test
+	public void testPreviousAndNextKBArticles() throws Exception {
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticle childKBArticle1 = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle childKBArticle2 = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle topLevelKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticle[] parentPreviousAndNextKBArticles =
+			KBArticleLocalServiceUtil.getPreviousAndNextKBArticles(
+				parentKBArticle.getKbArticleId());
+
+		Assert.assertNull(parentPreviousAndNextKBArticles[0]);
+		Assert.assertEquals(
+			childKBArticle1, parentPreviousAndNextKBArticles[2]);
+
+		KBArticle[] child1PreviousAndNextKBArticles =
+			KBArticleLocalServiceUtil.getPreviousAndNextKBArticles(
+				childKBArticle1.getKbArticleId());
+
+		Assert.assertEquals(
+			parentKBArticle, child1PreviousAndNextKBArticles[0]);
+		Assert.assertEquals(
+			childKBArticle2, child1PreviousAndNextKBArticles[2]);
+
+		KBArticle[] child2PreviousAndNextKBArticles =
+			KBArticleLocalServiceUtil.getPreviousAndNextKBArticles(
+				childKBArticle2.getKbArticleId());
+
+		Assert.assertEquals(
+			childKBArticle1, child2PreviousAndNextKBArticles[0]);
+		Assert.assertEquals(
+			topLevelKBArticle, child2PreviousAndNextKBArticles[2]);
+
+		KBArticle[] topLevelPreviousAndNextKBArticles =
+			KBArticleLocalServiceUtil.getPreviousAndNextKBArticles(
+				topLevelKBArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			childKBArticle2, topLevelPreviousAndNextKBArticles[0]);
+		Assert.assertNull(topLevelPreviousAndNextKBArticles[2]);
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
