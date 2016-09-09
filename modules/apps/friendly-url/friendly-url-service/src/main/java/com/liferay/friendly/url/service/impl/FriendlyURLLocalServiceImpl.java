@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -210,6 +211,10 @@ public class FriendlyURLLocalServiceImpl
 			long companyId, long groupId, long classNameId, long classPK,
 			String urlTitle)
 		throws PortalException {
+
+		if (Validator.isNull(urlTitle)) {
+			throw new FriendlyURLLengthException();
+		}
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			FriendlyURL.class.getName(), "urlTitle");
