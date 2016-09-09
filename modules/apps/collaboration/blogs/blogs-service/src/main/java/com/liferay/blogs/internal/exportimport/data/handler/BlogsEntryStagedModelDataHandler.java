@@ -26,6 +26,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.friendly.url.exportimport.util.FriendlyURLExportImportHelper;
+import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -173,6 +175,9 @@ public class BlogsEntryStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 		}
 
+		_friendlyURLExportImportHelper.exportFriendlyURLs(
+			portletDataContext, entry);
+
 		String content =
 			_exportImportContentProcessorController.
 				replaceExportContentReferences(
@@ -281,17 +286,6 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
 
-		if ((entry.getCoverImageFileEntryId() == 0) &&
-			Validator.isNull(entry.getCoverImageURL()) &&
-			(entry.getSmallImageFileEntryId() == 0) &&
-			Validator.isNull(entry.getSmallImageURL()) &&
-			!entry.isSmallImage()) {
-
-			portletDataContext.importClassedModel(entry, importedEntry);
-
-			return;
-		}
-
 		// Cover image
 
 		ImageSelector coverImageSelector = null;
@@ -363,6 +357,15 @@ public class BlogsEntryStagedModelDataHandler
 				importedEntry.getEntryId());
 		}
 
+		Map<Long, Long> newPrimaryKeysMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				BlogsEntry.class);
+
+		newPrimaryKeysMap.put(entry.getEntryId(), importedEntry.getEntryId());
+
+		_friendlyURLExportImportHelper.importFriendlyURLs(
+			portletDataContext, entry);
+
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
 
@@ -423,6 +426,17 @@ public class BlogsEntryStagedModelDataHandler
 		return inputStream;
 	}
 
+	@Override
+	protected boolean isExplicitlyImportedReference(Element referenceElement) {
+		String className = referenceElement.attributeValue("class-name");
+
+		if (className.equals(FriendlyURL.class.getName())) {
+			return true;
+		}
+
+		return super.isExplicitlyImportedReference(referenceElement);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */
@@ -437,6 +451,13 @@ public class BlogsEntryStagedModelDataHandler
 		BlogsEntryLocalService blogsEntryLocalService) {
 
 		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setFriendlyURLExportImportHelper(
+		FriendlyURLExportImportHelper friendlyURLExportImportHelper) {
+
+		_friendlyURLExportImportHelper = friendlyURLExportImportHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -510,6 +531,7 @@ public class BlogsEntryStagedModelDataHandler
 	private ExportImportContentProcessorController
 		_exportImportContentProcessorController;
 
+	private FriendlyURLExportImportHelper _friendlyURLExportImportHelper;
 	private ImageLocalService _imageLocalService;
 
 }
