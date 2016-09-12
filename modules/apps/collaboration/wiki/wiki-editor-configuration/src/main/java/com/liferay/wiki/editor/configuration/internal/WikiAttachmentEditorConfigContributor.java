@@ -92,6 +92,17 @@ public class WikiAttachmentEditorConfigContributor
 		}
 
 		if (wikiPageResourcePrimKey == 0) {
+			String removePlugins = jsonObject.getString("removePlugins");
+
+			if (Validator.isNotNull(removePlugins)) {
+				removePlugins += ",ae_addimages";
+			}
+			else {
+				removePlugins = "ae_addimages";
+			}
+
+			jsonObject.put("removePlugins", removePlugins);
+
 			return;
 		}
 
@@ -162,17 +173,6 @@ public class WikiAttachmentEditorConfigContributor
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
-
-		String removePlugins = jsonObject.getString("removePlugins");
-
-		if (Validator.isNotNull(removePlugins)) {
-			removePlugins += ",ae_addimages";
-		}
-		else {
-			removePlugins = "ae_addimages";
-		}
-
-		jsonObject.put("removePlugins", removePlugins);
 	}
 
 	@Reference(unbind = "-")
