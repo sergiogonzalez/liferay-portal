@@ -23,7 +23,6 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,23 +45,12 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
-@Component(
-	property = {
-		"editor.config.key=contentEditor",
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"service.ranking:Integer=100"
-	},
-	service = EditorConfigContributor.class
-)
 public class BaseWikiAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
