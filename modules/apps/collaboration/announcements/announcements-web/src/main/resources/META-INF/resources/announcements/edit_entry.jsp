@@ -25,6 +25,8 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 String content = BeanParamUtil.getString(entry, request, "content");
 
+String title = BeanParamUtil.getString(entry, request, "title");
+
 boolean alert = ParamUtil.getBoolean(request, "alert");
 
 boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately");
@@ -81,35 +83,10 @@ if (portletTitleBasedNavigation) {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<c:choose>
-					<c:when test="<%= entry != null %>">
-						<%@ include file="/announcements/entry_scope.jspf" %>
-					</c:when>
-					<c:otherwise>
 
-						<%
-						String distributionScope = ParamUtil.getString(request, "distributionScope");
+				<h1><liferay-ui:input-editor contents="<%= title %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
 
-						long classNameId = 0;
-						long classPK = 0;
-
-						String[] distributionScopeArray = StringUtil.split(distributionScope);
-
-						if (distributionScopeArray.length == 2) {
-							classNameId = GetterUtil.getLong(distributionScopeArray[0]);
-							classPK = GetterUtil.getLong(distributionScopeArray[1]);
-						}
-
-						boolean submitOnChange = false;
-						%>
-
-						<%@ include file="/announcements/entry_select_scope.jspf" %>
-					</c:otherwise>
-				</c:choose>
-
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
-
-				<aui:input name="url" />
+				<aui:input name="title" type="hidden" />
 
 				<aui:field-wrapper label="content" required="<%= true %>">
 
@@ -121,6 +98,36 @@ if (portletTitleBasedNavigation) {
 
 					<aui:input name="content" type="hidden" />
 				</aui:field-wrapper>
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+				<c:choose>
+					<c:when test="<%= entry != null %>">
+						<%@ include file="/announcements/entry_scope.jspf" %>
+					</c:when>
+					<c:otherwise>
+
+						<%
+							String distributionScope = ParamUtil.getString(request, "distributionScope");
+
+							long classNameId = 0;
+							long classPK = 0;
+
+							String[] distributionScopeArray = StringUtil.split(distributionScope);
+
+							if (distributionScopeArray.length == 2) {
+								classNameId = GetterUtil.getLong(distributionScopeArray[0]);
+								classPK = GetterUtil.getLong(distributionScopeArray[1]);
+							}
+
+							boolean submitOnChange = false;
+						%>
+
+						<%@ include file="/announcements/entry_select_scope.jspf" %>
+					</c:otherwise>
+				</c:choose>
+
+				<aui:input name="url" />
 
 				<aui:select name="type">
 
@@ -162,11 +169,16 @@ if (portletTitleBasedNavigation) {
 		return window.<portlet:namespace />contentEditor.getHTML();
 	}
 
+	function <portlet:namespace />getTitle() {
+		return window.<portlet:namespace />titleEditor.getText();
+	}
+
 	function <portlet:namespace />previewEntry() {
 		document.<portlet:namespace />fm.action = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/preview_entry" /></portlet:renderURL>';
 		document.<portlet:namespace />fm.target = '_blank';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.PREVIEW %>';
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
+		document.<portlet:namespace />fm.<portlet:namespace />title.value = <portlet:namespace />getTitle();
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= currentURL %>';
 		document.<portlet:namespace />fm.submit();
 	}
@@ -176,6 +188,7 @@ if (portletTitleBasedNavigation) {
 		document.<portlet:namespace />fm.target = '';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
+		document.<portlet:namespace />fm.<portlet:namespace />title.value = <portlet:namespace />getTitle();
 
 		submitForm(document.<portlet:namespace />fm);
 	}
