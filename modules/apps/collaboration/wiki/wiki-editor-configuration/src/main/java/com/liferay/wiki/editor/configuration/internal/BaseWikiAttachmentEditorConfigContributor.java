@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = EditorConfigContributor.class
 )
-public class WikiAttachmentEditorConfigContributor
+public class BaseWikiAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -257,7 +257,7 @@ public class WikiAttachmentEditorConfigContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WikiAttachmentEditorConfigContributor.class);
+		BaseWikiAttachmentEditorConfigContributor.class);
 
 	private ItemSelector _itemSelector;
 	private WikiPageLocalService _wikiPageLocalService;
