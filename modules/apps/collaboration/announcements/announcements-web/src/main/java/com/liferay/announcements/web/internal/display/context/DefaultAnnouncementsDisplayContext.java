@@ -207,14 +207,6 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public boolean isShowPreview() {
-		String mvcRenderCommandName = ParamUtil.getString(
-			_announcementsRequestHelper.getRequest(), "mvcRenderCommandName");
-
-		return mvcRenderCommandName.equals("/announcements/preview_entry");
-	}
-
-	@Override
 	public boolean isShowPreviousEntries() {
 		String tabs1 = _announcementsRequestHelper.getTabs1();
 

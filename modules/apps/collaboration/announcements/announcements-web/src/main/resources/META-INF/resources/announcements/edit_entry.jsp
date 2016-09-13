@@ -83,21 +83,13 @@ if (portletTitleBasedNavigation) {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-
 				<h1><liferay-ui:input-editor contents="<%= title %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
 
 				<aui:input name="title" type="hidden" />
 
-				<aui:field-wrapper label="content" required="<%= true %>">
+				<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp") %>' name="contentEditor" />
 
-					<%
-					String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp");
-					%>
-
-					<liferay-ui:input-editor contents="<%= content %>" cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName="<%= editorName %>" name="contentEditor" />
-
-					<aui:input name="content" type="hidden" />
-				</aui:field-wrapper>
+				<aui:input name="content" type="hidden" />
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
@@ -157,8 +149,6 @@ if (portletTitleBasedNavigation) {
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
 
-			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
-
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
@@ -171,16 +161,6 @@ if (portletTitleBasedNavigation) {
 
 	function <portlet:namespace />getTitle() {
 		return window.<portlet:namespace />titleEditor.getText();
-	}
-
-	function <portlet:namespace />previewEntry() {
-		document.<portlet:namespace />fm.action = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/preview_entry" /></portlet:renderURL>';
-		document.<portlet:namespace />fm.target = '_blank';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.PREVIEW %>';
-		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
-		document.<portlet:namespace />fm.<portlet:namespace />title.value = <portlet:namespace />getTitle();
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= currentURL %>';
-		document.<portlet:namespace />fm.submit();
 	}
 
 	function <portlet:namespace />saveEntry() {
