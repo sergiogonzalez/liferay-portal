@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"editor.config.key=contentEditor", "editor.name=alloyeditor",
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"editor.name=ckeditor", "javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"service.ranking:Integer=100"
