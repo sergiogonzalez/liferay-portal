@@ -193,20 +193,6 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public boolean isShowManageEntries() {
-		String tabs1 = _announcementsRequestHelper.getTabs1();
-
-		return tabs1.equals("manage-entries");
-	}
-
-	@Override
-	public boolean isShowNewEntries() {
-		String tabs1 = _announcementsRequestHelper.getTabs1();
-
-		return tabs1.equals("new");
-	}
-
-	@Override
 	public boolean isShowPreviousEntries() {
 		String tabs1 = _announcementsRequestHelper.getTabs1();
 
