@@ -86,7 +86,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 			themeDisplay);
 
 		Assert.assertEquals(
-			"ItemSelectorRepositoryEntryBrowserReturnTypeUtil value", value);
+			"ItemSelectorRepositoryEntryBrowserReturnTypeUtilValue", value);
 	}
 
 	@Test
@@ -101,7 +101,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 			new TestItemSelectorReturnType(), fileEntry, themeDisplay);
 
 		Assert.assertEquals(
-			"TestFileEntryItemSelectorReturnTypeResolver value", value);
+			"TestFileEntryItemSelectorReturnTypeResolverValue", value);
 	}
 
 	protected void initMocks() throws Exception {
@@ -112,7 +112,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 				Mockito.any(FileEntryItemSelectorReturnType.class),
 				Mockito.any(FileEntry.class), Mockito.any(ThemeDisplay.class))
 		).thenReturn(
-			"ItemSelectorRepositoryEntryBrowserReturnTypeUtil value"
+			"ItemSelectorRepositoryEntryBrowserReturnTypeUtilValue"
 		);
 	}
 
@@ -133,7 +133,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 			throws Exception {
 
-			return "TestFileEntryItemSelectorReturnTypeResolver value";
+			return "TestFileEntryItemSelectorReturnTypeResolverValue";
 		}
 
 	}
