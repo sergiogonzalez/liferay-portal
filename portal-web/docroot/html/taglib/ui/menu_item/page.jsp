@@ -46,12 +46,15 @@ MenuItem menuItem = (MenuItem)request.getAttribute("liferay-ui:menu_item:menuIte
 			url="javascript:;"
 		/>
 
-		<c:if test="Validator.isNotNull(javaScriptMenuItem.getJavaScript())">
+		<%
+		String javascript = javaScriptMenuItem.getJavaScript();
+		%>
+
+		<c:if test="<%= Validator.isNotNull(javascript) %>">
 			<aui:script>
-				<%= javaScriptMenuItem.getJavaScript() %>
+				<%= javascript %>
 			</aui:script>
 		</c:if>
-
 	</c:when>
 	<c:when test="<%= menuItem instanceof URLMenuItem %>">
 
