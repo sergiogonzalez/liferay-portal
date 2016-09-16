@@ -167,13 +167,17 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 	}
 
 	public static String getItemSelectorReturnTypeClassName(
-			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver,
+			ItemSelectorReturnTypeResolver
+				<? extends ItemSelectorReturnType, FileEntry>
+					itemSelectorReturnTypeResolver,
 			ItemSelectorReturnType itemSelectorReturnType)
 		throws Exception {
 
 		if (itemSelectorReturnTypeResolver != null) {
-			Class itemSelectorReturnTypeClass =
-				itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
+			Class<? extends ItemSelectorReturnType>
+				itemSelectorReturnTypeClass =
+					itemSelectorReturnTypeResolver.
+						getItemSelectorReturnTypeClass();
 
 			return itemSelectorReturnTypeClass.getName();
 		}
@@ -182,7 +186,9 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 	}
 
 	public static String getValue(
-			ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver,
+			ItemSelectorReturnTypeResolver
+				<? extends ItemSelectorReturnType, FileEntry>
+					itemSelectorReturnTypeResolver,
 			ItemSelectorReturnType itemSelectorReturnType, FileEntry fileEntry,
 			ThemeDisplay themeDisplay)
 		throws Exception {
