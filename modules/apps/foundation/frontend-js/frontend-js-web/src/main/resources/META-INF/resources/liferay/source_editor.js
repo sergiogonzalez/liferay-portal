@@ -4,6 +4,7 @@ AUI.add(
 	'liferay-source-editor',
 	function(A) {
 		var Lang = A.Lang;
+		var UA = A.UA;
 
 		var CSS_ACTIVE_CELL = 'ace_gutter-active-cell';
 
@@ -97,8 +98,8 @@ AUI.add(
 
 						// LPS-67768
 
-						if (A.UA.linux && aceEditor.renderer) {
-							aceEditor.renderer.$computeLayoutConfig();
+						if (UA.linux && UA.chrome) {
+							aceEditor.renderer.$computeLayerConfig();
 						}
 					},
 

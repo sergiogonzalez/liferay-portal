@@ -23,14 +23,14 @@ import org.junit.Test;
 public class InsertSQLBuilderTest {
 
 	@Test
-	public void testBuild() {
+	public void testBuildInsert() {
 		String[] fields = {"a", "b", "c", "d"};
 
 		InsertSQLBuilder insertSQLBuilder = new InsertSQLBuilder();
 
 		Assert.assertEquals(
 			"insert into Foo values (a, b, c, d);\n",
-			insertSQLBuilder.build(null, "Foo", fields));
+			insertSQLBuilder.buildInsert(null, "Foo", fields));
 	}
 
 }
