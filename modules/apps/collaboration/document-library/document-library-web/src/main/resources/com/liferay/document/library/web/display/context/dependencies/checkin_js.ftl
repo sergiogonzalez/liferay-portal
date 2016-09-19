@@ -14,11 +14,11 @@ Liferay.provide(
 
 					var majorVersionNode = $("input:radio[name='${namespace}versionDetailsMajorVersion']:checked");
 
-					portletURL += '&majorVersion=' + encodeURIComponent(majorVersionNode.val());
+					portletURL += '&${namespace}majorVersion=' + encodeURIComponent(majorVersionNode.val());
 
 					var changeLogNode = $('#${namespace}versionDetailsChangeLog');
 
-					portletURL += '&changeLog=' + encodeURIComponent(changeLogNode.val());
+					portletURL += '&${namespace}changeLog=' + encodeURIComponent(changeLogNode.val());
 
 					window.location.href = portletURL;
 				}
