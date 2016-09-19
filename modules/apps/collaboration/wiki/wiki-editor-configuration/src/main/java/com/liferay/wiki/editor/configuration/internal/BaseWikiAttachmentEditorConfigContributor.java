@@ -42,7 +42,7 @@ import javax.portlet.PortletURL;
  * @author Sergio González
  * @author Roberto Díaz
  */
-public class BaseWikiAttachmentEditorConfigContributor
+public abstract class BaseWikiAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -69,6 +69,39 @@ public class BaseWikiAttachmentEditorConfigContributor
 		if (!allowBrowseDocuments) {
 			return;
 		}
+
+		Map<String, String> fileBrowserParamsMap =
+			(Map<String, String>)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:fileBrowserParams");
+
+		long wikiPageResourcePrimKey = 0;
+
+		if (fileBrowserParamsMap != null) {
+			wikiPageResourcePrimKey = GetterUtil.getLong(
+				fileBrowserParamsMap.get("wikiPageResourcePrimKey"));
+		}
+
+		String name = GetterUtil.getString(
+			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+
+		boolean inlineEdit = GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:inlineEdit"));
+
+		if (!inlineEdit) {
+			String namespace = GetterUtil.getString(
+				inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:namespace"));
+
+			name = namespace + name;
+		}
+
+		String itemSelectorURL = getItemSelectorURL(
+			requestBackedPortletURLFactory, name + "selectItem",
+			wikiPageResourcePrimKey, themeDisplay);
+
+		jsonObject.put("filebrowserImageBrowseLinkUrl", itemSelectorURL);
+		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL);
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion(
@@ -82,6 +115,11 @@ public class BaseWikiAttachmentEditorConfigContributor
 
 		return imageItemSelectorCriterion;
 	}
+
+	protected abstract String getItemSelectorURL(
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		String itemSelectedEventName, long wikiPageResourcePrimKey,
+		ThemeDisplay themeDisplay);
 
 	protected ItemSelectorCriterion getUploadItemSelectorCriterion(
 		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
