@@ -19,15 +19,12 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -51,40 +48,10 @@ public class WikiAttachmentHtmlEditorConfigContributor
 	extends BaseWikiAttachmentEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
-
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			requestBackedPortletURLFactory);
-
-		Map<String, String> fileBrowserParamsMap =
-			(Map<String, String>)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:fileBrowserParams");
-
-		long wikiPageResourcePrimKey = 0;
-
-		if (fileBrowserParamsMap != null) {
-			wikiPageResourcePrimKey = GetterUtil.getLong(
-				fileBrowserParamsMap.get("wikiPageResourcePrimKey"));
-		}
-
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
-
-		boolean inlineEdit = GetterUtil.getBoolean(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:inlineEdit"));
-
-		if (!inlineEdit) {
-			String namespace = GetterUtil.getString(
-				inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:namespace"));
-
-			name = namespace + name;
-		}
+	protected String getItemSelectorURL(
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		String itemSelectedEventName, long wikiPageResourcePrimKey,
+		ThemeDisplay themeDisplay) {
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -102,7 +69,7 @@ public class WikiAttachmentHtmlEditorConfigContributor
 
 		if (wikiPageResourcePrimKey == 0) {
 			itemSelectorURL = _itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, name + "selectItem",
+				requestBackedPortletURLFactory, itemSelectedEventName,
 				imageItemSelectorCriterion, urlItemSelectorCriterion);
 		}
 		else {
@@ -116,18 +83,16 @@ public class WikiAttachmentHtmlEditorConfigContributor
 					requestBackedPortletURLFactory);
 
 			itemSelectorURL = _itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, name + "selectItem",
+				requestBackedPortletURLFactory, itemSelectedEventName,
 				attachmentItemSelectorCriterion, imageItemSelectorCriterion,
 				urlItemSelectorCriterion, uploadItemSelectorCriterion);
 		}
 
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+		return itemSelectorURL.toString();
 	}
 
 	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
+	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}
 
