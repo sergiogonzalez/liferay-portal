@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = EditorConfigContributor.class
 )
-public class WikiAttachmentHtmlEditorConfigContributor
+public class WikiAttachmentHTMLEditorConfigContributor
 	extends BaseWikiAttachmentEditorConfigContributor {
 
 	@Override
