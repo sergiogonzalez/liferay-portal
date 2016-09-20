@@ -77,7 +77,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 	<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 </liferay-portlet:actionURL>
 
-<aui:script use="liferay-upload">
+<aui:script use="liferay-portlet-url,liferay-upload">
 	var uploader = new Liferay.Upload(
 		{
 			boundingBox: '#<portlet:namespace />fileUpload',
