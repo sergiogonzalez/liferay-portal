@@ -41,7 +41,10 @@ public class MBUtilTest {
 			10640,
 			MBUtil.getCategoryId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
+	}
 
+	@Test
+	public void testGetCategoryIdWithNoSurroundingChevrons() {
 		Assert.assertEquals(
 			10640,
 			MBUtil.getCategoryId(
@@ -54,7 +57,10 @@ public class MBUtilTest {
 			20646,
 			MBUtil.getMessageId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
+	}
 
+	@Test
+	public void testGetMessageIdWithNoSurroundingChevrons() {
 		Assert.assertEquals(
 			20646,
 			MBUtil.getMessageId(
