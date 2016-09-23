@@ -27,7 +27,6 @@ import org.mockito.Mockito;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
 
 /**
  * @author John Zhao
@@ -38,16 +37,10 @@ public class MBUtilTest {
 
 	@Test
 	public void testGetCategoryId() {
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", StringPool.BLANK);
-
 		Assert.assertEquals(
 			10640,
 			MBUtil.getCategoryId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
-
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", "events");
 
 		Assert.assertEquals(
 			10640,
@@ -57,16 +50,10 @@ public class MBUtilTest {
 
 	@Test
 	public void testGetMessageId() {
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", StringPool.BLANK);
-
 		Assert.assertEquals(
 			20646,
 			MBUtil.getMessageId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
-
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", "events");
 
 		Assert.assertEquals(
 			20646,
