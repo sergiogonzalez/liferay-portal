@@ -66,7 +66,8 @@ OrderByComparator orderByComparator = null;
 if (orderByCol.equals("modified-date")) {
 	orderByComparator = new MBCategoryThreadModifiedDateComparator(orderByAsc);
 
-}else if(orderByCol.equals("name")) {
+}
+else if(orderByCol.equals("name")) {
 	orderByComparator = new MBCategoryThreadTitleComparator(orderByAsc);
 }
 %>
