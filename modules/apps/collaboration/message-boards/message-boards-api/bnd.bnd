@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.message.boards.api
 Bundle-Version: 3.0.2
 Export-Package:\
 	com.liferay.message.boards.configuration,\
-	com.liferay.message.boards.display.context
+	com.liferay.message.boards.display.context,\
+	com.liferay.message.boards.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards
