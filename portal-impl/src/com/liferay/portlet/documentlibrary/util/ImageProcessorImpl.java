@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -44,12 +45,24 @@ import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.Future;
+
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.metadata.TIFF;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.WriteOutContentHandler;
+
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * @author Sergio González
@@ -198,6 +211,57 @@ public class ImageProcessorImpl
 			custom2ImageId, is, type);
 	}
 
+	public RenderedImage tiffOrientationTransform(
+			RenderedImage renderedImage, String tiffOrientationValue)
+		throws PortalException {
+
+		if (Validator.isNull(tiffOrientationValue) ||
+			tiffOrientationValue.equals(
+				ImageTool.ORIENTATION_VALUE_HORIZONTAL_NORMAL)) {
+
+			return renderedImage;
+		}
+		else if (tiffOrientationValue.equals(
+					ImageTool.ORIENTATION_VALUE_MIRROR_HORIZONTAL)) {
+
+			return ImageToolUtil.flip(renderedImage);
+		}
+		else if (tiffOrientationValue.equals(
+					ImageTool.
+						ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_90_CW)) {
+
+			return ImageToolUtil.flip(ImageToolUtil.rotate(renderedImage, 90));
+		}
+		else if (tiffOrientationValue.equals(
+					ImageTool.
+						ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_270_CW)) {
+
+			return ImageToolUtil.flip(ImageToolUtil.rotate(renderedImage, 270));
+		}
+		else if (tiffOrientationValue.equals(
+					ImageTool.ORIENTATION_VALUE_MIRROR_VERTICAL)) {
+
+			return ImageToolUtil.flip(ImageToolUtil.rotate(renderedImage, 180));
+		}
+		else if (tiffOrientationValue.equals(
+					ImageTool.ORIENTATION_VALUE_ROTATE_90_CW)) {
+
+			return ImageToolUtil.rotate(renderedImage, 90);
+		}
+		else if (tiffOrientationValue.equals(
+					ImageTool.ORIENTATION_VALUE_ROTATE_180)) {
+
+			return ImageToolUtil.rotate(renderedImage, 180);
+		}
+		else if (tiffOrientationValue.equals(
+					ImageTool.ORIENTATION_VALUE_ROTATE_270_CW)) {
+
+			return ImageToolUtil.rotate(renderedImage, 270);
+		}
+
+		return renderedImage;
+	}
+
 	@Override
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
@@ -264,6 +328,30 @@ public class ImageProcessorImpl
 		return _fileVersionIds;
 	}
 
+	protected String getTiffOrientationValue(FileVersion fileVersion)
+		throws PortalException {
+
+		try {
+			Metadata metadata = new Metadata();
+
+			ContentHandler contentHandler = new WriteOutContentHandler(
+				new DummyWriter());
+
+			Parser parser = new AutoDetectParser();
+
+			parser.parse(
+				fileVersion.getContentStream(false), contentHandler, metadata,
+				new ParseContext());
+
+			return metadata.get(TIFF.ORIENTATION.getName());
+		}
+		catch (IOException | SAXException | TikaException e) {
+			_log.error(e, e);
+		}
+
+		return null;
+	}
+
 	private void _generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -317,6 +405,9 @@ public class ImageProcessorImpl
 				}
 			}
 
+			renderedImage = tiffOrientationTransform(
+				renderedImage, getTiffOrientationValue(destinationFileVersion));
+
 			if (!_hasPreview(destinationFileVersion)) {
 				_storePreviewImage(destinationFileVersion, renderedImage);
 			}
@@ -368,8 +459,13 @@ public class ImageProcessorImpl
 	private boolean _hasPreview(FileVersion fileVersion)
 		throws PortalException {
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			_previewGenerationRequired(fileVersion)) {
+		String orientationValue = getTiffOrientationValue(fileVersion);
+
+		if ((PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
+			 _previewGenerationRequired(fileVersion)) ||
+			(Validator.isNotNull(orientationValue) &&
+			 !orientationValue.equals(
+				 ImageTool.ORIENTATION_VALUE_HORIZONTAL_NORMAL))) {
 
 			String type = getPreviewType(fileVersion);
 
