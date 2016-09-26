@@ -36,7 +36,7 @@
 
 			<h4>
 				<aui:a href="<%= rowURL.toString() %>">
-					<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>
+					<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry, false) %>
 				</aui:a>
 			</h4>
 

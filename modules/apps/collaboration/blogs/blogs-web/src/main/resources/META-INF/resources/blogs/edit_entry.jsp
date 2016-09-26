@@ -155,7 +155,7 @@ if (portletTitleBasedNavigation) {
 
 					<div class="col-md-8 col-md-offset-2">
 						<div class="entry-title">
-							<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
+							<h1><liferay-ui:input-editor contents="<%= title %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
 						</div>
 
 						<aui:input name="title" type="hidden" />
@@ -450,7 +450,7 @@ if (entry != null) {
 	portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 	portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
-	PortalUtil.addPortletBreadcrumbEntry(request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry, false), portletURL.toString());
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
