@@ -93,7 +93,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=private-messaging-portlet",
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
-		"com.liferay.portlet.friendly-url-mapping=private_messaging",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/private_messaging.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

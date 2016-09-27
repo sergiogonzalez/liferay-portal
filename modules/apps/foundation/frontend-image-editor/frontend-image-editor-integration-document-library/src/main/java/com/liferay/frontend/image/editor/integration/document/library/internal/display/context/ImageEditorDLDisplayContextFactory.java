@@ -71,15 +71,9 @@ public class ImageEditorDLDisplayContextFactory
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
-		Object model = fileVersion.getModel();
-
-		if (model instanceof DLFileVersion) {
-			return new ImageEditorDLViewFileVersionDisplayContext(
-				parentDLViewFileVersionDisplayContext, request, response,
-				fileVersion, _resourceBundleLoader);
-		}
-
-		return parentDLViewFileVersionDisplayContext;
+		return new ImageEditorDLViewFileVersionDisplayContext(
+			parentDLViewFileVersionDisplayContext, request, response,
+			fileVersion, _resourceBundleLoader);
 	}
 
 	@Reference(unbind = "-")
