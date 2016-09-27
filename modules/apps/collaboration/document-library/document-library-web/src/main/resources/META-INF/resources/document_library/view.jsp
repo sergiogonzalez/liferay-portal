@@ -149,6 +149,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 				<liferay-ui:error exception="<%= AuthenticationRepositoryException.class %>" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
 				<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />
+				<liferay-ui:error key="repositoryPingFailed" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
 
 				<div class="document-container">
 					<c:choose>
