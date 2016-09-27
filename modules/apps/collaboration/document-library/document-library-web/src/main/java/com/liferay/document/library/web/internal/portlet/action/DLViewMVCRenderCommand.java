@@ -24,8 +24,10 @@ import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLP
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -60,6 +62,12 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, "repositoryPingFailed", e);
+
+			// See LPS-67947
+
+			PortletURL portletURL = renderResponse.createRenderURL();
+
+			renderRequest.setAttribute(WebKeys.CURRENT_PORTLET_URL, portletURL);
 
 			return getPath();
 		}
