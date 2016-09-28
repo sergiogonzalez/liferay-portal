@@ -238,7 +238,8 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 											name: '<%= HtmlUtil.escapeJS(name) %>',
 											namespace: '<portlet:namespace />',
 											publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
-											recordSetId: <%= recordSetId %>
+											recordSetId: <%= recordSetId %>,
+											rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>
 										}
 									)
 								);

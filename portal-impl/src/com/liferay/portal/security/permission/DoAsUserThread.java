@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,11 +47,11 @@ public abstract class DoAsUserThread extends Thread {
 	public void run() {
 		for (int i = 0; i < _retries; i++) {
 			try {
-				CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+				User user = UserLocalServiceUtil.getUserById(_userId);
+
+				CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
 				PrincipalThreadLocal.setName(_userId);
-
-				User user = UserLocalServiceUtil.getUserById(_userId);
 
 				PermissionChecker permissionChecker =
 					PermissionCheckerFactoryUtil.create(user);

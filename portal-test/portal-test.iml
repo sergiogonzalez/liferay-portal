@@ -10,6 +10,9 @@
 		<orderEntry type="inheritedJdk" />
 		<orderEntry type="sourceFolder" forTests="false" />
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
+	    <orderEntry type="module" module-name="registry-api" scope="PROVIDED" />
 		<orderEntry type="library" name="development" level="project" />
+		<orderEntry type="library" name="portal" level="project" />
+		<orderEntry type="library" name="global" level="project" />
 	</component>
 </module>

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Marketplace Service
 Bundle-SymbolicName: com.liferay.marketplace.service
-Bundle-Version: 2.1.14
+Bundle-Version: 2.1.15
 Export-Package:\
 	com.liferay.marketplace.bundle,\
 	com.liferay.marketplace.util,\

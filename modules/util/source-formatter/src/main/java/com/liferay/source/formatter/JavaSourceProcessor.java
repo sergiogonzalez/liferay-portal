@@ -1015,6 +1015,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern2);
 
+		newContent = getCombinedLiteralStringsContent(newContent);
+
 		newContent = formatArray(newContent);
 
 		newContent = formatClassLine(newContent);
@@ -2612,7 +2614,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 						processMessage(
-							fileName, "There should be a line break after '{'",
+							fileName, "There should be a line break after '}'",
 							lineCount);
 					}
 
@@ -3726,6 +3728,37 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected String getCombinedLiteralStringsContent(String content) {
+		Matcher matcher = _literalStringsMultiLinePattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(2);
+			String tabs2 = matcher.group(3);
+
+			if (tabs1.equals(tabs2)) {
+				continue;
+			}
+
+			String combinedLines = matcher.group(1) + matcher.group(4);
+
+			if (getLineLength(combinedLines) <= _maxLineLength) {
+				return StringUtil.replace(
+					content, matcher.group(), "\n" + combinedLines + "\n");
+			}
+		}
+
+		matcher = _literalStringsSingleLinePattern.matcher(content);
+
+		while (matcher.find()) {
+			if (!ToolsUtil.isInsideQuotes(content, matcher.start(1))) {
+				return StringUtil.replaceFirst(
+					content, "\" + \"", "", matcher.start() - 1);
+			}
+		}
+
+		return content;
+	}
+
 	protected String getFormattedClassLine(String indent, String classLine) {
 		while (classLine.contains(StringPool.TAB + StringPool.SPACE)) {
 			classLine = StringUtil.replace(
@@ -4251,7 +4284,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String parentDirName = sourceFormatterArgs.getBaseDirName() + "../";
 
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+		for (int i = 0; i < PORTAL_MAX_DIR_LEVEL - 1; i++) {
 			File suppressionsFile = new File(parentDirName + fileName);
 
 			if (suppressionsFile.exists()) {
@@ -4745,6 +4778,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _lineLengthExcludes;
 	private final Pattern _lineStartingWithOpenParenthesisPattern =
 		Pattern.compile("(.)\n+(\t+)\\)[^.].*\n");
+	private final Pattern _literalStringsMultiLinePattern = Pattern.compile(
+		"\n((\t*).*)\" \\+\n(\t*)\"(.*)\n");
+	private final Pattern _literalStringsSingleLinePattern = Pattern.compile(
+		"\" (\\+) \"");
 	private final Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
 	private final Pattern _logPattern = Pattern.compile(

@@ -1036,6 +1036,11 @@ public class MainServlet extends ActionServlet {
 			}
 		}
 
+		if (request.getAttribute(WebKeys.USER) != null) {
+			request.setAttribute(WebKeys.USER, user);
+			request.setAttribute(WebKeys.USER_ID, Long.valueOf(userId));
+		}
+
 		HttpSession session = request.getSession();
 
 		session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
@@ -1303,14 +1308,28 @@ public class MainServlet extends ActionServlet {
 			ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
 			properties);
 
+		ServletContext servletContext = getServletContext();
+
 		properties = new HashMap<>();
+
+		Object serverContainer = servletContext.getAttribute(
+			"javax.websocket.server.ServerContainer");
+
+		if (serverContainer != null) {
+			properties.put("websocket.active", Boolean.TRUE);
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("A WebSocket server container is not registered");
+			}
+		}
 
 		properties.put("bean.id", ServletContext.class.getName());
 		properties.put("original.bean", Boolean.TRUE);
 		properties.put("service.vendor", ReleaseInfo.getVendor());
 
 		_servletContextServiceRegistration = registry.registerService(
-			ServletContext.class, getServletContext(), properties);
+			ServletContext.class, servletContext, properties);
 	}
 
 	protected void sendError(

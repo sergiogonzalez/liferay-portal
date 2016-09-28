@@ -17,13 +17,16 @@ package com.liferay.portlet.messageboards.util;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
+import javax.mail.Message;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Mockito;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
 
 /**
  * @author John Zhao
@@ -34,17 +37,14 @@ public class MBUtilTest {
 
 	@Test
 	public void testGetCategoryId() {
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", StringPool.BLANK);
-
 		Assert.assertEquals(
 			10640,
 			MBUtil.getCategoryId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
+	}
 
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", "events");
-
+	@Test
+	public void testGetCategoryIdWithNoSurroundingChevrons() {
 		Assert.assertEquals(
 			10640,
 			MBUtil.getCategoryId(
@@ -53,21 +53,61 @@ public class MBUtilTest {
 
 	@Test
 	public void testGetMessageId() {
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", StringPool.BLANK);
-
 		Assert.assertEquals(
 			20646,
 			MBUtil.getMessageId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
+	}
 
-		Whitebox.setInternalState(
-			PropsValues.class, "POP_SERVER_SUBDOMAIN", "events");
-
+	@Test
+	public void testGetMessageIdWithNoSurroundingChevrons() {
 		Assert.assertEquals(
 			20646,
 			MBUtil.getMessageId(
 				"mb_message.10640.20646.1425017183884@events.gmail.com"));
+	}
+
+	@Test
+	public void testGetParentMessageIdWithTheInReplyToHeader()
+		throws Exception {
+
+		Message message = Mockito.mock(Message.class);
+
+		Mockito.when(
+			message.getHeader("In-Reply-To")
+		).thenReturn(
+			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
+		);
+
+		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+	}
+
+	@Test
+	public void testGetParentMessageIdWithTheReferencesHeader()
+		throws Exception {
+
+		Message message = Mockito.mock(Message.class);
+
+		Mockito.when(
+			message.getHeader("References")
+		).thenReturn(
+			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
+		);
+
+		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+	}
+
+	@Test
+	public void testGetParentMessageWithTheInReplyToHeader() throws Exception {
+		Message message = Mockito.mock(Message.class);
+
+		Mockito.when(
+			message.getHeader("In-Reply-To")
+		).thenReturn(
+			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
+		);
+
+		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
 	}
 
 }
