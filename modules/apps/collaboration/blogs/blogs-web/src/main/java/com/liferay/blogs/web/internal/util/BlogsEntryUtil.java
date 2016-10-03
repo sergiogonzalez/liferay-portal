@@ -29,12 +29,23 @@ public class BlogsEntryUtil {
 	public static String getDisplayTitle(
 		ResourceBundle resourceBundle, BlogsEntry entry) {
 
+		return getDisplayTitle(resourceBundle, entry, true);
+	}
+
+	public static String getDisplayTitle(
+		ResourceBundle resourceBundle, BlogsEntry entry, Boolean escape) {
+
 		if (Validator.isNull(entry.getTitle())) {
 			return HtmlUtil.escape(
 				LanguageUtil.get(resourceBundle, "untitled-entry"));
 		}
 
-		return HtmlUtil.escape(entry.getTitle());
+		if (escape) {
+			return HtmlUtil.escape(entry.getTitle());
+		}
+		else {
+			return entry.getTitle();
+		}
 	}
 
 }

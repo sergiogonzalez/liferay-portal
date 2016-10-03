@@ -43,7 +43,7 @@ portletDisplay.setURLBack(redirect);
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry));
+	renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry, false));
 }
 %>
 
