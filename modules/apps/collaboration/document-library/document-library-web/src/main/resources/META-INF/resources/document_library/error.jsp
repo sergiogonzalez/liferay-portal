@@ -33,5 +33,6 @@
 <liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="the-folder-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchRepositoryException.class %>" message="the-repository-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="the-structure-could-not-be-found" />
+<liferay-ui:error key="repositoryPingFailed" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
 
 <liferay-ui:error-principal />
