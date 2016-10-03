@@ -648,9 +648,8 @@ public class PDFProcessorImpl
 		try (PDDocument pdDocument = PDDocument.load(file)) {
 			if (!_isDocumentDecrypted(pdDocument, file)) {
 				_log.error(
-					"The following PDF document is encrypted " +
-							"and could not be decrypted: " +
-								fileVersion.getFileName());
+					"Unable to decrypt PDF document with {fileEntryId=" +
+						fileVersion.getFileEntryId() + "}");
 
 				return;
 			}
@@ -909,32 +908,29 @@ public class PDFProcessorImpl
 	}
 
 	private boolean _isDocumentDecrypted(PDDocument pdDocument, File file) {
-		boolean documentIsDecrypted = true;
-
-		if (pdDocument.isEncrypted()) {
-			try {
-
-				// We use default password
-
-				StandardDecryptionMaterial dm = new StandardDecryptionMaterial(
-					"");
-
-				pdDocument.openProtection(dm);
-
-				pdDocument.setAllSecurityToBeRemoved(true);
-
-				pdDocument.save(file);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
-				}
-
-				documentIsDecrypted = false;
-			}
+		if (!pdDocument.isEncrypted()) {
+			return true;
 		}
 
-		return documentIsDecrypted;
+		try {
+			StandardDecryptionMaterial standardDecryptionMaterial =
+				new StandardDecryptionMaterial("");
+
+			pdDocument.openProtection(standardDecryptionMaterial);
+
+			pdDocument.setAllSecurityToBeRemoved(true);
+
+			pdDocument.save(file);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isGeneratePreview(FileVersion fileVersion)
