@@ -88,7 +88,7 @@ if (portletTitleBasedNavigation) {
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<aui:a href="<%= previousEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry) %>">
+									<aui:a href="<%= previousEntryURL %>" title="<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry)) %>">
 										<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 									</aui:a>
 								</c:if>
@@ -104,7 +104,7 @@ if (portletTitleBasedNavigation) {
 
 								<div class="entry-content">
 									<h4>
-										<aui:a href="<%= previousEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry) %>"><%= BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry) %></aui:a>
+										<aui:a href="<%= previousEntryURL %>" title="<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry)) %>"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry)) %></aui:a>
 									</h4>
 
 									<p class="entry-content-body visible-lg-block">
@@ -130,7 +130,7 @@ if (portletTitleBasedNavigation) {
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<aui:a href="<%= nextEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry) %>">
+									<aui:a href="<%= nextEntryURL %>" title="<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry)) %>">
 										<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 									</aui:a>
 								</c:if>
@@ -146,7 +146,7 @@ if (portletTitleBasedNavigation) {
 
 								<div class="entry-content">
 									<h4>
-										<aui:a href="<%= nextEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry) %>"><%= BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry) %></aui:a>
+										<aui:a href="<%= nextEntryURL %>" title="<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry)) %>"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry)) %></aui:a>
 									</h4>
 
 									<p class="visible-lg-block">
