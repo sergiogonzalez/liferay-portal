@@ -30,11 +30,10 @@ public class BlogsEntryUtil {
 		ResourceBundle resourceBundle, BlogsEntry entry) {
 
 		if (Validator.isNull(entry.getTitle())) {
-			return HtmlUtil.escape(
-				LanguageUtil.get(resourceBundle, "untitled-entry"));
+			return LanguageUtil.get(resourceBundle, "untitled-entry");
 		}
 
-		return HtmlUtil.escape(entry.getTitle());
+		return entry.getTitle();
 	}
 
 }
