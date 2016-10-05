@@ -17,7 +17,9 @@
 <%@ include file="/blogs/init.jsp" %>
 
 <%
-	BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
+BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
+
+String socialBookmarksDisplayStyle = blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle();
 %>
 
 <portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
@@ -33,7 +35,7 @@
 	</c:choose>
 </portlet:renderURL>
 
-<div class="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle().equals("vertical") ? "pull-right " : "" %>social-bookmarks">
+<div class="<%= socialBookmarksDisplayStyle.equals("vertical") ? "pull-right" : StringPool.BLANK %> social-bookmarks">
 	<liferay-ui:social-bookmarks
 		contentId="<%= String.valueOf(entry.getEntryId()) %>"
 		displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"

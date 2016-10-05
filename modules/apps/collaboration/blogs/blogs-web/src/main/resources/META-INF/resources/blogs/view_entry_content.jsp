@@ -22,6 +22,8 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("view_en
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
+
+String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.socialBookmarksDisplayPosition();
 %>
 
 <c:choose>
@@ -80,7 +82,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<span><%= LanguageUtil.format(resourceBundle, "x-minutes-read", new String[] {String.valueOf(com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent()))}, false) %></span>
 					</small>
 
-					<c:if test='<%= viewSingleEntry && blogsPortletInstanceConfiguration.enableSocialBookmarks() && blogsPortletInstanceConfiguration.socialBookmarksDisplayPosition().equals("top") %>'>
+					<c:if test='<%= viewSingleEntry && blogsPortletInstanceConfiguration.enableSocialBookmarks() && socialBookmarksDisplayPosition.equals("top") %>'>
 						<liferay-util:include page="/blogs/social_bookmarks.jsp" servletContext="<%= application %>" />
 					</c:if>
 				</div>
@@ -117,7 +119,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 									<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
 								</c:if>
 
-								<c:if test='<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() && blogsPortletInstanceConfiguration.socialBookmarksDisplayPosition().equals("top") %>'>
+								<c:if test='<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() && socialBookmarksDisplayPosition.equals("top") %>'>
 									<liferay-util:include page="/blogs/social_bookmarks.jsp" servletContext="<%= application %>" />
 								</c:if>
 							</c:when>
@@ -280,7 +282,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</div>
 					</c:if>
 
-					<c:if test='<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() && blogsPortletInstanceConfiguration.socialBookmarksDisplayPosition().equals("bottom") %>'>
+					<c:if test='<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() && socialBookmarksDisplayPosition.equals("bottom") %>'>
 						<liferay-util:include page="/blogs/social_bookmarks.jsp" servletContext="<%= application %>" />
 					</c:if>
 
