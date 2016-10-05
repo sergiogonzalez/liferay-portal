@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.RestoreEntryUtil;
@@ -121,20 +120,15 @@ public class EditMessageAttachmentsMVCActionCommand
 	protected void restoreEntries(ActionRequest actionRequest)
 		throws Exception {
 
-		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if (trashEntryId > 0) {
-			_trashEntryService.restoreEntry(trashEntryId);
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-			return;
-		}
+		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		long[] restoreEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreEntryId : restoreEntryIds) {
-			_trashEntryService.restoreEntry(restoreEntryId);
-		}
+		_mbMessageLocalService.restoreMessageAttachmentFromTrash(
+			themeDisplay.getUserId(), messageId, fileName);
 	}
 
 	protected void restoreOverride(ActionRequest actionRequest)

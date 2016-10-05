@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.service.TrashEntryService;
@@ -135,20 +134,12 @@ public class WikiAttachmentsHelper {
 	}
 
 	public void restoreEntries(ActionRequest actionRequest) throws Exception {
-		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String title = ParamUtil.getString(actionRequest, "title");
+		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		if (trashEntryId > 0) {
-			_trashEntryService.restoreEntry(trashEntryId);
-
-			return;
-		}
-
-		long[] restoreEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreEntryId : restoreEntryIds) {
-			_trashEntryService.restoreEntry(restoreEntryId);
-		}
+		_wikiPageService.restorePageAttachmentFromTrash(
+			nodeId, title, fileName);
 	}
 
 	public void restoreOverride(ActionRequest actionRequest) throws Exception {

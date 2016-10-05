@@ -26,15 +26,11 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
-
-		<%
-		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), fileEntry.getFileEntryId());
-		%>
-
 		<portlet:actionURL name="/message_boards/edit_message_attachments" var="restoreEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
+			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+			<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
 		</portlet:actionURL>
 
 		<%
