@@ -33,14 +33,9 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 			<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
 		</portlet:actionURL>
 
-		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
-		%>
-
 		<liferay-ui:icon
-			message="restore"
-			onClick="<%= taglibOnClick %>"
-			url="javascript:;"
+			message="Restore"
+			url="<%= restoreEntryURL %>"
 		/>
 
 		<portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
