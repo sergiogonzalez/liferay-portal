@@ -112,10 +112,6 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 	public void deleteContentsByDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		if (!dirName.endsWith(StringPool.SLASH)) {
-			dirName = dirName.concat(StringPool.SLASH);
-		}
-
 		dirName = dirName.concat(StringPool.PERCENT);
 
 		dlContentPersistence.removeByC_R_LikeP(
