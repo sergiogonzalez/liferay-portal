@@ -38,14 +38,9 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 					<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
 				</portlet:actionURL>
 
-				<%
-				String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
-				%>
-
 				<liferay-ui:icon
 					message="restore"
-					onClick="<%= taglibOnClick %>"
-					url="javascript:;"
+					url="<%= restoreEntryURL %>"
 				/>
 			</c:if>
 
