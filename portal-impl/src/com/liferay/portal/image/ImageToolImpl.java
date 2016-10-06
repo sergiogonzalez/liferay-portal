@@ -40,6 +40,7 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
@@ -704,16 +705,79 @@ public class ImageToolImpl implements ImageTool {
 		BufferedImage scaledBufferedImage = new BufferedImage(
 			scaledWidth, scaledHeight, originalBufferedImage.getType());
 
-		Graphics2D scaledGraphics2D = scaledBufferedImage.createGraphics();
+		int currentWidth = originalBufferedImage.getWidth();
+		int currentHeight = originalBufferedImage.getHeight();
+
+		if (((scaledWidth * 2) >= currentWidth) &&
+			((scaledHeight * 2) >= currentHeight)) {
+
+			Graphics2D g = scaledBufferedImage.createGraphics();
+
+			g.drawImage(
+				originalBufferedImage, 0, 0, scaledWidth, scaledHeight, null);
+
+			g.dispose();
+
+			return scaledBufferedImage;
+		}
+
+		BufferedImage tempImage = new BufferedImage(
+			currentWidth, currentHeight, scaledBufferedImage.getType());
+
+		Graphics2D g = tempImage.createGraphics();
+
+		RenderingHints renderingHints = new RenderingHints(
+			RenderingHints.KEY_INTERPOLATION,
+			RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+		g.setRenderingHints(renderingHints);
 
 		ColorModel originalColorModel = originalBufferedImage.getColorModel();
 
 		if (originalColorModel.hasAlpha()) {
-			scaledGraphics2D.setComposite(AlphaComposite.Src);
+			g.setComposite(AlphaComposite.Src);
 		}
 
+		int startWidth = scaledWidth;
+		int startHeight = scaledHeight;
+
+		while ((startWidth < currentWidth) && (startHeight < currentHeight)) {
+			startWidth *= 2;
+			startHeight *= 2;
+		}
+
+		currentWidth = startWidth / 2;
+		currentHeight = startHeight / 2;
+
+		g.drawImage(
+			originalBufferedImage, 0, 0, currentWidth, currentHeight, null);
+
+		while ((currentWidth >= (scaledWidth * 2)) &&
+			   (currentHeight >= (scaledHeight * 2))) {
+
+			currentWidth /= 2;
+			currentHeight /= 2;
+
+			if (currentWidth < scaledWidth) {
+				currentWidth = scaledWidth;
+			}
+
+			if (currentHeight < scaledHeight) {
+				currentHeight = scaledHeight;
+			}
+
+			g.drawImage(
+				tempImage, 0, 0, currentWidth, currentHeight, 0, 0,
+				currentWidth * 2, currentHeight * 2, null);
+		}
+
+		g.dispose();
+
+		Graphics2D scaledGraphics2D = scaledBufferedImage.createGraphics();
+
 		scaledGraphics2D.drawImage(
-			originalBufferedImage, 0, 0, scaledWidth, scaledHeight, null);
+			tempImage, 0, 0, scaledWidth, scaledHeight, 0, 0, currentWidth,
+			currentHeight, null);
 
 		scaledGraphics2D.dispose();
 
