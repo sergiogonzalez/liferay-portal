@@ -711,31 +711,31 @@ public class ImageToolImpl implements ImageTool {
 		if (((scaledWidth * 2) >= currentWidth) &&
 			((scaledHeight * 2) >= currentHeight)) {
 
-			Graphics2D g = scaledBufferedImage.createGraphics();
+			Graphics2D scaledGraphics2D = scaledBufferedImage.createGraphics();
 
-			g.drawImage(
+			scaledGraphics2D.drawImage(
 				originalBufferedImage, 0, 0, scaledWidth, scaledHeight, null);
 
-			g.dispose();
+			scaledGraphics2D.dispose();
 
 			return scaledBufferedImage;
 		}
 
-		BufferedImage tempImage = new BufferedImage(
+		BufferedImage tempBufferedImage = new BufferedImage(
 			currentWidth, currentHeight, scaledBufferedImage.getType());
 
-		Graphics2D g = tempImage.createGraphics();
+		Graphics2D tempGraphics2D = tempBufferedImage.createGraphics();
 
 		RenderingHints renderingHints = new RenderingHints(
 			RenderingHints.KEY_INTERPOLATION,
 			RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		g.setRenderingHints(renderingHints);
+		tempGraphics2D.setRenderingHints(renderingHints);
 
 		ColorModel originalColorModel = originalBufferedImage.getColorModel();
 
 		if (originalColorModel.hasAlpha()) {
-			g.setComposite(AlphaComposite.Src);
+			tempGraphics2D.setComposite(AlphaComposite.Src);
 		}
 
 		int startWidth = scaledWidth;
@@ -749,7 +749,7 @@ public class ImageToolImpl implements ImageTool {
 		currentWidth = startWidth / 2;
 		currentHeight = startHeight / 2;
 
-		g.drawImage(
+		tempGraphics2D.drawImage(
 			originalBufferedImage, 0, 0, currentWidth, currentHeight, null);
 
 		while ((currentWidth >= (scaledWidth * 2)) &&
@@ -766,18 +766,18 @@ public class ImageToolImpl implements ImageTool {
 				currentHeight = scaledHeight;
 			}
 
-			g.drawImage(
-				tempImage, 0, 0, currentWidth, currentHeight, 0, 0,
+			tempGraphics2D.drawImage(
+				tempBufferedImage, 0, 0, currentWidth, currentHeight, 0, 0,
 				currentWidth * 2, currentHeight * 2, null);
 		}
 
-		g.dispose();
+		tempGraphics2D.dispose();
 
 		Graphics2D scaledGraphics2D = scaledBufferedImage.createGraphics();
 
 		scaledGraphics2D.drawImage(
-			tempImage, 0, 0, scaledWidth, scaledHeight, 0, 0, currentWidth,
-			currentHeight, null);
+			tempBufferedImage, 0, 0, scaledWidth, scaledHeight, 0, 0,
+			currentWidth, currentHeight, null);
 
 		scaledGraphics2D.dispose();
 
