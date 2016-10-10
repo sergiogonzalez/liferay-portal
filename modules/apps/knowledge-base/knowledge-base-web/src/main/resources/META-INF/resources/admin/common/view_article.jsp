@@ -106,7 +106,7 @@ if (portletTitleBasedNavigation) {
 					<liferay-util:include page="/admin/common/article_asset_entries.jsp" servletContext="<%= application %>" />
 				</c:if>
 
-				<c:if test="<%= enableKBArticleRatings %>">
+				<c:if test="<%= enableKBArticleRatings && kbArticle.isApproved() %>">
 					<div class="kb-article-ratings">
 						<liferay-ui:ratings
 							className="<%= KBArticle.class.getName() %>"
@@ -120,7 +120,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 			</div>
 
-			<c:if test="<%= enableKBArticleRatings %>">
+			<c:if test="<%= enableKBArticleRatings && kbArticle.isApproved() %>">
 				<c:choose>
 					<c:when test="<%= portletTitleBasedNavigation %>">
 						<liferay-ui:panel-container extended="<%= false %>" markupView="lexicon" persistState="<%= true %>">
