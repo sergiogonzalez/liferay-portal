@@ -34,7 +34,7 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message="Restore"
+			message="restore"
 			url="<%= restoreEntryURL %>"
 		/>
 
