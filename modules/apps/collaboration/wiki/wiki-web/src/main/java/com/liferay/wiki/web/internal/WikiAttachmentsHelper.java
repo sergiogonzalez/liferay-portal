@@ -17,16 +17,12 @@ package com.liferay.wiki.web.internal;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.service.TrashEntryService;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.service.WikiPageService;
 
 import java.io.InputStream;
@@ -140,32 +136,6 @@ public class WikiAttachmentsHelper {
 
 		_wikiPageService.restorePageAttachmentFromTrash(
 			nodeId, title, fileName);
-	}
-
-	public void restoreOverride(ActionRequest actionRequest) throws Exception {
-		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
-
-		long duplicateEntryId = ParamUtil.getLong(
-			actionRequest, "duplicateEntryId");
-
-		_trashEntryService.restoreEntry(trashEntryId, duplicateEntryId, null);
-	}
-
-	public void restoreRename(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
-
-		String newName = ParamUtil.getString(actionRequest, "newName");
-
-		if (Validator.isNull(newName)) {
-			String oldName = ParamUtil.getString(actionRequest, "oldName");
-
-			newName = TrashUtil.getNewName(themeDisplay, null, 0, oldName);
-		}
-
-		_trashEntryService.restoreEntry(trashEntryId, 0, newName);
 	}
 
 	@Reference(unbind = "-")
