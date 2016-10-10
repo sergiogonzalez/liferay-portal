@@ -122,6 +122,11 @@
 	</activity>
 	<activity>
 		<model-name>com.liferay.document.library.kernel.model.DLFileEntry</model-name>
+		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_ADD_COMMENT}</activity-type>
+		<log-activity>true</log-activity>
+	</activity>
+	<activity>
+		<model-name>com.liferay.document.library.kernel.model.DLFileEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>
