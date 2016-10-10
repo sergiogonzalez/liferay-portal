@@ -94,16 +94,15 @@ public class DefaultSocialActivitiesDisplayContext
 		String feedTitle = LanguageUtil.format(
 			getResourceBundle(), "x's-activities", groupDescriptiveName, false);
 
-		String max = Integer.toString(
-			_socialActivitiesRequestHelper.getRSSDelta());
-
 		LiferayPortletResponse liferayPortletResponse =
 			_socialActivitiesRequestHelper.getLiferayPortletResponse();
 
 		ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
 		rssURL.setParameter("feedTitle", feedTitle);
-		rssURL.setParameter("max", max);
+		rssURL.setParameter(
+			"max",
+			String.valueOf(_socialActivitiesRequestHelper.getRSSDelta()));
 		rssURL.setResourceID("rss");
 
 		return rssURL;
