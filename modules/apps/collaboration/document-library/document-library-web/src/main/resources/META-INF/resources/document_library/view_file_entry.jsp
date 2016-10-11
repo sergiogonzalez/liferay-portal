@@ -449,22 +449,22 @@ if (portletTitleBasedNavigation) {
 						<%
 						String displayURL = StringPool.BLANK;
 
-						String uploadUserInfo = StringPool.BLANK;
-
 						User userDisplay = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
-
-						if (userDisplay != null) {
-							displayURL = userDisplay.getDisplayURL(themeDisplay);
-						}
-
-						uploadUserInfo = LanguageUtil.format(resourceBundle, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false);
-
-						if (userDisplay == null || !userDisplay.isActive()) {
-							uploadUserInfo = HtmlUtil.stripHtml(uploadUserInfo);
-						}
 						%>
 
-						<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= uploadUserInfo %>' />
+						<c:choose>
+							<c:when test="<%= userDisplay != null && userDisplay.isActive() %>">
+
+								<%
+								displayURL = userDisplay.getDisplayURL(themeDisplay);
+								%>
+
+								<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= LanguageUtil.format(resourceBundle, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= HtmlUtil.stripHtml(LanguageUtil.format(resourceBundle, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false)) %>' />
+							</c:otherwise>
+						</c:choose>
 					</span>
 
 					<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() && fileEntry.isSupportsSocial() %>">
