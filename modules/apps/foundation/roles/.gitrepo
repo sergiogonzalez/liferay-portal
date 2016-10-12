@@ -3,7 +3,7 @@
 ;
 [subrepo]
 	cmdver = liferay
-	commit = 5a4dd1a51bdef722de0da5a992a5d37d4c2a57b7
+	commit = f6364be9499c38a3bf1a219bdd5ec8d495260cb2
 	mode = push
-	parent = 895dfcb590ef0de4c5825eed01a669dbb60f487f
+	parent = 20a4ba0e886f3a3c783834b7326b10692f9361de
 	remote = git@github.com:liferay/com-liferay-roles.git
