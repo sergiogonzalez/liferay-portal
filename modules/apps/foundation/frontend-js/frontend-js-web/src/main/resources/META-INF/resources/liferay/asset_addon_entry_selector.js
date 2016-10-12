@@ -39,11 +39,11 @@ AUI.add(
 			'</li>';
 
 		var TPL_SUMMARY_ASSET_ADDON_ENTRY = '<li class="list-entry" data-key="{key}" data-label="{label}">' +
-				'<span class="label label-circle label-entry">' +
+				'<span class="label label-default">' +
 					'{label}' +
-					'<button class="remove-button" type="button">' +
-						'<i class="icon-remove"></i>' +
-					'</button>' +
+					'<a class="remove-button" href="javascript:;">' +
+						Liferay.Util.getLexiconIconTpl('times') +
+					'</a>' +
 				'</span>' +
 			'</li>';
 
