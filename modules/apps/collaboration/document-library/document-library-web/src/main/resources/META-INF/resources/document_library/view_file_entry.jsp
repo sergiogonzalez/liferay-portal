@@ -453,7 +453,7 @@ if (portletTitleBasedNavigation) {
 						%>
 
 						<c:choose>
-							<c:when test="<%= userDisplay != null && userDisplay.isActive() %>">
+							<c:when test="<%= (userDisplay != null) && userDisplay.isActive() %>">
 
 								<%
 								displayURL = userDisplay.getDisplayURL(themeDisplay);
