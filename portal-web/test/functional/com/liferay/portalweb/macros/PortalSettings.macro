@@ -194,12 +194,11 @@
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="${casLogoutURL}" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="${casServerURL}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD" value1="${casServiceURL}" />
 
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
 
-		<execute function="AssertTextEquals" locator1="Message#LOGIN_URL_SUCCESS" value1="Pass" />
-		<execute function="AssertTextEquals" locator1="Message#LOGOUT_URL_SUCCESS" value1="Pass" />
-		<execute function="AssertTextEquals" locator1="Message#SERVER_URL_SUCCESS" value1="Pass" />
+		<execute function="AssertElementNotPresent" locator1="//span[.='Unreachable']" />
 
 		<execute function="Click" locator1="Icon#CLOSE" />
 
@@ -263,7 +262,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
 
-		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleTitle}" />
 
 		<execute macro="PortletEntry#save" />
 
@@ -273,7 +272,7 @@
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
 
-		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleTitle}" />
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsSitesCP">
@@ -387,6 +386,20 @@
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_${enableCheckboxKey}_CHECKBOX" />
 
 		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="enableOpenIDCP">
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
+
+		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
 	</command>
 
 	<command name="enterReservedEmailAddressCP">
@@ -603,8 +616,7 @@
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#OPEN_ID" value1="OpenID" />
-
+		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
 	</command>
 
@@ -613,8 +625,7 @@
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#OPEN_SSO" value1="OpenSSO" />
-
+		<execute function="AssertClick" locator1="NavTab#OPENSSO" value1="OpenSSO" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER" value1="Login URL" />
@@ -651,7 +662,7 @@
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
 
-		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleTitle}" />
 	</command>
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsSitesCP">
