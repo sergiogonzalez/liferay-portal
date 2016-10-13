@@ -538,7 +538,7 @@ public class ImageToolImpl implements ImageTool {
 
 					if (((PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT > 0) &&
 						 (height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT)) ||
-						((PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT > 0) &&
+						((PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH > 0) &&
 						 (width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH))) {
 
 						StringBundler sb = new StringBundler(9);
