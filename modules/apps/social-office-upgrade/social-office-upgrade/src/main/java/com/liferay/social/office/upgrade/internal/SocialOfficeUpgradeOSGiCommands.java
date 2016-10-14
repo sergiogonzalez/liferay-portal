@@ -26,12 +26,16 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
@@ -138,6 +142,13 @@ public class SocialOfficeUpgradeOSGiCommands {
 			"[socialOffice:removeTasksPortlet] %d Tasks portlet preferences " +
 				"deleted.%n",
 			atomicInteger.get());
+
+		int layoutCount = _removeTasksPortletLayoutTypeSettings();
+
+		System.out.printf(
+			"[socialOffice:removeTasksPortlet] Removed tasks portlet from %d " +
+				"layouts.%n",
+			layoutCount);
 	}
 
 	public void updateEventsDisplay() throws PortalException {
@@ -299,6 +310,74 @@ public class SocialOfficeUpgradeOSGiCommands {
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	private int _removeTasksPortletLayoutTypeSettings() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.like(
+							"typeSettings", "%tasksportlet%"));
+				}
+
+			});
+
+		final AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
+
+				@Override
+				public void performAction(Layout layout)
+					throws PortalException {
+
+					UnicodeProperties typeSettingsProperties =
+						layout.getTypeSettingsProperties();
+
+					Map<String, String> modifiedProperties = new HashMap<>();
+
+					for (Map.Entry<String, String> entry :
+							typeSettingsProperties.entrySet()) {
+
+						String value = entry.getValue();
+
+						if (value.contains("tasksportlet")) {
+							String[] portletIds = StringUtil.split(value);
+
+							List<String> newPortletIds = new ArrayList<>();
+
+							for (String portletId : portletIds) {
+								if (!portletId.contains("tasksportlet")) {
+									newPortletIds.add(portletId);
+								}
+							}
+
+							modifiedProperties.put(
+								entry.getKey(),
+								StringUtil.merge(newPortletIds));
+						}
+					}
+
+					typeSettingsProperties.putAll(modifiedProperties);
+
+					layout.setTypeSettingsProperties(typeSettingsProperties);
+
+					_layoutLocalService.updateLayout(layout);
+
+					atomicInteger.incrementAndGet();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		return atomicInteger.get();
 	}
 
 	private int _updateLayoutSetTheme() throws PortalException {
