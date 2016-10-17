@@ -37,6 +37,7 @@ import com.liferay.social.kernel.util.SocialInteractionsConfigurationUtil;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -86,15 +87,16 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.setCompanyId(user.getCompanyId());
 		subscriptionSender.setContextAttribute("[$CONTENT$]", content, false);
 		subscriptionSender.setContextAttributes(
-			"[$ASSET_ENTRY_NAME$]",
-			getAssetEntryName(className, serviceContext), "[$USER_ADDRESS$]",
-			messageUserEmailAddress, "[$USER_NAME$]", messageUserName,
-			"[$CONTENT_URL$]", contentURL);
+			"[$USER_ADDRESS$]", messageUserEmailAddress, "[$USER_NAME$]",
+			messageUserName, "[$CONTENT_URL$]", contentURL);
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(title);
 		subscriptionSender.setEntryURL(contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$ASSET_ENTRY_NAME$]",
+			locale -> getAssetEntryName(className, locale));
 		subscriptionSender.setMailId("mb_discussion", classPK);
 		subscriptionSender.setNotificationType(
 			MentionsConstants.NOTIFICATION_TYPE_MENTION);
@@ -121,15 +123,13 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected String getAssetEntryName(
-		String className, ServiceContext serviceContext) {
-
+	protected String getAssetEntryName(String className, Locale locale) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
 		if (assetRendererFactory != null) {
-			return assetRendererFactory.getTypeName(serviceContext.getLocale());
+			return assetRendererFactory.getTypeName(locale);
 		}
 
 		return StringPool.BLANK;
