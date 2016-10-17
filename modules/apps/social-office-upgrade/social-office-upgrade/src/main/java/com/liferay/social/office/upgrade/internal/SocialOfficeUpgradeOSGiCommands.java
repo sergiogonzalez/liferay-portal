@@ -105,43 +105,12 @@ public class SocialOfficeUpgradeOSGiCommands {
 	}
 
 	public void removeTasksPortlet() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_portletPreferencesLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.like(
-							"portletId", "%tasksportlet%"));
-				}
-
-			});
-
-		final AtomicInteger atomicInteger = new AtomicInteger(0);
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<PortletPreferences>() {
-
-				public void performAction(PortletPreferences portletPreferences)
-					throws PortalException {
-
-					_portletPreferencesLocalService.deletePersistedModel(
-						portletPreferences);
-
-					atomicInteger.incrementAndGet();
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
+		int preferencesCount = _removeTasksPortletPreferences();
 
 		System.out.printf(
 			"[socialOffice:removeTasksPortlet] %d Tasks portlet preferences " +
 				"deleted.%n",
-			atomicInteger.get());
+			preferencesCount);
 
 		int layoutCount = _removeTasksPortletLayoutTypeSettings();
 
@@ -369,6 +338,43 @@ public class SocialOfficeUpgradeOSGiCommands {
 					layout.setTypeSettingsProperties(typeSettingsProperties);
 
 					_layoutLocalService.updateLayout(layout);
+
+					atomicInteger.incrementAndGet();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		return atomicInteger.get();
+	}
+
+	private int _removeTasksPortletPreferences() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_portletPreferencesLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.like(
+							"portletId", "%tasksportlet%"));
+				}
+
+			});
+
+		final AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<PortletPreferences>() {
+
+				public void performAction(PortletPreferences portletPreferences)
+					throws PortalException {
+
+					_portletPreferencesLocalService.deletePersistedModel(
+						portletPreferences);
 
 					atomicInteger.incrementAndGet();
 				}
