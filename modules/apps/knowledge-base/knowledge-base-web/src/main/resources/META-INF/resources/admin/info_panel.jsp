@@ -106,14 +106,16 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-header-actions">
-				<li>
-					<liferay-util:include page="/admin/subscribe.jsp" servletContext="<%= application %>" />
-				</li>
-				<li>
-					<liferay-util:include page="/admin/article_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
+			<c:if test="<%= request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE) == null %>">
+				<ul class="sidebar-header-actions">
+					<li>
+						<liferay-util:include page="/admin/subscribe.jsp" servletContext="<%= application %>" />
+					</li>
+					<li>
+						<liferay-util:include page="/admin/article_action.jsp" servletContext="<%= application %>" />
+					</li>
+				</ul>
+			</c:if>
 
 			<h4><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
 
