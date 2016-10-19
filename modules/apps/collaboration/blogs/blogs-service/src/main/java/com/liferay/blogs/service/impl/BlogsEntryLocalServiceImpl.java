@@ -1848,6 +1848,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return portletURL.toString();
 	}
 
+	protected String getLayoutFullURL
+			(ThemeDisplay themeDisplay, ServiceContext serviceContext)
+		throws PortalException {
+
+		String layoutFullURL = null;
+
+		if (themeDisplay != null) {
+			layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
+		}
+
+		if (Validator.isNull(layoutFullURL)) {
+			layoutFullURL = serviceContext.getLayoutFullURL();
+		}
+
+		return layoutFullURL;
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
@@ -2080,7 +2097,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
+		String layoutFullURL = getLayoutFullURL(themeDisplay, serviceContext);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
@@ -2128,7 +2145,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
+		String layoutFullURL = getLayoutFullURL(themeDisplay, serviceContext);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
