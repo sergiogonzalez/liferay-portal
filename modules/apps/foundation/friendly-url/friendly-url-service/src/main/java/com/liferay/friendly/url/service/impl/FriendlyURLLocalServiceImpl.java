@@ -25,6 +25,7 @@ import com.liferay.friendly.url.util.comparator.FriendlyURLCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -161,6 +162,55 @@ public class FriendlyURLLocalServiceImpl
 
 		return friendlyURLPersistence.findByC_G_C_C(
 			companyId, groupId, classNameId, classPK);
+	}
+
+	@Override
+	public FriendlyURL getMainFriendlyURL(
+			long companyId, long groupId, Class<?> clazz, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return getMainFriendlyURL(companyId, groupId, classNameId, classPK);
+	}
+
+	@Override
+	public FriendlyURL getMainFriendlyURL(
+			long companyId, long groupId, long classNameId, long classPK)
+		throws PortalException {
+
+		return friendlyURLPersistence.findByC_G_C_C_M(
+			companyId, groupId, classNameId, classPK, true);
+	}
+
+	@Override
+	public String getUniqueUrlTitle(
+		long companyId, long groupId, long classNameId, long classPK,
+		String urlTitle) {
+
+		for (int i = 1;; i++) {
+			FriendlyURL curFriendlyURL = fetchFriendlyURL(
+				companyId, groupId, classNameId, urlTitle);
+
+			if ((curFriendlyURL == null) ||
+				(curFriendlyURL.getClassPK() == classPK)) {
+
+				break;
+			}
+
+			String suffix = StringPool.DASH + i;
+
+			String prefix = urlTitle;
+
+			if (urlTitle.length() > suffix.length()) {
+				prefix = urlTitle.substring(
+					0, urlTitle.length() - suffix.length());
+			}
+
+			urlTitle = prefix + suffix;
+		}
+
+		return urlTitle;
 	}
 
 	@Override

@@ -89,6 +89,8 @@
 
 module.framework.properties.osgi.console=11312</echo>
 
+					<print-file file.name="${tstamp.value}/WEB-INF/classes/portal-ext.properties" />
+
 					<zip
 						basedir="${tstamp.value}"
 						destfile="${test.build.liferay.portal.zip.file.name}"
@@ -106,6 +108,8 @@ module.framework.properties.osgi.console=11312</echo>
 					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
 module.framework.properties.osgi.console=11312</echo>
+
+					<print-file file.name="${app.server.classes.portal.dir}/portal-ext.properties" />
 				</else>
 			</if>
 		</sequential>
@@ -6950,7 +6954,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-system-ext-properties">
-		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+		<echo file="${app.server.classes.portal.dir}/system-ext.properties">liferay.mode=test
+log.sanitizer.enabled=false</echo>
+
 	</target>
 
 	<target name="prepare-test-build">

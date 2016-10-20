@@ -37,7 +37,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			%>
 
 				<li class="list-group-item">
-					<div class="list-group-item-content">
+					<div>
 						<h3>
 
 							<%

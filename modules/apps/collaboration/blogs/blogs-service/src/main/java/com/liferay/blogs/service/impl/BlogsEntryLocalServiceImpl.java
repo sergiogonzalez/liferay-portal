@@ -29,8 +29,8 @@ import com.liferay.blogs.kernel.exception.EntryTitleException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
 import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
-import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
-import com.liferay.blogs.kernel.util.comparator.EntryIdComparator;
+import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
+import com.liferay.blogs.util.comparator.EntryIdComparator;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.social.BlogsActivityKeys;
@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -100,8 +102,8 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.blogs.service.permission.BlogsPermission;
-import com.liferay.portlet.blogs.util.BlogsUtil;
-import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
+import com.liferay.blogs.util.BlogsUtil;
+import com.liferay.portal.linkback.LinkbackProducerUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
@@ -302,13 +304,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 
-		if (Validator.isNotNull(urlTitle)) {
-			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
-				user.getCompanyId(), groupId, BlogsEntry.class, entryId,
-				urlTitle);
-
-			entry.setUrlTitle(friendlyURL.getUrlTitle());
+		if (Validator.isNull(urlTitle)) {
+			urlTitle = _getUniqueUrlTitle(entry);
 		}
+
+		FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+			user.getCompanyId(), groupId, BlogsEntry.class, entryId,
+			urlTitle);
+
+		entry.setUrlTitle(friendlyURL.getUrlTitle());
 
 		entry.setDescription(description);
 		entry.setContent(content);
@@ -1284,7 +1288,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 
-		if (Validator.isNotNull(urlTitle)) {
+		if (Validator.isNotNull(urlTitle) &&
+			!urlTitle.equals(entry.getUrlTitle())) {
+
 			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
 				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
 				entry.getEntryId(), urlTitle);
@@ -1523,8 +1529,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			Validator.isNull(entry.getUrlTitle())) {
 
-			String uniqueUrlTitle = getUniqueUrlTitle(
-				entryId, entry.getGroupId(), entry.getTitle());
+			String uniqueUrlTitle = _getUniqueUrlTitle(entry);
 
 			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
 				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
@@ -1843,32 +1848,22 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return portletURL.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getUniqueUrlTitle(
 		long entryId, long groupId, String title) {
 
-		String urlTitle = BlogsUtil.getUrlTitle(entryId, title);
+		try {
+			BlogsEntry entry = blogsEntryPersistence.fetchByPrimaryKey(
+				entryId);
 
-		for (int i = 1;; i++) {
-			BlogsEntry entry = fetchEntry(groupId, urlTitle);
-
-			if ((entry == null) || (entryId == entry.getEntryId())) {
-				break;
-			}
-			else {
-				String suffix = StringPool.DASH + i;
-
-				String prefix = urlTitle;
-
-				if (urlTitle.length() > suffix.length()) {
-					prefix = urlTitle.substring(
-						0, urlTitle.length() - suffix.length());
-				}
-
-				urlTitle = prefix + suffix;
-			}
+			return _getUniqueUrlTitle(entry);
 		}
-
-		return urlTitle;
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	protected void notifySubscribers(
@@ -2317,14 +2312,29 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = FriendlyURLLocalService.class)
-	protected FriendlyURLLocalService friendlyURLLocalService;
+	private String _getUniqueUrlTitle(BlogsEntry entry) throws PortalException {
+		String urlTitle = BlogsUtil.getUrlTitle(
+			entry.getEntryId(), entry.getTitle());
+
+		long classNameId = classNameLocalService.getClassNameId(
+			BlogsEntry.class);
+
+		return friendlyURLLocalService.getUniqueUrlTitle(
+			entry.getCompanyId(), entry.getGroupId(), classNameId,
+			entry.getEntryId(), urlTitle);
+	}
+
+	@ServiceReference(type = BlogsEntryPersistence.class)
+	protected BlogsEntryPersistence blogsEntryPersistence;
 
 	@ServiceReference(type = BlogsEntryFinder.class)
 	protected BlogsEntryFinder blogsEntryFinder;
 
-	@ServiceReference(type = BlogsEntryPersistence.class)
-	protected BlogsEntryPersistence blogsEntryPersistence;
+	@ServiceReference(type = ClassNameLocalService.class)
+	protected ClassNameLocalService classNameLocalService;
+
+	@ServiceReference(type = FriendlyURLLocalService.class)
+	protected FriendlyURLLocalService friendlyURLLocalService;
 
 	private static final String _COVER_IMAGE_FOLDER_NAME = "Cover Image";
 

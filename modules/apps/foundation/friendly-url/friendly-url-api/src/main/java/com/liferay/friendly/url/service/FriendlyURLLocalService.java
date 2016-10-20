@@ -155,6 +155,14 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	public FriendlyURL getFriendlyURLByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURL getMainFriendlyURL(long companyId, long groupId,
+		java.lang.Class<?> clazz, long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FriendlyURL getMainFriendlyURL(long companyId, long groupId,
+		long classNameId, long classPK) throws PortalException;
+
 	/**
 	* Updates the friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -202,6 +210,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUniqueUrlTitle(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle);
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
