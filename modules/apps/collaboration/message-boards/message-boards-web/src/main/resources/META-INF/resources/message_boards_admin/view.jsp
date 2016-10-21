@@ -33,17 +33,14 @@ else {
 	portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 }
 
-Set<Long> categorySubscriptionClassPKs = MBUtil.getCategorySubscriptionClassPKs(user.getUserId());
-Set<Long> threadSubscriptionClassPKs = MBUtil.getThreadSubscriptionClassPKs(user.getUserId());
-
 String keywords = ParamUtil.getString(request, "keywords");
 
 if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
 
-request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscriptionClassPKs);
-request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionClassPKs);
+request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBUtil.getCategorySubscriptionClassPKs(user.getUserId()));
+request.setAttribute("view.jsp-threadSubscriptionClassPKs", MBUtil.getThreadSubscriptionClassPKs(user.getUserId()));
 
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-portletURL", portletURL);
