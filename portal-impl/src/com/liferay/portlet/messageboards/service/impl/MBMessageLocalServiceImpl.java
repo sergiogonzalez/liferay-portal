@@ -2044,8 +2044,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected MBSubscriptionSender getSubscriptionSender(
-		long userId, MBMessage message, String messageURL, String entryTitle,
-		boolean htmlFormat, String messageBody, String categoryName,
+		long userId, MBCategory category, MBMessage message, String messageURL,
+		String entryTitle, boolean htmlFormat, String messageBody,
 		String inReplyTo, String fromName, String fromAddress,
 		String replyToAddress, String emailAddress, String fullName,
 		LocalizedValuesMap subjectLocalizedValuesMap,
@@ -2063,11 +2063,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttribute(
 			"[$MESSAGE_BODY$]", messageBody, false);
 
-		if (message.getCategoryId() !=
+		if (category.getCategoryId() !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 			subscriptionSender.setContextAttribute(
-				"[$CATEGORY_NAME$]", categoryName, true);
+				"[$CATEGORY_NAME$]", category.getName(), true);
+		}
+		else {
+			subscriptionSender.setLocalizedContextAttribute(
+				"[$CATEGORY_NAME$]",
+				locale -> _getLocalizedCategoryName(category, locale));
 		}
 
 		subscriptionSender.setContextAttributes(
@@ -2086,14 +2091,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedBodyMap(
 				LocalizationUtil.getMap(bodyLocalizedValuesMap));
-		}
-
-		if (message.getCategoryId() ==
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-			subscriptionSender.setLocalizedContextAttribute(
-				"[$CATEGORY_NAME$]",
-				locale -> _getLocalizedCategoryName(message, locale));
 		}
 
 		if (subjectLocalizedValuesMap != null) {
@@ -2269,8 +2266,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBCategory category = message.getCategory();
 
-		String categoryName = category.getName();
-
 		List<Long> categoryIds = new ArrayList<>();
 
 		categoryIds.add(message.getCategoryId());
@@ -2353,8 +2348,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		SubscriptionSender subscriptionSender = getSubscriptionSender(
-			userId, message, messageURL, entryTitle, htmlFormat, messageBody,
-			categoryName, inReplyTo, fromName, fromAddress, replyToAddress,
+			userId, category, message, messageURL, entryTitle, htmlFormat,
+			messageBody, inReplyTo, fromName, fromAddress, replyToAddress,
 			emailAddress, fullName, subjectLocalizedValuesMap,
 			bodyLocalizedValuesMap, serviceContext);
 
@@ -2377,8 +2372,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			for (long categoryId : categoryIds) {
 				MBSubscriptionSender sourceMailingListSubscriptionSender =
 					getSubscriptionSender(
-						userId, message, messageURL, entryTitle, htmlFormat,
-						messageBody, categoryName, inReplyTo, fromName,
+						userId, category,  message, messageURL, entryTitle,
+						htmlFormat, messageBody, inReplyTo, fromName,
 						fromAddress, replyToAddress, emailAddress, fullName,
 						subjectLocalizedValuesMap, bodyLocalizedValuesMap,
 						serviceContext);
@@ -2595,10 +2590,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	private String _getLocalizedCategoryName(MBMessage message, Locale locale) {
+	private String _getLocalizedCategoryName(
+		MBCategory category, Locale locale) {
+
 		try {
 			Group group = groupPersistence.findByPrimaryKey(
-				message.getGroupId());
+				category.getGroupId());
 
 			return LanguageUtil.get(locale, "message-boards-home") + " - " +
 				group.getDescriptiveName(locale);
