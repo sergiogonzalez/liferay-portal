@@ -1938,17 +1938,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	private String _getGroupDescriptiveName(Group group, Locale locale) {
-		try {
-			return group.getDescriptiveName(locale);
-		}
-		catch (PortalException pe) {
-			_log.error("Could not retrieve group name");
-		}
-
-		return StringPool.BLANK;
-	}
-
 	protected void pingGoogle(BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2275,6 +2264,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@ServiceReference(type = FriendlyURLLocalService.class)
 	protected FriendlyURLLocalService friendlyURLLocalService;
+
+	private String _getGroupDescriptiveName(Group group, Locale locale) {
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Could not retrieve group name for {groupId=" +
+					group.getGroupId() + "}");
+		}
+
+		return StringPool.BLANK;
+	}
 
 	private String _getUniqueUrlTitle(BlogsEntry entry) throws PortalException {
 		String urlTitle = BlogsUtil.getUrlTitle(

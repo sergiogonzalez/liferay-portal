@@ -312,7 +312,7 @@ public class MembershipRequestLocalServiceImpl
 		String body = PrefsPropsUtil.getContent(
 			membershipRequest.getCompanyId(), bodyProperty);
 
-		String statusKey = null;
+		final String statusKey;
 
 		if (membershipRequest.getStatusId() ==
 				MembershipRequestConstants.STATUS_APPROVED) {
@@ -342,10 +342,8 @@ public class MembershipRequestLocalServiceImpl
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 
-		String finalStatusKey = statusKey;
-
 		subscriptionSender.setLocalizedContextAttribute(
-			"[$STATUS$]", locale -> LanguageUtil.get(locale, finalStatusKey));
+			"[$STATUS$]", locale -> LanguageUtil.get(locale, statusKey));
 
 		subscriptionSender.setMailId(
 			"membership_request", membershipRequest.getMembershipRequestId());
