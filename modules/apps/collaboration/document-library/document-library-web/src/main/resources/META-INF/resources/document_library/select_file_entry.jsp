@@ -68,19 +68,6 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 							<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 						</liferay-portlet:renderURL>
 
-						<%
-						try{
-							DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
-							DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
-						}
-						catch (com.liferay.portal.kernel.repository.RepositoryException re) {
-							rowURL = null;
-						}
-						catch (com.liferay.portal.kernel.security.auth.PrincipalException pe) {
-							rowURL = null;
-						}
-						%>
-
 						<liferay-ui:search-container-column-text
 							name="title"
 						>
