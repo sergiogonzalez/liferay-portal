@@ -495,7 +495,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		subscriptionSender.setHtmlFormat(true);
 
 		subscriptionSender.setLocalizedContextAttribute(
-			"[$BLOGS_ENTRY_SITE_NAME$]",
+			"[$COMMENT_CREATE_DATE$]",
 			locale -> _getFormattedKBCommentCreateDate(kbComment, locale),
 			false);
 
