@@ -37,12 +37,13 @@ if (microblogsEntryId > 0) {
 
 String modifiedDate = StringPool.BLANK;
 
-String receiverUserDisplayURL = StringPool.BLANK;
 String receiverUserFullName = StringPool.BLANK;
 String receiverUserScreenName = StringPool.BLANK;
 
 boolean edit = ParamUtil.getBoolean(request, "edit");
 boolean repost = ParamUtil.getBoolean(request, "repost");
+
+User receiverUser = null;
 
 if ((microblogsEntry != null) && !edit) {
 	modifiedDate = dateFormatDateTime.format(microblogsEntry.getModifiedDate());
@@ -50,9 +51,8 @@ if ((microblogsEntry != null) && !edit) {
 	receiverUserFullName = HtmlUtil.escape(PortalUtil.getUserName(microblogsEntry));
 
 	try {
-		User receiverUser = UserLocalServiceUtil.getUserById(microblogsEntry.getUserId());
+		receiverUser = UserLocalServiceUtil.getUserById(microblogsEntry.getUserId());
 
-		receiverUserDisplayURL = receiverUser.getDisplayURL(themeDisplay);
 		receiverUserScreenName = receiverUser.getScreenName();
 	}
 	catch (NoSuchUserException nsue) {
@@ -90,12 +90,22 @@ if (comment) {
 		<c:otherwise>
 			<div class="microblogs-entry">
 				<span class="thumbnail">
-					<a href="<%= receiverUserDisplayURL %>">
-						<liferay-ui:user-portrait
-							imageCssClass="user-icon-lg"
-							userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
-						/>
-					</a>
+					<c:choose>
+						<c:when test="<%= (receiverUser != null) && receiverUser.isActive() %>">
+							<a href="<%= receiverUser.getDisplayURL(themeDisplay) %>">
+								<liferay-ui:user-portrait
+									imageCssClass="user-icon-lg"
+									userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
+								/>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:user-portrait
+								imageCssClass="user-icon-lg"
+								userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</span>
 
 				<div class="entry-bubble">
