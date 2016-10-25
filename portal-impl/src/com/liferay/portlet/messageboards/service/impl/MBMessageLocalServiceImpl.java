@@ -2372,7 +2372,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			for (long categoryId : categoryIds) {
 				MBSubscriptionSender sourceMailingListSubscriptionSender =
 					getSubscriptionSender(
-						userId, category,  message, messageURL, entryTitle,
+						userId, category, message, messageURL, entryTitle,
 						htmlFormat, messageBody, inReplyTo, fromName,
 						fromAddress, replyToAddress, emailAddress, fullName,
 						subjectLocalizedValuesMap, bodyLocalizedValuesMap,
@@ -2604,9 +2604,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			_log.error(
 				"Could not retrieve group name for {groupId=" +
 					category.getGroupId() + "}");
-		}
 
-		return LanguageUtil.get(locale, "message-boards-home");
+			return LanguageUtil.get(locale, "message-boards-home");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
