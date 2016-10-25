@@ -1699,12 +1699,6 @@ public class DLAppHelperLocalServiceImpl
 			folder = dlAppLocalService.getFolder(folderId);
 		}
 
-		String folderName = null;
-
-		if (folder != null) {
-			folderName = folder.getName();
-		}
-
 		SubscriptionSender subscriptionSender =
 			new GroupSubscriptionCheckSubscriptionSender(
 				DLPermission.RESOURCE_NAME);
@@ -1721,7 +1715,7 @@ public class DLAppHelperLocalServiceImpl
 
 		if (folder != null) {
 			subscriptionSender.setContextAttribute(
-				"[$FOLDER_NAME$]", folderName, true);
+				"[$FOLDER_NAME$]", folder.getName(), true);
 		}
 		else {
 			subscriptionSender.setLocalizedContextAttribute(
