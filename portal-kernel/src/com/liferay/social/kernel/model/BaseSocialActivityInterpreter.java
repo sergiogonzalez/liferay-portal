@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -412,7 +413,17 @@ public abstract class BaseSocialActivityInterpreter
 		Object[] titleArguments = getTitleArguments(
 			groupName, activity, link, entryTitle, serviceContext);
 
-		return serviceContext.translate(titlePattern, titleArguments);
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+
+		if (resourceBundleLoader == null) {
+			return serviceContext.translate(titlePattern, titleArguments);
+		}
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			LanguageUtil.getLanguageId(serviceContext.getLocale()));
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, titlePattern, titleArguments);
 	}
 
 	protected Object[] getTitleArguments(
