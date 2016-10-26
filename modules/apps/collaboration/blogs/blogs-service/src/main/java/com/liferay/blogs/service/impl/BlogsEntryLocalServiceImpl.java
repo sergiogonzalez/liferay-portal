@@ -2289,7 +2289,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		catch (PortalException pe) {
 			_log.error(
 				"Could not retrieve group name for {groupId=" +
-					group.getGroupId() + "}");
+					group.getGroupId() + "}",
+				pe);
 		}
 
 		return StringPool.BLANK;
