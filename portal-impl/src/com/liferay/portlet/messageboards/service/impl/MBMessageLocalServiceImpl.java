@@ -2602,9 +2602,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				group.getDescriptiveName(locale);
 		}
 		catch (PortalException pe) {
-			_log.error(
-				"Could not retrieve group name for {groupId=" +
-					category.getGroupId() + "}");
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe.getMessage());
+			}
 
 			return LanguageUtil.get(locale, "message-boards-home");
 		}
