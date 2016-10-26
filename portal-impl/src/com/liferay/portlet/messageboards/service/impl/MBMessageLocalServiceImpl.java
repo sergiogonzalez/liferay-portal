@@ -2604,7 +2604,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		catch (PortalException pe) {
 			_log.error(
 				"Could not retrieve group name for {groupId=" +
-					category.getGroupId() + "}");
+					category.getGroupId() + "}",
+				pe);
 
 			return LanguageUtil.get(locale, "message-boards-home");
 		}
