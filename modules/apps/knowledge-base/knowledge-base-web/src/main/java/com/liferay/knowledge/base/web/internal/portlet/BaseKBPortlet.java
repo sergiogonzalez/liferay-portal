@@ -300,7 +300,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 					try {
 						HttpServletRequest request =
 							PortalUtil.getHttpServletRequest(resourceRequest);
-
 						HttpServletResponse response =
 							PortalUtil.getHttpServletResponse(resourceResponse);
 
