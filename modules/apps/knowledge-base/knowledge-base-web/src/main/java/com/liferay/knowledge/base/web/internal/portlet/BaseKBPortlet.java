@@ -281,10 +281,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		try {
 			String resourceID = resourceRequest.getResourceID();
 
-			if (resourceID.equals("kbArticleRSS")) {
-				serveKBArticleRSS(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("compareVersions")) {
+			if (resourceID.equals("compareVersions")) {
 				long resourcePrimKey = ParamUtil.getLong(
 					resourceRequest, "resourcePrimKey");
 				double sourceVersion = ParamUtil.getDouble(
@@ -328,6 +325,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 				portletRequestDispatcher.include(
 					resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("kbArticleRSS")) {
+				serveKBArticleRSS(resourceRequest, resourceResponse);
 			}
 		}
 		catch (IOException ioe) {
