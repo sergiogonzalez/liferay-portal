@@ -164,6 +164,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 						(DLFileShortcut)fileShortcut.getModel();
 
 					dlFileShortcut.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
 					trashedModels.add((TrashedModel)dlFileShortcut);
 				}
 			}
