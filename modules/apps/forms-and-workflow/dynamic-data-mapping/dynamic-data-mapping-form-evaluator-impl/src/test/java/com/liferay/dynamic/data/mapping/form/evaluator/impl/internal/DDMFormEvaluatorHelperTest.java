@@ -522,15 +522,17 @@ public class DDMFormEvaluatorHelperTest {
 
 		// Properties
 
+		Object expectedValue = expectedDDMFormFieldEvaluationResult.getValue();
+		Object actualValue = actualDDMFormFieldEvaluationResult.getValue();
+
+		Assert.assertEquals(expectedValue, actualValue);
+
 		Assert.assertEquals(
 			expectedDDMFormFieldEvaluationResult.getErrorMessage(),
 			actualDDMFormFieldEvaluationResult.getErrorMessage());
 		Assert.assertEquals(
 			expectedDDMFormFieldEvaluationResult.isValid(),
 			actualDDMFormFieldEvaluationResult.isValid());
-		Assert.assertEquals(
-			expectedDDMFormFieldEvaluationResult.getValue(),
-			actualDDMFormFieldEvaluationResult.getValue());
 		Assert.assertEquals(
 			expectedDDMFormFieldEvaluationResult.isVisible(),
 			actualDDMFormFieldEvaluationResult.isVisible());

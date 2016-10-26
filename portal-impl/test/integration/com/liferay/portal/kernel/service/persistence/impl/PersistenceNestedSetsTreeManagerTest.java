@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,7 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
 
@@ -59,7 +60,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 	@ClassRule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, new LiferayIntegrationTestRule());
+			CodeCoverageAssertor.INSTANCE, new LiferayIntegrationTestRule(),
+			TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -94,13 +96,13 @@ public class PersistenceNestedSetsTreeManagerTest {
 			_assetCategories[i] = AssetTestUtil.addCategory(
 				_group.getGroupId(), _assetVocabulary.getVocabularyId());
 		}
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
 	}
 
 	@After
 	public void tearDown() throws PortalException {
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
+		ReflectionTestUtil.setFieldValue(
+			_assetCategoryPersistence, "_sessionFactory",
+			_sessionFactoryInvocationHandler.getTarget());
 
 		GroupLocalServiceUtil.deleteGroup(_group);
 
@@ -702,13 +704,28 @@ public class PersistenceNestedSetsTreeManagerTest {
 	private static class SessionFactoryInvocationHandler
 		implements InvocationHandler {
 
+		public Object getTarget() {
+			return _target;
+		}
+
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
 			String methodName = method.getName();
 
-			if (methodName.equals("openSession") && _failOpenSession) {
+			if (methodName.equals("closeSession")) {
+				Session session = (Session)args[0];
+
+				if (session == null) {
+					return null;
+				}
+
+				session.flush();
+
+				session.clear();
+			}
+			else if (methodName.equals("openSession") && _failOpenSession) {
 				throw new Exception("Unable to open session");
 			}
 

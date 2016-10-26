@@ -39,21 +39,21 @@ public class SetPropertyFunctionTest extends BaseDDMFormRuleFunctionTest {
 
 	@Test
 	public void testSetBooleanProperty() {
-		String randomPropertyName = StringUtil.randomString();
+		String propertyName = StringUtil.randomString();
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult1 =
 			createDDMFormFieldEvaluationResult(
-				"Field1", randomPropertyName, RandomTestUtil.randomBoolean());
+				"Field1", propertyName, RandomTestUtil.randomBoolean());
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult2 =
 			createDDMFormFieldEvaluationResult(
-				"Field1", randomPropertyName, RandomTestUtil.randomBoolean());
+				"Field1", propertyName, RandomTestUtil.randomBoolean());
 
-		boolean ddmFormField2PropertyValue = RandomTestUtil.randomBoolean();
+		boolean field2PropertyValue = RandomTestUtil.randomBoolean();
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult3 =
 			createDDMFormFieldEvaluationResult(
-				"Field2", randomPropertyName, ddmFormField2PropertyValue);
+				"Field2", propertyName, field2PropertyValue);
 
 		Map<String, List<DDMFormFieldEvaluationResult>>
 			ddmFormFieldEvaluationResultsMap =
@@ -63,42 +63,36 @@ public class SetPropertyFunctionTest extends BaseDDMFormRuleFunctionTest {
 					ddmFormFieldEvaluationResult3);
 
 		SetPropertyFunction setPropertyFunction = new SetPropertyFunction(
-			ddmFormFieldEvaluationResultsMap, randomPropertyName);
+			ddmFormFieldEvaluationResultsMap, propertyName);
 
-		boolean expectedDDMFormField1PropertyValue =
-			RandomTestUtil.randomBoolean();
+		boolean field1NewPropertyValue = RandomTestUtil.randomBoolean();
 
-		setPropertyFunction.evaluate(
-			"Field1", expectedDDMFormField1PropertyValue);
+		setPropertyFunction.evaluate("Field1", field1NewPropertyValue);
 
-		Assert.assertEquals(
-			expectedDDMFormField1PropertyValue,
-			ddmFormFieldEvaluationResult1.getProperty(randomPropertyName));
+		assertProperty(
+			field1NewPropertyValue, ddmFormFieldEvaluationResult1,
+			propertyName);
 
-		Assert.assertEquals(
-			expectedDDMFormField1PropertyValue,
-			ddmFormFieldEvaluationResult2.getProperty(randomPropertyName));
+		assertProperty(
+			field1NewPropertyValue, ddmFormFieldEvaluationResult2,
+			propertyName);
 
 		// Unchanged property value
 
-		Assert.assertEquals(
-			ddmFormField2PropertyValue,
-			ddmFormFieldEvaluationResult3.getProperty(randomPropertyName));
+		assertProperty(
+			field2PropertyValue, ddmFormFieldEvaluationResult3, propertyName);
 	}
 
 	@Test
 	public void testSetValue() {
-		int ddmFormField1PropertyValue = RandomTestUtil.randomInt();
-
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult1 =
 			createDDMFormFieldEvaluationResult(
-				"Field1", "value", ddmFormField1PropertyValue);
+				"Field1", "value", RandomTestUtil.randomInt());
 
-		int ddmFormField2PropertyValue = RandomTestUtil.randomInt();
+		int field2Value = RandomTestUtil.randomInt();
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult2 =
-			createDDMFormFieldEvaluationResult(
-				"Field2", "value", ddmFormField2PropertyValue);
+			createDDMFormFieldEvaluationResult("Field2", "value", field2Value);
 
 		Map<String, List<DDMFormFieldEvaluationResult>>
 			ddmFormFieldEvaluationResultsMap =
@@ -106,20 +100,35 @@ public class SetPropertyFunctionTest extends BaseDDMFormRuleFunctionTest {
 					ddmFormFieldEvaluationResult1,
 					ddmFormFieldEvaluationResult2);
 
-		int expectedDDMFormField1PropertyValue = RandomTestUtil.randomInt();
-
 		SetPropertyFunction setPropertyFunction = new SetPropertyFunction(
 			ddmFormFieldEvaluationResultsMap, "value");
 
-		setPropertyFunction.evaluate(
-			"Field1", expectedDDMFormField1PropertyValue);
+		int field1NewValue = RandomTestUtil.randomInt();
 
-		Assert.assertEquals(
-			expectedDDMFormField1PropertyValue,
-			ddmFormFieldEvaluationResult1.getValue());
-		Assert.assertEquals(
-			ddmFormField2PropertyValue,
-			ddmFormFieldEvaluationResult2.getValue());
+		setPropertyFunction.evaluate("Field1", field1NewValue);
+
+		assertValue(field1NewValue, ddmFormFieldEvaluationResult1);
+
+		assertValue(field2Value, ddmFormFieldEvaluationResult2);
+	}
+
+	protected static void assertProperty(
+		Object expected,
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
+		String name) {
+
+		Object property = ddmFormFieldEvaluationResult.getProperty(name);
+
+		Assert.assertEquals(expected, property);
+	}
+
+	protected static void assertValue(
+		Object expected,
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult) {
+
+		Object value = ddmFormFieldEvaluationResult.getValue();
+
+		Assert.assertEquals(expected, value);
 	}
 
 }
