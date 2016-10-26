@@ -15,9 +15,20 @@
 package com.liferay.comment.web.internal.portlet;
 
 import com.liferay.comment.web.constants.CommentPortletKeys;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
+
+import java.util.Objects;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,4 +53,25 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class CommentPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (Objects.isNull(renderRequest.getAttribute(WebKeys.COMMENT))) {
+			setCommentAttribute(renderRequest);
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	protected void setCommentAttribute(RenderRequest renderRequest) {
+		long commentId = ParamUtil.getLong(renderRequest, "commentId");
+
+		Comment comment = CommentManagerUtil.fetchComment(commentId);
+
+		renderRequest.setAttribute(WebKeys.COMMENT, comment);
+	}
+
 }
