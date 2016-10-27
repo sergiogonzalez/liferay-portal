@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -103,7 +102,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DisplayPortlet extends BaseKBPortlet {
 
 	@Override
-	public void render(
+	public void doRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
@@ -126,12 +125,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
 					kbArticle.getResourcePrimKey(),
 					WorkflowConstants.STATUS_APPROVED);
-			}
-
-			String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
-
-			if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
-				super.compareVersions(renderRequest);
 			}
 
 			renderRequest.setAttribute(
@@ -167,8 +160,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 				throw new PortletException(e);
 			}
 		}
-
-		super.render(renderRequest, renderResponse);
 	}
 
 	public void updateRootKBFolderId(

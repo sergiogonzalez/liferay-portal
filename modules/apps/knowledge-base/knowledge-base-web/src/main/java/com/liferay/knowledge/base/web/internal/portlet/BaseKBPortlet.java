@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -78,6 +79,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -207,6 +209,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
+	public abstract void doRender(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException;
+
 	public void moveKBObject(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -235,6 +241,22 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			kbFolderService.moveKBFolder(
 				resourcePrimKey, parentResourcePrimKey);
 		}
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
+
+		if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
+			compareVersions(renderRequest);
+		}
+
+		doRender(renderRequest, renderResponse);
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	public void serveKBArticleRSS(

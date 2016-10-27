@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -74,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SectionPortlet extends BaseKBPortlet {
 
 	@Override
-	public void render(
+	public void doRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
@@ -84,12 +83,6 @@ public class SectionPortlet extends BaseKBPortlet {
 				dlMimeTypeDisplayContext);
 
 			KBArticle kbArticle = getKBArticle(renderRequest);
-
-			String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
-
-			if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
-				super.compareVersions(renderRequest);
-			}
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
@@ -108,8 +101,6 @@ public class SectionPortlet extends BaseKBPortlet {
 				throw new PortletException(e);
 			}
 		}
-
-		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
