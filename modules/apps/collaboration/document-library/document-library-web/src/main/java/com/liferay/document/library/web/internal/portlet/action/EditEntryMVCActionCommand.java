@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -158,7 +160,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 						deleteFileShortcutId);
 
 				if (fileShortcut.getModel() instanceof TrashedModel) {
-					trashedModels.add((TrashedModel)fileShortcut.getModel());
+					DLFileShortcut dlFileShortcut =
+						(DLFileShortcut)fileShortcut.getModel();
+
+					dlFileShortcut.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+					trashedModels.add((TrashedModel)dlFileShortcut);
 				}
 			}
 			else {
