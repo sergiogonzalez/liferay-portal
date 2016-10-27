@@ -72,6 +72,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
 
 /**
  * @author Alexander Chow
@@ -85,6 +86,7 @@ public class PDFProcessorImpl
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		FileUtil.mkdirs(DECRYPT_TMP_PATH);
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
@@ -642,16 +644,30 @@ public class PDFProcessorImpl
 	private void _generateImagesPB(FileVersion fileVersion, File file)
 		throws Exception {
 
+		int previewFilesCount = 0;
+
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
+		File decryptedFile = getDecryptedTempFile(tempFileId);
+
 		File thumbnailFile = getThumbnailTempFile(tempFileId);
 
-		int previewFilesCount = 0;
-
 		try (PDDocument pdDocument = PDDocument.load(file)) {
+			if (!_isDocumentDecrypted(pdDocument)) {
+				_log.error(
+					"Unable to decrypt PDF document with {fileEntryId=" +
+						fileVersion.getFileEntryId() + "}");
+
+				return;
+			}
+
+			pdDocument.save(decryptedFile);
+
 			previewFilesCount = pdDocument.getNumberOfPages();
 		}
+
+		_log.error("Using decryptedFile: " + decryptedFile.getAbsolutePath());
 
 		File[] previewFiles = new File[previewFilesCount];
 
@@ -671,8 +687,8 @@ public class PDFProcessorImpl
 				new LiferayPDFBoxProcessCallable(
 					ServerDetector.getServerId(),
 					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					Log4JUtil.getCustomLogSettings(), file, thumbnailFile,
-					previewFiles, getThumbnailType(fileVersion),
+					Log4JUtil.getCustomLogSettings(), decryptedFile,
+					thumbnailFile, previewFiles, getThumbnailType(fileVersion),
 					getPreviewType(fileVersion),
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
@@ -695,21 +711,21 @@ public class PDFProcessorImpl
 					_log.debug(
 						"Waiting for " + pdfBoxTimeout +
 							" seconds to generate thumbnail and preview for " +
-								file.getPath());
+								decryptedFile.getPath());
 				}
 				else {
 					if (generateThumbnail) {
 						_log.debug(
 							"Waiting for " + pdfBoxTimeout +
 								" seconds to generate thumbnail for " +
-									file.getPath());
+									decryptedFile.getPath());
 					}
 
 					if (generatePreview) {
 						_log.debug(
 							"Waiting for " + pdfBoxTimeout +
 								" seconds to generate preview for " +
-									file.getPath());
+									decryptedFile.getPath());
 					}
 				}
 			}
@@ -725,19 +741,19 @@ public class PDFProcessorImpl
 				if (generateThumbnail && generatePreview) {
 					errorMessage =
 						"Timeout when generating thumbnail and preview for " +
-							file.getPath();
+							decryptedFile.getPath();
 				}
 				else {
 					if (generateThumbnail) {
 						errorMessage =
 							"Timeout when generating thumbnail for " +
-								file.getPath();
+								decryptedFile.getPath();
 					}
 
 					if (generatePreview) {
 						errorMessage =
 							"Timeout when generating preview for " +
-								file.getPath();
+								decryptedFile.getPath();
 					}
 				}
 
@@ -759,7 +775,7 @@ public class PDFProcessorImpl
 		else {
 			LiferayPDFBoxConverter liferayConverter =
 				new LiferayPDFBoxConverter(
-					file, thumbnailFile, previewFiles,
+						decryptedFile, thumbnailFile, previewFiles,
 					getPreviewType(fileVersion), getThumbnailType(fileVersion),
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
@@ -768,6 +784,8 @@ public class PDFProcessorImpl
 
 			liferayConverter.generateImagesPB();
 		}
+
+		FileUtil.delete(decryptedFile);
 
 		if (generateThumbnail) {
 			try {
@@ -896,6 +914,48 @@ public class PDFProcessorImpl
 		}
 
 		return hasThumbnails(fileVersion);
+	}
+
+	private boolean _isDocumentDecrypted(PDDocument pdDocument) {
+		if (!pdDocument.isEncrypted()) {
+			return true;
+		}
+
+		for (String decryptPassword :
+				PropsValues.
+				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX) {
+
+			StandardDecryptionMaterial standardDecryptionMaterial =
+				new StandardDecryptionMaterial(decryptPassword);
+
+			try {
+				pdDocument.openProtection(standardDecryptionMaterial);
+
+				pdDocument.setAllSecurityToBeRemoved(true);
+
+				return true;
+			}
+			catch (Exception e) {
+				continue;
+			}
+		}
+
+		//Try a last chance with default password ""
+		StandardDecryptionMaterial standardDecryptionMaterial =
+			new StandardDecryptionMaterial("");
+
+		try {
+			pdDocument.openProtection(standardDecryptionMaterial);
+
+			pdDocument.setAllSecurityToBeRemoved(true);
+		}
+		catch (Exception e) {
+			_log.error(e.getMessage());
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isGeneratePreview(FileVersion fileVersion)
