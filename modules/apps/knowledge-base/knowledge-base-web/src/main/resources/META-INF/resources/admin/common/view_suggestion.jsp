@@ -19,7 +19,7 @@
 <%
 KBComment kbComment = KBCommentServiceUtil.getKBComment(ParamUtil.getLong(request, "kbCommentId"));
 
-String kbCommentTitle = StringUtil.shorten(HtmlUtil.escape(kbComment.getContent()), 100);
+String kbCommentTitle = StringUtil.shorten(kbComment.getContent(), 100);
 
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestionListDisplayContext(request, templatePath, scopeGroupId);
 
@@ -51,7 +51,7 @@ renderResponse.setTitle(kbCommentTitle);
 				</h5>
 
 				<h4>
-					<%= kbCommentTitle %>
+					<%= HtmlUtil.escape(kbCommentTitle) %>
 				</h4>
 
 				<h5>
