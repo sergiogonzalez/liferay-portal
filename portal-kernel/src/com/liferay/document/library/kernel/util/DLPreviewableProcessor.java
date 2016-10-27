@@ -80,8 +80,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	public static final String THUMBNAIL_PATH = "document_thumbnail/";
 
 	public static final String THUMBNAIL_TMP_PATH =
-			SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/" +
-				THUMBNAIL_PATH;
+		SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/" +
+			THUMBNAIL_PATH;
 
 	public static void deleteFiles() {
 		long[] companyIds = PortalUtil.getCompanyIds();
@@ -650,18 +650,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected File getDecryptedTempFile(String id) {
-		String thumbnailTempFilePath = getDecryptedTempFilePath(id);
-
-		return new File(thumbnailTempFilePath);
-	}
-
-	protected String getDecryptedTempFilePath(String id) {
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(DECRYPT_TMP_PATH);
-		sb.append(id);
-
-		return sb.toString();
+		return new File(DECRYPT_TMP_PATH + id);
 	}
 
 	protected abstract List<Long> getFileVersionIds();
