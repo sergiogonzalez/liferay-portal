@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -667,8 +668,6 @@ public class PDFProcessorImpl
 			previewFilesCount = pdDocument.getNumberOfPages();
 		}
 
-		_log.error("Using decryptedFile: " + decryptedFile.getAbsolutePath());
-
 		File[] previewFiles = new File[previewFilesCount];
 
 		for (int i = 0; i < previewFilesCount; i++) {
@@ -775,7 +774,7 @@ public class PDFProcessorImpl
 		else {
 			LiferayPDFBoxConverter liferayConverter =
 				new LiferayPDFBoxConverter(
-						decryptedFile, thumbnailFile, previewFiles,
+					decryptedFile, thumbnailFile, previewFiles,
 					getPreviewType(fileVersion), getThumbnailType(fileVersion),
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
@@ -921,10 +920,12 @@ public class PDFProcessorImpl
 			return true;
 		}
 
-		for (String decryptPassword :
-				PropsValues.
-				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX) {
+		String[] decryptedPasswords = ArrayUtil.append(
+			PropsValues.
+				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX,
+			StringPool.BLANK);
 
+		for (String decryptPassword : decryptedPasswords) {
 			StandardDecryptionMaterial standardDecryptionMaterial =
 				new StandardDecryptionMaterial(decryptPassword);
 
@@ -940,22 +941,7 @@ public class PDFProcessorImpl
 			}
 		}
 
-		//Try a last chance with default password ""
-		StandardDecryptionMaterial standardDecryptionMaterial =
-			new StandardDecryptionMaterial("");
-
-		try {
-			pdDocument.openProtection(standardDecryptionMaterial);
-
-			pdDocument.setAllSecurityToBeRemoved(true);
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
-
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	private boolean _isGeneratePreview(FileVersion fileVersion)
