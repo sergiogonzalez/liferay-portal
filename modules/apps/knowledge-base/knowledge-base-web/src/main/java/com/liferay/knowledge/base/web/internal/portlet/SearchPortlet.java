@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SearchPortlet extends BaseKBPortlet {
 
 	@Override
-	public void render(
+	public void doRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
@@ -103,8 +103,6 @@ public class SearchPortlet extends BaseKBPortlet {
 				throw new PortletException(e);
 			}
 		}
-
-		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
