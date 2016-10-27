@@ -28,10 +28,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -80,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ArticlePortlet extends BaseKBPortlet {
 
 	@Override
-	public void render(
+	public void doRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
@@ -96,12 +94,6 @@ public class ArticlePortlet extends BaseKBPortlet {
 			if (resourcePrimKey > 0) {
 				kbArticle = kbArticleService.getLatestKBArticle(
 					resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
-			}
-
-			String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
-
-			if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
-				super.compareVersions(renderRequest);
 			}
 
 			renderRequest.setAttribute(
@@ -126,8 +118,6 @@ public class ArticlePortlet extends BaseKBPortlet {
 				throw new PortletException(e);
 			}
 		}
-
-		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
