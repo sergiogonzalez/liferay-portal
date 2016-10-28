@@ -68,7 +68,7 @@ public class JournalFeedLocalServiceImpl
 
 		// Feed
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		feedId = StringUtil.toUpperCase(feedId.trim());
 
 		validate(

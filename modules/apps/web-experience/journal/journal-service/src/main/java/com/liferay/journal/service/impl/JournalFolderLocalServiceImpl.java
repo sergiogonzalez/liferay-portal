@@ -88,7 +88,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Folder
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		parentFolderId = getParentFolderId(groupId, parentFolderId);
 
 		validateFolder(0, groupId, parentFolderId, name);
@@ -944,7 +944,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Folder
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		folder.setStatus(status);
 		folder.setStatusByUserId(userId);

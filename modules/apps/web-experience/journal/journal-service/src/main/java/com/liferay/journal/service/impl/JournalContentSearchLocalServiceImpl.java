@@ -264,7 +264,7 @@ public class JournalContentSearchLocalServiceImpl
 				groupId, privateLayout, layoutId, portletId);
 		}
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		JournalContentSearch contentSearch =
 			journalContentSearchPersistence.fetchByG_P_L_P_A(

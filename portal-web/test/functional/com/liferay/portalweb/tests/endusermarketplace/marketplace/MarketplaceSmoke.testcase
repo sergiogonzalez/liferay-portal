@@ -7,6 +7,24 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="ProductMenu#gotoSite">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="BookmarksFolder#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="DMFolder#tearDownCP" />
+
+		<execute macro="DMDocument#tearDownCP" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Test Page" />
 		</execute>
@@ -14,24 +32,6 @@
 		<execute macro="CalendarEvent#tearDown" />
 
 		<execute macro="Calendar#tearDown" />
-
-		<execute macro="BlogsEntry#tearDownCP" />
-
-		<execute macro="BookmarksFolder#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="DMDocument#tearDownCP" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#tearDownCP" />
-
-		<execute macro="WikiPage#tearDownCP" />
-
-		<execute macro="DMFolder#tearDownCP" />
 	</tear-down>
 
 	<command name="MarketplaceSmoke" priority="5">

@@ -566,47 +566,8 @@
 		</execute>
 
 		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="Test Folder Entry 2 Description" />
-			<var name="bookmarkName" value="Test Folder Entry 2" />
-			<var name="bookmarkURL" value="http://www.openqa.org" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Test Folder" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Folder Entry 2" />
-			<var name="bookmarkURL" value="http://www.openqa.org" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Test Folder" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="Test Folder Entry 3 Description" />
-			<var name="bookmarkName" value="Test Folder Entry 3" />
+			<var name="bookmarkName" value="Test Folder Entry 2" />
 			<var name="bookmarkURL" value="https://www.google.com" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -625,7 +586,7 @@
 		</execute>
 
 		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Folder Entry 3" />
+			<var name="bookmarkName" value="Test Folder Entry 2" />
 			<var name="bookmarkURL" value="https://www.google.com" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -1130,45 +1091,6 @@
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="Test Folder Entry 2 Description" />
 			<var name="bookmarkName" value="Test Folder Entry 2" />
-			<var name="bookmarkURL" value="http://www.openqa.org" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Test Folder" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Folder Entry 2" />
-			<var name="bookmarkURL" value="http://www.openqa.org" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="Test Folder" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-		</execute>
-
-		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="Test Folder Entry 3 Description" />
-			<var name="bookmarkName" value="Test Folder Entry 3" />
 			<var name="bookmarkURL" value="https://www.google.com" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -1187,7 +1109,7 @@
 		</execute>
 
 		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Folder Entry 3" />
+			<var name="bookmarkName" value="Test Folder Entry 2" />
 			<var name="bookmarkURL" value="https://www.google.com" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />

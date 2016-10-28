@@ -35,6 +35,7 @@ SPAUtil spaUtil = (SPAUtil)request.getAttribute(SPAWebKeys.SPA_UTIL);
 	Liferay.SPA.clearScreensCache = <%= spaUtil.isClearScreensCache(request, session) %>;
 	Liferay.SPA.excludedPaths = <%= spaUtil.getExcludedPaths() %>;
 	Liferay.SPA.loginRedirect = '<%= HtmlUtil.escapeJS(spaUtil.getLoginRedirect(request)) %>';
+	Liferay.SPA.navigationExceptionSelectors = '<%= spaUtil.getNavigationExceptionSelectors() %>';
 	Liferay.SPA.requestTimeout = <%= spaUtil.getRequestTimeout() %>;
 	Liferay.SPA.userNotification = {
 		message: '<%= LanguageUtil.get(spaUtil.getLanguageResourceBundle(themeDisplay.getLocale()), "it-looks-like-this-is-taking-longer-than-expected") %>',
