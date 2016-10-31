@@ -50,6 +50,26 @@ public class KBArticleSiblingNavigationHelper {
 		return new KBArticle[] {previousKBArticle, kbArticle, nextKBArticle};
 	}
 
+	protected KBArticle fetchFirstChildKBArticle(KBArticle kbArticle) {
+		return _kbArticlePersistence.fetchByG_P_M_First(
+			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
+			new KBArticlePriorityComparator(true));
+	}
+
+	protected KBArticle fetchLastChildKBArticle(KBArticle previousKBArticle) {
+		return _kbArticlePersistence.fetchByG_P_M_Last(
+			previousKBArticle.getGroupId(),
+			previousKBArticle.getResourcePrimKey(), true,
+			new KBArticlePriorityComparator(true));
+	}
+
+	protected List<KBArticle> findChildKBArticles(KBArticle kbArticle) {
+		return _kbArticlePersistence.findByG_P_M(
+			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new KBArticlePriorityComparator(true));
+	}
+
 	protected KBArticle getNextAncestorKBArticle(
 			long kbArticleId, KBArticle nextKBArticle)
 		throws PortalException {
@@ -78,10 +98,7 @@ public class KBArticleSiblingNavigationHelper {
 			KBArticle kbArticle, KBArticle nextKBArticle)
 		throws PortalException {
 
-		KBArticle firstChildKBArticle =
-			_kbArticlePersistence.fetchByG_P_M_First(
-				kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
-				new KBArticlePriorityComparator(true));
+		KBArticle firstChildKBArticle = fetchFirstChildKBArticle(kbArticle);
 
 		if (firstChildKBArticle != null) {
 			return firstChildKBArticle;
@@ -92,10 +109,7 @@ public class KBArticleSiblingNavigationHelper {
 	}
 
 	protected KBArticle[] getPreviousAndNextKBArticles(KBArticle kbArticle) {
-		List<KBArticle> kbArticles = _kbArticlePersistence.findByG_P_M(
-			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new KBArticlePriorityComparator(true));
+		List<KBArticle> kbArticles = findChildKBArticles(kbArticle);
 
 		int index = kbArticles.indexOf(kbArticle);
 
@@ -120,10 +134,8 @@ public class KBArticleSiblingNavigationHelper {
 			return kbArticle.getParentKBArticle();
 		}
 
-		KBArticle lastSiblingChildKBArticle =
-			_kbArticlePersistence.fetchByG_P_M_Last(
-				kbArticle.getGroupId(), previousKBArticle.getResourcePrimKey(),
-				true, new KBArticlePriorityComparator(true));
+		KBArticle lastSiblingChildKBArticle = fetchLastChildKBArticle(
+			previousKBArticle);
 
 		if (lastSiblingChildKBArticle == null) {
 			return previousKBArticle;
