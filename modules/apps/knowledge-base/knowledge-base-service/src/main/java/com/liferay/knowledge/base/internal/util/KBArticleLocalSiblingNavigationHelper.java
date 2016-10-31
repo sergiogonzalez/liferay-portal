@@ -25,10 +25,10 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class KBArticleSiblingNavigationHelper
+public class KBArticleLocalSiblingNavigationHelper
 	extends BaseKBArticleSiblingNavigationHelper {
 
-	public KBArticleSiblingNavigationHelper(
+	public KBArticleLocalSiblingNavigationHelper(
 		KBArticlePersistence kbArticlePersistence) {
 
 		_kbArticlePersistence = kbArticlePersistence;
@@ -36,34 +36,22 @@ public class KBArticleSiblingNavigationHelper
 
 	@Override
 	protected KBArticle fetchFirstChildKBArticle(KBArticle kbArticle) {
-		List<KBArticle> kbArticles = _kbArticlePersistence.filterFindByG_P_M(
-			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true, 0, 1,
+		return _kbArticlePersistence.fetchByG_P_M_First(
+			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
 			new KBArticlePriorityComparator(true));
-
-		if (kbArticles.isEmpty()) {
-			return null;
-		}
-
-		return kbArticles.get(0);
 	}
 
 	@Override
 	protected KBArticle fetchLastChildKBArticle(KBArticle previousKBArticle) {
-		List<KBArticle> kbArticles = _kbArticlePersistence.findByG_P_M(
+		return _kbArticlePersistence.fetchByG_P_M_Last(
 			previousKBArticle.getGroupId(),
-			previousKBArticle.getResourcePrimKey(), true, 0, 1,
-			new KBArticlePriorityComparator(false));
-
-		if (kbArticles.isEmpty()) {
-			return null;
-		}
-
-		return kbArticles.get(0);
+			previousKBArticle.getResourcePrimKey(), true,
+			new KBArticlePriorityComparator(true));
 	}
 
 	@Override
 	protected List<KBArticle> findChildKBArticles(KBArticle kbArticle) {
-		return _kbArticlePersistence.filterFindByG_P_M(
+		return _kbArticlePersistence.findByG_P_M(
 			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new KBArticlePriorityComparator(true));
