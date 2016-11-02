@@ -2063,6 +2063,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttribute(
 			"[$MESSAGE_BODY$]", messageBody, false);
 
+		long groupId = message.getGroupId();
+
 		if (category.getCategoryId() !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
@@ -2072,7 +2074,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		else {
 			subscriptionSender.setLocalizedContextAttribute(
 				"[$CATEGORY_NAME$]",
-				locale -> _getLocalizedCategoryName(category, locale));
+				locale -> _getLocalizedCategoryName(groupId, locale));
 		}
 
 		subscriptionSender.setContextAttributes(
@@ -2120,7 +2122,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setPortletId(portletId);
 
 		subscriptionSender.setReplyToAddress(replyToAddress);
-		subscriptionSender.setScopeGroupId(message.getGroupId());
+		subscriptionSender.setScopeGroupId(groupId);
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUniqueMailId(false);
 
@@ -2591,20 +2593,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	private String _getLocalizedCategoryName(
-		MBCategory category, Locale locale) {
-
+	private String _getLocalizedCategoryName(long groupId, Locale locale) {
 		try {
-			Group group = groupPersistence.findByPrimaryKey(
-				category.getGroupId());
+			Group group = groupPersistence.findByPrimaryKey(groupId);
 
 			return LanguageUtil.get(locale, "message-boards-home") + " - " +
 				group.getDescriptiveName(locale);
 		}
 		catch (PortalException pe) {
 			_log.error(
-				"Could not retrieve group name for {groupId=" +
-					category.getGroupId() + "}",
+				"Could not retrieve group name for {groupId=" + groupId + "}",
 				pe);
 
 			return LanguageUtil.get(locale, "message-boards-home");
