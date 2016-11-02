@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1227,6 +1228,71 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			new AggregateTestRule(
 				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
+
+		@Test
+		public void assetEntryShouldBeAddedWithFile() throws Exception {
+			String fileName = RandomTestUtil.randomString();
+			byte[] bytes = CONTENT.getBytes();
+
+			File file = FileUtil.createTempFile(bytes);
+
+			String[] assetTagNames = new String[] {"hello"};
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				fileName, assetTagNames);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			serviceContext.setAssetTagNames(assetTagNames);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+				fileName, StringPool.BLANK, StringPool.BLANK, false, file,
+				serviceContext);
+
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+
+			Assert.assertNotNull(assetEntry);
+		}
+
+		@Test
+		public void assetEntryShouldBeAddedWithNullFile() throws Exception {
+			String fileName = RandomTestUtil.randomString();
+
+			String[] assetTagNames = new String[] {"hello"};
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				fileName, assetTagNames);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			serviceContext.setAssetTagNames(assetTagNames);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+				fileName, StringPool.BLANK, StringPool.BLANK, false, null, 0,
+				serviceContext);
+
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+
+			Assert.assertNotNull(assetEntry);
+		}
 
 		@Test
 		public void assetTagsShouldBeOrdered() throws Exception {
