@@ -2074,7 +2074,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		else {
 			subscriptionSender.setLocalizedContextAttribute(
 				"[$CATEGORY_NAME$]",
-				locale -> _getLocalizedCategoryName(groupId, locale));
+				locale -> _getLocalizedRootCategoryName(groupId, locale));
 		}
 
 		subscriptionSender.setContextAttributes(
@@ -2593,7 +2593,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	private String _getLocalizedCategoryName(long groupId, Locale locale) {
+	private String _getLocalizedRootCategoryName(long groupId, Locale locale) {
 		try {
 			Group group = groupPersistence.findByPrimaryKey(groupId);
 
