@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + CommentPortletKeys.COMMENT,
-		"mvc.command.name=/edit_discussion.jsp"
+		"mvc.command.name=/discussion/edit_discussion"
 	},
 	service = MVCRenderCommand.class
 )
@@ -44,17 +44,13 @@ public class EditDiscussionMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		setCommentAttribute(renderRequest);
-
-		return "/edit_discussion.jsp";
-	}
-
-	protected void setCommentAttribute(RenderRequest renderRequest) {
 		long commentId = ParamUtil.getLong(renderRequest, "commentId");
 
 		Comment comment = CommentManagerUtil.fetchComment(commentId);
 
 		renderRequest.setAttribute(WebKeys.COMMENT, comment);
+
+		return "/edit_discussion.jsp";
 	}
 
 }
