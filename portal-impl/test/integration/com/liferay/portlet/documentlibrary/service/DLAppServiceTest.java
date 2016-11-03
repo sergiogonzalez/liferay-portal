@@ -1234,8 +1234,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			String fileName = RandomTestUtil.randomString();
 			byte[] bytes = CONTENT.getBytes();
 
-			File file = FileUtil.createTempFile(bytes);
-
 			String[] assetTagNames = new String[] {"hello"};
 
 			FileEntry fileEntry = addFileEntry(
@@ -1249,10 +1247,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-			fileEntry = DLAppServiceUtil.updateFileEntry(
-				fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
-				fileName, StringPool.BLANK, StringPool.BLANK, false, file,
-				serviceContext);
+			File file = null;
+
+			try {
+				file = FileUtil.createTempFile(bytes);
+
+				fileEntry = DLAppServiceUtil.updateFileEntry(
+					fileEntry.getFileEntryId(), fileName,
+					ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
+					StringPool.BLANK, false, file, serviceContext);
+			}
+			finally {
+				FileUtil.delete(file);
+			}
 
 			FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
