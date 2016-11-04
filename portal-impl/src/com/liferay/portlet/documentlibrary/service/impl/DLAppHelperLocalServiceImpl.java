@@ -93,6 +93,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -1699,8 +1700,7 @@ public class DLAppHelperLocalServiceImpl
 			folder = dlAppLocalService.getFolder(folderId);
 		}
 
-		String folderName = LanguageUtil.get(
-			serviceContext.getLocale(), "home");
+		String folderName = null;
 
 		if (folder != null) {
 			folderName = folder.getName();
@@ -1719,12 +1719,16 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
 		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
 		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			subscriptionSender.setContextAttribute(
+				"[$FOLDER_NAME$]", folderName, true);
+		}
+
 		subscriptionSender.setContextAttributes(
 			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
 			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]", entryTitle,
-			"[$DOCUMENT_TYPE$]",
-			dlFileEntryType.getName(serviceContext.getLocale()),
-			"[$DOCUMENT_URL$]", entryURL, "[$FOLDER_NAME$]", folderName);
+			"[$DOCUMENT_URL$]", entryURL);
 		subscriptionSender.setContextCreatorUserPrefix("DOCUMENT");
 		subscriptionSender.setCreatorUserId(fileVersion.getUserId());
 		subscriptionSender.setCurrentUserId(userId);
@@ -1734,6 +1738,17 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(
 			LocalizationUtil.getMap(bodyLocalizedValuesMap));
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			subscriptionSender.setLocalizedContextFunctionAttribute(
+				"[$FOLDER_NAME$]",
+				(Locale locale) -> LanguageUtil.get(locale, "home"));
+		}
+
+		subscriptionSender.setLocalizedContextFunctionAttribute(
+			"[$DOCUMENT_TYPE$]",
+			(Locale locale) -> dlFileEntryType.getName(locale));
+
 		subscriptionSender.setLocalizedSubjectMap(
 			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 		subscriptionSender.setMailId(
