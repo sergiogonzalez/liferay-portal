@@ -272,7 +272,11 @@ public class DisplayPortlet extends BaseKBPortlet {
 				KBWebKeys.KNOWLEDGE_BASE_STATUS,
 				WorkflowConstants.STATUS_APPROVED);
 
-			if (!kbArticleSelection.isExactMatch()) {
+			String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+
+			if ((mvcPath.equals("") ||
+				 mvcPath.equals("/display/view_article.jsp")) &&
+				!kbArticleSelection.isExactMatch()) {
 				HttpServletResponse response =
 					PortalUtil.getHttpServletResponse(renderResponse);
 
