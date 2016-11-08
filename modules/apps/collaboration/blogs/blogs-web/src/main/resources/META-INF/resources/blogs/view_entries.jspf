@@ -31,7 +31,7 @@
 			delta="<%= GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()) %>"
 			displayStyle="<%= blogsGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
 			feedType="<%= blogsGroupServiceOverriddenConfiguration.rssFeedType() %>"
-			url='<%= themeDisplay.getPathMain() + "/blogs/rss" %>'
+			url='<%= themeDisplay.getPathMain() + "/blogs/rss?p_l_id=" + plid + "&groupId=" + themeDisplay.getScopeGroupId() %>'
 		/>
 	</c:if>
 
