@@ -41,6 +41,7 @@ import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -59,8 +60,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -74,6 +77,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -375,6 +379,20 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, editURL);
 		}
+
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		WindowState windowState = actionRequest.getWindowState();
+
+		if (cmd.equals(Constants.ADD) && Validator.isNotNull(redirect) &&
+			windowState.equals(LiferayWindowState.POP_UP)) {
+
+			actionRequest.setAttribute(
+				WebKeys.REDIRECT,
+				getContentRedirect(
+					KBArticle.class, kbArticle.getResourcePrimKey(), redirect));
+		}
 	}
 
 	public void updateKBComment(
@@ -492,6 +510,21 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			throw new PortalException(cause);
 		}
+	}
+
+	protected String getContentRedirect(
+		Class<?> clazz, long classPK, String redirect) {
+
+		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+		String namespace = PortalUtil.getPortletNamespace(portletId);
+
+		redirect = HttpUtil.addParameter(
+			redirect, namespace + "className", clazz.getName());
+		redirect = HttpUtil.addParameter(
+			redirect, namespace + "classPK", classPK);
+
+		return redirect;
 	}
 
 	@Override
