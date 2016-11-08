@@ -27,6 +27,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Adolfo Pérez
  */
@@ -59,8 +61,12 @@ public class KBArticleURLHelper {
 		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
 			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
 
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(_renderRequest);
+
 			portletURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(_renderRequest));
+				"redirect",
+				PortalUtil.getCurrentCompleteURL(httpServletRequest));
 		}
 
 		if (Validator.isNull(kbArticle.getUrlTitle()) ||
