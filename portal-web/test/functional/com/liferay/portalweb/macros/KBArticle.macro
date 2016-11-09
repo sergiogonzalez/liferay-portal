@@ -1039,11 +1039,17 @@
 
 		<execute function="AssertClick" locator1="Button#SELECT_VOCABULARY" value1="Select" />
 
+		<execute function="SelectFrame" locator1="IFrame#SELECT_CATEGORY" />
+
 		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_UNSELECTED" value1="${categoryName}" />
 
 		<execute function="AssertElementPresent" locator1="AssetCategorization#CATEGORY_SELECTED" value1="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="KnowledgeBaseArticle#SELECT_CATEGORIES_IFRAME" />
+
+		<execute function="Click" locator1="Button#DONE" value1="Done" />
 	</command>
 
 	<command name="selectParentArticleCP">
