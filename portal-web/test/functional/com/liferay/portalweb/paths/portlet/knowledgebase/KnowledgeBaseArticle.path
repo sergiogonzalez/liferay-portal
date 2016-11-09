@@ -178,16 +178,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HISTORY_TITLE_ADDED_DIFF</td>
-	<td>//div[@class='panel-body']//span[contains(@id,'added-diff')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HISTORY_TITLE_REMOVED_DIFF</td>
-	<td>//div[@class='panel-body']//p//span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HISTORY_VERSION_TABLE_SOURCE</td>
 	<td>//table[contains(@data-searchcontainerid,'knowledge_base_web')]//thead[contains(.,'Version')]/..//a[contains(.,'(Source)')]</td>
 	<td></td>
