@@ -188,6 +188,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_SELECT_VERSION_CHECKBOX</td>
+	<td>//input[(@type='checkbox' and @value='${key_versionNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -211,6 +216,12 @@
 <tr>
 	<td>CATEGORY_LINKS</td>
 	<td>//div[@class='kb-article-assets']/span/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<!--SELECT_CATEGORIES-->
+<tr>
+	<td>SELECT_CATEGORIES_IFRAME</td>
+	<td>//div[contains(@id,'selectCategory')]</td>
 	<td></td>
 </tr>
 </tbody>
