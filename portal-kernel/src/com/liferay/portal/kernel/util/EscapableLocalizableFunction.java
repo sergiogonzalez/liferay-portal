@@ -21,15 +21,13 @@ import java.util.Locale;
 /**
  * @author Roberto Díaz
  */
-public class EscapableLocalizableFunctionObject implements Serializable {
+public class EscapableLocalizableFunction implements Serializable {
 
-	public EscapableLocalizableFunctionObject(
-		Function<Locale, String> function) {
-
+	public EscapableLocalizableFunction(Function<Locale, String> function) {
 		this(function, true);
 	}
 
-	public EscapableLocalizableFunctionObject(
+	public EscapableLocalizableFunction(
 		Function<Locale, String> function, boolean escape) {
 
 		_function = function;
