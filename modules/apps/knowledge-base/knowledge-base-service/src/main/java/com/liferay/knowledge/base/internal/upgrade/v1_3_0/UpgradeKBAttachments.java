@@ -16,11 +16,10 @@ package com.liferay.knowledge.base.internal.upgrade.v1_3_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
@@ -84,21 +83,12 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected void updateAttachments() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("select MIN(kbArticleId) as kbArticleId, ");
-			sb.append("resourcePrimKey, groupId, companyId, ");
-			sb.append("MIN(userId) as userId, MIN(userName) as userName, ");
-			sb.append("MIN(status) as status from KBArticle ");
-			sb.append("group by resourcePrimKey, groupId, companyId");
-
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				SQLTransformer.transform(
+					"select kbArticleId, resourcePrimKey, groupId, " +
+						"companyId, userId, userName, status from KBArticle " +
+							"where latest = [$TRUE$]"));
+			 ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long kbArticleId = rs.getLong("kbArticleId");
@@ -118,9 +108,6 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 				updateEntryAttachments(
 					companyId, groupId, classPK, 0, userId, userName);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
