@@ -277,6 +277,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			if ((mvcPath.equals("") ||
 				 mvcPath.equals("/display/view_article.jsp")) &&
 				!kbArticleSelection.isExactMatch()) {
+
 				HttpServletResponse response =
 					PortalUtil.getHttpServletResponse(renderResponse);
 

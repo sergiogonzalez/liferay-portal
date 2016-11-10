@@ -98,7 +98,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public abstract class BaseKBPortlet extends MVCPortlet {
 
 	public void addTempAttachment(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -106,7 +106,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		checkExceededSizeLimit(actionRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long resourcePrimKey = ParamUtil.getLong(
@@ -130,7 +130,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void deleteKBArticle(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long resourcePrimKey = ParamUtil.getLong(
@@ -140,10 +140,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void deleteKBComment(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
@@ -158,10 +158,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void deleteKBComments(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
@@ -179,10 +179,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void deleteTempAttachment(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long resourcePrimKey = ParamUtil.getLong(
@@ -210,7 +210,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void moveKBObject(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long resourceClassNameId = ParamUtil.getLong(
@@ -241,7 +241,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
-		RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
@@ -256,7 +256,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void serveKBArticleRSS(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
@@ -271,7 +271,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long resourcePrimKey = ParamUtil.getLong(
@@ -293,7 +293,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 	@Override
 	public void serveResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
 		try {
@@ -359,10 +359,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void subscribeKBArticle(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long resourcePrimKey = ParamUtil.getLong(
@@ -373,7 +373,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void unsubscribeKBArticle(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long resourcePrimKey = ParamUtil.getLong(
@@ -383,7 +383,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void updateKBArticle(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String portletId = portal.getPortletId(actionRequest);
@@ -450,10 +450,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void updateKBComment(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
@@ -495,7 +495,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	public void updateKBCommentStatus(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
 		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
@@ -511,11 +511,11 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	protected String buildEditURL(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		KBArticle kbArticle)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			KBArticle kbArticle)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -544,7 +544,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		throws PortalException {
 
 		UploadException uploadException =
-			(UploadException) portletRequest.getAttribute(
+			(UploadException)portletRequest.getAttribute(
 				WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
@@ -591,15 +591,15 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	protected void deleteKBArticle(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		long resourcePrimKey)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long resourcePrimKey)
 		throws Exception {
 
 		kbArticleService.deleteKBArticle(resourcePrimKey);
 	}
 
 	protected abstract void doRender(
-		RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException;
 
 	@Override
