@@ -2064,7 +2064,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$CATEGORY_NAME$]", categoryName, "[$MAILING_LIST_ADDRESS$]",
 			replyToAddress, "[$MESSAGE_ID$]", message.getMessageId(),
-			"[$MESSAGE_SUBJECT$]", messageSubject, "[$MESSAGE_SUBJECT_PREFIX]",
+			"[$MESSAGE_SUBJECT$]", messageSubject, "[$MESSAGE_SUBJECT_PREFIX$]",
 			messageSubjectPrefix, "[$MESSAGE_URL$]", messageURL,
 			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
 			fullName);
