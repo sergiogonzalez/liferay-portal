@@ -85,10 +85,8 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 	protected void updateAttachments() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				SQLTransformer.transform(
-					"select kbArticleId, resourcePrimKey, groupId, " +
-						"companyId, userId, status from KBArticle where " +
-							"latest = [$TRUE$]"));
+				"select kbArticleId, resourcePrimKey, groupId, " +
+					"companyId, userId, status from KBArticle");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -116,6 +114,12 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 		for (String attachment : getAttachments(companyId, resourcePrimKey)) {
 			try {
+				if (!DLStoreUtil.hasFile(
+						companyId, CompanyConstants.SYSTEM, attachment)) {
+
+					continue;
+				}
+
 				long folderId = getFolderId(groupId, userId, resourcePrimKey);
 
 				byte[] bytes = DLStoreUtil.getFileAsBytes(
