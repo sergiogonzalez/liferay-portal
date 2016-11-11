@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,6 +62,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 		UserAssetRenderer userAssetRenderer = new UserAssetRenderer(user);
 
 		userAssetRenderer.setAssetRendererType(type);
+		userAssetRenderer.setServletContext(_servletContext);
 
 		return userAssetRenderer;
 	}
@@ -100,6 +103,14 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.directory.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
@@ -111,6 +122,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 	}
 
 	private GroupLocalService _groupLocalService;
+	private ServletContext _servletContext;
 	private UserLocalService _userLocalService;
 
 }
