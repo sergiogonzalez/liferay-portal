@@ -63,6 +63,7 @@
 	<liferay-ui:search-container-column-status
 		href="<%= rowURL %>"
 		name="status"
+		status="<%= thread.getStatus() %>"
 	/>
 </c:if>
 
