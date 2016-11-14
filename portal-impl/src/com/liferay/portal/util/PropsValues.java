@@ -534,8 +534,6 @@ public class PropsValues {
 
 	public static final boolean DL_FILE_EXTENSIONS_STRICT_CHECK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_EXTENSIONS_STRICT_CHECK));
 
-	public static final int DL_FILE_INDEXING_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_INDEXING_INTERVAL));
-
 	public static final int DL_FILE_INDEXING_MAX_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_INDEXING_MAX_SIZE));
 
 	public static final long DL_FILE_MAX_SIZE = GetterUtil.getLong(PropsUtil.get(PropsKeys.DL_FILE_MAX_SIZE));
@@ -543,6 +541,8 @@ public class PropsValues {
 	public static final boolean DL_FILE_RANK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_RANK_ENABLED));
 
 	public static final int DL_FILE_RANK_MAX_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_RANK_MAX_SIZE));
+
+	public static final int DL_FILE_REINDEXING_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_REINDEXING_INTERVAL));
 
 	public static final boolean DL_FOLDER_ICON_CHECK_COUNT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FOLDER_ICON_CHECK_COUNT));
 
