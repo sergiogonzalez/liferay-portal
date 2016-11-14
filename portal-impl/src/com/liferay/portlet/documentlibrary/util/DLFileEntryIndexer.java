@@ -676,7 +676,7 @@ public class DLFileEntryIndexer
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final int _INTERVAL = 500;
+	private static final int _INTERVAL = PropsValues.DL_FILE_INDEXING_INTERVAL;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryIndexer.class);
