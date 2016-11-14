@@ -55,56 +55,58 @@ if (comment instanceof WorkflowableComment) {
 
 <portlet:actionURL name="invokeTaglibDiscussion" var="editCommentURL" />
 
-<aui:form action="<%= editCommentURL %>" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
-	<aui:input name="parentCommentId" type="hidden" value="<%= parentCommentId %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(pending ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-	<aui:input name="ajax" type="hidden" value="<%= false %>" />
+<div class="container-fluid-1280">
+	<aui:form action="<%= editCommentURL %>" enctype="multipart/form-data" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
+		<aui:input name="parentCommentId" type="hidden" value="<%= parentCommentId %>" />
+		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(pending ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+		<aui:input name="ajax" type="hidden" value="<%= false %>" />
 
-	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
-	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
-	<liferay-ui:error exception="<%= DiscussionMaxCommentsException.class %>" message="maximum-number-of-comments-has-been-reached" />
-	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
+		<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
+		<liferay-ui:error exception="<%= DiscussionMaxCommentsException.class %>" message="maximum-number-of-comments-has-been-reached" />
+		<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
 
-	<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
+		<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
 
-	<aui:fieldset>
-		<c:if test="<%= workflowableComment != null %>">
-			<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
+		<aui:fieldset>
+			<c:if test="<%= workflowableComment != null %>">
+				<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
+			</c:if>
+
+			<liferay-ui:input-editor contents="<%= comment.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name="body" showSource="<%= false %>" />
+		</aui:fieldset>
+
+		<c:if test="<%= parentComment != null %>">
+			<liferay-ui:message key="replying-to" />:
+
+			<%
+			request.setAttribute(WebKeys.COMMENT, parentComment);
+			%>
+
+			<liferay-util:include page="/asset/discussion_full_content.jsp" />
 		</c:if>
 
-		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="body" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
-	</aui:fieldset>
-
-	<c:if test="<%= parentComment != null %>">
-		<liferay-ui:message key="replying-to" />:
-
-		<%
-		request.setAttribute(WebKeys.COMMENT, parentComment);
-		%>
-
-		<liferay-util:include page="/asset/discussion_full_content.jsp" />
-	</c:if>
-
-	<c:if test="<%= pending %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-		</div>
-	</c:if>
-
-	<aui:button-row>
-		<c:if test="<%= (comment == null) || !approved %>">
-			<aui:button cssClass="btn-lg" type="submit" />
-		</c:if>
-
-		<c:if test="<%= (workflowableComment != null) && approved && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(workflowableComment.getCompanyId(), workflowableComment.getGroupId(), CommentConstants.getDiscussionClassName()) %>">
+		<c:if test="<%= pending %>">
 			<div class="alert alert-info">
-				<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, comment.getModelClassName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
 			</div>
 		</c:if>
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+		<aui:button-row>
+			<c:if test="<%= (comment == null) || !approved %>">
+				<aui:button cssClass="btn-lg" type="submit" />
+			</c:if>
+
+			<c:if test="<%= (workflowableComment != null) && approved && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(workflowableComment.getCompanyId(), workflowableComment.getGroupId(), CommentConstants.getDiscussionClassName()) %>">
+				<div class="alert alert-info">
+					<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, comment.getModelClassName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+				</div>
+			</c:if>
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
