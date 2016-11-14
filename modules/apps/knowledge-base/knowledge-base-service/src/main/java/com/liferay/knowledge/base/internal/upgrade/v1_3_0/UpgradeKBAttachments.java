@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.internal.upgrade.v1_3_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -85,8 +84,8 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 	protected void updateAttachments() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select kbArticleId, resourcePrimKey, groupId, " +
-					"companyId, userId, status from KBArticle");
+				"select kbArticleId, resourcePrimKey, groupId, companyId, " +
+					"userId, status from KBArticle");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
