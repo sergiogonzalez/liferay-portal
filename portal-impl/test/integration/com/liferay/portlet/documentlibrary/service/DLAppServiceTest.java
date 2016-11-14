@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1230,7 +1229,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
-		public void assetEntryShouldBeAddedWithFile() throws Exception {
+		public void assetEntryShouldBeAddedWhenDraft() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 			byte[] bytes = CONTENT.getBytes();
 
@@ -1240,6 +1239,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				group.getGroupId(), parentFolder.getFolderId(), fileName,
 				fileName, assetTagNames);
 
+			assetTagNames = new String[] {"hello", "world"};
+
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1247,31 +1248,37 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-			File file = null;
-
-			try {
-				file = FileUtil.createTempFile(bytes);
-
-				fileEntry = DLAppServiceUtil.updateFileEntry(
-					fileEntry.getFileEntryId(), fileName,
-					ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-					StringPool.BLANK, false, file, serviceContext);
-			}
-			finally {
-				FileUtil.delete(file);
-			}
+			fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+				fileName, StringPool.BLANK, StringPool.BLANK, false, bytes,
+				serviceContext);
 
 			FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			AssetEntry latestAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId());
 
+			Assert.assertNotNull(latestAssetEntry);
+
+			AssertUtils.assertEqualsSorted(
+				assetTagNames, latestAssetEntry.getTagNames());
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
 			Assert.assertNotNull(assetEntry);
+
+			assetTagNames = assetEntry.getTagNames();
+
+			Assert.assertEquals(1, assetTagNames.length);
 		}
 
 		@Test
-		public void assetEntryShouldBeAddedWithNullFile() throws Exception {
+		public void assetEntryShouldBeAddedWithNullBytesWhenDraft()
+			throws Exception {
+
 			String fileName = RandomTestUtil.randomString();
 
 			String[] assetTagNames = new String[] {"hello"};
@@ -1279,6 +1286,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName,
 				fileName, assetTagNames);
+
+			assetTagNames = new String[] {"hello", "world"};
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1294,11 +1303,24 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			AssetEntry latestAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId());
 
+			Assert.assertNotNull(latestAssetEntry);
+
+			AssertUtils.assertEqualsSorted(
+				assetTagNames, latestAssetEntry.getTagNames());
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
 			Assert.assertNotNull(assetEntry);
+
+			assetTagNames = assetEntry.getTagNames();
+
+			Assert.assertEquals(1, assetTagNames.length);
 		}
 
 		@Test
