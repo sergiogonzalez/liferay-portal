@@ -29,7 +29,11 @@ import java.util.List;
  *
  * @author Charles May
  * @author Zsolt Berentey
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.subscription.service.impl.
+ *             SubscriptionLocalServiceImpl}
  */
+@Deprecated
 public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
 
