@@ -129,9 +129,6 @@ public class BlogsEntryLocalServiceImplTest {
 
 		blogsEntry.setStatus(WorkflowConstants.STATUS_PENDING);
 
-		Assert.assertTrue(
-			blogsEntry.getStatus() != WorkflowConstants.STATUS_APPROVED);
-
 		serviceContext.setRequest(_request);
 
 		Assert.assertNull(serviceContext.getThemeDisplay());
@@ -142,8 +139,8 @@ public class BlogsEntryLocalServiceImplTest {
 			TestPropsValues.getUserId(), blogsEntry.getEntryId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 
-		Assert.assertTrue(
-			blogsEntry.getStatus() == WorkflowConstants.STATUS_APPROVED);
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, blogsEntry.getStatus());
 	}
 
 	@DeleteAfterTestRun
