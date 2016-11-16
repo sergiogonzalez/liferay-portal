@@ -102,6 +102,29 @@ public class ImageToolImplTest {
 		read("liferay.png");
 	}
 
+	@Test
+	public void testRotation() throws Exception {
+		ImageBag imageBag = ImageToolUtil.read(
+			getFile("TiffOrientationValue1.jpg"));
+
+		RenderedImage expectedImage = imageBag.getRenderedImage();
+
+		imageBag = ImageToolUtil.read(getFile("TiffOrientationValue6.jpg"));
+
+		RenderedImage originalImage = imageBag.getRenderedImage();
+
+		Assert.assertEquals(
+			expectedImage.getHeight(), originalImage.getWidth());
+		Assert.assertEquals(
+			expectedImage.getWidth(), originalImage.getHeight());
+
+		RenderedImage rotatedImage = ImageToolUtil.rotate(originalImage, 90);
+
+		Assert.assertEquals(expectedImage.getWidth(), rotatedImage.getWidth());
+		Assert.assertEquals(
+			expectedImage.getHeight(), rotatedImage.getHeight());
+	}
+
 	protected void crop(String fileName) throws Exception {
 
 		// Crop bottom right
