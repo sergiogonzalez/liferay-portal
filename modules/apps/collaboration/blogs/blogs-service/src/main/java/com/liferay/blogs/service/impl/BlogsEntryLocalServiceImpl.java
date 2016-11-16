@@ -100,6 +100,7 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -2278,6 +2279,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@ServiceReference(type = FriendlyURLLocalService.class)
 	protected FriendlyURLLocalService friendlyURLLocalService;
+
+	@ServiceReference(type = SubscriptionLocalService.class)
+	protected SubscriptionLocalService subscriptionLocalService;
 
 	private String _getUniqueUrlTitle(BlogsEntry entry) throws PortalException {
 		String urlTitle = BlogsUtil.getUrlTitle(
