@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
 
@@ -677,6 +679,9 @@ public class MicroblogsEntryLocalServiceImpl
 			throw new UnsupportedMicroblogsEntryException();
 		}
 	}
+
+	@ServiceReference(type = SubscriptionLocalService.class)
+	protected SubscriptionLocalService subscriptionLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MicroblogsEntryLocalServiceImpl.class);
