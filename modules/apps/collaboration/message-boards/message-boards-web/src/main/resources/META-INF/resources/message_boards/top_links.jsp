@@ -92,16 +92,14 @@ long categoryId = MBUtil.getCategoryId(request, category);
 		</liferay-portlet:renderURL>
 
 		<aui:nav-bar-search>
-			<div class="form-search">
-				<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-					<liferay-portlet:renderURLParams varImpl="searchURL" />
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-					<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-					<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
+			<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
+				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
 
-					<liferay-ui:input-search id="keywords1" markupView="lexicon" />
-				</aui:form>
-			</div>
+				<liferay-ui:input-search id="keywords1" markupView="lexicon" />
+			</aui:form>
 		</aui:nav-bar-search>
 	</c:if>
 </aui:nav-bar>
