@@ -14,17 +14,31 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.util.Encryptor;
+import com.liferay.util.EncryptorException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Charles May
  */
 public class DiscussionTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		HttpServletRequest request = getOriginalServletRequest();
+
+		request.setAttribute(
+			"liferay-ui:discussion:doAsUserId", getDoAsUserId(request));
+
+		return super.doStartTag();
+	}
 
 	public void setAssetEntryVisible(boolean assetEntryVisible) {
 		_assetEntryVisible = assetEntryVisible;
@@ -73,6 +87,31 @@ public class DiscussionTag extends IncludeTag {
 		_ratingsEnabled = true;
 		_redirect = null;
 		_userId = 0;
+	}
+
+	protected String getDoAsUserId(HttpServletRequest request)
+		throws JspException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isImpersonated()) {
+			Company company = themeDisplay.getCompany();
+			long doAsUserId = themeDisplay.getUser().getUserId();
+
+			String encDoAsUserId;
+
+			try {
+				encDoAsUserId = Encryptor.encrypt(
+					company.getKeyObj(), String.valueOf(doAsUserId));
+			} catch (EncryptorException e) {
+				throw new JspException();
+			}
+
+			return encDoAsUserId;
+		}
+
+		return null;
 	}
 
 	protected String getFormAction(HttpServletRequest request) {
