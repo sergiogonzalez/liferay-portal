@@ -206,12 +206,6 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId());
-
 		// File ranks
 
 		dlFileRankLocalService.deleteFileRanksByFileEntryId(
