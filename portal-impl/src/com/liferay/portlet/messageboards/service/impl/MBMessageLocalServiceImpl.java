@@ -658,12 +658,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					threadAttachmentsFolderId);
 			}
 
-			// Subscriptions
-
-			subscriptionLocalService.deleteSubscriptions(
-				message.getCompanyId(), MBThread.class.getName(),
-				message.getThreadId());
-
 			// Thread
 
 			MBThread thread = mbThreadPersistence.findByPrimaryKey(
@@ -1483,22 +1477,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public void subscribeMessage(long userId, long messageId)
 		throws PortalException {
-
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		subscriptionLocalService.addSubscription(
-			userId, message.getGroupId(), MBThread.class.getName(),
-			message.getThreadId());
 	}
 
 	@Override
 	public void unsubscribeMessage(long userId, long messageId)
 		throws PortalException {
-
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		subscriptionLocalService.deleteSubscription(
-			userId, MBThread.class.getName(), message.getThreadId());
 	}
 
 	@Override
