@@ -282,6 +282,11 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	@Override
+	public Subscription fetchSubscription(long subscriptionId) {
+		return subscriptionPersistence.fetchByPrimaryKey(subscriptionId);
+	}
+
+	@Override
 	public Subscription fetchSubscription(
 		long companyId, long userId, String className, long classPK) {
 
