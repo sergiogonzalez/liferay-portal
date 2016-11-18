@@ -403,7 +403,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 		<div class="sidebar-header">
 			<ul class="list-inline list-unstyled">
 				<li>
-					<h4><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></h4>
+					<h4><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-selected" /></h4>
 				</li>
 			</ul>
 		</div>
@@ -413,7 +413,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				<div class="sidebar-body">
 					<h5 class="text-default">
 						<span>
-							<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" />
+							<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-selected" />
 						</span>
 					</h5>
 				</div>
