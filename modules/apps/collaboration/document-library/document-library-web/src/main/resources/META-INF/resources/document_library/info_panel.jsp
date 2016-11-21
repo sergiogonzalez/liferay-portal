@@ -70,9 +70,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
 
 			<h5 class="text-default">
-				<span>
-					<liferay-ui:message key="folder" />
-				</span>
+				<liferay-ui:message key="folder" />
 			</h5>
 		</div>
 
@@ -127,9 +125,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			<h4><%= HtmlUtil.escape(fileEntry.getTitle()) %></h4>
 
 			<h5 class="text-default">
-				<span>
-					<liferay-ui:message key="document" />
-				</span>
+				<liferay-ui:message key="document" />
 			</h5>
 		</div>
 
@@ -301,9 +297,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			<h4><%= HtmlUtil.escape(fileShortcut.getToTitle()) %></h4>
 
 			<h5 class="text-default">
-				<span>
-					<liferay-ui:message key="shortcut" />
-				</span>
+				<liferay-ui:message key="shortcut" />
 			</h5>
 		</div>
 
@@ -394,7 +388,8 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						</dt>
 						<dd>
 							<%= HtmlUtil.escape(fileEntry.getMimeType()) %>
-						</dd>>
+						</dd>
+					</dl>
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
@@ -412,9 +407,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			<liferay-ui:section>
 				<div class="sidebar-body">
 					<h5 class="text-default">
-						<span>
-							<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" />
-						</span>
+						<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" />
 					</h5>
 				</div>
 			</liferay-ui:section>
