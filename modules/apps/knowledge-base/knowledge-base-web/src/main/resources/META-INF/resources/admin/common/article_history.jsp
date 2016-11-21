@@ -121,13 +121,11 @@ for (KBArticle curKBArticle : kbArticles) {
 			</ul>
 
 			<dl>
-				<dt class="h5">
-					<h4><liferay-ui:message arguments="<%= curKBArticle.getVersion() %>" key="version-x" /></h4>
+				<dt class="h4">
+					<liferay-ui:message arguments="<%= curKBArticle.getVersion() %>" key="version-x" />
 				</dt>
-				<dd>
-					<small class="text-muted">
-						<liferay-ui:message arguments="<%= new Object[] {curKBArticle.getUserName(), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
-					</small>
+				<dd class="small text-muted">
+					<liferay-ui:message arguments="<%= new Object[] {curKBArticle.getUserName(), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
 				</dd>
 			</dl>
 		</aui:col>

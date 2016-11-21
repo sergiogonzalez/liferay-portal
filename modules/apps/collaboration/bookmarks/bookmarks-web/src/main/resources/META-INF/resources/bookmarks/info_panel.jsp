@@ -72,27 +72,32 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+			<dl>
+				<dt class="h5">
+					<liferay-ui:message key="num-of-items" />
+				</dt>
 
-			<%
-			long folderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				<%
+				long folderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			if (folder != null) {
-				folderId = folder.getFolderId();
-			}
-			%>
+				if (folder != null) {
+					folderId = folder.getFolderId();
+				}
+				%>
 
-			<p>
-				<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
-			</p>
+				<dd>
+					<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
+				</dd>
 
-			<c:if test="<%= folder != null %>">
-				<h5><liferay-ui:message key="created" /></h5>
-
-				<p>
-					<%= HtmlUtil.escape(folder.getUserName()) %>
-				</p>
-			</c:if>
+				<c:if test="<%= folder != null %>">
+					<dt class="h5">
+						<liferay-ui:message key="created" />
+					</dt>
+					<dd>
+						<%= HtmlUtil.escape(folder.getUserName()) %>
+					</dd>
+				</c:if>
+			</dl>
 		</div>
 	</c:when>
 	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(entries) && (entries.size() == 1) %>">
@@ -127,31 +132,36 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="created" /></h5>
+			<dl>
+				<dt class="h5">
+					<liferay-ui:message key="created" />
+				</dt>
+				<dd>
+					<%= HtmlUtil.escape(entry.getUserName()) %>
+				</dd>
 
-			<p>
-				<%= HtmlUtil.escape(entry.getUserName()) %>
-			</p>
+				<c:if test="<%= Validator.isNotNull(entry.getDescription()) %>">
+					<dt class="h5">
+						<liferay-ui:message key="description" />
+					</dt>
+					<dd>
+						<%= HtmlUtil.escape(entry.getDescription()) %>
+					</dd>
+				</c:if>
 
-			<c:if test="<%= Validator.isNotNull(entry.getDescription()) %>">
-				<h5><liferay-ui:message key="description" /></h5>
-
-				<p>
-					<%= HtmlUtil.escape(entry.getDescription()) %>
-				</p>
-			</c:if>
-
-			<h5><liferay-ui:message key="url" /></h5>
-
-			<p>
-				<%= HtmlUtil.escape(entry.getUrl()) %>
-			</p>
-
-			<h5><liferay-ui:message key="visits" /></h5>
-
-			<p>
-				<%= entry.getVisits() %>
-			</p>
+				<dt class="h5">
+					<liferay-ui:message key="url" />
+				</dt>
+				<dd>
+					<%= HtmlUtil.escape(entry.getUrl()) %>
+				</dd>
+				<dt class="h5">
+					<liferay-ui:message key="visits" />
+				</dt>
+				<dd>
+					<%= entry.getVisits() %>
+				</dd>
+			</dl>
 
 			<div class="lfr-asset-categories">
 				<liferay-ui:asset-categories-summary

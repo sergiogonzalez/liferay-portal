@@ -76,27 +76,32 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+			<dl>
+				<dt class="h5">
+					<liferay-ui:message key="num-of-items" />
+				</dt>
 
-			<%
-			long folderId = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				<%
+				long folderId = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			if (kbFolder != null) {
-				folderId = kbFolder.getKbFolderId();
-			}
-			%>
+				if (kbFolder != null) {
+					folderId = kbFolder.getKbFolderId();
+				}
+				%>
 
-			<p>
-				<%= KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
-			</p>
+				<dd>
+					<%= KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
+				</dd>
 
-			<c:if test="<%= kbFolder != null %>">
-				<h5><liferay-ui:message key="created" /></h5>
-
-				<p>
-					<%= HtmlUtil.escape(kbFolder.getUserName()) %>
-				</p>
-			</c:if>
+				<c:if test="<%= kbFolder != null %>">
+					<dt class="h5">
+						<liferay-ui:message key="created" />
+					</dt>
+					<dd>
+						<%= HtmlUtil.escape(kbFolder.getUserName()) %>
+					</dd>
+				</c:if>
+			</dl>
 		</div>
 	</c:when>
 	<c:when test="<%= ListUtil.isEmpty(kbFolders) && ListUtil.isNotEmpty(kbArticles) && (kbArticles.size() == 1) %>">

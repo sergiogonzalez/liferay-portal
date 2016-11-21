@@ -45,9 +45,9 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 				<%= HtmlUtil.escape(node.getName()) %>
 			</h4>
 
-			<p>
+			<div>
 				<liferay-ui:message key="wiki" />
-			</p>
+			</div>
 		</c:when>
 		<c:when test="<%= wikiNodeInfoPanelDisplayContext.isMultipleNodeSelection() %>">
 			<h4><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
@@ -70,45 +70,53 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 						%>
 
 						<c:if test="<%= Validator.isNotNull(node.getDescription()) %>">
-							<dt class="h5"><liferay-ui:message key="description" /></dt>
-
+							<dt class="h5">
+								<liferay-ui:message key="description" />
+							</dt>
 							<dd>
 								<%= HtmlUtil.escape(node.getDescription()) %>
 							</dd>
 						</c:if>
 
-						<dt class="h5"><liferay-ui:message key="total-pages" /></dt>
-
+						<dt class="h5">
+							<liferay-ui:message key="total-pages" />
+						</dt>
 						<dd>
 							<%= WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true) %>
 						</dd>
-						<dt class="h5"><liferay-ui:message key="orphan-pages" /></dt>
+						<dt class="h5">
+							<liferay-ui:message key="orphan-pages" />
+						</dt>
+
+						<%
+						List<WikiPage> orphanPages = WikiPageServiceUtil.getOrphans(scopeGroupId, node.getNodeId());
+						%>
 
 						<dd>
-
-							<%
-							List<WikiPage> orphanPages = WikiPageServiceUtil.getOrphans(scopeGroupId, node.getNodeId());
-							%>
-
 							<%= orphanPages.size() %>
 						</dd>
-						<dt class="h5"><liferay-ui:message key="last-modified" /></dt>
-
+						<dt class="h5">
+							<liferay-ui:message key="last-modified" />
+						</dt>
 						<dd>
 							<%= dateFormatDateTime.format(node.getModifiedDate()) %>
 						</dd>
-						<dt class="h5"><liferay-ui:message key="create-date" /></dt>
-
+						<dt class="h5">
+							<liferay-ui:message key="create-date" />
+						</dt>
 						<dd>
 							<%= dateFormatDateTime.format(node.getModifiedDate()) %>
 						</dd>
 					</c:when>
 					<c:when test="<%= wikiNodeInfoPanelDisplayContext.isMultipleNodeSelection() %>">
-						<dt class="h5"><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></dt>
+						<dt class="h5">
+							<liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" />
+						</dt>
 					</c:when>
 					<c:otherwise>
-						<dt class="h5"><liferay-ui:message key="num-of-items" /></dt>
-
+						<dt class="h5">
+							<liferay-ui:message key="num-of-items" />
+						</dt>
 						<dd>
 							<%= wikiNodeInfoPanelDisplayContext.getNodesCount() %>
 						</dd>
