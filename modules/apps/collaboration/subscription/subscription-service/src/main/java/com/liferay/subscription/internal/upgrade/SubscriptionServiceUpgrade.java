@@ -12,27 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3;
+package com.liferay.subscription.internal.upgrade;
+
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.subscription.internal.upgrade.v1_0_0.UpgradeClassNames;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Shuyang Zhou
+ * @author Adolfo Pérez
  */
-public class UpgradeModules
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public String[] getBundleSymbolicNames() {
-		return _BUNDLE_SYMBOLIC_NAMES;
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.subscription.service", "0.0.1", "1.0.0",
+			new UpgradeClassNames());
 	}
-
-	@Override
-	public String[][] getConvertedLegacyModules() {
-		return _CONVERTED_LEGACY_MODULES;
-	}
-
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES =
-		{"com.liferay.blogs.service", "com.liferay.subscription.service"};
-
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
 
 }
