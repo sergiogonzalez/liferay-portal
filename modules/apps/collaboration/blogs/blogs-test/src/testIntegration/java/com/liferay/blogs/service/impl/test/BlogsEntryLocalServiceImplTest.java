@@ -27,11 +27,16 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -39,8 +44,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
  * @author Adolfo Pérez
+ * @author Christopher Kian
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -108,7 +116,37 @@ public class BlogsEntryLocalServiceImplTest {
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 
+	@Test
+	public void testUpdateStatusWithNullThemeDisplay() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(), serviceContext);
+
+		_blogsEntries.add(blogsEntry);
+
+		blogsEntry.setStatus(WorkflowConstants.STATUS_PENDING);
+
+		serviceContext.setRequest(_request);
+
+		Assert.assertNull(serviceContext.getThemeDisplay());
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		blogsEntry = BlogsEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, blogsEntry.getStatus());
+	}
+
 	@DeleteAfterTestRun
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
+
+	private final MockHttpServletRequest _request =
+		new MockHttpServletRequest();
 
 }
