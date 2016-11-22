@@ -499,12 +499,13 @@ if (portletTitleBasedNavigation) {
 							</h3>
 
 							<%
-							String childPageFormattedContent = childPage.getContent();
+							String childPageFormattedContent = null;
 
 							try {
 								childPageFormattedContent = wikiEngineRenderer.getFormattedContent(renderRequest, renderResponse, childPage, viewPageURL, editPageURL, childPage.getTitle(), false);
 							}
 							catch (Exception e) {
+								childPageFormattedContent = childPage.getContent();
 							}
 							%>
 
