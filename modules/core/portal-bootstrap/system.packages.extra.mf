@@ -2698,7 +2698,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  al.kernel.repository.model,com.liferay.portal.kernel.service",com.lif
  eray.portal.kernel.repository.event;version="1.0.0";uses:="com.lifera
  y.portal.kernel.exception,com.liferay.portal.kernel.repository.regist
- ry",com.liferay.portal.kernel.repository.model;version="7.0.0";uses:=
+ ry",com.liferay.portal.kernel.repository.model;version="7.1.0";uses:=
  "com.liferay.expando.kernel.model,com.liferay.exportimport.kernel.lar
  ,com.liferay.portal.kernel.exception,com.liferay.portal.kernel.json,c
  om.liferay.portal.kernel.lock,com.liferay.portal.kernel.model,com.lif
@@ -4070,7 +4070,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  sion="1.0.0";uses:="com.liferay.portal.kernel.dao.orm,com.liferay.por
  tal.kernel.exception,com.liferay.portal.kernel.util,com.liferay.ratin
  gs.kernel,com.liferay.ratings.kernel.model,javax.portlet",com.liferay
- .registry;version="1.1.0";uses:="com.liferay.registry.dependency",com
+ .registry;version="1.2.0";uses:="com.liferay.registry.dependency",com
  .liferay.registry.collections;version="1.0.0";uses:="com.liferay.regi
  stry",com.liferay.registry.dependency;version="1.0.0";uses:="com.life
  ray.registry",com.liferay.registry.util;version="1.0.0",com.liferay.r
