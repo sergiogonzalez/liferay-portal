@@ -31,7 +31,6 @@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
-page import="com.liferay.portal.kernel.model.Subscription" %><%@
 page import="com.liferay.portal.kernel.model.UserNotificationDelivery" %><%@
 page import="com.liferay.portal.kernel.model.UserNotificationDeliveryConstants" %><%@
 page import="com.liferay.portal.kernel.model.UserNotificationEvent" %><%@
@@ -50,6 +49,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.subscription.model.Subscription" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
