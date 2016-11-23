@@ -10,10 +10,6 @@ $microblogs-border-color: #EAEAEA;
 
 	.microblogs-container {
 		padding-bottom: 20px;
-
-		.form-inline .control-label {
-			min-width: 80px;
-		}
 	}
 
 	.microblogs-entry-form {
@@ -45,7 +41,7 @@ $microblogs-border-color: #EAEAEA;
 		}
 
 		.microblogs-post {
-			margin-right: 0.8em;
+			margin-right: 1em;
 		}
 
 		.field-select {
@@ -162,7 +158,6 @@ $microblogs-border-color: #EAEAEA;
 		.footer {
 			color: #CCC;
 			font-size: 0.9em;
-			min-width: 290px;
 
 			.action {
 				display: none;
