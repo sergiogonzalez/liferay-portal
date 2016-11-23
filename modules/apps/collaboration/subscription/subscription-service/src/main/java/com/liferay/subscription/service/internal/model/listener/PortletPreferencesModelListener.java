@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.subscription.service.internal.model.listener;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,22 +21,25 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
-import com.liferay.portal.kernel.service.persistence.LayoutUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.Date;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Alexander Chow
- * @author Raymond Augé
+ * @author Adolfo Pérez
  */
+@Component(immediate = true, service = ModelListener.class)
 public class PortletPreferencesModelListener
 	extends BaseModelListener<PortletPreferences> {
 
@@ -62,7 +65,7 @@ public class PortletPreferencesModelListener
 		try {
 			long companyId = 0;
 
-			Layout layout = LayoutUtil.fetchByPrimaryKey(
+			Layout layout = _layoutLocalService.getLayout(
 				portletPreferences.getPlid());
 
 			if ((layout != null) && !layout.isPrivateLayout()) {
@@ -70,7 +73,7 @@ public class PortletPreferencesModelListener
 			}
 			else {
 				LayoutRevision layoutRevision =
-					LayoutRevisionUtil.fetchByPrimaryKey(
+					_layoutRevisionLocalService.getLayoutRevision(
 						portletPreferences.getPlid());
 
 				if ((layoutRevision != null) &&
@@ -95,7 +98,7 @@ public class PortletPreferencesModelListener
 		}
 
 		try {
-			SubscriptionLocalServiceUtil.deleteSubscriptions(
+			_subscriptionLocalService.deleteSubscriptions(
 				portletPreferences.getCompanyId(),
 				portletPreferences.getModelClassName(),
 				portletPreferences.getPortletPreferencesId());
@@ -105,13 +108,39 @@ public class PortletPreferencesModelListener
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
 	protected void updateLayout(PortletPreferences portletPreferences) {
 		try {
 			if ((portletPreferences.getOwnerType() ==
 					PortletKeys.PREFS_OWNER_TYPE_GROUP) &&
 				(portletPreferences.getOwnerId() > 0)) {
 
-				Group group = GroupLocalServiceUtil.fetchGroup(
+				Group group = _groupLocalService.fetchGroup(
 					portletPreferences.getOwnerId());
 
 				if (group == null) {
@@ -125,7 +154,7 @@ public class PortletPreferencesModelListener
 				}
 
 				LayoutSetPrototype layoutSetPrototype =
-					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+					_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
 						group.getClassPK());
 
 				if (layoutSetPrototype == null) {
@@ -134,14 +163,14 @@ public class PortletPreferencesModelListener
 
 				layoutSetPrototype.setModifiedDate(new Date());
 
-				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 					layoutSetPrototype);
 			}
 			else if ((portletPreferences.getOwnerType() ==
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
 					 (portletPreferences.getPlid() > 0)) {
 
-				Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				Layout layout = _layoutLocalService.fetchLayout(
 					portletPreferences.getPlid());
 
 				if (layout == null) {
@@ -150,7 +179,7 @@ public class PortletPreferencesModelListener
 
 				layout.setModifiedDate(new Date());
 
-				LayoutLocalServiceUtil.updateLayout(layout);
+				_layoutLocalService.updateLayout(layout);
 			}
 		}
 		catch (Exception e) {
@@ -160,5 +189,11 @@ public class PortletPreferencesModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesModelListener.class);
+
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private final LayoutRevisionLocalService _layoutRevisionLocalService;
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

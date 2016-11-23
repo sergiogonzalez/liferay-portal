@@ -256,10 +256,10 @@ public class SubscriptionLocalServiceImpl
 	public List<Subscription> getSubscriptions(
 		long companyId, String className, long classPK) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.subscription.service.impl." +
-					"SubscriptionLocalServiceImpl");
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return subscriptionPersistence.findByC_C_C(
+			companyId, classNameId, classPK);
 	}
 
 	/**
@@ -328,10 +328,17 @@ public class SubscriptionLocalServiceImpl
 	public boolean isSubscribed(
 		long companyId, long userId, String className, long classPK) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.subscription.service.impl." +
-					"SubscriptionLocalServiceImpl");
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
+			companyId, userId, classNameId, classPK);
+
+		if (subscription == null) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	/**
@@ -349,10 +356,17 @@ public class SubscriptionLocalServiceImpl
 	public boolean isSubscribed(
 		long companyId, long userId, String className, long[] classPKs) {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.subscription.service.impl." +
-					"SubscriptionLocalServiceImpl");
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		int count = subscriptionPersistence.countByC_U_C_C(
+			companyId, userId, classNameId, classPKs);
+
+		if (count == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 }
