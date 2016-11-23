@@ -301,9 +301,7 @@ $microblogs-border-color: #EAEAEA;
 	.field-input-text {
 		background: none transparent;
 		border-width: 0;
-
-		@include box-sizing(border-box);
-
+		box-sizing: border-box;
 		line-height: 1.5em;
 		min-width: 100%;
 		outline: none;
