@@ -67,10 +67,10 @@ public class UpgradePortletId
 	private void _deleteLegacyResourcePermission() throws Exception {
 		runSQL(
 			"delete from ResourcePermission where name = '161' and " +
-				"primkey like '%LAYOUT_33'");
+				"primKey like '%LAYOUT_33'");
 		runSQL(
 			"delete from ResourcePermission where name = '162' and " +
-				"primkey like '%LAYOUT_19'");
+				"primKey like '%LAYOUT_19'");
 	}
 
 	private static final String _ASSET_CATEGORIES_ADMIN =
