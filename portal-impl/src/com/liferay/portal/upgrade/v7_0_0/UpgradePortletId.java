@@ -25,7 +25,7 @@ public class UpgradePortletId
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		deleteLegacyResourcePermission();
+		_deleteLegacyResourcePermission();
 
 		upgrade(UpgradeUserNotificationEvent.class);
 
@@ -64,7 +64,7 @@ public class UpgradePortletId
 		};
 	}
 
-	private void deleteLegacyResourcePermission() throws Exception {
+	private void _deleteLegacyResourcePermission() throws Exception {
 		runSQL(
 			"delete from ResourcePermission where name = '161' and " +
 				"primkey like '%LAYOUT_33'");
