@@ -94,10 +94,11 @@ if (microblogsEntries != null) {
 				<div class="edit-container"><!-- --></div>
 
 				<div class="footer">
-					<span class="modified-date">
+					<div class="modified-date">
 						<%= dateFormatDateTime.format(microblogsEntry.getModifiedDate()) %>
-					</span>
-					<span class="action-container">
+					</div>
+
+					<div class="action-container">
 						<c:if test="<%= microblogsEntry.getType() != MicroblogsEntryConstants.TYPE_REPLY %>">
 
 							<%
@@ -152,7 +153,7 @@ if (microblogsEntries != null) {
 								<a href="<%= deleteURL %>"><liferay-ui:message key="delete" /></a>
 							</span>
 						</c:if>
-					</span>
+					</div>
 				</div>
 			</div>
 
