@@ -25,6 +25,8 @@ public class UpgradePortletId
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		deleteLegacyResourcePermission();
+
 		upgrade(UpgradeUserNotificationEvent.class);
 
 		super.doUpgrade();
@@ -60,6 +62,15 @@ public class UpgradePortletId
 			new String[] {"88", _LAYOUTS_ADMIN},
 			new String[] {"99", _ASSET_TAGS_ADMIN}
 		};
+	}
+
+	private void deleteLegacyResourcePermission() throws Exception {
+		runSQL(
+			"delete from ResourcePermission where name = '161' and " +
+				"primkey like '%LAYOUT_33'");
+		runSQL(
+			"delete from ResourcePermission where name = '162' and " +
+				"primkey like '%LAYOUT_19'");
 	}
 
 	private static final String _ASSET_CATEGORIES_ADMIN =
