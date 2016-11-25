@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -53,6 +56,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -62,6 +66,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.InternetHeaders;
 
 /**
  * @author Brian Wing Shun Chan
@@ -452,6 +457,10 @@ public class SubscriptionSender implements Serializable {
 		this.uniqueMailId = uniqueMailId;
 	}
 
+	public void setUnsubscribable(boolean unsubscribable) {
+		this.unsubscribable = unsubscribable;
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #setCurrentUserId(long)}
 	 */
@@ -465,6 +474,18 @@ public class SubscriptionSender implements Serializable {
 
 		SubscriptionLocalServiceUtil.deleteSubscription(
 			subscription.getSubscriptionId());
+	}
+
+	protected String getUnsubscribeURL(User user, String ticketKey) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(PortalUtil.getPathContext());
+		sb.append("/c/portal/unsubscribe?key=");
+		sb.append(ticketKey);
+		sb.append("&userId=");
+		sb.append(user.getUserId());
+
+		return sb.toString();
 	}
 
 	protected boolean hasPermission(
@@ -594,6 +615,20 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
+		if (unsubscribable && !bulk) {
+			Calendar calendar = Calendar.getInstance();
+
+			calendar.add(Calendar.HOUR_OF_DAY, 24);
+
+			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
+				subscription.getCompanyId(), subscription.getClassName(),
+				subscription.getClassPK(), TicketConstants.TYPE_SUBSCRIPTIONS,
+				String.valueOf(subscription.getUserId()), calendar.getTime(),
+				serviceContext);
+
+			_unsubscribableUserMap.put(user.getUserId(), ticket.getKey());
+		}
+
 		sendNotification(user);
 	}
 
@@ -678,18 +713,33 @@ public class SubscriptionSender implements Serializable {
 
 		mailMessage.setSubject(processedSubject);
 
+		InternetHeaders internetHeaders = mailMessage.getInternetHeaders();
+
+		String unsubscribeURL = null;
+
+		if (internetHeaders != null) {
+			String[] header = internetHeaders.getHeader("List-Unsubscribe");
+
+			if (ArrayUtil.isNotEmpty(header)) {
+				unsubscribeURL = header[0];
+			}
+		}
+
+		System.out.println("Unsubscribe URL: " + unsubscribeURL);
+
 		String processedBody = StringUtil.replace(
 			mailMessage.getBody(),
 			new String[] {
 				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
+				"[$TO_NAME$]", "[$UNSUBSCRIBE_URL$]"
 			},
 			new String[] {
 				from.getAddress(),
 				GetterUtil.getString(from.getPersonal(), from.getAddress()),
 				HtmlUtil.escape(to.getAddress()),
 				HtmlUtil.escape(
-					GetterUtil.getString(to.getPersonal(), to.getAddress()))
+					GetterUtil.getString(to.getPersonal(), to.getAddress())),
+				unsubscribeURL
 			});
 
 		processedBody = replaceContent(processedBody, locale, htmlFormat);
@@ -865,6 +915,21 @@ public class SubscriptionSender implements Serializable {
 			mailMessage.setSMTPAccount(smtpAccount);
 		}
 
+		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
+			companyId, to.getAddress());
+
+		if (user != null) {
+			String ticketKey = _unsubscribableUserMap.get(user.getUserId());
+
+			InternetHeaders internetHeaders = new InternetHeaders();
+
+			internetHeaders.setHeader(
+				"List-Unsubscribe",
+				"<" + getUnsubscribeURL(user, ticketKey) + ">");
+
+			mailMessage.setInternetHeaders(internetHeaders);
+		}
+
 		processMailMessage(mailMessage, locale);
 
 		MailServiceUtil.sendEmail(mailMessage);
@@ -957,6 +1022,7 @@ public class SubscriptionSender implements Serializable {
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected boolean uniqueMailId = true;
+	protected boolean unsubscribable;
 
 	private void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {
@@ -1008,5 +1074,6 @@ public class SubscriptionSender implements Serializable {
 	private final List<ObjectValuePair<String, String>>
 		_runtimeSubscribersOVPs = new ArrayList<>();
 	private final Set<String> _sentEmailAddresses = new HashSet<>();
+	private final Map<Long, String> _unsubscribableUserMap = new HashMap<>();
 
 }
