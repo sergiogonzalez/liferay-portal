@@ -278,37 +278,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 								</c:choose>
 							</c:if>
 						</div>
-
-						<%
-						long parentCategoryId = category.getParentCategoryId();
-						String parentCategoryName = LanguageUtil.get(request, "message-boards-home");
-
-						if (!category.isRoot()) {
-							MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
-
-							parentCategoryId = parentCategory.getCategoryId();
-							parentCategoryName = parentCategory.getName();
-						}
-						%>
-
-						<portlet:renderURL var="backURL">
-							<c:choose>
-								<c:when test="<%= parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
-									<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-								</c:when>
-								<c:otherwise>
-									<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
-									<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-								</c:otherwise>
-							</c:choose>
-						</portlet:renderURL>
-
-						<liferay-ui:header
-							backLabel="<%= parentCategoryName %>"
-							backURL="<%= backURL.toString() %>"
-							localizeTitle="<%= false %>"
-							title="<%= category.getName() %>"
-						/>
 					</c:if>
 
 					<%
