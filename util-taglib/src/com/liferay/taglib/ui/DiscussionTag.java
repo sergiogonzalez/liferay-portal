@@ -104,7 +104,8 @@ public class DiscussionTag extends IncludeTag {
 			try {
 				encDoAsUserId = Encryptor.encrypt(
 					company.getKeyObj(), String.valueOf(doAsUserId));
-			} catch (EncryptorException e) {
+			}
+			catch (EncryptorException ee) {
 				throw new JspException();
 			}
 
