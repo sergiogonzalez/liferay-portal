@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -310,26 +309,6 @@ public class PortletURLImpl
 
 		if (_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 			_reservedParameters.put("p_p_cacheability", _cacheability);
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (Validator.isNotNull(portletDisplay.getColumnId())) {
-			_reservedParameters.put("p_p_col_id", portletDisplay.getColumnId());
-		}
-
-		if (portletDisplay.getColumnPos() > 0) {
-			_reservedParameters.put(
-				"p_p_col_pos", String.valueOf(portletDisplay.getColumnPos()));
-		}
-
-		if (portletDisplay.getColumnCount() > 0) {
-			_reservedParameters.put(
-				"p_p_col_count",
-				String.valueOf(portletDisplay.getColumnCount()));
 		}
 
 		_reservedParameters = Collections.unmodifiableMap(_reservedParameters);
