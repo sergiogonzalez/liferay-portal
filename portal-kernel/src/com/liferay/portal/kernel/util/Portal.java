@@ -653,7 +653,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.1.0, with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String getFacebookURL(

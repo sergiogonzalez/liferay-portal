@@ -313,7 +313,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.1.0, with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String getFacebookCanvasPageURL() {
@@ -1020,7 +1020,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.1.0, with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public boolean isFacebook() {
@@ -1267,7 +1267,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 7.1.0, with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public void setFacebookCanvasPageURL(String facebookCanvasPageURL) {
@@ -1828,7 +1828,7 @@ public class ThemeDisplay
 	private String _doAsUserLanguageId = StringPool.BLANK;
 
 	/**
-	 * @deprecated As of 7.1.0, with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	private String _facebookCanvasPageURL;
