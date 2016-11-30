@@ -642,11 +642,7 @@ public class SubscriptionSender implements Serializable {
 			}
 
 			if (bulk) {
-				if (_bulkAddresses == null) {
-					_bulkAddresses = new ArrayList<>();
-				}
-
-				_bulkAddresses.add(to);
+				_addBulkAddress(to);
 
 				return;
 			}
@@ -751,41 +747,11 @@ public class SubscriptionSender implements Serializable {
 			fromAddressMailTemplate.renderAsString(locale, mailTemplateContext),
 			fromNameMailTemplate.renderAsString(locale, mailTemplateContext));
 
-		String processedSubject = null;
+		String processedSubject = _getLocalizedValue(
+			localizedSubjectMap, locale, subject);
 
-		if (localizedSubjectMap != null) {
-			String localizedSubject = localizedSubjectMap.get(locale);
-
-			if (Validator.isNull(localizedSubject)) {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				processedSubject = localizedSubjectMap.get(defaultLocale);
-			}
-			else {
-				processedSubject = localizedSubject;
-			}
-		}
-		else {
-			processedSubject = subject;
-		}
-
-		String processedBody = null;
-
-		if (localizedBodyMap != null) {
-			String localizedBody = localizedBodyMap.get(locale);
-
-			if (Validator.isNull(localizedBody)) {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				processedBody = localizedBodyMap.get(defaultLocale);
-			}
-			else {
-				processedBody = localizedBody;
-			}
-		}
-		else {
-			processedBody = body;
-		}
+		String processedBody = _getLocalizedValue(
+			localizedBodyMap, locale, body);
 
 		MailMessage mailMessage = new MailMessage(
 			from, to, processedSubject, processedBody, htmlFormat);
@@ -844,11 +810,7 @@ public class SubscriptionSender implements Serializable {
 				user.getEmailAddress(), user.getFullName());
 
 			if (bulk) {
-				if (_bulkAddresses == null) {
-					_bulkAddresses = new ArrayList<>();
-				}
-
-				_bulkAddresses.add(to);
+				_addBulkAddress(to);
 
 				return;
 			}
@@ -922,6 +884,14 @@ public class SubscriptionSender implements Serializable {
 	protected String subject;
 	protected boolean uniqueMailId = true;
 
+	private void _addBulkAddress(InternetAddress internetAddress) {
+		if (_bulkAddresses == null) {
+			_bulkAddresses = new ArrayList<>();
+		}
+
+		_bulkAddresses.add(internetAddress);
+	}
+
 	private MailTemplateContext _getBasicMailTemplateContext(Locale locale) {
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			new DefaultMailTemplateContextBuilder();
@@ -962,6 +932,31 @@ public class SubscriptionSender implements Serializable {
 			mailTemplateContext, _getBasicMailTemplateContext(locale));
 	}
 
+	private String _getLocalizedValue(
+		Map<Locale, String> localizedValueMap, Locale locale,
+		String defaultValue) {
+
+		String processedValue = null;
+
+		if (localizedValueMap != null) {
+			String localizedValue = localizedValueMap.get(locale);
+
+			if (Validator.isNull(localizedValue)) {
+				Locale defaultLocale = LocaleUtil.getDefault();
+
+				processedValue = localizedValueMap.get(defaultLocale);
+			}
+			else {
+				processedValue = localizedValue;
+			}
+		}
+		else {
+			processedValue = defaultValue;
+		}
+
+		return processedValue;
+	}
+
 	private String _getPortletName(Locale locale) {
 		String portletName = StringPool.BLANK;
 
@@ -973,24 +968,8 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	private String _getPortletTitle(String portletName, Locale locale) {
-		String portletTitle = portletName;
-
-		if (localizedPortletTitleMap != null) {
-			if (Validator.isNotNull(localizedPortletTitleMap.get(locale))) {
-				portletTitle = localizedPortletTitleMap.get(locale);
-			}
-			else {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				if (Validator.isNotNull(
-						localizedPortletTitleMap.get(defaultLocale))) {
-
-					portletTitle = localizedPortletTitleMap.get(defaultLocale);
-				}
-			}
-		}
-
-		return portletTitle;
+		return _getLocalizedValue(
+			localizedPortletTitleMap, locale, portletName);
 	}
 
 	private void readObject(ObjectInputStream objectInputStream)
