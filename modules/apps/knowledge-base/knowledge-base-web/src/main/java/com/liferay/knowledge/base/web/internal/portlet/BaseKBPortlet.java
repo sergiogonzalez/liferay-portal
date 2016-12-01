@@ -218,34 +218,28 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		String originalUrl = super.getRedirect(actionRequest, actionResponse);
 		String namespace = actionResponse.getNamespace();
 
-		String redirectParamName = namespace + "redirect";
+		String redirectParameter = namespace + "redirect";
 
-		// LPS-68710 Prevent the redirect parameter from getting too long
-		// (invalid) by using the embedded redirect URL within the redirect
-		// parameter, if it exists.
+		String redirect = HttpUtil.getParameter(
+			originalUrl, redirectParameter, false);
 
-		String redirectUrl = HttpUtil.getParameter(
-			originalUrl, redirectParamName, false);
-
-		if ((redirectUrl == null) || redirectUrl.isEmpty()) {
+		if (Validator.isNull(redirect)) {
 			return originalUrl;
 		}
 
-		redirectUrl = HttpUtil.decodeURL(redirectUrl);
+		redirect = HttpUtil.decodeURL(redirect);
 
-		String prevRedirectUrl = HttpUtil.getParameter(
-			redirectUrl, redirectParamName, false);
+		String oldRedirect = HttpUtil.getParameter(
+			redirect, redirectParameter, false);
 
-		if ((prevRedirectUrl == null) || prevRedirectUrl.isEmpty()) {
+		if (Validator.isNull(oldRedirect)) {
 			return originalUrl;
 		}
 
-		prevRedirectUrl = HttpUtil.decodeURL(prevRedirectUrl);
+		oldRedirect = HttpUtil.decodeURL(oldRedirect);
 
-		String newUrl = HttpUtil.setParameter(
-			originalUrl, redirectParamName, prevRedirectUrl);
-
-		return newUrl;
+		return HttpUtil.setParameter(
+			originalUrl, redirectParameter, oldRedirect);
 	}
 
 	public void moveKBObject(
