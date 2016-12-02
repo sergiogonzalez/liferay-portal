@@ -59,16 +59,18 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 			</span>
 
 			<%
-				if (!themeDisplay.isSignedIn()) {
+			if (!themeDisplay.isSignedIn()) {
 			%>
+
 				<aui:input label="email-address" name="reporterEmailAddress">
 					<aui:validator name="email" />
 					<aui:validator name="required" />
 				</aui:input>
+
 			<%
 			}
 			%>
-			
+
 		</aui:fieldset>
 
 		<aui:button-row>
