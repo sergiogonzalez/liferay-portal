@@ -56,6 +56,7 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.ItalicTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ItemNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.LineNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ListNode;
+import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiInlineNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiSectionNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.OrderedListItemNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.OrderedListNode;
@@ -798,9 +799,9 @@ nowikiblock_close_markup
 	:	NOWIKI_BLOCK_CLOSE
 	;
 
-nowiki_inline returns [NoWikiSectionNode nowiki = null]
+nowiki_inline returns [NoWikiInlineNode nowiki = null]
 	:	nowiki_open_markup  t = nowiki_inline_contents
-		nowiki_close_markup {$nowiki = new NoWikiSectionNode($t.text.toString());}
+		nowiki_close_markup {$nowiki = new NoWikiInlineNode($t.text.toString());}
 	;
 nowiki_block_contents returns [StringBundler contents = new StringBundler()]
 	:(c=~( NOWIKI_BLOCK_CLOSE | EOF ) {$contents.append($c.text);})*
