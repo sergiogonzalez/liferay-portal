@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BoldTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.FormattedTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ItalicTextNode;
+import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiInlineNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiSectionNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.UnformattedTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
@@ -71,6 +72,11 @@ public abstract class UnformattedTextVisitor extends BaseASTVisitor {
 		}
 
 		super.visit(linkNode);
+	}
+
+	@Override
+	public void visit(NoWikiInlineNode noWikiInlineNode) {
+		write(noWikiInlineNode.getContent());
 	}
 
 	@Override

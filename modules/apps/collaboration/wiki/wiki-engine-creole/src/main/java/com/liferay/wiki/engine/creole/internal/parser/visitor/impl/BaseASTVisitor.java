@@ -25,6 +25,7 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.ImageNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ItalicTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.LineNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ListNode;
+import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiInlineNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiSectionNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.OrderedListItemNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.OrderedListNode;
@@ -163,6 +164,10 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 
 	@Override
 	public void visit(MoinMoinInterwikiLinkNode moinMoinInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(NoWikiInlineNode noWikiInlineNode) {
 	}
 
 	@Override
