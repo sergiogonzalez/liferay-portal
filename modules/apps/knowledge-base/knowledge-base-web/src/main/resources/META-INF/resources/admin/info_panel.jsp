@@ -56,17 +56,17 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-header-actions">
+			<ul class="sidebar-actions">
 				<li>
 					<liferay-util:include page="/admin/folder_action.jsp" servletContext="<%= application %>" />
 				</li>
 			</ul>
 
-			<h4><%= (kbFolder != null) ? HtmlUtil.escape(kbFolder.getName()) : LanguageUtil.get(request, "home") %></h4>
+			<h4 class="sidebar-title"><%= (kbFolder != null) ? HtmlUtil.escape(kbFolder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
-			<div>
+			<h5>
 				<liferay-ui:message key="folder" />
-			</div>
+			</h5>
 		</div>
 
 		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
@@ -76,7 +76,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<dl>
+			<dl class="sidebar-block">
 				<dt class="h5">
 					<liferay-ui:message key="num-of-items" />
 				</dt>
@@ -89,7 +89,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 				}
 				%>
 
-				<dd>
+				<dd class="h6 sidebar-caption">
 					<%= KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
 				</dd>
 
@@ -97,7 +97,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 					<dt class="h5">
 						<liferay-ui:message key="created" />
 					</dt>
-					<dd>
+					<dd class="h6 sidebar-caption">
 						<%= HtmlUtil.escape(kbFolder.getUserName()) %>
 					</dd>
 				</c:if>
@@ -114,7 +114,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 
 		<div class="sidebar-header">
 			<c:if test="<%= showSidebarHeader %>">
-				<ul class="sidebar-header-actions">
+				<ul class="sidebar-actions">
 					<li>
 						<liferay-util:include page="/admin/subscribe.jsp" servletContext="<%= application %>" />
 					</li>
@@ -124,57 +124,57 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 				</ul>
 			</c:if>
 
-			<h4><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
+			<h4 class="sidebar-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
 
-			<div>
+			<h5>
 				<liferay-ui:message key="entry" />
-			</div>
+			</h5>
 		</div>
 
 		<liferay-ui:tabs cssClass="navbar-no-collapse" names="details,versions" refresh="<%= false %>" type="dropdown">
 			<liferay-ui:section>
 				<div class="sidebar-body">
-					<dl>
+					<dl class="sidebar-block">
 						<dt class="h5">
 							<liferay-ui:message key="title" />
 						</dt>
-						<dd>
+						<dd class="h6 sidebar-caption">
 							<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="author" />
 						</dt>
-						<dd>
+						<dd class="h6 sidebar-caption">
 							<%= HtmlUtil.escape(kbArticle.getUserName()) %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="status" />
 						</dt>
-						<dd>
+						<dd class="h6 sidebar-caption">
 							<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(kbArticle.getStatus()) %>" />
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="priority" />
 						</dt>
-						<dd>
+						<dd class="h6 sidebar-caption">
 							<%= kbArticle.getPriority() %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="create-date" />
 						</dt>
-						<dd>
+						<dd class="h6 sidebar-caption">
 							<%= dateFormatDateTime.format(kbArticle.getCreateDate()) %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="modified-date" />
 						</dt>
-						<dd>
+						<dd class="h6 sidebar-caption">
 							<%= dateFormatDateTime.format(kbArticle.getModifiedDate()) %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="views" />
 						</dt>
-						<dd>
+						<dd class="h6 sidebar-caption">
 							<%= kbArticle.getViewCount() %>
 						</dd>
 					</dl>
@@ -190,7 +190,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></h4>
+			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
