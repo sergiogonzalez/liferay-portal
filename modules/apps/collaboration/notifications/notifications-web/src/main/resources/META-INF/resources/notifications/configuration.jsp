@@ -50,7 +50,7 @@
 						%>
 
 							<aui:fieldset collapsed="<%= !first %>" collapsible="<%= true %>" label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>">
-								<table class="table table-condensed table-list">
+								<table class="table table-autofit table-condensed table-list">
 									<tbody>
 
 										<%
@@ -73,7 +73,7 @@
 														UserNotificationDeliveryType userNotificationDeliveryType = userNotificationDeliveryTypeEntry.getValue();
 													%>
 
-														<th class="table-cell-field">
+														<th class="lfr-<%= userNotificationDeliveryType.getName() %>-column">
 															<%= LanguageUtil.get(request, userNotificationDeliveryType.getName()) %>
 														</th>
 
@@ -98,7 +98,7 @@
 													userNotificationDeliveryIds.add(userNotificationDelivery.getUserNotificationDeliveryId());
 												%>
 
-													<td class="table-cell-field">
+													<td class="lfr-<%= userNotificationDeliveryType.getName() %>-column">
 														<div class="checkbox-container">
 															<aui:input cssClass="notification-delivery" data-userNotificationDeliveryId="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>" disabled="<%= !userNotificationDeliveryType.isModifiable() %>" inlineLabel="<%= Boolean.TRUE.toString() %>" label="" name="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>" type="toggle-switch" value="<%= userNotificationDelivery.isDeliver() %>" />
 														</div>
