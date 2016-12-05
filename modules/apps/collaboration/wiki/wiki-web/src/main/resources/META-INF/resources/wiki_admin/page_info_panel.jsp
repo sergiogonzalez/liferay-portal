@@ -20,47 +20,58 @@
 WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
 
 WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiPageInfoPanelDisplayContext(request, response);
+
+request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayContext.getFirstPage());
+
 %>
 
-<c:if test="<%= wikiPageInfoPanelDisplayContext.isShowSidebarHeader() %>">
-	<div class="sidebar-header">
-		<c:choose>
-			<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
-				<ul class="sidebar-actions">
+<c:choose>
+	<c:when test="<%= wikiPageInfoPanelDisplayContext.isShowSidebarHeader() %>">
+		<div class="sidebar-header">
+			<c:choose>
+				<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
+					<ul class="sidebar-actions">
+						<li>
+							<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
+						</li>
+						<li>
+							<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
 
 					<%
-					request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayContext.getFirstPage());
+					WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 					%>
 
-					<li>
-						<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
-					</li>
-					<li>
-						<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
-					</li>
-				</ul>
+					<h4 class="sidebar-title">
+						<%= HtmlUtil.escape(wikiPage.getTitle()) %>
+					</h4>
 
-				<%
-				WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
-				%>
+					<h5>
+						<liferay-ui:message key="page" />
+					</h5>
+				</c:when>
+				<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
+					<h4 class="sidebar-title"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
+				</c:when>
+				<c:otherwise>
+					<h4 class="sidebar-title"><liferay-ui:message key="pages" /></h4>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="sidebar-header visible-xs">
+			<%
+			WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
+			%>
 
-				<h4 class="sidebar-title">
-					<%= HtmlUtil.escape(wikiPage.getTitle()) %>
-				</h4>
-
-				<h5>
-					<liferay-ui:message key="page" />
-				</h5>
-			</c:when>
-			<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
-				<h4 class="sidebar-title"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
-			</c:when>
-			<c:otherwise>
-				<h4 class="sidebar-title"><liferay-ui:message key="pages" /></h4>
-			</c:otherwise>
-		</c:choose>
-	</div>
-</c:if>
+			<h4 class="sidebar-title">
+				<%= HtmlUtil.escape(wikiPage.getTitle()) %>
+			</h4>
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <%
 String sections = "details";
