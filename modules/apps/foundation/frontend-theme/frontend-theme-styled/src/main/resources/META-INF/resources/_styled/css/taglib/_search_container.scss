@@ -22,6 +22,18 @@
 	min-width: 200px;
 }
 
+.lfr-email-column, .lfr-website-column {
+	min-width: 100px;
+
+	@include sm {
+		min-width: 115px;
+	}
+
+	.checkbox-container .form-group {
+		margin-bottom: 0;
+	}
+}
+
 .user-info .user-details {
 	.date-info {
 		color: #8C8C8C;
