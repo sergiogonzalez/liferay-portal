@@ -262,7 +262,7 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseCorrectlyNoWikiBlockInline() {
 		Assert.assertEquals(
-			"<p><pre> Inline </pre></p>", translate("nowikiblock-10.creole"));
+			"<p><tt> Inline </tt></p>", translate("nowikiblock-10.creole"));
 	}
 
 	@Test
@@ -571,7 +571,7 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseNoWikiAndTextInListItem() {
 		Assert.assertEquals(
-			"<ul><li><pre>This is nowiki inside a list item</pre> and <em>" +
+			"<ul><li><tt>This is nowiki inside a list item</tt> and <em>" +
 				"italics</em></li></ul>",
 			translate("list-15.creole"));
 	}
@@ -579,7 +579,7 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseNoWikiInListItem() {
 		Assert.assertEquals(
-			"<ul><li><pre>This is nowiki inside a list item</pre></li></ul>",
+			"<ul><li><tt>This is nowiki inside a list item</tt></li></ul>",
 			translate("list-14.creole"));
 	}
 
