@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -396,7 +397,9 @@ public class FriendlyURLServlet extends HttpServlet {
 					String redirect = PortalUtil.getLocalizedFriendlyURL(
 						request, layout, locale, originalLocale);
 
-					return new Object[] {redirect, Boolean.TRUE};
+					return new Object[] {
+						redirect, PropsValues.PERMANENT_REDIRECT_ENABLED
+					};
 				}
 			}
 		}

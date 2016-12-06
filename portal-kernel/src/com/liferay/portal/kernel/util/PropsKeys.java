@@ -1583,6 +1583,8 @@ public interface PropsKeys {
 
 	public static final String PASSWORDS_TOOLKIT = "passwords.toolkit";
 
+	public static final String PERMANENT_REDIRECT_ENABLED = "permanent.redirect.enabled";
+
 	public static final String PERMISSIONS_CHECK_GUEST_ENABLED = "permissions.check.guest.enabled";
 
 	public static final String PERMISSIONS_CHECKER = "permissions.checker";
