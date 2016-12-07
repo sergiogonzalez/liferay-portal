@@ -174,9 +174,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		long companyId = wallEntry.getCompanyId();
 
-		String layoutURL = PortalUtil.getLayoutURL(themeDisplay);
-
-		String wallEntryURL = layoutURL;
+		String wallEntryURL = PortalUtil.getLayoutURL(themeDisplay);
 
 		Group group = groupLocalService.getGroup(wallEntry.getGroupId());
 
