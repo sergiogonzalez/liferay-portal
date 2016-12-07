@@ -39,7 +39,7 @@ public class MySubscriptionsWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String getBundleSymbolicName() {
-					return "com.liferay.mysubscriptions.web";
+					return "com.liferay.my.subscriptions.web";
 				}
 
 				@Override
