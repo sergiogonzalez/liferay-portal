@@ -72,6 +72,7 @@ if (portletTitleBasedNavigation) {
 
 	<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime">
 		<c:if test="<%= readingTimeInMinutes > 0 %>">
+			&nbsp;-&nbsp;
 			<liferay-ui:message arguments="<%= readingTimeInMinutes %>" key="x-minutes-read" translateArguments="<%= false %>" />
 		</c:if>
 	</small>
@@ -433,7 +434,7 @@ if (portletTitleBasedNavigation) {
 					'CMD': '<%= Constants.CMD %>',
 					'STATUS_DRAFT': '<%= WorkflowConstants.STATUS_DRAFT %>',
 					'UPDATE': '<%= Constants.UPDATE %>',
-					'X_MINUTES_READ': '<%= ResourceBundleUtil.getString(resourceBundle, "x-minutes-read") %>'
+					'X_MINUTES_READ': '&nbsp;-&nbsp; <%= ResourceBundleUtil.getString(resourceBundle, "x-minutes-read") %>'
 				},
 				descriptionLength: '<%= pageAbstractLength %>',
 				editEntryURL: '<%= editEntryURL %>',
