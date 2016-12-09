@@ -259,12 +259,6 @@
 		}
 	}
 
-	.info-bar-center, .status {
-		small:not(:empty) + small:not(:empty):before {
-			content: " - ";
-		}
-	}
-
 	.info-bar-container.affix + .entry-body {
 		margin-top: 47px;
 
