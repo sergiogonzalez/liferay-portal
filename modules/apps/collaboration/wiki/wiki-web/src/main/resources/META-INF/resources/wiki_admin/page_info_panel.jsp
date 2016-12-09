@@ -22,7 +22,6 @@ WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute
 WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiPageInfoPanelDisplayContext(request, response);
 
 request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayContext.getFirstPage());
-
 %>
 
 <c:choose>
@@ -62,6 +61,7 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header visible-xs">
+
 			<%
 			WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 			%>
