@@ -18,7 +18,7 @@
 
 <aui:row>
 	<aui:col width="<%= 100 %>">
-		<ul class="tabular-list-group-unstyled sidebar-block">
+		<ul class="sidebar-block tabular-list-group-unstyled">
 
 			<%
 			KBArticle kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle");
@@ -40,6 +40,7 @@
 						<div class="h5">
 							<liferay-ui:message arguments="<%= curKBArticle.getVersion() %>" key="version-x" />
 						</div>
+
 						<div class="h6 sidebar-caption">
 							<liferay-ui:message arguments="<%= new Object[] {curKBArticle.getUserName(), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
 						</div>
