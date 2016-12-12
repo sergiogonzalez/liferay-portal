@@ -72,3 +72,33 @@ The remaining content of this document consists of the breaking changes listed
 in ascending chronological order.
 
 ## Breaking Changes List
+
+### Url parameters p_p_col_id, p_p_col_pos and p_p_col_count are no longer present in every portlet url.
+- **Date:** 2016-Dec-12
+- **JIRA Ticket:** LPS-69482
+
+#### What changed?
+
+The parameters p_p_col_count, p_p_col_id and p_p_col_pos are no longer present
+in every portlet url.
+
+#### Who is affected?
+
+Developers who were reading those parameters in their custom code.
+
+#### How should I update my code?
+
+You cannot obtain those parameters from the portlet url anymore. If you need to
+read those parameters, you should do it from `PortletDisplay`.
+
+The parameter p_p_col_count can be obtain via `portletDisplay.getColumnCount()`.
+The parameter p_p_col_id can be obtain via `portletDisplay.getColumnId()`.
+The parameter p_p_col_pos can be obtain via `portletDisplay.getColumnPos()`.
+
+#### Why was this change made?
+
+This change simplifies the urls so it only contains the required parameters.
+This was done as a preliminar step of a bigger story to creating portlet urls
+without passing the request as a necessary parameter.
+
+---------------------------------------
