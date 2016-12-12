@@ -650,9 +650,7 @@ public class ImageToolImpl implements ImageTool {
 		BufferedImage rotatedBufferedImage = new BufferedImage(
 			imageHeight, imageWidth, BufferedImage.TYPE_INT_RGB);
 
-		AffineTransform affineTransform = new AffineTransform();
-
-		affineTransform.rotate(
+		AffineTransform affineTransform = AffineTransform.getRotateInstance(
 			Math.toRadians(degrees), imageWidth / 2, imageHeight / 2);
 
 		Graphics2D graphics = rotatedBufferedImage.createGraphics();
