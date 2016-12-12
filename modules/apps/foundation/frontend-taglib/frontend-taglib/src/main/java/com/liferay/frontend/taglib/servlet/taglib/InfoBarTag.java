@@ -37,6 +37,8 @@ public class InfoBarTag extends BaseBarTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_fixed = false;
 	}
 
