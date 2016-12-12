@@ -32,7 +32,9 @@
 		left: 50%;
 		margin-top: 16px;
 		position: absolute;
+		text-align: center;
 		transform: translate(-50%);
+		width: 100%;
 
 		@include sm() {
 			margin-top: 20px;
