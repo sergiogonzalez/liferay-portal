@@ -644,25 +644,25 @@ public class ImageToolImpl implements ImageTool {
 	public RenderedImage rotate(RenderedImage renderedImage, int degrees) {
 		BufferedImage bufferedImage = getBufferedImage(renderedImage);
 
-		int width = bufferedImage.getWidth();
-		int height = bufferedImage.getHeight();
+		int imageWidth = bufferedImage.getWidth();
+		int imageHeight = bufferedImage.getHeight();
 
-		BufferedImage rotatedImage = new BufferedImage(
-			height, width, BufferedImage.TYPE_INT_RGB);
+		BufferedImage rotatedBufferedImage = new BufferedImage(
+			imageHeight, imageWidth, BufferedImage.TYPE_INT_RGB);
 
 		AffineTransform affineTransform = new AffineTransform();
 
-		affineTransform.translate(height / 2, width / 2);
+		affineTransform.translate(imageHeight / 2, imageWidth / 2);
 		affineTransform.rotate(Math.toRadians(degrees));
-		affineTransform.translate(width / (-2), height / (-2));
+		affineTransform.translate(imageWidth / (-2), imageHeight / (-2));
 
-		Graphics2D g = rotatedImage.createGraphics();
+		Graphics2D graphics = rotatedBufferedImage.createGraphics();
 
-		g.drawImage(bufferedImage, affineTransform, null);
+		graphics.drawImage(bufferedImage, affineTransform, null);
 
-		g.dispose();
+		graphics.dispose();
 
-		return rotatedImage;
+		return rotatedBufferedImage;
 	}
 
 	@Override
