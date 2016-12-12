@@ -211,6 +211,37 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
+	@Override
+	public String getRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String originalUrl = super.getRedirect(actionRequest, actionResponse);
+		String namespace = actionResponse.getNamespace();
+
+		String redirectParameter = namespace + "redirect";
+
+		String redirect = HttpUtil.getParameter(
+			originalUrl, redirectParameter, false);
+
+		if (Validator.isNull(redirect)) {
+			return originalUrl;
+		}
+
+		redirect = HttpUtil.decodeURL(redirect);
+
+		String oldRedirect = HttpUtil.getParameter(
+			redirect, redirectParameter, false);
+
+		if (Validator.isNull(oldRedirect)) {
+			return originalUrl;
+		}
+
+		oldRedirect = HttpUtil.decodeURL(oldRedirect);
+
+		return HttpUtil.setParameter(
+			originalUrl, redirectParameter, oldRedirect);
+	}
+
 	public void moveKBObject(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
