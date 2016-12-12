@@ -118,10 +118,8 @@ AUI.add(
 
 						var friendlyURLEmpty = !urlTitleInput.val();
 
-						if (instance._automaticURL() && (friendlyURLEmpty ||
-														 instance._originalFriendlyURLChanged)) {
-							urlTitleInput.val(
-								Liferay.Util.normalizeFriendlyURL(title));
+						if (instance._automaticURL() && (friendlyURLEmpty || instance._originalFriendlyURLChanged)) {
+							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(title));
 						}
 
 						instance._originalFriendlyURLChanged = true;
