@@ -652,9 +652,8 @@ public class ImageToolImpl implements ImageTool {
 
 		AffineTransform affineTransform = new AffineTransform();
 
-		affineTransform.translate(imageHeight / 2, imageWidth / 2);
-		affineTransform.rotate(Math.toRadians(degrees));
-		affineTransform.translate(imageWidth / (-2), imageHeight / (-2));
+		affineTransform.rotate(
+			Math.toRadians(degrees), imageWidth / 2, imageHeight / 2);
 
 		Graphics2D graphics = rotatedBufferedImage.createGraphics();
 
