@@ -18,5 +18,5 @@
 
 <%
 String buttons = (String)request.getAttribute("liferay-frontend:info-bar:buttons");
-Boolean fixed = (Boolean)request.getAttribute("liferay-frontend:info-bar:fixed");
+boolean fixed = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:info-bar:fixed"));
 %>
