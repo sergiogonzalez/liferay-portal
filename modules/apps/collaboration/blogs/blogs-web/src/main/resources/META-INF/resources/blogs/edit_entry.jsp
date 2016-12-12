@@ -86,7 +86,6 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
-<portlet:actionURL name="/blogs/calculate_reading_time" var="calculateReadingTimeURL" />
 
 <div class="container-fluid-1280 entry-body">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
@@ -426,7 +425,7 @@ if (portletTitleBasedNavigation) {
 		'<portlet:namespace />Blogs',
 		new Liferay.Blogs(
 			{
-				calculateReadingTimeURL: '<%= calculateReadingTimeURL %>',
+				calculateReadingTimeURL: '<portlet:resourceURL id="/blogs/calculate_reading_time" />',
 				constants: {
 					'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
 					'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',

@@ -19,12 +19,12 @@ import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,22 +39,24 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
 		"mvc.command.name=/blogs/calculate_reading_time"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class CalculateReadingTimeMVCActionCommand extends BaseMVCActionCommand {
+public class CalculateReadingTimeMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		String content = ParamUtil.getString(actionRequest, "content");
+		String content = ParamUtil.getString(resourceRequest, "content");
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("readingTime", BlogsUtil.getReadingTimeMinutes(content));
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			resourceRequest, resourceResponse, jsonObject);
+
 	}
 
 }
