@@ -14,28 +14,11 @@
 
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Ambrin Chaudhary
- * @deprecated replaced by {@link BaseTinyMCEEditorConfigContributor}
+ * @deprecated As of 1.0.0, replaced by {@link BaseTinyMCEEditorConfigContributor}
  */
 @Deprecated
 public class BaseTinyMCEEditorConfigConfigurator
 	extends BaseTinyMCEEditorConfigContributor {
-
 }
