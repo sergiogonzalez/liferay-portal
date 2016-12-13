@@ -56,7 +56,6 @@ public class CalculateReadingTimeMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
-
 	}
 
 }
