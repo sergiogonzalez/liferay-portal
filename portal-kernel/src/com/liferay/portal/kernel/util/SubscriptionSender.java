@@ -67,6 +67,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.InternetHeaders;
@@ -497,6 +499,16 @@ public class SubscriptionSender implements Serializable {
 			subscription.getSubscriptionId());
 	}
 
+	protected String extractURLFromHeader(String header) {
+		Matcher matcher = _EMAIL_HEADER_PATTERN.matcher(header);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return header;
+	}
+
 	protected String getUnsubscribeURL(User user, String ticketKey) {
 		StringBundler sb = new StringBundler(5);
 
@@ -731,12 +743,11 @@ public class SubscriptionSender implements Serializable {
 		InternetHeaders internetHeaders = mailMessage.getInternetHeaders();
 
 		if (internetHeaders != null) {
-			String[] header = internetHeaders.getHeader("List-Unsubscribe");
+			String[] header = internetHeaders.getHeader(
+				_LIST_UNSUBSCRIBE_HEADER);
 
 			if (ArrayUtil.isNotEmpty(header)) {
-				String unsubscribeURL = header[0];
-
-				System.out.println("Unsubscribe URL: " + unsubscribeURL);
+				String unsubscribeURL = extractURLFromHeader(header[0]);
 
 				mailTemplateContext = mailTemplateContext.aggregateWith(
 					_getUnsubscribeMailTemplateContext(locale, unsubscribeURL));
@@ -850,7 +861,7 @@ public class SubscriptionSender implements Serializable {
 			InternetHeaders internetHeaders = new InternetHeaders();
 
 			internetHeaders.setHeader(
-				"List-Unsubscribe",
+				_LIST_UNSUBSCRIBE_HEADER,
 				"<" + getUnsubscribeURL(user, ticketKey) + ">");
 
 			mailMessage.setInternetHeaders(internetHeaders);
@@ -1053,6 +1064,11 @@ public class SubscriptionSender implements Serializable {
 
 		objectOutputStream.writeUTF(servletContextName);
 	}
+
+	private static final Pattern _EMAIL_HEADER_PATTERN = Pattern.compile(
+		"<(.+)>");
+
+	private static final String _LIST_UNSUBSCRIBE_HEADER = "List-Unsubscribe";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionSender.class);
