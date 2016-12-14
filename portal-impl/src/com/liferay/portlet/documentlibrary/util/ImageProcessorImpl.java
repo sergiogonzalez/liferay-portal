@@ -243,8 +243,7 @@ public class ImageProcessorImpl
 		else if (tiffOrientationValue.equals(
 					ImageTool.ORIENTATION_VALUE_MIRROR_VERTICAL)) {
 
-			return ImageToolUtil.flipVertical(
-				ImageToolUtil.rotate(renderedImage, 180));
+			return ImageToolUtil.flipVertical(renderedImage);
 		}
 		else if (tiffOrientationValue.equals(
 					ImageTool.ORIENTATION_VALUE_ROTATE_90_CW)) {
