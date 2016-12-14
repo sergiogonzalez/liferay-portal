@@ -89,7 +89,6 @@ public class GoogleDocsUIItemsProcessor {
 			index = 0;
 		}
 
-		urlUIItem.setIcon("icon-edit");
 		urlUIItem.setKey(GoogleDocsUIItemKeys.EDIT_IN_GOOGLE);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
