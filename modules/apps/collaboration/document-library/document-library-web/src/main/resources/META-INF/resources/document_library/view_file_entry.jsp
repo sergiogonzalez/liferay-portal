@@ -228,9 +228,9 @@ if (portletTitleBasedNavigation) {
 								<liferay-ui:icon
 									iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
 									label="<%= true %>"
-									message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+									message="<%= StringUtil.toUpperCase(conversion) %>"
 									method="get"
-									url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+									url='<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
 								/>
 
 							<%
