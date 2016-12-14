@@ -512,8 +512,9 @@ public class SubscriptionSender implements Serializable {
 	protected String getUnsubscribeURL(User user, String ticketKey) {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(PortalUtil.getPathContext());
-		sb.append("/c/portal/unsubscribe?key=");
+		sb.append(getContextAttribute("[$PORTAL_URL$]"));
+		sb.append(PortalUtil.getPathMain());
+		sb.append("/portal/unsubscribe?key=");
 		sb.append(ticketKey);
 		sb.append("&userId=");
 		sb.append(user.getUserId());
