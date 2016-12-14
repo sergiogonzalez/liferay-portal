@@ -657,8 +657,8 @@ public class SubscriptionSender implements Serializable {
 			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
 				subscription.getCompanyId(), subscription.getClassName(),
 				subscription.getClassPK(), TicketConstants.TYPE_SUBSCRIPTIONS,
-				String.valueOf(subscription.getUserId()), calendar.getTime(),
-				serviceContext);
+				String.valueOf(subscription.getSubscriptionId()),
+				calendar.getTime(), serviceContext);
 
 			_unsubscribableUserMap.put(user.getUserId(), ticket.getKey());
 		}
