@@ -69,6 +69,7 @@ public class UnsubscribeAction extends BaseStrutsAction {
 		}
 
 		_subscriptionLocalService.deleteSubscription(subscription);
+		_ticketLocalService.deleteTicket(ticket);
 
 		request.getSession().setAttribute(
 			MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY,
