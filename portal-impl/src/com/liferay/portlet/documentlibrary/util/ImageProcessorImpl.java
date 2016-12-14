@@ -224,24 +224,27 @@ public class ImageProcessorImpl
 		else if (tiffOrientationValue.equals(
 					ImageTool.ORIENTATION_VALUE_MIRROR_HORIZONTAL)) {
 
-			return ImageToolUtil.flip(renderedImage);
+			return ImageToolUtil.flipVertical(renderedImage);
 		}
 		else if (tiffOrientationValue.equals(
 					ImageTool.
 						ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_90_CW)) {
 
-			return ImageToolUtil.flip(ImageToolUtil.rotate(renderedImage, 90));
+			return ImageToolUtil.flipVertical(
+				ImageToolUtil.rotate(renderedImage, 90));
 		}
 		else if (tiffOrientationValue.equals(
 					ImageTool.
 						ORIENTATION_VALUE_MIRROR_HORIZONTAL_ROTATE_270_CW)) {
 
-			return ImageToolUtil.flip(ImageToolUtil.rotate(renderedImage, 270));
+			return ImageToolUtil.flipVertical(
+				ImageToolUtil.rotate(renderedImage, 270));
 		}
 		else if (tiffOrientationValue.equals(
 					ImageTool.ORIENTATION_VALUE_MIRROR_VERTICAL)) {
 
-			return ImageToolUtil.flip(ImageToolUtil.rotate(renderedImage, 180));
+			return ImageToolUtil.flipVertical(
+				ImageToolUtil.rotate(renderedImage, 180));
 		}
 		else if (tiffOrientationValue.equals(
 					ImageTool.ORIENTATION_VALUE_ROTATE_90_CW)) {
