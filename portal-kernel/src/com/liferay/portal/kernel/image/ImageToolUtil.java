@@ -104,6 +104,10 @@ public class ImageToolUtil {
 		getImageTool().encodeWBMP(renderedImage, os);
 	}
 
+	public static RenderedImage flipHorizontal(RenderedImage renderedImage) {
+		return getImageTool().flipHorizontal(renderedImage);
+	}
+
 	public static RenderedImage flipVertical(RenderedImage renderedImage) {
 		return getImageTool().flipVertical(renderedImage);
 	}
