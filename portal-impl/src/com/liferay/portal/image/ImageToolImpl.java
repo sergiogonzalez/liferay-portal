@@ -374,6 +374,21 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
+	public RenderedImage flipHorizontal(RenderedImage renderedImage) {
+		BufferedImage bufferedImage = getBufferedImage(renderedImage);
+
+		AffineTransform affineTransform = AffineTransform.getScaleInstance(
+			-1.0, 1.0);
+
+		affineTransform.translate(-bufferedImage.getWidth(), 0);
+
+		AffineTransformOp affineTransformOp = new AffineTransformOp(
+			affineTransform, null);
+
+		return affineTransformOp.filter(bufferedImage, null);
+	}
+
+	@Override
 	public RenderedImage flipVertical(RenderedImage renderedImage) {
 		BufferedImage bufferedImage = getBufferedImage(renderedImage);
 
