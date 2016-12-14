@@ -662,8 +662,10 @@ public class ImageToolImpl implements ImageTool {
 		int imageWidth = bufferedImage.getWidth();
 		int imageHeight = bufferedImage.getHeight();
 
-		double absoluteSin = Math.abs(Math.sin(degrees));
-		double absoluteCos = Math.abs(Math.cos(degrees));
+		double radians = Math.toRadians(degrees);
+
+		double absoluteSin = Math.abs(Math.sin(radians));
+		double absoluteCos = Math.abs(Math.cos(radians));
 
 		int rotatedImageWidth = (int)Math.floor(
 			(imageWidth * absoluteCos) + (imageHeight * absoluteSin));
@@ -674,7 +676,7 @@ public class ImageToolImpl implements ImageTool {
 			rotatedImageWidth, rotatedImageHeight, bufferedImage.getType());
 
 		AffineTransform affineTransform = AffineTransform.getRotateInstance(
-			Math.toRadians(degrees), imageWidth / 2, imageHeight / 2);
+			radians, imageWidth / 2, imageHeight / 2);
 
 		Graphics2D graphics = rotatedBufferedImage.createGraphics();
 
