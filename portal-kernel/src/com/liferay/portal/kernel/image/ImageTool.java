@@ -79,6 +79,8 @@ public interface ImageTool {
 	public void encodeWBMP(RenderedImage renderedImage, OutputStream os)
 		throws IOException;
 
+	public RenderedImage flipHorizontal(RenderedImage renderedImage);
+
 	public RenderedImage flipVertical(RenderedImage renderedImage);
 
 	public BufferedImage getBufferedImage(RenderedImage renderedImage);
