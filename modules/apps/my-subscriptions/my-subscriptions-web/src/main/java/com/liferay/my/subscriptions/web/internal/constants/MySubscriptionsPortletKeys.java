@@ -22,4 +22,6 @@ public class MySubscriptionsPortletKeys {
 	public static final String MY_SUBSCRIPTIONS =
 		"com_liferay_mysubscriptions_web_portlet_MySubscriptionsPortlet";
 
+	public static final String LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY =
+		"com_liferay_mysubscriptions_web_portlet_MySubscriptionsPortlet_LastUnsubscribedSubscription";
 }

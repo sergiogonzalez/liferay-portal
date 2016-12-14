@@ -34,6 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
+
 /**
  * @author Sergio González
  */
@@ -67,6 +69,10 @@ public class UnsubscribeAction extends BaseStrutsAction {
 		}
 
 		_subscriptionLocalService.deleteSubscription(subscription);
+
+		request.getSession().setAttribute(
+			MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY,
+			subscription);
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			request, MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS,
