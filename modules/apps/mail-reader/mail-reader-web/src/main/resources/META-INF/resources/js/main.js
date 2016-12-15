@@ -561,7 +561,7 @@ AUI.add(
 								instance.messagesContainer.all('.move-messages').on(
 									'click',
 									function(event) {
-										var folderId = event.currentTarget.text().trim();
+										var folderId = event.currentTarget.getData('folderId');
 
 										var messageIds = instance._getSelectedMessageIds();
 
