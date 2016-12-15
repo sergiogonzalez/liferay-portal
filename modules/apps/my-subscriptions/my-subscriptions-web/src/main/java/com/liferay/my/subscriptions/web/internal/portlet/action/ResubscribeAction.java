@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletRequest;
 
@@ -46,8 +45,6 @@ public class ResubscribeAction extends BaseStrutsAction {
 	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-		long userId = ParamUtil.getLong(request, "userId");
 
 		Subscription subscription =
 			(Subscription)request.getSession().getAttribute(
@@ -76,7 +73,9 @@ public class ResubscribeAction extends BaseStrutsAction {
 			"subscriptionTitle",
 			MySubscriptionsUtil.getTitle(request.getLocale(), subscription));
 		liferayPortletURL.setParameter(
-			"email", _userLocalService.getUser(userId).getEmailAddress());
+			"email",
+			_userLocalService.getUser(
+				subscription.getUserId()).getEmailAddress());
 
 		response.sendRedirect(liferayPortletURL.toString());
 
