@@ -1,11 +1,4 @@
-<%@ page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
-<%@ page import="com.liferay.portal.kernel.model.User" %>
-<%@ page import="com.liferay.portal.kernel.portlet.LiferayPortletURL" %>
-<%@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
-<%@ page
-	import="com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys" %>
-<%@ page import="javax.portlet.PortletRequest" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -24,21 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long userId = GetterUtil.getLong(request.getParameter("userId"));
-
-User unsubcribedUser = UserLocalServiceUtil.getUser(userId);
-
-Subscription subscription = (Subscription)request.getSession().getAttribute(MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
+String email = GetterUtil.getString(request.getParameter("email"));
+String subscriptionTitle = GetterUtil.getString(request.getParameter("subscriptionTitle"));
 
 LiferayPortletURL manageSubscriptionsURL = PortletURLFactoryUtil.create(request, MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS, PortletRequest.RENDER_PHASE);
-
-AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(subscription.getClassName(), subscription.getClassPK());
-
-String subscriptionTitle = MySubscriptionsUtil.getTitleText(locale, subscription.getClassName(), subscription.getClassPK(), ((assetRenderer != null) ? assetRenderer.getTitle(locale) : null));
+manageSubscriptionsURL.setWindowState(LiferayWindowState.MAXIMIZED);
 %>
 
 <div class="unsubscribe">
-
 	<liferay-ui:icon
 		icon="check-circle"
 		markupView="lexicon"
@@ -49,11 +35,12 @@ String subscriptionTitle = MySubscriptionsUtil.getTitleText(locale, subscription
 	<p>
 		You have been removed from <%= subscriptionTitle %>.
 		<br>
-		We won't send you mails to <%= unsubcribedUser.getEmailAddress() %> anymore.
+		We won't send you mails to <%= email %> anymore.
 	</p>
 
 	<p>
 		<h4>Did you unsubscribe by accident?</h4>
+
 		<a href="/c/portal/resubscribe">Resubscribe</a> or <a href="<%= manageSubscriptionsURL.toString() %>">Manage your subscriptions</a>.
 	</p>
 </div>

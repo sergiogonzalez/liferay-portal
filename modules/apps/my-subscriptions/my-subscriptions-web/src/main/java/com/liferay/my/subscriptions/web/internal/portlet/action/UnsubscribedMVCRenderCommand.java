@@ -16,12 +16,12 @@ package com.liferay.my.subscriptions.web.internal.portlet.action;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.GetterUtil;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
@@ -43,4 +43,5 @@ public class UnsubscribedMVCRenderCommand implements MVCRenderCommand {
 
 		return "/unsubscribed.jsp";
 	}
+
 }
