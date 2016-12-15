@@ -57,6 +57,7 @@ public class UnsubscribeAction extends BaseStrutsAction {
 		Ticket ticket = _ticketLocalService.getTicket(key);
 
 		if (ticket.isExpired()) {
+			_ticketLocalService.deleteTicket(ticket);
 			throw new NoSuchTicketException("{ticketKey=" + key + "}");
 		}
 
