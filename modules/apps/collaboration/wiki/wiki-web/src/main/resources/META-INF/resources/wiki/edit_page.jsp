@@ -217,7 +217,12 @@ if (portletTitleBasedNavigation) {
 
 							<%
 							try {
-								wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+								if ((wikiPage != null) && wikiPage.isNew() && (templatePage != null)) {
+									wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, templatePage);
+								}
+								else {
+									wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+								}
 							}
 							catch (WikiFormatException wfe) {
 							%>
