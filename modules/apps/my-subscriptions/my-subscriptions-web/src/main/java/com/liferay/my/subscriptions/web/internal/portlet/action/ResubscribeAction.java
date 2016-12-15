@@ -15,6 +15,7 @@
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
+import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -63,6 +64,15 @@ public class ResubscribeAction extends BaseStrutsAction {
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			request, MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS,
 			PortletRequest.RENDER_PHASE);
+
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName", "/mysubscriptions/resubscribed");
+
+		liferayPortletURL.setParameter(
+			"subscriptionTitle",
+			MySubscriptionsUtil.getTitle(request.getLocale(), subscription));
+		/*liferayPortletURL.setParameter(
+			"email", _userLocalService.getUser(userId).getEmailAddress());*/
 
 		response.sendRedirect(liferayPortletURL.toString());
 
