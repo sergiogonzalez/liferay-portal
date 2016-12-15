@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,6 +80,12 @@ public class UnsubscribeAction extends BaseStrutsAction {
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			request, MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS,
 			PortletRequest.RENDER_PHASE);
+
+		liferayPortletURL.setParameter("userId", String.valueOf(userId));
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName", "/mysubscriptions/unsubscribed");
+		liferayPortletURL.setWindowState(LiferayWindowState.MAXIMIZED);
+		liferayPortletURL.setPortletMode(PortletMode.VIEW);
 
 		response.sendRedirect(liferayPortletURL.toString());
 
