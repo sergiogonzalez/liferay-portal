@@ -35,8 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
-
 /**
  * @author Sergio González
  */
@@ -63,8 +61,8 @@ public class UnsubscribeAction extends BaseStrutsAction {
 
 		long subscriptionId = Long.valueOf(ticket.getExtraInfo());
 
-		Subscription subscription =
-			_subscriptionLocalService.getSubscription(subscriptionId);
+		Subscription subscription = _subscriptionLocalService.getSubscription(
+			subscriptionId);
 
 		if (subscription.getUserId() != userId) {
 			throw new PrincipalException();
@@ -91,4 +89,5 @@ public class UnsubscribeAction extends BaseStrutsAction {
 
 	@Reference
 	private TicketLocalService _ticketLocalService;
+
 }

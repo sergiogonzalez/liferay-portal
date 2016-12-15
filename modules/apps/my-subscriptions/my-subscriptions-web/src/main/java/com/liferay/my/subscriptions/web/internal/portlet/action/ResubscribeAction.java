@@ -16,21 +16,19 @@ package com.liferay.my.subscriptions.web.internal.portlet.action;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
 import com.liferay.portal.kernel.model.Subscription;
-import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
-import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.util.ParamUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -47,16 +45,17 @@ public class ResubscribeAction extends BaseStrutsAction {
 		throws Exception {
 
 		Subscription subscription =
-			(Subscription) request.getSession().getAttribute(
+			(Subscription)request.getSession().getAttribute(
 				MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
 
 		if (subscription == null) {
 			throw new Exception("There is no subscription in the session");
 		}
 
-		_subscriptionLocalService.addSubscription(subscription.getUserId(),
-			subscription.getGroupId(), subscription.getClassName(),
-			subscription.getClassPK(), subscription.getFrequency());
+		_subscriptionLocalService.addSubscription(
+			subscription.getUserId(), subscription.getGroupId(),
+			subscription.getClassName(), subscription.getClassPK(),
+			subscription.getFrequency());
 
 		request.getSession().removeAttribute(
 			MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
@@ -72,4 +71,5 @@ public class ResubscribeAction extends BaseStrutsAction {
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
 }
