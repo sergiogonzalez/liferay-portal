@@ -15,6 +15,7 @@
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
+import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -56,7 +57,7 @@ public class UnsubscribeAction extends BaseStrutsAction {
 		Ticket ticket = _ticketLocalService.getTicket(key);
 
 		if (ticket.isExpired()) {
-			throw new Exception("The ticket is expired");
+			throw new NoSuchTicketException("{ticketKey=" + key + "}");
 		}
 
 		long subscriptionId = Long.valueOf(ticket.getExtraInfo());
