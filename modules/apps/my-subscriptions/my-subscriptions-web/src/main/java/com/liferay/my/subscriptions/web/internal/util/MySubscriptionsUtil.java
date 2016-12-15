@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -128,6 +129,17 @@ public class MySubscriptionsUtil {
 		}
 
 		return null;
+	}
+
+	public static String getTitle(Locale locale, Subscription subscription)
+		throws PortalException {
+
+		AssetRenderer assetRenderer = getAssetRenderer(
+			subscription.getClassName(), subscription.getClassPK());
+
+		return getTitleText(
+			locale, subscription.getClassName(), subscription.getClassPK(),
+			(assetRenderer != null) ? assetRenderer.getTitle(locale) : null);
 	}
 
 	public static String getTitleText(

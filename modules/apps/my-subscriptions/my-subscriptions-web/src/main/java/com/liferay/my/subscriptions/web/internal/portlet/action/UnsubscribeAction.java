@@ -14,7 +14,6 @@
 
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
 import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
@@ -33,8 +32,6 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
-
-import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -72,18 +69,6 @@ public class UnsubscribeAction extends BaseStrutsAction {
 		return null;
 	}
 
-	private String _getSubscriptionTitle(
-			Locale locale, Subscription subscription)
-		throws PortalException {
-
-		AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(
-			subscription.getClassName(), subscription.getClassPK());
-
-		return MySubscriptionsUtil.getTitleText(
-			locale, subscription.getClassName(), subscription.getClassPK(),
-			(assetRenderer != null) ? assetRenderer.getTitle(locale) : null);
-	}
-
 	private String _getSuccessURL(
 			Subscription subscription, long userId, HttpServletRequest request)
 		throws IOException, PortalException, PortletException {
@@ -99,7 +84,7 @@ public class UnsubscribeAction extends BaseStrutsAction {
 			"mvcRenderCommandName", "/mysubscriptions/unsubscribed");
 		liferayPortletURL.setParameter(
 			"subscriptionTitle",
-			_getSubscriptionTitle(request.getLocale(), subscription));
+			MySubscriptionsUtil.getTitle(request.getLocale(), subscription));
 		liferayPortletURL.setParameter(
 			"email", _userLocalService.getUser(userId).getEmailAddress());
 
