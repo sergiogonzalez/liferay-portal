@@ -302,7 +302,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						PortletURL copyPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
 						copyPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-						copyPageURL.setParameter("redirect", viewPageURL.toString());
 						copyPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
 						copyPageURL.setParameter("title", StringPool.BLANK);
 						copyPageURL.setParameter("editTitle", "1");

@@ -42,7 +42,11 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 	}
 }
 
-int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
+int deletedAttachmentsCount = 0;
+
+if (wikiPage != null) {
+	deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
+}
 %>
 
 <c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">
@@ -82,10 +86,10 @@ int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
 	</c:if>
 
 	<%
-	int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
+	int attachmentsFileEntriesCount = attachmentsFileEntries.size();
 	String emptyResultsMessage = "this-page-does-not-have-file-attachments";
 	boolean paginate = false;
-	boolean showPageAttachmentAction = true;
+	boolean showPageAttachmentAction = (templateNodeId == 0);
 	int status = WorkflowConstants.STATUS_APPROVED;
 	%>
 

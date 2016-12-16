@@ -235,9 +235,9 @@ if (portletTitleBasedNavigation) {
 						</div>
 					</aui:fieldset>
 
-					<c:if test="<%= (wikiPage != null) && (wikiPage.getPageId() > 0) %>">
+					<c:if test="<%= ((wikiPage != null) && (wikiPage.getPageId() > 0)) || (templateNodeId != 0) %>">
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
-							<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
+							<c:if test="<%= !wikiPage.isNew() && WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
 								<liferay-util:include page="/wiki/edit_page_attachment.jsp" servletContext="<%= application %>" />
 							</c:if>
 
