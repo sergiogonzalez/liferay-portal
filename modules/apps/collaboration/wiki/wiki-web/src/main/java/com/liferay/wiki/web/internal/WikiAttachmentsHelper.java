@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -84,7 +85,10 @@ public class WikiAttachmentsHelper {
 				}
 			}
 
-			_wikiPageService.addPageAttachments(nodeId, title, inputStreamOVPs);
+			if (ListUtil.isNotEmpty(inputStreamOVPs)) {
+				_wikiPageService.addPageAttachments(
+					nodeId, title, inputStreamOVPs);
+			}
 		}
 		finally {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :
