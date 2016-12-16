@@ -30,9 +30,17 @@ manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
 		markupView="lexicon"
 	/>
 
-	<h3>Subscription successful</h3>
+	<h3>
+		<liferay-ui:message key="subscribe-successful" />
+	</h3>
 
-	<p>Your subscription to <%= subscriptionTitle %> has been enabled again, you will keep receiving emails to <%= email %></p>
+	<p>
+		<liferay-ui:message arguments="<%= subscriptionTitle %>" key="your-subscription-to-x-has-been-enabled-again" />
+		<br>
+		<liferay-ui:message arguments="<%= email %>" key="you-will-keep-receiving-emails-to-x" />
+	</p>
 
-	<a href="<%= manageSubscriptionsURL.toString() %>">Manage your subscriptions</a>.
+	<a href="<%= manageSubscriptionsURL.toString() %>">
+		<liferay-ui:message key="manage-your-subcriptions" />
+	</a>
 </div>
