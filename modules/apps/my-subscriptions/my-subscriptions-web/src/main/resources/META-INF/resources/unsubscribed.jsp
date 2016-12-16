@@ -17,11 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String email = GetterUtil.getString(request.getParameter("email"));
-String subscriptionTitle = GetterUtil.getString(request.getParameter("subscriptionTitle"));
+String email = GetterUtil.getString(request.getAttribute("email"));
+String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscriptionTitle"));
 
-LiferayPortletURL manageSubscriptionsURL = PortletURLFactoryUtil.create(request, MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS, PortletRequest.RENDER_PHASE);
-manageSubscriptionsURL.setWindowState(LiferayWindowState.MAXIMIZED);
+PortletURL manageSubscriptionsURL = renderResponse.createRenderURL();
+manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
+
+PortletURL resubscribeURL = renderResponse.createRenderURL();
+resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.COMMAND_NAME);
 %>
 
 <div class="unsubscribe">
@@ -41,6 +44,8 @@ manageSubscriptionsURL.setWindowState(LiferayWindowState.MAXIMIZED);
 	<p>
 		<h4>Did you unsubscribe by accident?</h4>
 
-		<a href="/c/portal/resubscribe">Resubscribe</a> or <a href="<%= manageSubscriptionsURL.toString() %>">Manage your subscriptions</a>.
+		<a href="<%= resubscribeURL.toString() %>">Resubscribe</a>
+		or
+		<a href="<%= manageSubscriptionsURL.toString() %>">Manage your subscriptions</a>.
 	</p>
 </div>

@@ -24,17 +24,16 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
-page import="com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys" %><%@
+page import="com.liferay.my.subscriptions.web.internal.portlet.action.ResubscribeMVCRenderCommand" %><%@
 page import="com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchSubscriptionException" %><%@
+page import="com.liferay.portal.kernel.exception.NoSuchTicketException" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Subscription" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletURL" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -48,7 +47,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletRequest" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
 
