@@ -461,13 +461,8 @@ public class ImageProcessorImpl
 	private boolean _hasPreview(FileVersion fileVersion)
 		throws PortalException {
 
-		String orientationValue = getTiffOrientationValue(fileVersion);
-
-		if ((PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			 _previewGenerationRequired(fileVersion)) ||
-			(Validator.isNotNull(orientationValue) &&
-			 !orientationValue.equals(
-				 ImageTool.ORIENTATION_VALUE_HORIZONTAL_NORMAL))) {
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
+			_previewGenerationRequired(fileVersion)) {
 
 			String type = getPreviewType(fileVersion);
 
@@ -487,7 +482,20 @@ public class ImageProcessorImpl
 	private boolean _previewGenerationRequired(FileVersion fileVersion) {
 		String mimeType = fileVersion.getMimeType();
 
-		if (mimeType.contains("tiff") || mimeType.contains("tif")) {
+		String orientationValue = null;
+
+		try {
+			orientationValue = getTiffOrientationValue(fileVersion);
+		}
+		catch (PortalException pe) {
+			_log.error("Could not obtain the tiff orientation value", pe);
+		}
+
+		if (mimeType.contains("tiff") || mimeType.contains("tif") ||
+			(Validator.isNotNull(orientationValue) &&
+			 !orientationValue.equals(
+				 ImageTool.ORIENTATION_VALUE_HORIZONTAL_NORMAL))) {
+
 			return true;
 		}
 		else {
