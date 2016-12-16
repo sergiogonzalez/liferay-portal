@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/unsubscribe/init.jsp" %>
 
 <%
 String email = GetterUtil.getString(request.getAttribute("email"));
