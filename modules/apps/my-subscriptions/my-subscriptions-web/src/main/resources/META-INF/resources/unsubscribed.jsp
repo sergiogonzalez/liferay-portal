@@ -33,19 +33,29 @@ resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.
 		markupView="lexicon"
 	/>
 
-	<h3>Unsubscribe successful</h3>
+	<h3>
+		<liferay-ui:message key="unsubscribe-successful" />
+	</h3>
 
 	<p>
-		You have been removed from <%= subscriptionTitle %>.
+		<liferay-ui:message arguments="<%= subscriptionTitle %>" key="you-have-been-removed-from-x" />
 		<br>
-		We won't send you mails to <%= email %> anymore.
+		<liferay-ui:message arguments="<%= email %>" key="we-wont-send-you-mails-to-x-anymore" />
 	</p>
 
 	<p>
-		<h4>Did you unsubscribe by accident?</h4>
+		<h4>
+			<liferay-ui:message key="did-you-unsubscribe-by-accident" />
+		</h4>
 
-		<a href="<%= resubscribeURL.toString() %>">Resubscribe</a>
-		or
-		<a href="<%= manageSubscriptionsURL.toString() %>">Manage your subscriptions</a>.
+		<a href="<%= resubscribeURL.toString() %>">
+			<liferay-ui:message key="resubscribe" />
+		</a>
+
+		<liferay-ui:message key="or" />
+
+		<a href="<%= manageSubscriptionsURL.toString() %>">
+			<liferay-ui:message key="manage-your-subcriptions" />
+		</a>
 	</p>
 </div>
