@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -108,6 +109,13 @@ public class GoogleDocsConfigurator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMStructureVersionLocalService(
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+
+		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDLFileEntryMetadataDDMPermissionSupport(
 		DLFileEntryMetadataDDMPermissionSupport
 			dlFileEntryMetadataDDMPermissionSupport) {
@@ -135,6 +143,7 @@ public class GoogleDocsConfigurator {
 	private DDM _ddm;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private UserLocalService _userLocalService;
 
