@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String email = GetterUtil.getString(request.getParameter("email"));
-String subscriptionTitle = GetterUtil.getString(request.getParameter("subscriptionTitle"));
+String email = GetterUtil.getString(request.getAttribute("email"));
+String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscriptionTitle"));
 
-LiferayPortletURL manageSubscriptionsURL = PortletURLFactoryUtil.create(request, MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS, PortletRequest.RENDER_PHASE);
-manageSubscriptionsURL.setWindowState(LiferayWindowState.MAXIMIZED);
+PortletURL manageSubscriptionsURL = renderResponse.createRenderURL();
+manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
 %>
 
 <div class="resubscribe">
