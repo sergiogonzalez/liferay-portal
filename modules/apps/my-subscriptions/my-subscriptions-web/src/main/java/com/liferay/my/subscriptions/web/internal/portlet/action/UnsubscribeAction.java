@@ -14,7 +14,7 @@
 
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
-import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
+import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -43,7 +43,7 @@ public class UnsubscribeAction extends BaseStrutsAction {
 		throws Exception {
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS,
+			request, UnsubscribePortlet.PORTLET_NAME,
 			PortletRequest.RENDER_PHASE);
 
 		liferayPortletURL.setWindowState(LiferayWindowState.MAXIMIZED);

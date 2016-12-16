@@ -15,6 +15,7 @@
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
+import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
 import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS,
+		"javax.portlet.name=" + UnsubscribePortlet.PORTLET_NAME,
 		"mvc.command.name=" + ResubscribeMVCRenderCommand.COMMAND_NAME
 	},
 	service = MVCRenderCommand.class
@@ -77,12 +78,12 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 				MySubscriptionsUtil.getTitle(
 					request.getLocale(), subscription));
 
-			return "/resubscribed.jsp";
+			return "/unsubscribe/resubscribed.jsp";
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(request, pe.getClass(), pe);
 
-			return "/error.jsp";
+			return "/unsubscribe/error.jsp";
 		}
 	}
 

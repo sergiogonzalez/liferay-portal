@@ -15,6 +15,7 @@
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
+import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
 import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS,
+		"javax.portlet.name=" + UnsubscribePortlet.PORTLET_NAME,
 		"mvc.command.name=" + UnsubscribeMVCRenderCommand.COMMAND_NAME
 	},
 	service = MVCRenderCommand.class
@@ -67,7 +68,7 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		catch (PortalException pe) {
 			SessionErrors.add(request, pe.getClass(), pe);
 
-			return "/error.jsp";
+			return "/unsubscribe/error.jsp";
 		}
 	}
 
@@ -81,7 +82,7 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 			"subscriptionTitle",
 			MySubscriptionsUtil.getTitle(request.getLocale(), subscription));
 
-		return "/unsubscribed.jsp";
+		return "/unsubscribe/unsubscribed.jsp";
 	}
 
 	private void _saveSubscriptionToSession(

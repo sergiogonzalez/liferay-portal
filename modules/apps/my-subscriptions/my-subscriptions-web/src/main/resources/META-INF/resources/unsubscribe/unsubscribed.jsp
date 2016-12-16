@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
 <%
 String email = GetterUtil.getString(request.getAttribute("email"));
@@ -22,25 +22,40 @@ String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscripti
 
 PortletURL manageSubscriptionsURL = renderResponse.createRenderURL();
 manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
+
+PortletURL resubscribeURL = renderResponse.createRenderURL();
+resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.COMMAND_NAME);
 %>
 
-<div class="resubscribe">
+<div class="unsubscribe">
 	<liferay-ui:icon
 		icon="check-circle"
 		markupView="lexicon"
 	/>
 
 	<h3>
-		<liferay-ui:message key="subscribe-successful" />
+		<liferay-ui:message key="unsubscribe-successful" />
 	</h3>
 
 	<p>
-		<liferay-ui:message arguments="<%= subscriptionTitle %>" key="your-subscription-to-x-has-been-enabled-again" />
+		<liferay-ui:message arguments="<%= subscriptionTitle %>" key="you-have-been-removed-from-x" />
 		<br>
-		<liferay-ui:message arguments="<%= email %>" key="you-will-keep-receiving-emails-to-x" />
+		<liferay-ui:message arguments="<%= email %>" key="we-wont-send-you-mails-to-x-anymore" />
 	</p>
 
-	<a href="<%= manageSubscriptionsURL.toString() %>">
-		<liferay-ui:message key="manage-your-subcriptions" />
-	</a>
+	<p>
+		<h4>
+			<liferay-ui:message key="did-you-unsubscribe-by-accident" />
+		</h4>
+
+		<a href="<%= resubscribeURL.toString() %>">
+			<liferay-ui:message key="resubscribe" />
+		</a>
+
+		<liferay-ui:message key="or" />
+
+		<a href="<%= manageSubscriptionsURL.toString() %>">
+			<liferay-ui:message key="manage-your-subcriptions" />
+		</a>
+	</p>
 </div>
