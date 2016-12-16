@@ -14,9 +14,8 @@
  */
 --%>
 
-<%@ include file="/unsubscribe/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<liferay-ui:error exception="<%= NoSuchSubscriptionException.class %>" message="the-subscription-could-not-be-found" />
-<liferay-ui:error exception="<%= NoSuchTicketException.class %>" message="the-ticket-could-not-be-found" />
-
-<liferay-ui:error-principal />
+<%
+portletDisplay.setShowBackIcon(false);
+%>
