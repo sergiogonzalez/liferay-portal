@@ -49,120 +49,120 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a friendly url model instance should use the {@link FriendlyURL} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a friendly u r l model instance should use the {@link FriendlyURL} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this friendly url.
+	 * Returns the primary key of this friendly u r l.
 	 *
-	 * @return the primary key of this friendly url
+	 * @return the primary key of this friendly u r l
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this friendly url.
+	 * Sets the primary key of this friendly u r l.
 	 *
-	 * @param primaryKey the primary key of this friendly url
+	 * @param primaryKey the primary key of this friendly u r l
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this friendly url.
+	 * Returns the uuid of this friendly u r l.
 	 *
-	 * @return the uuid of this friendly url
+	 * @return the uuid of this friendly u r l
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this friendly url.
+	 * Sets the uuid of this friendly u r l.
 	 *
-	 * @param uuid the uuid of this friendly url
+	 * @param uuid the uuid of this friendly u r l
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the friendly url ID of this friendly url.
+	 * Returns the friendly u r l ID of this friendly u r l.
 	 *
-	 * @return the friendly url ID of this friendly url
+	 * @return the friendly u r l ID of this friendly u r l
 	 */
 	public long getFriendlyURLId();
 
 	/**
-	 * Sets the friendly url ID of this friendly url.
+	 * Sets the friendly u r l ID of this friendly u r l.
 	 *
-	 * @param friendlyURLId the friendly url ID of this friendly url
+	 * @param friendlyURLId the friendly u r l ID of this friendly u r l
 	 */
 	public void setFriendlyURLId(long friendlyURLId);
 
 	/**
-	 * Returns the group ID of this friendly url.
+	 * Returns the group ID of this friendly u r l.
 	 *
-	 * @return the group ID of this friendly url
+	 * @return the group ID of this friendly u r l
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this friendly url.
+	 * Sets the group ID of this friendly u r l.
 	 *
-	 * @param groupId the group ID of this friendly url
+	 * @param groupId the group ID of this friendly u r l
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this friendly url.
+	 * Returns the company ID of this friendly u r l.
 	 *
-	 * @return the company ID of this friendly url
+	 * @return the company ID of this friendly u r l
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this friendly url.
+	 * Sets the company ID of this friendly u r l.
 	 *
-	 * @param companyId the company ID of this friendly url
+	 * @param companyId the company ID of this friendly u r l
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the create date of this friendly url.
+	 * Returns the create date of this friendly u r l.
 	 *
-	 * @return the create date of this friendly url
+	 * @return the create date of this friendly u r l
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this friendly url.
+	 * Sets the create date of this friendly u r l.
 	 *
-	 * @param createDate the create date of this friendly url
+	 * @param createDate the create date of this friendly u r l
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this friendly url.
+	 * Returns the modified date of this friendly u r l.
 	 *
-	 * @return the modified date of this friendly url
+	 * @return the modified date of this friendly u r l
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this friendly url.
+	 * Sets the modified date of this friendly u r l.
 	 *
-	 * @param modifiedDate the modified date of this friendly url
+	 * @param modifiedDate the modified date of this friendly u r l
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the fully qualified class name of this friendly url.
+	 * Returns the fully qualified class name of this friendly u r l.
 	 *
-	 * @return the fully qualified class name of this friendly url
+	 * @return the fully qualified class name of this friendly u r l
 	 */
 	@Override
 	public String getClassName();
@@ -170,70 +170,70 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	public void setClassName(String className);
 
 	/**
-	 * Returns the class name ID of this friendly url.
+	 * Returns the class name ID of this friendly u r l.
 	 *
-	 * @return the class name ID of this friendly url
+	 * @return the class name ID of this friendly u r l
 	 */
 	@Override
 	public long getClassNameId();
 
 	/**
-	 * Sets the class name ID of this friendly url.
+	 * Sets the class name ID of this friendly u r l.
 	 *
-	 * @param classNameId the class name ID of this friendly url
+	 * @param classNameId the class name ID of this friendly u r l
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class pk of this friendly url.
+	 * Returns the class p k of this friendly u r l.
 	 *
-	 * @return the class pk of this friendly url
+	 * @return the class p k of this friendly u r l
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class pk of this friendly url.
+	 * Sets the class p k of this friendly u r l.
 	 *
-	 * @param classPK the class pk of this friendly url
+	 * @param classPK the class p k of this friendly u r l
 	 */
 	@Override
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the url title of this friendly url.
+	 * Returns the url title of this friendly u r l.
 	 *
-	 * @return the url title of this friendly url
+	 * @return the url title of this friendly u r l
 	 */
 	@AutoEscape
 	public String getUrlTitle();
 
 	/**
-	 * Sets the url title of this friendly url.
+	 * Sets the url title of this friendly u r l.
 	 *
-	 * @param urlTitle the url title of this friendly url
+	 * @param urlTitle the url title of this friendly u r l
 	 */
 	public void setUrlTitle(String urlTitle);
 
 	/**
-	 * Returns the main of this friendly url.
+	 * Returns the main of this friendly u r l.
 	 *
-	 * @return the main of this friendly url
+	 * @return the main of this friendly u r l
 	 */
 	public boolean getMain();
 
 	/**
-	 * Returns <code>true</code> if this friendly url is main.
+	 * Returns <code>true</code> if this friendly u r l is main.
 	 *
-	 * @return <code>true</code> if this friendly url is main; <code>false</code> otherwise
+	 * @return <code>true</code> if this friendly u r l is main; <code>false</code> otherwise
 	 */
 	public boolean isMain();
 
 	/**
-	 * Sets whether this friendly url is main.
+	 * Sets whether this friendly u r l is main.
 	 *
-	 * @param main the main of this friendly url
+	 * @param main the main of this friendly u r l
 	 */
 	public void setMain(boolean main);
 

@@ -33,18 +33,18 @@ public class KBFolderFinderBaseImpl extends BasePersistenceImpl<KBFolder> {
 	}
 
 	/**
-	 * Returns the kb folder persistence.
+	 * Returns the k b folder persistence.
 	 *
-	 * @return the kb folder persistence
+	 * @return the k b folder persistence
 	 */
 	public KBFolderPersistence getKBFolderPersistence() {
 		return kbFolderPersistence;
 	}
 
 	/**
-	 * Sets the kb folder persistence.
+	 * Sets the k b folder persistence.
 	 *
-	 * @param kbFolderPersistence the kb folder persistence
+	 * @param kbFolderPersistence the k b folder persistence
 	 */
 	public void setKBFolderPersistence(KBFolderPersistence kbFolderPersistence) {
 		this.kbFolderPersistence = kbFolderPersistence;
