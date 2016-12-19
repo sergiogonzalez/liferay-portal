@@ -32,10 +32,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = {"path=/portal/unsubscribe"},
+	immediate = true, property = {"path=" + UnsubscribeAction.ACTION_NAME},
 	service = StrutsAction.class
 )
 public class UnsubscribeAction extends BaseStrutsAction {
+
+	public static final String ACTION_NAME = "/portal/unsubscribe";
 
 	@Override
 	public String execute(
