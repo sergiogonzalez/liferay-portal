@@ -24,8 +24,9 @@ PortletURL manageSubscriptionsURL = renderResponse.createRenderURL();
 manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
 %>
 
-<div class="resubscribe">
+<div class="successful">
 	<liferay-ui:icon
+		cssClass="unsubscribe-success-icon"
 		icon="check-circle"
 		markupView="lexicon"
 	/>
@@ -40,7 +41,9 @@ manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
 		<liferay-ui:message arguments="<%= email %>" key="you-will-keep-receiving-emails-to-x" />
 	</p>
 
-	<a href="<%= manageSubscriptionsURL.toString() %>">
-		<liferay-ui:message key="manage-your-subcriptions" />
-	</a>
+	<p class="help">
+		<a href="<%= manageSubscriptionsURL.toString() %>">
+			<liferay-ui:message key="manage-your-subcriptions" />
+		</a>
+	</p>
 </div>

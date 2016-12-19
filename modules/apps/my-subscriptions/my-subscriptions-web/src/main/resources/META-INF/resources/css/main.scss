@@ -1,3 +1,5 @@
+@import "mixins";
+
 .my-subscriptions-portlet {
 	.asset-name {
 		font-size: 12px;
@@ -13,13 +15,49 @@
 			background: #DCDCDC;
 		}
 	}
+}
 
-	.unsubscribe {
+.unsubscribe-portlet {
+	$icon-width: 40px;
 
-		.lexicon-icon {
-			color: #51A1F0;
-			height: 40px;
-			width: 40px;
+	@mixin margins($margin) {
+		.successful {
+			margin-bottom: $margin;
+			margin-left: $icon-width + $margin;
+			margin-top: $margin;
+
+			.help {
+				margin-top: $margin;
+			}
+		}
+	}
+
+	@include margins($margin: 20px);
+
+	@include respond-to(desktop) {
+		@include margins($margin: 100px);
+	}
+
+	.portlet-title-text {
+		display: none;
+	}
+
+	.successful {
+		position: relative;
+
+		h3 {
+			margin-top: 0;
+		}
+
+		.unsubscribe-success-icon {
+			left: -($icon-width + 16px);
+			position: absolute;
+
+			.lexicon-icon {
+				color: #51A1F0;
+				height: $icon-width;
+				width: $icon-width;
+			}
 		}
 	}
 }

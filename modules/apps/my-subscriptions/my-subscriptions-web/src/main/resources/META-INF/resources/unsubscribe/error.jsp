@@ -16,6 +16,8 @@
 
 <%@ include file="/unsubscribe/init.jsp" %>
 
+<liferay-ui:header title="error" />
+
 <liferay-ui:error exception="<%= NoSuchSubscriptionException.class %>" message="the-subscription-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchTicketException.class %>" message="the-ticket-could-not-be-found" />
 
