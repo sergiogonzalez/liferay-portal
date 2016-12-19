@@ -35,6 +35,17 @@ else {
 %>
 
 <liferay-frontend:add-menu>
+	<c:if test="<%= hasAddKBFolderPermission %>">
+		<portlet:renderURL var="addFolderURL">
+			<portlet:param name="mvcPath" value="/admin/common/edit_folder.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
+			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "folder") %>' url="<%= addFolderURL.toString() %>" />
+	</c:if>
+
 	<c:if test="<%= hasAddKBArticlePermission %>">
 
 		<%
@@ -73,17 +84,6 @@ else {
 			%>
 
 		</c:if>
-	</c:if>
-
-	<c:if test="<%= hasAddKBFolderPermission %>">
-		<portlet:renderURL var="addFolderURL">
-			<portlet:param name="mvcPath" value="/admin/common/edit_folder.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
-			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "folder") %>' url="<%= addFolderURL.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= (parentResourceClassNameId == kbFolderClassNameId) && AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) %>">
