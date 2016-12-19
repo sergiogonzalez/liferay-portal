@@ -33,18 +33,18 @@ public class KBArticleFinderBaseImpl extends BasePersistenceImpl<KBArticle> {
 	}
 
 	/**
-	 * Returns the kb article persistence.
+	 * Returns the k b article persistence.
 	 *
-	 * @return the kb article persistence
+	 * @return the k b article persistence
 	 */
 	public KBArticlePersistence getKBArticlePersistence() {
 		return kbArticlePersistence;
 	}
 
 	/**
-	 * Sets the kb article persistence.
+	 * Sets the k b article persistence.
 	 *
-	 * @param kbArticlePersistence the kb article persistence
+	 * @param kbArticlePersistence the k b article persistence
 	 */
 	public void setKBArticlePersistence(
 		KBArticlePersistence kbArticlePersistence) {
