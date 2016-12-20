@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 		"panel.app.order:Integer=600",
 		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT
 	},
-	service = PanelApp.class
+	service = {PanelApp.class, MySubscriptionPanelApp.class}
 )
 public class MySubscriptionPanelApp extends BasePanelApp {
 
