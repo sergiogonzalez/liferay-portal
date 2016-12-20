@@ -20,8 +20,7 @@
 String email = GetterUtil.getString(request.getAttribute("email"));
 String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscriptionTitle"));
 
-PortletURL manageSubscriptionsURL = renderResponse.createRenderURL();
-manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
+PortletURL manageSubscriptionsURL = MySubscriptionsUtil.getManageSubscriptionsURL(request);
 %>
 
 <div class="successful">
@@ -41,9 +40,11 @@ manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
 		<liferay-ui:message arguments="<%= email %>" key="you-will-keep-receiving-emails-to-x" />
 	</p>
 
-	<p class="help">
-		<a href="<%= manageSubscriptionsURL.toString() %>">
-			<liferay-ui:message key="manage-your-subcriptions" />
-		</a>
-	</p>
+	<c:if test="<%= manageSubscriptionsURL != null %>">
+		<p class="help">
+			<a href="<%= manageSubscriptionsURL.toString() %>">
+				<liferay-ui:message key="manage-your-subcriptions" />
+			</a>
+		</p>
+	</c:if>
 </div>

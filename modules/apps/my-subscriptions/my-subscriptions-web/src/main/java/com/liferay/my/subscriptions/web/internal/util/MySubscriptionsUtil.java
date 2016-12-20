@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -54,6 +55,11 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
 import java.util.Locale;
+
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Peter Shin
@@ -129,6 +135,21 @@ public class MySubscriptionsUtil {
 		}
 
 		return null;
+	}
+
+	public static PortletURL getManageSubscriptionsURL(
+			HttpServletRequest request)
+		throws PortalException, WindowStateException {
+
+		PortletURL manageSubscriptionsURL = PortletProviderUtil.getPortletURL(
+			request, Subscription.class.getName(),
+			PortletProvider.Action.MANAGE);
+
+		if (manageSubscriptionsURL != null) {
+			manageSubscriptionsURL.setWindowState(LiferayWindowState.MAXIMIZED);
+		}
+
+		return manageSubscriptionsURL;
 	}
 
 	public static String getTitle(Locale locale, Subscription subscription)

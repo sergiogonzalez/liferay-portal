@@ -20,8 +20,7 @@
 String email = GetterUtil.getString(request.getAttribute("email"));
 String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscriptionTitle"));
 
-PortletURL manageSubscriptionsURL = renderResponse.createRenderURL();
-manageSubscriptionsURL.setParameter("mvcRenderCommandName", "/");
+PortletURL manageSubscriptionsURL = MySubscriptionsUtil.getManageSubscriptionsURL(request);
 
 PortletURL resubscribeURL = renderResponse.createRenderURL();
 resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.COMMAND_NAME);
@@ -51,12 +50,14 @@ resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.
 
 		<a href="<%= resubscribeURL.toString() %>"><liferay-ui:message key="resubscribe" /></a>
 
-		<span class="text-lowercase">
-			<liferay-ui:message key="or" />
-		</span>
+		<c:if test="<%= manageSubscriptionsURL != null %>">
+			<span class="text-lowercase">
+				<liferay-ui:message key="or" />
+			</span>
 
-		<a href="<%= manageSubscriptionsURL.toString() %>">
-			<liferay-ui:message key="manage-your-subcriptions" />
-		</a>
+			<a href="<%= manageSubscriptionsURL.toString() %>">
+				<liferay-ui:message key="manage-your-subcriptions" />
+			</a>
+		</c:if>
 	</p>
 </div>
