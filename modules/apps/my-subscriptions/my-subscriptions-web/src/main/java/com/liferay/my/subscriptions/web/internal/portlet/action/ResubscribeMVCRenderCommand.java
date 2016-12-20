@@ -17,6 +17,7 @@ package com.liferay.my.subscriptions.web.internal.portlet.action;
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
 import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
 import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
+import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -57,8 +58,7 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 						LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
 
 			if (subscription == null) {
-				throw new PortletException(
-					"There is no subscription in the session");
+				throw new NoSuchSubscriptionException();
 			}
 
 			_subscriptionLocalService.addSubscription(
