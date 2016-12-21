@@ -18,6 +18,7 @@ import com.liferay.message.boards.display.context.MBListDisplayContext;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Hits;
@@ -213,14 +214,19 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				status = WorkflowConstants.STATUS_ANY;
 			}
 
+			QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+				status, themeDisplay.getUserId(), true,
+				searchContainer.getStart(), searchContainer.getEnd(),
+				searchContainer.getOrderByComparator());
+
 			searchContainer.setTotal(
 				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
-					themeDisplay.getScopeGroupId(), _categoryId, status));
+					themeDisplay.getScopeGroupId(), _categoryId,
+					queryDefinition));
 			searchContainer.setResults(
 				MBCategoryServiceUtil.getCategoriesAndThreads(
-					themeDisplay.getScopeGroupId(), _categoryId, status,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()));
+					themeDisplay.getScopeGroupId(), _categoryId,
+					queryDefinition));
 		}
 	}
 
