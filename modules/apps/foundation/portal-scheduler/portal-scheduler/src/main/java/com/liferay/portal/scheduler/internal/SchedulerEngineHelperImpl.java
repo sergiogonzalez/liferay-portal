@@ -572,6 +572,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		MessageListener messageListener, SchedulerEntry schedulerEntry,
 		String destinationName) {
 
+		synchronized (_serviceRegistrations) {
+			if (_serviceRegistrations.containsKey(messageListener)) {
+				unregister(messageListener);
+			}
+		}
+
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper =
 				new SchedulerEventMessageListenerWrapper();
