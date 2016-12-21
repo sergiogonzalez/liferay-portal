@@ -654,7 +654,7 @@ public class SubscriptionSender implements Serializable {
 
 			calendar.add(Calendar.MONTH, 1);
 
-			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
+			Ticket ticket = TicketLocalServiceUtil.addOrUpdateDistinctTicket(
 				subscription.getCompanyId(), Subscription.class.getName(),
 				subscription.getSubscriptionId(),
 				TicketConstants.TYPE_SUBSCRIPTIONS, StringPool.BLANK,
