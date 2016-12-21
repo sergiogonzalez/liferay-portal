@@ -103,7 +103,7 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 			throw new NoSuchTicketException("{ticketKey=" + key + "}");
 		}
 
-		long subscriptionId = Long.valueOf(ticket.getExtraInfo());
+		long subscriptionId = ticket.getClassPK();
 
 		Subscription subscription = _subscriptionLocalService.getSubscription(
 			subscriptionId);
