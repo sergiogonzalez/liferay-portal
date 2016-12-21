@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.my.subscriptions.web.internal.portlet;
+package com.liferay.subscriptions.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -49,6 +49,6 @@ import org.osgi.service.component.annotations.Component;
 public class UnsubscribePortlet extends MVCPortlet {
 
 	public static final String PORTLET_NAME =
-		"com_liferay_mysubscriptions_web_portlet_UnsubscribePortlet";
+		"com_liferay_subscriptions_web_portlet_UnsubscribePortlet";
 
 }

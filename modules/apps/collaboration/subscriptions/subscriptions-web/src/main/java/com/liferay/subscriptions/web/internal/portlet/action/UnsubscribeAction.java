@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.my.subscriptions.web.internal.portlet.action;
+package com.liferay.subscriptions.web.internal.portlet.action;
 
-import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.subscriptions.web.internal.portlet.UnsubscribePortlet;
 
 import javax.portlet.PortletRequest;
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.my.subscriptions.web.internal.portlet.path;
+package com.liferay.subscriptions.web.internal.portlet.path;
 
-import com.liferay.my.subscriptions.web.internal.portlet.action.UnsubscribeAction;
+import com.liferay.subscriptions.web.internal.portlet.action.UnsubscribeAction;
 
 import org.osgi.service.component.annotations.Component;
 
