@@ -268,9 +268,25 @@ public class MBCategoryFinderImpl
 			qPos.add(categoryId);
 			qPos.add(queryDefinition.getStatus());
 
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
 			qPos.add(groupId);
 			qPos.add(categoryId);
 			qPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
 
 			int count = 0;
 
@@ -440,9 +456,25 @@ public class MBCategoryFinderImpl
 			qPos.add(categoryId);
 			qPos.add(queryDefinition.getStatus());
 
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
 			qPos.add(groupId);
 			qPos.add(categoryId);
 			qPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
 
 			List<Object> models = new ArrayList<>();
 
