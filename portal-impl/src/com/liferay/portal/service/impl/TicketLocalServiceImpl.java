@@ -42,6 +42,28 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Ticket addOrUpdateDistinctTicket(
+		long companyId, String className, long classPK, int type,
+		String extraInfo, Date expirationDate, ServiceContext serviceContext) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		Ticket oldTicket = ticketPersistence.fetchByC_C_T_First(
+			classNameId, classPK, type, null);
+
+		if (oldTicket != null) {
+			oldTicket.setExtraInfo(extraInfo);
+			oldTicket.setExpirationDate(expirationDate);
+			return ticketPersistence.update(oldTicket);
+		}
+		else {
+			return addTicket(
+				companyId, className, classPK, type, extraInfo, expirationDate,
+				serviceContext);
+		}
+	}
+
+	@Override
 	public Ticket addTicket(
 		long companyId, String className, long classPK, int type,
 		String extraInfo, Date expirationDate, ServiceContext serviceContext) {
