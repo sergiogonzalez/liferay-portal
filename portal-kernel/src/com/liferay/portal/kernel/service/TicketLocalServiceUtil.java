@@ -76,6 +76,15 @@ public class TicketLocalServiceUtil {
 			extraInfo, expirationDate, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.model.Ticket addOrUpdateDistinctTicket(
+		long companyId, java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate,
+		ServiceContext serviceContext) {
+		return getService()
+				   .addOrUpdateDistinctTicket(companyId, className, classPK,
+			type, extraInfo, expirationDate, serviceContext);
+	}
+
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
 	*
