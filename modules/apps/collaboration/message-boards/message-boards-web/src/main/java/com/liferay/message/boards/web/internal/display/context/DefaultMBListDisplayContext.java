@@ -16,7 +16,6 @@ package com.liferay.message.boards.web.internal.display.context;
 
 import com.liferay.message.boards.display.context.MBListDisplayContext;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -215,7 +214,7 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			}
 
 			searchContainer.setTotal(
-				MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
+				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
 					themeDisplay.getScopeGroupId(), _categoryId, status));
 			searchContainer.setResults(
 				MBCategoryServiceUtil.getCategoriesAndThreads(
