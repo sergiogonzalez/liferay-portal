@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.my.subscriptions.web.internal.util;
+package com.liferay.subscriptions.web.internal.util;
 
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;

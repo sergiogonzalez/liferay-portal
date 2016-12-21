@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.my.subscriptions.web.internal.messaging;
+package com.liferay.subscriptions.web.internal.messaging;
 
-import com.liferay.my.subscriptions.web.configuration.MySubscriptionsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.subscriptions.configuration.SubscriptionsConfiguration;
 
 import java.util.Map;
 
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.my.subscriptions.web.configuration.MySubscriptionsConfiguration",
+	configurationPid = "com.liferay.subscriptions.configuration.SubscriptionsConfiguration",
 	immediate = true, service = BaseSchedulerEntryMessageListener.class
 )
 public class DeleteExpiredTicketsMessageListener
@@ -51,7 +51,7 @@ public class DeleteExpiredTicketsMessageListener
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_configuration = ConfigurableUtil.createConfigurable(
-			MySubscriptionsConfiguration.class, properties);
+			SubscriptionsConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
@@ -93,7 +93,7 @@ public class DeleteExpiredTicketsMessageListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private volatile MySubscriptionsConfiguration _configuration;
+	private volatile SubscriptionsConfiguration _configuration;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

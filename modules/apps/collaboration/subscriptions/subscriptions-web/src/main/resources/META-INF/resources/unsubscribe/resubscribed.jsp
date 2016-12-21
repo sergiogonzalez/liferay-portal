@@ -20,12 +20,12 @@
 String email = GetterUtil.getString(request.getAttribute("email"));
 String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscriptionTitle"));
 
-PortletURL manageSubscriptionsURL = MySubscriptionsUtil.getManageSubscriptionsURL(request);
+PortletURL manageSubscriptionsURL = SubscriptionsUtil.getManageSubscriptionsURL(request);
 
-PortletURL resubscribeURL = renderResponse.createRenderURL();
-resubscribeURL.setParameter("key", request.getParameter("key"));
-resubscribeURL.setParameter("userId", request.getParameter("userId"));
-resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.COMMAND_NAME);
+PortletURL unsubscribeURL = renderResponse.createRenderURL();
+unsubscribeURL.setParameter("key", request.getParameter("key"));
+unsubscribeURL.setParameter("userId", request.getParameter("userId"));
+unsubscribeURL.setParameter("mvcRenderCommandName", UnsubscribeMVCRenderCommand.COMMAND_NAME);
 %>
 
 <div class="successful">
@@ -36,21 +36,21 @@ resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.
 	/>
 
 	<h3>
-		<liferay-ui:message key="unsubscribe-successful" />
+		<liferay-ui:message key="subscribe-successful" />
 	</h3>
 
 	<p>
-		<liferay-ui:message arguments="<%= subscriptionTitle %>" key="you-have-been-removed-from-x" />
+		<liferay-ui:message arguments="<%= subscriptionTitle %>" key="your-subscription-to-x-has-been-enabled-again" />
 		<br>
-		<liferay-ui:message arguments="<%= email %>" key="we-wont-send-you-mails-to-x-anymore" />
+		<liferay-ui:message arguments="<%= email %>" key="you-will-keep-receiving-emails-to-x" />
 	</p>
 
 	<p class="help">
 		<h4>
-			<liferay-ui:message key="did-you-unsubscribe-by-accident" />
+			<liferay-ui:message key="did-you-resubscribe-by-accident" />
 		</h4>
 
-		<a href="<%= resubscribeURL.toString() %>"><liferay-ui:message key="resubscribe" /></a>
+		<a href="<%= unsubscribeURL.toString() %>"><liferay-ui:message key="unsubscribe" /></a>
 
 		<c:if test="<%= manageSubscriptionsURL != null %>">
 			<span class="text-lowercase">

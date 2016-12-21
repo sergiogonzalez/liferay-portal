@@ -12,11 +12,8 @@
  * details.
  */
 
-package com.liferay.my.subscriptions.web.internal.portlet.action;
+package com.liferay.subscriptions.web.internal.portlet.action;
 
-import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
-import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
-import com.liferay.my.subscriptions.web.internal.util.UnsubscribeUtil;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
@@ -27,6 +24,9 @@ import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.subscriptions.web.internal.portlet.UnsubscribePortlet;
+import com.liferay.subscriptions.web.internal.util.SubscriptionsUtil;
+import com.liferay.subscriptions.web.internal.util.UnsubscribeUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -66,8 +66,7 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 				"email", _userLocalService.getUser(userId).getEmailAddress());
 			request.setAttribute(
 				"subscriptionTitle",
-				MySubscriptionsUtil.getTitle(
-					request.getLocale(), subscription));
+				SubscriptionsUtil.getTitle(request.getLocale(), subscription));
 
 			return "/unsubscribe/unsubscribed.jsp";
 		}
