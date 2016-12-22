@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.my.subscriptions.web.internal.portlet.action.ResubscribeMVCRenderCommand" %><%@
+page import="com.liferay.my.subscriptions.web.internal.portlet.action.UnsubscribeMVCRenderCommand" %><%@
 page import="com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchSubscriptionException" %><%@

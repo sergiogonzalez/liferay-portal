@@ -21,6 +21,11 @@ String email = GetterUtil.getString(request.getAttribute("email"));
 String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscriptionTitle"));
 
 PortletURL manageSubscriptionsURL = MySubscriptionsUtil.getManageSubscriptionsURL(request);
+
+PortletURL unsubscribeURL = renderResponse.createRenderURL();
+unsubscribeURL.setParameter("key", request.getParameter("key"));
+unsubscribeURL.setParameter("userId", request.getParameter("userId"));
+unsubscribeURL.setParameter("mvcRenderCommandName", UnsubscribeMVCRenderCommand.COMMAND_NAME);
 %>
 
 <div class="successful">
@@ -40,11 +45,21 @@ PortletURL manageSubscriptionsURL = MySubscriptionsUtil.getManageSubscriptionsUR
 		<liferay-ui:message arguments="<%= email %>" key="you-will-keep-receiving-emails-to-x" />
 	</p>
 
-	<c:if test="<%= manageSubscriptionsURL != null %>">
-		<p class="help">
+	<p class="help">
+		<h4>
+			<liferay-ui:message key="did-you-resubscribe-by-accident" />
+		</h4>
+
+		<a href="<%= unsubscribeURL.toString() %>"><liferay-ui:message key="unsubscribe" /></a>
+
+		<c:if test="<%= manageSubscriptionsURL != null %>">
+			<span class="text-lowercase">
+				<liferay-ui:message key="or" />
+			</span>
+
 			<a href="<%= manageSubscriptionsURL.toString() %>">
 				<liferay-ui:message key="manage-your-subcriptions" />
 			</a>
-		</p>
-	</c:if>
+		</c:if>
+	</p>
 </div>
