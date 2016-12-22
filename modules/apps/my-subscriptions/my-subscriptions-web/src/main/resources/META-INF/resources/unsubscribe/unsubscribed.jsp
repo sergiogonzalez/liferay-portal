@@ -24,6 +24,7 @@ PortletURL manageSubscriptionsURL = MySubscriptionsUtil.getManageSubscriptionsUR
 
 PortletURL resubscribeURL = renderResponse.createRenderURL();
 resubscribeURL.setParameter("key", request.getParameter("key"));
+resubscribeURL.setParameter("userId", request.getParameter("userId"));
 resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.COMMAND_NAME);
 %>
 
