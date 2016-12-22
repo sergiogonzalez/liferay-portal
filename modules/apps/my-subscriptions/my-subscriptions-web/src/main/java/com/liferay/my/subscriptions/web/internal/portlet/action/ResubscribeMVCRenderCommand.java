@@ -57,6 +57,7 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			String key = ParamUtil.getString(request, "key");
+			long userId = ParamUtil.getLong(request, "userId");
 
 			Subscription subscription =
 				(Subscription)request.getPortletSession().getAttribute(
@@ -65,6 +66,10 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 
 			if (subscription == null) {
 				throw new NoSuchSubscriptionException();
+			}
+
+			if (subscription.getUserId() != userId) {
+				throw new PrincipalException();
 			}
 
 			Ticket ticket = _ticketLocalService.getTicket(key);
