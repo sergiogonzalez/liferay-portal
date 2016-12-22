@@ -59,6 +59,8 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 			String key = ParamUtil.getString(request, "key");
 			long userId = ParamUtil.getLong(request, "userId");
 
+			UnsubscribeUtil.checkUser(userId, request);
+
 			Ticket ticket = UnsubscribeUtil.getTicket(_ticketLocalService, key);
 
 			Subscription subscription = _getFromTicket(ticket, userId);

@@ -58,6 +58,8 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		long userId = ParamUtil.getLong(request, "userId");
 
 		try {
+			UnsubscribeUtil.checkUser(userId, request);
+
 			Subscription subscription = _unsubscribe(key, userId, request);
 
 			request.setAttribute(
