@@ -14,8 +14,13 @@
 
 package com.liferay.my.subscriptions.web.internal.util;
 
+import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.TicketLocalService;
 
 import javax.portlet.RenderRequest;
 
@@ -40,6 +45,18 @@ public class UnsubscribeUtil {
 	public static Subscription getFromSession(RenderRequest request) {
 		return (Subscription)request.getPortletSession().getAttribute(
 			_LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
+	}
+
+	public static Ticket getTicket(TicketLocalService service, String key)
+		throws PortalException {
+
+		Ticket ticket = service.getTicket(key);
+
+		if (ticket.getType() != TicketConstants.TYPE_SUBSCRIPTIONS) {
+			throw new NoSuchTicketException("Invalid type " + ticket.getType());
+		}
+
+		return ticket;
 	}
 
 	public static void saveToSession(
