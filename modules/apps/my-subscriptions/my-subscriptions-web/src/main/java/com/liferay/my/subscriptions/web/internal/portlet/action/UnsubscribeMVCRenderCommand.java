@@ -59,11 +59,16 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		long userId = ParamUtil.getLong(request, "userId");
 
 		try {
-			Subscription subscription = _unsubscribe(key, userId);
+			Subscription subscription = _unsubscribe(key, userId, request);
 
-			_saveSubscriptionToSession(request, subscription);
+			request.setAttribute(
+				"email", _userLocalService.getUser(userId).getEmailAddress());
+			request.setAttribute(
+				"subscriptionTitle",
+				MySubscriptionsUtil.getTitle(
+					request.getLocale(), subscription));
 
-			return _returnSuccess(subscription, userId, request);
+			return "/unsubscribe/unsubscribed.jsp";
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(request, pe.getClass(), pe);
@@ -72,17 +77,9 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private String _returnSuccess(
-			Subscription subscription, long userId, RenderRequest request)
-		throws PortalException {
-
-		request.setAttribute(
-			"email", _userLocalService.getUser(userId).getEmailAddress());
-		request.setAttribute(
-			"subscriptionTitle",
-			MySubscriptionsUtil.getTitle(request.getLocale(), subscription));
-
-		return "/unsubscribe/unsubscribed.jsp";
+	private Subscription _getSubscriptionFromSession(RenderRequest request) {
+		return (Subscription)request.getPortletSession().getAttribute(
+			MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
 	}
 
 	private void _saveSubscriptionToSession(
@@ -93,19 +90,28 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 			subscription);
 	}
 
-	private Subscription _unsubscribe(String key, long userId)
+	private Subscription _unsubscribe(
+			String key, long userId, RenderRequest request)
 		throws PortalException {
 
 		Ticket ticket = _ticketLocalService.getTicket(key);
+
+		long subscriptionId = ticket.getClassPK();
+
+		Subscription subscription = _getSubscriptionFromSession(request);
+
+		if ((subscription != null) &&
+			(subscription.getSubscriptionId() == subscriptionId)) {
+
+			return subscription;
+		}
 
 		if (ticket.isExpired()) {
 			_ticketLocalService.deleteTicket(ticket);
 			throw new NoSuchTicketException("{ticketKey=" + key + "}");
 		}
 
-		long subscriptionId = ticket.getClassPK();
-
-		Subscription subscription = _subscriptionLocalService.getSubscription(
+		subscription = _subscriptionLocalService.getSubscription(
 			subscriptionId);
 
 		if (subscription.getUserId() != userId) {
@@ -113,6 +119,8 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		_subscriptionLocalService.deleteSubscription(subscription);
+
+		_saveSubscriptionToSession(request, subscription);
 
 		return subscription;
 	}
