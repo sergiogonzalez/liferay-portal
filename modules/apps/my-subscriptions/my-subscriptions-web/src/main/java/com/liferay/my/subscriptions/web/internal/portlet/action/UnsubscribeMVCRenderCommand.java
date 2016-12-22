@@ -80,7 +80,7 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 			String key, long userId, RenderRequest request)
 		throws PortalException {
 
-		Ticket ticket = _ticketLocalService.getTicket(key);
+		Ticket ticket = UnsubscribeUtil.getTicket(_ticketLocalService, key);
 
 		long subscriptionId = ticket.getClassPK();
 
