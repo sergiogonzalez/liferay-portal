@@ -15,7 +15,7 @@
 package com.liferay.subscriptions.web.internal.util;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
+import com.liferay.my.subscriptions.web.util.MySubscriptionsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
