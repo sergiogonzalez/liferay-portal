@@ -101,6 +101,9 @@ public class ItemSelectorCriterionSerializerImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ItemSelectorView.class, "item.selector.view.key");
+
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, ItemSelectorViewReturnTypeProvider.class,
 			new ItemSelectorViewReturnTypeProviderServiceTrackerCustomizer());
@@ -108,9 +111,6 @@ public class ItemSelectorCriterionSerializerImpl
 		_serviceTrackerItemSelectorView = ServiceTrackerFactory.open(
 			bundleContext, ItemSelectorView.class,
 			new ItemSelectorReturnTypeServiceTrackerCustomizer());
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ItemSelectorView.class, "item.selector.view.key");
 	}
 
 	protected void addItemSelectorReturnType(
