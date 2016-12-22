@@ -14,15 +14,14 @@
 
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
-import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
 import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
 import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
+import com.liferay.my.subscriptions.web.internal.util.UnsubscribeUtil;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -77,19 +76,6 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private Subscription _getSubscriptionFromSession(RenderRequest request) {
-		return (Subscription)request.getPortletSession().getAttribute(
-			MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
-	}
-
-	private void _saveSubscriptionToSession(
-		RenderRequest request, Subscription subscription) {
-
-		request.getPortletSession().setAttribute(
-			MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY,
-			subscription);
-	}
-
 	private Subscription _unsubscribe(
 			String key, long userId, RenderRequest request)
 		throws PortalException {
@@ -98,7 +84,7 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 
 		long subscriptionId = ticket.getClassPK();
 
-		Subscription subscription = _getSubscriptionFromSession(request);
+		Subscription subscription = UnsubscribeUtil.getFromSession(request);
 
 		if ((subscription != null) &&
 			(subscription.getSubscriptionId() == subscriptionId)) {
@@ -114,13 +100,11 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		subscription = _subscriptionLocalService.getSubscription(
 			subscriptionId);
 
-		if (subscription.getUserId() != userId) {
-			throw new PrincipalException();
-		}
+		UnsubscribeUtil.checkUser(userId, subscription);
 
 		_subscriptionLocalService.deleteSubscription(subscription);
 
-		_saveSubscriptionToSession(request, subscription);
+		UnsubscribeUtil.saveToSession(request, subscription);
 
 		return subscription;
 	}

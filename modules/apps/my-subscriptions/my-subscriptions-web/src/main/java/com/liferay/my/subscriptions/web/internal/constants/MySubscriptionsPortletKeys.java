@@ -19,10 +19,6 @@ package com.liferay.my.subscriptions.web.internal.constants;
  */
 public class MySubscriptionsPortletKeys {
 
-	public static final String LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY =
-		"com_liferay_mysubscriptions_web_portlet_MySubscriptionsPortlet_" +
-			"LastUnsubscribedSubscription";
-
 	public static final String MY_SUBSCRIPTIONS =
 		"com_liferay_mysubscriptions_web_portlet_MySubscriptionsPortlet";
 
