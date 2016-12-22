@@ -14,9 +14,9 @@
 
 package com.liferay.my.subscriptions.web.internal.portlet.action;
 
-import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
 import com.liferay.my.subscriptions.web.internal.portlet.UnsubscribePortlet;
 import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
+import com.liferay.my.subscriptions.web.internal.util.UnsubscribeUtil;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
@@ -76,9 +76,7 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 
 				_ticketLocalService.updateTicket(ticket);
 
-				request.getPortletSession().removeAttribute(
-					MySubscriptionsPortletKeys.
-						LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
+				UnsubscribeUtil.clearSession(request);
 			}
 
 			request.setAttribute(
@@ -99,26 +97,16 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private void _checkUser(long userId, Subscription subscription)
-		throws PrincipalException {
-
-		if ((subscription != null) && (subscription.getUserId() != userId)) {
-			throw new PrincipalException();
-		}
-	}
-
 	private Subscription _getFromSession(RenderRequest request, long userId)
 		throws NoSuchSubscriptionException, PrincipalException {
 
-		Subscription subscription =
-			(Subscription)request.getPortletSession().getAttribute(
-				MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
+		Subscription subscription = UnsubscribeUtil.getFromSession(request);
 
 		if (subscription == null) {
 			throw new NoSuchSubscriptionException();
 		}
 
-		_checkUser(userId, subscription);
+		UnsubscribeUtil.checkUser(userId, subscription);
 
 		return subscription;
 	}
@@ -129,7 +117,7 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 		Subscription subscription = _subscriptionLocalService.fetchSubscription(
 			ticket.getClassPK());
 
-		_checkUser(userId, subscription);
+		UnsubscribeUtil.checkUser(userId, subscription);
 
 		return subscription;
 	}
