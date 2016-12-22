@@ -272,6 +272,23 @@ public class MBCategoryServiceSoap {
 		}
 	}
 
+	public static int getCategoriesAndThreadsCount(long groupId,
+		long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws RemoteException {
+		try {
+			int returnValue = MBCategoryServiceUtil.getCategoriesAndThreadsCount(groupId,
+					categoryId, queryDefinition);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getCategoriesAndThreadsCount(long groupId, long categoryId)
 		throws RemoteException {
 		try {
