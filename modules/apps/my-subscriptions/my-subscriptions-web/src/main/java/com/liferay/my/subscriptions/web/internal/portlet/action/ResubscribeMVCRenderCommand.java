@@ -59,32 +59,27 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 			String key = ParamUtil.getString(request, "key");
 			long userId = ParamUtil.getLong(request, "userId");
 
-			Subscription subscription =
-				(Subscription)request.getPortletSession().getAttribute(
-					MySubscriptionsPortletKeys.
-						LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
-
-			if (subscription == null) {
-				throw new NoSuchSubscriptionException();
-			}
-
-			if (subscription.getUserId() != userId) {
-				throw new PrincipalException();
-			}
-
 			Ticket ticket = _ticketLocalService.getTicket(key);
 
-			Subscription newSubscription =
-				_subscriptionLocalService.addSubscription(
-					subscription.getUserId(), subscription.getGroupId(),
-					subscription.getClassName(), subscription.getClassPK(),
-					subscription.getFrequency());
+			Subscription subscription = _getFromTicket(ticket, userId);
 
-			ticket.setClassPK(newSubscription.getSubscriptionId());
-			_ticketLocalService.updateTicket(ticket);
+			if (subscription == null) {
+				subscription = _getFromSession(request, userId);
 
-			request.getPortletSession().removeAttribute(
-				MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
+				Subscription newSubscription =
+					_subscriptionLocalService.addSubscription(
+						subscription.getUserId(), subscription.getGroupId(),
+						subscription.getClassName(), subscription.getClassPK(),
+						subscription.getFrequency());
+
+				ticket.setClassPK(newSubscription.getSubscriptionId());
+
+				_ticketLocalService.updateTicket(ticket);
+
+				request.getPortletSession().removeAttribute(
+					MySubscriptionsPortletKeys.
+						LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
+			}
 
 			request.setAttribute(
 				"email",
@@ -102,6 +97,41 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 
 			return "/unsubscribe/error.jsp";
 		}
+	}
+
+	private void _checkUser(long userId, Subscription subscription)
+		throws PrincipalException {
+
+		if ((subscription != null) && (subscription.getUserId() != userId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	private Subscription _getFromSession(RenderRequest request, long userId)
+		throws NoSuchSubscriptionException, PrincipalException {
+
+		Subscription subscription =
+			(Subscription)request.getPortletSession().getAttribute(
+				MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
+
+		if (subscription == null) {
+			throw new NoSuchSubscriptionException();
+		}
+
+		_checkUser(userId, subscription);
+
+		return subscription;
+	}
+
+	private Subscription _getFromTicket(Ticket ticket, long userId)
+		throws PrincipalException {
+
+		Subscription subscription = _subscriptionLocalService.fetchSubscription(
+			ticket.getClassPK());
+
+		_checkUser(userId, subscription);
+
+		return subscription;
 	}
 
 	@Reference
