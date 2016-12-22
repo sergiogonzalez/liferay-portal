@@ -18,6 +18,9 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -221,8 +224,16 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public List<Object> getCategoriesAndThreads(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+
+		return mbCategoryFinder.filterFindC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
-		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
 
 		return mbCategoryFinder.filterCountC_T_ByG_C(
@@ -234,6 +245,14 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		long groupId, long categoryId, int status) {
 
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return mbCategoryFinder.filterCountC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
 		return mbCategoryFinder.filterCountC_T_ByG_C(
 			groupId, categoryId, queryDefinition);
@@ -490,5 +509,28 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			mailingListActive, allowAnonymousEmail, mergeWithParentCategory,
 			serviceContext);
 	}
+
+	private QueryDefinition<?> _createQueryDefinition(
+		int status, int start, int end, OrderByComparator<?> obc) {
+
+		long userId = 0;
+		boolean includeOwner = false;
+
+		try {
+			userId = getUserId();
+			includeOwner = true;
+		}
+		catch (PrincipalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe);
+			}
+		}
+
+		return new QueryDefinition<>(
+			status, userId, includeOwner, start, end, obc);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBCategoryServiceImpl.class);
 
 }
