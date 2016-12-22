@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
 
@@ -28,6 +30,16 @@ import javax.portlet.RenderRequest;
  * @author Alejandro Tardín
  */
 public class UnsubscribeUtil {
+
+	public static void checkUser(long userId, RenderRequest request)
+		throws PortalException {
+
+		User user = PortalUtil.getUser(request);
+
+		if ((user != null) && (userId != user.getUserId())) {
+			throw new PrincipalException();
+		}
+	}
 
 	public static void checkUser(long userId, Subscription subscription)
 		throws PrincipalException {
