@@ -16,7 +16,6 @@ package com.liferay.document.library.demo.data.creator.internal;
 
 import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -53,7 +52,9 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 	public FileEntry create(long userId, long folderId)
 		throws IOException, PortalException {
 
-		String sourceFileName = UUID.randomUUID().toString() + ".jpeg";
+		UUID uuid = UUID.randomUUID();
+
+		String sourceFileName = uuid.toString() + ".jpeg";
 
 		return create(userId, folderId, sourceFileName);
 	}
@@ -66,7 +67,7 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			userId, folder.getGroupId(), folderId, name, "image/jpeg",
-			_fetchRemoteFile(), new ServiceContext());
+			_getBytes(), new ServiceContext());
 
 		_fileEntryIds.add(fileEntry.getFileEntryId());
 
@@ -85,9 +86,7 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 		_dlAppLocalService = dlAppLocalService;
 	}
 
-	private byte[] _fetchRemoteFile()
-		throws ImageResolutionException, IOException {
-
+	private byte[] _getBytes() throws IOException {
 		URL url = _getNextUrl();
 
 		InputStream inputStream = null;
