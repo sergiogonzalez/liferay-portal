@@ -113,7 +113,6 @@ public class UnsubscribeMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		_subscriptionLocalService.deleteSubscription(subscription);
-		_ticketLocalService.deleteTicket(ticket);
 
 		return subscription;
 	}

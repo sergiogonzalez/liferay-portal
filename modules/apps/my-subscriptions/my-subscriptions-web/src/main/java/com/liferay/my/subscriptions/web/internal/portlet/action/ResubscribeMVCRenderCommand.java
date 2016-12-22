@@ -20,10 +20,14 @@ import com.liferay.my.subscriptions.web.internal.util.MySubscriptionsUtil;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -52,6 +56,8 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			String key = ParamUtil.getString(request, "key");
+
 			Subscription subscription =
 				(Subscription)request.getPortletSession().getAttribute(
 					MySubscriptionsPortletKeys.
@@ -61,10 +67,16 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 				throw new NoSuchSubscriptionException();
 			}
 
-			_subscriptionLocalService.addSubscription(
-				subscription.getUserId(), subscription.getGroupId(),
-				subscription.getClassName(), subscription.getClassPK(),
-				subscription.getFrequency());
+			Ticket ticket = _ticketLocalService.getTicket(key);
+
+			Subscription newSubscription =
+				_subscriptionLocalService.addSubscription(
+					subscription.getUserId(), subscription.getGroupId(),
+					subscription.getClassName(), subscription.getClassPK(),
+					subscription.getFrequency());
+
+			ticket.setClassPK(newSubscription.getSubscriptionId());
+			_ticketLocalService.updateTicket(ticket);
 
 			request.getPortletSession().removeAttribute(
 				MySubscriptionsPortletKeys.LAST_UNSUBSCRIBED_SUBSCRIPTION_KEY);
@@ -89,6 +101,9 @@ public class ResubscribeMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

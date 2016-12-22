@@ -23,6 +23,7 @@ String subscriptionTitle = GetterUtil.getString(request.getAttribute("subscripti
 PortletURL manageSubscriptionsURL = MySubscriptionsUtil.getManageSubscriptionsURL(request);
 
 PortletURL resubscribeURL = renderResponse.createRenderURL();
+resubscribeURL.setParameter("key", request.getParameter("key"));
 resubscribeURL.setParameter("mvcRenderCommandName", ResubscribeMVCRenderCommand.COMMAND_NAME);
 %>
 
