@@ -35,7 +35,7 @@ if (bbcodeEditorName.equals("bbcode")) {
 }
 %>
 
-<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" cssClass='<%= bbcodeEditorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName="<%= bbcodeEditorName %>" />
+<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" cssClass='<%= bbcodeEditorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName="<%= bbcodeEditorName %>" name="contentEditor" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {
