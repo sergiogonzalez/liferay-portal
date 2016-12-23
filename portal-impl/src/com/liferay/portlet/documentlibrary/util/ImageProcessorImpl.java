@@ -295,6 +295,12 @@ public class ImageProcessorImpl
 				return;
 			}
 
+			ImageTiffOrientationHandler imageTiffOrientationHandler =
+				new ImageTiffOrientationHandler();
+
+			renderedImage = imageTiffOrientationHandler.transform(
+				destinationFileVersion, renderedImage);
+
 			ColorModel colorModel = renderedImage.getColorModel();
 
 			if (colorModel.getNumColorComponents() == 4) {
@@ -368,8 +374,12 @@ public class ImageProcessorImpl
 	private boolean _hasPreview(FileVersion fileVersion)
 		throws PortalException {
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			_previewGenerationRequired(fileVersion)) {
+		ImageTiffOrientationHandler imageTiffOrientationHandler =
+			new ImageTiffOrientationHandler();
+
+		if ((PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
+			 _previewGenerationRequired(fileVersion)) ||
+			imageTiffOrientationHandler.hasRotation(fileVersion)) {
 
 			String type = getPreviewType(fileVersion);
 
@@ -389,12 +399,21 @@ public class ImageProcessorImpl
 	private boolean _previewGenerationRequired(FileVersion fileVersion) {
 		String mimeType = fileVersion.getMimeType();
 
-		if (mimeType.contains("tiff") || mimeType.contains("tif")) {
-			return true;
+		ImageTiffOrientationHandler imageTiffOrientationHandler =
+			new ImageTiffOrientationHandler();
+
+		try {
+			if (mimeType.contains("tiff") || mimeType.contains("tif") ||
+				imageTiffOrientationHandler.hasRotation(fileVersion)) {
+
+				return true;
+			}
 		}
-		else {
-			return false;
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
+
+		return false;
 	}
 
 	private void _queueGeneration(
