@@ -35,4 +35,10 @@ public interface SubscriptionsConfiguration {
 	@Meta.AD(deflt = "24", required = false)
 	public int deleteExpiredTicketsIntervalInHours();
 
+	/**
+	 * Set the time in days when the unsubscription tickets will expire.
+	 */
+	@Meta.AD(deflt = "31", required = false)
+	public int unsubscriptionTicketExpirationTimeInDays();
+
 }
