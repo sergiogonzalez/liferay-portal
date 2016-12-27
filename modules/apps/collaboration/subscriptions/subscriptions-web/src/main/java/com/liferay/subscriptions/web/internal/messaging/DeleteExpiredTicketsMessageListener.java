@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.subscriptions.configuration.SubscriptionsConfiguration;
+import com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration;
 
 import java.util.Map;
 
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.subscriptions.configuration.SubscriptionsConfiguration",
+	configurationPid = "com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration",
 	immediate = true, service = BaseSchedulerEntryMessageListener.class
 )
 public class DeleteExpiredTicketsMessageListener
