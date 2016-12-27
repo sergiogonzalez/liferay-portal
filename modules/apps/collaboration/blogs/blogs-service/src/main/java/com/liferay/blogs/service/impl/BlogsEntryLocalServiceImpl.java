@@ -101,7 +101,7 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.subscriptions.util.UnsubscribeLifecycleHook;
+import com.liferay.subscriptions.util.UnsubscribeLifecycleHookProvider;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -1955,7 +1955,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.addLifecycleHook(unsubscribeLifecycleHook);
+		unsubscribeLifecycleHookProvider.get().ifPresent(
+			hook -> subscriptionSender.addLifecycleHook(hook));
 
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
@@ -2293,8 +2294,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@ServiceReference(type = FriendlyURLLocalService.class)
 	protected FriendlyURLLocalService friendlyURLLocalService;
 
-	@ServiceReference(type = UnsubscribeLifecycleHook.class)
-	protected UnsubscribeLifecycleHook unsubscribeLifecycleHook;
+	@ServiceReference(type = UnsubscribeLifecycleHookProvider.class)
+	protected UnsubscribeLifecycleHookProvider unsubscribeLifecycleHookProvider;
 
 	private String _getGroupDescriptiveName(Group group, Locale locale) {
 		try {
