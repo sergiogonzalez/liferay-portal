@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SubscriptionSender;
-import com.liferay.subscriptions.configuration.SubscriptionsConfiguration;
 import com.liferay.subscriptions.util.UnsubscribeLifecycleHook;
+import com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration;
 import com.liferay.subscriptions.web.internal.portlet.action.UnsubscribeAction;
 
 import java.io.IOException;
