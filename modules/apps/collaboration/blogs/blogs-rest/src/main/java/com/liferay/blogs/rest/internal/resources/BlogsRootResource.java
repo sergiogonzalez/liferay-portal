@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(immediate = true, service = BlogsRestRootResource.class)
+@Component(immediate = true, service = BlogsRootResource.class)
 @Path("/")
-public class BlogsRestRootResource {
+public class BlogsRootResource {
 
 	@Path("/{entryId}")
 	public BlogsEntryResource getEntryResource(
