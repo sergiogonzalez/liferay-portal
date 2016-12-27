@@ -15,6 +15,11 @@
 package com.liferay.blogs.rest.internal.resources;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.rest.internal.repr.BlogsEntryRepr;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 /**
  * @author Alejandro Hernández
@@ -23,6 +28,13 @@ public class BlogsEntryResource {
 
 	public BlogsEntryResource(BlogsEntry blogsEntry) {
 		_blogsEntry = blogsEntry;
+	}
+
+	@GET
+	@Path("/")
+	@Produces("application/json")
+	public BlogsEntryRepr getBlogsEntry() {
+		return new BlogsEntryRepr(_blogsEntry);
 	}
 
 	private final BlogsEntry _blogsEntry;
