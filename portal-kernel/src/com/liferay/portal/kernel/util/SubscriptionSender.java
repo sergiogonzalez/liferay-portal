@@ -700,7 +700,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement.
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	protected String replaceContent(String content, Locale locale)
@@ -710,7 +710,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement.
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	protected String replaceContent(
