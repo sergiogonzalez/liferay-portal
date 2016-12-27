@@ -38,16 +38,16 @@ public class BlogsRestRootResource {
 			@PathParam("entryId") long entryId)
 		throws PortalException {
 
-		BlogsEntry blogsEntry = null;
+		BlogsEntry entry = null;
 
 		try {
-			blogsEntry = _blogsEntryService.getEntry(entryId);
+			entry = _blogsEntryService.getEntry(entryId);
 		}
 		catch (NoSuchEntryException nsee) {
 			throw new NotFoundException();
 		}
 
-		return new BlogsEntryResource(blogsEntry);
+		return new BlogsEntryResource(entry);
 	}
 
 	@Reference
