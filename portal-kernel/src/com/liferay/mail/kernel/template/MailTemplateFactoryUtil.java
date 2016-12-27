@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.mail;
+package com.liferay.mail.kernel.template;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;

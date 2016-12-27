@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.petra.mail.internal;
+package com.liferay.petra.mail.template.internal;
 
-import com.liferay.portal.kernel.mail.MailTemplateContext;
+import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 
 import java.util.Collections;

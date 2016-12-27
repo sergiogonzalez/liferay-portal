@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.mail.internal;
+package com.liferay.petra.mail.template.internal;
 
-import com.liferay.portal.kernel.mail.MailTemplate;
-import com.liferay.portal.kernel.mail.MailTemplateContext;
-import com.liferay.portal.kernel.mail.MailTemplateContextBuilder;
+import com.liferay.mail.kernel.template.MailTemplate;
+import com.liferay.mail.kernel.template.MailTemplateContext;
+import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.StringPool;

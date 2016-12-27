@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Petra Mail Template
+Bundle-SymbolicName: com.liferay.petra.mail.template
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.petra.mail.template
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

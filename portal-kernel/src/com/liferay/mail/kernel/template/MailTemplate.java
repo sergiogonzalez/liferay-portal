@@ -12,24 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.mail;
+package com.liferay.mail.kernel.template;
 
-import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
-import com.liferay.portal.kernel.util.EscapableObject;
+import java.io.IOException;
+import java.io.Writer;
+
+import java.util.Locale;
 
 /**
  * @author Adolfo Pérez
  */
-public interface MailTemplateContextBuilder {
+public interface MailTemplate {
 
-	public MailTemplateContext build();
+	public void render(
+			Writer writer, Locale locale,
+			MailTemplateContext mailTemplateContext)
+		throws IOException;
 
-	public MailTemplateContextBuilder put(
-		String name, EscapableLocalizableFunction escapableLocalizableFunction);
-
-	public MailTemplateContextBuilder put(
-		String name, EscapableObject<String> escapableObject);
-
-	public MailTemplateContextBuilder put(String name, String value);
+	public String renderAsString(
+			Locale locale, MailTemplateContext mailTemplateContext)
+		throws IOException;
 
 }
