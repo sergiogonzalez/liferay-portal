@@ -19,6 +19,7 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.subscriptions.configuration.SubscriptionsConfiguration;
 import com.liferay.subscriptions.util.UnsubscribeLifecycleHook;
 import com.liferay.subscriptions.web.internal.portlet.action.UnsubscribeAction;
 
@@ -41,13 +43,19 @@ import java.util.Map;
 
 import javax.mail.internet.InternetHeaders;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = UnsubscribeLifecycleHook.class)
+@Component(
+	immediate = true,
+	configurationPid = "com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration",
+	service = UnsubscribeLifecycleHook.class
+)
 public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 
 	@Override
@@ -57,7 +65,9 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 		if (!sender.isBulk()) {
 			Calendar calendar = Calendar.getInstance();
 
-			calendar.add(Calendar.MONTH, 1);
+			calendar.add(
+				Calendar.DATE,
+				_configuration.unsubscriptionTicketExpirationTimeInDays());
 
 			Ticket ticket = _ticketLocalService.addOrUpdateDistinctTicket(
 				subscription.getCompanyId(), Subscription.class.getName(),
@@ -93,6 +103,13 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				_unsubscribableUserMap.remove(user.getUserId());
 			}
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_configuration = ConfigurableUtil.createConfigurable(
+			SubscriptionsConfiguration.class, properties);
 	}
 
 	private void _addUnsubscribeHeader(
@@ -143,6 +160,8 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 
 		return sb.toString();
 	}
+
+	private volatile SubscriptionsConfiguration _configuration;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;
