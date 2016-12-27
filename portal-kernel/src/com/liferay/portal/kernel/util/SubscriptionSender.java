@@ -230,6 +230,10 @@ public class SubscriptionSender implements Serializable {
 			});
 	}
 
+	public long getCompanyId() {
+		return companyId;
+	}
+
 	public Object getContextAttribute(String key) {
 		return _context.get(key);
 	}
@@ -240,6 +244,10 @@ public class SubscriptionSender implements Serializable {
 
 	public String getMailId() {
 		return mailId;
+	}
+
+	public ServiceContext getServiceContext() {
+		return serviceContext;
 	}
 
 	/**
@@ -292,6 +300,10 @@ public class SubscriptionSender implements Serializable {
 
 		mailId = PortalUtil.getMailId(
 			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
+	}
+
+	public boolean isBulk() {
+		return bulk;
 	}
 
 	public void setBody(String body) {
@@ -495,7 +507,7 @@ public class SubscriptionSender implements Serializable {
 
 		public void processMailMessage(
 				SubscriptionSender sender, MailMessage mailMessage)
-			throws PortalException;
+			throws IOException, PortalException;
 
 	}
 
