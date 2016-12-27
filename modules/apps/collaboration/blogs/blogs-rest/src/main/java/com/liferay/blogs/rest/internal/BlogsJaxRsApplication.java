@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.rest.internal;
 
-import com.liferay.blogs.rest.internal.resources.BlogsRestRootResource;
+import com.liferay.blogs.rest.internal.resources.BlogsRootResource;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Collections;
@@ -36,10 +36,10 @@ public class BlogsJaxRsApplication extends Application {
 	@Override
 	public Set<Object> getSingletons() {
 		return SetUtil.fromCollection(
-			Collections.singletonList(_blogsRestRootResource));
+			Collections.singletonList(_blogsRootResource));
 	}
 
 	@Reference
-	private BlogsRestRootResource _blogsRestRootResource;
+	private BlogsRootResource _blogsRootResource;
 
 }
