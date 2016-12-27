@@ -16,7 +16,6 @@ package com.liferay.blogs.rest.internal.repr;
 
 import com.liferay.blogs.model.BlogsEntry;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,17 +27,16 @@ public class BlogsEntryRepr {
 	public BlogsEntryRepr() {
 	}
 
-	public BlogsEntryRepr(BlogsEntry blogsEntry) {
-		_title = blogsEntry.getTitle();
-		_content = blogsEntry.getContent();
-		_entryId = blogsEntry.getEntryId();
+	public BlogsEntryRepr(BlogsEntry entry) {
+		_content = entry.getContent();
+		_entryId = entry.getEntryId();
+		_title = entry.getTitle();
 	}
 
 	public String getContent() {
 		return _content;
 	}
 
-	@XmlElement(name = "id")
 	public long getEntryId() {
 		return _entryId;
 	}

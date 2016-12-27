@@ -26,17 +26,17 @@ import javax.ws.rs.Produces;
  */
 public class BlogsEntryResource {
 
-	public BlogsEntryResource(BlogsEntry blogsEntry) {
-		_blogsEntry = blogsEntry;
+	public BlogsEntryResource(BlogsEntry entry) {
+		_entry = entry;
 	}
 
 	@GET
 	@Path("/")
 	@Produces("application/json")
-	public BlogsEntryRepr getBlogsEntry() {
-		return new BlogsEntryRepr(_blogsEntry);
+	public BlogsEntryRepr getEntry() {
+		return new BlogsEntryRepr(_entry);
 	}
 
-	private final BlogsEntry _blogsEntry;
+	private final BlogsEntry _entry;
 
 }
