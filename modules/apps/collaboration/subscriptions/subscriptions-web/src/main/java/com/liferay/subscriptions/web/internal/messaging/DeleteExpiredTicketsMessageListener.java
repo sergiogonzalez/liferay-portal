@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration",
-	immediate = true, service = BaseSchedulerEntryMessageListener.class
+	configurationPid = SubscriptionsConfiguration.ID, immediate = true,
+	service = BaseSchedulerEntryMessageListener.class
 )
 public class DeleteExpiredTicketsMessageListener
 	extends BaseSchedulerEntryMessageListener {
