@@ -20,6 +20,9 @@ import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
@@ -37,7 +40,6 @@ import com.liferay.subscriptions.web.internal.portlet.action.UnsubscribeAction;
 import java.io.IOException;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -74,7 +76,9 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				TicketConstants.TYPE_SUBSCRIPTIONS, StringPool.BLANK,
 				calendar.getTime(), sender.getServiceContext());
 
-			_unsubscribableUserMap.put(subscription.getUserId(), ticket);
+			ThreadLocalCache<Ticket> cache = _getTicketCache();
+
+			cache.put(String.valueOf(subscription.getUserId()), ticket);
 		}
 	}
 
@@ -88,7 +92,9 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 		User user = _userLocalService.getUserByEmailAddress(
 			sender.getCompanyId(), mailMessage.getTo()[0].getAddress());
 
-		Ticket ticket = _unsubscribableUserMap.get(user.getUserId());
+		ThreadLocalCache<Ticket> cache = _getTicketCache();
+
+		Ticket ticket = cache.get(String.valueOf(user.getUserId()));
 
 		if (ticket != null) {
 			try {
@@ -99,7 +105,7 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 				_addUnsubscribeLink(mailMessage, locale, unsubscribeURL);
 			}
 			finally {
-				_unsubscribableUserMap.remove(user.getUserId());
+				cache.remove(String.valueOf(user.getUserId()));
 			}
 		}
 	}
@@ -144,6 +150,11 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 		mailMessage.setBody(processedBody);
 	}
 
+	private ThreadLocalCache<Ticket> _getTicketCache() {
+		return ThreadLocalCacheManager.getThreadLocalCache(
+			Lifecycle.REQUEST, UnsubscribeLifecycleHookImpl.class.getName());
+	}
+
 	private String _getUnsubscribeURL(
 		SubscriptionSender sender, User user, Ticket ticket) {
 
@@ -164,8 +175,6 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 
 	@Reference
 	private TicketLocalService _ticketLocalService;
-
-	private final Map<Number, Ticket> _unsubscribableUserMap = new HashMap<>();
 
 	@Reference
 	private UserLocalService _userLocalService;
