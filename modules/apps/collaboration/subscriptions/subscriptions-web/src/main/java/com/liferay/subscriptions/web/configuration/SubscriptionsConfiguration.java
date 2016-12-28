@@ -23,10 +23,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
-	id = "com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration",
-	localization = "content/Language", name = "subscriptions.configuration.name"
+	id = SubscriptionsConfiguration.ID, localization = "content/Language",
+	name = "subscriptions.configuration.name"
 )
 public interface SubscriptionsConfiguration {
+
+	public String ID =
+		"com.liferay.subscriptions.web.configuration." +
+			"SubscriptionsConfiguration";
 
 	/**
 	 * Set the interval in hours on how often DeleteExpiredTicketsMessageListener will

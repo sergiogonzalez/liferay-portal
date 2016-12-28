@@ -52,8 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
-	configurationPid = "com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration",
+	configurationPid = SubscriptionsConfiguration.ID, immediate = true,
 	service = UnsubscribeLifecycleHook.class
 )
 public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
