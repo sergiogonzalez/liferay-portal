@@ -685,7 +685,6 @@
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="UserGroup" package-path="com.liferay.portal" />
 		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
@@ -2766,7 +2765,6 @@
 		<reference entity="RecentLayoutSetBranch" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="Team" package-path="com.liferay.portal" />
 		<reference entity="Ticket" package-path="com.liferay.portal" />
 		<reference entity="UserGroup" package-path="com.liferay.portal" />
@@ -3357,7 +3355,6 @@
 		<!-- References -->
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
