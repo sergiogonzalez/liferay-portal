@@ -43,11 +43,9 @@ public class SubscriptionUserLocalServiceWrapper
 
 	@Override
 	public User deleteUser(User user) throws PortalException {
-		User deletedUser = super.deleteUser(user);
-
 		_subscriptionLocalService.deleteSubscriptions(user.getUserId());
 
-		return deletedUser;
+		return super.deleteUser(user);
 	}
 
 	@Reference(unbind = "-")
