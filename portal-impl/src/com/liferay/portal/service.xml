@@ -508,7 +508,6 @@
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="ResourceTypePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="Team" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="UserGroup" package-path="com.liferay.portal" />
@@ -3314,7 +3313,6 @@
 		<!-- References -->
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="WorkflowInstanceLink" remote-service="false">
