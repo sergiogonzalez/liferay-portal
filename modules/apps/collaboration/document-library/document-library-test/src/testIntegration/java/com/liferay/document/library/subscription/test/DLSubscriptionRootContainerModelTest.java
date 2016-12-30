@@ -16,7 +16,6 @@ package com.liferay.document.library.subscription.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -80,9 +79,10 @@ public class DLSubscriptionRootContainerModelTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), containerModelId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+		Folder folder = DLAppLocalServiceUtil.addFolder(
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		return folder.getFolderId();
 	}
