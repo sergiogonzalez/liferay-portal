@@ -12,32 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.subscriptions;
+package com.liferay.message.boards.notifications.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
+import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
- * @author José Ángel Jiménez
+ * @author Roberto Díaz
+ * @author Sergio González
  */
+@RunWith(Arquillian.class)
 @Sync
-public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
+public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@ClassRule
 	@Rule
@@ -46,68 +56,70 @@ public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected BaseModel<?> addBaseModel() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			userId, RandomTestUtil.randomString(), group.getGroupId(),
-			containerModelId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), _category.getCategoryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
-		return message.getMessageId();
+		return message;
 	}
 
 	@Override
-	protected long addContainerModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected void addContainerModel() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		MBCategory category = MBCategoryServiceUtil.addCategory(
-			userId, containerModelId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
-		return category.getCategoryId();
+		_category = MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override
-	protected void addSubscription(long userId, long containerModelId)
-		throws Exception {
+	protected String getPortletId() {
+		return PortletProviderUtil.getPortletId(
+			MBMessage.class.getName(), PortletProvider.Action.VIEW);
+	}
 
+	@Override
+	protected void subscribeToContainer() throws Exception {
 		MBCategoryLocalServiceUtil.subscribeCategory(
-			userId, group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), _category.getCategoryId());
 	}
 
 	@Override
-	protected boolean isSubscriptionForAuthorEnabled() {
-		return true;
-	}
-
-	@Override
-	protected void updateBaseModel(long userId, long baseModelId)
+	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
+		MBMessage message = (MBMessage)baseModel;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				message.getGroupId(), userId);
+				message.getGroupId(), TestPropsValues.getUserId());
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
-		MBMessageLocalServiceUtil.updateMessage(
-			userId, message.getMessageId(), RandomTestUtil.randomString(),
-			serviceContext);
+		message = MBMessageLocalServiceUtil.updateMessage(
+			TestPropsValues.getUserId(), message.getMessageId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		return message;
 	}
+
+	private MBCategory _category;
 
 }

@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.subscriptions;
+package com.liferay.document.library.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,18 +31,20 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
-public class DLSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class DLSubscriptionRootContainerModelTest
+	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@ClassRule
 	@Rule
@@ -76,10 +80,9 @@ public class DLSubscriptionContainerModelTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		Folder folder = DLAppLocalServiceUtil.addFolder(
-			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		Folder folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), containerModelId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		return folder.getFolderId();
 	}

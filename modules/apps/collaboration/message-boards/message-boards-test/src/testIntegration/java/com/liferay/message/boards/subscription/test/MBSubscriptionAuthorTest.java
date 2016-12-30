@@ -12,37 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.subscriptions;
+package com.liferay.message.boards.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionBaseModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
+@RunWith(Arquillian.class)
 @Sync
-public class MBSubscriptionBaseModelTest
-	extends BaseSubscriptionBaseModelTestCase {
+public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -77,35 +75,24 @@ public class MBSubscriptionBaseModelTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
-
-		_category = MBCategoryLocalServiceUtil.addCategory(
+		MBCategory category = MBCategoryServiceUtil.addCategory(
 			userId, containerModelId, RandomTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
-		return _category.getCategoryId();
+		return category.getCategoryId();
 	}
 
 	@Override
-	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		MBMessageLocalServiceUtil.subscribeMessage(
-			user.getUserId(), baseModelId);
-	}
-
-	@Override
-	protected void removeContainerModelResourceViewPermission()
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, MBCategory.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_category.getCategoryId()), ActionKeys.VIEW);
+		MBCategoryLocalServiceUtil.subscribeCategory(
+			userId, group.getGroupId(), containerModelId);
+	}
 
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.SITE_MEMBER, MBCategory.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_category.getCategoryId()), ActionKeys.VIEW);
+	@Override
+	protected boolean isSubscriptionForAuthorEnabled() {
+		return true;
 	}
 
 	@Override
@@ -125,7 +112,5 @@ public class MBSubscriptionBaseModelTest
 			userId, message.getMessageId(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
-
-	private MBCategory _category;
 
 }
