@@ -26,6 +26,4 @@ public class TicketConstants {
 
 	public static final int TYPE_PASSWORD = 3;
 
-	public static final int TYPE_SUBSCRIPTIONS = 4;
-
 }
