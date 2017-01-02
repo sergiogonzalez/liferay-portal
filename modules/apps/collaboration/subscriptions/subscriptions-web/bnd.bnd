@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Subscriptions Web
+Bundle-SymbolicName: com.liferay.subscriptions.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.subscriptions.web.configuration,\
+	com.liferay.subscriptions.web.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /subscriptions-web
