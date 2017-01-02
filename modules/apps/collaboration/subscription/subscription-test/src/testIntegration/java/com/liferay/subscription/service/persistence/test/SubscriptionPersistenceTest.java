@@ -123,6 +123,8 @@ public class SubscriptionPersistenceTest {
 
 		Subscription newSubscription = _persistence.create(pk);
 
+		newSubscription.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSubscription.setGroupId(RandomTestUtil.nextLong());
 
 		newSubscription.setCompanyId(RandomTestUtil.nextLong());
@@ -145,6 +147,8 @@ public class SubscriptionPersistenceTest {
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
 
+		Assert.assertEquals(existingSubscription.getMvccVersion(),
+			newSubscription.getMvccVersion());
 		Assert.assertEquals(existingSubscription.getSubscriptionId(),
 			newSubscription.getSubscriptionId());
 		Assert.assertEquals(existingSubscription.getGroupId(),
@@ -240,9 +244,9 @@ public class SubscriptionPersistenceTest {
 
 	protected OrderByComparator<Subscription> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Subscription",
-			"subscriptionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"mvccVersion", true, "subscriptionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"frequency", true);
 	}
 
@@ -466,6 +470,8 @@ public class SubscriptionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		Subscription subscription = _persistence.create(pk);
+
+		subscription.setMvccVersion(RandomTestUtil.nextLong());
 
 		subscription.setGroupId(RandomTestUtil.nextLong());
 
