@@ -71,6 +71,15 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 			classPK, type, extraInfo, expirationDate, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Ticket addOrUpdateDistinctTicket(
+		long companyId, java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate,
+		ServiceContext serviceContext) {
+		return _ticketLocalService.addOrUpdateDistinctTicket(companyId,
+			className, classPK, type, extraInfo, expirationDate, serviceContext);
+	}
+
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
 	*
