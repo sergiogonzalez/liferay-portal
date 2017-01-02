@@ -49,6 +49,17 @@ public class DiscussionTaglibHelper {
 		return _classPK;
 	}
 
+	public String getDoAsUserId() {
+		if (_doAsUserId == null) {
+			HttpServletRequest request = getRequest();
+
+			_doAsUserId = (String)request.getAttribute(
+				"liferay-ui:discussion:doAsUserId");
+		}
+
+		return _doAsUserId;
+	}
+
 	public String getFormAction() {
 		if (_formAction == null) {
 			HttpServletRequest request = getRequest();
@@ -147,6 +158,7 @@ public class DiscussionTaglibHelper {
 	private Boolean _assetEntryVisible;
 	private String _className;
 	private Long _classPK;
+	private String _doAsUserId;
 	private String _formAction;
 	private String _formName;
 	private Boolean _hideControls;

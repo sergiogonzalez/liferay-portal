@@ -54,6 +54,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				<aui:input name="classPK" type="hidden" value="<%= discussionTaglibHelper.getClassPK() %>" />
 				<aui:input name="commentId" type="hidden" />
 				<aui:input name="parentCommentId" type="hidden" />
+				<aui:input name="doAsUserId" type="hidden" value="<%= discussionTaglibHelper.getDoAsUserId() %>" />
 				<aui:input name="body" type="hidden" />
 				<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 				<aui:input name="ajax" type="hidden" value="<%= true %>" />
@@ -331,6 +332,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				form.ajaxSubmit(
 					{
+						data: {doAsUserId: <%= namespace %>doAsUserId.value},
 						beforeSubmit: function() {
 							Util.toggleDisabled(commentButtonList, true);
 						},
