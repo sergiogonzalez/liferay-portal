@@ -82,6 +82,11 @@ public interface TicketLocalService extends BaseLocalService,
 		long classPK, int type, java.lang.String extraInfo,
 		Date expirationDate, ServiceContext serviceContext);
 
+	public Ticket addOrUpdateDistinctTicket(long companyId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, Date expirationDate,
+		ServiceContext serviceContext);
+
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
 	*
