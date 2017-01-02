@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.subscriptions.web.internal.constants.SubscriptionsWebConstants;
 
 import javax.portlet.RenderRequest;
 
@@ -64,8 +64,15 @@ public class UnsubscribeUtil {
 
 		Ticket ticket = service.getTicket(key);
 
-		if (ticket.getType() != TicketConstants.TYPE_SUBSCRIPTIONS) {
+		if (ticket.getType() !=
+				SubscriptionsWebConstants.IRRELEVANT_TICKET_TYPE) {
+
 			throw new NoSuchTicketException("Invalid type " + ticket.getType());
+		}
+
+		if (!Subscription.class.getName().equals(ticket.getClassName())) {
+			throw new NoSuchTicketException(
+				"Invalid className " + ticket.getClassName());
 		}
 
 		return ticket;

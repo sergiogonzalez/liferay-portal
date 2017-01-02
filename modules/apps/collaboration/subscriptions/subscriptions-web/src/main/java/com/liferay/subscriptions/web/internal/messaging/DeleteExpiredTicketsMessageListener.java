@@ -20,14 +20,16 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration;
+import com.liferay.subscriptions.web.internal.constants.SubscriptionsWebConstants;
 
 import java.util.Map;
 
@@ -70,13 +72,20 @@ public class DeleteExpiredTicketsMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		long subscriptionClassNameId = _classNameLocalService.getClassNameId(
+			Subscription.class);
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_ticketLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"type", TicketConstants.TYPE_SUBSCRIPTIONS)));
+				RestrictionsFactoryUtil.and(
+					RestrictionsFactoryUtil.eq(
+						"type",
+						SubscriptionsWebConstants.IRRELEVANT_TICKET_TYPE),
+					RestrictionsFactoryUtil.eq(
+						"classNameId", subscriptionClassNameId))));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(Ticket ticket) -> {
@@ -92,6 +101,9 @@ public class DeleteExpiredTicketsMessageListener
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	private volatile SubscriptionsConfiguration _configuration;
 

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.subscriptions.util.UnsubscribeLifecycleHook;
 import com.liferay.subscriptions.web.configuration.SubscriptionsConfiguration;
+import com.liferay.subscriptions.web.internal.constants.SubscriptionsWebConstants;
 import com.liferay.subscriptions.web.internal.portlet.action.UnsubscribeAction;
 
 import java.io.IOException;
@@ -73,8 +73,9 @@ public class UnsubscribeLifecycleHookImpl implements UnsubscribeLifecycleHook {
 			Ticket ticket = _ticketLocalService.addOrUpdateDistinctTicket(
 				subscription.getCompanyId(), Subscription.class.getName(),
 				subscription.getSubscriptionId(),
-				TicketConstants.TYPE_SUBSCRIPTIONS, StringPool.BLANK,
-				calendar.getTime(), sender.getServiceContext());
+				SubscriptionsWebConstants.IRRELEVANT_TICKET_TYPE,
+				StringPool.BLANK, calendar.getTime(),
+				sender.getServiceContext());
 
 			ThreadLocalCache<Ticket> cache = _getTicketCache();
 
