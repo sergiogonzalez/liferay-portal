@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Subscriptions API
-Bundle-SymbolicName: com.liferay.subscriptions.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.subscriptions.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Subscriptions

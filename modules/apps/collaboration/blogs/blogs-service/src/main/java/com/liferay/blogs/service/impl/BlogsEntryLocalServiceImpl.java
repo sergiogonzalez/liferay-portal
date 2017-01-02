@@ -101,7 +101,7 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.subscriptions.util.UnsubscribeLifecycleHookProvider;
+import com.liferay.subscription.util.UnsubscribeLifecycleHookProvider;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
