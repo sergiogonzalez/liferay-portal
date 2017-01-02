@@ -3,10 +3,11 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.subscription.model.Subscription" />
-	<class name="com.liferay.subscription.model.impl.SubscriptionImpl" table="Subscription">
+	<class dynamic-update="true" name="com.liferay.subscription.model.impl.SubscriptionImpl" table="Subscription">
 		<id name="subscriptionId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
