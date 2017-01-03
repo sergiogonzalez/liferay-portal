@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -179,6 +180,34 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 		WikiNode node = _wikiNodeLocalService.getNode(classPK);
 
 		return node.getTrashEntry();
+	}
+
+	@Override
+	public int getTrashModelsCount(long classPK) throws PortalException {
+		return _wikiPageLocalService.getPagesCount(
+			classPK, true, WorkflowConstants.STATUS_IN_TRASH);
+	}
+
+	@Override
+	public List<TrashRenderer> getTrashModelTrashRenderers(
+			long classPK, int start, int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		List<WikiPage> pages = _wikiPageLocalService.getPages(
+			classPK, true, WorkflowConstants.STATUS_IN_TRASH, start, end,
+			(OrderByComparator<WikiPage>)obc);
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			WikiPage.class.getName());
+
+		List<TrashRenderer> trashRenderers = new ArrayList<>(pages.size());
+
+		for (WikiPage page : pages) {
+			trashRenderers.add(
+				trashHandler.getTrashRenderer(page.getResourcePrimKey()));
+		}
+
+		return trashRenderers;
 	}
 
 	@Override
