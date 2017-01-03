@@ -140,14 +140,8 @@ public class AUIUtil {
 		Map<String, Object> dynamicAttributes =
 			(Map<String, Object>)request.getAttribute(
 				namespace.concat("dynamicAttributes"));
-		Map<String, Object> scopedAttributes =
-			(Map<String, Object>)request.getAttribute(
-				namespace.concat("scopedAttributes"));
 
-		if (((dynamicAttributes != null) &&
-			 dynamicAttributes.containsKey(key)) ||
-			((scopedAttributes != null) && scopedAttributes.containsKey(key))) {
-
+		if ((dynamicAttributes != null) && dynamicAttributes.containsKey(key)) {
 			return request.getAttribute(namespace.concat(key));
 		}
 

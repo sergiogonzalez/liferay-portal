@@ -42,7 +42,6 @@ boolean toggleTouch = GetterUtil.getBoolean(String.valueOf(request.getAttribute(
 boolean useDialog = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:useDialog")));
 boolean wrapDropDownMenu = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:wrapDropDownMenu")), true);
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:nav-item:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:nav-item:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/nav_item/init-ext.jspf" %>

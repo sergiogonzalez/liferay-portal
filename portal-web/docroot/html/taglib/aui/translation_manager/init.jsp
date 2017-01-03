@@ -27,7 +27,6 @@ java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribut
 boolean initialize = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:initialize")), true);
 boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:readOnly")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:translation-manager:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:translation-manager:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/translation_manager/init-ext.jspf" %>

@@ -29,7 +29,6 @@ java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttri
 boolean localizeLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:fieldset:localizeLabel")), true);
 java.lang.String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:markupView"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:fieldset:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:fieldset:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/fieldset/init-ext.jspf" %>
