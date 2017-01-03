@@ -738,9 +738,16 @@ public class DLFileEntryFinderImpl
 		}
 
 		if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
-			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, DLFileEntry.class.getName(), "DLFileEntry.fileEntryId",
-				groupId);
+			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DLFileEntry.class.getName(), "DLFileEntry.fileEntryId",
+					groupId);
+			}
+			else {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DLFileEntry.class.getName(),
+					"DLFileVersion.fileEntryId", groupId);
+			}
 		}
 
 		StringBundler sb = new StringBundler(12);
