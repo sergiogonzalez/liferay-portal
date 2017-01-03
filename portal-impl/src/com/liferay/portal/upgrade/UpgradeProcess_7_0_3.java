@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeGroup;
+import com.liferay.portal.upgrade.v7_0_3.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOracle;
@@ -39,6 +40,7 @@ public class UpgradeProcess_7_0_3 extends UpgradeProcess {
 		upgrade(UpgradeGroup.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeModules.class);
+		upgrade(UpgradeMVCCVersion.class);
 		upgrade(UpgradeOrganization.class);
 		upgrade(UpgradeOracle.class);
 		upgrade(UpgradeSQLServer.class);
