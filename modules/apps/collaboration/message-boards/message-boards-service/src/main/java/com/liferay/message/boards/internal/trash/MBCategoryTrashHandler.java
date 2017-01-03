@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
@@ -286,6 +287,60 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		return category.getTrashEntry();
+	}
+
+	@Override
+	public int getTrashModelsCount(long classPK) throws PortalException {
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
+
+		return _mbCategoryLocalService.getCategoriesAndThreadsCount(
+			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
+	}
+
+	@Override
+	public List<TrashRenderer> getTrashModelTrashRenderers(
+			long classPK, int start, int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
+
+		List<Object> categoriesAndThreads =
+			_mbCategoryLocalService.getCategoriesAndThreads(
+				category.getGroupId(), classPK,
+				WorkflowConstants.STATUS_IN_TRASH, start, end);
+
+		List<TrashRenderer> trashRenderers = new ArrayList<>(
+			categoriesAndThreads.size());
+
+		for (Object categoryOrThread : categoriesAndThreads) {
+			if (categoryOrThread instanceof MBThread) {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						MBThread.class.getName());
+
+				MBThread mbThread = (MBThread)categoryOrThread;
+
+				trashRenderers.add(
+					trashHandler.getTrashRenderer(mbThread.getThreadId()));
+			}
+			else if (categoryOrThread instanceof MBCategory) {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						MBCategory.class.getName());
+
+				MBCategory mbCategory = (MBCategory)categoryOrThread;
+
+				trashRenderers.add(
+					trashHandler.getTrashRenderer(mbCategory.getCategoryId()));
+			}
+			else {
+				throw new IllegalStateException(
+					"Expected MBThread or MBCategory, received " +
+						categoryOrThread.getClass());
+			}
+		}
+
+		return trashRenderers;
 	}
 
 	@Override
