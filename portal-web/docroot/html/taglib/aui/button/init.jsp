@@ -34,7 +34,6 @@ boolean useDialog = GetterUtil.getBoolean(String.valueOf(request.getAttribute("a
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:button:useNamespace")), true);
 java.lang.String value = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button:value"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:button:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/button/init-ext.jspf" %>

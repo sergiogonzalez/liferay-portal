@@ -619,6 +619,12 @@
 
 		<var locator="Gmail#EMAIL_VERIFICATION_CODE" name="emailVerification" />
 
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteSpecificMail">
+			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
+		</execute>
+
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://www.baker.com:8080/" />
 		</execute>
@@ -669,6 +675,12 @@
 
 		<execute function="SelectWindow" locator1="title=Verify Email Address - ${siteName}" />
 		<execute function="AssertLocation" value1="${emailAddressVerificationURL}" />
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteSpecificMail">
+			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
+		</execute>
 	</command>
 
 	<command name="SiteFriendlyURLLayoutImporter" priority="3">

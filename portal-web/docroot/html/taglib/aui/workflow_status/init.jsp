@@ -31,7 +31,6 @@ java.lang.Integer status = GetterUtil.getInteger(String.valueOf(request.getAttri
 java.lang.String statusMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:statusMessage"));
 java.lang.String version = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:version"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:workflow-status:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:workflow-status:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/workflow_status/init-ext.jspf" %>
