@@ -14,7 +14,11 @@
 
 package com.liferay.subscription.internal.upgrade.v1_0_0;
 
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Adolfo Pérez
@@ -29,6 +33,37 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 	@Override
 	protected String[][] getResourceNames() {
 		return _RESOURCE_NAMES;
+	}
+
+	@Override
+	protected void upgradeTable(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder(5);
+
+		sb.append("select count(1) from ");
+		sb.append(tableName);
+		sb.append(" where ");
+		sb.append(columnName);
+		sb.append(" = 'com.liferay.subscription.model.Subscription'");
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					int count = rs.getInt(1);
+
+					if (count > 0) {
+						return;
+					}
+				}
+			}
+		}
+
+		super.upgradeTable(tableName, columnName, names, wildcardMode);
 	}
 
 	private static final String[][] _CLASS_NAMES = new String[][] {

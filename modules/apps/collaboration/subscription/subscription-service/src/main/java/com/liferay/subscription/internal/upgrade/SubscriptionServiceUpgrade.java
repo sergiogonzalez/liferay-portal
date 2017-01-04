@@ -14,7 +14,7 @@
 
 package com.liferay.subscription.internal.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
@@ -53,11 +53,8 @@ public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeClassNames());
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.DATABASE_INITIALIZED, unbind = "-"
-	)
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Reference
+	protected void setLockManager(LockManager lockManager) {
 	}
 
 }
