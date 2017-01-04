@@ -103,6 +103,13 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			return true;
 		}
 
+		String mvcRenderCommandName = ParamUtil.getString(
+			_request, "mvcRenderCommandName");
+
+		if (mvcRenderCommandName.equals("/message_boards/search")) {
+			return true;
+		}
+
 		return false;
 	}
 
