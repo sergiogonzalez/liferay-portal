@@ -51,7 +51,6 @@ boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute
 java.lang.Object value = (java.lang.Object)request.getAttribute("aui:select:value");
 java.lang.String wrapperCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:wrapperCssClass"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:select:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:select:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/select/init-ext.jspf" %>

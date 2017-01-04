@@ -66,7 +66,6 @@ java.lang.Object value = (java.lang.Object)request.getAttribute("aui:input:value
 boolean wrappedField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:wrappedField")));
 java.lang.String wrapperCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:wrapperCssClass"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:input:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:input:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/input/init-ext.jspf" %>

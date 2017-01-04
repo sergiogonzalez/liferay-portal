@@ -710,10 +710,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					mbThreadPersistence.update(thread);
 				}
 			}
-
-			// Message is a child message
-
 			else {
+
+				// Message is a child message
+
 				List<MBMessage> childrenMessages =
 					mbMessagePersistence.findByT_P(
 						message.getThreadId(), message.getMessageId());

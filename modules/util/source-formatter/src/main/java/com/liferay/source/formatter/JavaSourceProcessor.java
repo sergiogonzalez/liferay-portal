@@ -268,7 +268,42 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkIndentationAndLineBreaks(
+	protected void checkInternalImports(
+		String fileName, String absolutePath, String content) {
+
+		if (absolutePath.contains("/modules/core/") ||
+			absolutePath.contains("/modules/util/") ||
+			fileName.contains("/test/") ||
+			fileName.contains("/testIntegration/")) {
+
+			return;
+		}
+
+		Matcher matcher = _internalImportPattern.matcher(content);
+
+		int pos = -1;
+
+		while (matcher.find()) {
+			if (pos == -1) {
+				pos = absolutePath.lastIndexOf("/com/liferay/");
+			}
+
+			String expectedImportFileLocation =
+				absolutePath.substring(0, pos + 13) +
+					StringUtil.replace(matcher.group(1), ".", "/") + ".java";
+
+			File file = new File(expectedImportFileLocation);
+
+			if (!file.exists()) {
+				processMessage(
+					fileName,
+					"Do not import internal class from another module",
+					getLineCount(content, matcher.start(1)));
+			}
+		}
+	}
+
+	protected void checkLineBreaks(
 		String line, String previousLine, String fileName, int lineCount) {
 
 		String trimmedLine = StringUtil.trimLeading(line);
@@ -297,48 +332,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				lineCount - 1);
 		}
 
-		if ((lineLeadingTabCount == previousLineLeadingTabCount) &&
-			(previousLine.endsWith(StringPool.EQUAL) ||
-			 previousLine.endsWith(StringPool.OPEN_PARENTHESIS))) {
-
-			processMessage(fileName, "Line should be indented", lineCount);
-		}
-
-		if (Validator.isNotNull(previousLine) &&
-			!previousLine.matches(
-				".*\t(abstract|else|extends|for|if|implements|private|" +
-					"protected|public|try|while) .*") &&
-			(previousLineLeadingTabCount <= (lineLeadingTabCount - 2))) {
-
-			processMessage(fileName, "Incorrect indent", lineCount);
-		}
-
-		if (Validator.isNotNull(trimmedLine)) {
-			int expectedTabCount = -1;
-
-			if (previousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-				!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE)) {
-
-				expectedTabCount = previousLineLeadingTabCount + 1;
-			}
-			else if (previousLine.matches(".*\t(for|if|try) .*[(:]")) {
-				expectedTabCount = previousLineLeadingTabCount + 2;
-			}
-			else if (previousLine.matches(".*\t(else if|while) .*[(:]")) {
-				expectedTabCount = previousLineLeadingTabCount + 3;
-			}
-
-			if ((expectedTabCount != -1) &&
-				(lineLeadingTabCount != expectedTabCount)) {
-
-				processMessage(
-					fileName,
-					"Line starts with " + lineLeadingTabCount +
-						" tabs, but should be " + expectedTabCount,
-					lineCount);
-			}
-		}
-
 		if (previousLine.endsWith(StringPool.PERIOD)) {
 			int x = trimmedLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
@@ -349,15 +342,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				processMessage(fileName, "Incorrect line break", lineCount);
 			}
-		}
-
-		int diff = lineLeadingTabCount - previousLineLeadingTabCount;
-
-		if ((previousLine.contains("\tthrows ") && (diff == 0)) ||
-			(trimmedLine.startsWith("throws ") &&
-			 ((diff == 0) || (diff > 1)))) {
-
-			processMessage(fileName, "incorrect indent", lineCount);
 		}
 
 		String strippedQuotesLine = stripQuotes(trimmedLine);
@@ -517,41 +501,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 			processMessage(
 				fileName, "There should be a line break after '}'", lineCount);
-		}
-	}
-
-	protected void checkInternalImports(
-		String fileName, String absolutePath, String content) {
-
-		if (absolutePath.contains("/modules/core/") ||
-			absolutePath.contains("/modules/util/") ||
-			fileName.contains("/test/") ||
-			fileName.contains("/testIntegration/")) {
-
-			return;
-		}
-
-		Matcher matcher = _internalImportPattern.matcher(content);
-
-		int pos = -1;
-
-		while (matcher.find()) {
-			if (pos == -1) {
-				pos = absolutePath.lastIndexOf("/com/liferay/");
-			}
-
-			String expectedImportFileLocation =
-				absolutePath.substring(0, pos + 13) +
-					StringUtil.replace(matcher.group(1), ".", "/") + ".java";
-
-			File file = new File(expectedImportFileLocation);
-
-			if (!file.exists()) {
-				processMessage(
-					fileName,
-					"Do not import internal class from another module",
-					getLineCount(content, matcher.start(1)));
-			}
 		}
 	}
 
@@ -2437,6 +2386,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
+				if (trimmedLine.startsWith(StringPool.SEMICOLON)) {
+					processMessage(
+						fileName, "Line should not start with ';'", lineCount);
+				}
+
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
@@ -2662,7 +2616,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					ifClause = ifClause + line + StringPool.NEW_LINE;
 
-					if (line.endsWith(") {")) {
+					String trimmedIfClause = StringUtil.trim(ifClause);
+
+					if (line.endsWith(") {") ||
+						(line.endsWith(StringPool.SEMICOLON) &&
+						 trimmedIfClause.startsWith("while "))) {
+
 						String newIfClause = formatIfClause(
 							ifClause, fileName, lineCount);
 
@@ -2676,11 +2635,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						ifClause = StringPool.BLANK;
 					}
 					else if (line.endsWith(StringPool.SEMICOLON)) {
-						String trimmedIfClause = StringUtil.trim(ifClause);
-
-						if (!trimmedIfClause.startsWith("while ") &&
-							!trimmedIfClause.contains("{\t")) {
-
+						if (!trimmedIfClause.contains("{\t")) {
 							processMessage(
 								fileName, "Incorrect if statement", lineCount);
 						}
@@ -2725,7 +2680,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 					else {
-						checkIndentationAndLineBreaks(
+						checkLineBreaks(
 							line, previousLine, fileName, lineCount);
 
 						if (!trimmedLine.startsWith("//") &&
@@ -3300,6 +3255,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 						if (Validator.isNull(nextLine) ||
 							nextLine.endsWith(") {")) {
+
+							if (trimmedPreviousLine.startsWith("try (") &&
+								trimmedLine.startsWith("new ") &&
+								(getLevel(nextLine) == -1)) {
+
+								return null;
+							}
 
 							processMessage(
 								fileName,

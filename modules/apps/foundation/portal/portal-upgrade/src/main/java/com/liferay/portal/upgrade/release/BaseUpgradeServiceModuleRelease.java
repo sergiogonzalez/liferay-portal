@@ -14,8 +14,11 @@
 
 package com.liferay.portal.upgrade.release;
 
+import com.liferay.portal.kernel.model.dao.ReleaseDAO;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +31,12 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (Validator.isNull(getOldBundleSymbolicName())) {
+			_createRelease();
+
+			return;
+		}
+
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select buildNumber from Release_ where servletContextName = " +
 					"?")) {
@@ -40,13 +49,24 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 
 					_updateRelease(_toSchemaVersion(buildNumber));
 				}
+				else {
+					_createRelease();
+				}
 			}
 		}
 	}
 
 	protected abstract String getNewBundleSymbolicName();
 
-	protected abstract String getOldBundleSymbolicName();
+	protected String getOldBundleSymbolicName() {
+		return StringPool.BLANK;
+	}
+
+	private void _createRelease() throws SQLException {
+		ReleaseDAO releaseDAO = new ReleaseDAO();
+
+		releaseDAO.addRelease(connection, getNewBundleSymbolicName());
+	}
 
 	private String _toSchemaVersion(String buildNumber) {
 		StringBuilder sb = new StringBuilder(2 * buildNumber.length());

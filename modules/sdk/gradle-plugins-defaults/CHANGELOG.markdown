@@ -827,8 +827,8 @@ versions of Git.
 ## 2.3.11 - 2016-12-27
 
 ### Added
-- [LPS-69847]: Apply [Liferay Gradle Plugins Dependency Checker] to throw an
-error if the version of [Liferay Source Formatter] in use is not the latest one
+- [LPS-69847]: Apply the [Liferay Gradle Plugins Dependency Checker] to throw an
+error if the [Liferay Source Formatter] version in use is not the latest one
 and is older than 30 days.
 
 ## 2.4.0 - 2016-12-29
@@ -836,7 +836,7 @@ and is older than 30 days.
 ### Added
 - [LPS-61987]: Enforce the use of snapshot timestamp versions for dependencies.
 - [LPS-69453]: Add an empty `deployDependencies` task to copy additional
-dependency JAR files to the deploy directory.
+dependency JAR files to the `deploy` directory.
 - [LPS-69847]: Add the ability to ignore the locally deployed JAR files of a
 portal tool by setting the project property `[portal tool name].ignore.local`.
 
@@ -849,6 +849,27 @@ portal tool by setting the project property `[portal tool name].ignore.local`.
 
 ### Changed
 - [LPS-69920]: Update the [Liferay Gradle Plugins] dependency to version 3.0.63.
+
+## 2.4.3 - 2016-12-29
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.64.
+
+## 2.4.4 - 2017-01-02
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.65.
+
+## 2.4.5 - 2017-01-03
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.67.
+
+## 2.4.6 - 2017-01-03
+
+### Added
+- [LPS-69719]: Exclude `**/archetype-resources/**.java` files from the
+`.classpath` file to avoid compilation errors in Eclipse.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -925,6 +946,7 @@ portal tool by setting the project property `[portal tool name].ignore.local`.
 [LPS-69606]: https://issues.liferay.com/browse/LPS-69606
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
+[LPS-69719]: https://issues.liferay.com/browse/LPS-69719
 [LPS-69730]: https://issues.liferay.com/browse/LPS-69730
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-69824]: https://issues.liferay.com/browse/LPS-69824
