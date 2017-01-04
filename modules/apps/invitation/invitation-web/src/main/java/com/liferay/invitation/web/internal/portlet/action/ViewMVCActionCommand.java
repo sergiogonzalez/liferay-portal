@@ -44,6 +44,7 @@ import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -173,10 +174,17 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "redirect"));
 
 		if (Validator.isNotNull(redirect)) {
-			actionResponse.setRenderParameter("mvcPath", redirect);
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
+
+			actionResponse.sendRedirect(redirect);
+
+			return;
 		}
 
-		actionResponse.setRenderParameter("mvcPath", "/view.jsp");
+		actionResponse.setWindowState(WindowState.NORMAL);
 	}
 
 	@Reference(unbind = "-")
