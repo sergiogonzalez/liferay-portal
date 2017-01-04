@@ -331,7 +331,9 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				form.ajaxSubmit(
 					{
-						data: {doAsUserId: themeDisplay.getDoAsUserIdEncoded()},
+						data: {
+							doAsUserId: themeDisplay.getDoAsUserIdEncoded()
+						},
 						beforeSubmit: function() {
 							Util.toggleDisabled(commentButtonList, true);
 						},
