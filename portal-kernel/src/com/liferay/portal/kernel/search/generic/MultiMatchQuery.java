@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -174,6 +175,47 @@ public class MultiMatchQuery extends BaseQueryImpl {
 
 	public void setZeroTermsQuery(MatchQuery.ZeroTermsQuery zeroTermsQuery) {
 		_zeroTermsQuery = zeroTermsQuery;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(29);
+
+		sb.append("{analyzer=");
+		sb.append(_analyzer);
+		sb.append(", className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", cutOffFrequency=");
+		sb.append(_cutOffFrequency);
+		sb.append(", fields=");
+		sb.append(_fields);
+		sb.append(", fuzziness=");
+		sb.append(_fuzziness);
+		sb.append(", lenient=");
+		sb.append(_lenient);
+		sb.append(", maxExpansions=");
+		sb.append(_maxExpansions);
+		sb.append(", minShouldMatch=");
+		sb.append(_minShouldMatch);
+		sb.append(", operator=");
+		sb.append(_operator);
+		sb.append(", prefixLength=");
+		sb.append(_prefixLength);
+		sb.append(", slop=");
+		sb.append(_slop);
+		sb.append(", tieBreaker=");
+		sb.append(_tieBreaker);
+		sb.append(", type=");
+		sb.append(_type);
+		sb.append(", value=");
+		sb.append(_value);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public enum Type {

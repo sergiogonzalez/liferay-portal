@@ -27,7 +27,6 @@ java.lang.Number duration = GetterUtil.getNumber(String.valueOf(request.getAttri
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:alert:id"));
 java.lang.String type = GetterUtil.getString((java.lang.String)request.getAttribute("aui:alert:type"), "info");
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:alert:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:alert:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/alert/init-ext.jspf" %>

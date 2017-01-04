@@ -39,7 +39,14 @@ public class IndentationCheck extends AbstractCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
-			TokenTypes.IDENT, TokenTypes.LITERAL_BOOLEAN,
+			TokenTypes.ANNOTATION_ARRAY_INIT, TokenTypes.ARRAY_INIT,
+			TokenTypes.AT, TokenTypes.BLOCK_COMMENT_BEGIN,
+			TokenTypes.BLOCK_COMMENT_END, TokenTypes.CHAR_LITERAL,
+			TokenTypes.CTOR_CALL, TokenTypes.DO_WHILE,
+			TokenTypes.EXTENDS_CLAUSE, TokenTypes.FINAL,
+			TokenTypes.GENERIC_START, TokenTypes.IDENT,
+			TokenTypes.IMPLEMENTS_CLAUSE, TokenTypes.IMPORT, TokenTypes.INC,
+			TokenTypes.INSTANCE_INIT, TokenTypes.LITERAL_BOOLEAN,
 			TokenTypes.LITERAL_BREAK, TokenTypes.LITERAL_BYTE,
 			TokenTypes.LITERAL_CASE, TokenTypes.LITERAL_CATCH,
 			TokenTypes.LITERAL_CHAR, TokenTypes.LITERAL_CLASS,
@@ -54,18 +61,35 @@ public class IndentationCheck extends AbstractCheck {
 			TokenTypes.LITERAL_PUBLIC, TokenTypes.LITERAL_RETURN,
 			TokenTypes.LITERAL_SHORT, TokenTypes.LITERAL_STATIC,
 			TokenTypes.LITERAL_SUPER, TokenTypes.LITERAL_SWITCH,
-			TokenTypes.LITERAL_THIS, TokenTypes.LITERAL_THROW,
-			TokenTypes.LITERAL_THROWS, TokenTypes.LITERAL_TRUE,
-			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_VOID,
-			TokenTypes.LITERAL_WHILE, TokenTypes.RCURLY, TokenTypes.RPAREN
+			TokenTypes.LITERAL_SYNCHRONIZED, TokenTypes.LITERAL_THIS,
+			TokenTypes.LITERAL_THROW, TokenTypes.LITERAL_THROWS,
+			TokenTypes.LITERAL_TRUE, TokenTypes.LITERAL_TRY,
+			TokenTypes.LITERAL_VOID, TokenTypes.LITERAL_WHILE, TokenTypes.LNOT,
+			TokenTypes.LPAREN, TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT,
+			TokenTypes.NUM_INT, TokenTypes.NUM_LONG, TokenTypes.PACKAGE_DEF,
+			TokenTypes.RCURLY, TokenTypes.RPAREN,
+			TokenTypes.SINGLE_LINE_COMMENT, TokenTypes.STATIC_IMPORT,
+			TokenTypes.STATIC_INIT, TokenTypes.STRING_LITERAL,
+			TokenTypes.SUPER_CTOR_CALL, TokenTypes.TYPECAST,
+			TokenTypes.UNARY_MINUS
 		};
 	}
 
 	@Override
+	public boolean isCommentNodesRequired() {
+		return true;
+	}
+
+	@Override
 	public void visitToken(DetailAST detailAST) {
+
+		// Only check types at the beginning of the line. We can skip if/while
+		// statements since we have logic in BaseSourceProcessor in place to
+		// automatically fix incorrect indentations inside those.
+
 		if (!_isAtLineStart(detailAST) ||
 			_isInsideChainedConcatMethod(detailAST) ||
-			_isInsideDoIfTryOrWhileStatementCriterium(detailAST) ||
+			_isInsideDoIfOrWhileStatementCriterium(detailAST) ||
 			_isInsideOperatorCriterium(detailAST)) {
 
 			return;
@@ -184,6 +208,38 @@ public class IndentationCheck extends AbstractCheck {
 
 			if (parentAST.getType() == TokenTypes.CASE_GROUP) {
 				return expectedTabCount + 1;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
+	private int _addExtraTabForTryStatement(
+		int expectedTabCount, DetailAST detailAST) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return expectedTabCount;
+			}
+
+			if (parentAST.getType() == TokenTypes.RESOURCE) {
+				DetailAST previousSibling = parentAST.getPreviousSibling();
+
+				if (previousSibling != null) {
+					return expectedTabCount;
+				}
+			}
+
+			if (parentAST.getType() == TokenTypes.RESOURCE_SPECIFICATION) {
+				parentAST = parentAST.getParent();
+
+				if (parentAST.getType() == TokenTypes.LITERAL_TRY) {
+					return expectedTabCount + 1;
+				}
+
+				continue;
 			}
 
 			parentAST = parentAST.getParent();
@@ -364,8 +420,11 @@ public class IndentationCheck extends AbstractCheck {
 		expectedTabCount = _addExtraTabForParameterWithThrows(
 			expectedTabCount, detailAST);
 		expectedTabCount = _addExtraTabForSwitch(expectedTabCount, detailAST);
+		expectedTabCount = _addExtraTabForTryStatement(
+			expectedTabCount, detailAST);
 
-		if ((detailAST.getType() == TokenTypes.RCURLY) ||
+		if ((detailAST.getType() == TokenTypes.BLOCK_COMMENT_END) ||
+			(detailAST.getType() == TokenTypes.RCURLY) ||
 			(detailAST.getType() == TokenTypes.RPAREN)) {
 
 			return expectedTabCount - 1;
@@ -412,7 +471,8 @@ public class IndentationCheck extends AbstractCheck {
 	}
 
 	private int _getLineBreakTabs(DetailAST detailAST) {
-		if ((detailAST.getType() == TokenTypes.LITERAL_CATCH) ||
+		if ((detailAST.getType() == TokenTypes.DO_WHILE) ||
+			(detailAST.getType() == TokenTypes.LITERAL_CATCH) ||
 			(detailAST.getType() == TokenTypes.LITERAL_ELSE) ||
 			(detailAST.getType() == TokenTypes.LITERAL_FINALLY)) {
 
@@ -452,6 +512,20 @@ public class IndentationCheck extends AbstractCheck {
 
 				if ((lineNo != -1) && (lineNo < detailAST.getLineNo())) {
 					lineNumbers.add(lineNo);
+				}
+
+				if ((parentAST.getType() == TokenTypes.CLASS_DEF) ||
+					(parentAST.getType() == TokenTypes.ENUM_DEF) ||
+					(parentAST.getType() == TokenTypes.INTERFACE_DEF)) {
+
+					DetailAST nameAST = parentAST.findFirstToken(
+						TokenTypes.IDENT);
+
+					lineNo = nameAST.getLineNo();
+
+					if (lineNo < detailAST.getLineNo()) {
+						lineNumbers.add(lineNo);
+					}
 				}
 
 				lineNumbers = _addTabsForGenerics(
@@ -558,7 +632,10 @@ public class IndentationCheck extends AbstractCheck {
 			if (parentAST.getType() == TokenTypes.ANNOTATION) {
 				parentAST = parentAST.getParent();
 
-				if (parentAST.getType() == TokenTypes.MODIFIERS) {
+				if ((parentAST.getType() == TokenTypes.MODIFIERS) &&
+					(_findParent(parentAST, TokenTypes.PARAMETER_DEF) ==
+						null)) {
+
 					return lineNumbers.size();
 				}
 
@@ -665,7 +742,7 @@ public class IndentationCheck extends AbstractCheck {
 		}
 	}
 
-	private boolean _isInsideDoIfTryOrWhileStatementCriterium(
+	private boolean _isInsideDoIfOrWhileStatementCriterium(
 		DetailAST detailAST) {
 
 		DetailAST parentAST = detailAST.getParent();
@@ -675,30 +752,20 @@ public class IndentationCheck extends AbstractCheck {
 				return false;
 			}
 
-			if (parentAST.getType() == TokenTypes.EXPR) {
+			if (parentAST.getType() != TokenTypes.EXPR) {
 				parentAST = parentAST.getParent();
-
-				if ((parentAST.getType() == TokenTypes.LITERAL_DO) ||
-					(parentAST.getType() == TokenTypes.LITERAL_IF) ||
-					(parentAST.getType() == TokenTypes.LITERAL_WHILE)) {
-
-					return true;
-				}
-
-				continue;
-			}
-
-			if (parentAST.getType() == TokenTypes.RESOURCE_SPECIFICATION) {
-				parentAST = parentAST.getParent();
-
-				if (parentAST.getType() == TokenTypes.LITERAL_TRY) {
-					return true;
-				}
 
 				continue;
 			}
 
 			parentAST = parentAST.getParent();
+
+			if ((parentAST.getType() == TokenTypes.LITERAL_DO) ||
+				(parentAST.getType() == TokenTypes.LITERAL_IF) ||
+				(parentAST.getType() == TokenTypes.LITERAL_WHILE)) {
+
+				return true;
+			}
 		}
 	}
 
