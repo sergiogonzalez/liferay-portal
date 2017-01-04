@@ -69,12 +69,25 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		String rss = StringPool.BLANK;
 
-		if (companyId > 0) {
-			String feedURL = StringPool.BLANK;
+		if (threadId > 0) {
+			String feedURL =
+				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+					"/message_boards/find_thread?p_l_id=" + plid +
+						"&threadId=" + threadId;
 
-			rss = _mbMessageService.getCompanyMessagesRSS(
-				companyId, WorkflowConstants.STATUS_APPROVED, max, type,
-				version, displayStyle, feedURL, entryURL, themeDisplay);
+			rss = _mbMessageService.getThreadMessagesRSS(
+				threadId, WorkflowConstants.STATUS_APPROVED, max, type, version,
+				displayStyle, feedURL, entryURL, themeDisplay);
+		}
+		else if (categoryId > 0) {
+			String feedURL =
+				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+					"/message_boards/find_category?p_l_id=" + plid +
+						"&mbCategoryId=" + categoryId;
+
+			rss = _mbMessageService.getCategoryMessagesRSS(
+				groupId, categoryId, WorkflowConstants.STATUS_APPROVED, max,
+				type, version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
 		else if (groupId > 0) {
 			String mvcRenderCommandName = ParamUtil.getString(
@@ -108,25 +121,12 @@ public class RSSAction extends BaseRSSStrutsAction {
 					version, displayStyle, feedURL, entryURL, themeDisplay);
 			}
 		}
-		else if (categoryId > 0) {
-			String feedURL =
-				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/message_boards/find_category?p_l_id=" + plid +
-						"&mbCategoryId=" + categoryId;
+		else if (companyId > 0) {
+			String feedURL = StringPool.BLANK;
 
-			rss = _mbMessageService.getCategoryMessagesRSS(
-				groupId, categoryId, WorkflowConstants.STATUS_APPROVED, max,
-				type, version, displayStyle, feedURL, entryURL, themeDisplay);
-		}
-		else if (threadId > 0) {
-			String feedURL =
-				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/message_boards/find_thread?p_l_id=" + plid +
-						"&threadId=" + threadId;
-
-			rss = _mbMessageService.getThreadMessagesRSS(
-				threadId, WorkflowConstants.STATUS_APPROVED, max, type, version,
-				displayStyle, feedURL, entryURL, themeDisplay);
+			rss = _mbMessageService.getCompanyMessagesRSS(
+				companyId, WorkflowConstants.STATUS_APPROVED, max, type,
+				version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
 
 		return rss.getBytes(StringPool.UTF8);
