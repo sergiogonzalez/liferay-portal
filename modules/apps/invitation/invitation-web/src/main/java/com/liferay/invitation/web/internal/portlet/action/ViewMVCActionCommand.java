@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + InvitationPortletKeys.INVITATION,
-		"mvc.command.name=view"
+		"mvc.command.name=/invitation/view"
 	},
 	service = MVCActionCommand.class
 )
