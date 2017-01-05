@@ -14,12 +14,14 @@
 
 package com.liferay.comment.taglib.servlet.taglib;
 
+import com.liferay.comment.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Charles May
@@ -48,6 +50,13 @@ public class DiscussionTag extends IncludeTag {
 
 	public void setHideControls(boolean hideControls) {
 		_hideControls = hideControls;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setRatingsEnabled(boolean ratingsEnabled) {
