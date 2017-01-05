@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Comment Discussion Taglib
+Bundle-SymbolicName: com.liferay.comment.discussion.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.comment.discussion.taglib.servlet.taglib
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/comment-discussion";version:Version="${Bundle-Version}"
+Web-ContextPath: /comment-discussion-taglib
