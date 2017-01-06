@@ -381,7 +381,9 @@ AUI.add(
 
 						var label = instance._getLabel(description, json.totalEntries);
 
-						var averageIndex = instance.get('round') ? Math.round(averageScore) : Math.floor(averageScore);
+						var formattedAverageScore = averageScore.toFixed(1);
+
+						var averageIndex = instance.get('round') ? Math.round(formattedAverageScore) : Math.floor(formattedAverageScore);
 
 						var ratingScore = instance._ratingScoreNode;
 
@@ -401,7 +403,7 @@ AUI.add(
 							}
 						);
 
-						instance._updateAverageScoreText(averageScore);
+						instance._updateAverageScoreText(formattedAverageScore);
 						instance._updateScoreText(score);
 					}
 				}
