@@ -16,7 +16,6 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.ratings.kernel.model.RatingsStats;
@@ -54,11 +53,9 @@ public class RateEntryAction extends JSONAction {
 		RatingsStats stats = RatingsStatsLocalServiceUtil.getStats(
 			className, classPK);
 
-		double averageScore = MathUtil.format(stats.getAverageScore(), 1, 1);
-
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
-		jsonObj.put("averageScore", averageScore);
+		jsonObj.put("averageScore", stats.getAverageScore());
 		jsonObj.put("score", score);
 		jsonObj.put("totalEntries", stats.getTotalEntries());
 		jsonObj.put("totalScore", stats.getTotalScore());
