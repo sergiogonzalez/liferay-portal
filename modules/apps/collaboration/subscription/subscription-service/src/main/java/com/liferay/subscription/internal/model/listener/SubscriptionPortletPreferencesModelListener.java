@@ -17,14 +17,9 @@ package com.liferay.subscription.internal.model.listener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,48 +33,7 @@ public class SubscriptionPortletPreferencesModelListener
 
 	@Override
 	public void onAfterRemove(PortletPreferences portletPreferences) {
-		clearCache(portletPreferences);
-
 		deleteSubscriptions(portletPreferences);
-	}
-
-	/**
-	 * @see com.liferay.portal.model.PortletPreferencesModelListener#clearCache(
-	 *      PortletPreferences)
-	 */
-	protected void clearCache(PortletPreferences portletPreferences) {
-		if (portletPreferences == null) {
-			return;
-		}
-
-		try {
-			long companyId = 0;
-
-			Layout layout = _layoutLocalService.fetchLayout(
-				portletPreferences.getPlid());
-
-			if ((layout != null) && !layout.isPrivateLayout()) {
-				companyId = layout.getCompanyId();
-			}
-			else {
-				LayoutRevision layoutRevision =
-					_layoutRevisionLocalService.fetchLayoutRevision(
-						portletPreferences.getPlid());
-
-				if ((layoutRevision != null) &&
-					!layoutRevision.isPrivateLayout()) {
-
-					companyId = layoutRevision.getCompanyId();
-				}
-			}
-
-			if (companyId > 0) {
-				CacheUtil.clearCache(companyId);
-			}
-		}
-		catch (Exception e) {
-			CacheUtil.clearCache();
-		}
 	}
 
 	protected void deleteSubscriptions(PortletPreferences portletPreferences) {
@@ -99,20 +53,6 @@ public class SubscriptionPortletPreferencesModelListener
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		_layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSubscriptionLocalService(
 		SubscriptionLocalService subscriptionLocalService) {
 
@@ -122,8 +62,6 @@ public class SubscriptionPortletPreferencesModelListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionPortletPreferencesModelListener.class);
 
-	private LayoutLocalService _layoutLocalService;
-	private LayoutRevisionLocalService _layoutRevisionLocalService;
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

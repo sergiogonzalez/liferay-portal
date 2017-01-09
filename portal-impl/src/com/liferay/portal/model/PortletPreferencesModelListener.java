@@ -40,16 +40,17 @@ public class PortletPreferencesModelListener
 	extends BaseModelListener<PortletPreferences> {
 
 	@Override
+	public void onAfterRemove(PortletPreferences portletPreferences) {
+		clearCache(portletPreferences);
+	}
+
+	@Override
 	public void onAfterUpdate(PortletPreferences portletPreferences) {
 		clearCache(portletPreferences);
 
 		updateLayout(portletPreferences);
 	}
 
-	/**
-	 * @see com.liferay.subscription.internal.service.SubscriptionPortletPreferencesModelListener#clearCache(
-	 *      PortletPreferences)
-	 */
 	protected void clearCache(PortletPreferences portletPreferences) {
 		if (portletPreferences == null) {
 			return;
