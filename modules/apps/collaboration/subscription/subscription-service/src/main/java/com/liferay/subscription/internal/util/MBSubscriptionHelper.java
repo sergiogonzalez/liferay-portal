@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = MBSubscriptionHelper.class)
 public class MBSubscriptionHelper {
 
-	public List<MBCategory> addDefaultCategory(
+	public List<MBCategory> addSubscribedRootCategory(
 			long groupId, long userId, List<MBCategory> categories)
 		throws PortalException {
 
@@ -75,7 +75,7 @@ public class MBSubscriptionHelper {
 		return categories;
 	}
 
-	public int addDefaultCategoryCount(long groupId, long userId, int count)
+	public int addSubscribedRootCategoryCount(long groupId, long userId, int count)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(groupId);

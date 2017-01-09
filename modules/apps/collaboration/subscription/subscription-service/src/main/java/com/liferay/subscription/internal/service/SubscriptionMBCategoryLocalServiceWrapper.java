@@ -72,7 +72,7 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 		}
 
 		try {
-			return _mbSubscriptionHelper.addDefaultCategory(
+			return _mbSubscriptionHelper.addSubscribedRootCategory(
 				groupId, userId, categories);
 		}
 		catch (PortalException pe) {
@@ -85,7 +85,7 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 		int count = super.getSubscribedCategoriesCount(groupId, userId);
 
 		try {
-			return _mbSubscriptionHelper.addDefaultCategoryCount(
+			return _mbSubscriptionHelper.addSubscribedRootCategoryCount(
 				groupId, userId, count);
 		}
 		catch (PortalException pe) {
