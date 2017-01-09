@@ -25,6 +25,7 @@ ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)req
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectedEventName"));
 ItemSelectorReturnTypeResolver itemSelectorReturnTypeResolver = (ItemSelectorReturnTypeResolver)request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectorReturnTypeResolver");
 long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-item-selector:repository-entry-browser:maxFileSize"));
+String mimeTypes = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:mimeTypes"), "*");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:portletURL");
 List repositoryEntries = (List)request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntries");
 int repositoryEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntriesCount"));
@@ -174,7 +175,7 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-util:buffer var="selectFileHTML">
 			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 
-			<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
+			<input accept="<%= mimeTypes %>" class="hide" id="<%= randomNamespace %>InputFile" type="file" />
 		</liferay-util:buffer>
 
 		<div class="drop-enabled drop-zone no-border">
