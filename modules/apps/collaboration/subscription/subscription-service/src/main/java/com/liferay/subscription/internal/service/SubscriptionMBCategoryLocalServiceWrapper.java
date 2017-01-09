@@ -18,6 +18,7 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceWrapper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -67,7 +68,9 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 
 		int count = getSubscribedCategoriesCount(groupId, userId);
 
-		if (((start + end) < count) || ((start - end) == categories.size())) {
+		if ((start != QueryUtil.ALL_POS) && (end != QueryUtil.ALL_POS) &&
+			((end < count) || ((end - start) == categories.size()))) {
+
 			return categories;
 		}
 
