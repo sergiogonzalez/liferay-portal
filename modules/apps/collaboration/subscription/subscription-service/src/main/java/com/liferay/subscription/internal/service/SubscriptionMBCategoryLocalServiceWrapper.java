@@ -20,7 +20,6 @@ import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceWrapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.subscription.internal.util.MBSubscriptionHelper;
@@ -125,11 +124,6 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 	}
 
 	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setMBSubscriptionHelper(
 		MBSubscriptionHelper mbSubscriptionHelper) {
 
@@ -143,7 +137,6 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
 	private MBSubscriptionHelper _mbSubscriptionHelper;
 	private SubscriptionLocalService _subscriptionLocalService;
 
