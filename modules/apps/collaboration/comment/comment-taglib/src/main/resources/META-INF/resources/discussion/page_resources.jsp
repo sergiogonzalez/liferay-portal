@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/discussion/init.jsp" %>
+<%@ include file="/discussion/init.jsp" %>
 
 <%
-int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
-int initialIndex = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
-int rootIndexPage = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:rootIndexPage"));
+int index = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:index"));
+int initialIndex = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:index"));
+int rootIndexPage = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:rootIndexPage"));
 
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
@@ -38,15 +38,15 @@ if (discussionCommentIterator != null) {
 			break;
 		}
 
-		request.setAttribute("liferay-ui:discussion:depth", 0);
-		request.setAttribute("liferay-ui:discussion:discussion", discussion);
-		request.setAttribute("liferay-ui:discussion:discussionComment", discussionCommentIterator.next());
+		request.setAttribute("liferay-comment:discussion:depth", 0);
+		request.setAttribute("liferay-comment:discussion:discussion", discussion);
+		request.setAttribute("liferay-comment:discussion:discussionComment", discussionCommentIterator.next());
 %>
 
-		<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
+		<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>"/>
 
 <%
-		index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
+		index = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:index"));
 	}
 }
 %>
