@@ -15,13 +15,10 @@
 package com.liferay.subscription.internal.service;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceWrapper;
+import com.liferay.message.boards.kernel.service.MBCategoryService;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.subscription.internal.util.MBSubscriptionHelper;
 
 import java.util.List;
@@ -33,29 +30,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class SubscriptionMBCategoryLocalServiceWrapper
-	extends MBCategoryLocalServiceWrapper {
+public class SubscriptionMBCategoryServiceWrapper
+	extends MBCategoryServiceWrapper {
 
-	public SubscriptionMBCategoryLocalServiceWrapper() {
+	public SubscriptionMBCategoryServiceWrapper() {
 		super(null);
 	}
 
-	public SubscriptionMBCategoryLocalServiceWrapper(
-		MBCategoryLocalService mbCategoryLocalService) {
+	public SubscriptionMBCategoryServiceWrapper(
+		MBCategoryService mbCategoryService) {
 
-		super(mbCategoryLocalService);
-	}
-
-	@Override
-	public void deleteCategory(
-			MBCategory category, boolean includeTrashedEntries)
-		throws PortalException {
-
-		super.deleteCategory(category, includeTrashedEntries);
-
-		_subscriptionLocalService.deleteSubscriptions(
-			category.getCompanyId(), MBCategory.class.getName(),
-			category.getCategoryId());
+		super(mbCategoryService);
 	}
 
 	@Override
@@ -93,39 +78,6 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 		}
 	}
 
-	@Override
-	public void subscribeCategory(long userId, long groupId, long categoryId)
-		throws PortalException {
-
-		super.subscribeCategory(userId, groupId, categoryId);
-
-		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			categoryId = groupId;
-		}
-
-		_subscriptionLocalService.addSubscription(
-			userId, groupId, MBCategory.class.getName(), categoryId);
-	}
-
-	@Override
-	public void unsubscribeCategory(long userId, long groupId, long categoryId)
-		throws PortalException {
-
-		super.unsubscribeCategory(userId, groupId, categoryId);
-
-		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			categoryId = groupId;
-		}
-
-		_subscriptionLocalService.deleteSubscription(
-			userId, MBCategory.class.getName(), categoryId);
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setMBSubscriptionHelper(
 		MBSubscriptionHelper mbSubscriptionHelper) {
@@ -133,15 +85,6 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 		_mbSubscriptionHelper = mbSubscriptionHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	private GroupLocalService _groupLocalService;
 	private MBSubscriptionHelper _mbSubscriptionHelper;
-	private SubscriptionLocalService _subscriptionLocalService;
 
 }
