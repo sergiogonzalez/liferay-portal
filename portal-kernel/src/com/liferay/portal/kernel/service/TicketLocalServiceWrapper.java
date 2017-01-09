@@ -171,6 +171,15 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 		return _ticketLocalService.updateTicket(ticket);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Ticket updateTicket(long ticketId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.updateTicket(ticketId, className, classPK,
+			type, extraInfo, expirationDate);
+	}
+
 	/**
 	* Returns the number of tickets.
 	*
@@ -259,6 +268,13 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	public java.util.List<com.liferay.portal.kernel.model.Ticket> getTickets(
 		int start, int end) {
 		return _ticketLocalService.getTickets(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Ticket> getTickets(
+		long companyId, java.lang.String className, long classPK, int type) {
+		return _ticketLocalService.getTickets(companyId, className, classPK,
+			type);
 	}
 
 	/**

@@ -150,6 +150,10 @@ public interface TicketLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Ticket updateTicket(Ticket ticket);
 
+	public Ticket updateTicket(long ticketId, java.lang.String className,
+		long classPK, int type, java.lang.String extraInfo, Date expirationDate)
+		throws PortalException;
+
 	/**
 	* Returns the number of tickets.
 	*
@@ -217,6 +221,10 @@ public interface TicketLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Ticket> getTickets(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Ticket> getTickets(long companyId, java.lang.String className,
+		long classPK, int type);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
