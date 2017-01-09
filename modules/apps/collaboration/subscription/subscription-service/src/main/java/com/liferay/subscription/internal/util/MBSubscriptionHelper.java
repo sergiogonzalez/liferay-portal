@@ -75,7 +75,8 @@ public class MBSubscriptionHelper {
 		return categories;
 	}
 
-	public int addSubscribedRootCategoryCount(long groupId, long userId, int count)
+	public int addSubscribedRootCategoryCount(
+			long groupId, long userId, int count)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(groupId);
