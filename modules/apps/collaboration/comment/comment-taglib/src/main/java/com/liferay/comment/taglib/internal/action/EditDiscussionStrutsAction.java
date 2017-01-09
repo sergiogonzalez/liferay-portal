@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFunction;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -50,6 +50,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -137,6 +138,11 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		CommentManagerUtil.deleteComment(commentId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void subscribeToComments(
 			HttpServletRequest request, boolean subscribe)
 		throws Exception {
@@ -189,7 +195,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 				String emailAddress = ParamUtil.getString(
 					request, "emailAddress");
 
-				user = UserLocalServiceUtil.fetchUserByEmailAddress(
+				user = _userLocalService.fetchUserByEmailAddress(
 					themeDisplay.getCompanyId(), emailAddress);
 
 				if ((user == null) ||
@@ -275,5 +281,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 		return discussionPermission;
 	}
+
+	private UserLocalService _userLocalService;
 
 }
