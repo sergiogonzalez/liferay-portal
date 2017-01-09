@@ -14,20 +14,20 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/discussion/init.jsp" %>
+<%@ include file="/discussion/init.jsp" %>
 
 <%
-int depth = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:depth"));
-Discussion discussion = (Discussion)request.getAttribute("liferay-ui:discussion:discussion");
-DiscussionComment discussionComment = (DiscussionComment)request.getAttribute("liferay-ui:discussion:discussionComment");
+int depth = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:depth"));
+Discussion discussion = (Discussion)request.getAttribute("liferay-comment:discussion:discussion");
+DiscussionComment discussionComment = (DiscussionComment)request.getAttribute("liferay-comment:discussion:discussionComment");
 
-int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
+int index = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:index"));
 
 index++;
 
-request.setAttribute("liferay-ui:discussion:index", Integer.valueOf(index));
+request.setAttribute("liferay-comment:discussion:index", Integer.valueOf(index));
 
-String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
+String randomNamespace = (String)request.getAttribute("liferay-comment:discussion:randomNamespace");
 
 boolean skipEditorLoading = ParamUtil.getBoolean(request, "skipEditorLoading");
 
@@ -299,11 +299,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		<%
 		for (DiscussionComment curDiscussionComment : discussionComment.getDescendantComments()) {
-			request.setAttribute("liferay-ui:discussion:depth", depth + 1);
-			request.setAttribute("liferay-ui:discussion:discussionComment", curDiscussionComment);
+			request.setAttribute("liferay-comment:discussion:depth", depth + 1);
+			request.setAttribute("liferay-comment:discussion:discussionComment", curDiscussionComment);
 		%>
 
-			<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
+			<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>"/>
 
 		<%
 		}

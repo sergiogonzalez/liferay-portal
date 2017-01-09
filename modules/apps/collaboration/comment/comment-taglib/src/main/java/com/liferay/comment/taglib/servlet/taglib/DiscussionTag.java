@@ -116,28 +116,30 @@ public class DiscussionTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:discussion:assetEntryVisible",
+			"liferay-comment:discussion:assetEntryVisible",
 			String.valueOf(_assetEntryVisible));
-		request.setAttribute("liferay-ui:discussion:className", _className);
 		request.setAttribute(
-			"liferay-ui:discussion:classPK", String.valueOf(_classPK));
+			"liferay-comment:discussion:className", _className);
 		request.setAttribute(
-			"liferay-ui:discussion:formAction", getFormAction(request));
-		request.setAttribute("liferay-ui:discussion:formName", _formName);
+			"liferay-comment:discussion:classPK", String.valueOf(_classPK));
 		request.setAttribute(
-			"liferay-ui:discussion:hideControls",
+			"liferay-comment:discussion:formAction", getFormAction(request));
+		request.setAttribute("liferay-comment:discussion:formName", _formName);
+		request.setAttribute(
+			"liferay-comment:discussion:hideControls",
 			String.valueOf(_hideControls));
 		request.setAttribute(
-			"liferay-ui:discussion:paginationURL", getPaginationURL(request));
+			"liferay-comment:discussion:paginationURL",
+			getPaginationURL(request));
 		request.setAttribute(
-			"liferay-ui:discussion:ratingsEnabled",
+			"liferay-comment:discussion:ratingsEnabled",
 			String.valueOf(_ratingsEnabled));
-		request.setAttribute("liferay-ui:discussion:redirect", _redirect);
+		request.setAttribute("liferay-comment:discussion:redirect", _redirect);
 		request.setAttribute(
-			"liferay-ui:discussion:userId", String.valueOf(_userId));
+			"liferay-comment:discussion:userId", String.valueOf(_userId));
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/discussion/page.jsp";
+	private static final String _PAGE = "/discussion/page.jsp";
 
 	private boolean _assetEntryVisible = true;
 	private String _className;
