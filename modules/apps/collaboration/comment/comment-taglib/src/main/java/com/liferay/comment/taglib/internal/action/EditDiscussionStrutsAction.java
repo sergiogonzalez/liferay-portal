@@ -43,11 +43,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.NamespaceServletRequest;
-import org.osgi.service.component.annotations.Component;
+
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
@@ -60,7 +62,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-		HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		String namespace = ParamUtil.getString(request, "namespace");
@@ -108,8 +110,8 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 			}
 		}
 		catch (DiscussionMaxCommentsException | MessageBodyException |
-			NoSuchMessageException | PrincipalException |
-			RequiredMessageException e) {
+			   NoSuchMessageException | PrincipalException |
+			   RequiredMessageException e) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
