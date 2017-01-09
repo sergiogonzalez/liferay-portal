@@ -43,7 +43,7 @@ if (discussionCommentIterator != null) {
 		request.setAttribute("liferay-comment:discussion:discussionComment", discussionCommentIterator.next());
 %>
 
-		<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>"/>
+		<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>" />
 
 <%
 		index = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:index"));

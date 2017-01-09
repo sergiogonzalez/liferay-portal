@@ -168,7 +168,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							request.setAttribute("liferay-comment:discussion:randomNamespace", randomNamespace);
 						%>
 
-							<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>"/>
+							<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>" />
 
 						<%
 						}

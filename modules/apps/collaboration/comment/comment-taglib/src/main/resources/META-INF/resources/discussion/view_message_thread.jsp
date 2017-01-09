@@ -303,7 +303,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			request.setAttribute("liferay-comment:discussion:discussionComment", curDiscussionComment);
 		%>
 
-			<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>"/>
+			<liferay-util:include page="/discussion/view_message_thread.jsp" servletContext="<%= application %>" />
 
 		<%
 		}
