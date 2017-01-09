@@ -20,25 +20,25 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.NamespaceServletRequest;
-import org.osgi.service.component.annotations.Component;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
-	property = "path=/portal/comment/discussion/get_comments",
+	immediate = true, property = "path=/portal/comment/discussion/get_comments",
 	service = StrutsAction.class
 )
 public class GetCommentsStrutsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-		HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		String namespace = ParamUtil.getString(request, "namespace");
@@ -62,7 +62,8 @@ public class GetCommentsStrutsAction extends BaseStrutsAction {
 			namespacedRequest, "hideControls");
 
 		namespacedRequest.setAttribute(
-			"liferay-comment:discussion:hideControls", String.valueOf(hideControls));
+			"liferay-comment:discussion:hideControls",
+			String.valueOf(hideControls));
 
 		int index = ParamUtil.getInteger(namespacedRequest, "index");
 
