@@ -494,6 +494,7 @@ if (Validator.isNotNull(keywords)) {
 			</c:if>
 
 			maxFileSize: '<%= maxFileSize %>',
+			mimeTypes: '<%= mimeTypes %>',
 			on: {
 				selectedItem: function(event) {
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
