@@ -83,7 +83,7 @@ else {
 	emptyResultsMessage='<%= LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder") %>'
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= dlItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
-	mimeTypes='<%= ArrayUtil.toString(mimeTypes, "", ",") %>'
+	mimeTypes="<%= ListUtil.toList(mimeTypes) %>"
 	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= repositoryEntries %>"
 	repositoryEntriesCount="<%= repositoryEntriesCount %>"
