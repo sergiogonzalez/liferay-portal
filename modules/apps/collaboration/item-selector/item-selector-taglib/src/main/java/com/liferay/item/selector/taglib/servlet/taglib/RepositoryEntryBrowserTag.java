@@ -77,7 +77,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_maxFileSize = maxFileSize;
 	}
 
-	public void setMimeTypes(String mimeTypes) {
+	public void setMimeTypes(List<String> mimeTypes) {
 		_mimeTypes = mimeTypes;
 	}
 
@@ -125,7 +125,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_displayStyle = null;
 		_itemSelectedEventName = null;
 		_maxFileSize = PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
-		_mimeTypes = null;
+		_mimeTypes = new ArrayList<>();
 		_portletURL = null;
 		_repositoryEntries = new ArrayList<>();
 		_repositoryEntriesCount = 0;
@@ -245,7 +245,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	private ItemSelectorReturnTypeResolver _itemSelectorReturnTypeResolver;
 	private long _maxFileSize =
 		PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
-	private String _mimeTypes;
+	private List<String> _mimeTypes = new ArrayList<>();
 	private PortletURL _portletURL;
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
 	private int _repositoryEntriesCount;
