@@ -72,6 +72,8 @@ List<BlogsEntry> entriesResults = null;
 
 SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found");
 
+entriesSearchContainer.setOrderByComparator(BlogsUtil.getOrderByComparator(orderByCol, orderByType));
+
 if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 	SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResults(entriesSearchContainer);
 
@@ -200,7 +202,6 @@ entriesSearchContainer.setResults(entriesResults);
 
 		<liferay-ui:search-container
 			id="blogEntries"
-			orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= entriesSearchContainer %>"
 		>
