@@ -23,6 +23,7 @@ Folder folder = (Folder)row.getObject();
 
 folder = folder.toEscapedModel();
 
+String userName = folder.getUserName();
 Date modifiedDate = folder.getModifiedDate();
 
 String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
@@ -35,7 +36,14 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
 <h5 class="text-default">
-	<liferay-ui:message arguments="<%= new String[] {folder.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(userName) %>">
+			<liferay-ui:message arguments="<%= new String[] {userName, modifiedDateDescription} %>" key="x-modified-x-ago" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
+		</c:otherwise>
+	</c:choose>
 </h5>
 
 <h4>
