@@ -149,6 +149,12 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 
 					<aui:input name="body" type="hidden" />
 
+					<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE %>">
+						<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
+
+						<liferay-captcha:captcha url="<%= captchaURL %>" />
+					</c:if>
+
 					<aui:button cssClass="advanced-reply btn btn-link btn-sm" onClick='<%= liferayPortletResponse.getNamespace() + "advancedReply" + replyToMessageId + "();" %>' value="advanced-reply" />
 
 					<c:if test="<%= themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
