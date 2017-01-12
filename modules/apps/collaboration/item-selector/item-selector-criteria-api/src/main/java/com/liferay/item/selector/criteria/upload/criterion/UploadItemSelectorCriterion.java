@@ -39,8 +39,22 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_maxFileSize = maxFileSize;
 	}
 
+	public UploadItemSelectorCriterion(
+		String url, String repositoryName, long maxFileSize,
+		String[] mimeTypes) {
+
+		_url = url;
+		_repositoryName = repositoryName;
+		_maxFileSize = maxFileSize;
+		_mimeTypes = mimeTypes;
+	}
+
 	public long getMaxFileSize() {
 		return _maxFileSize;
+	}
+
+	public String[] getMimeTypes() {
+		return _mimeTypes;
 	}
 
 	public String getRepositoryName() {
@@ -55,6 +69,10 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_maxFileSize = maxFileSize;
 	}
 
+	public void setMimeTypes(String[] mimeTypes) {
+		_mimeTypes = mimeTypes;
+	}
+
 	public void setRepositoryName(String repositoryName) {
 		_repositoryName = repositoryName;
 	}
@@ -64,6 +82,7 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private long _maxFileSize;
+	private String[] _mimeTypes;
 	private String _repositoryName;
 	private String _url;
 
