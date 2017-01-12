@@ -22,7 +22,7 @@ import com.liferay.portal.util.HtmlImpl;
 import com.liferay.wiki.engine.creole.internal.parser.ast.WikiPageNode;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Lexer;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Parser;
-import com.liferay.wiki.engine.creole.internal.parser.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.wiki.engine.creole.internal.parser.visitor.XhtmlTranslationVisitor;
 import com.liferay.wiki.engine.creole.internal.util.WikiEngineCreoleComponentProvider;
 import com.liferay.wiki.engine.creole.util.test.CreoleTestUtil;
 
