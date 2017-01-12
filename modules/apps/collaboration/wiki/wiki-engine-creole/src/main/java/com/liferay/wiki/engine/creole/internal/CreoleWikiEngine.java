@@ -29,7 +29,7 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.WikiPageNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Lexer;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Parser;
-import com.liferay.wiki.engine.creole.internal.parser.visitor.impl.LinkNodeCollectorVisitor;
+import com.liferay.wiki.engine.creole.internal.parser.visitor.LinkNodeCollectorVisitor;
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
