@@ -66,7 +66,7 @@ public abstract class BaseBlogsEntryDemoDataCreator
 			StringPool.BLANK);
 
 		BlogsEntry blogsEntry = blogsEntryLocalService.addEntry(
-			userId, title, subtitle, null, content, getRandomDate(), false,
+			userId, title, subtitle, null, content, _getRandomDate(), false,
 			false, null, null, imageSelector, null, serviceContext);
 
 		entryIds.add(blogsEntry.getEntryId());
@@ -91,18 +91,6 @@ public abstract class BaseBlogsEntryDemoDataCreator
 
 		fileEntryDemoDataCreator.delete();
 		rootFolderDemoDataCreator.delete();
-	}
-
-	protected Date getRandomDate() {
-		long start = Timestamp.valueOf("2000-01-01 00:00:00").getTime();
-		long end = new Date().getTime();
-
-		long diff = end - start + 1;
-
-		Timestamp timestamp = new Timestamp(
-			start + (long)(Math.random() * diff));
-
-		return new Date(timestamp.getTime());
 	}
 
 	@Reference(unbind = "-")
@@ -130,6 +118,18 @@ public abstract class BaseBlogsEntryDemoDataCreator
 	protected final List<Long> entryIds = new CopyOnWriteArrayList<>();
 	protected FileEntryDemoDataCreator fileEntryDemoDataCreator;
 	protected RootFolderDemoDataCreator rootFolderDemoDataCreator;
+
+	private Date _getRandomDate() {
+		long start = Timestamp.valueOf("2000-01-01 00:00:00").getTime();
+		long end = new Date().getTime();
+
+		long diff = end - start + 1;
+
+		Timestamp timestamp = new Timestamp(
+			start + (long)(Math.random() * diff));
+
+		return new Date(timestamp.getTime());
+	}
 
 	private byte[] _getRandomImageBytes(long userId, long groupId)
 		throws IOException, PortalException {
