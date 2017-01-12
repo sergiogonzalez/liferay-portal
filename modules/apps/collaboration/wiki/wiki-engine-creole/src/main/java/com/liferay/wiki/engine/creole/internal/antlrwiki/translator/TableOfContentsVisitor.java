@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.TreeNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.HeadingNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.WikiPageNode;
-import com.liferay.wiki.engine.creole.internal.parser.visitor.impl.BaseASTVisitor;
+import com.liferay.wiki.engine.creole.internal.parser.visitor.BaseASTVisitor;
 
 import java.util.List;
 

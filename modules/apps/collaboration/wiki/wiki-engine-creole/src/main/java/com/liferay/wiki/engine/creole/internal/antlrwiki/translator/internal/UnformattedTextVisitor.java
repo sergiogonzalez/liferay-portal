@@ -22,7 +22,7 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiInlineNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.NoWikiSectionNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.UnformattedTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
-import com.liferay.wiki.engine.creole.internal.parser.visitor.impl.BaseASTVisitor;
+import com.liferay.wiki.engine.creole.internal.parser.visitor.BaseASTVisitor;
 
 /**
  * @author Miguel Pastor
