@@ -60,17 +60,22 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 			_siteAdminUserDemoDataCreator.create(
 				guestGroup.getGroupId(), "sharon.choi@liferay.com"));
 
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 10; i++) {
 			long randomUserId = users.get(
 				RandomUtil.nextInt(users.size())).getUserId();
 
-			_blogsDemoDataCreator.create(randomUserId, guestGroup.getGroupId());
+			_creativeCommonsBlogsEntryDemoDataCreator.create(
+				randomUserId, guestGroup.getGroupId());
+
+			_loremIpsumBlogsEntryDemoDataCreator.create(
+				randomUserId, guestGroup.getGroupId());
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
-		_blogsDemoDataCreator.delete();
+		_creativeCommonsBlogsEntryDemoDataCreator.delete();
+		_loremIpsumBlogsEntryDemoDataCreator.delete();
 		_basicUserDemoDataCreator.delete();
 		_omniAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
@@ -83,16 +88,23 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		_basicUserDemoDataCreator = basicUserDemoDataCreator;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsDemoDataCreator(
-		BlogsEntryDemoDataCreator blogsDemoDataCreator) {
+	@Reference(target = "(source=creative-commons)", unbind = "-")
+	protected void setCreativeCommonsBlogsEntryDemoDataCreator(
+		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
 
-		_blogsDemoDataCreator = blogsDemoDataCreator;
+		_creativeCommonsBlogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
 	}
 
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(target = "(source=lorem-ipsum)", unbind = "-")
+	protected void setLoremIpsumBlogsEntryDemoDataCreator(
+		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
+
+		_loremIpsumBlogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -115,8 +127,9 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
-	private BlogsEntryDemoDataCreator _blogsDemoDataCreator;
+	private BlogsEntryDemoDataCreator _creativeCommonsBlogsEntryDemoDataCreator;
 	private GroupLocalService _groupLocalService;
+	private BlogsEntryDemoDataCreator _loremIpsumBlogsEntryDemoDataCreator;
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;
 	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;
 
