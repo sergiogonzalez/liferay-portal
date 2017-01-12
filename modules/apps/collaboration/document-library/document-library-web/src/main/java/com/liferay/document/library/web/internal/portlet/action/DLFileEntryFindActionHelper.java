@@ -40,7 +40,7 @@ public class DLFileEntryFindActionHelper extends BaseDLFindActionHelper {
 	public long getGroupId(long primaryKey) throws Exception {
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(primaryKey);
 
-		return fileEntry.getRepositoryId();
+		return fileEntry.getGroupId();
 	}
 
 	@Override
