@@ -15,112 +15,41 @@
 package com.liferay.blogs.demo.data.creator.internal;
 
 import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
-import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
-import com.liferay.document.library.demo.data.creator.RootFolderDemoDataCreator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.RandomUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import java.sql.Timestamp;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
  */
 @Component(service = BlogsEntryDemoDataCreator.class)
 public class LoremIpsumBlogsEntryDemoDataCreatorImpl
-	implements BlogsEntryDemoDataCreator {
+	extends BaseBlogsEntryDemoDataCreator {
 
 	@Override
 	public BlogsEntry create(long userId, long groupId)
 		throws IOException, PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
+		String title = _getRandomElement(_entryTitles);
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+		String subtitle = _getRandomElement(_entrySubtitles);
 
-		serviceContext.setScopeGroupId(groupId);
+		String content = _getRandomContent();
 
-		ImageSelector imageSelector = new ImageSelector(
-			_getRandomImageBytes(userId, groupId),
-			StringUtil.randomString() + ".jpeg", "image/jpeg",
-			StringPool.BLANK);
-
-		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-			userId, _getRandomElement(_entryTitles),
-			_getRandomElement(_entrySubtitles), null, _getRandomContent(),
-			_getRandomDate(), false, false, null, null, imageSelector, null,
-			serviceContext);
-
-		_entryIds.add(blogsEntry.getEntryId());
-
-		return blogsEntry;
-	}
-
-	@Override
-	public void delete() throws PortalException {
-		try {
-			for (long entryId : _entryIds) {
-				_blogsEntryLocalService.deleteEntry(entryId);
-
-				_entryIds.remove(entryId);
-			}
-		}
-		catch (NoSuchEntryException nsee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsee);
-			}
-		}
-
-		_fileEntryDemoDataCreator.delete();
-		_rootFolderDemoDataCreator.delete();
-	}
-
-	@Reference(unbind = "-")
-	protected void setBlogLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFileEntryDemoDataCreator(
-		FileEntryDemoDataCreator fileEntryDemoDataCreator) {
-
-		_fileEntryDemoDataCreator = fileEntryDemoDataCreator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRootFolderDemoDataCreator(
-		RootFolderDemoDataCreator rootFolderDemoDataCreator) {
-
-		_rootFolderDemoDataCreator = rootFolderDemoDataCreator;
+		return createBaseBlogsEntry(userId, groupId, title, subtitle, content);
 	}
 
 	private String _getRandomContent() {
@@ -137,43 +66,9 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 		return sb.toString();
 	}
 
-	private Date _getRandomDate() {
-		long start = Timestamp.valueOf("2000-01-01 00:00:00").getTime();
-		long end = new Date().getTime();
-
-		long diff = end - start + 1;
-
-		Timestamp timestamp = new Timestamp(
-			start + (long)(Math.random() * diff));
-
-		return new Date(timestamp.getTime());
-	}
-
 	private String _getRandomElement(List<String> list) {
 		return list.get(RandomUtil.nextInt(list.size()));
 	}
-
-	private byte[] _getRandomImageBytes(long userId, long groupId)
-		throws IOException, PortalException {
-
-		if (_blogsEntryImagesFolder == null) {
-			_blogsEntryImagesFolder = _rootFolderDemoDataCreator.create(
-				userId, groupId, "Blogs Images");
-		}
-
-		FileEntry fileEntry = _fileEntryDemoDataCreator.create(
-			userId, _blogsEntryImagesFolder.getFolderId());
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		return FileUtil.getBytes(fileVersion.getContentStream(false));
-	}
-
-	private Folder _blogsEntryImagesFolder;
-	private BlogsEntryLocalService _blogsEntryLocalService;
-	private FileEntryDemoDataCreator _fileEntryDemoDataCreator;
-	private RootFolderDemoDataCreator _rootFolderDemoDataCreator;
-	private final List<Long> _entryIds = new CopyOnWriteArrayList<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LoremIpsumBlogsEntryDemoDataCreatorImpl.class);
