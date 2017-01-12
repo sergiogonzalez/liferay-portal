@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.internal.validator.impl;
+package com.liferay.wiki.internal.validator;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

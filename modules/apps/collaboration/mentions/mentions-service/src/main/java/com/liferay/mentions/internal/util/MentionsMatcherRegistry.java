@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.internal.util.impl;
+package com.liferay.mentions.internal.util;
 
 import com.liferay.mentions.matcher.MentionsMatcher;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

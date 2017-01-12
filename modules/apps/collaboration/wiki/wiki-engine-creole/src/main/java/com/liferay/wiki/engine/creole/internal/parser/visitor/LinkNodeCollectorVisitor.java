@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.creole.internal.parser.visitor.impl;
+package com.liferay.wiki.engine.creole.internal.parser.visitor;
 
 import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
 
