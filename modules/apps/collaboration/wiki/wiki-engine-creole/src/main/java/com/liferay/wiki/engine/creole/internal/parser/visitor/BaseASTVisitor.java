@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.creole.internal.parser.visitor.impl;
+package com.liferay.wiki.engine.creole.internal.parser.visitor;
 
 import com.liferay.wiki.engine.creole.internal.parser.ast.ASTNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BoldTextNode;
@@ -60,7 +60,6 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.link.interwiki.XWikiIn
 import com.liferay.wiki.engine.creole.internal.parser.ast.table.TableDataNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.table.TableHeaderNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.table.TableNode;
-import com.liferay.wiki.engine.creole.internal.parser.visitor.ASTVisitor;
 
 import java.util.List;
 

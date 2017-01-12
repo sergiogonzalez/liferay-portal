@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.display.context.impl;
+package com.liferay.document.library.internal.display.context;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
