@@ -149,11 +149,13 @@ public class BlogsContentEditorConfigContributor
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME, "/blogs/upload_image");
 
+		String[] mimeTypes = PropsValues.MIME_TYPES_WEB_IMAGES;
+
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
-				PropsValues.BLOGS_IMAGE_MAX_SIZE);
+				PropsValues.BLOGS_IMAGE_MAX_SIZE, mimeTypes);
 
 		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
 			new ArrayList<>();
