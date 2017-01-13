@@ -35,7 +35,8 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		ticketPersistence.removeByC_C_T(classNameId, classPK, type);
+		ticketPersistence.removeByC_C_C_T(
+			companyId, classNameId, classPK, type);
 
 		return addTicket(
 			companyId, className, classPK, type, extraInfo, expirationDate,
