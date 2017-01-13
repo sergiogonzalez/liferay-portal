@@ -46,7 +46,8 @@
 				(DLFileEntry.repositoryId = ?) AND
 				([$STATUS$])
 		]]>
-	</sql><sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_U_F">
+	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_U_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
@@ -58,6 +59,18 @@
 			WHERE
 				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.userId = ?) AND
+				([$STATUS$])
+				[$FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			WHERE
+				(DLFileVersion.groupId = ?) AND
 				([$STATUS$])
 				[$FOLDER_ID$]
 		]]>
