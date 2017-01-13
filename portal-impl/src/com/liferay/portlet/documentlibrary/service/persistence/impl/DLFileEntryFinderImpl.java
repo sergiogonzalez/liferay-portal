@@ -59,6 +59,9 @@ public class DLFileEntryFinderImpl
 	public static final String COUNT_BY_G_U_F =
 		DLFileEntryFinder.class.getName() + ".countByG_U_F";
 
+	public static final String COUNT_BY_G_F_S =
+		DLFileEntryFinder.class.getName() + ".countByG_F_S";
+
 	public static final String FIND_BY_ANY_IMAGE_ID =
 		DLFileEntryFinder.class.getName() + ".findByAnyImageId";
 
@@ -127,10 +130,7 @@ public class DLFileEntryFinderImpl
 		long groupId, List<Long> folderIds,
 		QueryDefinition<DLFileEntry> queryDefinition) {
 
-		List<Long> repositoryIds = Collections.emptyList();
-
-		return doCountByG_U_R_F_M(
-			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
+		return doCountByG_F(groupId, folderIds, queryDefinition, false);
 	}
 
 	/**
@@ -220,10 +220,7 @@ public class DLFileEntryFinderImpl
 		long groupId, List<Long> folderIds,
 		QueryDefinition<DLFileEntry> queryDefinition) {
 
-		List<Long> repositoryIds = Collections.emptyList();
-
-		return doCountByG_U_R_F_M(
-			groupId, 0, repositoryIds, folderIds, null, queryDefinition, true);
+		return doCountByG_F(groupId, folderIds, queryDefinition, true);
 	}
 
 	@Override
@@ -562,6 +559,55 @@ public class DLFileEntryFinderImpl
 		return doFindByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition, false);
+	}
+
+	protected int doCountByG_F(
+		long groupId, List<Long> folderIds, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			List<Long> repositoryIds = Collections.emptyList();
+
+			String sql = getFileEntriesSQL(
+				COUNT_BY_G_F_S, groupId, repositoryIds, folderIds, null,
+				queryDefinition, inlineSQLHelper);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(queryDefinition.getStatus());
+
+			for (Long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected int doCountByG_U_R_F_M(
