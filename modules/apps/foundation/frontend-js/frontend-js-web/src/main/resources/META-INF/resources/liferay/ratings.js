@@ -182,8 +182,9 @@ AUI.add(
 							var message = '';
 
 							if (averageScore == 1.0) {
-								message = Liferay.Language.get('the-average-rating-is-x-star-out-of-x')
-							} else {
+								message = Liferay.Language.get('the-average-rating-is-x-star-out-of-x');
+							}
+							else {
 								message = Liferay.Language.get('the-average-rating-is-x-stars-out-of-x');
 							}
 
