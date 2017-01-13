@@ -63,10 +63,6 @@ public abstract class BaseFolderDemoDataCreatorImpl
 			folder = _dlAppLocalService.getFolder(groupId, folderId, name);
 		}
 		catch (NoSuchFolderException nsfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfe, nsfe);
-			}
-
 			folder = _dlAppLocalService.addFolder(
 				userId, groupId, folderId, name, StringPool.BLANK,
 				new ServiceContext());
