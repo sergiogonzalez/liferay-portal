@@ -458,6 +458,7 @@ create index IX_5D47F637 on Team (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_39F69E79 on Team (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_1E8DFB2E on Ticket (classNameId, classPK, type_);
+create index IX_8BACD0AA on Ticket (companyId, classNameId, classPK, type_);
 create index IX_B2468446 on Ticket (key_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_B35F73D5 on TrashEntry (classNameId, classPK);

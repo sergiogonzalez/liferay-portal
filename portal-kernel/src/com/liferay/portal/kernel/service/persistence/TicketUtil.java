@@ -352,6 +352,213 @@ public class TicketUtil {
 	}
 
 	/**
+	* Returns all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @return the matching tickets
+	*/
+	public static List<Ticket> findByC_C_C_T(long companyId, long classNameId,
+		long classPK, int type) {
+		return getPersistence()
+				   .findByC_C_C_T(companyId, classNameId, classPK, type);
+	}
+
+	/**
+	* Returns a range of all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param start the lower bound of the range of tickets
+	* @param end the upper bound of the range of tickets (not inclusive)
+	* @return the range of matching tickets
+	*/
+	public static List<Ticket> findByC_C_C_T(long companyId, long classNameId,
+		long classPK, int type, int start, int end) {
+		return getPersistence()
+				   .findByC_C_C_T(companyId, classNameId, classPK, type, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param start the lower bound of the range of tickets
+	* @param end the upper bound of the range of tickets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching tickets
+	*/
+	public static List<Ticket> findByC_C_C_T(long companyId, long classNameId,
+		long classPK, int type, int start, int end,
+		OrderByComparator<Ticket> orderByComparator) {
+		return getPersistence()
+				   .findByC_C_C_T(companyId, classNameId, classPK, type, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param start the lower bound of the range of tickets
+	* @param end the upper bound of the range of tickets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tickets
+	*/
+	public static List<Ticket> findByC_C_C_T(long companyId, long classNameId,
+		long classPK, int type, int start, int end,
+		OrderByComparator<Ticket> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_C_C_T(companyId, classNameId, classPK, type, start,
+			end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ticket
+	* @throws NoSuchTicketException if a matching ticket could not be found
+	*/
+	public static Ticket findByC_C_C_T_First(long companyId, long classNameId,
+		long classPK, int type, OrderByComparator<Ticket> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchTicketException {
+		return getPersistence()
+				   .findByC_C_C_T_First(companyId, classNameId, classPK, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ticket, or <code>null</code> if a matching ticket could not be found
+	*/
+	public static Ticket fetchByC_C_C_T_First(long companyId, long classNameId,
+		long classPK, int type, OrderByComparator<Ticket> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_C_T_First(companyId, classNameId, classPK, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ticket
+	* @throws NoSuchTicketException if a matching ticket could not be found
+	*/
+	public static Ticket findByC_C_C_T_Last(long companyId, long classNameId,
+		long classPK, int type, OrderByComparator<Ticket> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchTicketException {
+		return getPersistence()
+				   .findByC_C_C_T_Last(companyId, classNameId, classPK, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
+	*/
+	public static Ticket fetchByC_C_C_T_Last(long companyId, long classNameId,
+		long classPK, int type, OrderByComparator<Ticket> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_C_T_Last(companyId, classNameId, classPK, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the tickets before and after the current ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param ticketId the primary key of the current ticket
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ticket
+	* @throws NoSuchTicketException if a ticket with the primary key could not be found
+	*/
+	public static Ticket[] findByC_C_C_T_PrevAndNext(long ticketId,
+		long companyId, long classNameId, long classPK, int type,
+		OrderByComparator<Ticket> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchTicketException {
+		return getPersistence()
+				   .findByC_C_C_T_PrevAndNext(ticketId, companyId, classNameId,
+			classPK, type, orderByComparator);
+	}
+
+	/**
+	* Removes all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	*/
+	public static void removeByC_C_C_T(long companyId, long classNameId,
+		long classPK, int type) {
+		getPersistence().removeByC_C_C_T(companyId, classNameId, classPK, type);
+	}
+
+	/**
+	* Returns the number of tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param type the type
+	* @return the number of matching tickets
+	*/
+	public static int countByC_C_C_T(long companyId, long classNameId,
+		long classPK, int type) {
+		return getPersistence()
+				   .countByC_C_C_T(companyId, classNameId, classPK, type);
+	}
+
+	/**
 	* Caches the ticket in the entity cache if it is enabled.
 	*
 	* @param ticket the ticket
