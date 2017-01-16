@@ -28,17 +28,18 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
-import java.sql.Timestamp;
-
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -120,15 +121,19 @@ public abstract class BaseBlogsEntryDemoDataCreator
 	protected RootFolderDemoDataCreator rootFolderDemoDataCreator;
 
 	private Date _getRandomDate() {
-		long start = Timestamp.valueOf("2000-01-01 00:00:00").getTime();
-		long end = new Date().getTime();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		long diff = end - start + 1;
+		calendar.set(2000, Calendar.JANUARY, 1);
 
-		Timestamp timestamp = new Timestamp(
-			start + (long)(Math.random() * diff));
+		long start = calendar.getTimeInMillis();
 
-		return new Date(timestamp.getTime());
+		Date now = new Date();
+
+		long end = now.getTime();
+
+		ThreadLocalRandom current = ThreadLocalRandom.current();
+
+		return new Date(current.nextLong(start, end));
 	}
 
 	private byte[] _getRandomImageBytes(long userId, long groupId)
