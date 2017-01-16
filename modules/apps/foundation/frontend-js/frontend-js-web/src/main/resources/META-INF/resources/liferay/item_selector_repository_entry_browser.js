@@ -175,7 +175,7 @@ AUI.add(
 											instance._previewFile(dataTransfer.files[0]);
 										}
 										else {
-											var message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [mimeTypes]);
+											var message = Liferay.Language.get('please-enter-a-valid-image');
 
 											instance._showError(message);
 										}
