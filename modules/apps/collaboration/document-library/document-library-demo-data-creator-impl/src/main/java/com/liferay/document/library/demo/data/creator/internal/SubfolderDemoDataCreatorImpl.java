@@ -14,31 +14,40 @@
 
 package com.liferay.document.library.demo.data.creator.internal;
 
-import com.liferay.document.library.demo.data.creator.FolderDemoDataCreator;
+import com.liferay.document.library.demo.data.creator.SubfolderDemoDataCreator;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
  */
-@Component(service = FolderDemoDataCreator.class)
-public class FolderDemoDataCreatorImpl
-	extends BaseFolderDemoDataCreatorImpl implements FolderDemoDataCreator {
+@Component(service = SubfolderDemoDataCreator.class)
+public class SubfolderDemoDataCreatorImpl
+	extends BaseFolderDemoDataCreatorImpl implements SubfolderDemoDataCreator {
 
 	@Override
-	public Folder create(long userId, long groupId, long folderId)
-		throws PortalException {
-
-		return create(userId, groupId, folderId, "Demo");
+	public Folder create(long userId, long folderId) throws PortalException {
+		return create(userId, folderId, "Demo");
 	}
 
 	@Override
-	public Folder create(long userId, long groupId, long folderId, String name)
+	public Folder create(long userId, long folderId, String name)
 		throws PortalException {
 
-		return createBaseFolder(userId, groupId, folderId, name);
+		Folder folder = _dlAppLocalService.getFolder(folderId);
+
+		return createBaseFolder(userId, folder.getGroupId(), folderId, name);
 	}
+
+	@Reference(unbind = "-")
+	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
 
 }

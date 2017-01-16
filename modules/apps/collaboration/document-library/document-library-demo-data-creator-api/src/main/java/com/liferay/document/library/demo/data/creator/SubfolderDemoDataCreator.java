@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.repository.model.Folder;
 /**
  * @author Alejandro Hernández
  */
-public interface FolderDemoDataCreator extends BaseFolderDemoDataCreator {
+public interface SubfolderDemoDataCreator extends BaseFolderDemoDataCreator {
 
-	public Folder create(long userId, long groupId, long folderId)
+	public Folder create(long userId, long parentFolderId)
 		throws PortalException;
 
-	public Folder create(long userId, long groupId, long folderId, String name)
+	public Folder create(long userId, long parentFolderId, String name)
 		throws PortalException;
 
 }
