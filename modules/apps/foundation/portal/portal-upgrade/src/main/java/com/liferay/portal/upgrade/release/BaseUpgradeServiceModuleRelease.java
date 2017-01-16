@@ -40,13 +40,43 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 
 					_updateRelease(_toSchemaVersion(buildNumber));
 				}
+				else if (_hasServiceComponent()) {
+					_createRelease();
+				}
 			}
 		}
+	}
+
+	protected String getNamespace() {
+		return StringPool.BLANK;
 	}
 
 	protected abstract String getNewBundleSymbolicName();
 
 	protected abstract String getOldBundleSymbolicName();
+
+	private boolean _hasServiceComponent()
+		throws SQLException {
+
+		if (Validator.isNull(getNamespace())) {
+			return false;
+		}
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select serviceComponentId from ServiceComponent where " +
+					"buildNamespace = ?")) {
+
+			ps.setString(1, getNamespace());
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	private String _toSchemaVersion(String buildNumber) {
 		StringBuilder sb = new StringBuilder(2 * buildNumber.length());
