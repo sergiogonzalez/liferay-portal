@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.image.ImageTool;
 
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
@@ -26,7 +25,8 @@ import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPageTree;
-import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 
 /**
  * @author Juan Gonzalez
@@ -52,34 +52,34 @@ public class LiferayPDFBoxConverter {
 
 	public void generateImagesPB() throws Exception {
 		try (PDDocument pdDocument = PDDocument.load(_inputFile)) {
+			PDFRenderer pdfRenderer = new PDFRenderer(pdDocument);
 
 			PDPageTree pages = pdDocument.getPages();
 
 			int count = pages.getCount();
 
 			for (int i = 0; i < count; i++) {
-				PDPage pdPage = pages.get(i);
-
 				if (_generateThumbnail && (i == 0)) {
 					_generateImagesPB(
-						pdPage, _thumbnailFile, _thumbnailExtension);
+						pdfRenderer, i, _thumbnailFile, _thumbnailExtension);
 				}
 
 				if (!_generatePreview) {
 					break;
 				}
 
-				_generateImagesPB(pdPage, _previewFiles[i], _extension);
+				_generateImagesPB(pdfRenderer, i, _previewFiles[i], _extension);
 			}
 		}
 	}
 
 	private void _generateImagesPB(
-			PDPage pdPage, File outputFile, String extension)
+			PDFRenderer pdfRenderer, int pageIndex, File outputFile,
+			String extension)
 		throws Exception {
 
-		RenderedImage renderedImage = pdPage.convertToImage(
-			BufferedImage.TYPE_INT_RGB, _dpi);
+		RenderedImage renderedImage = pdfRenderer.renderImageWithDPI(
+			pageIndex, _dpi, ImageType.RGB);
 
 		ImageTool imageTool = ImageToolImpl.getInstance();
 
