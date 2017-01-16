@@ -41,7 +41,7 @@ public abstract class BaseFolderDemoDataCreatorImpl
 			for (long folderId : _folderIds) {
 				_folderIds.remove(folderId);
 
-				_dlAppLocalService.deleteFolder(folderId);
+				dlAppLocalService.deleteFolder(folderId);
 			}
 		}
 		catch (NoSuchFolderException nsfe) {
@@ -60,10 +60,10 @@ public abstract class BaseFolderDemoDataCreatorImpl
 		Folder folder = null;
 
 		try {
-			folder = _dlAppLocalService.getFolder(groupId, folderId, name);
+			folder = dlAppLocalService.getFolder(groupId, folderId, name);
 		}
 		catch (NoSuchFolderException nsfe) {
-			folder = _dlAppLocalService.addFolder(
+			folder = dlAppLocalService.addFolder(
 				userId, groupId, folderId, name, StringPool.BLANK,
 				new ServiceContext());
 		}
@@ -75,13 +75,14 @@ public abstract class BaseFolderDemoDataCreatorImpl
 
 	@Reference(unbind = "-")
 	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
+		this.dlAppLocalService = dlAppLocalService;
 	}
+
+	protected DLAppLocalService dlAppLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFolderDemoDataCreatorImpl.class);
 
-	private DLAppLocalService _dlAppLocalService;
 	private final List<Long> _folderIds = new CopyOnWriteArrayList<>();
 
 }

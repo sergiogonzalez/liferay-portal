@@ -15,12 +15,10 @@
 package com.liferay.document.library.demo.data.creator.internal;
 
 import com.liferay.document.library.demo.data.creator.SubfolderDemoDataCreator;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
@@ -38,16 +36,9 @@ public class SubfolderDemoDataCreatorImpl
 	public Folder create(long userId, long folderId, String name)
 		throws PortalException {
 
-		Folder folder = _dlAppLocalService.getFolder(folderId);
+		Folder folder = dlAppLocalService.getFolder(folderId);
 
 		return createBaseFolder(userId, folder.getGroupId(), folderId, name);
 	}
-
-	@Reference(unbind = "-")
-	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	private DLAppLocalService _dlAppLocalService;
 
 }
