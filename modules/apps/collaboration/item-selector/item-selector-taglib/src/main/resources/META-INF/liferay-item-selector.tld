@@ -124,6 +124,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The list of MIME types acceptable in the file uploader.</description>
+			<name>mimeTypes</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The URL of the dialog. This is used as a base URL in order to be populated with needed parameters.</description>
 			<name>portletURL</name>
 			<required>true</required>
