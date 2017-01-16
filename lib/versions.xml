@@ -1629,7 +1629,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/fontbox.jar</file-name>
-				<version>1.8.12</version>
+				<version>2.0.3</version>
 				<project-name>PDFBox</project-name>
 				<project-url>http://pdfbox.apache.org</project-url>
 				<licenses>
@@ -2331,7 +2331,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/metadata-extractor.jar</file-name>
-				<version>2.8.0</version>
+				<version>2.9.1</version>
 				<project-name>Metadata Extractor</project-name>
 				<project-url>http://www.drewnoakes.com/code/exif</project-url>
 				<licenses>
@@ -2452,7 +2452,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/pdfbox.jar</file-name>
-				<version>1.8.12</version>
+				<version>2.0.3</version>
 				<project-name>PDFBox</project-name>
 				<project-url>http://pdfbox.apache.org</project-url>
 				<licenses>
@@ -2464,7 +2464,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi.jar</file-name>
-				<version>3.11</version>
+				<version>3.15</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -2477,7 +2477,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi-ooxml.jar</file-name>
-				<version>3.11</version>
+				<version>3.15</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -2490,7 +2490,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi-ooxml-schemas.jar</file-name>
-				<version>3.11</version>
+				<version>3.15</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -2503,7 +2503,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi-scratchpad.jar</file-name>
-				<version>3.11</version>
+				<version>3.15</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -3017,7 +3017,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-core.jar</file-name>
-				<version>1.10</version>
+				<version>1.14</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3029,7 +3029,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-parsers.jar</file-name>
-				<version>1.10</version>
+				<version>1.14</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3101,7 +3101,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/vorbis-java-core.jar</file-name>
-				<version>0.6</version>
+				<version>0.8</version>
 				<project-name>Vorbis</project-name>
 				<project-url>http://xiph.org/vorbis</project-url>
 				<licenses>
@@ -3113,7 +3113,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/vorbis-java-tika.jar</file-name>
-				<version>0.6</version>
+				<version>0.8</version>
 				<project-name>Vorbis</project-name>
 				<project-url>http://xiph.org/vorbis</project-url>
 				<licenses>
