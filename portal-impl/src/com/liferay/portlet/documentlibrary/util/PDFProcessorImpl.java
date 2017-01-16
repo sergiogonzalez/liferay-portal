@@ -884,12 +884,8 @@ public class PDFProcessorImpl
 	private Map<String, Integer> _getScaledDimensions(File file)
 		throws Exception {
 
-		PDDocument pdDocument = null;
-
-		try {
+		try (PDDocument pdDocument = PDDocument.load(file)) {
 			Map<String, Integer> scaledDimensions = new HashMap<>();
-
-			pdDocument = PDDocument.load(file);
 
 			PDDocumentCatalog pdDocumentCatalog =
 				pdDocument.getDocumentCatalog();
@@ -921,11 +917,6 @@ public class PDFProcessorImpl
 			scaledDimensions.put("width", scaledWidth);
 
 			return scaledDimensions;
-		}
-		finally {
-			if (pdDocument != null) {
-				pdDocument.close();
-			}
 		}
 	}
 
