@@ -179,8 +179,16 @@ AUI.add(
 						var firstNode = instance._ratingScoreNode.one(SELECTOR_RATING_ELEMENT);
 
 						if (firstNode) {
+							var message = '';
+
+							if (averageScore == 1.0) {
+								message = Liferay.Language.get('the-average-rating-is-x-star-out-of-x')
+							} else {
+								message = Liferay.Language.get('the-average-rating-is-x-stars-out-of-x');
+							}
+
 							var averageRatingText = Lang.sub(
-								Liferay.Language.get('the-average-rating-is-x-stars-out-of-x'),
+								message,
 								[averageScore, instance.get(STR_SIZE)]
 							);
 
