@@ -35,15 +35,19 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+
+import java.lang.reflect.Field;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -75,13 +79,25 @@ public class PDFProcessorTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, "DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED");
+
+		_dlFileEntryPreviewForkProcessEnabled = field.get(null);
+
+		field.set(null, Boolean.FALSE);
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
 		if (_dlProcessorServiceRegistration != null) {
 			_dlProcessorServiceRegistration.unregister();
 		}
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, "DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED");
+
+		field.set(null, _dlFileEntryPreviewForkProcessEnabled);
 	}
 
 	@Test
@@ -515,6 +531,7 @@ public class PDFProcessorTest {
 
 	}
 
+	private Object _dlFileEntryPreviewForkProcessEnabled;
 	private ServiceRegistration<DLProcessor> _dlProcessorServiceRegistration;
 
 	@DeleteAfterTestRun
