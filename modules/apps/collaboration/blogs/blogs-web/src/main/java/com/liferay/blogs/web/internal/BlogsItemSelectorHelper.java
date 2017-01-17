@@ -82,13 +82,12 @@ public class BlogsItemSelectorHelper {
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME, "/blogs/upload_cover_image");
 
-		String[] mimeTypes = PropsValues.MIME_TYPES_WEB_IMAGES;
-
 		UploadItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
-				PropsValues.BLOGS_IMAGE_MAX_SIZE, mimeTypes);
+				PropsValues.BLOGS_IMAGE_MAX_SIZE,
+				PropsValues.MIME_TYPES_WEB_IMAGES);
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadCriterionDesiredItemSelectorReturnTypes);
