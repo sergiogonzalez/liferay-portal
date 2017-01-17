@@ -20,7 +20,6 @@
 ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (ItemSelectorUploadViewDisplayContext)request.getAttribute(ItemSelectorUploadView.ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT);
 
 String[] mimeTypes = itemSelectorUploadViewDisplayContext.getMimeTypes();
-List<String> listMimeTypes = ListUtil.toList(mimeTypes);
 %>
 
 <div class="container-fluid-1280 lfr-item-viewer" id="itemSelectorUploadContainer">
@@ -35,7 +34,7 @@ List<String> listMimeTypes = ListUtil.toList(mimeTypes);
 			<p>
 				<label class="btn btn-default" for="<portlet:namespace />inputFile"><liferay-ui:message key="select-file" /></label>
 
-				<input accept="<%= ListUtil.isEmpty(listMimeTypes) ? "*" : StringUtil.merge(listMimeTypes) %>" class="hide" id="<portlet:namespace />inputFile" type="file" />
+				<input accept="<%= ArrayUtil.isEmpty(mimeTypes) ? "*" : StringUtil.merge(mimeTypes) %>" class="hide" id="<portlet:namespace />inputFile" type="file" />
 			</p>
 		</div>
 	</div>
@@ -48,7 +47,7 @@ List<String> listMimeTypes = ListUtil.toList(mimeTypes);
 		{
 			closeCaption: '<%= itemSelectorUploadViewDisplayContext.getTitle(locale) %>',
 			maxFileSize: '<%= itemSelectorUploadViewDisplayContext.getMaxFileSize() %>',
-			mimeTypes: '<%= ListUtil.isEmpty(listMimeTypes) ? "*" : StringUtil.merge(listMimeTypes) %>',
+			mimeTypes: '<%= ArrayUtil.isEmpty(mimeTypes) ? "*" : StringUtil.merge(mimeTypes) %>',
 			on: {
 				selectedItem: function(event) {
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorUploadViewDisplayContext.getItemSelectedEventName() %>', event);
