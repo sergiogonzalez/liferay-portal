@@ -58,12 +58,17 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 				<aui:input name="otherReason" />
 			</span>
 
-			<c:if test="<%= !themeDisplay.isSignedIn() %>">
-				<aui:input label="email-address" name="reporterEmailAddress">
-					<aui:validator name="email" />
-					<aui:validator name="required" />
-				</aui:input>
-			</c:if>
+			<c:choose>
+				<c:when test="<%= !themeDisplay.isSignedIn() %>">
+					<aui:input label="email-address" name="reporterEmailAddress">
+						<aui:validator name="email" />
+						<aui:validator name="required" />
+					</aui:input>
+				</c:when>
+				<c:otherwise>
+					<aui:input name="reporterEmailAddress" type="hidden" value="<%= user.getEmailAddress() %>" />
+				</c:otherwise>
+			</c:choose>
 		</aui:fieldset>
 
 		<aui:button-row>
