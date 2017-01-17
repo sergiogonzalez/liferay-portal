@@ -136,6 +136,13 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 		}
 	}
 
+	@Override
+	protected String replaceContent(String content, Locale locale)
+		throws Exception {
+
+		return super.replaceContent(content, locale);
+	}
+
 	private Function<Locale, String> _getEmailKBArticleAttachmentsFunction()
 		throws PortalException {
 
