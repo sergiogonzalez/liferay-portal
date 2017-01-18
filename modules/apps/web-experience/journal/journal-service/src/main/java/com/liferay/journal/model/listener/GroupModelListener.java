@@ -14,7 +14,6 @@
 
 package com.liferay.journal.model.listener;
 
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
@@ -32,14 +31,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
-		try {
-			_subscriptionLocalService.deleteSubscriptions(
-				group.getCompanyId(), JournalArticle.class.getName(),
-				group.getGroupId());
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
 	}
 
 	@Reference(unbind = "-")
