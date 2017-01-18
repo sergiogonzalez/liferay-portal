@@ -162,8 +162,7 @@ public class DLFolderFinderTest {
 			2,
 			DLFolderFinderUtil.filterCountF_FE_FS_ByG_F_M_M(
 				_group.getGroupId(), _folder.getFolderId(),
-				new String[] {ContentTypes.TEXT_HTML}, false,
-				queryDefinition));
+				new String[] {ContentTypes.TEXT_HTML}, false, queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
