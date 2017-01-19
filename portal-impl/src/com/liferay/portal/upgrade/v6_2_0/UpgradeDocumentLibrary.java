@@ -86,7 +86,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		deleteTempDirectory();
 
-		updateDLFolderName();
+		updateDLFolderUserName();
 	}
 
 	protected String getUserName(long userId) throws Exception {
@@ -129,7 +129,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			localizationMap, StringPool.BLANK, key, languageId);
 	}
 
-	protected void updateDLFolderName() throws Exception {
+	protected void updateDLFolderUserName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				"select distinct userId from DLFolder where userName IS NULL " +
