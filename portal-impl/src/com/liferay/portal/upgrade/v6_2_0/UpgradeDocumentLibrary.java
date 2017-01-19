@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -82,6 +85,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		// Temp directory
 
 		deleteTempDirectory();
+
+		updateDLFolderName();
 	}
 
 	protected String getUserName(long userId) throws Exception {
@@ -122,6 +127,43 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		return LocalizationUtil.updateLocalization(
 			localizationMap, StringPool.BLANK, key, languageId);
+	}
+
+	protected void updateDLFolderName() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select distinct userId from DLFolder where userName IS NULL " +
+					"or userName = ''");
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update DLFolder set userName = ? where userId = ? and " +
+						"(userName IS NULL or userName = '')"))) {
+
+			while (rs.next()) {
+				long userId = rs.getLong("userId");
+
+				String userName = getUserName(userId);
+
+				if (userName != null) {
+					ps2.setString(1, userName);
+
+					ps2.setLong(2, userId);
+
+					ps2.addBatch();
+				}
+				else {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"User " + userId + " does not exist in the " +
+								"database. The userNames of DLFolders with " +
+									"this userId will not be updated.");
+					}
+				}
+			}
+
+			ps2.executeBatch();
+		}
 	}
 
 	protected void updateFileEntryType(
@@ -168,5 +210,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDocumentLibrary.class);
 
 }
