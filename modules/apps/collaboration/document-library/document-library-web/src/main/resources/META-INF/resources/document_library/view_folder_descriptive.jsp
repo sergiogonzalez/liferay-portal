@@ -24,9 +24,9 @@ Folder folder = (Folder)row.getObject();
 folder = folder.toEscapedModel();
 
 String userName = folder.getUserName();
-Date modifiedDate = folder.getModifiedDate();
+Date createDate = folder.getCreateDate();
 
-String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 
 PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
@@ -38,10 +38,10 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 <h5 class="text-default">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(userName) %>">
-			<liferay-ui:message arguments="<%= new String[] {userName, modifiedDateDescription} %>" key="x-modified-x-ago" />
+			<liferay-ui:message arguments="<%= new String[] {userName, createDateDescription} %>" key="x-created-x-ago" />
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
+			<liferay-ui:message arguments="<%= new String[] {createDateDescription} %>" key="created-x-ago" />
 		</c:otherwise>
 	</c:choose>
 </h5>
