@@ -42,6 +42,10 @@ public class ItemSelectorUploadViewDisplayContext {
 		return _uploadItemSelectorCriterion.getMaxFileSize();
 	}
 
+	public String[] getMimeTypes() {
+		return _uploadItemSelectorCriterion.getMimeTypes();
+	}
+
 	public String getRepositoryName() {
 		return _uploadItemSelectorCriterion.getRepositoryName();
 	}

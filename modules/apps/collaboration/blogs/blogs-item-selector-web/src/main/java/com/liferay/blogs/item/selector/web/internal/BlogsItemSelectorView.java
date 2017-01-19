@@ -26,6 +26,7 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -61,6 +62,10 @@ public class BlogsItemSelectorView
 	@Override
 	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return BlogsItemSelectorCriterion.class;
+	}
+
+	public String[] getMimeTypes() {
+		return PropsValues.MIME_TYPES_WEB_IMAGES;
 	}
 
 	public ServletContext getServletContext() {
