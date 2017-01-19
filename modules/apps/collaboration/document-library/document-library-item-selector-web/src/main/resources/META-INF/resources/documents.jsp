@@ -77,13 +77,15 @@ else {
 	repositoryEntries = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, start, end, DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true));
 	repositoryEntriesCount = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
 }
+
+String[] extensions = dlItemSelectorViewDisplayContext.getExtensions();
 %>
 
 <liferay-item-selector:repository-entry-browser
 	emptyResultsMessage='<%= LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder") %>'
+	extensions="<%= ListUtil.toList(extensions) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= dlItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
-	mimeTypes="<%= ListUtil.toList(mimeTypes) %>"
 	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= repositoryEntries %>"
 	repositoryEntriesCount="<%= repositoryEntriesCount %>"

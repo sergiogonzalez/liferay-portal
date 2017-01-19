@@ -43,6 +43,11 @@ public class DLImageItemSelectorView
 	extends BaseDLItemSelectorView<ImageItemSelectorCriterion> {
 
 	@Override
+	public String[] getExtensions() {
+		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_EXTENSIONS;
+	}
+
+	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return ImageItemSelectorCriterion.class;
 	}
