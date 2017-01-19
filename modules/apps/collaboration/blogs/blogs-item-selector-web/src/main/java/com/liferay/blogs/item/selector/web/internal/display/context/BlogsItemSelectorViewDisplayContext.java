@@ -75,6 +75,10 @@ public class BlogsItemSelectorViewDisplayContext {
 				FileEntry.class);
 	}
 
+	public String[] getMimeTypes() {
+		return _blogsItemSelectorView.getMimeTypes();
+	}
+
 	public PortletURL getPortletURL(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse)
