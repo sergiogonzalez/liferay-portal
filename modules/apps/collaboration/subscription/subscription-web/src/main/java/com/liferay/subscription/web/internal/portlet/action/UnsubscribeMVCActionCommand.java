@@ -14,6 +14,7 @@
 
 package com.liferay.subscription.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
@@ -59,26 +60,29 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		String key = ParamUtil.getString(actionRequest, "key");
 		long userId = ParamUtil.getLong(actionRequest, "userId");
 
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, SubscriptionPortletKeys.UNSUBSCRIBE,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setWindowState(WindowState.MAXIMIZED);
+
+		portletURL.setParameter("mvcPath", "/unsubscribe/unsubscribed.jsp");
+		portletURL.setParameter("key", key);
+		portletURL.setParameter("userId", String.valueOf(userId));
+
 		try {
 			UnsubscribeUtil.checkUser(userId, actionRequest);
 
-			Subscription subscription = _unsubscribe(
-				key, userId, actionRequest);
+			Subscription subscription = _unsubscribe(key, userId);
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				actionRequest, SubscriptionPortletKeys.UNSUBSCRIBE,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-
-			portletURL.setParameter("mvcPath", "/unsubscribe/unsubscribed.jsp");
-			portletURL.setParameter("key", key);
-			portletURL.setParameter("userId", String.valueOf(userId));
 			portletURL.setParameter(
 				"subscriptionTitle",
 				SubscriptionUtil.getTitle(
 					actionRequest.getLocale(), subscription));
 
+			actionResponse.sendRedirect(portletURL.toString());
+		}
+		catch (NoSuchSubscriptionException nsse) {
 			actionResponse.sendRedirect(portletURL.toString());
 		}
 		catch (PortalException pe) {
@@ -89,8 +93,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private Subscription _unsubscribe(
-			String key, long userId, ActionRequest actionRequest)
+	private Subscription _unsubscribe(String key, long userId)
 		throws PortalException {
 
 		Ticket ticket = UnsubscribeUtil.getTicket(_ticketLocalService, key);
