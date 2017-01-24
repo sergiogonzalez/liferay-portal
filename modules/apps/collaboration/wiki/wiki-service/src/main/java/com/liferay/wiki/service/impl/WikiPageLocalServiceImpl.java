@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -174,6 +175,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		content = SanitizerUtil.sanitize(
 			user.getCompanyId(), node.getGroupId(), userId,
 			WikiPage.class.getName(), pageId, "text/" + format, content);
+
+		title = StringUtil.replace(
+			title, CharPool.NO_BREAK_SPACE, CharPool.SPACE);
 
 		validate(title, nodeId, content, format);
 
