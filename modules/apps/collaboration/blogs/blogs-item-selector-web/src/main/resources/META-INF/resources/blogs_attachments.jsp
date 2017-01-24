@@ -19,8 +19,7 @@
 <%
 BlogsItemSelectorViewDisplayContext blogsItemSelectorViewDisplayContext = (BlogsItemSelectorViewDisplayContext)request.getAttribute(BlogsItemSelectorView.BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
-String[] imageExtensions = PrefsPropsUtil.getStringArray(
-	PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+String[] imageExtensions = PropsUtil.getArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS);
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);

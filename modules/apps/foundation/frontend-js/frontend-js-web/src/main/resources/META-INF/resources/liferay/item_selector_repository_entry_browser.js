@@ -167,7 +167,6 @@ AUI.add(
 									rootNode.removeClass(CSS_DROP_ACTIVE);
 
 									if (eventDrop) {
-										debugger;
 										var fileExtension = dataTransfer.files[0].name.split('.').pop().toLowerCase();
 
 										var validExtensions = instance.get('validExtensions');

@@ -41,9 +41,8 @@ page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
+page import="com.liferay.portal.util.PropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@

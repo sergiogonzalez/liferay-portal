@@ -151,7 +151,6 @@ public class BlogsContentEditorConfigContributor
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME, "/blogs/upload_image");
 
-
 		String[] extensions = PropsUtil.getArray(
 			PropsKeys.BLOGS_IMAGE_EXTENSIONS);
 
