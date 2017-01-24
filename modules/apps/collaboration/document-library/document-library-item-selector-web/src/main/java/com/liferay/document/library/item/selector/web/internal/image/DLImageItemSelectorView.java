@@ -15,24 +15,30 @@
 package com.liferay.document.library.item.selector.web.internal.image;
 
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
+import com.liferay.document.library.item.selector.web.internal.configuration.DLImageItemSelectorViewConfiguration;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Roberto Díaz
  */
 @Component(
+	configurationPid = "com.liferay.document.library.item.selector.web.internal.configuration.DLImageItemSelectorViewConfiguration",
 	property = {
 		"item.selector.view.key=" + DLItemSelectorViewConstants.DL_IMAGE_ITEM_SELECTOR_VIEW_KEY,
 		"item.selector.view.order:Integer=100"
@@ -44,7 +50,7 @@ public class DLImageItemSelectorView
 
 	@Override
 	public String[] getExtensions() {
-		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_EXTENSIONS;
+		return _dlImageItemSelectorViewConfiguration.validExtensions();
 	}
 
 	@Override
@@ -62,6 +68,14 @@ public class DLImageItemSelectorView
 		return _supportedItemSelectorReturnTypes;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_dlImageItemSelectorViewConfiguration =
+			ConfigurableUtil.createConfigurable(
+				DLImageItemSelectorViewConfiguration.class, properties);
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -69,5 +83,8 @@ public class DLImageItemSelectorView
 					new FileEntryItemSelectorReturnType(),
 					new URLItemSelectorReturnType()
 				}));
+
+	private volatile DLImageItemSelectorViewConfiguration
+		_dlImageItemSelectorViewConfiguration;
 
 }
