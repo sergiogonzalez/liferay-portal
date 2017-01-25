@@ -80,12 +80,12 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	private static List<String> _entryTitles = new ArrayList<>();
 
 	static {
-		_entryTitles.addAll(
-			_getAllLines("dependencies/lorem/ipsum/titles.txt"));
-		_entrySubtitles.addAll(
-			_getAllLines("dependencies/lorem/ipsum/subtitles.txt"));
 		_entryParagraphs.addAll(
 			_getAllLines("dependencies/lorem/ipsum/paragraphs.txt"));
+		_entrySubtitles.addAll(
+			_getAllLines("dependencies/lorem/ipsum/subtitles.txt"));
+		_entryTitles.addAll(
+			_getAllLines("dependencies/lorem/ipsum/titles.txt"));
 	}
 
 	private static List<String> _getAllLines(String file) {
