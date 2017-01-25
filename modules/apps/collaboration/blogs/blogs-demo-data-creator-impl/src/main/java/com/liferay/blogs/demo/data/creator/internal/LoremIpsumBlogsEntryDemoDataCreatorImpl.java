@@ -75,9 +75,10 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		LoremIpsumBlogsEntryDemoDataCreatorImpl.class);
 
-	private static List<String> _entryTitles = new ArrayList<>();
-	private static List<String> _entrySubtitles = new ArrayList<>();
 	private static List<String> _entryParagraphs = new ArrayList<>();
+	private static List<String> _entrySubtitles = new ArrayList<>();
+	private static List<String> _entryTitles = new ArrayList<>();
+
 	static {
 		_entryTitles.addAll(
 			_getAllLines("dependencies/lorem/ipsum/titles.txt"));
