@@ -40,15 +40,17 @@ request.setAttribute("view.jsp-portletURLString", portletURLString);
 		<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<c:choose>
-		<c:when test='<%= tabs1.equals("users") %>'>
-			<liferay-util:include page="/view_users.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test='<%= tabs1.equals("organizations") %>'>
-			<liferay-util:include page="/view_organizations.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test='<%= tabs1.equals("user-groups") %>'>
-			<liferay-util:include page="/view_user_groups.jsp" servletContext="<%= application %>" />
-		</c:when>
-	</c:choose>
+	<div class="container-fluid-1280">
+		<c:choose>
+			<c:when test='<%= tabs1.equals("users") %>'>
+				<liferay-util:include page="/view_users.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= tabs1.equals("organizations") %>'>
+				<liferay-util:include page="/view_organizations.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= tabs1.equals("user-groups") %>'>
+				<liferay-util:include page="/view_user_groups.jsp" servletContext="<%= application %>" />
+			</c:when>
+		</c:choose>
+	</div>
 </aui:form>
