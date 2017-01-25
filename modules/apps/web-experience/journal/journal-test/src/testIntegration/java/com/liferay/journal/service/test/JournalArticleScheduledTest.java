@@ -28,6 +28,7 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -194,17 +195,18 @@ public class JournalArticleScheduledTest {
 			Assert.assertEquals(approved, article.isApproved());
 			Assert.assertEquals(approved, assetEntry.isVisible());
 
+			Hits hits = JournalTestUtil.getSearchArticles(
+				_group.getCompanyId(), _group.getGroupId());
+
 			if (approved) {
 				Assert.assertEquals(
-					initialSearchArticlesCount + 1,
-					JournalTestUtil.getSearchArticlesCount(
-						_group.getCompanyId(), _group.getGroupId()));
+					hits.toString(), initialSearchArticlesCount + 1,
+					hits.getLength());
 			}
 			else {
 				Assert.assertEquals(
-					initialSearchArticlesCount,
-					JournalTestUtil.getSearchArticlesCount(
-						_group.getCompanyId(), _group.getGroupId()));
+					hits.toString(), initialSearchArticlesCount,
+					hits.getLength());
 			}
 		}
 	}

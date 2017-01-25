@@ -503,6 +503,210 @@
 		</execute>
 	</command>
 
+	<command name="EditKBArticleWithCustomField" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldType" value="True/False" />
+			<var name="resourceName" value="Knowledge Base Article" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCPWithBooleanCustomField">
+			<var name="kbArticleContent" value="KB Article Content" />
+			<var name="kbArticleTitle" value="KB Article Title" />
+			<var name="selectBoolean" value="True" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewPG">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldValue" value="true" />
+			<var name="kbArticleContent" value="KB Article Content" />
+			<var name="kbArticleTitle" value="KB Article Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#editCP">
+			<var name="kbArticleContent" value="KB Article Content" />
+			<var name="kbArticleContentEdit" value="KB Article Content Edited" />
+			<var name="kbArticleTitle" value="KB Article Title" />
+			<var name="kbArticleTitleEdit" value="KB Article Title Edited" />
+			<var name="selectBoolean" value="False" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewPG">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldValue" value="false" />
+			<var name="kbArticleContent" value="KB Article Content Edited" />
+			<var name="kbArticleTitle" value="KB Article Title Edited" />
+		</execute>
+	</command>
+
+	<command name="EditKBFolderWithCustomField" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Date" />
+			<var name="customFieldType" value="Date" />
+			<var name="resourceName" value="Knowledge Base Folder" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="customField" value="01/01/2017" />
+			<var name="kbFolderDescription" value="KB Folder 2017 Description" />
+			<var name="kbFolderName" value="KB Folder 2017 Name" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="customField" value="01/01/2010" />
+			<var name="kbFolderDescription" value="KB Folder 2010 Description" />
+			<var name="kbFolderName" value="KB Folder 2010 Name" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 2017 Name" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base 2017 Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base 2017 Article Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 2010 Name" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base 2010 Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base 2010 Article Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="KBFolder#gotoViaKBDisplayPG">
+			<var name="kbFolderName" value="KB Folder 2017 Name" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base 2017 Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base 2017 Article Title" />
+		</execute>
+
+		<execute macro="KBFolder#gotoViaKBDisplayPG">
+			<var name="kbFolderName" value="KB Folder 2010 Name" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base 2010 Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base 2010 Article Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<var name="entries" value="2010,2017" />
+
+		<for list="${entries}" param="kbEntry">
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Knowledge Base" />
+			</execute>
+
+			<var name="key_rowEntry" value="${kbEntry}" />
+
+			<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+			<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+			<execute function="AssertTextEquals" locator1="TextInput#CUSTOM_FIELD" value1="01/01/${kbEntry}" />
+		</for>
+	</command>
+
 	<command name="SaveEditedChildArticleAsDraft" priority="3">
 		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Page" />

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.servlet.filters.compoundsessionid;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -35,11 +34,15 @@ public class CompoundSessionIdSplitterUtil {
 	}
 
 	public static boolean hasSessionDelimiter() {
-		return _HAS_SESSION_DELIMITER;
+		if (_SESSION_ID_DELIMITER == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public static String parseSessionId(String sessionId) {
-		if (!_HAS_SESSION_DELIMITER) {
+		if (_SESSION_ID_DELIMITER == null) {
 			return sessionId;
 		}
 
@@ -51,8 +54,6 @@ public class CompoundSessionIdSplitterUtil {
 
 		return sessionId.substring(0, pos);
 	}
-
-	private static final boolean _HAS_SESSION_DELIMITER;
 
 	private static final String _SESSION_ID_DELIMITER;
 
@@ -66,12 +67,10 @@ public class CompoundSessionIdSplitterUtil {
 		}
 
 		if (Validator.isNotNull(sessionIdDelimiter)) {
-			_HAS_SESSION_DELIMITER = true;
 			_SESSION_ID_DELIMITER = sessionIdDelimiter;
 		}
 		else {
-			_HAS_SESSION_DELIMITER = false;
-			_SESSION_ID_DELIMITER = StringPool.BLANK;
+			_SESSION_ID_DELIMITER = null;
 		}
 	}
 

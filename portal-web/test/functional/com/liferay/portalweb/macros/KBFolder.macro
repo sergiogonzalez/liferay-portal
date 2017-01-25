@@ -14,6 +14,17 @@
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${kbFolderDescription}" />
 
+		<if>
+			<isset var="customField" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Custom Fields" />
+				</execute>
+
+				<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customField}" />
+			</then>
+		</if>
+
 		<execute macro="Button#clickSave" />
 
 		<if>

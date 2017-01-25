@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -40,9 +39,6 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.service.persistence.test.AssetEntryQueryTestUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -124,37 +120,15 @@ public class JournalArticleIndexableTest {
 	}
 
 	protected void assertCount(
-			final int expectedCount, final AssetEntryQuery assetEntryQuery,
-			final SearchContext searchContext)
-		throws Exception {
-
-		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					int actualCount = searchCount(
-						assetEntryQuery, searchContext, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS);
-
-					Assert.assertEquals(expectedCount, actualCount);
-
-					return null;
-				}
-
-			});
-	}
-
-	protected int searchCount(
-			AssetEntryQuery assetEntryQuery, SearchContext searchContext,
-			int start, int end)
+			int expectedCount, AssetEntryQuery assetEntryQuery,
+			SearchContext searchContext)
 		throws Exception {
 
 		Hits hits = AssetUtil.search(
-			searchContext, assetEntryQuery, start, end);
+			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
-		return hits.getLength();
+		Assert.assertEquals(hits.toString(), expectedCount, hits.getLength());
 	}
 
 	@DeleteAfterTestRun

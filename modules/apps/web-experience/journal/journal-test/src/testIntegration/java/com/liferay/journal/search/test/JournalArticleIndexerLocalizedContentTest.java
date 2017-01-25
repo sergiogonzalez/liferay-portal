@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -52,8 +51,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -178,9 +175,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 		String searchTerm = "nev";
 
-		Document document = retryAssert(() -> {
-			return _search(searchTerm, LocaleUtil.HUNGARY);
-		});
+		Document document = _search(searchTerm, LocaleUtil.HUNGARY);
 
 		FieldValuesAssert.assertFieldValues(
 			titleStrings, "title", document, searchTerm);
@@ -246,9 +241,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 		String searchTerm = articleId;
 
-		Document document = retryAssert(() -> {
-			return _search(searchTerm, LocaleUtil.BRAZIL);
-		});
+		Document document = _search(searchTerm, LocaleUtil.BRAZIL);
 
 		FieldValuesAssert.assertFieldValues(
 			titleStrings, "title", document, searchTerm);
@@ -349,9 +342,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 		Stream<String> searchTerms = Stream.of(word1, word2, prefix1, prefix2);
 
 		searchTerms.forEach(searchTerm -> {
-			Document document = retryAssert(() -> {
-				return _search(searchTerm, LocaleUtil.JAPAN);
-			});
+			Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
 			FieldValuesAssert.assertFieldValues(
 				titleStrings, "title", document, searchTerm);
@@ -411,26 +402,11 @@ public class JournalArticleIndexerLocalizedContentTest {
 		Stream<String> searchTerms = Stream.of(word1, word2);
 
 		searchTerms.forEach(searchTerm -> {
-			Document document = retryAssert(() -> {
-				return _search(searchTerm, LocaleUtil.JAPAN);
-			});
+			Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
 			FieldValuesAssert.assertFieldValues(
 				titleStrings, "title", document, searchTerm);
 		});
-	}
-
-	protected static <T> T retryAssert(Callable<T> callable) {
-		try {
-			return IdempotentRetryAssert.retryAssert(
-				10, TimeUnit.SECONDS, callable);
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	protected JournalArticle addArticle() {
@@ -529,14 +505,20 @@ public class JournalArticleIndexerLocalizedContentTest {
 		throw new AssertionError(searchTerm + "->" + documents);
 	}
 
-	private Document _search(String searchTerm, Locale locale)
-		throws Exception {
+	private Document _search(String searchTerm, Locale locale) {
+		try {
+			SearchContext searchContext = _getSearchContext(searchTerm, locale);
 
-		SearchContext searchContext = _getSearchContext(searchTerm, locale);
+			Hits hits = _indexer.search(searchContext);
 
-		Hits hits = _indexer.search(searchContext);
-
-		return _getSingleDocument(searchTerm, hits);
+			return _getSingleDocument(searchTerm, hits);
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@DeleteAfterTestRun

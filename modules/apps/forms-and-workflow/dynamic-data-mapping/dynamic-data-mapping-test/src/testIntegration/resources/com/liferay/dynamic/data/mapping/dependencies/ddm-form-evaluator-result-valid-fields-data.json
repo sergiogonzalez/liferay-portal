@@ -6,7 +6,8 @@
 			"name": "Integer",
 			"nestedFields": [],
 			"readOnly": false,
-			"valid": true ,
+			"required": false,
+			"valid": true,
 			"value": 0,
 			"visible": false
 		},
@@ -16,6 +17,7 @@
 			"name": "Integer",
 			"nestedFields": [],
 			"readOnly": false,
+			"required": false,
 			"valid": false,
 			"value": 1,
 			"visible": false
@@ -26,6 +28,7 @@
 			"name": "Integer",
 			"nestedFields": [],
 			"readOnly": false,
+			"required": false,
 			"valid": false,
 			"value": 2,
 			"visible": false
@@ -36,6 +39,7 @@
 			"name": "Text3",
 			"nestedFields": [],
 			"readOnly": false,
+			"required": true,
 			"valid": false,
 			"value": "Bloggs",
 			"visible": true
@@ -46,9 +50,21 @@
 			"name": "Text",
 			"nestedFields": [],
 			"readOnly": false,
+			"required": false,
 			"valid": false,
 			"value": "Zero",
 			"visible": true
+		},
+		{
+			"errorMessage": "",
+			"instanceId": "lroa",
+			"name": "Integer",
+			"nestedFields": [],
+			"readOnly": false,
+			"required": false,
+			"valid": true,
+			"value": 0,
+			"visible": false
 		},
 		{
 			"errorMessage": "This field is never valid.",
@@ -56,9 +72,32 @@
 			"name": "Text",
 			"nestedFields": [],
 			"readOnly": false,
+			"required": false,
 			"valid": false,
 			"value": "OneTwo",
 			"visible": true
+		},
+		{
+			"errorMessage": "Integer must be equal to zero.",
+			"instanceId": "uvwn",
+			"name": "Integer",
+			"nestedFields": [],
+			"readOnly": false,
+			"required": false,
+			"valid": false,
+			"value": 1,
+			"visible": false
+		},
+		{
+			"errorMessage": "Integer must be equal to zero.",
+			"instanceId": "lsky",
+			"name": "Integer",
+			"nestedFields": [],
+			"readOnly": false,
+			"required": false,
+			"valid": false,
+			"value": 2,
+			"visible": false
 		},
 		{
 			"errorMessage": "This field is required.",
@@ -66,6 +105,7 @@
 			"name": "Text2",
 			"nestedFields": [],
 			"readOnly": false,
+			"required": true,
 			"valid": false,
 			"value": "",
 			"visible": true
@@ -76,6 +116,7 @@
 			"name": "Boolean",
 			"nestedFields": [],
 			"readOnly": false,
+			"required": false,
 			"valid": true,
 			"value": true,
 			"visible": false
