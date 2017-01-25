@@ -72,9 +72,9 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
+		_basicUserDemoDataCreator.delete();
 		_creativeCommonsBlogsEntryDemoDataCreator.delete();
 		_loremIpsumBlogsEntryDemoDataCreator.delete();
-		_basicUserDemoDataCreator.delete();
 		_omniAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
 	}
