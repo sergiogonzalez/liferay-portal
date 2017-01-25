@@ -88,12 +88,12 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 			_getAllLines("dependencies/lorem/ipsum/titles.txt"));
 	}
 
-	private static List<String> _getAllLines(String file) {
-		List<String> dictionaryList = new ArrayList<>();
+	private static List<String> _getAllLines(String fileName) {
+		List<String> lines = new ArrayList<>();
 
 		try (InputStream is =
 				LoremIpsumBlogsEntryDemoDataCreatorImpl.class.
-					getResourceAsStream(file);
+					getResourceAsStream(fileName);
 
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new InputStreamReader(is))) {
@@ -101,7 +101,7 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				dictionaryList.add(line);
+				lines.add(line);
 			}
 		}
 		catch (IOException ioe) {
@@ -110,7 +110,7 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 			}
 		}
 
-		return dictionaryList;
+		return lines;
 	}
 
 }
