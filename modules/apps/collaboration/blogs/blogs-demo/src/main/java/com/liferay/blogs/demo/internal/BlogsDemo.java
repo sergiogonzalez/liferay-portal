@@ -51,11 +51,9 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		users.add(
 			_basicUserDemoDataCreator.create(
 				company.getCompanyId(), "nikki.prudencio@liferay.com"));
-
 		users.add(
 			_omniAdminUserDemoDataCreator.create(
 				company.getCompanyId(), "sergio.gonzalez@liferay.com"));
-
 		users.add(
 			_siteAdminUserDemoDataCreator.create(
 				guestGroup.getGroupId(), "sharon.choi@liferay.com"));
