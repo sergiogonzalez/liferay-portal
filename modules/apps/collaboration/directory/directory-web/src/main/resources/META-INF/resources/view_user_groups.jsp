@@ -78,7 +78,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		/>
 	</liferay-ui:search-container-row>
 
-	<div class="separator"><!-- --></div>
-
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

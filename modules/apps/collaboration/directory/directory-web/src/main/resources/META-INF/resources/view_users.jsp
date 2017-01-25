@@ -155,7 +155,5 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 		<liferay-ui:message key="filter-by-user-group" />: <%= HtmlUtil.escape(userGroup.getName()) %><br />
 	</c:if>
 
-	<div class="separator"><!-- --></div>
-
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

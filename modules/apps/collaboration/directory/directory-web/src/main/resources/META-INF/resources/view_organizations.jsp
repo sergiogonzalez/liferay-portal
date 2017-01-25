@@ -99,7 +99,5 @@ if (parentOrganizationId > 0) {
 		<%@ include file="/organization/search_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<div class="separator"><!-- --></div>
-
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
