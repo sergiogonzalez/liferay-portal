@@ -101,5 +101,5 @@ if (parentOrganizationId > 0) {
 
 	<div class="separator"><!-- --></div>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
