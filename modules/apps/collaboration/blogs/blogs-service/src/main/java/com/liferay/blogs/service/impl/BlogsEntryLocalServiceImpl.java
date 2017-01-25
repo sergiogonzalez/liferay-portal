@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -1782,6 +1783,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entry.getGroupId(), portletId, serviceContext);
 
 			if (Validator.isNotNull(layoutURL)) {
+				if (layoutURL.indexOf(CharPool.QUESTION) != -1) {
+					layoutURL = StringUtil.extractFirst(
+						layoutURL, CharPool.QUESTION);
+				}
+
 				return layoutURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
 					StringPool.SLASH + entry.getEntryId();
 			}
