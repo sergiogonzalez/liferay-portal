@@ -14,10 +14,18 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/organization_search_form/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-OrganizationSearch searchContainer = (OrganizationSearch)request.getAttribute("liferay-ui:search:searchContainer");
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+if (parentOrganizationId > 0) {
+	portletURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
+}
+
+OrganizationSearch searchContainer = new OrganizationSearch(renderRequest, portletURL);
 
 OrganizationDisplayTerms displayTerms = (OrganizationDisplayTerms)searchContainer.getDisplayTerms();
 
