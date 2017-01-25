@@ -60,7 +60,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 		String content = _getRandomContent(index);
 
-		return createBaseBlogsEntry(userId, groupId, title, subtitle, content);
+		return createBlogsEntry(userId, groupId, title, subtitle, content);
 	}
 
 	private int _getNextIndex() {

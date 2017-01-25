@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseBlogsEntryDemoDataCreator
 	implements BlogsEntryDemoDataCreator {
 
-	public BlogsEntry createBaseBlogsEntry(
+	public BlogsEntry createBlogsEntry(
 			long userId, long groupId, String title, String subtitle,
 			String content)
 		throws IOException, PortalException {

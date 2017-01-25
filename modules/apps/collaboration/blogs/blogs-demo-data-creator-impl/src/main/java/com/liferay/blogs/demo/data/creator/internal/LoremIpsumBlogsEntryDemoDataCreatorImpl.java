@@ -51,7 +51,7 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 
 		String content = _getRandomContent();
 
-		return createBaseBlogsEntry(userId, groupId, title, subtitle, content);
+		return createBlogsEntry(userId, groupId, title, subtitle, content);
 	}
 
 	private String _getRandomContent() {
