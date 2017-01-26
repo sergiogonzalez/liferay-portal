@@ -34,6 +34,7 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_user_search"
+	markupView="lexicon"
 >
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.FIRST_NAME %>" size="20" type="text" value="<%= displayTerms.getFirstName() %>" />

@@ -36,6 +36,7 @@ String type = displayTerms.getType();
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_organization_search"
+	markupView="lexicon"
 >
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
