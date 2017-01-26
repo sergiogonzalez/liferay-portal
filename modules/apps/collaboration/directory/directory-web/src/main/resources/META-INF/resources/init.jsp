@@ -30,7 +30,6 @@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchUserException" %><%@
-page import="com.liferay.portal.kernel.exception.NoSuchUserGroupException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Address" %><%@
 page import="com.liferay.portal.kernel.model.Contact" %><%@
