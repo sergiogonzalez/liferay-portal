@@ -17,17 +17,17 @@ package com.liferay.blogs.demo.data.creator.internal;
 import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -89,28 +89,21 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	}
 
 	private static List<String> _getAllLines(String fileName) {
-		List<String> lines = new ArrayList<>();
-
 		try (InputStream is =
 				LoremIpsumBlogsEntryDemoDataCreatorImpl.class.
-					getResourceAsStream(fileName);
+					getResourceAsStream(fileName)) {
 
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(is))) {
+			String fileContent = StringUtil.read(is);
 
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lines.add(line);
-			}
+			return Arrays.asList(StringUtil.split(fileContent, '\n'));
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(ioe);
 			}
-		}
 
-		return lines;
+			return new ArrayList<>();
+		}
 	}
 
 }
