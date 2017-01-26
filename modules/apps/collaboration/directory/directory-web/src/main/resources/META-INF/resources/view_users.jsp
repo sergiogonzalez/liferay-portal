@@ -79,11 +79,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 		</h3>
 	</c:if>
 
-	<aui:nav-bar>
-		<aui:nav-bar-search>
-			<liferay-ui:user-search-form />
-		</aui:nav-bar-search>
-	</aui:nav-bar>
+	<liferay-util:include page="/user_search.jsp" servletContext="<%= application %>" />
 
 	<%
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();

@@ -14,10 +14,18 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-UserSearch searchContainer = (UserSearch)request.getAttribute("liferay-ui:search:searchContainer");
+String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
+
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+if (Validator.isNotNull(viewUsersRedirect)) {
+	portletURL.setParameter("viewUsersRedirect", viewUsersRedirect);
+}
+
+UserSearch searchContainer = new UserSearch(renderRequest, portletURL);
 
 UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerms();
 %>
