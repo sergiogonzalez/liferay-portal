@@ -57,33 +57,59 @@ userGroupSearch.setResults(userGroups);
 
 <aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-<liferay-ui:search-container
-	searchContainer="<%= userGroupSearch %>"
->
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.UserGroup"
-		escapedModel="<%= true %>"
-		keyProperty="userGroupId"
-		modelVar="userGroup"
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="list"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= userGroupSearch.getOrderByCol() %>"
+			orderByType="<%= userGroupSearch.getOrderByType() %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		searchContainer="<%= userGroupSearch %>"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			orderable="<%= true %>"
-			property="name"
-		/>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.model.UserGroup"
+			escapedModel="<%= true %>"
+			keyProperty="userGroupId"
+			modelVar="userGroup"
+		>
+			<liferay-ui:search-container-column-text
+				name="name"
+				orderable="<%= true %>"
+				property="name"
+			/>
 
-		<liferay-ui:search-container-column-text
-			name="description"
-			orderable="<%= true %>"
-			property="description"
-		/>
+			<liferay-ui:search-container-column-text
+				name="description"
+				orderable="<%= true %>"
+				property="description"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/user_group_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-jsp
+				align="right"
+				cssClass="entry-action"
+				path="/user_group_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
-</liferay-ui:search-container>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
