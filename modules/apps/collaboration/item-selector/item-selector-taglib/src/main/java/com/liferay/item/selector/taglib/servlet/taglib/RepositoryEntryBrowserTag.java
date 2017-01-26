@@ -63,6 +63,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_emptyResultsMessage = emptyResultsMessage;
 	}
 
+	public void setExtensions(List<String> extensions) {
+		_extensions = extensions;
+	}
+
 	public void setItemSelectedEventName(String itemSelectedEventName) {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
@@ -119,6 +123,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_desiredItemSelectorReturnTypes = null;
 		_emptyResultsMessage = null;
 		_displayStyle = null;
+		_extensions = new ArrayList<>();
 		_itemSelectedEventName = null;
 		_maxFileSize = PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 		_portletURL = null;
@@ -188,6 +193,9 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		}
 
 		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:extensions",
+			_extensions);
+		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"itemSelectedEventName",
 			_itemSelectedEventName);
@@ -233,6 +241,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
 	private String _emptyResultsMessage;
+	private List<String> _extensions = new ArrayList<>();
 	private String _itemSelectedEventName;
 	private ItemSelectorReturnTypeResolver _itemSelectorReturnTypeResolver;
 	private long _maxFileSize =

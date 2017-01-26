@@ -18,6 +18,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
+import com.liferay.portal.tools.bundle.support.util.StreamLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,6 @@ import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author David Truong
@@ -37,14 +37,20 @@ import java.nio.file.Paths;
 	commandDescription = "Download and expand a new bundle.",
 	commandNames = "initBundle"
 )
-public class InitBundleCommand extends BaseCommand {
+public class InitBundleCommand extends BaseCommand implements StreamLogger {
 
 	@Override
 	public void execute() throws Exception {
 		_deleteBundle();
 
+		Path cacheDirPath = null;
+
+		if (_cacheDir != null) {
+			cacheDirPath = _cacheDir.toPath();
+		}
+
 		Path path = FileUtil.downloadFile(
-			_url.toURI(), _userName, _password, bundlesCacheDirPath);
+			_url.toURI(), _userName, _password, cacheDirPath, this);
 
 		FileUtil.unpack(path, getLiferayHomePath(), _stripComponents);
 
@@ -128,8 +134,13 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	protected static final Path bundlesCacheDirPath = Paths.get(
-		System.getProperty("user.home"), ".liferay/bundles");
+	public File getCacheDir() {
+		return _cacheDir;
+	}
+
+	public void setCacheDir(File cacheDir) {
+		_cacheDir = cacheDir;
+	}
 
 	private static final int _DEFAULT_STRIP_COMPONENTS = 1;
 
@@ -149,38 +160,78 @@ public class InitBundleCommand extends BaseCommand {
 
 	@Parameter(
 		description = "The directory that contains the configuration files.",
-		names = {"--configs"}
+		names = "--configs"
 	)
 	private File _configsDir;
 
-	@Parameter (
+	@Parameter(
 		description = "The environment of your Liferay home deployment.",
-		names = {"--environment"}
+		names = "--environment"
 	)
 	private String _environment;
 
-	@Parameter (
+	@Parameter(
 		description = "The password if your URL requires authentication.",
 		names = {"-p", "--password"}, password = true
 	)
 	private String _password;
 
-	@Parameter (
+	@Parameter(
 		description = "The number of directories to strip when expanding your bundle.",
-		names = {"--strip-components"}
+		names = "--strip-components"
 	)
 	private int _stripComponents = _DEFAULT_STRIP_COMPONENTS;
 
-	@Parameter (
+	@Parameter(
 		description = "The URL of the Liferay Bundle to expand.",
-		names = {"--url"}
+		names = "--url"
 	)
 	private URL _url = _DEFAULT_URL;
 
-	@Parameter (
+	@Parameter(
 		description = "The user name if your URL requires authentication.",
 		names = {"-u", "--username", "--user-name"}
 	)
 	private String _userName;
+
+	@Parameter(
+		description = "The directory where to cache the downloaded bundles.",
+		names = "--cache-dir")
+	private File _cacheDir = new File(
+		System.getProperty("user.home"), ".liferay/bundles");
+
+	@Override
+	public void onStarted() {
+		onStarted("Download " + _url);
+	}
+
+	protected void onStarted(String message) {
+		System.out.println(message);
+	}
+
+	@Override
+	public void onCompleted() {
+		System.out.println();
+	}
+
+	protected void onProgress(String message) {
+		System.out.print("\r" + message);
+	}
+
+	@Override
+	public void onProgress(long completed, long length) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(FileUtil.getFileLength(completed));
+
+		if (length > 0) {
+			sb.append('/');
+			sb.append(FileUtil.getFileLength(length));
+		}
+
+		sb.append(" downloaded");
+
+		onProgress(sb.toString());
+	}
 
 }

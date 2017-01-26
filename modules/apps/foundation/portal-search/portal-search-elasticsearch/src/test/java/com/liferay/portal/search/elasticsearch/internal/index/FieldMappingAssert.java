@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.index;
 
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
