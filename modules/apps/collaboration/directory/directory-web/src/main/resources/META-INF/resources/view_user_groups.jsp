@@ -18,39 +18,48 @@
 
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL);
+
+UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
+
+LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
+
+if (portletName.equals(PortletKeys.MY_SITES_DIRECTORY)) {
+	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
+
+	groupParams.put("inherit", Boolean.FALSE);
+	groupParams.put("site", Boolean.TRUE);
+	groupParams.put("usersGroups", user.getUserId());
+
+	List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+	userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, SitesUtil.filterGroups(groups, PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES));
+}
+else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
+	userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, Long.valueOf(themeDisplay.getScopeGroupId()));
+}
+
+String keywords = searchTerms.getKeywords();
+
+if (Validator.isNotNull(keywords)) {
+	userGroupParams.put("expandoAttributes", keywords);
+}
+
+int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams);
+
+userGroupSearch.setTotal(userGroupsCount);
+
+List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
+
+userGroupSearch.setResults(userGroups);
 %>
 
+<aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+
 <liferay-ui:search-container
-	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= userGroupSearch %>"
 >
-	<aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-
-	<%
-	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
-
-	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-	if (portletName.equals(PortletKeys.MY_SITES_DIRECTORY)) {
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
-
-		groupParams.put("inherit", Boolean.FALSE);
-		groupParams.put("site", Boolean.TRUE);
-		groupParams.put("usersGroups", user.getUserId());
-
-		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, SitesUtil.filterGroups(groups, PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES));
-	}
-	else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
-		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, Long.valueOf(themeDisplay.getScopeGroupId()));
-	}
-	%>
-
-	<liferay-ui:user-group-search-container-results
-		searchTerms="<%= searchTerms %>"
-		userGroupParams="<%= userGroupParams %>"
-	/>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.UserGroup"
 		escapedModel="<%= true %>"
