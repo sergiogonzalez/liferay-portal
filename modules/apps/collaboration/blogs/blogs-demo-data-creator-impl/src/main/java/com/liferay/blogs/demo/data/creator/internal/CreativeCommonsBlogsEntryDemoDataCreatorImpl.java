@@ -78,7 +78,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 		String titlePath =
 			"com/liferay/blogs/demo/data/creator/internal/dependencies" +
-				"/creative/commons/content" + index + ".txt";
+				"/creative/commons/content_" + index + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -88,7 +88,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 		String titlePath =
 			"com/liferay/blogs/demo/data/creator/internal/dependencies" +
-				"/creative/commons/subtitle" + index + ".txt";
+				"/creative/commons/subtitle_" + index + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -98,7 +98,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 		String titlePath =
 			"com/liferay/blogs/demo/data/creator/internal/dependencies" +
-				"/creative/commons/title" + index + ".txt";
+				"/creative/commons/title_" + index + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
