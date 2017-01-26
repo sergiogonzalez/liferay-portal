@@ -22,7 +22,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/directory/view");
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%
@@ -43,4 +43,18 @@ portletURL.setParameter("mvcRenderCommandName", "/directory/view");
 
 		<aui:nav-item href="<%= portletURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
 	</aui:nav>
+
+	<aui:nav-bar-search>
+		<c:choose>
+			<c:when test='<%= tabs1.equals("organizations") %>'>
+				<liferay-util:include page="/organization_search.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= tabs1.equals("user-groups") %>'>
+				<liferay-ui:input-search markupView="lexicon" />
+			</c:when>
+			<c:when test='<%= tabs1.equals("users") %>'>
+				<liferay-util:include page="/user_search.jsp" servletContext="<%= application %>" />
+			</c:when>
+		</c:choose>
+	</aui:nav-bar-search>
 </aui:nav-bar>
