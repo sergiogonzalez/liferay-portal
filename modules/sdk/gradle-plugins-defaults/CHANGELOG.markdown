@@ -932,6 +932,22 @@ compilation.
 - [LPS-70170]: Use the latest snapshot of the `com.liferay.util.taglib`
 dependency for JSP compilation.
 
+## 2.4.16 - 2017-01-20
+
+### Changed
+- [LPS-69501]: Use the published portal tools by default instead of the ones
+deployed locally in the `tools/sdk/dependencies` directories.
+
+## 2.4.17 - 2017-01-26
+
+### Added
+- [LPS-70282]: Automatically apply the `application` plugin if the `bnd.bnd`
+file contains a `Main-Class` header.
+
+### Changed
+- [LPS-70282]: Update the [Liferay Gradle Plugins] dependency to version 3.1.2.
+- [LPS-70286]: Change `appJavadoc` module headings.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -1021,6 +1037,8 @@ dependency for JSP compilation.
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092
 [LPS-70146]: https://issues.liferay.com/browse/LPS-70146
 [LPS-70170]: https://issues.liferay.com/browse/LPS-70170
+[LPS-70282]: https://issues.liferay.com/browse/LPS-70282
+[LPS-70286]: https://issues.liferay.com/browse/LPS-70286
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

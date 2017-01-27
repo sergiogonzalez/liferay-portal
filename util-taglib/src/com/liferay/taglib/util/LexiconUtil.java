@@ -22,14 +22,15 @@ import com.liferay.portal.kernel.model.User;
 public class LexiconUtil {
 
 	public static String getUserColorCssClass(User user) {
-		String colorCssClass = "user-icon-defaul";
-
-		if (user != null) {
-			colorCssClass =
-				"user-icon-color-" + (Math.abs(user.getUserId()) % 10);
+		if (user == null) {
+			return "user-icon-defaul";
 		}
 
-		return colorCssClass;
+		return "user-icon-color-".concat(
+			_NUMBERS[(int)(user.getUserId() % 10)]);
 	}
+
+	private static final String[] _NUMBERS =
+		{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
 }

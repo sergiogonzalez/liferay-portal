@@ -35,9 +35,9 @@
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<execute function="Click" locator1="ExportImport#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
-				<execute function="Click" locator1="ExportImport#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
@@ -168,7 +168,7 @@
 	</command>
 
 	<command name="_export">
-		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<if>
 			<isset var="larFileName" />
@@ -282,7 +282,7 @@
 				<for list="${checkContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute function="Click" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -308,7 +308,7 @@
 	</command>
 
 	<command name="_selectImportFile">
-		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
 
@@ -347,8 +347,8 @@
 			<elseif>
 				<isset var="importValidationMissingItem" />
 				<then>
-					<execute function="AssertTextEquals" locator1="ExportImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-					<execute function="AssertTextEquals" locator1="ExportImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
+					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
 				</then>
 			</elseif>
 			<else>
@@ -372,7 +372,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick" locator1="SitePagesImport#SELECT_FILE_BUTTON" value1="Select File" />
+		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 
 		<execute function="Pause" locator1="5000" />
 
@@ -551,7 +551,7 @@
 		<if>
 			<equals arg1="${privateLayout}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="SitePagesExport#CHANGE_TO_PRIVATE_PAGES" />
+				<execute function="Click" locator1="PagesConfiguration#CHANGE_TO_PRIVATE_PAGES" />
 			</then>
 		</if>
 
@@ -568,6 +568,14 @@
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
+	</command>
+
+	<command name="filterCompletedProcesses">
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Completed" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
 	</command>
 
 	<command name="gotoExport">
@@ -636,6 +644,16 @@
 		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+	</command>
+
+	<command name="orderByCompletionDate">
+		<execute function="Pause" locator1="1000" />
+
+		<execute function="Click" locator1="Dropdown#FILTER_ORDER" />
+
+		<var name="key_filterValue" value="Completion Date" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_ORDER_VALUES" value1="Completion Date" />
 	</command>
 
 	<command name="relaunchExport">
@@ -863,5 +881,15 @@
 
 		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
 		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
+	</command>
+
+	<command name="viewProcessesInDescendingOrder">
+		<execute function="Click" locator1="Icon#CARET_DESCENDING" />
+	</command>
+
+	<command name="viewProcessesInListView">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
+		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_LIST_ACTIVE" />
 	</command>
 </definition>

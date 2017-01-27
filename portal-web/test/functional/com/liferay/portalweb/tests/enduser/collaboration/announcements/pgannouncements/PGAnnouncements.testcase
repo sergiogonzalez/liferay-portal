@@ -81,9 +81,9 @@
 			<var name="entryURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Announcements Page" />
-		</execute>
+		<execute function="Pause" locator1="10000" />
+
+		<execute function="AssertClick" locator1="Announcements#NAVIGATION_ENTRIES_NEW" value1="New" />
 
 		<execute function="AssertTextNotPresent" value1="Announcements Entry Title" />
 		<execute function="Pause" locator1="120000" />

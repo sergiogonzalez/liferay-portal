@@ -123,6 +123,24 @@ describe(
 				);
 
 				it(
+					'should return a value if set a valid value',
+					function(done) {
+						selectField = createSelectField();
+
+						var container = selectField.get('container');
+
+						selectField.set('options', [{label: 'a', value: 'a'}]);
+						selectField.setValue('a');
+
+						assert.equal(selectField.get('value'), 'a');
+						assert.equal(selectField.getValue(), 'a');
+						assert.equal(container.one('.select-field-trigger').one('.option-selected').html(), 'a');
+
+						done();
+					}
+				);
+
+				it(
 					'should return value if select has a value in context',
 					function(done) {
 						selectField = createSelectField(
@@ -131,8 +149,6 @@ describe(
 								value: 'a'
 							}
 						);
-
-						selectField.setValue('');
 
 						assert.equal(
 							selectField.getValue(),
@@ -165,7 +181,7 @@ describe(
 					}
 				);
 
-				it(
+				xit(
 					'should return string values for multiple selectField',
 					function(done) {
 						selectField = createSelectField(

@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,7 +32,7 @@ public class AuthTokenUtil {
 	public static void addCSRFToken(
 		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
 
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken != null) {
 			authToken.addCSRFToken(request, liferayPortletURL);
@@ -44,7 +42,7 @@ public class AuthTokenUtil {
 	public static void addPortletInvocationToken(
 		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
 
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken != null) {
 			authToken.addPortletInvocationToken(request, liferayPortletURL);
@@ -59,7 +57,7 @@ public class AuthTokenUtil {
 	public static void check(HttpServletRequest request)
 		throws PortalException {
 
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken != null) {
 			authToken.check(request);
@@ -69,7 +67,7 @@ public class AuthTokenUtil {
 	public static void checkCSRFToken(HttpServletRequest request, String origin)
 		throws PrincipalException {
 
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken != null) {
 			authToken.checkCSRFToken(request, origin);
@@ -77,7 +75,7 @@ public class AuthTokenUtil {
 	}
 
 	public static String getToken(HttpServletRequest request) {
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken == null) {
 			return null;
@@ -89,7 +87,7 @@ public class AuthTokenUtil {
 	public static String getToken(
 		HttpServletRequest request, long plid, String portletId) {
 
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken == null) {
 			return null;
@@ -101,7 +99,7 @@ public class AuthTokenUtil {
 	public static boolean isValidPortletInvocationToken(
 		HttpServletRequest request, Layout layout, Portlet portlet) {
 
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken == null) {
 			return false;
@@ -121,7 +119,7 @@ public class AuthTokenUtil {
 		HttpServletRequest request, long plid, String portletId,
 		String strutsAction, String tokenValue) {
 
-		AuthToken authToken = _serviceTracker.getService();
+		AuthToken authToken = _authToken;
 
 		if (authToken == null) {
 			return false;
@@ -131,14 +129,8 @@ public class AuthTokenUtil {
 			request, plid, portletId, strutsAction, tokenValue);
 	}
 
-	private static final ServiceTracker<?, AuthToken> _serviceTracker;
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(AuthToken.class.getName());
-
-		_serviceTracker.open();
-	}
+	private static volatile AuthToken _authToken =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			AuthToken.class, AuthTokenUtil.class, "_authToken", false);
 
 }

@@ -21,6 +21,13 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public interface TemplateConstants {
 
+	public static final String[] ALLOWED_LANG_TYPES = {
+		TemplateConstants.LANG_TYPE_CSS, TemplateConstants.LANG_TYPE_FTL,
+		TemplateConstants.LANG_TYPE_JSON, TemplateConstants.LANG_TYPE_SOY,
+		TemplateConstants.LANG_TYPE_TPL, TemplateConstants.LANG_TYPE_VM,
+		TemplateConstants.LANG_TYPE_XML, TemplateConstants.LANG_TYPE_XSL
+	};
+
 	public static final String BUNDLE_SEPARATOR = "_BUNDLE_CONTEXT_";
 
 	public static final String CLASS_NAME_ID = "class_name_id";
@@ -40,6 +47,8 @@ public interface TemplateConstants {
 	public static final String LANG_TYPE_JSON = "json";
 
 	public static final String LANG_TYPE_SOY = "soy";
+
+	public static final String LANG_TYPE_TPL = "tpl";
 
 	public static final String LANG_TYPE_VM = "vm";
 

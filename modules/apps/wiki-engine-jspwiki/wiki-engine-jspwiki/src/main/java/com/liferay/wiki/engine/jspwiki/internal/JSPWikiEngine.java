@@ -95,7 +95,8 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 
 	@Override
 	public String getHelpURL() {
-		return "http://www.wikicreole.org/wiki/Creole1.0";
+		return
+			"https://jspwiki-wiki.apache.org/Wiki.jsp?page=TextFormattingRules";
 	}
 
 	@Override

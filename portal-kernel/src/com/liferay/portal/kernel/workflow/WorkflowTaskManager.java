@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -31,6 +33,7 @@ import java.util.Map;
  * @author Marcellus Tavares
  */
 @MessagingProxy(mode = ProxyMode.SYNC)
+@ProviderType
 public interface WorkflowTaskManager {
 
 	public WorkflowTask assignWorkflowTaskToRole(
@@ -118,6 +121,9 @@ public interface WorkflowTaskManager {
 			long companyId, Long userId, long workflowInstanceId,
 			Boolean completed, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException;
+
+	public boolean hasOtherAssignees(long workflowTaskInstanceId, long userId)
 		throws WorkflowException;
 
 	public List<WorkflowTask> search(

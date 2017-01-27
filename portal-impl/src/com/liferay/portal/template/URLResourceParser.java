@@ -16,9 +16,11 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -96,7 +98,10 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 
 		String extension = FileUtil.getExtension(templateId);
 
-		if (!extension.equals(langType)) {
+		if (!extension.equals(langType) &&
+			!ArrayUtil.contains(
+				TemplateConstants.ALLOWED_LANG_TYPES, extension)) {
+
 			return false;
 		}
 
