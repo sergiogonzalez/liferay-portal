@@ -1,4 +1,5 @@
 <definition component-name="portal-plugins-osgi">
+	<property name="osgi.app.includes" value="social-bookmarks" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="plugins.deployment.type" value="osgi" />
@@ -9,8 +10,6 @@
 	</set-up>
 
 	<command name="SocialBookmarksHookSmoke" priority="4">
-		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
-
 		<var name="appName" value="Social Bookmarks" />
 		<var name="portletName" value="social-bookmarks-hook" />
 

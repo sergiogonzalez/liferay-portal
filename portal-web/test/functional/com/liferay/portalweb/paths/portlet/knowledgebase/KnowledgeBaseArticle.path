@@ -130,6 +130,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CUSTOM_FIELD-->
+<tr>
+	<td>CUSTOM_FIELD_BOOLEAN</td>
+	<td>//div[contains(@class,'ddm-field-group')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELD_NAME</td>
+	<td>//div[contains(@class,'ddm-field-group')]//span[contains(.,'${customFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELD_VALUE</td>
+	<td>//div[contains(@class,'ddm-field-group')]//span[contains(.,'${customFieldValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--EDIT-->
 <tr>
 	<td>EDIT_FRIENDLY_URL_FIELD</td>

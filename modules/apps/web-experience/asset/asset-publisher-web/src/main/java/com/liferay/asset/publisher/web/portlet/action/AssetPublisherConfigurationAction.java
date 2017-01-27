@@ -28,6 +28,7 @@ import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -60,6 +61,7 @@ import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -90,6 +92,12 @@ public class AssetPublisherConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
+		if (Objects.equals(cmd, "edit_query_rule")) {
+			return "/edit_field.jsp";
+		}
+
 		return "/configuration.jsp";
 	}
 
@@ -112,6 +120,8 @@ public class AssetPublisherConfigurationAction
 		request.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
 			assetPublisherCustomizer);
+
+		request.setAttribute(AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
 
 		super.include(portletConfig, request, response);
 	}
@@ -512,6 +522,11 @@ public class AssetPublisherConfigurationAction
 	}
 
 	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		this.itemSelector = itemSelector;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -734,6 +749,7 @@ public class AssetPublisherConfigurationAction
 
 	protected AssetTagLocalService assetTagLocalService;
 	protected GroupLocalService groupLocalService;
+	protected ItemSelector itemSelector;
 	protected LayoutLocalService layoutLocalService;
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
 

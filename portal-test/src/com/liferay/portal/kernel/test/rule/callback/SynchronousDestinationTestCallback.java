@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCa
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -172,6 +175,17 @@ public class SynchronousDestinationTestCallback
 				mailFilter, pdfProcessorFilter, rawMetaDataProcessorFilter,
 				subscrpitionSenderFilter);
 
+			boolean schedulerEnabled = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.SCHEDULER_ENABLED));
+
+			if (schedulerEnabled) {
+				Filter kaleoGraphWalkerFilter = _registerDestinationFilter(
+					"liferay/kaleo_graph_walker");
+
+				serviceDependencyManager.registerDependencies(
+					kaleoGraphWalkerFilter);
+			}
+
 			serviceDependencyManager.waitForDependencies();
 
 			ProxyModeThreadLocal.setForceSync(true);
@@ -187,6 +201,10 @@ public class SynchronousDestinationTestCallback
 			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SCHEDULER_ENGINE);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
+
+			if (schedulerEnabled) {
+				replaceDestination("liferay/kaleo_graph_walker");
+			}
 
 			for (String searchEngineId :
 					SearchEngineHelperUtil.getSearchEngineIds()) {
