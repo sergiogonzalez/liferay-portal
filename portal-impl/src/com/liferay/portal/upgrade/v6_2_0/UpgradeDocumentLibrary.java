@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileEntryTypeTable;
 
 import java.sql.PreparedStatement;
@@ -132,20 +133,20 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	protected void updateDLFolderUserName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select distinct userId from DLFolder where userName IS NULL " +
+				"select distinct userId from DLFolder where userName is null " +
 					"or userName = ''");
 			ResultSet rs = ps1.executeQuery();
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update DLFolder set userName = ? where userId = ? and " +
-						"(userName IS NULL or userName = '')"))) {
+						"(userName is null or userName = '')"))) {
 
 			while (rs.next()) {
 				long userId = rs.getLong("userId");
 
 				String userName = getUserName(userId);
 
-				if (userName != null) {
+				if (Validator.isNotNull(userName)) {
 					ps2.setString(1, userName);
 
 					ps2.setLong(2, userId);
