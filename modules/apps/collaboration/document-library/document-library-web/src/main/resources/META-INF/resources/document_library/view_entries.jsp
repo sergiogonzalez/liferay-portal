@@ -503,7 +503,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									actionJspServletContext="<%= application %>"
 									resultRow="<%= row %>"
 									rowChecker="<%= entriesChecker %>"
-									text="<%= HtmlUtil.escape(curFolder.getName()) %>"
+									text="<%= curFolder.getName() %>"
 									url="<%= rowURL.toString() %>"
 								>
 									<liferay-frontend:horizontal-card-col>
