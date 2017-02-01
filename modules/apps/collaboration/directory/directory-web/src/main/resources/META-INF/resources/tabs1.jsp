@@ -17,26 +17,44 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL tabs1URL = renderResponse.createRenderURL();
+PortletURL portletURL = renderResponse.createRenderURL();
 
-tabs1URL.setParameter("mvcRenderCommandName", "/directory/view");
-
-String tabs1Names = ParamUtil.getString(request, "tabs1Names", "users,organizations,user-groups");
-
-tabs1Names = HtmlUtil.escape(tabs1Names);
-
-String tabs1Values = tabs1Names;
-
-String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
-
-String redirect = ParamUtil.getString(request, "redirect", viewUsersRedirect);
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+portletURL.setParameter("mvcRenderCommandName", "/directory/view");
 %>
 
-<liferay-ui:tabs
-	backURL="<%= backURL %>"
-	names="<%= tabs1Names %>"
-	tabsValues="<%= tabs1Values %>"
-	url="<%= tabs1URL.toString() %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		portletURL.setParameter("tabs1", "users");
+		%>
+
+		<aui:nav-item href="<%= portletURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+
+		<%
+		portletURL.setParameter("tabs1", "organizations");
+		%>
+
+		<aui:nav-item href="<%= portletURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
+
+		<%
+		portletURL.setParameter("tabs1", "user-groups");
+		%>
+
+		<aui:nav-item href="<%= portletURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<c:choose>
+			<c:when test='<%= tabs1.equals("organizations") %>'>
+				<liferay-util:include page="/organization_search.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= tabs1.equals("user-groups") %>'>
+				<liferay-ui:input-search markupView="lexicon" />
+			</c:when>
+			<c:when test='<%= tabs1.equals("users") %>'>
+				<liferay-util:include page="/user_search.jsp" servletContext="<%= application %>" />
+			</c:when>
+		</c:choose>
+	</aui:nav-bar-search>
+</aui:nav-bar>

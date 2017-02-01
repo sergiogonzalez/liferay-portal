@@ -34,7 +34,8 @@ UserGroup userGroup = (UserGroup)row.getObject();
 </portlet:renderURL>
 
 <liferay-ui:icon
-	iconCssClass="icon-search"
+	icon="users"
+	markupView="lexicon"
 	message="view-users"
 	method="get"
 	url="<%= viewUsersURL %>"
