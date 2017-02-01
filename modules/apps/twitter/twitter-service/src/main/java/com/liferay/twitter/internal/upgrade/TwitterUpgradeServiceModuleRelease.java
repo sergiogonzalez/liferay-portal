@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.release;
+package com.liferay.twitter.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.model.dao.ReleaseDAO;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,10 +26,17 @@ import java.sql.SQLException;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
+public class TwitterUpgradeServiceModuleRelease
+	extends BaseUpgradeServiceModuleRelease {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (Validator.isNull(getOldBundleSymbolicName())) {
+			_createRelease();
+
+			return;
+		}
+
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select buildNumber from Release_ where servletContextName = " +
 					"?")) {
@@ -48,16 +57,26 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 	}
 
 	protected String getNamespace() {
-		return StringPool.BLANK;
+		return "Twitter";
 	}
 
-	protected abstract String getNewBundleSymbolicName();
+	@Override
+	protected String getNewBundleSymbolicName() {
+		return "com.liferay.twitter.service";
+	}
 
-	protected abstract String getOldBundleSymbolicName();
+	@Override
+	protected String getOldBundleSymbolicName() {
+		return "twitter-portlet";
+	}
 
-	private boolean _hasServiceComponent()
-		throws SQLException {
+	private void _createRelease() throws SQLException {
+		ReleaseDAO releaseDAO = new ReleaseDAO();
 
+		releaseDAO.addRelease(connection, getNewBundleSymbolicName());
+	}
+
+	private boolean _hasServiceComponent() throws SQLException {
 		if (Validator.isNull(getNamespace())) {
 			return false;
 		}
