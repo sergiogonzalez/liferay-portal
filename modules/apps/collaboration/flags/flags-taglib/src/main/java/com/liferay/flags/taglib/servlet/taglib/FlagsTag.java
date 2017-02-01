@@ -15,83 +15,91 @@
 package com.liferay.flags.taglib.servlet.taglib;
 
 import com.liferay.flags.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.taglib.util.IncludeTag;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
+import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 /**
  * @author Julio Camarero
  */
-public class FlagsTag extends IncludeTag {
+public class FlagsTag extends TemplateRendererTag {
+
+	@Override
+	public int doStartTag() {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+
+		String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
+
+		boolean inTrash = false;//TrashUtil.isInTrash(this.className, this.classPK);
+
+		String cssClass = randomNamespace;
+
+		if (!inTrash) {
+			cssClass = randomNamespace + " flag-enable";
+		}
+
+		putValue("elementClasses", cssClass);
+
+/*
+		context.put("cssClass", cssClass);
+		context.put("data", dataJSON);
+		context.put("inTrash", inTrash);
+		context.put("id", randomNamespace + "id");
+		context.put("signedUser", flagsGroupServiceConfiguration.guestUsersEnabled() || themeDisplay.isSignedIn());
+		context.put("uri", editEntryURL.toString());
+*/
+
+
+		putValue("pathThemeImages", themeDisplay.getPathThemeImages());
+
+		setTemplateNamespace("Flags.render");
+
+		return super.doStartTag();
+	}
+
+	@Override
+	public int doEndTag() {
+		try {
+			return super.doEndTag();
+		}
+		catch (javax.servlet.jsp.JspException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public String getModule() {
+		return "flags-taglib/flags/Flags.es";
+	}
 
 	public void setClassName(String className) {
-		_className = className;
+		putValue("className", className);
 	}
 
 	public void setClassPK(long classPK) {
-		_classPK = classPK;
+		putValue("classPK", classPK);
 	}
 
 	public void setContentTitle(String contentTitle) {
-		_contentTitle = contentTitle;
+		putValue("contentTitle", contentTitle);
 	}
 
 	public void setLabel(boolean label) {
-		_label = label;
+		putValue("label", label);
 	}
 
 	public void setMessage(String message) {
-		_message = message;
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
+		putValue("message", message);
 	}
 
 	public void setReportedUserId(long reportedUserId) {
-		_reportedUserId = reportedUserId;
+		putValue("reportedUserId", reportedUserId);
 	}
 
-	@Override
-	protected void cleanUp() {
-		_className = null;
-		_classPK = 0;
-		_contentTitle = null;
-		_label = true;
-		_message = null;
-		_reportedUserId = 0;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-flags:flags:className", _className);
-		request.setAttribute(
-			"liferay-flags:flags:classPK", String.valueOf(_classPK));
-		request.setAttribute("liferay-flags:flags:contentTitle", _contentTitle);
-		request.setAttribute(
-			"liferay-flags:flags:label", String.valueOf(_label));
-		request.setAttribute("liferay-flags:flags:message", _message);
-		request.setAttribute(
-			"liferay-flags:flags:reportedUserId",
-			String.valueOf(_reportedUserId));
-	}
-
-	private static final String _PAGE = "/flags/page.jsp";
-
-	private String _className;
-	private long _classPK;
-	private String _contentTitle;
 	private boolean _label = true;
-	private String _message;
-	private long _reportedUserId;
-
 }
