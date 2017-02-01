@@ -206,7 +206,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 		for (Document document : getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
-				return _cmisRepository.toFileVersion(document);
+				return _cmisRepository.toFileVersion(this, document);
 			}
 		}
 
@@ -224,7 +224,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 			for (Document document : documents) {
 				FileVersion fileVersion = _cmisRepository.toFileVersion(
-					document);
+					this, document);
 
 				fileVersions.add(fileVersion);
 			}
@@ -322,10 +322,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			Document latestDocumentVersion = documents.get(0);
 
 			_latestFileVersion = _cmisRepository.toFileVersion(
-				latestDocumentVersion);
+				this, latestDocumentVersion);
 		}
 		else {
-			_latestFileVersion = _cmisRepository.toFileVersion(_document);
+			_latestFileVersion = _cmisRepository.toFileVersion(this, _document);
 		}
 
 		return _latestFileVersion;

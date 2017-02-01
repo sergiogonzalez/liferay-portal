@@ -271,7 +271,7 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 
 		if (draftDocument != null) {
-			return toFileVersion(draftDocument);
+			return toFileVersion(null, draftDocument);
 		}
 
 		return null;
@@ -640,7 +640,7 @@ public class CMISRepository extends BaseCmisRepository {
 		try {
 			Session session = getSession();
 
-			return getFileVersion(session, fileVersionId);
+			return getFileVersion(session, null, fileVersionId);
 		}
 		catch (PortalException | SystemException e) {
 			throw e;
@@ -1238,11 +1238,13 @@ public class CMISRepository extends BaseCmisRepository {
 		return toFileEntry(objectId, false);
 	}
 
-	public FileVersion toFileVersion(Document version) throws PortalException {
+	public FileVersion toFileVersion(FileEntry fileEntry, Document version)
+		throws PortalException {
+
 		RepositoryEntry repositoryEntry = getRepositoryEntry(version.getId());
 
 		return new CMISFileVersion(
-			this, repositoryEntry.getUuid(),
+			this, fileEntry, repositoryEntry.getUuid(),
 			repositoryEntry.getRepositoryEntryId(), version);
 	}
 
@@ -1955,13 +1957,15 @@ public class CMISRepository extends BaseCmisRepository {
 		return new ArrayList<>();
 	}
 
-	protected FileVersion getFileVersion(Session session, long fileVersionId)
+	protected FileVersion getFileVersion(
+			Session session, FileEntry fileEntry, long fileVersionId)
 		throws PortalException {
 
 		try {
 			String objectId = toFileVersionId(fileVersionId);
 
-			return toFileVersion((Document)session.getObject(objectId));
+			return toFileVersion(
+				fileEntry, (Document)session.getObject(objectId));
 		}
 		catch (CmisObjectNotFoundException confe) {
 			throw new NoSuchFileVersionException(
