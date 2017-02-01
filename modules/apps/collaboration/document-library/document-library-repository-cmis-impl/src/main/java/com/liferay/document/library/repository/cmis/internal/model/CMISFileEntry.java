@@ -742,8 +742,6 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	protected List<Document> getAllVersions() throws PortalException {
 		if (_allVersions == null) {
 			try {
-				_document.refresh();
-
 				_allVersions = _document.getAllVersions();
 			}
 			catch (CmisObjectNotFoundException confe) {
