@@ -7,6 +7,6 @@ create table FriendlyURL (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	urlTitle VARCHAR(75) null,
+	urlTitle VARCHAR(255) null,
 	main BOOLEAN
 );
