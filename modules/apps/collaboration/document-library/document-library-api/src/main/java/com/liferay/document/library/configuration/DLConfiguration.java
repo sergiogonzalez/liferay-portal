@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.configuration;
 
+import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -26,7 +27,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	id = "com.liferay.document.library.configuration.DLConfiguration",
 	localization = "content/Language", name = "dl.configuration.name"
 )
+@ProviderType
 public interface DLConfiguration {
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean addDefaultStructures();
 
 	@Meta.AD(
 		deflt = "text/asp|text/css|text/ecmascript|text/html|text/javascript|text/x-c|text/x-fortran|text/x-java-source|text/x-pascal|text/x-script.perl|text/x-script.perl-module|text/xml",
