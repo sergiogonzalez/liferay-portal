@@ -545,9 +545,7 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		try {
-			Map<Long, FileEntry> fileEntryMap = _fileEntryCache.get();
-
-			FileEntry fileEntry = fileEntryMap.get(fileEntryId);
+			FileEntry fileEntry = _cmisModelCache.getFileEntry(fileEntryId);
 
 			if (fileEntry == null) {
 				Session session = getSession();
@@ -556,7 +554,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 				fileEntry = toFileEntry(document);
 
-				fileEntryMap.put(fileEntryId, fileEntry);
+				_cmisModelCache.putFileEntry(fileEntry);
 			}
 
 			return fileEntry;
@@ -1547,9 +1545,6 @@ public class CMISRepository extends BaseCmisRepository {
 			ItemIterable<CmisObject> cmisObjects =
 				cmisParentFolder.getChildren();
 
-			Map<Long, FileEntry> fileEntryCache = _fileEntryCache.get();
-			Map<Long, Folder> folderCache = _folderCache.get();
-
 			for (CmisObject cmisObject : cmisObjects) {
 				if (cmisObject instanceof
 						org.apache.chemistry.opencmis.client.api.Folder) {
@@ -1562,7 +1557,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 					foldersAndFileEntries.add(cmisFolder);
 					folders.add(cmisFolder);
-					folderCache.put(cmisFolder.getFolderId(), cmisFolder);
+
+					_cmisModelCache.putFolder(cmisFolder);
 				}
 				else if (cmisObject instanceof Document) {
 					CMISFileEntry cmisFileEntry = (CMISFileEntry)toFileEntry(
@@ -1572,8 +1568,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 					foldersAndFileEntries.add(cmisFileEntry);
 					fileEntries.add(cmisFileEntry);
-					fileEntryCache.put(
-						cmisFileEntry.getFileEntryId(), cmisFileEntry);
+
+					_cmisModelCache.putFileEntry(cmisFileEntry);
 				}
 			}
 
@@ -1995,9 +1991,7 @@ public class CMISRepository extends BaseCmisRepository {
 		throws PortalException {
 
 		try {
-			Map<Long, Folder> folderMap = _folderCache.get();
-
-			Folder folder = folderMap.get(folderId);
+			Folder folder = _cmisModelCache.getFolder(folderId);
 
 			if (folder == null) {
 				String objectId = toFolderId(session, folderId);
@@ -2006,7 +2000,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 				folder = (Folder)toFolderOrFileEntry(cmisObject);
 
-				folderMap.put(folderId, folder);
+				_cmisModelCache.putFolder(folder);
 			}
 
 			return folder;
@@ -2362,19 +2356,12 @@ public class CMISRepository extends BaseCmisRepository {
 
 	private static final Log _log = LogFactoryUtil.getLog(CMISRepository.class);
 
+	private static final CMISModelCache _cmisModelCache = new CMISModelCache();
 	private static final ThreadLocal<Map<Long, List<FileEntry>>>
 		_fileEntriesCache =
 			new AutoResetThreadLocal<Map<Long, List<FileEntry>>>(
 				CMISRepository.class + "._fileEntriesCache",
 				new HashMap<Long, List<FileEntry>>());
-	private static final ThreadLocal<Map<Long, FileEntry>> _fileEntryCache =
-		new AutoResetThreadLocal<Map<Long, FileEntry>>(
-			CMISRepository.class + "._fileEntryCache",
-			new HashMap<Long, FileEntry>());
-	private static final ThreadLocal<Map<Long, Folder>> _folderCache =
-		new AutoResetThreadLocal<Map<Long, Folder>>(
-			CMISRepository.class + "._folderCache",
-			new HashMap<Long, Folder>());
 	private static final ThreadLocal<Map<Long, List<Object>>>
 		_foldersAndFileEntriesCache =
 			new AutoResetThreadLocal<Map<Long, List<Object>>>(
