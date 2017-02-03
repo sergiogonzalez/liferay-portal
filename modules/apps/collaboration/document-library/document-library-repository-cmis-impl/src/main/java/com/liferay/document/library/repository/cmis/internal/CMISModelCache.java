@@ -65,12 +65,20 @@ public class CMISModelCache {
 	}
 
 	public void putFileEntry(FileEntry fileEntry) {
+		if (fileEntry == null) {
+			return;
+		}
+
 		Map<Long, FileEntry> fileEntryMap = _fileEntryCache.get();
 
 		fileEntryMap.put(fileEntry.getFileEntryId(), fileEntry);
 	}
 
 	public void putFolder(Folder folder) {
+		if (folder == null) {
+			return;
+		}
+
 		Map<Long, Folder> folderMap = _folderCache.get();
 
 		folderMap.put(folder.getFolderId(), folder);
