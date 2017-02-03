@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -486,9 +485,7 @@ public class CMISRepository extends BaseCmisRepository {
 			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
-		Map<Long, List<FileEntry>> fileEntriesCache = _fileEntriesCache.get();
-
-		List<FileEntry> fileEntries = fileEntriesCache.get(folderId);
+		List<FileEntry> fileEntries = _cmisModelCache.getFileEntries(folderId);
 
 		if ((fileEntries == null) || (mimeTypes != null)) {
 			fileEntries = new ArrayList<>();
@@ -503,7 +500,7 @@ public class CMISRepository extends BaseCmisRepository {
 			}
 
 			if (mimeTypes == null) {
-				fileEntriesCache.put(folderId, fileEntries);
+				_cmisModelCache.putFileEntries(folderId, fileEntries);
 			}
 		}
 
@@ -741,11 +738,8 @@ public class CMISRepository extends BaseCmisRepository {
 			OrderByComparator<?> obc)
 		throws PortalException {
 
-		Map<Long, List<Object>> foldersAndFileEntriesCache =
-			_foldersAndFileEntriesCache.get();
-
-		List<Object> foldersAndFileEntries = foldersAndFileEntriesCache.get(
-			folderId);
+		List<Object> foldersAndFileEntries =
+			_cmisModelCache.getFoldersAndFileEntries(folderId);
 
 		if ((foldersAndFileEntries == null) || (mimeTypes != null)) {
 			foldersAndFileEntries = new ArrayList<>();
@@ -759,7 +753,8 @@ public class CMISRepository extends BaseCmisRepository {
 			foldersAndFileEntries.addAll(fileEntries);
 
 			if (mimeTypes == null) {
-				foldersAndFileEntriesCache.put(folderId, foldersAndFileEntries);
+				_cmisModelCache.putFoldersAndFileEntries(
+					folderId, foldersAndFileEntries);
 			}
 		}
 
@@ -1524,10 +1519,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 	protected void cacheFoldersAndFileEntries(long folderId) {
 		try {
-			Map<Long, List<Object>> foldersAndFileEntriesCache =
-				_foldersAndFileEntriesCache.get();
-
-			if (foldersAndFileEntriesCache.containsKey(folderId)) {
+			if (_cmisModelCache.getFoldersAndFileEntries(folderId) != null) {
 				return;
 			}
 
@@ -1573,16 +1565,12 @@ public class CMISRepository extends BaseCmisRepository {
 				}
 			}
 
-			foldersAndFileEntriesCache.put(folderId, foldersAndFileEntries);
+			_cmisModelCache.putFoldersAndFileEntries(
+				folderId, foldersAndFileEntries);
 
-			Map<Long, List<Folder>> foldersCache = _foldersCache.get();
+			_cmisModelCache.putFolders(folderId, folders);
 
-			foldersCache.put(folderId, folders);
-
-			Map<Long, List<FileEntry>> fileEntriesCache =
-				_fileEntriesCache.get();
-
-			fileEntriesCache.put(folderId, fileEntries);
+			_cmisModelCache.putFileEntries(folderId, fileEntries);
 		}
 		catch (SystemException se) {
 			throw se;
@@ -1960,9 +1948,7 @@ public class CMISRepository extends BaseCmisRepository {
 	protected List<FileEntry> getFileEntries(long folderId) {
 		cacheFoldersAndFileEntries(folderId);
 
-		Map<Long, List<FileEntry>> fileEntriesCache = _fileEntriesCache.get();
-
-		return fileEntriesCache.get(folderId);
+		return _cmisModelCache.getFileEntries(folderId);
 	}
 
 	protected List<FileEntry> getFileEntries(long folderId, long repositoryId) {
@@ -2014,9 +2000,7 @@ public class CMISRepository extends BaseCmisRepository {
 	protected List<Folder> getFolders(long parentFolderId)
 		throws PortalException {
 
-		Map<Long, List<Folder>> foldersCache = _foldersCache.get();
-
-		List<Folder> folders = foldersCache.get(parentFolderId);
+		List<Folder> folders = _cmisModelCache.getFolders(parentFolderId);
 
 		if (folders == null) {
 			List<String> folderIds = getCmisFolderIds(
@@ -2028,7 +2012,7 @@ public class CMISRepository extends BaseCmisRepository {
 				folders.add(toFolder(folderId));
 			}
 
-			foldersCache.put(parentFolderId, folders);
+			_cmisModelCache.putFolders(parentFolderId, folders);
 		}
 
 		return folders;
@@ -2037,10 +2021,7 @@ public class CMISRepository extends BaseCmisRepository {
 	protected List<Object> getFoldersAndFileEntries(long folderId) {
 		cacheFoldersAndFileEntries(folderId);
 
-		Map<Long, List<Object>> foldersAndFileEntriesCache =
-			_foldersAndFileEntriesCache.get();
-
-		return foldersAndFileEntriesCache.get(folderId);
+		return _cmisModelCache.getFoldersAndFileEntries(folderId);
 	}
 
 	protected String getObjectId(
@@ -2357,20 +2338,6 @@ public class CMISRepository extends BaseCmisRepository {
 	private static final Log _log = LogFactoryUtil.getLog(CMISRepository.class);
 
 	private static final CMISModelCache _cmisModelCache = new CMISModelCache();
-	private static final ThreadLocal<Map<Long, List<FileEntry>>>
-		_fileEntriesCache =
-			new AutoResetThreadLocal<Map<Long, List<FileEntry>>>(
-				CMISRepository.class + "._fileEntriesCache",
-				new HashMap<Long, List<FileEntry>>());
-	private static final ThreadLocal<Map<Long, List<Object>>>
-		_foldersAndFileEntriesCache =
-			new AutoResetThreadLocal<Map<Long, List<Object>>>(
-				CMISRepository.class + "._foldersAndFileEntriesCache",
-				new HashMap<Long, List<Object>>());
-	private static final ThreadLocal<Map<Long, List<Folder>>> _foldersCache =
-		new AutoResetThreadLocal<Map<Long, List<Folder>>>(
-			CMISRepository.class + "._foldersCache",
-			new HashMap<Long, List<Folder>>());
 
 	private final CMISRepositoryConfiguration _cmisRepositoryConfiguration;
 	private CMISRepositoryDetector _cmisRepositoryDetector;

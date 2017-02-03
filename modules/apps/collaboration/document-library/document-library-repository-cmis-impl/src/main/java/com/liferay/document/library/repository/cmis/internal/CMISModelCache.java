@@ -19,12 +19,19 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Adolfo Pérez
  */
 public class CMISModelCache {
+
+	public List<FileEntry> getFileEntries(long folderId) {
+		Map<Long, List<FileEntry>> fileEntriesCache = _fileEntriesCache.get();
+
+		return fileEntriesCache.get(folderId);
+	}
 
 	public FileEntry getFileEntry(long fileEntryId) {
 		Map<Long, FileEntry> fileEntryMap = _fileEntryCache.get();
@@ -36,6 +43,25 @@ public class CMISModelCache {
 		Map<Long, Folder> folderMap = _folderCache.get();
 
 		return folderMap.get(folderId);
+	}
+
+	public List<Folder> getFolders(long folderId) {
+		Map<Long, List<Folder>> foldersCache = _foldersCache.get();
+
+		return foldersCache.get(folderId);
+	}
+
+	public List<Object> getFoldersAndFileEntries(long folderId) {
+		Map<Long, List<Object>> foldersAndFileEntriesCache =
+			_foldersAndFileEntriesCache.get();
+
+		return foldersAndFileEntriesCache.get(folderId);
+	}
+
+	public void putFileEntries(long folderId, List<FileEntry> fileEntries) {
+		Map<Long, List<FileEntry>> fileEntriesCache = _fileEntriesCache.get();
+
+		fileEntriesCache.put(folderId, fileEntries);
 	}
 
 	public void putFileEntry(FileEntry fileEntry) {
@@ -50,6 +76,25 @@ public class CMISModelCache {
 		folderMap.put(folder.getFolderId(), folder);
 	}
 
+	public void putFolders(long folderId, List<Folder> folders) {
+		Map<Long, List<Folder>> foldersCache = _foldersCache.get();
+
+		foldersCache.put(folderId, folders);
+	}
+
+	public void putFoldersAndFileEntries(
+		long folderId, List<Object> foldersAndFileEntries) {
+
+		Map<Long, List<Object>> foldersAndFileEntriesCache =
+			_foldersAndFileEntriesCache.get();
+
+		foldersAndFileEntriesCache.put(folderId, foldersAndFileEntries);
+	}
+
+	private final ThreadLocal<Map<Long, List<FileEntry>>> _fileEntriesCache =
+		new AutoResetThreadLocal<Map<Long, List<FileEntry>>>(
+			CMISRepository.class + "._fileEntriesCache",
+			new HashMap<Long, List<FileEntry>>());
 	private final ThreadLocal<Map<Long, FileEntry>> _fileEntryCache =
 		new AutoResetThreadLocal<Map<Long, FileEntry>>(
 			CMISRepository.class + "._fileEntryCache",
@@ -58,5 +103,14 @@ public class CMISModelCache {
 		new AutoResetThreadLocal<Map<Long, Folder>>(
 			CMISRepository.class + "._folderCache",
 			new HashMap<Long, Folder>());
+	private final ThreadLocal<Map<Long, List<Object>>>
+		_foldersAndFileEntriesCache =
+			new AutoResetThreadLocal<Map<Long, List<Object>>>(
+				CMISRepository.class + "._foldersAndFileEntriesCache",
+				new HashMap<Long, List<Object>>());
+	private final ThreadLocal<Map<Long, List<Folder>>> _foldersCache =
+		new AutoResetThreadLocal<Map<Long, List<Folder>>>(
+			CMISRepository.class + "._foldersCache",
+			new HashMap<Long, List<Folder>>());
 
 }
