@@ -103,6 +103,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		StringBundler sb = new StringBundler();
 
+		sb.append("ae_dragresize");
 		sb.append("bidi,colorbutton,colordialog,div,flash,font,forms,");
 		sb.append("indentblock,justify,keystrokes,maximize,newpage,pagebreak,");
 		sb.append("preview,print,save,showblocks,smiley,stylescombo,");
