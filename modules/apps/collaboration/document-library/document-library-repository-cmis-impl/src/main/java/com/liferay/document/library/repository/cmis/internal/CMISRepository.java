@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -2158,41 +2157,9 @@ public class CMISRepository extends BaseCmisRepository {
 			repositoryEntry = getRepositoryEntry(document.getId());
 		}
 
-		FileEntry fileEntry = new CMISFileEntry(
+		return new CMISFileEntry(
 			this, repositoryEntry.getUuid(),
 			repositoryEntry.getRepositoryEntryId(), document, _lockManager);
-
-		FileVersion fileVersion = null;
-
-		try {
-			fileVersion = fileEntry.getFileVersion();
-		}
-		catch (Exception e) {
-			if (strict) {
-				if (e instanceof CmisObjectNotFoundException) {
-					throw new NoSuchFileVersionException(
-						"No CMIS file version with CMIS file entry {objectId=" +
-							document.getId() + "}",
-						e);
-				}
-				else if (e instanceof SystemException) {
-					throw (SystemException)e;
-				}
-				else {
-					processException(e);
-
-					throw new RepositoryException(e);
-				}
-			}
-			else {
-				_log.error("Unable to update asset", e);
-			}
-		}
-
-		dlAppHelperLocalService.checkAssetEntry(
-			PrincipalThreadLocal.getUserId(), fileEntry, fileVersion);
-
-		return fileEntry;
 	}
 
 	protected FileEntry toFileEntry(String objectId, boolean strict)
