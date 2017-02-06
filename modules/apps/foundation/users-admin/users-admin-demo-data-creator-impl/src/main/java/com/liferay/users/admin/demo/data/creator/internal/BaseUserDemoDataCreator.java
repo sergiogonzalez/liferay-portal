@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,7 +35,11 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -50,6 +55,8 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		throws PortalException {
 
 		String email = emailAddress;
+		Date birthDate = new Date(0);
+		boolean male = true;
 
 		try (InputStream is = (new URL(_RANDOM_USER_API)).openStream()) {
 			String json = StringUtil.read(is);
@@ -61,6 +68,24 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 			if (email == null) {
 				email = userJsonObject.getString("email");
+			}
+
+			male = StringUtil.equalsIgnoreCase(
+				userJsonObject.getString("gender"), "male");
+
+			String dateString = userJsonObject.getString("dob");
+
+			try {
+				DateFormat dateFormat =
+					DateFormatFactoryUtil.getSimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss");
+
+				birthDate = dateFormat.parse(dateString);
+			}
+			catch (ParseException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe, pe);
+				}
 			}
 		}
 		catch (IOException ioe) {
@@ -79,7 +104,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			return user;
 		}
 
-		user = _createBasicUser(companyId, email);
+		user = _createBasicUser(companyId, email, male, birthDate);
 
 		_userIds.add(user.getUserId());
 
@@ -130,7 +155,8 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 	protected UserLocalService userLocalService;
 
-	private User _createBasicUser(long companyId, String email)
+	private User _createBasicUser(
+			long companyId, String email, boolean male, Date birthDate)
 		throws PortalException {
 
 		String[] fullNameArray = getFullNameArray(email);
@@ -144,13 +170,19 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		Locale locale = LocaleUtil.SPAIN;
+
 		String middleName = StringPool.BLANK;
 		long prefixId = 0;
 		long suffixId = 0;
-		boolean male = true;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(birthDate);
+
+		int birthdayMonth = calendar.get(Calendar.MONTH);
+		int birthdayDay = calendar.get(Calendar.DATE);
+		int birthdayYear = calendar.get(Calendar.YEAR);
+
 		String jobTitle = StringUtil.randomString();
 		long[] groupIds = null;
 		long[] organizationIds = null;
@@ -168,7 +200,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 	}
 
 	private static final String _RANDOM_USER_API =
-		"https://randomuser.me/api?inc=email&noinfo";
+		"https://randomuser.me/api?inc=email,gender,dob&noinfo";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserDemoDataCreator.class);
