@@ -54,38 +54,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			return user;
 		}
 
-		String[] fullNameArray = getFullNameArray(email);
-
-		String firstName = fullNameArray[0];
-		String lastName = fullNameArray[1];
-
-		boolean autoPassword = false;
-		String password1 = "test";
-		String password2 = "test";
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
-		Locale locale = LocaleUtil.SPAIN;
-		String middleName = StringPool.BLANK;
-		long prefixId = 0;
-		long suffixId = 0;
-		boolean male = true;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = StringUtil.randomString();
-		long[] groupIds = null;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendMail = false;
-
-		user = userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
-			password2, true, StringPool.BLANK, email, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail,
-			new ServiceContext());
+		user = _createBasicUser(companyId, email);
 
 		_userIds.add(user.getUserId());
 
@@ -135,6 +104,43 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 	}
 
 	protected UserLocalService userLocalService;
+
+	private User _createBasicUser(long companyId, String email)
+		throws PortalException {
+
+		String[] fullNameArray = getFullNameArray(email);
+
+		String firstName = fullNameArray[0];
+		String lastName = fullNameArray[1];
+
+		boolean autoPassword = false;
+		String password1 = "test";
+		String password2 = "test";
+		long facebookId = 0;
+		String openId = StringPool.BLANK;
+		Locale locale = LocaleUtil.SPAIN;
+		String middleName = StringPool.BLANK;
+		long prefixId = 0;
+		long suffixId = 0;
+		boolean male = true;
+		int birthdayMonth = Calendar.JANUARY;
+		int birthdayDay = 1;
+		int birthdayYear = 1970;
+		String jobTitle = StringUtil.randomString();
+		long[] groupIds = null;
+		long[] organizationIds = null;
+		long[] roleIds = null;
+		long[] userGroupIds = null;
+		boolean sendMail = false;
+
+		return userLocalService.addUser(
+			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
+			password2, true, StringPool.BLANK, email, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendMail,
+			new ServiceContext());
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserDemoDataCreator.class);
