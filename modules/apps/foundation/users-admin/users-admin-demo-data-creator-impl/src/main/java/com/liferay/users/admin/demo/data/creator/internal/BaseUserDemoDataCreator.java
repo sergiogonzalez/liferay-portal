@@ -16,6 +16,8 @@ package com.liferay.users.admin.demo.data.creator.internal;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -26,6 +28,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.users.admin.demo.data.creator.UserDemoDataCreator;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.Calendar;
 import java.util.List;
@@ -44,8 +51,26 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 		String email = emailAddress;
 
-		if (email == null) {
-			email = StringUtil.randomString().concat("@liferay.com");
+		try (InputStream is = (new URL(_RANDOM_USER_API)).openStream()) {
+			String json = StringUtil.read(is);
+
+			JSONObject rootJsonObject = JSONFactoryUtil.createJSONObject(json);
+
+			JSONObject userJsonObject = rootJsonObject.getJSONArray(
+				"results").getJSONObject(0);
+
+			if (email == null) {
+				email = userJsonObject.getString("email");
+			}
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
+
+			if (email == null) {
+				email = StringUtil.randomString().concat("@liferay.com");
+			}
 		}
 
 		User user = userLocalService.fetchUserByEmailAddress(companyId, email);
@@ -141,6 +166,9 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			organizationIds, roleIds, userGroupIds, sendMail,
 			new ServiceContext());
 	}
+
+	private static final String _RANDOM_USER_API =
+		"https://randomuser.me/api?inc=email&noinfo";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserDemoDataCreator.class);
