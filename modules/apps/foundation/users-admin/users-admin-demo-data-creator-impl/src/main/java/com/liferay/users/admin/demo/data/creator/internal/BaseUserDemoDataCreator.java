@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -61,6 +62,8 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		Date birthDate = new Date(0);
 		boolean male = true;
 
+		byte[] portraitBytes = null;
+
 		try (InputStream is = (new URL(_RANDOM_USER_API)).openStream()) {
 			String json = StringUtil.read(is);
 
@@ -90,6 +93,11 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 					_log.warn(pe, pe);
 				}
 			}
+
+			String portraitURL = userJsonObject.getJSONObject(
+				"picture").getString("large");
+
+			portraitBytes = _getBytes(new URL(portraitURL));
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
@@ -110,6 +118,10 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		user = _createBasicUser(companyId, email, male, birthDate);
 
 		_userIds.add(user.getUserId());
+
+		if (portraitBytes != null) {
+			userLocalService.updatePortrait(user.getUserId(), portraitBytes);
+		}
 
 		return user;
 	}
@@ -211,12 +223,18 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			new ServiceContext());
 	}
 
+	private byte[] _getBytes(URL url) throws IOException {
+		try (InputStream is = url.openStream()) {
+			return FileUtil.getBytes(is);
+		}
+	}
+
 	private String _getRandomElement(List<String> list) {
 		return list.get(RandomUtil.nextInt(list.size()));
 	}
 
 	private static final String _RANDOM_USER_API =
-		"https://randomuser.me/api?inc=email,gender,dob&noinfo";
+		"https://randomuser.me/api?inc=email,gender,dob,picture&noinfo";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserDemoDataCreator.class);
