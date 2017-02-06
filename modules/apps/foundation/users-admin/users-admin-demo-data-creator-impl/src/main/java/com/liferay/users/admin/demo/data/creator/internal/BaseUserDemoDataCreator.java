@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.UserDemoDataCreator;
 
 import java.util.Calendar;
 import java.util.List;
@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-public abstract class BaseUserDemoDataCreator
-	implements BasicUserDemoDataCreator {
+public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 	public User createUser(long companyId, String emailAddress)
 		throws PortalException {
@@ -49,8 +48,7 @@ public abstract class BaseUserDemoDataCreator
 			email = StringUtil.randomString().concat("@liferay.com");
 		}
 
-		User user = userLocalService.fetchUserByEmailAddress(
-			companyId, email);
+		User user = userLocalService.fetchUserByEmailAddress(companyId, email);
 
 		if (user != null) {
 			return user;
