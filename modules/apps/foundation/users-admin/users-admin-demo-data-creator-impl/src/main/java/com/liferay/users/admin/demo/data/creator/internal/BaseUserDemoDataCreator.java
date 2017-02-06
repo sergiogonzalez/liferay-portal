@@ -43,14 +43,20 @@ public abstract class BaseUserDemoDataCreator
 	public User createUser(long companyId, String emailAddress)
 		throws PortalException {
 
+		String email = emailAddress;
+
+		if (email == null) {
+			email = StringUtil.randomString().concat("@liferay.com");
+		}
+
 		User user = userLocalService.fetchUserByEmailAddress(
-			companyId, emailAddress);
+			companyId, email);
 
 		if (user != null) {
 			return user;
 		}
 
-		String[] fullNameArray = getFullNameArray(emailAddress);
+		String[] fullNameArray = getFullNameArray(email);
 
 		String firstName = fullNameArray[0];
 		String lastName = fullNameArray[1];
@@ -77,7 +83,7 @@ public abstract class BaseUserDemoDataCreator
 
 		user = userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
-			password2, true, StringPool.BLANK, emailAddress, facebookId, openId,
+			password2, true, StringPool.BLANK, email, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail,
