@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.demo.data.creator.UserDemoDataCreator;
 
 import java.io.IOException;
@@ -74,6 +76,16 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 			if (email == null) {
 				email = userJsonObject.getString("email");
+			}
+
+			if (Validator.isEmailAddress(email)) {
+				String[] emailComponents = StringUtil.split(email, CharPool.AT);
+
+				String normalizedEmail = FriendlyURLNormalizerUtil.normalize(
+					emailComponents[0]);
+
+				email = String.format(
+					"%s@%s", normalizedEmail, emailComponents[1]);
 			}
 
 			male = StringUtil.equalsIgnoreCase(
