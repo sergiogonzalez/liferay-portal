@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryTypeException;
+import com.liferay.document.library.kernel.exception.LinkedFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.NoSuchMetadataSetException;
 import com.liferay.document.library.kernel.exception.RequiredFileEntryTypeException;
@@ -211,6 +212,16 @@ public class DLFileEntryTypeLocalServiceImpl
 
 			throw new RequiredFileEntryTypeException(
 				"There are file entries of file entry type " +
+					dlFileEntryType.getFileEntryTypeId());
+		}
+
+		if (assetVocabularyLocalService.getLinkedVocabulariesCount(
+				classNameLocalService.getClassNameId(
+					DLFileEntry.class.getName()),
+				dlFileEntryType.getFileEntryTypeId()) > 0) {
+
+			throw new LinkedFileEntryTypeException(
+				"There are asset vocabularies linked to file entry type " +
 					dlFileEntryType.getFileEntryTypeId());
 		}
 
