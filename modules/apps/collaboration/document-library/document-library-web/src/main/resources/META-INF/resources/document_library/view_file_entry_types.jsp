@@ -42,6 +42,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 </aui:nav-bar>
 
 <div class="container-fluid-1280 main-content-body">
+	<liferay-ui:error exception="<%= LinkedFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-linked-to-one-or-more-asset-vocabularies" />
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
 	<liferay-ui:search-container
