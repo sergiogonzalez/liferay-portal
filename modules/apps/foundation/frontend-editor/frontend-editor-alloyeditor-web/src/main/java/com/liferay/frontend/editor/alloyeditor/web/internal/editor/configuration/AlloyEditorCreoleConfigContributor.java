@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -91,8 +90,6 @@ public class AlloyEditorCreoleConfigContributor
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
-		extraPlugins = extraPlugins.replace(
-			",ae_tableresize", StringPool.BLANK);
 		extraPlugins = extraPlugins.concat(",creole,itemselector,media");
 
 		jsonObject.put("extraPlugins", extraPlugins);
@@ -103,7 +100,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("ae_dragresize");
+		sb.append("ae_dragresize,ae_tableresize,");
 		sb.append("bidi,colorbutton,colordialog,div,flash,font,forms,");
 		sb.append("indentblock,justify,keystrokes,maximize,newpage,pagebreak,");
 		sb.append("preview,print,save,showblocks,smiley,stylescombo,");
