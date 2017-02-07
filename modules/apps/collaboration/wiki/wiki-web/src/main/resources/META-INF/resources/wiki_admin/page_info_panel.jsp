@@ -229,7 +229,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 								</div>
 
 								<div class="h6 sidebar-caption">
-									<liferay-ui:message arguments="<%= new Object[] {curPage.getUserName(), dateFormatDateTime.format(curPage.getCreateDate())} %>" key="by-x-on-x" />
+									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curPage.getUserName()), dateFormatDateTime.format(curPage.getCreateDate())} %>" key="by-x-on-x" />
 								</div>
 							</div>
 
