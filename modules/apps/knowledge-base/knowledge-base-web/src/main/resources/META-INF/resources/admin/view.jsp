@@ -277,7 +277,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<h5 class="text-default">
-									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									<liferay-ui:message arguments="<%= new String[] {kbArticle.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
 								</h5>
 
 								<h4>
