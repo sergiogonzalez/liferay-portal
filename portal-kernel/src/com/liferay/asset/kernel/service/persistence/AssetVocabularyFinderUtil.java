@@ -25,18 +25,42 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class AssetVocabularyFinderUtil {
+	public static int countByLinkedAsset(long classNameId, long classTypePK) {
+		return getFinder().countByLinkedAsset(classNameId, classTypePK);
+	}
+
 	public static int countByG_N(long groupId, java.lang.String name) {
 		return getFinder().countByG_N(groupId, name);
+	}
+
+	public static int filterCountByLinkedAsset(long classNameId,
+		long classTypePK) {
+		return getFinder().filterCountByLinkedAsset(classNameId, classTypePK);
 	}
 
 	public static int filterCountByG_N(long groupId, java.lang.String name) {
 		return getFinder().filterCountByG_N(groupId, name);
 	}
 
+	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> filterFindByLinkedAsset(
+		long classNameId, long classTypePK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetVocabulary> obc) {
+		return getFinder()
+				   .filterFindByLinkedAsset(classNameId, classTypePK, start,
+			end, obc);
+	}
+
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> filterFindByG_N(
 		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetVocabulary> obc) {
 		return getFinder().filterFindByG_N(groupId, name, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> findByLinkedAsset(
+		long classNameId, long classTypePK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetVocabulary> obc) {
+		return getFinder()
+				   .findByLinkedAsset(classNameId, classTypePK, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> findByG_N(
