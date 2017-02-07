@@ -25,13 +25,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -48,7 +51,7 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 	public Comment create(long userId, long parentCommentId)
 		throws PortalException {
 
-		String body = StringUtil.randomString();
+		String body = _getRandomBody();
 
 		User user = _userLocalService.fetchUser(userId);
 
@@ -69,7 +72,7 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 	public Comment create(long userId, String className, long classPK)
 		throws PortalException {
 
-		String body = StringUtil.randomString();
+		String body = _getRandomBody();
 
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
@@ -124,14 +127,33 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 		_userLocalService = userLocalService;
 	}
 
+	private static List<String> _read(String fileName) {
+		return Arrays.asList(
+			StringUtil.split(
+				StringUtil.read(
+					MultipleCommentDemoDataCreatorImpl.class,
+					"dependencies/" + fileName + ".txt"),
+				CharPool.NEW_LINE));
+	}
+
 	private Comment _getComment(long commentId) {
 		_commentIds.add(commentId);
 
 		return _commentManager.fetchComment(commentId);
 	}
 
+	private String _getRandomBody() {
+		return _getRandomElement(_commentBodies);
+	}
+
+	private <T> T _getRandomElement(List<T> list) {
+		return list.get(RandomUtil.nextInt(list.size()));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommentDemoDataCreatorImpl.class);
+
+	private static final List<String> _commentBodies = _read("CommentBodies");
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private final List<Long> _commentIds = new CopyOnWriteArrayList<>();
