@@ -16,15 +16,12 @@ package com.liferay.comment.demo.data.creator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
-
 /**
  * @author Alejandro Hernández
  */
 public interface MultipleCommentDemoDataCreator {
 
-	public void create(List<Long> userIds, String className, long classPK)
-		throws PortalException;
+	public void create(String className, long classPK) throws PortalException;
 
 	public void delete() throws PortalException;
 
