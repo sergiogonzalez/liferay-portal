@@ -496,6 +496,16 @@ public class DDMStructureLocalServiceImpl
 					MustNotDeleteStructureReferencedByTemplates(
 						structure.getStructureId());
 			}
+
+			if (assetVocabularyLocalService.getLinkedVocabulariesCount(
+					classNameLocalService.getClassNameId(
+						"com.liferay.journal.model.JournalArticle"),
+					structure.getStructureId()) > 0) {
+
+				throw new RequiredStructureException.
+					MustNotDeleteStructureLinkedToAssetVocabularies(
+						structure.getStructureId());
+			}
 		}
 
 		// Structure
