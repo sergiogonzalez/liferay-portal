@@ -2042,7 +2042,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  .portal.kernel.service,com.liferay.portal.kernel.service.permission,c
  om.liferay.portal.kernel.systemevent,com.liferay.portal.kernel.transa
  ction,com.liferay.portal.kernel.util",com.liferay.asset.kernel.servic
- e.persistence;version="1.0.0";uses:="com.liferay.asset.kernel.excepti
+ e.persistence;version="1.1.0";uses:="com.liferay.asset.kernel.excepti
  on,com.liferay.asset.kernel.model,com.liferay.portal.kernel.dao.orm,c
  om.liferay.portal.kernel.dao.search,com.liferay.portal.kernel.model,c
  om.liferay.portal.kernel.service,com.liferay.portal.kernel.service.pe
