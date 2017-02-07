@@ -328,6 +328,12 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	@Override
+	public int getLinkedVocabulariesCount(long classNameId, long classTypePK) {
+		return assetVocabularyFinder.countByLinkedAsset(
+			classNameId, classTypePK);
+	}
+
+	@Override
 	public List<AssetVocabulary> getVocabularies(Hits hits)
 		throws PortalException {
 
