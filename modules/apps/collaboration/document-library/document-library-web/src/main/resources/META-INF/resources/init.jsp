@@ -55,6 +55,7 @@ page import="com.liferay.document.library.kernel.exception.FileSizeException" %>
 page import="com.liferay.document.library.kernel.exception.FolderNameException" %><%@
 page import="com.liferay.document.library.kernel.exception.InvalidFileVersionException" %><%@
 page import="com.liferay.document.library.kernel.exception.InvalidFolderException" %><%@
+page import="com.liferay.document.library.kernel.exception.LinkedFileEntryTypeException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFolderException" %><%@
