@@ -48,35 +48,40 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		Group guestGroup = _groupLocalService.getGroup(
 			company.getCompanyId(), "Guest");
 
-		users.add(_basicUserDemoDataCreator.create(guestGroup.getGroupId()));
+		_basicUserDemoDataCreator.create(
+			company.getCompanyId(), "nikki.prudencio@liferay.com");
 
-		users.add(
-			_basicUserDemoDataCreator.create(
-				company.getCompanyId(), "nikki.prudencio@liferay.com"));
-		users.add(
-			_omniAdminUserDemoDataCreator.create(
-				company.getCompanyId(), "sergio.gonzalez@liferay.com"));
-		users.add(
-			_siteAdminUserDemoDataCreator.create(
-				guestGroup.getGroupId(), "sharon.choi@liferay.com"));
+		_omniAdminUserDemoDataCreator.create(
+			company.getCompanyId(), "sergio.gonzalez@liferay.com");
+
+		_siteAdminUserDemoDataCreator.create(
+			guestGroup.getGroupId(), "sharon.choi@liferay.com");
+
+		long groupId = guestGroup.getGroupId();
+
+		for (int i = 0; i < 30; i++) {
+			users.add(_basicUserDemoDataCreator.create(company.getCompanyId()));
+		}
 
 		for (int i = 0; i < 10; i++) {
-			long randomUserId = users.get(
-				RandomUtil.nextInt(users.size())).getUserId();
+			long userId = _getRandomElement(users).getUserId();
 
-			_creativeCommonsBlogsEntryDemoDataCreator.create(
-				randomUserId, guestGroup.getGroupId());
+			BlogsEntryDemoDataCreator blogsEntryDemoDataCreator =
+				_getRandomElement(_blogsEntryDemoDataCreators);
 
-			_loremIpsumBlogsEntryDemoDataCreator.create(
-				randomUserId, guestGroup.getGroupId());
+			blogsEntryDemoDataCreator.withComments().create(userId, groupId);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
+		for (BlogsEntryDemoDataCreator blogsEntryDemoDataCreator :
+				_blogsEntryDemoDataCreators) {
+
+			blogsEntryDemoDataCreator.delete();
+		}
+
 		_basicUserDemoDataCreator.delete();
-		_creativeCommonsBlogsEntryDemoDataCreator.delete();
-		_loremIpsumBlogsEntryDemoDataCreator.delete();
 		_omniAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
 	}
@@ -92,7 +97,7 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 	protected void setCreativeCommonsBlogsEntryDemoDataCreator(
 		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
 
-		_creativeCommonsBlogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
+		_blogsEntryDemoDataCreators.add(blogsEntryDemoDataCreator);
 	}
 
 	@Reference(unbind = "-")
@@ -104,7 +109,7 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 	protected void setLoremIpsumBlogsEntryDemoDataCreator(
 		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
 
-		_loremIpsumBlogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
+		_blogsEntryDemoDataCreators.add(blogsEntryDemoDataCreator);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -126,10 +131,14 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		_siteAdminUserDemoDataCreator = siteAdminUserDemoDataCreator;
 	}
 
+	private <T> T _getRandomElement(List<T> list) {
+		return list.get(RandomUtil.nextInt(list.size()));
+	}
+
 	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
-	private BlogsEntryDemoDataCreator _creativeCommonsBlogsEntryDemoDataCreator;
+	private final List<BlogsEntryDemoDataCreator> _blogsEntryDemoDataCreators =
+		new ArrayList<>();
 	private GroupLocalService _groupLocalService;
-	private BlogsEntryDemoDataCreator _loremIpsumBlogsEntryDemoDataCreator;
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;
 	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;
 
