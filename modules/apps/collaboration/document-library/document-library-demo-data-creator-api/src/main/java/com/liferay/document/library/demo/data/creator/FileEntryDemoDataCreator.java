@@ -32,4 +32,6 @@ public interface FileEntryDemoDataCreator {
 
 	public void delete() throws PortalException;
 
+	public FileEntryDemoDataCreator withComments();
+
 }
