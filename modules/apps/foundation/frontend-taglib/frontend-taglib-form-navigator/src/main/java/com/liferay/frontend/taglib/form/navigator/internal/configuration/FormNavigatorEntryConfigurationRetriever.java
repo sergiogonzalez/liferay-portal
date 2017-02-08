@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,7 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -100,7 +100,7 @@ public class FormNavigatorEntryConfigurationRetriever {
 			"(service.factoryPid=" +
 				FormNavigatorConfiguration.class.getName() + ")");
 
-		return Stream.of(configurations).map(
+		return ListUtil.toList(configurations).stream().map(
 			configuration -> ConfigurableUtil.createConfigurable(
 				FormNavigatorConfiguration.class,
 				configuration.getProperties())).collect(Collectors.toList());
