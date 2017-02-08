@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementExceptio
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -138,6 +139,11 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 					"mvcPath", "/document_library/error.jsp");
 			}
 			else if (e instanceof RequiredStructureException) {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof DDMFormValidationException.
+						MustSetFieldsForForm) {
+
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
