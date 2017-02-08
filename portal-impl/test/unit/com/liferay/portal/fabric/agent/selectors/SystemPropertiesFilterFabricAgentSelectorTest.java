@@ -60,7 +60,7 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 				Arrays.asList(fabricAgent1, fabricAgent2)),
 			null);
 
-		Assert.assertEquals(1, fabricAgents.size());
+		Assert.assertEquals(fabricAgents.toString(), 1, fabricAgents.size());
 
 		Iterator<FabricAgent> iterator = fabricAgents.iterator();
 
@@ -89,14 +89,18 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
-			if (!methodName.equals("getFabricStatus")) {
-				throw new UnsupportedOperationException();
+			if (methodName.equals("getFabricStatus")) {
+				return ProxyUtil.newProxyInstance(
+					FabricStatus.class.getClassLoader(),
+					new Class<?>[] {FabricStatus.class},
+					new FabricStatusInvocationHandler(_systemProperties));
 			}
 
-			return ProxyUtil.newProxyInstance(
-				FabricStatus.class.getClassLoader(),
-				new Class<?>[] {FabricStatus.class},
-				new FabricStatusInvocationHandler(_systemProperties));
+			if (methodName.equals("toString")) {
+				return String.valueOf(_systemProperties);
+			}
+
+			throw new UnsupportedOperationException();
 		}
 
 		private final Map<String, String> _systemProperties;
@@ -116,14 +120,18 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
-			if (!methodName.equals("getRuntimeMXBean")) {
-				throw new UnsupportedOperationException();
+			if (methodName.equals("getRuntimeMXBean")) {
+				return ProxyUtil.newProxyInstance(
+					AdvancedOperatingSystemMXBean.class.getClassLoader(),
+					new Class<?>[] {RuntimeMXBean.class},
+					new RuntimeMXBeanInvocationHandler(_systemProperties));
 			}
 
-			return ProxyUtil.newProxyInstance(
-				AdvancedOperatingSystemMXBean.class.getClassLoader(),
-				new Class<?>[] {RuntimeMXBean.class},
-				new RuntimeMXBeanInvocationHandler(_systemProperties));
+			if (methodName.equals("toString")) {
+				return String.valueOf(_systemProperties);
+			}
+
+			throw new UnsupportedOperationException();
 		}
 
 		private final Map<String, String> _systemProperties;
@@ -143,11 +151,15 @@ public class SystemPropertiesFilterFabricAgentSelectorTest {
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
 
-			if (!methodName.equals("getSystemProperties")) {
-				throw new UnsupportedOperationException();
+			if (methodName.equals("getSystemProperties")) {
+				return _systemProperties;
 			}
 
-			return _systemProperties;
+			if (methodName.equals("toString")) {
+				return String.valueOf(_systemProperties);
+			}
+
+			throw new UnsupportedOperationException();
 		}
 
 		private final Map<String, String> _systemProperties;

@@ -46,8 +46,6 @@ public class PortalSessionListener implements HttpSessionListener {
 
 		new PortalSessionCreator(session);
 
-		PortalSessionActivationListener.setInstance(session);
-
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
 			if (_counter.incrementAndGet() > PropsValues.SESSION_MAX_ALLOWED) {
 				session.setAttribute(WebKeys.SESSION_MAX_ALLOWED, Boolean.TRUE);

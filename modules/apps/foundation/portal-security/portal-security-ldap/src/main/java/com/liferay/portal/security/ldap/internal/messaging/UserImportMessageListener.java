@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
@@ -132,7 +133,7 @@ public class UserImportMessageListener
 		_ldapImportConfigurationProvider = ldapImportConfigurationProvider;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setLdapUserImporter(LDAPUserImporter ldapUserImporter) {
 		_ldapUserImporter = ldapUserImporter;
 	}

@@ -173,7 +173,7 @@
 
 		${discussionURL.setParameter("javax.portlet.action", "/wiki/" + assetRenderer.getDiscussionPath())}
 
-		<@liferay_ui["discussion"]
+		<@liferay_comment["discussion"]
 			className=wikiPageClassName
 			classPK=entry.getResourcePrimKey()
 			formAction=discussionURL?string

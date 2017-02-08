@@ -206,7 +206,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 		for (Document document : getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
-				return _cmisRepository.toFileVersion(document);
+				return _cmisRepository.toFileVersion(this, document);
 			}
 		}
 
@@ -224,7 +224,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 			for (Document document : documents) {
 				FileVersion fileVersion = _cmisRepository.toFileVersion(
-					document);
+					this, document);
 
 				fileVersions.add(fileVersion);
 			}
@@ -322,10 +322,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			Document latestDocumentVersion = documents.get(0);
 
 			_latestFileVersion = _cmisRepository.toFileVersion(
-				latestDocumentVersion);
+				this, latestDocumentVersion);
 		}
 		else {
-			_latestFileVersion = _cmisRepository.toFileVersion(_document);
+			_latestFileVersion = _cmisRepository.toFileVersion(this, _document);
 		}
 
 		return _latestFileVersion;
@@ -405,12 +405,12 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public Class<?> getModelClass() {
-		return CMISFileEntry.class;
+		return FileEntry.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return CMISFileEntry.class.getName();
+		return FileEntry.class.getName();
 	}
 
 	@Override
@@ -660,7 +660,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	public <T extends Capability> boolean isRepositoryCapabilityProvided(
 		Class<T> capabilityClass) {
 
-		return false;
+		Repository repository = getRepository();
+
+		return repository.isCapabilityProvided(capabilityClass);
 	}
 
 	@Override
@@ -742,8 +744,6 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	protected List<Document> getAllVersions() throws PortalException {
 		if (_allVersions == null) {
 			try {
-				_document.refresh();
-
 				_allVersions = _document.getAllVersions();
 			}
 			catch (CmisObjectNotFoundException confe) {
@@ -757,6 +757,17 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	@Override
 	protected CMISRepository getCmisRepository() {
 		return _cmisRepository;
+	}
+
+	protected Repository getRepository() {
+		try {
+			return RepositoryProviderUtil.getRepository(getRepositoryId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to get repository for file entry " + getFileEntryId(),
+				pe);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CMISFileEntry.class);

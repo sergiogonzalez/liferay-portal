@@ -42,7 +42,7 @@
 						</div>
 
 						<div class="h6 sidebar-caption">
-							<liferay-ui:message arguments="<%= new Object[] {curKBArticle.getUserName(), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
+							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(curKBArticle.getUserName()), dateFormatDateTime.format(curKBArticle.getModifiedDate())} %>" key="by-x-on-x" />
 						</div>
 					</div>
 

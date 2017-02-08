@@ -63,6 +63,7 @@ import javax.naming.ldap.LdapContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -722,7 +723,7 @@ public class LDAPAuth implements Authenticator {
 		_ldapSettings = ldapSettings;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setLdapUserImporter(LDAPUserImporter ldapUserImporter) {
 		_ldapUserImporter = ldapUserImporter;
 	}
@@ -737,7 +738,7 @@ public class LDAPAuth implements Authenticator {
 		_passwordEncryptor = passwordEncryptor;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;
 	}

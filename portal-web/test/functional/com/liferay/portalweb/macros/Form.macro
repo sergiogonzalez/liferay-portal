@@ -135,11 +135,23 @@
 		<execute function="AssertVisible" locator1="Form#NAME_FIELD" />
 		<execute function="AssertVisible" locator1="Form#DESCRIPTION_FIELD" />
 
-		<execute function="Pause" locator1="5000" />
-
 		<execute function="Click" locator1="Form#NAME_FIELD" />
 
 		<execute function="Type#typeEditor" locator1="AlloyEditor#NAME_FIELD" value1="${formName}" />
+	</command>
+
+	<command name="editNameLocalized">
+		<var name="key_columnSize" value="${columnSize}" />
+
+		<execute function="AssertVisible" locator1="Form#ADD_FIELD" />
+		<execute function="AssertVisible" locator1="Form#NAME_FIELD" />
+		<execute function="AssertVisible" locator1="Form#DESCRIPTION_FIELD" />
+
+		<execute function="Click" locator1="Form#NAME_FIELD" />
+
+		<var name="key_localizedText" value="${localizedText}" />
+
+		<execute function="Type#typeEditor" locator1="AlloyEditor#NAME_FIELD_LOCALIZED" value1="${formName}" />
 	</command>
 
 	<command name="editPageDescription">
@@ -223,6 +235,14 @@
 		<execute function="Click" locator1="Form#SAVE_BUTTON_DROPDOWN" />
 
 		<execute function="AssertClick" locator1="Form#SAVE_BUTTON_DROPDOWN_SAVE_AND_PUBLISH_LIVE_PAGE" value1="Save and Publish Live Page" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="saveLocalized">
+		<var name="key_saveButton" value="${saveButton}" />
+
+		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON_LOCALIZED" value1="${saveButton}" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
