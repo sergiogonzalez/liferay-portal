@@ -2837,7 +2837,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ecurity.sso;version="1.0.0";uses:="javax.servlet.http",com.liferay.po
  rtal.kernel.security.xml;version="1.0.0";uses:="javax.xml.parsers,jav
  ax.xml.stream,org.xml.sax",com.liferay.portal.kernel.service;version=
- "1.10.0";uses:="com.liferay.announcements.kernel.model,com.liferay.ex
+ "1.11.0";uses:="com.liferay.announcements.kernel.model,com.liferay.ex
  pando.kernel.model,com.liferay.exportimport.kernel.lar,com.liferay.ex
  portimport.kernel.model,com.liferay.portal.kernel.cache.thread.local,
  com.liferay.portal.kernel.cluster,com.liferay.portal.kernel.dao.orm,c
@@ -2865,7 +2865,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  0";uses:="com.liferay.portal.kernel.exception,com.liferay.portal.kern
  el.model,com.liferay.portal.kernel.security.auth,com.liferay.portal.k
  ernel.security.permission,javax.portlet,javax.servlet.http",com.lifer
- ay.portal.kernel.service.persistence;version="1.5.0";uses:="com.lifer
+ ay.portal.kernel.service.persistence;version="1.6.0";uses:="com.lifer
  ay.portal.kernel.dao.orm,com.liferay.portal.kernel.exception,com.life
  ray.portal.kernel.model,com.liferay.portal.kernel.security.permission
  ,com.liferay.portal.kernel.service,com.liferay.portal.kernel.util",co
@@ -2875,7 +2875,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  om.liferay.portal.kernel.exception,com.liferay.portal.kernel.model,co
  m.liferay.portal.kernel.service,com.liferay.portal.kernel.service.per
  sistence,com.liferay.portal.kernel.util",com.liferay.portal.kernel.se
- rvlet;version="7.5.0";uses:="com.liferay.portal.kernel.log,com.lifera
+ rvlet;version="7.6.0";uses:="com.liferay.portal.kernel.log,com.lifera
  y.portal.kernel.util,javax.portlet,javax.servlet,javax.servlet.http",
  com.liferay.portal.kernel.servlet.filters.compoundsessionid;version="
  7.0.0";uses:="com.liferay.portal.kernel.servlet,javax.servlet.http",c
@@ -2939,7 +2939,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  curity.permission,com.liferay.portal.kernel.service,com.liferay.porta
  l.kernel.theme,javax.portlet,javax.servlet.http",com.liferay.portal.k
  ernel.url;version="1.0.0";uses:="javax.servlet",com.liferay.portal.ke
- rnel.util;version="7.16.0";uses:="com.liferay.expando.kernel.model,co
+ rnel.util;version="7.17.0";uses:="com.liferay.expando.kernel.model,co
  m.liferay.mail.kernel.model,com.liferay.portal.kernel.concurrent,com.
  liferay.portal.kernel.configuration,com.liferay.portal.kernel.dao.jdb
  c.aop,com.liferay.portal.kernel.dao.search,com.liferay.portal.kernel.

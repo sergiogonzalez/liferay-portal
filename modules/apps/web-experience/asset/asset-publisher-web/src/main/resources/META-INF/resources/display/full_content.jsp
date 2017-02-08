@@ -46,12 +46,13 @@ String languageId = LanguageUtil.getLanguageId(request);
 String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(languageId));
 
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
+boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName());
 
 assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 
-request.setAttribute("view.jsp-fullContentRedirect", currentURL);
+request.setAttribute("view.jsp-fullContentRedirect", workflowEnabled ? redirect : currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
 %>
 

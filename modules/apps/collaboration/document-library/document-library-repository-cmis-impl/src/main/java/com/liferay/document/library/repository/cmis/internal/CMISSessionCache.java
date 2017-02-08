@@ -55,7 +55,15 @@ public class CMISSessionCache {
 			return null;
 		}
 
-		return transientValue.getValue();
+		Object value = transientValue.getValue();
+
+		if (value instanceof Session) {
+			return (Session)value;
+		}
+
+		httpSession.removeAttribute(key);
+
+		return null;
 	}
 
 	public void put(String key, Session session) {

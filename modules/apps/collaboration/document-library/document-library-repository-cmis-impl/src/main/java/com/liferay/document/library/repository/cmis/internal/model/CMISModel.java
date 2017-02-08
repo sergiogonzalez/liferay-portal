@@ -140,20 +140,23 @@ public abstract class CMISModel {
 	static {
 		_mappedActionKeys.put(ActionKeys.ACCESS, Action.CAN_GET_FOLDER_TREE);
 		_mappedActionKeys.put(
+			ActionKeys.ADD_DISCUSSION, Action.CAN_GET_PROPERTIES);
+		_mappedActionKeys.put(
 			ActionKeys.ADD_DOCUMENT, Action.CAN_CREATE_DOCUMENT);
 		_mappedActionKeys.put(ActionKeys.ADD_FOLDER, Action.CAN_CREATE_FOLDER);
 		_mappedActionKeys.put(
 			ActionKeys.ADD_SUBFOLDER, Action.CAN_CREATE_FOLDER);
 		_mappedActionKeys.put(ActionKeys.DELETE, Action.CAN_DELETE_OBJECT);
+		_mappedActionKeys.put(
+			ActionKeys.DELETE_DISCUSSION, Action.CAN_DELETE_OBJECT);
 		_mappedActionKeys.put(ActionKeys.UPDATE, Action.CAN_UPDATE_PROPERTIES);
+		_mappedActionKeys.put(
+			ActionKeys.UPDATE_DISCUSSION, Action.CAN_UPDATE_PROPERTIES);
 		_mappedActionKeys.put(ActionKeys.VIEW, Action.CAN_GET_PROPERTIES);
 
-		_unsupportedActionKeys.add(ActionKeys.ADD_DISCUSSION);
 		_unsupportedActionKeys.add(ActionKeys.ADD_SHORTCUT);
-		_unsupportedActionKeys.add(ActionKeys.DELETE_DISCUSSION);
 		_unsupportedActionKeys.add(ActionKeys.PERMISSIONS);
 		_unsupportedActionKeys.add(ActionKeys.SUBSCRIBE);
-		_unsupportedActionKeys.add(ActionKeys.UPDATE_DISCUSSION);
 	}
 
 	private Folder _parentFolder;

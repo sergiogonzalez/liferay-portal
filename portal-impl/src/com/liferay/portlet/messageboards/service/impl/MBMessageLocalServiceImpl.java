@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,6 +77,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -2008,11 +2011,20 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				"message_boards/view_message/" + message.getMessageId();
 		}
 		else {
+			Group group = null;
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay == null) {
+				group = groupLocalService.fetchGroup(message.getGroupId());
+			}
+
 			portletId = PortletProviderUtil.getPortletId(
 				MBMessage.class.getName(), PortletProvider.Action.MANAGE);
 
 			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				request, portletId, PortletRequest.RENDER_PHASE);
+				request, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/message_boards/view_message");

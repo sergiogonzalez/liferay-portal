@@ -74,7 +74,7 @@
 
 		${discussionURL.setParameter("javax.portlet.action", "invokeTaglibDiscussion")}
 
-		<@liferay_ui["discussion"]
+		<@liferay_comment["discussion"]
 			className=entry.getClassName()
 			classPK=entry.getClassPK()
 			formAction=discussionURL?string
