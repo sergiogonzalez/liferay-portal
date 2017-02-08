@@ -120,35 +120,28 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
+		catch (DuplicateFileEntryTypeException | NoSuchMetadataSetException |
+			   StructureDefinitionException |
+			   StructureDuplicateElementException | StructureNameException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+		catch (NoSuchFileEntryTypeException | NoSuchStructureException |
+			   PrincipalException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (RequiredStructureException rse) {
+			SessionErrors.add(actionRequest, rse.getClass());
+		}
+		catch (DDMFormValidationException.MustSetFieldsForForm msfffe) {
+			SessionErrors.add(actionRequest, msfffe.getClass());
+		}
 		catch (Exception e) {
-			if (e instanceof DuplicateFileEntryTypeException ||
-				e instanceof NoSuchMetadataSetException ||
-				e instanceof StructureDefinitionException ||
-				e instanceof StructureDuplicateElementException ||
-				e instanceof StructureNameException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof NoSuchFileEntryTypeException ||
-					 e instanceof NoSuchStructureException ||
-					 e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (e instanceof RequiredStructureException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof DDMFormValidationException.
-						MustSetFieldsForForm) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
+			throw e;
 		}
 	}
 
