@@ -60,8 +60,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 	public User createUser(long companyId, String emailAddress)
 		throws PortalException {
 
-		String email = emailAddress;
-		Date birthDate = new Date(0);
+		Date birthDate = new Date();
 		boolean male = true;
 
 		byte[] portraitBytes = null;
@@ -74,40 +73,17 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			JSONObject userJsonObject = rootJsonObject.getJSONArray(
 				"results").getJSONObject(0);
 
-			if (email == null) {
-				email = userJsonObject.getString("email");
-			}
-
-			if (Validator.isEmailAddress(email)) {
-				String[] emailComponents = StringUtil.split(email, CharPool.AT);
-
-				String normalizedEmail = FriendlyURLNormalizerUtil.normalize(
-					emailComponents[0]);
-
-				email = String.format(
-					"%s@%s", normalizedEmail, emailComponents[1]);
-			}
+			emailAddress = _getEmailAddress(emailAddress, userJsonObject);
 
 			male = StringUtil.equalsIgnoreCase(
 				userJsonObject.getString("gender"), "male");
 
-			String dateString = userJsonObject.getString("dob");
+			birthDate = _getBirthDate(birthDate, userJsonObject);
 
-			try {
-				DateFormat dateFormat =
-					DateFormatFactoryUtil.getSimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss");
+			JSONObject pictureJSONObject = userJsonObject.getJSONObject(
+				"picture");
 
-				birthDate = dateFormat.parse(dateString);
-			}
-			catch (ParseException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
-				}
-			}
-
-			String portraitURL = userJsonObject.getJSONObject(
-				"picture").getString("large");
+			String portraitURL = pictureJSONObject.getString("large");
 
 			portraitBytes = _getBytes(new URL(portraitURL));
 		}
@@ -116,18 +92,19 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 				_log.warn(ioe, ioe);
 			}
 
-			if (email == null) {
-				email = StringUtil.randomString().concat("@liferay.com");
+			if (Validator.isNull(emailAddress)) {
+				emailAddress = StringUtil.randomString().concat("@liferay.com");
 			}
 		}
 
-		User user = userLocalService.fetchUserByEmailAddress(companyId, email);
+		User user = userLocalService.fetchUserByEmailAddress(
+			companyId, emailAddress);
 
 		if (user != null) {
 			return user;
 		}
 
-		user = _createBasicUser(companyId, email, male, birthDate);
+		user = _createBasicUser(companyId, emailAddress, male, birthDate);
 
 		_userIds.add(user.getUserId());
 
@@ -192,10 +169,10 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 	}
 
 	private User _createBasicUser(
-			long companyId, String email, boolean male, Date birthDate)
+			long companyId, String emailAddress, boolean male, Date birthDate)
 		throws PortalException {
 
-		String[] fullNameArray = getFullNameArray(email);
+		String[] fullNameArray = getFullNameArray(emailAddress);
 
 		String firstName = fullNameArray[0];
 		String lastName = fullNameArray[1];
@@ -206,7 +183,6 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		Locale locale = LocaleUtil.SPAIN;
-
 		String middleName = StringPool.BLANK;
 		long prefixId = 0;
 		long suffixId = 0;
@@ -228,17 +204,56 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 		return userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
-			password2, true, StringPool.BLANK, email, facebookId, openId,
+			password2, true, StringPool.BLANK, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail,
 			new ServiceContext());
 	}
 
+	private Date _getBirthDate(Date birthDate, JSONObject userJsonObject) {
+		String dob = userJsonObject.getString("dob");
+
+		try {
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss");
+
+			birthDate = dateFormat.parse(dob);
+		}
+		catch (ParseException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+		}
+
+		return birthDate;
+	}
+
 	private byte[] _getBytes(URL url) throws IOException {
 		try (InputStream is = url.openStream()) {
 			return FileUtil.getBytes(is);
 		}
+	}
+
+	private String _getEmailAddress(
+		String emailAddress, JSONObject userJsonObject) {
+
+		if (Validator.isNull(emailAddress)) {
+			emailAddress = userJsonObject.getString("email");
+		}
+
+		if (!Validator.isEmailAddress(emailAddress)) {
+			String[] emailComponents = StringUtil.split(
+				emailAddress, CharPool.AT);
+
+			String normalizedEmail = FriendlyURLNormalizerUtil.normalize(
+				emailComponents[0]);
+
+			emailAddress = String.format(
+				"%s@%s", normalizedEmail, emailComponents[1]);
+		}
+
+		return emailAddress;
 	}
 
 	private String _getRandomElement(List<String> list) {
