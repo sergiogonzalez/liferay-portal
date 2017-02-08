@@ -266,7 +266,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserDemoDataCreator.class);
 
-	private static final List<String> _jobTitles = _read("JobTitles");
+	private static final List<String> _jobTitles = _read("job_titles");
 
 	private final List<Long> _userIds = new CopyOnWriteArrayList<>();
 
