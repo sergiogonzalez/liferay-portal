@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Sergio González
@@ -45,7 +46,8 @@ public class FormNavigatorEntryUtil {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries =
 			_getFormNavigatorEntries(
-				formNavigatorId, categoryKey, formModelBean);
+				formNavigatorId, categoryKey, formModelBean).collect(
+				Collectors.toList());
 
 		return filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
@@ -62,7 +64,8 @@ public class FormNavigatorEntryUtil {
 		for (String categoryKey : categoryKeys) {
 			List<FormNavigatorEntry<T>> curFormNavigatorEntries =
 				_getFormNavigatorEntries(
-					formNavigatorId, categoryKey, formModelBean);
+					formNavigatorId, categoryKey, formModelBean).collect(
+					Collectors.toList());
 
 			if (curFormNavigatorEntries != null) {
 				formNavigatorEntries.addAll(curFormNavigatorEntries);
@@ -125,31 +128,30 @@ public class FormNavigatorEntryUtil {
 				user, formModelBean)).collect(Collectors.toList());
 	}
 
-	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
+	private static <T> Stream<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
+		Optional<Stream<FormNavigatorEntry<T>>> formNavigatorEntryStream =
 			_getFormNavigatorEntriesFromConfiguration(
 				formNavigatorId, categoryKey, formModelBean);
 
-		return formNavigationEntriesOptional.orElse(
-			(List)_instance._formNavigatorEntries.getService(
-				_getKey(formNavigatorId, categoryKey)));
+		return formNavigatorEntryStream.orElse(
+			(Stream)(_instance._formNavigatorEntries.getService(
+				_getKey(formNavigatorId, categoryKey)).stream()));
 	}
 
-	private static <T> Optional<List<FormNavigatorEntry<T>>>
+	private static <T> Optional<Stream<FormNavigatorEntry<T>>>
 		_getFormNavigatorEntriesFromConfiguration(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
 		Optional<FormNavigatorEntryConfigurationHelper>
 			formNavigatorEntryConfigurationHelperOptional =
-				_getFormNavigatorEntryConfigurationHelper();
+			_getFormNavigatorEntryConfigurationHelper();
 
 		return formNavigatorEntryConfigurationHelperOptional.map(
 			formNavigatorEntryConfigurationHelper ->
 				formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
-					formNavigatorId, categoryKey, formModelBean)).orElse(
-					Optional.empty());
+					formNavigatorId, categoryKey, formModelBean));
 	}
 
 	private static Optional<FormNavigatorEntryConfigurationHelper>

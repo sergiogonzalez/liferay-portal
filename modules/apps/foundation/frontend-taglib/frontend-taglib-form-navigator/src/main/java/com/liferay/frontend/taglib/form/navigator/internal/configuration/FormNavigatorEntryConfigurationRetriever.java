@@ -14,10 +14,8 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,10 +31,8 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -75,9 +71,11 @@ public class FormNavigatorEntryConfigurationRetriever {
 		return Optional.empty();
 	}
 
-	@Reference(bind = "-", unbind = "-")
-	public void setConfigurationAdmin(ConfigurationAdmin configurationAdmin) {
-		_configurationAdmin = configurationAdmin;
+	@Activate
+	protected void activate(
+		FormNavigatorConfiguration formNavigatorConfiguration) {
+
+		_formNavigatorConfiguration = formNavigatorConfiguration;
 	}
 
 	private void _addProperties(
@@ -93,33 +91,17 @@ public class FormNavigatorEntryConfigurationRetriever {
 		}
 	}
 
-	private List<FormNavigatorConfiguration> _getConfigurations()
-		throws InvalidSyntaxException, IOException {
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.factoryPid=" +
-				FormNavigatorConfiguration.class.getName() + ")");
-
-		return ListUtil.toList(configurations).stream().map(
-			configuration -> ConfigurableUtil.createConfigurable(
-				FormNavigatorConfiguration.class,
-				configuration.getProperties())).collect(Collectors.toList());
-	}
-
 	private Properties _getFormNavigatorEntryKeysProperties(
 			String formNavigatorId)
 		throws InvalidSyntaxException, IOException {
 
 		StringBundler sb = new StringBundler();
 
-		List<FormNavigatorConfiguration> configurations = _getConfigurations();
+		String curFormNavigatorId =
+			_formNavigatorConfiguration.formNavigatorId();
 
-		for (FormNavigatorConfiguration configuration : configurations) {
-			String curFormNavigatorId = configuration.formNavigatorId();
-
-			if (curFormNavigatorId.equals(formNavigatorId)) {
-				_addProperties(sb, configuration);
-			}
+		if (curFormNavigatorId.equals(formNavigatorId)) {
+			_addProperties(sb, _formNavigatorConfiguration);
 		}
 
 		Properties properties = new Properties();
@@ -137,6 +119,6 @@ public class FormNavigatorEntryConfigurationRetriever {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FormNavigatorEntryConfigurationRetriever.class);
 
-	private ConfigurationAdmin _configurationAdmin;
+	private FormNavigatorConfiguration _formNavigatorConfiguration;
 
 }

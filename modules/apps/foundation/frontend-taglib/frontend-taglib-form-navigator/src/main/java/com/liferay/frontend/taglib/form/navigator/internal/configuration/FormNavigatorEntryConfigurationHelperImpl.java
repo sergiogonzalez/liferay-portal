@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,6 +33,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Alejandro Tardín
@@ -46,10 +48,14 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 		String context = _getContext(formNavigatorId, formModelBean);
 
-		return _formNavigatorEntryConfigurationRetriever.
-			getFormNavigatorEntryKeys(
-				formNavigatorId, categoryKey, context).map(
-				keys -> _convertKeysToServices(formNavigatorId, keys));
+		Stream<Optional<List<FormNavigatorEntry<Object>>>> optionalStream =
+			_formNavigatorEntryConfigurationRetrievers.stream().map(
+				formNavigatorEntryConfigurationRetriever ->
+					formNavigatorEntryConfigurationRetriever.
+						getFormNavigatorEntryKeys(
+							formNavigatorId, categoryKey, context).map(
+						formNavigatorEntryKeys -> _convertKeysToServices(
+							formNavigatorId, formNavigatorEntryKeys)));
 	}
 
 	@Activate
@@ -119,8 +125,9 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	private ServiceTrackerMap<String, FormNavigatorEntry>
 		_formNavigatorEntriesMap;
 
-	@Reference
-	private FormNavigatorEntryConfigurationRetriever
-		_formNavigatorEntryConfigurationRetriever;
+	@Reference(policy = ReferencePolicy.DYNAMIC)
+	private volatile List<FormNavigatorEntryConfigurationRetriever>
+		_formNavigatorEntryConfigurationRetrievers =
+			new CopyOnWriteArrayList<>();
 
 }
