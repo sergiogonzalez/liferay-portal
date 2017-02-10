@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.exception.InvalidParentStructureException;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
@@ -39,6 +40,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -263,6 +266,43 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		addFormTemplate(
 			structure.getPrimaryKey(), "Test Form Template",
 			WorkflowConstants.STATUS_APPROVED);
+
+		DDMStructureLocalServiceUtil.deleteStructure(
+			structure.getStructureId());
+	}
+
+	@Test(
+		expected =
+			RequiredStructureException.
+				MustNotDeleteStructureLinkedToAssetVocabularies.class
+	)
+	public void testDeleteStructureReferencedByVocabulary() throws Exception {
+		DDMStructure structure = addStructure(
+			ClassNameLocalServiceUtil.getClassNameId(
+				"com.liferay.journal.model.JournalArticle"),
+			"Test Structure");
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(LocaleUtil.getSiteDefault(), StringUtil.randomString());
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(
+			LocaleUtil.getSiteDefault(), StringUtil.randomString());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("selectedClassNameIds=");
+		sb.append(structure.getClassNameId());
+		sb.append(StringPool.COLON);
+		sb.append(structure.getStructureId());
+		sb.append("\n");
+
+		AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			StringUtil.randomString(), titleMap, descriptionMap, sb.toString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		DDMStructureLocalServiceUtil.deleteStructure(
 			structure.getStructureId());
