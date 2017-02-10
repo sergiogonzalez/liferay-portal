@@ -86,7 +86,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 			<liferay-ui:message key="created-by" />
 		</th>
 		<td class="table-cell">
-			<%= HtmlUtil.escape(initialPage.getUserName()) %> (<%= dateFormatDateTime.format(initialPage.getCreateDate()) %>)
+
+			<%
+			String userName = initialPage.getUserName();
+
+			if (Validator.isNull(userName)) {
+				userName = "Liferay";
+			}
+			%>
+
+			<%= HtmlUtil.escape(userName) %> (<%= dateFormatDateTime.format(initialPage.getCreateDate()) %>)
 		</td>
 	</tr>
 	<tr>
