@@ -27,7 +27,7 @@ if (wikiPage != null) {
 	attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 }
 
-WikiPage initialPage = (WikiPage)WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), 0, 1).get(0);
+WikiPage initialPage = WikiPageLocalServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), WikiPageConstants.VERSION_DEFAULT);
 
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
