@@ -184,7 +184,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 											actionJsp="/view_content_action.jsp"
 											actionJspServletContext="<%= application %>"
 											resultRow="<%= row %>"
-											text="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
+											text="<%= curTrashRenderer.getTitle(locale) %>"
 											url="<%= rowURL.toString() %>"
 										>
 										</liferay-frontend:horizontal-card>

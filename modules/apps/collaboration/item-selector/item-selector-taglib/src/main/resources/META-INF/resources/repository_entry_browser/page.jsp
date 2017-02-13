@@ -323,7 +323,7 @@ if (Validator.isNotNull(keywords)) {
 									<liferay-ui:search-container-column-text colspan="<%= 3 %>">
 										<liferay-frontend:horizontal-card
 											resultRow="<%= row %>"
-											text="<%= HtmlUtil.escape(folder.getName()) %>"
+											text="<%= folder.getName() %>"
 											url="<%= viewFolderURL.toString() %>"
 										>
 											<liferay-frontend:horizontal-card-col>
