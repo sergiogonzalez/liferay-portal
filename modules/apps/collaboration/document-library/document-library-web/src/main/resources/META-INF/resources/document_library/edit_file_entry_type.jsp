@@ -71,6 +71,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="definition" type="hidden" />
 
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field-to-main-metadata-fields" />
 		<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />
 		<liferay-ui:error exception="<%= NoSuchMetadataSetException.class %>" message="please-enter-a-valid-metadata-set-or-enter-a-metadata-field" />
 		<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
