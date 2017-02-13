@@ -284,6 +284,12 @@ public class AssetVocabularyLocalServiceWrapper
 		return _assetVocabularyLocalService.getGroupVocabulariesCount(groupIds);
 	}
 
+	@Override
+	public int getLinkedVocabulariesCount(long classNameId, long classTypePK) {
+		return _assetVocabularyLocalService.getLinkedVocabulariesCount(classNameId,
+			classTypePK);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
