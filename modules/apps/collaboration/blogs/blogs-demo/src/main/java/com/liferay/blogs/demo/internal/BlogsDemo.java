@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.OmniAdminUserDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,35 +48,23 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		Group guestGroup = _groupLocalService.getGroup(
 			company.getCompanyId(), "Guest");
 
-		users.add(
-			_basicUserDemoDataCreator.create(
-				company.getCompanyId(), "nikki.prudencio@liferay.com"));
-		users.add(
-			_omniAdminUserDemoDataCreator.create(
-				company.getCompanyId(), "sergio.gonzalez@liferay.com"));
-		users.add(
-			_siteAdminUserDemoDataCreator.create(
-				guestGroup.getGroupId(), "sharon.choi@liferay.com"));
+		for (int i = 0; i < 30; i++) {
+			users.add(_basicUserDemoDataCreator.create(company.getCompanyId()));
+		}
+
+		long groupId = guestGroup.getGroupId();
 
 		for (int i = 0; i < 10; i++) {
-			long randomUserId = users.get(
-				RandomUtil.nextInt(users.size())).getUserId();
+			long userId = _getRandomElement(users).getUserId();
 
-			_creativeCommonsBlogsEntryDemoDataCreator.create(
-				randomUserId, guestGroup.getGroupId());
-
-			_loremIpsumBlogsEntryDemoDataCreator.create(
-				randomUserId, guestGroup.getGroupId());
+			_blogsEntryDemoDataCreator.withComments().create(userId, groupId);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
+		_blogsEntryDemoDataCreator.delete();
 		_basicUserDemoDataCreator.delete();
-		_creativeCommonsBlogsEntryDemoDataCreator.delete();
-		_loremIpsumBlogsEntryDemoDataCreator.delete();
-		_omniAdminUserDemoDataCreator.delete();
-		_siteAdminUserDemoDataCreator.delete();
 	}
 
 	@Reference(unbind = "-")
@@ -84,13 +72,6 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		BasicUserDemoDataCreator basicUserDemoDataCreator) {
 
 		_basicUserDemoDataCreator = basicUserDemoDataCreator;
-	}
-
-	@Reference(target = "(source=creative-commons)", unbind = "-")
-	protected void setCreativeCommonsBlogsEntryDemoDataCreator(
-		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
-
-		_creativeCommonsBlogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
 	}
 
 	@Reference(unbind = "-")
@@ -102,7 +83,7 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 	protected void setLoremIpsumBlogsEntryDemoDataCreator(
 		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator) {
 
-		_loremIpsumBlogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
+		_blogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -110,25 +91,12 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setOmniAdminUserDemoDataCreator(
-		OmniAdminUserDemoDataCreator omniAdminUserDemoDataCreator) {
-
-		_omniAdminUserDemoDataCreator = omniAdminUserDemoDataCreator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteAdminUserDemoDataCreator(
-		SiteAdminUserDemoDataCreator siteAdminUserDemoDataCreator) {
-
-		_siteAdminUserDemoDataCreator = siteAdminUserDemoDataCreator;
+	private <T> T _getRandomElement(List<T> list) {
+		return list.get(RandomUtil.nextInt(list.size()));
 	}
 
 	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
-	private BlogsEntryDemoDataCreator _creativeCommonsBlogsEntryDemoDataCreator;
 	private GroupLocalService _groupLocalService;
-	private BlogsEntryDemoDataCreator _loremIpsumBlogsEntryDemoDataCreator;
-	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;
-	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;
+	private BlogsEntryDemoDataCreator _blogsEntryDemoDataCreator;
 
 }

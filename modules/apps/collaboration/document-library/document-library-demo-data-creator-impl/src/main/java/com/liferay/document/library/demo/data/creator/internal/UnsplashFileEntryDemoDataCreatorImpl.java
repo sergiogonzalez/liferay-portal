@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.demo.data.creator.internal;
 
+import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -73,28 +74,49 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 		_fileEntryIds.add(fileEntry.getFileEntryId());
 
+		if (_addComments) {
+			_multipleCommentDemoDataCreator.create(
+				FileEntry.class.getName(), fileEntry.getFileEntryId());
+
+			_addComments = false;
+		}
+
 		return fileEntry;
 	}
 
 	@Override
 	public void delete() throws PortalException {
-		try {
-			for (long fileEntryId : _fileEntryIds) {
-				_fileEntryIds.remove(fileEntryId);
-
+		for (long fileEntryId : _fileEntryIds) {
+			try {
 				_dlAppLocalService.deleteFileEntry(fileEntryId);
 			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
+			catch (NoSuchFileEntryException nsfee) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nsfee, nsfee);
+				}
 			}
+
+			_fileEntryIds.remove(fileEntryId);
 		}
+	}
+
+	@Override
+	public FileEntryDemoDataCreator withComments() {
+		_addComments = true;
+
+		return this;
 	}
 
 	@Reference(unbind = "-")
 	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMultipleCommentDemoDataCreator(
+		MultipleCommentDemoDataCreator multipleCommentDemoDataCreator) {
+
+		_multipleCommentDemoDataCreator = multipleCommentDemoDataCreator;
 	}
 
 	private byte[] _getBytes() throws IOException, PortalException {
@@ -157,8 +179,10 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 		_categories.add("objects");
 	}
 
+	private boolean _addComments;
 	private int _categoryIndex = -1;
 	private DLAppLocalService _dlAppLocalService;
 	private final List<Long> _fileEntryIds = new CopyOnWriteArrayList<>();
+	private MultipleCommentDemoDataCreator _multipleCommentDemoDataCreator;
 
 }

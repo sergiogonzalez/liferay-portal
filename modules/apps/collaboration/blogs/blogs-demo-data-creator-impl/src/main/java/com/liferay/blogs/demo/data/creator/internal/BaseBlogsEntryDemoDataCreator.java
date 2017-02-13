@@ -18,6 +18,7 @@ import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
 import com.liferay.document.library.demo.data.creator.RootFolderDemoDataCreator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,26 +72,42 @@ public abstract class BaseBlogsEntryDemoDataCreator
 
 		entryIds.add(blogsEntry.getEntryId());
 
+		if (_addComments) {
+			_multipleCommentDemoDataCreator.create(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+			_addComments = false;
+		}
+
 		return blogsEntry;
 	}
 
 	@Override
 	public void delete() throws PortalException {
-		try {
-			for (long entryId : entryIds) {
-				blogsEntryLocalService.deleteEntry(entryId);
+		_multipleCommentDemoDataCreator.delete();
 
-				entryIds.remove(entryId);
+		for (long entryId : entryIds) {
+			try {
+				blogsEntryLocalService.deleteEntry(entryId);
 			}
-		}
-		catch (NoSuchEntryException nsee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsee);
+			catch (NoSuchEntryException nsee) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nsee);
+				}
 			}
+
+			entryIds.remove(entryId);
 		}
 
 		fileEntryDemoDataCreator.delete();
 		rootFolderDemoDataCreator.delete();
+	}
+
+	@Override
+	public BlogsEntryDemoDataCreator withComments() {
+		_addComments = true;
+
+		return this;
 	}
 
 	@Reference(unbind = "-")
@@ -105,6 +122,13 @@ public abstract class BaseBlogsEntryDemoDataCreator
 		FileEntryDemoDataCreator fileEntryDemoDataCreator) {
 
 		this.fileEntryDemoDataCreator = fileEntryDemoDataCreator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMultipleCommentDemoDataCreator(
+		MultipleCommentDemoDataCreator multipleCommentDemoDataCreator) {
+
+		_multipleCommentDemoDataCreator = multipleCommentDemoDataCreator;
 	}
 
 	@Reference(unbind = "-")
@@ -154,6 +178,8 @@ public abstract class BaseBlogsEntryDemoDataCreator
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseBlogsEntryDemoDataCreator.class);
 
+	private boolean _addComments;
 	private Folder _blogsEntryImagesFolder;
+	private MultipleCommentDemoDataCreator _multipleCommentDemoDataCreator;
 
 }

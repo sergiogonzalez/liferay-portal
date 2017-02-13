@@ -29,4 +29,6 @@ public interface BlogsEntryDemoDataCreator {
 
 	public void delete() throws PortalException;
 
+	public BlogsEntryDemoDataCreator withComments();
+
 }
