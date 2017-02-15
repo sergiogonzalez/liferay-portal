@@ -48,16 +48,26 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		Group guestGroup = _groupLocalService.getGroup(
 			company.getCompanyId(), "Guest");
 
-		_basicUserDemoDataCreator.create(
+		User user1 = _basicUserDemoDataCreator.create(
 			company.getCompanyId(), "nikki.prudencio@liferay.com");
 
-		_omniAdminUserDemoDataCreator.create(
+		User user2 = _omniAdminUserDemoDataCreator.create(
 			company.getCompanyId(), "sergio.gonzalez@liferay.com");
 
-		_siteAdminUserDemoDataCreator.create(
+		User user3 = _siteAdminUserDemoDataCreator.create(
 			guestGroup.getGroupId(), "sharon.choi@liferay.com");
 
 		long groupId = guestGroup.getGroupId();
+
+		BlogsEntryDemoDataCreator randomBlogsEntryDemoDataCreator =
+			_getRandomElement(_blogsEntryDemoDataCreators);
+
+		randomBlogsEntryDemoDataCreator.withComments().create(
+			user1.getUserId(), groupId);
+		randomBlogsEntryDemoDataCreator.withComments().create(
+			user2.getUserId(), groupId);
+		randomBlogsEntryDemoDataCreator.withComments().create(
+			user3.getUserId(), groupId);
 
 		for (int i = 0; i < 30; i++) {
 			users.add(_basicUserDemoDataCreator.create(company.getCompanyId()));
