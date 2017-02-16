@@ -23,17 +23,16 @@ KBArticle[] previousAndNextKBArticles = KBArticleServiceUtil.getPreviousAndNextK
 
 KBArticle previousKBArticle = previousAndNextKBArticles[0];
 KBArticle nextKBArticle = previousAndNextKBArticles[2];
-
-KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 %>
 
 <div class="kb-article-siblings">
 	<span class="kb-article-previous">
 		<c:if test="<%= previousKBArticle != null %>">
-
-			<%
-			PortletURL previousKBArticleURL = kbArticleURLHelper.createViewURL(previousKBArticle);
-			%>
+			<liferay-portlet:renderURL varImpl="previousKBArticleURL">
+				<portlet:param name="mvcPath" value="/search/view_article.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(previousKBArticle.getResourcePrimKey()) %>" />
+			</liferay-portlet:renderURL>
 
 			<aui:a cssClass="hidden-xs" href="<%= previousKBArticleURL.toString() %>">
 				<i class="icon icon-circle-arrow-left"></i>
@@ -50,10 +49,11 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	</span>
 	<span class="kb-article-next">
 		<c:if test="<%= nextKBArticle != null %>">
-
-			<%
-			PortletURL nextKBArticleURL = kbArticleURLHelper.createViewURL(nextKBArticle);
-			%>
+			<liferay-portlet:renderURL varImpl="nextKBArticleURL">
+				<portlet:param name="mvcPath" value="/search/view_article.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(nextKBArticle.getResourcePrimKey()) %>" />
+			</liferay-portlet:renderURL>
 
 			<aui:a cssClass="hidden-xs next" href="<%= nextKBArticleURL.toString() %>">
 				<span class="title"><%= HtmlUtil.escape(nextKBArticle.getTitle()) %></span>
