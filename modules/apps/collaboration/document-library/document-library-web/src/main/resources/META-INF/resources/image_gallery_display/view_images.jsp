@@ -135,7 +135,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/folder_action.jsp" : StringPool.BLANK %>'
 						actionJspServletContext="<%= application %>"
 						resultRow="<%= row %>"
-						text="<%= HtmlUtil.escape(curFolder.getName()) %>"
+						text="<%= curFolder.getName() %>"
 						url="<%= viewFolderURL %>"
 					>
 						<liferay-frontend:horizontal-card-col>
