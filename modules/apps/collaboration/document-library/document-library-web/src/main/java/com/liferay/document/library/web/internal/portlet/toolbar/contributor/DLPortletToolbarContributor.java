@@ -18,8 +18,11 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,17 +45,22 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
+ * @author Mauro Mariuzzo
  */
 @Component(
 	immediate = true,
@@ -319,6 +327,19 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		return urlMenuItem;
 	}
 
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_dlPortletToolbarContributorContexts = ServiceTrackerListFactory.open(
+			bundleContext, DLPortletToolbarContributorContext.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dlPortletToolbarContributorContexts.close();
+	}
+
 	protected void addPortletTitleAddDocumentMenuItems(
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
@@ -467,6 +488,15 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		addPortletTitleAddDocumentMenuItems(
 			menuItems, folder, themeDisplay, portletRequest);
 
+		for (DLPortletToolbarContributorContext
+				dlPortletToolbarContributorContext :
+					_dlPortletToolbarContributorContexts) {
+
+			dlPortletToolbarContributorContext.updatePortletTitleMenuItems(
+				menuItems, folder, themeDisplay, portletRequest,
+				portletResponse);
+		}
+
 		return menuItems;
 	}
 
@@ -583,6 +613,10 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	private DLFileEntryTypeService _dlFileEntryTypeService;
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
+
+	private ServiceTrackerList
+		<DLPortletToolbarContributorContext, DLPortletToolbarContributorContext>
+			_dlPortletToolbarContributorContexts;
 
 	@Reference
 	private Portal _portal;
