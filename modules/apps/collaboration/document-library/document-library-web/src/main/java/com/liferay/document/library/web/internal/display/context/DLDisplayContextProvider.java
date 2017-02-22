@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.display.context.DLViewFileHistoryDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -92,6 +93,39 @@ public class DLDisplayContextProvider {
 		}
 
 		return dlEditFileEntryDisplayContext;
+	}
+
+	public DLViewFileHistoryDisplayContext
+		getDLViewFileHistoryDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
+
+		DLViewFileHistoryDisplayContext dlViewFileHistoryDisplayContext =
+				new DefaultDLViewFileHistoryDisplayContext(
+					request, response, fileVersion, _dlMimeTypeDisplayContext,
+					resourceBundle, _storageEngine);
+
+		if (fileVersion == null) {
+			return dlViewFileHistoryDisplayContext;
+		}
+
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+			_dlDisplayContextFactories) {
+
+			dlViewFileHistoryDisplayContext =
+				dlDisplayContextFactory.getDLViewFileHistoryDisplayContext(
+					dlViewFileHistoryDisplayContext, request, response,
+					fileVersion);
+		}
+
+		return dlViewFileHistoryDisplayContext;
 	}
 
 	public DLViewFileVersionDisplayContext
