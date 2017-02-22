@@ -115,6 +115,12 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 		Metadata metadata = super.extractMetadata(extension, mimeType, file);
 
+		if (metadata == null) {
+			metadata = new Metadata();
+
+			metadata.set("Content-Type", mimeType);
+		}
+
 		boolean forkProcess = false;
 
 		if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED) {
