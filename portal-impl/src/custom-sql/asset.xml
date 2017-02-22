@@ -193,6 +193,19 @@
 				AssetTag.tagId, AssetTag.name
 		]]>
 	</sql>
+	<sql id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder.countByLinkedAsset">
+		<![CDATA[
+			SELECT
+				COUNT(AssetVocabulary.vocabularyId) AS COUNT_VALUE
+			FROM
+				AssetVocabulary
+			WHERE
+				AssetVocabulary.settings_ like '%=[LINKED_ASSET$],%' OR
+				AssetVocabulary.settings_ like '%=[LINKED_ASSET$]\n' OR
+				AssetVocabulary.settings_ like '%,[LINKED_ASSET$],%' OR
+				AssetVocabulary.settings_ like '%,[LINKED_ASSET$]\n'
+		]]>
+	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder.countByG_N">
 		<![CDATA[
 			SELECT
@@ -202,6 +215,21 @@
 			WHERE
 				(AssetVocabulary.groupId = ?) AND
 				(AssetVocabulary.name LIKE ? OR ? IS NULL)
+		]]>
+	</sql>
+	<sql id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder.findByLinkedAsset">
+		<![CDATA[
+			SELECT
+				{AssetVocabulary.*}
+			FROM
+				AssetVocabulary
+			WHERE
+				AssetVocabulary.settings_ like '%=[LINKED_ASSET$],%' OR
+				AssetVocabulary.settings_ like '%=[LINKED_ASSET$]\n' OR
+				AssetVocabulary.settings_ like '%,[LINKED_ASSET$],%' OR
+				AssetVocabulary.settings_ like '%,[LINKED_ASSET$]\n'
+			ORDER BY
+				AssetVocabulary.name ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder.findByG_N">

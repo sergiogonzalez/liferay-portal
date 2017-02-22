@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -37,11 +38,22 @@ import java.util.List;
 public class AssetVocabularyFinderImpl
 	extends AssetVocabularyFinderBaseImpl implements AssetVocabularyFinder {
 
+	public static final String COUNT_BY_LINKED_ASSET =
+		AssetVocabularyFinder.class.getName() + ".countByLinkedAsset";
+
 	public static final String COUNT_BY_G_N =
 		AssetVocabularyFinder.class.getName() + ".countByG_N";
 
+	public static final String FIND_BY_LINKED_ASSET =
+		AssetVocabularyFinder.class.getName() + ".findByLinkedAsset";
+
 	public static final String FIND_BY_G_N =
 		AssetVocabularyFinder.class.getName() + ".findByG_N";
+
+	@Override
+	public int countByLinkedAsset(long classNameId, long classTypePK) {
+		return doCountByLinkedAsset(classNameId, classTypePK, false);
+	}
 
 	@Override
 	public int countByG_N(long groupId, String name) {
@@ -49,8 +61,22 @@ public class AssetVocabularyFinderImpl
 	}
 
 	@Override
+	public int filterCountByLinkedAsset(long classNameId, long classTypePK) {
+		return doCountByLinkedAsset(classNameId, classTypePK, true);
+	}
+
+	@Override
 	public int filterCountByG_N(long groupId, String name) {
 		return doCountByG_N(groupId, name, true);
+	}
+
+	@Override
+	public List<AssetVocabulary> filterFindByLinkedAsset(
+		long classNameId, long classTypePK, int start, int end,
+		OrderByComparator<AssetVocabulary> obc) {
+
+		return doFindByLinkedAsset(
+			classNameId, classTypePK, start, end, obc, true);
 	}
 
 	@Override
@@ -62,11 +88,64 @@ public class AssetVocabularyFinderImpl
 	}
 
 	@Override
+	public List<AssetVocabulary> findByLinkedAsset(
+		long classNameId, long classTypePK, int start, int end,
+		OrderByComparator<AssetVocabulary> obc) {
+
+		return doFindByLinkedAsset(
+			classNameId, classTypePK, start, end, obc, false);
+	}
+
+	@Override
 	public List<AssetVocabulary> findByG_N(
 		long groupId, String name, int start, int end,
 		OrderByComparator<AssetVocabulary> obc) {
 
 		return doFindByG_N(groupId, name, start, end, obc, false);
+	}
+
+	protected int doCountByLinkedAsset(
+		long classNameId, long classTypePK, boolean inlineSQLHelper) {
+
+		String linkedAsset = classNameId + StringPool.COLON + classTypePK;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_LINKED_ASSET);
+
+			sql = StringUtil.replace(sql, "[LINKED_ASSET$]", linkedAsset);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetVocabulary.class.getName(),
+					"AssetVocabulary.vocabularyId");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected int doCountByG_N(
@@ -106,6 +185,44 @@ public class AssetVocabularyFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<AssetVocabulary> doFindByLinkedAsset(
+		long classNameId, long classTypePK, int start, int end,
+		OrderByComparator<AssetVocabulary> obc, boolean inlineSQLHelper) {
+
+		String linkedAsset = classNameId + StringPool.COLON + classTypePK;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_LINKED_ASSET);
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			sql = StringUtil.replace(sql, "[LINKED_ASSET$]", linkedAsset);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetVocabulary.class.getName(),
+					"AssetVocabulary.vocabularyId");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("AssetVocabulary", AssetVocabularyImpl.class);
+
+			return (List<AssetVocabulary>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

@@ -56,6 +56,26 @@ public class RequiredStructureException extends PortalException {
 		return _type;
 	}
 
+	public static class MustNotDeleteStructureLinkedToAssetVocabularies
+		extends RequiredStructureException {
+
+		public MustNotDeleteStructureLinkedToAssetVocabularies(
+			long structureId) {
+
+			super(
+				String.format(
+					"Structure %s cannot be deleted because it is linked to " +
+						"one or more asset vocabularies",
+					structureId),
+				0);
+
+			this.structureId = structureId;
+		}
+
+		public long structureId;
+
+	}
+
 	public static class MustNotDeleteStructureReferencedByStructureLinks
 		extends RequiredStructureException {
 

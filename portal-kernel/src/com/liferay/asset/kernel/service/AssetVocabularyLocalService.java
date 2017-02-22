@@ -241,6 +241,9 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupVocabulariesCount(long[] groupIds);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLinkedVocabulariesCount(long classNameId, long classTypePK);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

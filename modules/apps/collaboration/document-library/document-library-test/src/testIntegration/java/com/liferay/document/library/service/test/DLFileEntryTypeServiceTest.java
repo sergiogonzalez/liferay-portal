@@ -15,6 +15,8 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.document.library.kernel.exception.LinkedFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -53,6 +56,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
@@ -60,8 +64,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -224,6 +230,50 @@ public class DLFileEntryTypeServiceTest {
 		Assert.assertNotNull(
 			DLFileEntryTypeConstants.NAME_MARKETING_BANNER + " is null",
 			_marketingBannerDLFileEntryType);
+	}
+
+	@Test(expected = LinkedFileEntryTypeException.class)
+	public void testDeleteFileEntryTypeReferencedByVocabulary()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+		String description = RandomTestUtil.randomString();
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			DLFileEntryMetadata.class.getName(),
+			new Locale[] {LocaleUtil.SPAIN}, LocaleUtil.SPAIN);
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), _group.getGroupId(), name,
+				description, new long[] {ddmStructure.getStructureId()},
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(LocaleUtil.getSiteDefault(), StringUtil.randomString());
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(
+			LocaleUtil.getSiteDefault(), StringUtil.randomString());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("selectedClassNameIds=");
+		sb.append(
+			ClassNameLocalServiceUtil.getClassNameId(
+				DLFileEntry.class.getName()));
+		sb.append(StringPool.COLON);
+		sb.append(dlFileEntryType.getFileEntryTypeId());
+		sb.append("\n");
+
+		AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			StringUtil.randomString(), titleMap, descriptionMap, sb.toString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		DLFileEntryTypeServiceUtil.deleteFileEntryType(
+			dlFileEntryType.getFileEntryTypeId());
 	}
 
 	@Test

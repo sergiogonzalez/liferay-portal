@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
+
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceFinder;
@@ -802,6 +804,44 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the asset vocabulary local service.
+	 *
+	 * @return the asset vocabulary local service
+	 */
+	public com.liferay.asset.kernel.service.AssetVocabularyLocalService getAssetVocabularyLocalService() {
+		return assetVocabularyLocalService;
+	}
+
+	/**
+	 * Sets the asset vocabulary local service.
+	 *
+	 * @param assetVocabularyLocalService the asset vocabulary local service
+	 */
+	public void setAssetVocabularyLocalService(
+		com.liferay.asset.kernel.service.AssetVocabularyLocalService assetVocabularyLocalService) {
+		this.assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	/**
+	 * Returns the asset vocabulary persistence.
+	 *
+	 * @return the asset vocabulary persistence
+	 */
+	public AssetVocabularyPersistence getAssetVocabularyPersistence() {
+		return assetVocabularyPersistence;
+	}
+
+	/**
+	 * Sets the asset vocabulary persistence.
+	 *
+	 * @param assetVocabularyPersistence the asset vocabulary persistence
+	 */
+	public void setAssetVocabularyPersistence(
+		AssetVocabularyPersistence assetVocabularyPersistence) {
+		this.assetVocabularyPersistence = assetVocabularyPersistence;
+	}
+
+	/**
 	 * Returns the ddm structure layout local service.
 	 *
 	 * @return the ddm structure layout local service
@@ -1078,6 +1118,10 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@ServiceReference(type = com.liferay.asset.kernel.service.AssetVocabularyLocalService.class)
+	protected com.liferay.asset.kernel.service.AssetVocabularyLocalService assetVocabularyLocalService;
+	@ServiceReference(type = AssetVocabularyPersistence.class)
+	protected AssetVocabularyPersistence assetVocabularyPersistence;
 	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService.class)
 	protected com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
 	@BeanReference(type = DDMStructureLayoutPersistence.class)
