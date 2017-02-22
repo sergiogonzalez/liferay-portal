@@ -57,6 +57,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -111,13 +112,12 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		long fileEntryTypeId = counterLocalService.increment();
 
-		long ddmStructureId = updateDDMStructure(
+		long[] updatedDDMStructureIds = _updateDDMStructure(
 			userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
 			descriptionMap, serviceContext);
 
-		if (ddmStructureId > 0) {
-			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
-		}
+		ddmStructureIds = _updateDDMStructureIds(
+			updatedDDMStructureIds, ddmStructureIds);
 
 		validate(fileEntryTypeId, groupId, fileEntryTypeKey, ddmStructureIds);
 
@@ -475,14 +475,13 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
-		long ddmStructureId = updateDDMStructure(
+		long[] updatedDDMStructureIds = _updateDDMStructure(
 			userId, dlFileEntryType.getUuid(), fileEntryTypeId,
 			dlFileEntryType.getGroupId(), nameMap, descriptionMap,
 			serviceContext);
 
-		if (ddmStructureId > 0) {
-			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
-		}
+		ddmStructureIds = _updateDDMStructureIds(
+			updatedDDMStructureIds, ddmStructureIds);
 
 		validate(
 			fileEntryTypeId, dlFileEntryType.getGroupId(),
@@ -729,68 +728,22 @@ public class DLFileEntryTypeLocalServiceImpl
 		return staleDDMStructureLinkStructureIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #_updateDDMStructure(long,
+	 *             String, long, long, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	protected long updateDDMStructure(
 			long userId, String fileEntryTypeUuid, long fileEntryTypeId,
 			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		fixDDMStructureKey(fileEntryTypeUuid, fileEntryTypeId, groupId);
+		long[] structureIds = _updateDDMStructure(
+			userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
+			descriptionMap, serviceContext);
 
-		String ddmStructureKey = DLUtil.getDDMStructureKey(fileEntryTypeUuid);
-
-		DDMForm ddmForm = (DDMForm)serviceContext.getAttribute("ddmForm");
-
-		DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
-			groupId,
-			classNameLocalService.getClassNameId(DLFileEntryMetadata.class),
-			ddmStructureKey);
-
-		if ((ddmStructure != null) && (ddmForm == null)) {
-			ddmForm = ddmStructure.getDDMForm();
-		}
-
-		if (ddmForm == null) {
-			return 0;
-		}
-
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-		if (ddmFormFields.isEmpty()) {
-			return 0;
-		}
-
-		try {
-			if (ddmStructure == null) {
-				ddmStructure = DDMStructureManagerUtil.addStructure(
-					userId, groupId, null,
-					classNameLocalService.getClassNameId(
-						DLFileEntryMetadata.class),
-					ddmStructureKey, nameMap, descriptionMap, ddmForm,
-					StorageEngineManager.STORAGE_TYPE_DEFAULT,
-					DDMStructureManager.STRUCTURE_TYPE_AUTO, serviceContext);
-			}
-			else {
-				ddmStructure = DDMStructureManagerUtil.updateStructure(
-					userId, ddmStructure.getStructureId(),
-					ddmStructure.getParentStructureId(), nameMap,
-					descriptionMap, ddmForm, serviceContext);
-			}
-
-			return ddmStructure.getStructureId();
-		}
-		catch (StructureDefinitionException sde) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sde, sde);
-			}
-
-			if (ddmStructure != null) {
-				DDMStructureManagerUtil.deleteStructure(
-					ddmStructure.getStructureId());
-			}
-		}
-
-		return 0;
+		return structureIds[1];
 	}
 
 	protected void validate(
@@ -820,6 +773,98 @@ public class DLFileEntryTypeLocalServiceImpl
 					"{ddmStructureId=" + ddmStructureId);
 			}
 		}
+	}
+
+	private long[] _updateDDMStructure(
+			long userId, String fileEntryTypeUuid, long fileEntryTypeId,
+			long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		fixDDMStructureKey(fileEntryTypeUuid, fileEntryTypeId, groupId);
+
+		String ddmStructureKey = DLUtil.getDDMStructureKey(fileEntryTypeUuid);
+
+		DDMForm ddmForm = (DDMForm)serviceContext.getAttribute("ddmForm");
+
+		DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
+			groupId,
+			classNameLocalService.getClassNameId(DLFileEntryMetadata.class),
+			ddmStructureKey);
+
+		if ((ddmStructure != null) && (ddmForm == null)) {
+			ddmForm = ddmStructure.getDDMForm();
+		}
+
+		if (ddmForm == null) {
+			return new long[] {0, 0};
+		}
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		if (ddmFormFields.isEmpty()) {
+			if (ddmStructure != null) {
+				long structureId = ddmStructure.getStructureId();
+
+				deleteDDMStructureLinks(
+					fileEntryTypeId, Collections.singleton(structureId));
+
+				DDMStructureManagerUtil.deleteStructure(structureId);
+
+				return new long[] {structureId, 0};
+			}
+
+			return new long[] {0, 0};
+		}
+
+		try {
+			if (ddmStructure == null) {
+				ddmStructure = DDMStructureManagerUtil.addStructure(
+					userId, groupId, null,
+					classNameLocalService.getClassNameId(
+						DLFileEntryMetadata.class),
+					ddmStructureKey, nameMap, descriptionMap, ddmForm,
+					StorageEngineManager.STORAGE_TYPE_DEFAULT,
+					DDMStructureManager.STRUCTURE_TYPE_AUTO, serviceContext);
+			}
+			else {
+				ddmStructure = DDMStructureManagerUtil.updateStructure(
+					userId, ddmStructure.getStructureId(),
+					ddmStructure.getParentStructureId(), nameMap,
+					descriptionMap, ddmForm, serviceContext);
+			}
+
+			return new long[] {0, ddmStructure.getStructureId()};
+		}
+		catch (StructureDefinitionException sde) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sde, sde);
+			}
+
+			if (ddmStructure != null) {
+				long structureId = ddmStructure.getStructureId();
+
+				DDMStructureManagerUtil.deleteStructure(structureId);
+
+				return new long[] {structureId, 0};
+			}
+		}
+
+		return new long[] {0, 0};
+	}
+
+	private long[] _updateDDMStructureIds(
+		long[] updatedDDMStructureIds, long[] originalDDMStructureIds) {
+
+		long[] structureIds = ArrayUtil.remove(
+			originalDDMStructureIds, updatedDDMStructureIds[0]);
+
+		if (updatedDDMStructureIds[1] != 0) {
+			structureIds = ArrayUtil.append(
+				structureIds, updatedDDMStructureIds[1]);
+		}
+
+		return structureIds;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
