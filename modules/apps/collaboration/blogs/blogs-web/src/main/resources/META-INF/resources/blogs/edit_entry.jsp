@@ -263,6 +263,12 @@ if (portletTitleBasedNavigation) {
 							<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
 						</div>
 
+						<div class="entry-description form-group">
+							<aui:input label="description" name="description" type="text" value="<%= description %>">
+								<aui:validator name="required" />
+							</aui:input>
+						</div>
+
 						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
 						<div class="lfr-blogs-small-image-selector">
@@ -273,12 +279,6 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-item-selector:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, smallImageSelectedItemEventName) %>" maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 						</div>
-
-						<div class="entry-description form-group">
-							<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
-						</div>
-
-						<aui:input name="description" type="hidden" />
 					</div>
 
 					<aui:input label="display-date" name="displayDate" />
@@ -416,12 +416,6 @@ if (portletTitleBasedNavigation) {
 		}
 	}
 
-	function <portlet:namespace />OnDescriptionEditorInit() {
-		<c:if test="<%= !customAbstract %>">
-			document.getElementById('<portlet:namespace />descriptionEditor').setAttribute('contenteditable', false);
-		</c:if>
-	}
-
 	<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
 		Liferay.Util.toggleBoxes('<portlet:namespace />sendEmailEntryUpdated', '<portlet:namespace />emailEntryUpdatedCommentWrapper');
 	</c:if>
@@ -462,25 +456,6 @@ if (portletTitleBasedNavigation) {
 			}
 		)
 	);
-
-	var createAbstractEditor = function() {
-		var descriptionEditor = window['<portlet:namespace />descriptionEditor'];
-
-		if (!descriptionEditor.instanceReady) {
-			descriptionEditor.create();
-
-			blogs.setDescription(window['<portlet:namespace />contentEditor'].getText());
-		}
-	};
-
-	var configurationContentHeader = AUI.$('#<portlet:namespace />configurationContent');
-
-	if (configurationContentHeader.hasClass('in')) {
-		createAbstractEditor();
-	}
-	else {
-		configurationContentHeader.on('show.bs.collapse', createAbstractEditor);
-	}
 
 	var clearSaveDraftHandle = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
