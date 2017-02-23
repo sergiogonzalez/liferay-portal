@@ -189,6 +189,9 @@ public class MBMailingListLocalServiceImpl
 		if (active) {
 			scheduleMailingList(mailingList);
 		}
+		else {
+			unscheduleMailingList(mailingList);
+		}
 
 		return mailingList;
 	}
