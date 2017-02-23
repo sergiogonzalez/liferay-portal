@@ -262,7 +262,7 @@ if (portletTitleBasedNavigation) {
 						</div>
 
 						<div class="entry-description form-group">
-							<aui:input label="description" name="description" type="text" value="<%= description %>">
+							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" type="text" value="<%= description %>">
 								<aui:validator name="required" />
 							</aui:input>
 						</div>
