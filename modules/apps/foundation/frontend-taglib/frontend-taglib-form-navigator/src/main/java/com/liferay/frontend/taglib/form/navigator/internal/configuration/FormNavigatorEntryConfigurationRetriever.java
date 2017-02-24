@@ -40,8 +40,10 @@ public class FormNavigatorEntryConfigurationRetriever {
 			_serviceTrackerMap.getService(formNavigatorId)).stream().map(
 				formNavigatorEntryConfigurationParser ->
 					formNavigatorEntryConfigurationParser.
-						getFormNavigatorEntryKeys(categoryKey, context)).reduce(
-				Optional.empty(), this::_mergeFormNavigatorEntryKeys);
+						getFormNavigatorEntryKeys(categoryKey, context)
+			).reduce(
+				Optional.empty(), this::_mergeFormNavigatorEntryKeys
+			);
 	}
 
 	@Activate

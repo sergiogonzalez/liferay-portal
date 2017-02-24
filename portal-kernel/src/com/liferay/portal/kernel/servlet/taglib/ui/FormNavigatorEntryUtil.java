@@ -121,9 +121,15 @@ public class FormNavigatorEntryUtil {
 			List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
 			T formModelBean) {
 
-		return ListUtil.fromCollection(formNavigatorEntries).stream().filter(
-			formNavigatorEntry -> formNavigatorEntry.isVisible(
-				user, formModelBean)).collect(Collectors.toList());
+		List<FormNavigatorEntry<T>> filteredFormNavigatorEntries =
+			ListUtil.fromCollection(formNavigatorEntries).stream().filter(
+				formNavigatorEntry -> formNavigatorEntry.isVisible(
+					user, formModelBean)
+			).collect(
+				Collectors.toList()
+			);
+
+		return filteredFormNavigatorEntries;
 	}
 
 	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(

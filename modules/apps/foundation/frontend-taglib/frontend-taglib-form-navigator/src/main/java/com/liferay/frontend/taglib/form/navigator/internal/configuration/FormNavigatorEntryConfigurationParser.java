@@ -92,7 +92,10 @@ public class FormNavigatorEntryConfigurationParser {
 		SortedSet<String> keys = new TreeSet<>();
 
 		Arrays.stream(StringUtil.split(formNavigatorEntryKeys)).map(
-			String::trim).forEach(keys::add);
+			String::trim
+		).forEach(
+			keys::add
+		);
 
 		return keys;
 	}
