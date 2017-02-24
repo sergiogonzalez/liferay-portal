@@ -24,11 +24,10 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
-import java.util.stream.Collectors;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -49,11 +48,13 @@ public class FormNavigatorEntryConfigurationHelperImpl
 
 		String context = _getContext(formNavigatorId, formModelBean);
 
-		return _formNavigatorEntryConfigurationRetriever.
-			getFormNavigatorEntryKeys(
-				formNavigatorId, categoryKey, context).map(
-				formNavigatorEntryKeys -> _getFormNavigatorEntries(
-					formNavigatorId, formNavigatorEntryKeys));
+		Optional<SortedSet<String>> optionalFormNavigatorEntryKeys =
+			_formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
+				formNavigatorId, categoryKey, context);
+
+		return optionalFormNavigatorEntryKeys.map(
+			formNavigatorEntryKeys -> _getFormNavigatorEntries(
+				formNavigatorId, formNavigatorEntryKeys));
 	}
 
 	@Activate
@@ -102,10 +103,18 @@ public class FormNavigatorEntryConfigurationHelperImpl
 	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, SortedSet<String> formNavigatorEntryKeys) {
 
-		return formNavigatorEntryKeys.stream().map(
-			key -> this.<T>_getFormNavigatorEntry(
-				key, formNavigatorId)).filter(Objects::nonNull).collect(
-				Collectors.toList());
+		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
+
+		for (String key : formNavigatorEntryKeys) {
+			FormNavigatorEntry<T> formNavigatorEntry = _getFormNavigatorEntry(
+				key, formNavigatorId);
+
+			if (formNavigatorEntry != null) {
+				formNavigatorEntries.add(formNavigatorEntry);
+			}
+		}
+
+		return formNavigatorEntries;
 	}
 
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(

@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
@@ -33,7 +32,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Sergio González
@@ -121,9 +119,16 @@ public class FormNavigatorEntryUtil {
 			List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
 			T formModelBean) {
 
-		return ListUtil.fromCollection(formNavigatorEntries).stream().filter(
-			formNavigatorEntry -> formNavigatorEntry.isVisible(
-				user, formModelBean)).collect(Collectors.toList());
+		List<FormNavigatorEntry<T>> filteredFormNavigatorEntries =
+			new ArrayList<>();
+
+		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
+			if (formNavigatorEntry.isVisible(user, formModelBean)) {
+				filteredFormNavigatorEntries.add(formNavigatorEntry);
+			}
+		}
+
+		return filteredFormNavigatorEntries;
 	}
 
 	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
@@ -134,10 +139,7 @@ public class FormNavigatorEntryUtil {
 				formNavigatorId, categoryKey, formModelBean);
 
 		if (formNavigationEntriesOptional.isPresent()) {
-			List<FormNavigatorEntry<T>> formNavigatorEntries =
-				formNavigationEntriesOptional.get();
-
-			return ListUtil.fromCollection(formNavigatorEntries);
+			return formNavigationEntriesOptional.get();
 		}
 		else {
 			return (List)_instance._formNavigatorEntries.getService(
@@ -149,15 +151,16 @@ public class FormNavigatorEntryUtil {
 		_getFormNavigatorEntriesFromConfiguration(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
-		Optional<FormNavigatorEntryConfigurationHelper>
-			formNavigatorEntryConfigurationHelperOptional = Optional.ofNullable(
-				_instance._serviceTracker.getService());
+		FormNavigatorEntryConfigurationHelper
+			formNavigatorEntryConfigurationHelper =
+				_instance._serviceTracker.getService();
 
-		return formNavigatorEntryConfigurationHelperOptional.map(
-			formNavigatorEntryConfigurationHelper ->
-				formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
-					formNavigatorId, categoryKey, formModelBean)).orElse(
-				Optional.empty());
+		if (formNavigatorEntryConfigurationHelper == null) {
+			return Optional.empty();
+		}
+
+		return formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
+			formNavigatorId, categoryKey, formModelBean);
 	}
 
 	private static String _getKey(String formNavigatorId, String categoryKey) {

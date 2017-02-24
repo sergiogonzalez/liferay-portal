@@ -36,12 +36,28 @@ public class FormNavigatorEntryConfigurationRetriever {
 	public Optional<SortedSet<String>> getFormNavigatorEntryKeys(
 		String formNavigatorId, String categoryKey, String context) {
 
-		return ListUtil.fromCollection(
-			_serviceTrackerMap.getService(formNavigatorId)).stream().map(
-				formNavigatorEntryConfigurationParser ->
-					formNavigatorEntryConfigurationParser.
-						getFormNavigatorEntryKeys(categoryKey, context)).reduce(
-				Optional.empty(), this::_mergeFormNavigatorEntryKeys);
+		List<FormNavigatorEntryConfigurationParser>
+			formNavigatorEntryConfigurationParsers = ListUtil.fromCollection(
+				_serviceTrackerMap.getService(formNavigatorId));
+
+		Optional<SortedSet<String>> formNavigatorEntryKeysOptional =
+			Optional.empty();
+
+		for (FormNavigatorEntryConfigurationParser
+				formNavigatorEntryConfigurationParser :
+					formNavigatorEntryConfigurationParsers) {
+
+			Optional<SortedSet<String>> currentFormNavigatorEntryKeysOptional =
+				formNavigatorEntryConfigurationParser.getFormNavigatorEntryKeys(
+					categoryKey, context);
+
+			if (currentFormNavigatorEntryKeysOptional.isPresent()) {
+				formNavigatorEntryKeysOptional =
+					currentFormNavigatorEntryKeysOptional;
+			}
+		}
+
+		return formNavigatorEntryKeysOptional;
 	}
 
 	@Activate
@@ -63,17 +79,6 @@ public class FormNavigatorEntryConfigurationRetriever {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	private Optional<SortedSet<String>> _mergeFormNavigatorEntryKeys(
-		Optional<SortedSet<String>> previous,
-		Optional<SortedSet<String>> current) {
-
-		if (current.isPresent()) {
-			return current;
-		}
-
-		return previous;
 	}
 
 	private ServiceTrackerMap

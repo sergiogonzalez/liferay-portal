@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -91,8 +90,9 @@ public class FormNavigatorEntryConfigurationParser {
 	private SortedSet<String> _splitKeys(String formNavigatorEntryKeys) {
 		SortedSet<String> keys = new TreeSet<>();
 
-		Arrays.stream(StringUtil.split(formNavigatorEntryKeys)).map(
-			String::trim).forEach(keys::add);
+		for (String key : StringUtil.split(formNavigatorEntryKeys)) {
+			keys.add(key.trim());
+		}
 
 		return keys;
 	}
