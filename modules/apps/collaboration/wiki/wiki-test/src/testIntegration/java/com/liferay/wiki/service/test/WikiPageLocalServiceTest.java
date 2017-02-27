@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -114,6 +115,19 @@ public class WikiPageLocalServiceTest {
 			catch (PageTitleException pte) {
 			}
 		}
+	}
+
+	@Test
+	public void testAddPageWithNbspTitle() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPage childPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			"ChildPage" + CharPool.NO_BREAK_SPACE + "1",
+			RandomTestUtil.randomString(), true, serviceContext);
+
+		Assert.assertEquals("ChildPage 1", childPage.getTitle());
 	}
 
 	@Test
@@ -506,6 +520,24 @@ public class WikiPageLocalServiceTest {
 	@Test
 	public void testRenamePageWithExpando() throws Exception {
 		testRenamePage(true);
+	}
+
+	@Test
+	public void testRenamePageWithNbspTitle() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
+			"New" + CharPool.NO_BREAK_SPACE + "Title", true, serviceContext);
+
+		WikiPage renamedPage = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "New Title");
+
+		Assert.assertNotNull(renamedPage);
 	}
 
 	@Test
