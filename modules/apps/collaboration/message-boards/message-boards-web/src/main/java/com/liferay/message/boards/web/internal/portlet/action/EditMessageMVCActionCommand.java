@@ -306,28 +306,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryService(MBCategoryService mbCategoryService) {
-		_mbCategoryService = mbCategoryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageService(MBMessageService mbMessageService) {
-		_mbMessageService = mbMessageService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadService(MBThreadService mbThreadService) {
-		_mbThreadService = mbThreadService;
-	}
-
 	protected void subscribeMessage(ActionRequest actionRequest)
 		throws Exception {
 
@@ -584,13 +562,19 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;
 
+	@Reference
 	private MBCategoryService _mbCategoryService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
+	@Reference
 	private MBMessageService _mbMessageService;
+
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
 	private MBThreadService _mbThreadService;
 
 	@Reference
