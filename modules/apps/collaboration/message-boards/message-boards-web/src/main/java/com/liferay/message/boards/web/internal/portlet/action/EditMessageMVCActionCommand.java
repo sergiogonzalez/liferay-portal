@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -57,6 +59,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -155,7 +160,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				message = updateMessage(actionRequest, actionResponse);
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> updateMessage(actionRequest, actionResponse));
 			}
 			else if (cmd.equals(Constants.ADD_ANSWER)) {
 				addAnswer(actionRequest);
@@ -232,6 +239,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw e;
 			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/message_boards/error.jsp");
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 
@@ -558,6 +573,13 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 		return body;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditMessageMVCActionCommand.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;
