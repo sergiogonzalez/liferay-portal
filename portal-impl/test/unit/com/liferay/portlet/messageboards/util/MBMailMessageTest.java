@@ -14,23 +14,21 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
 import java.io.InputStream;
+
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PropsValues;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Eduardo Perez
  */
-@PrepareForTest({MBUtil.class, StringPool.class, PropsValues.class})
 @RunWith(PowerMockRunner.class)
 public class MBMailMessageTest {
 
