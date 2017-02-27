@@ -30,6 +30,7 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadService;
@@ -471,10 +472,11 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay, body, message, new ArrayList<String>(),
 						formatHandler);
 
-					_mbMessageService.updateMessage(
-						message.getMessageId(), message.getSubject(), body,
-						null, null, message.getPriority(),
-						message.getAllowPingbacks(), serviceContext);
+					_mbMessageLocalService.updateMessage(
+						themeDisplay.getUserId(), message.getMessageId(),
+						message.getSubject(), body, null, null,
+						message.getPriority(), message.getAllowPingbacks(),
+						serviceContext);
 				}
 			}
 			else {
@@ -583,6 +585,10 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;
 
 	private MBCategoryService _mbCategoryService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
 	private MBMessageService _mbMessageService;
 	private MBThreadLocalService _mbThreadLocalService;
 	private MBThreadService _mbThreadService;
