@@ -36,21 +36,23 @@ public class MBMailMessageTest {
 
 	@Test
 	public void testAddBytes() throws Exception {
-		
 		byte[] bytes = new byte[0];
 		String expected = "Tílde.txt";
 		String fileName = "=?UTF-8?Q?T=C3=83=C2=ADlde.txt?=";
+
 		MBMailMessage mbMailMessage = new MBMailMessage();
 
 		mbMailMessage.addBytes(fileName, bytes);
 
-		List<ObjectValuePair<String, InputStream>> streams =
-				mbMailMessage.getInputStreamOVPs();
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			mbMailMessage.getInputStreamOVPs();
 
-		String result = streams.get(0).getKey();
-		
-		Assert.assertEquals (expected,
-			result);
+		ObjectValuePair<String, InputStream> inputStreamOVP =
+			inputStreamOVPs.get(0);
+
+		String result = inputStreamOVP.getKey();
+
+		Assert.assertEquals(expected, result);
 	}
 
 }
