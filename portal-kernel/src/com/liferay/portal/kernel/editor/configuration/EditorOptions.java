@@ -26,6 +26,10 @@ public class EditorOptions {
 		return _dynamicAttributes;
 	}
 
+	public String getUploadItemReturnType() {
+		return _uploadItemReturnType;
+	}
+
 	public String getUploadURL() {
 		return _uploadURL;
 	}
@@ -38,12 +42,17 @@ public class EditorOptions {
 		_textMode = textMode;
 	}
 
+	public void setUploadItemReturnType(String uploadItemReturnType) {
+		_uploadItemReturnType = uploadItemReturnType;
+	}
+
 	public void setUploadURL(String uploadURL) {
 		_uploadURL = uploadURL;
 	}
 
 	private final Map<String, Object> _dynamicAttributes = new HashMap<>();
 	private boolean _textMode;
+	private String _uploadItemReturnType;
 	private String _uploadURL;
 
 }
