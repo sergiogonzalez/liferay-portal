@@ -81,6 +81,13 @@ public class FormNavigatorEntryConfigurationRetriever {
 		_serviceTrackerMap.close();
 	}
 
+	protected final void setServiceTrackerMap(
+		ServiceTrackerMap<String, List<FormNavigatorEntryConfigurationParser>>
+			serviceTrackerMap) {
+
+		_serviceTrackerMap = serviceTrackerMap;
+	}
+
 	private ServiceTrackerMap
 		<String, List<FormNavigatorEntryConfigurationParser>>
 			_serviceTrackerMap;

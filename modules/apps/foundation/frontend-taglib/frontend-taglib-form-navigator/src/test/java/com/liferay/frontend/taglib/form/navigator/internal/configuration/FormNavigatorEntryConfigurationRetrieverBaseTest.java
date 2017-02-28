@@ -14,20 +14,17 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.launch.Framework;
-import org.osgi.framework.launch.FrameworkFactory;
 
 /**
  * @author Alejandro Tardín
@@ -36,35 +33,13 @@ public abstract class FormNavigatorEntryConfigurationRetrieverBaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		FrameworkFactory factory = ServiceLoader.load(
-			FrameworkFactory.class).iterator().next();
-
-		Map<String, String> configuration = new HashMap<>();
-
-		Path cacheFolder = Paths.get(
-			System.getProperty("java.io.tmpdir"), "osgi-cache");
-
-		configuration.put("org.osgi.framework.storage", cacheFolder.toString());
-
-		_framework = factory.newFramework(configuration);
-
-		_framework.start();
-
-		formNavigatorEntryConfigurationRetriever.activate(
-			_framework.getBundleContext());
-
-		_serviceRegistrationMap.clear();
+		formNavigatorEntryConfigurationRetriever.setServiceTrackerMap(
+			_serviceTrackerMap);
 	}
 
 	@After
 	public final void tearDown() {
-		try {
-			_framework.stop();
-			_framework.waitForStop(0);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		formNavigatorEntryConfigurationRetriever.deactivate();
 	}
 
 	protected void createConfiguration(
@@ -81,27 +56,80 @@ public abstract class FormNavigatorEntryConfigurationRetrieverBaseTest {
 
 		formNavigatorEntryConfigurationParser.activate(properties);
 
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		ServiceRegistration<FormNavigatorEntryConfigurationParser>
-			serviceRegistration = bundleContext.registerService(
-				FormNavigatorEntryConfigurationParser.class,
-				formNavigatorEntryConfigurationParser, null);
-
-		_serviceRegistrationMap.put(formNavigatorId, serviceRegistration);
+		_serviceTrackerMap.register(
+			formNavigatorId, formNavigatorEntryConfigurationParser);
 	}
 
 	protected void deleteConfiguration(String formNavigatorId) {
-		_serviceRegistrationMap.get(formNavigatorId).unregister();
+		_serviceTrackerMap.unregister(formNavigatorId);
 	}
 
 	protected FormNavigatorEntryConfigurationRetriever
 		formNavigatorEntryConfigurationRetriever =
 			new FormNavigatorEntryConfigurationRetriever();
 
-	private Framework _framework;
-	private final
-		Map<String, ServiceRegistration<FormNavigatorEntryConfigurationParser>>
-			_serviceRegistrationMap = new HashMap<>();
+	private final MockServiceTrackerMap _serviceTrackerMap =
+		new MockServiceTrackerMap();
+
+	private final class MockServiceTrackerMap implements
+		ServiceTrackerMap<String, List<FormNavigatorEntryConfigurationParser>> {
+
+		@Override
+		public void close() {
+			_formNavigatorEntryConfigurationParserMap.clear();
+		}
+
+		@Override
+		public boolean containsKey(String formNavigatorId) {
+			return _formNavigatorEntryConfigurationParserMap.containsKey(
+				formNavigatorId);
+		}
+
+		@Override
+		public List<FormNavigatorEntryConfigurationParser> getService(
+			String formNavigatorId) {
+
+			return _formNavigatorEntryConfigurationParserMap.get(
+				formNavigatorId);
+		}
+
+		@Override
+		public Set<String> keySet() {
+			return _formNavigatorEntryConfigurationParserMap.keySet();
+		}
+
+		@Override
+		public void open() {
+		}
+
+		public void register(
+			String formNavigatorId,
+			FormNavigatorEntryConfigurationParser
+				formNavigatorEntryConfigurationParser) {
+
+			List<FormNavigatorEntryConfigurationParser>
+				formNavigatorEntryConfigurationParsers =
+					_formNavigatorEntryConfigurationParserMap.computeIfAbsent(
+						formNavigatorId, key -> new ArrayList<>());
+
+			formNavigatorEntryConfigurationParsers.add(
+				formNavigatorEntryConfigurationParser);
+		}
+
+		public void unregister(String formNavigatorId) {
+			_formNavigatorEntryConfigurationParserMap.remove(formNavigatorId);
+		}
+
+		@Override
+		public Collection<List<FormNavigatorEntryConfigurationParser>>
+			values() {
+
+			return _formNavigatorEntryConfigurationParserMap.values();
+		}
+
+		private final Map<String, List<FormNavigatorEntryConfigurationParser>>
+			_formNavigatorEntryConfigurationParserMap = new HashMap<>();
+
+	}
 
 }
