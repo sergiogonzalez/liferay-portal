@@ -49,6 +49,10 @@
 						<%= fileVersion.getChangeLog() %>
 					</c:otherwise>
 				</c:choose>
+
+				<div class="h6">
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+				</div>
 			</div>
 
 			<div class="list-group-item-field">
