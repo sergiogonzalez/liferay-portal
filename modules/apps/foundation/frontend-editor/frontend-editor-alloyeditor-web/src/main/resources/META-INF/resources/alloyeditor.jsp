@@ -233,6 +233,7 @@ name = HtmlUtil.escapeJS(name);
 			plugins.push(
 				{
 					cfg: {
+						uploadItemReturnType: '<%= editorOptions.getUploadItemReturnType() %>',
 						uploadUrl: '<%= uploadURL %>'
 					},
 					fn: A.Plugin.LiferayEditorImageUploader

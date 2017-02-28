@@ -30,6 +30,11 @@ AUI.add(
 						value: 10000
 					},
 
+					uploadItemReturnType: {
+						validator: Lang.isString,
+						value: STR_BLANK
+					},
+
 					uploadUrl: {
 						validator: Lang.isString,
 						value: STR_BLANK
@@ -200,6 +205,15 @@ AUI.add(
 								image.unwrap(imageContainer);
 
 								imageContainer.remove();
+
+								editor.fire(
+									'imageUploaded',
+									{
+										el: image,
+										fileEntryId: data.file.fileEntryId,
+										uploadImageReturnType: instance.get('uploadItemReturnType')
+									}
+								);
 							}
 						}
 						else {
