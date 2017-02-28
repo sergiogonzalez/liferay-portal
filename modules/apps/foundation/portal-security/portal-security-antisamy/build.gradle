@@ -39,44 +39,14 @@ processSanitizerConfiguration {
 		if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
 			line = line.replace "20000", "200000"
 		}
-		else if (line.contains('<tag-rules>')) {
+		else if (line.contains('<tag name="img"')) {
 			line = """
-				|	<allowed-empty-tags>
-				|		<literal-list>
-				|			<literal value="br"/>
-				|			<literal value="hr"/>
-				|			<literal value="a"/>
-				|			<literal value="img"/>
-				|			<literal value="param"/>
-				|			<literal value="input"/>
-				|			<literal value="textarea"/>
-				|			<literal value="basefont"/>
-				|			<literal value="col"/>
-				|			<literal value="div"/>
-				|			<literal value="source"/>
-				|		</literal-list>
-				|	</allowed-empty-tags>
-				|
 				|${line}
-				|		<tag name="picture" action="validate" />
-				|		<tag name="source" action="validate">
-				|			<attribute name="srcset">
+				|			<attribute name="data-fileEntryId" onInvalid="removeAttribute">
 				|				<regexp-list>
-				|					<regexp name="onsiteURL"/>
-				|					<regexp name="offsiteURL"/>
+				|					<regexp name="positiveInteger"/>
 				|				</regexp-list>
-				|			</attribute>
-				|			<attribute name="media">
-				|				<regexp-list>
-				|					<regexp name="anything" />
-				|				</regexp-list>
-				|			</attribute>
-				|			<attribute name="type">
-				|				<regexp-list>
-				|					<regexp value="[a-zA-Z0-9\\-]+/[a-zA-Z0-9\\-]+" />
-				|				</regexp-list>
-				|			</attribute>
-				|		</tag>""".stripMargin()
+				|			</attribute>""".stripMargin()
 		}
 
 		return line
