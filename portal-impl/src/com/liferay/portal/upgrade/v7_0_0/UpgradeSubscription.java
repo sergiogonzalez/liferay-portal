@@ -240,21 +240,22 @@ public class UpgradeSubscription extends UpgradeProcess {
 			"com.liferay.blogs.kernel.model.BlogsEntry",
 			"BlogsEntry,groupId,entryId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.bookmarks.model.BookmarksEntry",
+			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
 			"BookmarksEntry,groupId,entryId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.bookmarks.model.BookmarksFolder",
+			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
 			"BookmarksFolder,groupId,folderId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.dynamic.data.mapping.kernel.DDMStructure",
+			"com.liferay.portlet.dynamic.data.mapping.kernel.DDMStructure",
 			"DDMStructure,groupId,structureId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.journal.model.JournalFolder",
+			"com.liferay.portlet.journal.model.JournalFolder",
 			"JournalFolder,groupId,folderId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.wiki.model.WikiNode", "WikiNode,groupId,nodeId");
+			"com.liferay.portlet.wiki.model.WikiNode",
+			"WikiNode,groupId,nodeId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.wiki.model.WikiPage",
+			"com.liferay.portlet.wiki.model.WikiPage",
 			"WikiPage,groupId,resourcePrimKey");
 	}
 
