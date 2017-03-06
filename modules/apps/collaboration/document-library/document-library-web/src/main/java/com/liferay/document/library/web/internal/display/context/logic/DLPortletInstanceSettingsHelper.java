@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -134,8 +135,8 @@ public class DLPortletInstanceSettingsHelper {
 			entryColumns = ArrayUtil.remove(entryColumns, "action");
 		}
 		else if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) &&
-				 !portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
-				 !ArrayUtil.contains(entryColumns, "action")) {
+				!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
+				!ArrayUtil.contains(entryColumns, "action")) {
 
 			entryColumns = ArrayUtil.append(entryColumns, "action");
 		}
@@ -176,6 +177,11 @@ public class DLPortletInstanceSettingsHelper {
 
 		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
 			portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return true;
+		}
+		if (portletName.equals(PortletKeys.MY_WORKFLOW_TASK) ||
+			portletResource.equals(PortletKeys.MY_WORKFLOW_TASK)) {
 
 			return true;
 		}
