@@ -122,12 +122,12 @@ public class WikiPageLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		WikiPage childPage = WikiTestUtil.addPage(
+		WikiPage page = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _node.getNodeId(),
 			"ChildPage" + CharPool.NO_BREAK_SPACE + "1",
 			RandomTestUtil.randomString(), true, serviceContext);
 
-		Assert.assertEquals("ChildPage 1", childPage.getTitle());
+		Assert.assertEquals("ChildPage 1", page.getTitle());
 	}
 
 	@Test
@@ -534,10 +534,7 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			"New" + CharPool.NO_BREAK_SPACE + "Title", true, serviceContext);
 
-		WikiPage renamedPage = WikiPageLocalServiceUtil.getPage(
-			_node.getNodeId(), "New Title");
-
-		Assert.assertNotNull(renamedPage);
+		WikiPageLocalServiceUtil.getPage(_node.getNodeId(), "New Title");
 	}
 
 	@Test
