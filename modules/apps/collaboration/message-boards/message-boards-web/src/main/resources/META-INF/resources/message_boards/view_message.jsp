@@ -29,6 +29,11 @@ if ((message != null) && layout.isTypeControlPanel()) {
 	MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 }
 
+if(message != null) {
+	AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(MBMessage.class.getName(), message.getMessageId());
+	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+}
+
 AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
