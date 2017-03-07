@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
-import java.util.SortedSet;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyList() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
@@ -83,7 +83,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForLine1() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
@@ -100,7 +100,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForLine2() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "update").
 					get();
@@ -137,7 +137,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testTheyAreTrimmed() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
@@ -172,7 +172,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForAContext() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
@@ -188,7 +188,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsTheKeysInThatLineWhenAskedForNoConext() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", null).get();
 
@@ -233,7 +233,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForForm1() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
@@ -250,7 +250,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForForm2() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form2", "general", "add").get();
 
@@ -269,7 +269,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void testDoesContainValuesForEntry2IfItIsDeleted() {
 			deleteConfiguration("form2");
 
-			Optional<SortedSet<String>> formNavigatorEntryKeys =
+			Optional<List<String>> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form2", "general", "update");
 
@@ -307,7 +307,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForEntry1() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
@@ -324,10 +324,10 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testContainsValuesForEntry2() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
-					getFormNavigatorEntryKeys("form1", "general", "update").
-					get();
+					getFormNavigatorEntryKeys(
+						"form1", "general", "update").get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 3,
@@ -342,7 +342,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownCategory() {
-			Optional<SortedSet<String>> formNavigatorEntryKeys =
+			Optional<List<String>> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "unknownCategory", "add");
@@ -352,7 +352,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownContext() {
-			Optional<SortedSet<String>> formNavigatorEntryKeys =
+			Optional<List<String>> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys(
 						"form1", "general", "unknownContext");
@@ -362,7 +362,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptionalForAnUnknownFormId() {
-			Optional<SortedSet<String>> formNavigatorEntryKeys =
+			Optional<List<String>> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("unknownForm", "general", "add");
 
@@ -376,7 +376,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testReturnsEmptyOptional() {
-			Optional<SortedSet<String>> formNavigatorEntryKeys =
+			Optional<List<String>> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add");
 
@@ -414,7 +414,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 		@Test
 		public void testTheLastOneHasPrecedence() {
-			SortedSet<String> formNavigatorEntryKeys =
+			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
