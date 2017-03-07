@@ -32,6 +32,49 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class FormNavigatorEntryConfigurationRetrieverTest {
 
+	public static class WhenAConfigurationEntryHasDuplicates
+		extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
+
+		@Override
+		public void setUp() throws Exception {
+			super.setUp();
+
+			StringBundler sb1 = new StringBundler(5);
+
+			sb1.append("add.general");
+			sb1.append(StringPool.EQUAL);
+			sb1.append("formNavigatorEntryKey4,");
+			sb1.append("formNavigatorEntryKey3,");
+			sb1.append("formNavigatorEntryKey2,");
+			sb1.append("formNavigatorEntryKey1,");
+			sb1.append("formNavigatorEntryKey1,");
+			sb1.append("formNavigatorEntryKey2,");
+			sb1.append("formNavigatorEntryKey3,");
+			sb1.append("formNavigatorEntryKey4");
+
+			createConfiguration("form1", new String[] {sb1.toString()});
+		}
+
+		@Test
+		public void testOnlyTheFirstOcurrenceIsRetrieved() {
+			List<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form1", "general", "add").get();
+
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 4,
+				formNavigatorEntryKeys.size());
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey4", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey3", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+		}
+
+	}
+
 	public static class WhenAConfigurationEntryHasOneLineWithNoKeys
 		extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
 
