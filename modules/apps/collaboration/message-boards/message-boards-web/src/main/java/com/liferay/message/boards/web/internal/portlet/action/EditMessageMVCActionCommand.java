@@ -160,7 +160,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				TransactionInvokerUtil.invoke(
+				message = TransactionInvokerUtil.invoke(
 					_transactionConfig,
 					() -> updateMessage(actionRequest, actionResponse));
 			}
