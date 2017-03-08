@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -328,9 +327,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(BundleContext bundleContext) {
 		_dlPortletToolbarContributorContexts = ServiceTrackerListFactory.open(
 			bundleContext, DLPortletToolbarContributorContext.class);
 	}
