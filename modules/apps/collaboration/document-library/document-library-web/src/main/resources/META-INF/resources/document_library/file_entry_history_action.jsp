@@ -34,7 +34,7 @@ else {
 
 FileEntry fileEntry = fileVersion.getFileEntry();
 
-DLViewFileHistoryDisplayContext dlViewFileHistoryDisplayContext = dlDisplayContextProvider.getDLViewFileHistoryDisplayContext(request, response, fileVersion);
+DLViewFileEntryHistoryDisplayContext dlViewFileEntryHistoryDisplayContext = dlDisplayContextProvider.getDLViewFileEntryHistoryDisplayContext(request, response, fileVersion);
 %>
 
-<liferay-ui:menu menu="<%= dlViewFileHistoryDisplayContext.getMenu() %>" />
+<liferay-ui:menu menu="<%= dlViewFileEntryHistoryDisplayContext.getMenu() %>" />

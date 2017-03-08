@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Mauro Mariuzzo
  */
-public interface DLViewFileHistoryDisplayContext extends DLDisplayContext {
+public interface DLViewFileEntryHistoryDisplayContext extends DLDisplayContext {
 
 	public Menu getMenu() throws PortalException;
 
