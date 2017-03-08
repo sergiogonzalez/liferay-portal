@@ -27,6 +27,4 @@ public interface DLViewFileHistoryDisplayContext extends DLDisplayContext {
 
 	public Menu getMenu() throws PortalException;
 
-	public List<ToolbarItem> getToolbarItems() throws PortalException;
-
 }

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,13 +62,6 @@ public class DefaultDLViewFileHistoryDisplayContext
 		menu.setShowWhenSingleIcon(true);
 
 		return menu;
-	}
-
-	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		List<ToolbarItem> toolbarItems = new ArrayList<>();
-
-		return toolbarItems;
 	}
 
 	@Override
