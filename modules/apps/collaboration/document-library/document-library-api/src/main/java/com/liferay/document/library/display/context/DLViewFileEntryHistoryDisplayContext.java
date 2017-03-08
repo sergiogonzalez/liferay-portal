@@ -16,9 +16,6 @@ package com.liferay.document.library.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-
-import java.util.List;
 
 /**
  * @author Mauro Mariuzzo
