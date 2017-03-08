@@ -16,7 +16,6 @@ package com.liferay.document.library.google.docs.internal.display.context;
 
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.document.library.display.context.DLViewFileHistoryDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.google.docs.internal.util.GoogleDocsMetadataHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -92,15 +91,6 @@ public class GoogleDocsDLDisplayContextFactory
 		}
 
 		return parentDLEditFileEntryDisplayContext;
-	}
-
-	@Override
-	public DLViewFileHistoryDisplayContext getDLViewFileHistoryDisplayContext(
-		DLViewFileHistoryDisplayContext parentDLViewFileHistoryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
-
-		return parentDLViewFileHistoryDisplayContext;
 	}
 
 	@Override
