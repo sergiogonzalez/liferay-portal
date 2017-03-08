@@ -61,11 +61,13 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		_formNavigatorEntriesMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FormNavigatorEntry.class, null,
 			(serviceReference, emitter) -> {
-				FormNavigatorEntry service = bundleContext.getService(
-					serviceReference);
+				FormNavigatorEntry formNavigatorEntry =
+					bundleContext.getService(serviceReference);
 
 				emitter.emit(
-					_getKey(service.getKey(), service.getFormNavigatorId()));
+					_getKey(
+						formNavigatorEntry.getKey(),
+						formNavigatorEntry.getFormNavigatorId()));
 
 				bundleContext.ungetService(serviceReference);
 			});
