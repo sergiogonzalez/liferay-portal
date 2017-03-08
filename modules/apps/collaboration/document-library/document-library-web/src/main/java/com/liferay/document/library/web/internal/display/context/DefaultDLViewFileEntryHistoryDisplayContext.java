@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.document.library.display.context.DLViewFileHistoryDisplayContext;
+import com.liferay.document.library.display.context.DLViewFileEntryHistoryDisplayContext;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
@@ -33,10 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Mauro Mariuzzo
  */
-public class DefaultDLViewFileHistoryDisplayContext
-	implements DLViewFileHistoryDisplayContext {
+public class DefaultDLViewFileEntryHistoryDisplayContext
+	implements DLViewFileEntryHistoryDisplayContext {
 
-	public DefaultDLViewFileHistoryDisplayContext(
+	public DefaultDLViewFileEntryHistoryDisplayContext(
 		HttpServletRequest request, FileVersion fileVersion,
 		ResourceBundle resourceBundle) {
 
