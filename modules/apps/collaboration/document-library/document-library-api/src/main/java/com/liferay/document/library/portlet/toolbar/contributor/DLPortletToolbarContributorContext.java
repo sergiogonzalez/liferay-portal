@@ -14,14 +14,14 @@
 
 package com.liferay.document.library.portlet.toolbar.contributor;
 
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Mauro Mariuzzo

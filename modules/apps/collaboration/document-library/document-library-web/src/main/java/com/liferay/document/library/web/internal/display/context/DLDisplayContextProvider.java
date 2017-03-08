@@ -100,23 +100,23 @@ public class DLDisplayContextProvider {
 		FileVersion fileVersion) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(
 				themeDisplay.getLanguageId());
 
 		DLViewFileHistoryDisplayContext dlViewFileHistoryDisplayContext =
-				new DefaultDLViewFileHistoryDisplayContext(
-					request, response, fileVersion, _dlMimeTypeDisplayContext,
-					resourceBundle, _storageEngine);
+			new DefaultDLViewFileHistoryDisplayContext(
+				request, response, fileVersion, _dlMimeTypeDisplayContext,
+				resourceBundle, _storageEngine);
 
 		if (fileVersion == null) {
 			return dlViewFileHistoryDisplayContext;
 		}
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
-			_dlDisplayContextFactories) {
+				_dlDisplayContextFactories) {
 
 			dlViewFileHistoryDisplayContext =
 				dlDisplayContextFactory.getDLViewFileHistoryDisplayContext(

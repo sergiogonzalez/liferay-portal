@@ -335,11 +335,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			bundleContext, DLPortletToolbarContributorContext.class);
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_dlPortletToolbarContributorContexts.close();
-	}
-
 	protected void addPortletTitleAddDocumentMenuItems(
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
@@ -421,6 +416,11 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		}
 
 		return true;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dlPortletToolbarContributorContexts.close();
 	}
 
 	protected List<DLFileEntryType> getFileEntryTypes(
@@ -611,12 +611,11 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 	private BaseModelPermissionChecker _baseModelPermissionChecker;
 	private DLFileEntryTypeService _dlFileEntryTypeService;
-	private DLPortletToolbarContributorHelper
-		_dlPortletToolbarContributorHelper;
-
 	private ServiceTrackerList
 		<DLPortletToolbarContributorContext, DLPortletToolbarContributorContext>
 			_dlPortletToolbarContributorContexts;
+	private DLPortletToolbarContributorHelper
+		_dlPortletToolbarContributorHelper;
 
 	@Reference
 	private Portal _portal;

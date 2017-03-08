@@ -28,7 +28,7 @@ public class DocumentConverterUtil {
 		String sourceExtension, String targetExtension) {
 
 		for (Object service : _instance._serviceTracker.getServices()) {
-			DocumentConverter converter = (DocumentConverter) service;
+			DocumentConverter converter = (DocumentConverter)service;
 
 			if (converter.canConvert(sourceExtension, targetExtension)) {
 				return converter;
@@ -44,7 +44,11 @@ public class DocumentConverterUtil {
 		DocumentConverter converter = getConverter(
 			sourceExtension, targetExtension);
 
-		return converter != null;
+		if (converter != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean hasRegisteredConverters() {

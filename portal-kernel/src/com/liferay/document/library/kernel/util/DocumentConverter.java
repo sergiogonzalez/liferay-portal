@@ -18,8 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 /**
  * @author Mauro Mariuzzo
  */
@@ -30,7 +28,7 @@ public interface DocumentConverter {
 	public File convert(
 			String id, InputStream inputStream, String sourceExtension,
 			String targetExtension)
-		throws IOException, SystemException;
+		throws IOException;
 
 	public String getName();
 
