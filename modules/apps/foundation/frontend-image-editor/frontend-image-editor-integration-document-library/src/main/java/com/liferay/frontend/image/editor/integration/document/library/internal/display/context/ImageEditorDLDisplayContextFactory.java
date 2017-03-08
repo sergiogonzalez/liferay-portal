@@ -16,7 +16,6 @@ package com.liferay.frontend.image.editor.integration.document.library.internal.
 
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.document.library.display.context.DLViewFileHistoryDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -54,15 +53,6 @@ public class ImageEditorDLDisplayContextFactory
 		FileEntry fileEntry) {
 
 		return parentDLEditFileEntryDisplayContext;
-	}
-
-	@Override
-	public DLViewFileHistoryDisplayContext getDLViewFileHistoryDisplayContext(
-		DLViewFileHistoryDisplayContext parentDLViewFileHistoryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
-
-		return parentDLViewFileHistoryDisplayContext;
 	}
 
 	@Override
