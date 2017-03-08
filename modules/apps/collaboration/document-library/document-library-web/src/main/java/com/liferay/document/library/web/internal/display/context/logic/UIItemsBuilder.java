@@ -74,6 +74,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -253,7 +254,7 @@ public class UIItemsBuilder {
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 		selectFileVersionURL.setParameter("version", _fileVersion.getVersion());
 
-		Map<String, Object> data = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<>();
 
 		data.put("uri", selectFileVersionURL);
 
@@ -265,12 +266,16 @@ public class UIItemsBuilder {
 		String jsNamespace =
 			getNamespace() + String.valueOf(_fileVersion.getFileVersionId());
 
-		String onClick = jsNamespace + "compareVersionDialog('" +
-			selectFileVersionURL.toString() + "');";
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(jsNamespace);
+		sb.append("compareVersionDialog('");
+		sb.append(selectFileVersionURL.toString());
+		sb.append("');");
 
 		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
 			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.COMPARE_TO,
-			"compare-to", onClick);
+			"compare-to", sb.toString());
 
 		javascriptMenuItem.setData(data);
 
@@ -393,12 +398,15 @@ public class UIItemsBuilder {
 		if (_fileShortcut != null) {
 			return;
 		}
+
 		if (_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			return;
 		}
+
 		if (!_fileEntryDisplayContextHelper.hasDeletePermission()) {
 			return;
 		}
+
 		if (_fileEntry.getFileVersionsCount(
 				WorkflowConstants.STATUS_APPROVED) <= 1) {
 
@@ -426,8 +434,6 @@ public class UIItemsBuilder {
 		deleteMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(deleteMenuItem);
-
-
 	}
 
 	public void addDownloadMenuItem(List<MenuItem> menuItems)
@@ -751,12 +757,16 @@ public class UIItemsBuilder {
 		if (_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			return;
 		}
+
 		if (!_fileEntryDisplayContextHelper.hasUpdatePermission()) {
 			return;
 		}
-		if (_fileEntry.getLatestFileVersion().getVersion().equals(
-				_fileVersion.getVersion())) {
 
+		FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
+
+		String latestFileVersionVersion = latestFileVersion.getVersion();
+
+		if (latestFileVersionVersion.equals(_fileVersion.getVersion())) {
 			return;
 		}
 
@@ -772,8 +782,8 @@ public class UIItemsBuilder {
 		portletURL.setParameter("version", _fileVersion.getVersion());
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.REVERT,
-			"revert", portletURL.toString());
+			new URLMenuItem(), menuItems, DLUIItemKeys.REVERT, "revert",
+			portletURL.toString());
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {

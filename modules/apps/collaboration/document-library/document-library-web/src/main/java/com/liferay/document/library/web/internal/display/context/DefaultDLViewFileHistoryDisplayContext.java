@@ -14,14 +14,6 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileHistoryDisplayContext;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
@@ -38,6 +30,14 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Mauro Mariuzzo
@@ -167,18 +167,25 @@ public class DefaultDLViewFileHistoryDisplayContext
 
 	@SuppressWarnings("unused")
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
+
 	@SuppressWarnings("unused")
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+
 	@SuppressWarnings("unused")
 	private final FileVersion _fileVersion;
+
 	@SuppressWarnings("unused")
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
+
 	private final ResourceBundle _resourceBundle;
+
 	@SuppressWarnings("unused")
 	private final StorageEngine _storageEngine;
+
 	private final UIItemsBuilder _uiItemsBuilder;
 
 }

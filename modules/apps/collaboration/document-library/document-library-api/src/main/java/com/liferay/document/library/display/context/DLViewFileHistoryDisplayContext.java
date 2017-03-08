@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.display.context;
 
-import java.util.List;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+
+import java.util.List;
 
 /**
  * @author Mauro Mariuzzo
