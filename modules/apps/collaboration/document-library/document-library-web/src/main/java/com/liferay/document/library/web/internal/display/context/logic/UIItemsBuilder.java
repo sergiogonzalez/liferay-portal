@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.display.context.DLUIItemKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -250,8 +251,6 @@ public class UIItemsBuilder {
 			throw new PortalException(wse);
 		}
 
-		selectFileVersionURL.setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 		selectFileVersionURL.setParameter("version", _fileVersion.getVersion());
 
 		Map<String, Object> data = new HashMap<>();
@@ -395,20 +394,12 @@ public class UIItemsBuilder {
 	public void addDeleteVersionMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (_fileShortcut != null) {
-			return;
-		}
-
-		if (_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			return;
-		}
-
-		if (!_fileEntryDisplayContextHelper.hasDeletePermission()) {
-			return;
-		}
-
-		if (_fileEntry.getFileVersionsCount(
-				WorkflowConstants.STATUS_APPROVED) <= 1) {
+		if ((_fileEntry == null) ||
+			(_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
+			!_fileEntryDisplayContextHelper.hasDeletePermission() ||
+			!(_fileEntry.getModel() instanceof DLFileEntry) ||
+			(_fileEntry.getFileVersionsCount(
+				WorkflowConstants.STATUS_APPROVED) <= 1)) {
 
 			return;
 		}
@@ -421,10 +412,8 @@ public class UIItemsBuilder {
 		deleteMenuItem.setKey(DLUIItemKeys.DELETE_VERSION);
 		deleteMenuItem.setLabel("delete-version");
 
-		String mvcActionCommandName = "/document_library/edit_file_entry";
-
 		PortletURL portletURL = _getActionURL(
-			mvcActionCommandName, Constants.DELETE,
+			"/document_library/edit_file_entry", Constants.DELETE,
 			viewFileEntryURL.toString());
 
 		portletURL.setParameter(
@@ -754,11 +743,9 @@ public class UIItemsBuilder {
 	public void addRevertToVersionMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			return;
-		}
+		if ((_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
+			!_fileEntryDisplayContextHelper.hasUpdatePermission()) {
 
-		if (!_fileEntryDisplayContextHelper.hasUpdatePermission()) {
 			return;
 		}
 
@@ -794,7 +781,6 @@ public class UIItemsBuilder {
 		PortletURL portletURL = _getRenderURL(
 			"/document_library/view_file_entry");
 
-		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileShortcut.getToFileEntryId()));
 
@@ -812,8 +798,6 @@ public class UIItemsBuilder {
 			"/document_library/view_file_entry", _getRedirect());
 
 		portletURL.setParameter("version", _fileVersion.getVersion());
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_VERSION,
@@ -955,8 +939,6 @@ public class UIItemsBuilder {
 			}
 
 			_fileEntry = fileEntry;
-
-			_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
 
 			_themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -1132,7 +1114,6 @@ public class UIItemsBuilder {
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
-	private final long _folderId;
 	private Boolean _ieOnWin32;
 	private String _redirect;
 	private final HttpServletRequest _request;
