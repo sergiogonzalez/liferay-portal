@@ -108,8 +108,7 @@ public class DLDisplayContextProvider {
 
 		DLViewFileHistoryDisplayContext dlViewFileHistoryDisplayContext =
 			new DefaultDLViewFileHistoryDisplayContext(
-				request, response, fileVersion, _dlMimeTypeDisplayContext,
-				resourceBundle, _storageEngine);
+				request, fileVersion, resourceBundle);
 
 		if (fileVersion == null) {
 			return dlViewFileHistoryDisplayContext;
