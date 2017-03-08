@@ -245,8 +245,8 @@ public class UIItemsBuilder {
 		try {
 			selectFileVersionURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException e) {
-			throw new PortalException(e);
+		catch (WindowStateException wse) {
+			throw new PortalException(wse);
 		}
 
 		selectFileVersionURL.setParameter(

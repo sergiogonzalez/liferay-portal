@@ -95,10 +95,9 @@ public class DLDisplayContextProvider {
 		return dlEditFileEntryDisplayContext;
 	}
 
-	public DLViewFileHistoryDisplayContext
-		getDLViewFileHistoryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+	public DLViewFileHistoryDisplayContext getDLViewFileHistoryDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
