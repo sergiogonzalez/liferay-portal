@@ -135,8 +135,8 @@ public class DLPortletInstanceSettingsHelper {
 			entryColumns = ArrayUtil.remove(entryColumns, "action");
 		}
 		else if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) &&
-				!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
-				!ArrayUtil.contains(entryColumns, "action")) {
+				 !portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
+				 !ArrayUtil.contains(entryColumns, "action")) {
 
 			entryColumns = ArrayUtil.append(entryColumns, "action");
 		}
@@ -180,6 +180,7 @@ public class DLPortletInstanceSettingsHelper {
 
 			return true;
 		}
+
 		if (portletName.equals(PortletKeys.MY_WORKFLOW_TASK) ||
 			portletResource.equals(PortletKeys.MY_WORKFLOW_TASK)) {
 

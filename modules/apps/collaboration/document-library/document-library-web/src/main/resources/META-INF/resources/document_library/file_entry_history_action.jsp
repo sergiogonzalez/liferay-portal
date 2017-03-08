@@ -16,8 +16,6 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<%@page import="com.liferay.document.library.display.context.DLViewFileHistoryDisplayContext"%>
-
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -40,4 +38,3 @@ DLViewFileHistoryDisplayContext dlViewFileHistoryDisplayContext = dlDisplayConte
 %>
 
 <liferay-ui:menu menu="<%= dlViewFileHistoryDisplayContext.getMenu() %>" />
-

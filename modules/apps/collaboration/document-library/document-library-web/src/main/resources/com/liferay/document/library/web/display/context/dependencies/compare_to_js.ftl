@@ -1,5 +1,4 @@
 function ${jsNamespace}compareVersionDialog(eventUri) {
-
 	Liferay.Util.selectEntity(
 		{
 			dialog: {
@@ -21,5 +20,4 @@ function ${jsNamespace}compareVersionDialog(eventUri) {
 			location.href = uri;
 		}
 	);
-
 }

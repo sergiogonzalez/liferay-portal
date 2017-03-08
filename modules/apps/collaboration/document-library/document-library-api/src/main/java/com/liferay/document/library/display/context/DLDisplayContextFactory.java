@@ -38,12 +38,10 @@ public interface DLDisplayContextFactory extends DisplayContextFactory {
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry);
 
-	public DLViewFileHistoryDisplayContext
-		getDLViewFileHistoryDisplayContext(
-			DLViewFileHistoryDisplayContext
-				parentDLViewFileHistoryDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+	public DLViewFileHistoryDisplayContext getDLViewFileHistoryDisplayContext(
+		DLViewFileHistoryDisplayContext parentDLViewFileHistoryDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion);
 
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(

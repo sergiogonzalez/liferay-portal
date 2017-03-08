@@ -371,7 +371,7 @@ public class PDFProcessorImpl
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
 		}
 		else if ((PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH != 0) &&
-				(PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT == 0)) {
+				 (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT == 0)) {
 
 			arguments.add(
 				"-dDEVICEWIDTH=" +
@@ -380,7 +380,7 @@ public class PDFProcessorImpl
 			arguments.add("-dDEVICEHEIGHT=" + scaledDimensions.get("height"));
 		}
 		else if ((PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH == 0) &&
-				(PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0)) {
+				 (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0)) {
 
 			arguments.add("-dDEVICEWIDTH=" + scaledDimensions.get("width"));
 
