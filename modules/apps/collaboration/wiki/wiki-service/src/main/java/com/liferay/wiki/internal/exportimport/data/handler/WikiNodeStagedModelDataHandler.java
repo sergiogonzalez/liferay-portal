@@ -132,16 +132,16 @@ public class WikiNodeStagedModelDataHandler
 		WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
 			node.getUuid(), portletDataContext.getScopeGroupId());
 
-		WikiNode nodeWithSameName = _wikiNodeLocalService.fetchNode(
-			portletDataContext.getGroupId(), node.getName());
-
 		String nodeName = node.getName();
+
+		WikiNode nodeWithSameName = _wikiNodeLocalService.fetchNode(
+			portletDataContext.getGroupId(), nodeName);
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			if (existingNode == null) {
 				if (nodeWithSameName != null) {
 					nodeName = getNodeName(
-						portletDataContext, node, node.getName(), 2);
+						portletDataContext, node, nodeName, 2);
 				}
 
 				serviceContext.setUuid(node.getUuid());
