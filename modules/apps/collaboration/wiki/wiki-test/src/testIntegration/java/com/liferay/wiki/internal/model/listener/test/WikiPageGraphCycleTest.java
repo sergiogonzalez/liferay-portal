@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.model.test;
+package com.liferay.wiki.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
