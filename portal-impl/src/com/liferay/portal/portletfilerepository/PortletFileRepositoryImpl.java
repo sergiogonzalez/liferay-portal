@@ -60,8 +60,11 @@ import com.liferay.trash.kernel.util.TrashUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import java.util.List;
+
+import javax.mail.internet.MimeUtility;
 
 /**
  * @author Eudaldo Alonso
@@ -82,7 +85,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				inputStreamOVPs.get(i);
 
 			InputStream inputStream = inputStreamOVP.getValue();
-			String fileName = inputStreamOVP.getKey();
+
+			String fileName;
+
+			try {
+				fileName = MimeUtility.decodeText(inputStreamOVP.getKey());
+			}
+			catch (UnsupportedEncodingException uee) {
+				fileName = inputStreamOVP.getKey();
+			}
 
 			addPortletFileEntry(
 				groupId, userId, className, classPK, portletId, folderId,
