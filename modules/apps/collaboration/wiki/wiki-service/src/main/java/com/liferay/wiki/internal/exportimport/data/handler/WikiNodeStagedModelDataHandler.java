@@ -153,8 +153,7 @@ public class WikiNodeStagedModelDataHandler
 				String uuid = existingNode.getUuid();
 
 				if ((nodeWithSameName != null) &&
-					!uuid.equals(nodeWithSameName.getUuid()) &&
-					!nodeName.equals(existingNode.getName())) {
+					!uuid.equals(nodeWithSameName.getUuid())) {
 
 					nodeName = getNodeName(
 						portletDataContext, node, nodeName, 2);
