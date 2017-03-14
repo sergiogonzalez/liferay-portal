@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,71 +71,71 @@ public class BlogsEntryAttachementContentUpdaterTest extends PowerMockito {
 	public void testUpdateContentWithEmptyBlogsEntryAttachmentFileEntryReferences()
 		throws Exception {
 
-		String content = _blogsEntryAttachmentContentUpdater.updateContent(
-			populateContentWithSingleImgTag(_tempFileEntryImgTag),
-			Collections.emptyList());
+		String originalContent =
+			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
+				_tempFileEntryImgTag + "<span></a>";
 
-		String expectedContent = populateContentWithSingleImgTag(
-			_tempFileEntryImgTag);
+		String content = _blogsEntryAttachmentContentUpdater.updateContent(
+			originalContent, Collections.emptyList());
+
+		String expectedContent = originalContent;
 
 		Assert.assertEquals(expectedContent, content);
 	}
 
 	@Test
 	public void testUpdateContentWithMultipleImgTags() throws Exception {
-		String content = _blogsEntryAttachmentContentUpdater.updateContent(
-			populateContentWithMultipleImgTags(_tempFileEntryImgTag),
-			_blogsEntryAttachmentFileEntryReferences);
+		StringBundler sb = new StringBundler(4);
 
-		String expectedContent = populateContentWithMultipleImgTags(
-			"<img src=\"" + _FILE_ENTRY_IMAGE_URL + "\" />");
+		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
+		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span>");
+		sb.append(_tempFileEntryImgTag);
+		sb.append("<img src=\"www.liferay.com/pic2.jpg\" /></a>");
+
+		String content = _blogsEntryAttachmentContentUpdater.updateContent(
+			sb.toString(), _blogsEntryAttachmentFileEntryReferences);
+
+		sb = new StringBundler(6);
+
+		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
+		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span>");
+		sb.append("<img src=\"");
+		sb.append(_FILE_ENTRY_IMAGE_URL);
+		sb.append("\" />");
+		sb.append("<img src=\"www.liferay.com/pic2.jpg\" /></a>");
+
+		String expectedContent = sb.toString();
 
 		Assert.assertEquals(expectedContent, content);
 	}
 
 	@Test
 	public void testUpdateContentWithoutImgTag() throws Exception {
-		String content = _blogsEntryAttachmentContentUpdater.updateContent(
-			populateContentWithSingleImgTag(StringPool.BLANK),
-			_blogsEntryAttachmentFileEntryReferences);
+		String originalContent =
+			"<p>Sample Text</p><a href=\"www.liferay.com\"><span></a>";
 
-		String expectedContent = populateContentWithSingleImgTag(
-			StringPool.BLANK);
+		String content = _blogsEntryAttachmentContentUpdater.updateContent(
+			originalContent, _blogsEntryAttachmentFileEntryReferences);
+
+		String expectedContent = originalContent;
 
 		Assert.assertEquals(expectedContent, content);
 	}
 
 	@Test
 	public void testUpdateContentWithSingleImgTag() throws Exception {
-		String content = _blogsEntryAttachmentContentUpdater.updateContent(
-			populateContentWithSingleImgTag(_tempFileEntryImgTag),
-			_blogsEntryAttachmentFileEntryReferences);
+		String originalContent =
+			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
+				_tempFileEntryImgTag + "<span></a>";
 
-		String expectedContent = populateContentWithSingleImgTag(
-			"<img src=\"" + _FILE_ENTRY_IMAGE_URL + "\" />");
+		String content = _blogsEntryAttachmentContentUpdater.updateContent(
+			originalContent, _blogsEntryAttachmentFileEntryReferences);
+
+		String expectedContent =
+			"<p>Sample Text</p><a href=\"www.liferay.com\"><img src=\"" +
+				_FILE_ENTRY_IMAGE_URL + "\" /><span></a>";
 
 		Assert.assertEquals(expectedContent, content);
-	}
-
-	protected String populateContentWithMultipleImgTags(String imgTag) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
-		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span>");
-		sb.append(imgTag);
-		sb.append("<img src=\"www.liferay.com/pic2.jpg\" /></a>");
-
-		return sb.toString();
-	}
-
-	protected String populateContentWithSingleImgTag(String imgTag) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
-		sb.append(imgTag);
-		sb.append("<span></a>");
-
-		return sb.toString();
 	}
 
 	private static final String _FILE_ENTRY_IMAGE_URL = "www.liferay.com/logo";
