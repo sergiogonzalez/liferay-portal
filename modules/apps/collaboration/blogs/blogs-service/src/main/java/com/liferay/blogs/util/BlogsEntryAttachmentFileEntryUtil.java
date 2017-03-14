@@ -136,7 +136,7 @@ public class BlogsEntryAttachmentFileEntryUtil {
 		List<BlogsEntryAttachmentFileEntryReference>
 			blogsEntryAttachmentFileEntryReferences) {
 
-		return __BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER.updateContent(
+		return _BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER.updateContent(
 			content, blogsEntryAttachmentFileEntryReferences);
 	}
 
@@ -190,7 +190,7 @@ public class BlogsEntryAttachmentFileEntryUtil {
 	}
 
 	private static final BlogsEntryAttachmentContentUpdater
-		__BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER =
+		_BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER =
 			new BlogsEntryAttachmentContentUpdater();
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
