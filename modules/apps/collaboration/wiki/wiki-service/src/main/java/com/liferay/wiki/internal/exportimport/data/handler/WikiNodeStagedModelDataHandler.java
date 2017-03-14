@@ -135,7 +135,7 @@ public class WikiNodeStagedModelDataHandler
 		String nodeName = node.getName();
 
 		WikiNode nodeWithSameName = _wikiNodeLocalService.fetchNode(
-			portletDataContext.getGroupId(), nodeName);
+			portletDataContext.getScopeGroupId(), nodeName);
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			if (existingNode == null) {
