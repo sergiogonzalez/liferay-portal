@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(service = EditorConfigContributor.class)
-public class URLEditorConfigContributor extends BaseEditorConfigContributor {
+public class DocumentsAndMediaURLEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
 	public void populateConfigJSONObject(
