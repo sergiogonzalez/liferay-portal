@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class WikiPageGraphCycleTest {
+public class CycleDetectorWikiPageModelListenerTest {
 
 	@ClassRule
 	@Rule

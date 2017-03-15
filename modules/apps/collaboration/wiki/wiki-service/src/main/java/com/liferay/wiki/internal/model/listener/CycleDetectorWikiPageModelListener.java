@@ -27,11 +27,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  */
 @Component(immediate = true, service = ModelListener.class)
-public class WikiPageCycleDetectorListener extends BaseModelListener<WikiPage> {
+public class CycleDetectorWikiPageModelListener
+	extends BaseModelListener<WikiPage> {
 
 	@Override
 	public void onBeforeCreate(WikiPage model) throws ModelListenerException {
-		if (isCycleInWikiPagesGraph(model)) {
+		if (isCycleDetectedInWikiPagesGraph(model)) {
 			throw new ModelListenerException(
 				"Unable to create WikiPage " + model.getTitle() +
 					". Cycle detected.");
@@ -42,7 +43,7 @@ public class WikiPageCycleDetectorListener extends BaseModelListener<WikiPage> {
 
 	@Override
 	public void onBeforeUpdate(WikiPage model) throws ModelListenerException {
-		if (isCycleInWikiPagesGraph(model)) {
+		if (isCycleDetectedInWikiPagesGraph(model)) {
 			throw new ModelListenerException(
 				"Unable to update WikiPage " + model.getTitle() +
 					". Cycle detected.");
@@ -51,7 +52,7 @@ public class WikiPageCycleDetectorListener extends BaseModelListener<WikiPage> {
 		super.onBeforeUpdate(model);
 	}
 
-	protected boolean isCycleInWikiPagesGraph(WikiPage wikiPage) {
+	protected boolean isCycleDetectedInWikiPagesGraph(WikiPage wikiPage) {
 		WikiPage parentPage = wikiPage;
 
 		String title = wikiPage.getTitle();
