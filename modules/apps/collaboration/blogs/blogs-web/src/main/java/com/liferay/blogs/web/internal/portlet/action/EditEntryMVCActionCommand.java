@@ -28,6 +28,7 @@ import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.blogs.util.BlogsEntryAttachmentContentUpdater;
 import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryUtil;
 import com.liferay.blogs.util.BlogsEntryImageSelectorHelper;
@@ -91,6 +92,7 @@ import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -389,6 +391,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		_blogsEntryService = blogsEntryService;
 	}
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	protected void setBlogsEntryAttachmentContentUpdater(
+		BlogsEntryAttachmentContentUpdater blogsEntryAttachmentContentUpdater) {
+
+		_blogsEntryAttachmentContentUpdater =
+			blogsEntryAttachmentContentUpdater;
+	}
+
 	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
@@ -538,7 +548,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 							entry.getEntryId(), folder.getFolderId(),
 							tempBlogsEntryAttachments);
 
-				content = BlogsEntryAttachmentFileEntryUtil.updateContent(
+				content = _blogsEntryAttachmentContentUpdater.updateContent(
 					content, blogsEntryAttachmentFileEntryReferences);
 
 				entry.setContent(content);
@@ -586,7 +596,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 							entry.getEntryId(), folder.getFolderId(),
 							tempBlogsEntryAttachmentFileEntries);
 
-				content = BlogsEntryAttachmentFileEntryUtil.updateContent(
+				content = _blogsEntryAttachmentContentUpdater.updateContent(
 					content, blogsEntryAttachmentFileEntryReferences);
 			}
 
@@ -634,6 +644,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
+	private BlogsEntryAttachmentContentUpdater
+		_blogsEntryAttachmentContentUpdater;
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private BlogsEntryService _blogsEntryService;
 
