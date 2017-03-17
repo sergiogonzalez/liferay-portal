@@ -31,6 +31,7 @@ if ((message != null) && layout.isTypeControlPanel()) {
 
 if(message != null) {
 	AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(MBMessage.class.getName(), message.getMessageId());
+
 	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 }
 
