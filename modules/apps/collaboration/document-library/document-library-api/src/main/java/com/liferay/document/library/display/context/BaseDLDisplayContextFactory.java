@@ -49,6 +49,17 @@ public class BaseDLDisplayContextFactory
 	}
 
 	@Override
+	public DLViewFileHistoryDisplayContext
+		getDLViewFileHistoryDisplayContext(
+			DLViewFileHistoryDisplayContext
+				parentDLViewFileHistoryDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
+
+		return parentDLViewFileHistoryDisplayContext;
+	}
+
+	@Override
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,

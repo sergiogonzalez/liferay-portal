@@ -51,22 +51,29 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-
+import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -219,6 +226,80 @@ public class UIItemsBuilder {
 			getSubmitFormJavaScript(Constants.CHECKOUT, null));
 	}
 
+	public void addCompareToMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (!DocumentConversionUtil.isComparableVersion(
+				_fileVersion.getExtension())) {
+
+			return;
+		}
+
+		PortletURL viewFileEntryURL = _getRenderURL(
+			"/document_library/view_file_entry", _getRedirect());
+
+		PortletURL selectFileVersionURL = _getRenderURL(
+			"/document_library/select_file_version",
+			viewFileEntryURL.toString());
+
+		try {
+			selectFileVersionURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException e) {
+			throw new PortalException(e);
+		}
+
+		selectFileVersionURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		selectFileVersionURL.setParameter("version", _fileVersion.getVersion());
+
+		Map<String, Object> data = new HashMap<String, Object>();
+
+		data.put("uri", selectFileVersionURL);
+
+		PortletURL compareVersionURL = _getRenderURL(
+			"/document_library/compare_versions", null);
+
+		compareVersionURL.setParameter("backURL", _getCurrentURL());
+
+		String jsNamespace =
+			getNamespace() + String.valueOf(_fileVersion.getFileVersionId());
+
+		String onClick = jsNamespace + "compareVersionDialog('" +
+			selectFileVersionURL.toString() + "');";
+
+		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
+			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.COMPARE_TO,
+			"compare-to", onClick);
+
+		javascriptMenuItem.setData(data);
+
+		String javaScript =
+			"/com/liferay/document/library/web/display/context/dependencies" +
+				"/compare_to_js.ftl";
+
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put("compareVersionURL", compareVersionURL.toString());
+		template.put(
+			"dialogTitle",
+			UnicodeLanguageUtil.get(_request, "compare-versions"));
+		template.put("jsNamespace", jsNamespace);
+		template.put("namespace", getNamespace());
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
+	}
+
 	public void addDeleteMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -306,6 +387,49 @@ public class UIItemsBuilder {
 			LanguageUtil.get(_resourceBundle, "delete"), sb.toString());
 	}
 
+	public void addDeleteVersionMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_fileShortcut != null) {
+			return;
+		}
+		if (_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			return;
+		}
+		if (!_fileEntryDisplayContextHelper.hasDeletePermission()) {
+			return;
+		}
+		if (_fileEntry.getFileVersionsCount(
+				WorkflowConstants.STATUS_APPROVED) <= 1) {
+
+			return;
+		}
+
+		PortletURL viewFileEntryURL = _getRenderURL(
+			"/document_library/view_file_entry", _getRedirect());
+
+		DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
+
+		deleteMenuItem.setKey(DLUIItemKeys.DELETE_VERSION);
+		deleteMenuItem.setLabel("delete-version");
+
+		String mvcActionCommandName = "/document_library/edit_file_entry";
+
+		PortletURL portletURL = _getActionURL(
+			mvcActionCommandName, Constants.DELETE,
+			viewFileEntryURL.toString());
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		portletURL.setParameter("version", _fileVersion.getVersion());
+
+		deleteMenuItem.setURL(portletURL.toString());
+
+		menuItems.add(deleteMenuItem);
+
+
+	}
+
 	public void addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -318,9 +442,12 @@ public class UIItemsBuilder {
 
 		label = _themeDisplay.translate("download") + " (" + label + ")";
 
+		boolean appendVersion = !StringUtil.equalsIgnoreCase(
+			_fileEntry.getVersion(), _fileVersion.getVersion());
+
 		String url = DLUtil.getDownloadURL(
-			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK, false,
-			true);
+			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+			appendVersion, true);
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.DOWNLOAD, label, url);
@@ -618,6 +745,37 @@ public class UIItemsBuilder {
 			LanguageUtil.get(_resourceBundle, "permissions"), sb.toString());
 	}
 
+	public void addRevertToVersionMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			return;
+		}
+		if (!_fileEntryDisplayContextHelper.hasUpdatePermission()) {
+			return;
+		}
+		if (_fileEntry.getLatestFileVersion().getVersion().equals(
+				_fileVersion.getVersion())) {
+
+			return;
+		}
+
+		PortletURL viewFileEntryURL = _getRenderURL(
+			"/document_library/view_file_entry", _getRedirect());
+
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.REVERT,
+			viewFileEntryURL.toString());
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		portletURL.setParameter("version", _fileVersion.getVersion());
+
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, DLUIItemKeys.REVERT,
+			"revert", portletURL.toString());
+	}
+
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {
 		if (_fileShortcut == null) {
 			return;
@@ -633,6 +791,23 @@ public class UIItemsBuilder {
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_ORIGINAL_FILE,
 			"view-original-file", portletURL.toString());
+	}
+
+	public void addViewVersionMenuItem(List<MenuItem> menuItems) {
+		if (_fileShortcut != null) {
+			return;
+		}
+
+		PortletURL portletURL = _getRenderURL(
+			"/document_library/view_file_entry", _getRedirect());
+
+		portletURL.setParameter("version", _fileVersion.getVersion());
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_VERSION,
+			"view[action]", portletURL.toString());
 	}
 
 	public JavaScriptMenuItem getJavacriptCheckinMenuItem()
@@ -815,6 +990,12 @@ public class UIItemsBuilder {
 	}
 
 	private PortletURL _getActionURL(String mvcActionCommandName, String cmd) {
+		return _getActionURL(mvcActionCommandName, cmd, _getCurrentURL());
+	}
+
+	private PortletURL _getActionURL(
+		String mvcActionCommandName, String cmd, String redirect) {
+
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
@@ -823,7 +1004,7 @@ public class UIItemsBuilder {
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, mvcActionCommandName);
 		portletURL.setParameter(Constants.CMD, cmd);
-		portletURL.setParameter("redirect", _getCurrentURL());
+		portletURL.setParameter("redirect", redirect);
 
 		return portletURL;
 	}
@@ -862,14 +1043,31 @@ public class UIItemsBuilder {
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
+	private String _getRedirect() {
+		if (_redirect == null) {
+			_redirect = ParamUtil.getString(_request, "redirect");
+		}
+
+		return _redirect;
+	}
+
 	private PortletURL _getRenderURL(String mvcRenderCommandName) {
+		return _getRenderURL(mvcRenderCommandName, _getCurrentURL());
+	}
+
+	private PortletURL _getRenderURL(
+		String mvcRenderCommandName, String redirect) {
+
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-		portletURL.setParameter("redirect", _getCurrentURL());
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
 
 		if (_fileShortcut != null) {
 			portletURL.setParameter(
@@ -926,6 +1124,7 @@ public class UIItemsBuilder {
 		_fileVersionDisplayContextHelper;
 	private final long _folderId;
 	private Boolean _ieOnWin32;
+	private String _redirect;
 	private final HttpServletRequest _request;
 	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
