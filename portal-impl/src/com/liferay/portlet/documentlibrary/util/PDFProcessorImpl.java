@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.DocumentConverter;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.fabric.InputResource;
@@ -197,6 +198,18 @@ public class PDFProcessorImpl
 					DocumentConversionUtil.getConversions(extension);
 
 				if (Arrays.binarySearch(targetExtensions, "pdf") >= 0) {
+					return true;
+				}
+			}
+		}
+
+		if (DocumentConverterUtil.hasRegisteredConverters()) {
+			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+
+			for (String extension : extensions) {
+				extension = extension.substring(1);
+
+				if (DocumentConverterUtil.hasConverter(extension, "pdf")) {
 					return true;
 				}
 			}
@@ -451,6 +464,21 @@ public class PDFProcessorImpl
 				}
 
 				File file = DocumentConversionUtil.convert(
+					tempFileId, inputStream, extension, "pdf");
+
+				_generateImages(destinationFileVersion, file);
+			}
+			else if (DocumentConverterUtil.hasRegisteredConverters()) {
+				inputStream = destinationFileVersion.getContentStream(false);
+
+				String tempFileId = DLUtil.getTempFileId(
+					destinationFileVersion.getFileEntryId(),
+					destinationFileVersion.getVersion());
+
+				DocumentConverter documentConverter =
+					DocumentConverterUtil.getConverter(extension, "pdf");
+
+				File file = documentConverter.convert(
 					tempFileId, inputStream, extension, "pdf");
 
 				_generateImages(destinationFileVersion, file);
@@ -980,6 +1008,10 @@ public class PDFProcessorImpl
 					break;
 				}
 			}
+		}
+		else if (DocumentConverterUtil.hasRegisteredConverters()) {
+			generateImages = DocumentConverterUtil.hasConverter(
+				extension, "pdf");
 		}
 
 		if (generateImages) {
