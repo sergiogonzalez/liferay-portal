@@ -12,29 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.kernel.upload;
+package com.liferay.upload.web;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UploadFileEntryHandler;
+import com.liferay.upload.UploadFileEntryResponseCustomizer;
+import com.liferay.upload.UploadHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,18 +48,22 @@ import java.io.InputStream;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @deprecated As of 7.0.0, @see com.liferay.upload.UploadHandler
- *
  * @author Sergio González
  * @author Adolfo Pérez
  * @author Roberto Díaz
+ * @author Alejandro Tardín
  */
-@Deprecated
-public abstract class BaseUploadHandler implements UploadHandler {
+@Component
+public class UploadHandlerImpl implements UploadHandler {
 
 	@Override
 	public void upload(
+			UploadFileEntryHandler fileEntryHandler,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
@@ -63,8 +73,9 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		checkPermission(
-			themeDisplay.getScopeGroupId(), getFolderId(uploadPortletRequest),
+		fileEntryHandler.checkPermission(
+			themeDisplay.getScopeGroupId(),
+			fileEntryHandler.getFolderId(uploadPortletRequest),
 			themeDisplay.getPermissionChecker());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -92,7 +103,8 @@ public abstract class BaseUploadHandler implements UploadHandler {
 				throw new PortalException(cause);
 			}
 
-			JSONObject imageJSONObject = getImageJSONObject(portletRequest);
+			JSONObject imageJSONObject = _getImageJSONObject(
+				fileEntryHandler, portletRequest);
 
 			String randomId = ParamUtil.getString(
 				uploadPortletRequest, "randomId");
@@ -110,38 +122,41 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			throw new SystemException(ioe);
 		}
 		catch (PortalException pe) {
-			handleUploadException(
-				portletRequest, portletResponse, pe, jsonObject);
+			_handleUploadException(
+				fileEntryHandler, portletRequest, portletResponse, pe,
+				jsonObject);
 		}
 	}
 
-	protected abstract FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	protected abstract void checkPermission(
-			long groupId, long folderId, PermissionChecker permissionChecker)
-		throws PortalException;
-
-	protected void doHandleUploadException(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortalException pe, JSONObject jsonObject)
-		throws PortalException {
-
-		throw pe;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, UploadFileEntryResponseCustomizer.class, "source");
 	}
 
-	protected abstract FileEntry fetchFileEntry(
-			long userId, long groupId, long folderId, String fileName)
-		throws PortalException;
+	private void _customizeFileJSONObject(
+			UploadFileEntryHandler fileEntryHandler,
+			PortletRequest portletRequest, FileEntry fileEntry,
+			JSONObject jsonObject)
+		throws IOException {
 
-	protected long getFolderId(UploadPortletRequest uploadPortletRequest) {
-		return 0;
+		fileEntryHandler.customizeFileJSONObject(jsonObject);
+
+		String source = ParamUtil.getString(
+			portletRequest, "source", StringPool.BLANK);
+
+		UploadFileEntryResponseCustomizer uploadFileEntryResponseCustomizer =
+			_serviceTrackerMap.getService(source);
+
+		if (uploadFileEntryResponseCustomizer != null) {
+			uploadFileEntryResponseCustomizer.customize(
+				fileEntry, jsonObject, portletRequest);
+		}
 	}
 
-	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
+	private JSONObject _getImageJSONObject(
+			UploadFileEntryHandler fileEntryHandler,
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -159,34 +174,38 @@ public abstract class BaseUploadHandler implements UploadHandler {
 				"attributeDataImageId",
 				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
-			String parameterName = getParameterName();
+			String parameterName = fileEntryHandler.getParameterName();
 
 			String fileName = uploadPortletRequest.getFileName(parameterName);
 			String contentType = uploadPortletRequest.getContentType(
 				parameterName);
 			long size = uploadPortletRequest.getSize(parameterName);
 
-			validateFile(fileName, contentType, size);
+			fileEntryHandler.validateFile(fileName, contentType, size);
 
-			long folderId = getFolderId(uploadPortletRequest);
+			long folderId = fileEntryHandler.getFolderId(uploadPortletRequest);
 
-			String uniqueFileName = getUniqueFileName(
-				themeDisplay, fileName, folderId);
+			String uniqueFileName = _getUniqueFileName(
+				fileEntryHandler, themeDisplay, fileName, folderId);
 
 			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
 
-			FileEntry fileEntry = addFileEntry(
+			FileEntry fileEntry = fileEntryHandler.addFileEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				folderId, uniqueFileName, contentType, inputStream, size,
-				getServiceContext(uploadPortletRequest));
+				fileEntryHandler.getServiceContext(uploadPortletRequest));
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 			imageJSONObject.put("groupId", fileEntry.getGroupId());
 			imageJSONObject.put("title", fileEntry.getTitle());
 
 			imageJSONObject.put("type", "document");
-			imageJSONObject.put("url", getURL(fileEntry, themeDisplay));
+			imageJSONObject.put(
+				"url", fileEntryHandler.getURL(fileEntry, themeDisplay));
 			imageJSONObject.put("uuid", fileEntry.getUuid());
+
+			_customizeFileJSONObject(
+				fileEntryHandler, portletRequest, fileEntry, imageJSONObject);
 
 			return imageJSONObject;
 		}
@@ -198,23 +217,12 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		}
 	}
 
-	protected abstract String getParameterName();
-
-	/**
-	 * @throws PortalException
-	 */
-	protected ServiceContext getServiceContext(
-			UploadPortletRequest uploadPortletRequest)
+	private String _getUniqueFileName(
+			UploadFileEntryHandler fileEntryHandler, ThemeDisplay themeDisplay,
+			String fileName, long folderId)
 		throws PortalException {
 
-		return null;
-	}
-
-	protected String getUniqueFileName(
-			ThemeDisplay themeDisplay, String fileName, long folderId)
-		throws PortalException {
-
-		FileEntry fileEntry = fetchFileEntry(
+		FileEntry fileEntry = fileEntryHandler.fetchFileEntry(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), folderId,
 			fileName);
 
@@ -228,7 +236,7 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
-			fileEntry = fetchFileEntry(
+			fileEntry = fileEntryHandler.fetchFileEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				folderId, curFileName);
 
@@ -243,12 +251,8 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			"Unable to get a unique file name for " + fileName);
 	}
 
-	protected String getURL(FileEntry fileEntry, ThemeDisplay themeDisplay) {
-		return PortletFileRepositoryUtil.getPortletFileEntryURL(
-			themeDisplay, fileEntry, StringPool.BLANK);
-	}
-
-	protected void handleUploadException(
+	private void _handleUploadException(
+			UploadFileEntryHandler fileEntryHandler,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
 		throws PortalException {
@@ -293,7 +297,7 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			jsonObject.put("error", errorJSONObject);
 		}
 		else {
-			doHandleUploadException(
+			fileEntryHandler.doHandleUploadException(
 				portletRequest, portletResponse, pe, jsonObject);
 		}
 
@@ -306,13 +310,9 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		}
 	}
 
-	protected abstract void validateFile(
-			String fileName, String contentType, long size)
-		throws PortalException;
-
-	protected static final String TEMP_FOLDER_NAME =
-		BaseUploadHandler.class.getName();
-
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
+
+	private ServiceTrackerMap<String, UploadFileEntryResponseCustomizer>
+		_serviceTrackerMap;
 
 }
