@@ -43,11 +43,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @deprecated As of 7.0.0, @see com.liferay.upload.UploadHandler
- *
  * @author Sergio González
  * @author Adolfo Pérez
  * @author Roberto Díaz
+ * @deprecated As of 7.0.0, @see com.liferay.upload.UploadHandler
  */
 @Deprecated
 public abstract class BaseUploadHandler implements UploadHandler {
