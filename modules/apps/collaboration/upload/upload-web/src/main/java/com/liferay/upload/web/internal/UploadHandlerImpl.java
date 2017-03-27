@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
@@ -43,7 +41,6 @@ import com.liferay.upload.UploadFileEntryResponseCustomizer;
 import com.liferay.upload.UploadHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -74,8 +71,7 @@ public class UploadHandlerImpl implements UploadHandler {
 			WebKeys.THEME_DISPLAY);
 
 		uploadFileEntryHandler.checkPermission(
-			themeDisplay.getScopeGroupId(),
-			uploadFileEntryHandler.getFolderId(uploadPortletRequest),
+			uploadPortletRequest, themeDisplay.getScopeGroupId(),
 			themeDisplay.getPermissionChecker());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -159,41 +155,17 @@ public class UploadHandlerImpl implements UploadHandler {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
-
-		InputStream inputStream = null;
 
 		try {
 			imageJSONObject.put(
 				"attributeDataImageId",
 				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
-			String parameterName = fileEntryHandler.getParameterName();
-
-			String fileName = uploadPortletRequest.getFileName(parameterName);
-			String contentType = uploadPortletRequest.getContentType(
-				parameterName);
-			long size = uploadPortletRequest.getSize(parameterName);
-
-			fileEntryHandler.validateFile(fileName, contentType, size);
-
-			long folderId = fileEntryHandler.getFolderId(uploadPortletRequest);
-
-			String uniqueFileName = _getUniqueFileName(
-				fileEntryHandler, themeDisplay, fileName, folderId);
-
-			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
-
-			FileEntry fileEntry = fileEntryHandler.addFileEntry(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				folderId, uniqueFileName, contentType, inputStream, size,
-				fileEntryHandler.getServiceContext(uploadPortletRequest));
+			FileEntry fileEntry = fileEntryHandler.addFileEntry(portletRequest);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 			imageJSONObject.put("groupId", fileEntry.getGroupId());
@@ -212,43 +184,6 @@ public class UploadHandlerImpl implements UploadHandler {
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
-	}
-
-	private String _getUniqueFileName(
-			UploadFileEntryHandler fileEntryHandler, ThemeDisplay themeDisplay,
-			String fileName, long folderId)
-		throws PortalException {
-
-		FileEntry fileEntry = fileEntryHandler.fetchFileEntry(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), folderId,
-			fileName);
-
-		if (fileEntry == null) {
-			return fileName;
-		}
-
-		int suffix = 1;
-
-		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
-			String curFileName = FileUtil.appendParentheticalSuffix(
-				fileName, String.valueOf(suffix));
-
-			fileEntry = fileEntryHandler.fetchFileEntry(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				folderId, curFileName);
-
-			if (fileEntry == null) {
-				return curFileName;
-			}
-
-			suffix++;
-		}
-
-		throw new PortalException(
-			"Unable to get a unique file name for " + fileName);
 	}
 
 	private void _handleUploadException(

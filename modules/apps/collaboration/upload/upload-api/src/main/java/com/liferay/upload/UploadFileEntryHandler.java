@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.io.InputStream;
+import java.io.IOException;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -37,14 +36,12 @@ public interface UploadFileEntryHandler {
 	public static final String TEMP_FOLDER_NAME =
 		UploadFileEntryHandler.class.getName();
 
-	public FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public FileEntry addFileEntry(PortletRequest portletRequest)
+		throws IOException, PortalException;
 
 	public void checkPermission(
-			long groupId, long folderId, PermissionChecker permissionChecker)
+			UploadPortletRequest uploadPortletRequest, long groupId,
+			PermissionChecker permissionChecker)
 		throws PortalException;
 
 	public default void customizeFileJSONObject(JSONObject jsonObject) {
@@ -58,31 +55,11 @@ public interface UploadFileEntryHandler {
 		throw pe;
 	}
 
-	public FileEntry fetchFileEntry(
-			long userId, long scopeGroupId, long folderId, String fileName)
-		throws PortalException;
-
-	public default long getFolderId(UploadPortletRequest uploadPortletRequest) {
-		return 0;
-	}
-
-	public String getParameterName();
-
-	public default ServiceContext getServiceContext(
-			UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		return null;
-	}
-
 	public default String getURL(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 
 		return PortletFileRepositoryUtil.getPortletFileEntryURL(
 			themeDisplay, fileEntry, StringPool.BLANK);
 	}
-
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException;
 
 }

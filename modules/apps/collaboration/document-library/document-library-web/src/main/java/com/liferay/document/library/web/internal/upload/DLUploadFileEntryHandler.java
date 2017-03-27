@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -29,17 +28,21 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.upload.UploadFileEntryHandler;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,64 +56,57 @@ import org.osgi.service.component.annotations.Reference;
 public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Override
-	public FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
+	public FileEntry addFileEntry(PortletRequest portletRequest)
+		throws IOException, PortalException {
 
-		return _dlAppService.addFileEntry(
-			groupId, folderId, fileName, contentType, fileName,
-			StringPool.BLANK, StringPool.BLANK, inputStream, size,
-			serviceContext);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		InputStream inputStream = null;
+
+		try {
+			UploadPortletRequest uploadPortletRequest =
+				PortalUtil.getUploadPortletRequest(portletRequest);
+
+			String fileName = uploadPortletRequest.getFileName(
+				"imageSelectorFileName");
+			String contentType = uploadPortletRequest.getContentType(
+				"imageSelectorFileName");
+			long size = uploadPortletRequest.getSize("imageSelectorFileName");
+
+			_validateFile(size);
+
+			long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
+
+			String uniqueFileName = _getUniqueFileName(
+				themeDisplay, fileName, folderId);
+
+			inputStream = uploadPortletRequest.getFileAsStream(
+				"imageSelectorFileName");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), uploadPortletRequest);
+
+			return _dlAppService.addFileEntry(
+				themeDisplay.getScopeGroupId(), folderId, uniqueFileName,
+				contentType, uniqueFileName, StringPool.BLANK, StringPool.BLANK,
+				inputStream, size, serviceContext);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 	@Override
 	public void checkPermission(
-			long groupId, long folderId, PermissionChecker permissionChecker)
+			UploadPortletRequest uploadPortletRequest, long groupId,
+			PermissionChecker permissionChecker)
 		throws PortalException {
+
+		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 
 		DLFolderPermission.check(
 			permissionChecker, groupId, folderId, ActionKeys.ADD_DOCUMENT);
-	}
-
-	@Override
-	public FileEntry fetchFileEntry(
-			long userId, long groupId, long folderId, String fileName)
-		throws PortalException {
-
-		try {
-			return _dlAppService.getFileEntry(groupId, folderId, fileName);
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return null;
-		}
-	}
-
-	@Override
-	public long getFolderId(UploadPortletRequest uploadPortletRequest) {
-		return ParamUtil.getLong(uploadPortletRequest, "folderId");
-	}
-
-	@Override
-	public String getParameterName() {
-		return "imageSelectorFileName";
-	}
-
-	@Override
-	public ServiceContext getServiceContext(
-			UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		return ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), uploadPortletRequest);
 	}
 
 	@Override
@@ -132,10 +128,57 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 		return StringPool.BLANK;
 	}
 
-	@Override
-	public void validateFile(String fileName, String contentType, long size)
+	private FileEntry _fetchFileEntry(
+			long groupId, long folderId, String fileName)
 		throws PortalException {
 
+		try {
+			return _dlAppService.getFileEntry(groupId, folderId, fileName);
+		}
+		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return null;
+		}
+	}
+
+	private String _getUniqueFileName(
+			ThemeDisplay themeDisplay, String fileName, long folderId)
+		throws PortalException {
+
+		FileEntry fileEntry = _fetchFileEntry(
+			themeDisplay.getScopeGroupId(), folderId, fileName);
+
+		if (fileEntry == null) {
+			return fileName;
+		}
+
+		int suffix = 1;
+
+		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+			String curFileName = FileUtil.appendParentheticalSuffix(
+				fileName, String.valueOf(suffix));
+
+			fileEntry = _fetchFileEntry(
+				themeDisplay.getScopeGroupId(), folderId, curFileName);
+
+			if (fileEntry == null) {
+				return curFileName;
+			}
+
+			suffix++;
+		}
+
+		throw new PortalException(
+			"Unable to get a unique file name for " + fileName);
+	}
+
+	private void _validateFile(long size) throws PortalException {
 		long maxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
 		if ((maxSize > 0) && (size > maxSize)) {
@@ -143,6 +186,8 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 				size + " exceeds its maximum permitted size of " + maxSize);
 		}
 	}
+
+	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLUploadFileEntryHandler.class);
