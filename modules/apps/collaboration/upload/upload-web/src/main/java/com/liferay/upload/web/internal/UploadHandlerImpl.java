@@ -167,15 +167,6 @@ public class UploadHandlerImpl implements UploadHandler {
 
 			FileEntry fileEntry = fileEntryHandler.addFileEntry(portletRequest);
 
-			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-			imageJSONObject.put("groupId", fileEntry.getGroupId());
-			imageJSONObject.put("title", fileEntry.getTitle());
-
-			imageJSONObject.put("type", "document");
-			imageJSONObject.put(
-				"url", fileEntryHandler.getURL(fileEntry, themeDisplay));
-			imageJSONObject.put("uuid", fileEntry.getUuid());
-
 			_customizeFileJSONObject(
 				fileEntryHandler, portletRequest, fileEntry, imageJSONObject);
 

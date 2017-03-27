@@ -16,12 +16,9 @@ package com.liferay.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 
@@ -53,13 +50,6 @@ public interface UploadFileEntryHandler {
 		throws PortalException {
 
 		throw pe;
-	}
-
-	public default String getURL(
-		FileEntry fileEntry, ThemeDisplay themeDisplay) {
-
-		return PortletFileRepositoryUtil.getPortletFileEntryURL(
-			themeDisplay, fileEntry, StringPool.BLANK);
 	}
 
 }

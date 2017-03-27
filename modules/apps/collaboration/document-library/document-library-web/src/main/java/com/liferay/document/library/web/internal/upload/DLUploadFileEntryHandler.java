@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.upload;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -107,25 +106,6 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 		DLFolderPermission.check(
 			permissionChecker, groupId, folderId, ActionKeys.ADD_DOCUMENT);
-	}
-
-	@Override
-	public String getURL(FileEntry fileEntry, ThemeDisplay themeDisplay) {
-		try {
-			return DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
-				StringPool.BLANK);
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get URL for file entry " +
-						fileEntry.getFileEntryId(),
-					pe);
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private FileEntry _fetchFileEntry(
