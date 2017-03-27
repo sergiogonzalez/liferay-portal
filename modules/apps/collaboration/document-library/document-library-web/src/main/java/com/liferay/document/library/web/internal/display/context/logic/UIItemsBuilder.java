@@ -451,6 +451,7 @@ public class UIItemsBuilder {
 		data.put("senna-off", "true");
 
 		urlMenuItem.setData(data);
+
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setTarget("_blank");
 	}

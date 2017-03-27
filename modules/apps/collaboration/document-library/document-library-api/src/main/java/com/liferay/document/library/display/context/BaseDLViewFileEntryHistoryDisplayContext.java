@@ -17,9 +17,7 @@ package com.liferay.document.library.display.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +37,9 @@ public class BaseDLViewFileEntryHistoryDisplayContext
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
-		super(uuid, parentDLDisplayContext, request, response);
+		super(
+			uuid, parentDLViewFileEntryHistoryDisplayContext, request,
+			response);
 
 		this.fileVersion = fileVersion;
 	}
@@ -47,11 +47,6 @@ public class BaseDLViewFileEntryHistoryDisplayContext
 	@Override
 	public Menu getMenu() throws PortalException {
 		return parentDisplayContext.getMenu();
-	}
-
-	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		return parentDisplayContext.getToolbarItems();
 	}
 
 	protected FileVersion fileVersion;
