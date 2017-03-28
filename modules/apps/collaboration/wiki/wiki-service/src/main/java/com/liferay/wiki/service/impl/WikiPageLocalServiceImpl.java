@@ -2425,6 +2425,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getGroupId(), WikiPortletKeys.WIKI, serviceContext);
 
 		if (Validator.isNotNull(layoutFullURL)) {
+			if (layoutFullURL.indexOf(CharPool.QUESTION) != -1) {
+				layoutFullURL = StringUtil.extractFirst(
+					layoutFullURL, CharPool.QUESTION);
+			}
+
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
 				page.getNodeId() + StringPool.SLASH +
 					HttpUtil.encodeURL(
