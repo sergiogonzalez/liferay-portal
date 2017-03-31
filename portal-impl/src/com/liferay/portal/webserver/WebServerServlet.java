@@ -1480,7 +1480,8 @@ public class WebServerServlet extends HttpServlet {
 
 						Image image = getImage(request, true);
 
-						if ((image.getCompanyId() != user.getCompanyId()) &&
+						if ((image != null) &&
+							(image.getCompanyId() != user.getCompanyId()) &&
 							_processCompanyInactiveRequest(
 								request, response, image.getCompanyId())) {
 
