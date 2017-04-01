@@ -1348,6 +1348,12 @@ public class WebServerServlet extends HttpServlet {
 			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
 
 		if (!directoryIndexingEnabled) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Directory Indexising is not enabled for groupId: " +
+						group.getGroupId());
+			}
+
 			throw new NoSuchFolderException();
 		}
 	}
