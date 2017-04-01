@@ -183,18 +183,7 @@ public class WebServerServlet extends HttpServlet {
 			else {
 				Group group = _getGroup(user.getCompanyId(), pathArray[0]);
 
-				UnicodeProperties typeSettingsProperties =
-						group.getTypeSettingsProperties();
-
-				boolean directoryIndexingEnabled = GetterUtil.getBoolean(
-					typeSettingsProperties.getProperty(
-						"directoryIndexingEnabled"),
-					PropsValues.
-						WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
-
-				if (!directoryIndexingEnabled) {
-					throw new NoSuchFolderException();
-				}
+				_checkDirectoryIndexingEnabled(group);
 
 				long groupId = group.getGroupId();
 				long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -856,19 +845,9 @@ public class WebServerServlet extends HttpServlet {
 
 		Group group = _getGroup(user.getCompanyId(), pathArray[0]);
 
+		_checkDirectoryIndexingEnabled(group);
+
 		long groupId = group.getGroupId();
-
-		UnicodeProperties typeSettingsProperties =
-			group.getTypeSettingsProperties();
-
-		boolean directoryIndexingEnabled = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("directoryIndexingEnabled"),
-			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
-
-		if (!directoryIndexingEnabled) {
-			throw new NoSuchFolderException();
-		}
-
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		for (int i = 1; i < pathArray.length; i++) {
@@ -1355,6 +1334,24 @@ public class WebServerServlet extends HttpServlet {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e, e);
 			}
+		}
+	}
+
+	private static void _checkDirectoryIndexingEnabled(
+			Group group)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties =
+				group.getTypeSettingsProperties();
+
+		boolean directoryIndexingEnabled = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty(
+				"directoryIndexingEnabled"),
+			PropsValues.
+				WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
+
+		if (!directoryIndexingEnabled) {
+			throw new NoSuchFolderException();
 		}
 	}
 
