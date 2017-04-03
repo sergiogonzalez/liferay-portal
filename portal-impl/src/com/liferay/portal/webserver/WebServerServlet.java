@@ -181,8 +181,12 @@ public class WebServerServlet extends HttpServlet {
 				}
 			}
 			else {
-				long groupId = _getGroupId(user.getCompanyId(), pathArray[0]);
+				Group group = _getGroup(user.getCompanyId(), pathArray[0]);
+
+				_checkDirectoryIndexingEnabled(group);
+
 				long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				long groupId = group.getGroupId();
 
 				for (int i = 1; i < pathArray.length; i++) {
 					try {
@@ -839,22 +843,12 @@ public class WebServerServlet extends HttpServlet {
 			String path, String[] pathArray)
 		throws Exception {
 
-		long groupId = _getGroupId(user.getCompanyId(), pathArray[0]);
+		Group group = _getGroup(user.getCompanyId(), pathArray[0]);
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		UnicodeProperties typeSettingsProperties =
-			group.getTypeSettingsProperties();
-
-		boolean directoryIndexingEnabled = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("directoryIndexingEnabled"),
-			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
-
-		if (!directoryIndexingEnabled) {
-			throw new NoSuchFolderException();
-		}
+		_checkDirectoryIndexingEnabled(group);
 
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		long groupId = group.getGroupId();
 
 		for (int i = 1; i < pathArray.length; i++) {
 			String name = pathArray[i];
@@ -1343,6 +1337,27 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
+	private static void _checkDirectoryIndexingEnabled(Group group)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties =
+			group.getTypeSettingsProperties();
+
+		boolean directoryIndexingEnabled = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("directoryIndexingEnabled"),
+			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
+
+		if (!directoryIndexingEnabled) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Directory Indexising is not enabled for groupId: " +
+						group.getGroupId());
+			}
+
+			throw new NoSuchFolderException();
+		}
+	}
+
 	private static void _checkFileEntry(String[] pathArray) throws Exception {
 		if (pathArray.length == 1) {
 			long fileShortcutId = GetterUtil.getLong(pathArray[0]);
@@ -1394,21 +1409,21 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	private static long _getGroupId(long companyId, String name)
+	private static Group _getGroup(long companyId, String name)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
 			companyId, StringPool.SLASH + name);
 
 		if (group != null) {
-			return group.getGroupId();
+			return group;
 		}
 
 		User user = UserLocalServiceUtil.getUserByScreenName(companyId, name);
 
 		group = user.getGroup();
 
-		return group.getGroupId();
+		return group;
 	}
 
 	private static User _getUser(HttpServletRequest request) throws Exception {
@@ -1480,23 +1495,21 @@ public class WebServerServlet extends HttpServlet {
 
 						Image image = getImage(request, true);
 
-						if ((image.getCompanyId() != user.getCompanyId()) &&
-							_processCompanyInactiveRequest(
-								request, response, image.getCompanyId())) {
-
-							return null;
-						}
-
 						if (image != null) {
+							if ((image.getCompanyId() != user.getCompanyId()) &&
+								_processCompanyInactiveRequest(
+									request, response, image.getCompanyId())) {
+
+								return null;
+							}
+
 							writeImage(image, request, response);
 						}
-						else {
-							sendDocumentLibrary(
-								request, response, user,
-								request.getServletPath() + StringPool.SLASH +
-									path,
-								pathArray);
-						}
+
+						sendDocumentLibrary(
+							request, response, user,
+							request.getServletPath() + StringPool.SLASH + path,
+							pathArray);
 					}
 				}
 
