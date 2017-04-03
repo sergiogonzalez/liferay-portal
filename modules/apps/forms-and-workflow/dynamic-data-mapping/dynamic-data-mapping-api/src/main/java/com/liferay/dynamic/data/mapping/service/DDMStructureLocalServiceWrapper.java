@@ -356,8 +356,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructure(
 		long groupId, long classNameId, java.lang.String structureKey,
-		boolean includeAncestorStructures)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		boolean includeAncestorStructures) {
 		return _ddmStructureLocalService.fetchStructure(groupId, classNameId,
 			structureKey, includeAncestorStructures);
 	}

@@ -70,10 +70,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.SearchResult;
-import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -680,10 +677,8 @@ public class JournalDisplayContext {
 		return _restrictionType;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
-		if (_articleSearchContainer != null) {
-			return _articleSearchContainer;
-		}
+	public SearchContainer getSearchContainer(boolean showVersions)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -841,7 +836,7 @@ public class JournalDisplayContext {
 					folderIds, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 					getDDMStructureKey(), getDDMTemplateKey(), getKeywords(),
 					params, articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(), sort);
+					articleSearchContainer.getEnd(), sort, showVersions);
 
 				Hits hits = indexer.search(searchContext);
 
@@ -851,34 +846,43 @@ public class JournalDisplayContext {
 
 				List results = new ArrayList<>();
 
-				List<SearchResult> searchResults =
-					SearchResultUtil.getSearchResults(
-						hits, searchContext.getLocale(), _liferayPortletRequest,
-						_liferayPortletResponse);
+				Document[] documents = hits.getDocs();
 
-				for (int i = 0; i < searchResults.size(); i++) {
-					SearchResult searchResult = searchResults.get(i);
-
-					Summary summary = searchResult.getSummary();
-
-					summary.setQueryTerms(hits.getQueryTerms());
+				for (int i = 0; i < documents.length; i++) {
+					Document document = documents[i];
 
 					JournalArticle article = null;
 					JournalFolder folder = null;
 
-					String className = searchResult.getClassName();
+					String className = document.get(Field.ENTRY_CLASS_NAME);
+					long classPK = GetterUtil.getLong(
+						document.get(Field.ENTRY_CLASS_PK));
 
 					if (className.equals(JournalArticle.class.getName())) {
-						article =
-							JournalArticleLocalServiceUtil.fetchLatestArticle(
-								searchResult.getClassPK(),
-								WorkflowConstants.STATUS_ANY, false);
+						if (!showVersions) {
+							article =
+								JournalArticleLocalServiceUtil.
+									fetchLatestArticle(
+										classPK, WorkflowConstants.STATUS_ANY,
+										false);
+						}
+						else {
+							String articleId = document.get(Field.ARTICLE_ID);
+							long groupId = GetterUtil.getLong(
+								document.get(Field.GROUP_ID));
+							double version = GetterUtil.getDouble(
+								document.get(Field.VERSION));
+
+							article =
+								JournalArticleLocalServiceUtil.fetchArticle(
+									groupId, articleId, version);
+						}
 
 						results.add(article);
 					}
 					else if (className.equals(JournalFolder.class.getName())) {
 						folder = JournalFolderLocalServiceUtil.getFolder(
-							searchResult.getClassPK());
+							classPK);
 
 						results.add(folder);
 					}
@@ -946,9 +950,7 @@ public class JournalDisplayContext {
 			articleSearchContainer.setResults(results);
 		}
 
-		_articleSearchContainer = articleSearchContainer;
-
-		return _articleSearchContainer;
+		return articleSearchContainer;
 	}
 
 	public int getStatus() {
@@ -977,7 +979,13 @@ public class JournalDisplayContext {
 	}
 
 	public int getTotal() throws PortalException {
-		SearchContainer articleSearch = getSearchContainer();
+		SearchContainer articleSearch = getSearchContainer(false);
+
+		return articleSearch.getTotal();
+	}
+
+	public int getVersionsTotal() throws PortalException {
+		SearchContainer articleSearch = getSearchContainer(true);
 
 		return articleSearch.getTotal();
 	}
@@ -992,6 +1000,14 @@ public class JournalDisplayContext {
 
 	public boolean hasResults() throws PortalException {
 		if (getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasVersionsResults() throws PortalException {
+		if (getVersionsTotal() > 0) {
 			return true;
 		}
 
@@ -1127,7 +1143,7 @@ public class JournalDisplayContext {
 		long companyId, long groupId, List<java.lang.Long> folderIds,
 		long classNameId, String ddmStructureKey, String ddmTemplateKey,
 		String keywords, LinkedHashMap<String, Object> params, int start,
-		int end, Sort sort) {
+		int end, Sort sort, boolean showVersions) {
 
 		String articleId = null;
 		String title = null;
@@ -1182,7 +1198,7 @@ public class JournalDisplayContext {
 			}
 		}
 
-		searchContext.setAttribute("head", Boolean.FALSE.toString());
+		searchContext.setAttribute("head", !showVersions);
 		searchContext.setAttribute("params", params);
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(folderIds);
@@ -1295,7 +1311,6 @@ public class JournalDisplayContext {
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
-	private SearchContainer _articleSearchContainer;
 	private DDMFormValues _ddmFormValues;
 	private String _ddmStructureKey;
 	private String _ddmStructureName;

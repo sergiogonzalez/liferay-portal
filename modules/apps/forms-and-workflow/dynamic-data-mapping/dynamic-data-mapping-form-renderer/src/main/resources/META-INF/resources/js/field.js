@@ -16,6 +16,10 @@ AUI.add(
 		var Field = A.Component.create(
 			{
 				ATTRS: {
+					autoFocus: {
+						value: false
+					},
+
 					container: {
 						setter: A.one,
 						valueFn: '_valueContainer'
