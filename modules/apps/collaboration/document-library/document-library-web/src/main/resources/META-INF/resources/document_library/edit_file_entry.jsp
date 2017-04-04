@@ -161,6 +161,37 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(headerTitle);
 }
+
+String defaultLanguageId = themeDisplay.getLanguageId();
+
+Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
+
+if (fileEntryTypeId > 0) {
+	try {
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
+
+			try {
+				DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+				ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+
+				if (ddmFormValues != null) {
+					Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
+
+					availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+	catch (Exception e) {
+		_log.error(e, e);
+	}
+}
 %>
 
 <c:if test="<%= portletTitleBasedNavigation && (fileVersion != null) %>">
