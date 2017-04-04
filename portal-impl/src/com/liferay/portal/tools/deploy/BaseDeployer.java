@@ -243,17 +243,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				"The system property deployer.app.server.type is not set");
 		}
 
-		if (!appServerType.equals(ServerDetector.GLASSFISH_ID) &&
-			!appServerType.equals(ServerDetector.JBOSS_ID) &&
-			!appServerType.equals(ServerDetector.JONAS_ID) &&
-			!appServerType.equals(ServerDetector.JETTY_ID) &&
-			!appServerType.equals(ServerDetector.OC4J_ID) &&
-			!appServerType.equals(ServerDetector.RESIN_ID) &&
-			!appServerType.equals(ServerDetector.TOMCAT_ID) &&
-			!appServerType.equals(ServerDetector.WEBLOGIC_ID) &&
-			!appServerType.equals(ServerDetector.WEBSPHERE_ID) &&
-			!appServerType.equals(ServerDetector.WILDFLY_ID)) {
-
+		if (!ServerDetector.isSupported(appServerType)) {
 			throw new IllegalArgumentException(
 				appServerType + " is not a valid application server type");
 		}
