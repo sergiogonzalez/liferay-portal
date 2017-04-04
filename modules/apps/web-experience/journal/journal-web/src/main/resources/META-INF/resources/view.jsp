@@ -110,6 +110,12 @@ data.put("qa-id", "navigation");
 								tabsNames = ArrayUtil.append(tabsNames, tabName);
 							}
 
+							if (journalDisplayContext.hasVersionsResults()) {
+								String tabName = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, "versions"), journalDisplayContext.getVersionsTotal());
+
+								tabsNames = ArrayUtil.append(tabsNames, tabName);
+							}
+
 							if (journalDisplayContext.hasCommentsResults()) {
 								String tabName = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, "comments"), journalDisplayContext.getCommentsTotal());
 
@@ -126,6 +132,15 @@ data.put("qa-id", "navigation");
 									<liferay-ui:section>
 										<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
 											<liferay-util:param name="searchContainerId" value="articles" />
+										</liferay-util:include>
+									</liferay-ui:section>
+								</c:if>
+
+								<c:if test="<%= journalDisplayContext.hasVersionsResults() %>">
+									<liferay-ui:section>
+										<liferay-util:include page="/view_versions.jsp" servletContext="<%= application %>">
+											<liferay-util:param name="searchContainerId" value="versions" />
+											<liferay-util:param name="showEditActions" value="false" />
 										</liferay-util:include>
 									</liferay-ui:section>
 								</c:if>

@@ -1,3 +1,4 @@
+apply plugin: "com.liferay.gulp"
 apply plugin: "com.liferay.lang.merger"
 
 configJSModules {
@@ -14,6 +15,12 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
+}
+
+task testJS
+
+testJS {
+	dependsOn gulpTest
 }
 
 transpileJS {

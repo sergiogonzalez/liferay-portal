@@ -68,13 +68,21 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 
 </aui:select>
 
-<liferay-ui:icon
-	iconCssClass="<%= icon %>"
-	id="selectDDMTemplate"
-	label="<%= true %>"
-	message='<%= LanguageUtil.format(resourceBundle, "manage-display-templates-for-x", HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)), false) %>'
-	url="javascript:;"
-/>
+<%
+if (!ddmTemplateGroup.isLayoutPrototype()) {
+%>
+
+	<liferay-ui:icon
+		iconCssClass="<%= icon %>"
+		id="selectDDMTemplate"
+		label="<%= true %>"
+		message='<%= LanguageUtil.format(resourceBundle, "manage-display-templates-for-x", HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)), false) %>'
+		url="javascript:;"
+	/>
+
+<%
+}
+%>
 
 <liferay-portlet:renderURL plid="<%= themeDisplay.getPlid() %>" portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW) %>" var="basePortletURL">
 	<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />

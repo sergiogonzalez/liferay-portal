@@ -112,6 +112,25 @@ public abstract class ScreensDDLRecordServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the screens ddm structure version remote service.
+	 *
+	 * @return the screens ddm structure version remote service
+	 */
+	public com.liferay.screens.service.ScreensDDMStructureVersionService getScreensDDMStructureVersionService() {
+		return screensDDMStructureVersionService;
+	}
+
+	/**
+	 * Sets the screens ddm structure version remote service.
+	 *
+	 * @param screensDDMStructureVersionService the screens ddm structure version remote service
+	 */
+	public void setScreensDDMStructureVersionService(
+		com.liferay.screens.service.ScreensDDMStructureVersionService screensDDMStructureVersionService) {
+		this.screensDDMStructureVersionService = screensDDMStructureVersionService;
+	}
+
+	/**
 	 * Returns the screens journal article remote service.
 	 *
 	 * @return the screens journal article remote service
@@ -403,6 +422,8 @@ public abstract class ScreensDDLRecordServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.screens.service.ScreensCommentService screensCommentService;
 	@BeanReference(type = ScreensDDLRecordService.class)
 	protected ScreensDDLRecordService screensDDLRecordService;
+	@BeanReference(type = com.liferay.screens.service.ScreensDDMStructureVersionService.class)
+	protected com.liferay.screens.service.ScreensDDMStructureVersionService screensDDMStructureVersionService;
 	@BeanReference(type = com.liferay.screens.service.ScreensJournalArticleService.class)
 	protected com.liferay.screens.service.ScreensJournalArticleService screensJournalArticleService;
 	@BeanReference(type = com.liferay.screens.service.ScreensRatingsEntryService.class)

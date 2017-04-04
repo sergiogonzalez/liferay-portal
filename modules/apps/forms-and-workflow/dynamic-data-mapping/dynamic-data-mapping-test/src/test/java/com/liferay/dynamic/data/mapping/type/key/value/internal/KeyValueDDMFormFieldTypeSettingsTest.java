@@ -46,6 +46,11 @@ public class KeyValueDDMFormFieldTypeSettingsTest
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
+		DDMFormField labelDDMFormField = ddmFormFieldsMap.get("label");
+
+		Assert.assertNotNull(labelDDMFormField);
+		Assert.assertEquals("true", labelDDMFormField.getProperty("autoFocus"));
+
 		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
 			"placeholder");
 

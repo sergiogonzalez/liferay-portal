@@ -722,15 +722,12 @@
 	</command>
 
 	<command name="copyCP">
-		<var name="key_rowEntry" value="${webContentTitle}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Copy" />
+			<var name="rowEntry" value="${webContentTitle}" />
+		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
-
-		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="deleteCP">
@@ -1022,16 +1019,6 @@
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-	</command>
-
-	<command name="gotoEditDuplicateEntryCP">
-		<var name="key_rowIndexNumber" value="2" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_N" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>
 
 	<command name="gotoViewSpecificVersionHistoryCP">
@@ -1415,46 +1402,39 @@
 	</command>
 
 	<command name="viewCategorizationCategoryCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />
 		</execute>
 
 		<for list="${categoryNameList}" param="categoryName">
-			<var name="key_categoryName" value="${categoryName}" />
-
-			<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
+			<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}">
+				<var name="key_categoryName" value="${categoryName}" />
+			</execute>
 		</for>
 	</command>
 
 	<command name="viewCategorizationCategoryNotVisibleCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />
 		</execute>
 
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
+		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY" value1="${categoryName}">
+			<var name="key_categoryName" value="${categoryName}" />
+		</execute>
 	</command>
 
 	<command name="viewCategorizationVocabularyCP">
-		<var name="count" value="1" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${webContentTitle}" />
-		</execute>
-
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />
 		</execute>
 
-		<for list="${vocabularyNameList}" param="vocabularyName">
-			<var name="key_count" value="${count}" />
+		<var name="count" value="1" />
 
-			<execute function="AssertTextEquals" locator1="AssetCategorization#VOCABULARY_LIST_ITEM" value1="${vocabularyName}" />
+		<for list="${vocabularyNameList}" param="vocabularyName">
+
+			<execute function="AssertTextEquals" locator1="AssetCategorization#VOCABULARY_LIST_ITEM" value1="${vocabularyName}">
+				<var name="key_count" value="${count}" />
+			</execute>
 
 			<var method="MathUtil#sum('${count}', '1')" name="count" />
 		</for>

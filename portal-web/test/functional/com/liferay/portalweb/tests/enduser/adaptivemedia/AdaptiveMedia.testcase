@@ -14,6 +14,35 @@
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 	</tear-down>
 
+	<command name="AddAMIWithHighDensityResolution" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="addHighDensityDisplay" value="true" />
+			<var name="imageName" value="Low Resolution" />
+			<var name="maxHeight" value="480" />
+			<var name="maxWidth" value="320" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="Low Resolution" />
+			<var name="maxHeight" value="480" />
+			<var name="maxWidth" value="320" />
+			<var name="percentOptimized" value="0" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="Low Resolution-2x" />
+			<var name="maxHeight" value="960" />
+			<var name="maxWidth" value="640" />
+			<var name="percentOptimized" value="0" />
+		</execute>
+	</command>
+
 	<command name="AddImageVariantsForBlogEntry" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Adaptive Media" />

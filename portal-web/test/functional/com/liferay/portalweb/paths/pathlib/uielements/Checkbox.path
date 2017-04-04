@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_HIGH_DENSITY_DISPLAY</td>
+	<td>//label/input[contains(@id,'addHighResolution')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SAMPLE_DATA</td>
 	<td>//label[contains(.,'Add Sample Data')]/input[@type='checkbox']</td>
 	<td></td>

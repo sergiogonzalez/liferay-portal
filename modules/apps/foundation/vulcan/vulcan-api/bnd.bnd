@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Vulcan API
+Bundle-SymbolicName: com.liferay.vulcan.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.vulcan.contributor,\
+	com.liferay.vulcan.semantic.representation,\
+	com.liferay.vulcan.semantic.representation.builder

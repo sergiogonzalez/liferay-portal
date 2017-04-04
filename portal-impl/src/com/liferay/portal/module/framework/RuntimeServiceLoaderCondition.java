@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ServiceLoaderCondition;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.UnsupportedEncodingException;
-
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * @author Raymond Augé
@@ -44,13 +42,8 @@ public class RuntimeServiceLoaderCondition implements ServiceLoaderCondition {
 			PropsValues.MODULE_FRAMEWORK_BASE_DIR.replace(
 				StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-		try {
-			moduleFrameworkBaseDirName = URLEncoder.encode(
-				moduleFrameworkBaseDirName, StringPool.UTF8);
-		}
-		catch (UnsupportedEncodingException uee) {
-			return false;
-		}
+		moduleFrameworkBaseDirName = URLCodec.encodeURL(
+			moduleFrameworkBaseDirName, StringPool.UTF8, true);
 
 		return path.contains(moduleFrameworkBaseDirName);
 	}

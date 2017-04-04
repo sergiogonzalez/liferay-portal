@@ -8,6 +8,13 @@
 
 		<execute function="Type" locator1="TextInput#MAX_HEIGHT" value1="${maxHeight}" />
 
+		<if>
+			<isset var="addHighDensityDisplay" />
+			<then>
+				<execute function="Check" locator1="Checkbox#ADD_HIGH_DENSITY_DISPLAY" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
@@ -27,6 +34,8 @@
 				<execute function="Type" locator1="TextInput#NAME" value1="${imageNameEdit}"  />
 			</then>
 		</if>
+
+		<execute function="AssertElementNotPresent" locator1="Checkbox#ADD_HIGH_DENSITY_DISPLAY" />
 
 		<if>
 			<condition function="IsTextEqual" locator1="Message#INFO" value1="This resolution has already optimized images. Please, if you want different dimension values you must create a new image resolution." />
@@ -90,7 +99,6 @@
 		</if>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="AdaptiveMediaTable#MAX_WIDTH" value1="${maxWidth}" />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="AdaptiveMediaTable#MAX_HEIGHT" value1="${maxHeight}" />
 	</command>
 

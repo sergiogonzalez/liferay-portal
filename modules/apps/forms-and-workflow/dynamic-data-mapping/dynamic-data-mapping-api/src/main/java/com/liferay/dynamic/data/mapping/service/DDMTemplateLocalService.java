@@ -260,8 +260,7 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate fetchTemplate(long groupId, long classNameId,
-		java.lang.String templateKey, boolean includeAncestorTemplates)
-		throws PortalException;
+		java.lang.String templateKey, boolean includeAncestorTemplates);
 
 	/**
 	* Returns the template with the primary key.
