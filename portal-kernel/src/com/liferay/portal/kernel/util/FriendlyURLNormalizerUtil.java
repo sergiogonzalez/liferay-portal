@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 import java.util.regex.Pattern;
 
 /**
@@ -25,9 +23,6 @@ import java.util.regex.Pattern;
 public class FriendlyURLNormalizerUtil {
 
 	public static FriendlyURLNormalizer getFriendlyURLNormalizer() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			FriendlyURLNormalizerUtil.class);
-
 		return _friendlyURLNormalizer;
 	}
 
@@ -58,11 +53,12 @@ public class FriendlyURLNormalizerUtil {
 	public void setFriendlyURLNormalizer(
 		FriendlyURLNormalizer friendlyURLNormalizer) {
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_friendlyURLNormalizer = friendlyURLNormalizer;
 	}
 
-	private static FriendlyURLNormalizer _friendlyURLNormalizer;
+	private static volatile FriendlyURLNormalizer _friendlyURLNormalizer =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			FriendlyURLNormalizer.class, FriendlyURLNormalizerUtil.class,
+			"_friendlyURLNormalizer", true);
 
 }

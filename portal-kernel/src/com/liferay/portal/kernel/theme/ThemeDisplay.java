@@ -30,16 +30,20 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -53,6 +57,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -283,6 +288,31 @@ public class ThemeDisplay
 		return _contact;
 	}
 
+	public Group getControlPanelGroup() {
+		if (_controlPanelGroup == null) {
+			try {
+				_controlPanelGroup = GroupLocalServiceUtil.getGroup(
+					_company.getCompanyId(), GroupConstants.CONTROL_PANEL);
+			}
+			catch (PortalException pe) {
+				ReflectionUtil.throwException(pe);
+			}
+		}
+
+		return _controlPanelGroup;
+	}
+
+	public Layout getControlPanelLayout() {
+		if (_controlPanelLayout == null) {
+			Group controlPanelGroup = getControlPanelGroup();
+
+			_controlPanelLayout = LayoutLocalServiceUtil.fetchDefaultLayout(
+				controlPanelGroup.getGroupId(), true);
+		}
+
+		return _controlPanelLayout;
+	}
+
 	/**
 	 * Returns the portal instance's default user.
 	 *
@@ -404,6 +434,21 @@ public class ThemeDisplay
 	 */
 	public Layout getLayout() {
 		return _layout;
+	}
+
+	public String getLayoutFriendlyURL(Layout layout) {
+		if (layout instanceof VirtualLayout) {
+			VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+			layout = virtualLayout.getSourceLayout();
+
+			Group group = layout.getGroup();
+
+			return VirtualLayoutConstants.CANONICAL_URL_SEPARATOR.concat(
+				group.getFriendlyURL()).concat(_getFriendlyURL(layout));
+		}
+
+		return _getFriendlyURL(layout);
 	}
 
 	/**
@@ -1825,6 +1870,29 @@ public class ThemeDisplay
 		return LanguageUtil.format(getLocale(), pattern, arguments);
 	}
 
+	private String _getFriendlyURL(Layout layout) {
+		if (_layoutFriendlyURLs == null) {
+			if (_layouts == null) {
+				_layoutFriendlyURLs = new HashMap<>();
+			}
+			else {
+				_layoutFriendlyURLs =
+					LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+						_siteGroup, _layouts, _languageId);
+			}
+		}
+
+		String layoutFriendlyURL = _layoutFriendlyURLs.get(layout.getPlid());
+
+		if (layoutFriendlyURL == null) {
+			layoutFriendlyURL = layout.getFriendlyURL(_locale);
+
+			_layoutFriendlyURLs.put(layout.getPlid(), layoutFriendlyURL);
+		}
+
+		return layoutFriendlyURL;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);
 
 	private Account _account;
@@ -1840,6 +1908,8 @@ public class ThemeDisplay
 	private int _companyLogoHeight;
 	private int _companyLogoWidth;
 	private Contact _contact;
+	private Group _controlPanelGroup;
+	private Layout _controlPanelLayout;
 	private User _defaultUser;
 	private Device _device;
 	private long _doAsGroupId;
@@ -1860,6 +1930,7 @@ public class ThemeDisplay
 	private boolean _isolated;
 	private String _languageId;
 	private Layout _layout;
+	private Map<Long, String> _layoutFriendlyURLs;
 	private List<Layout> _layouts;
 	private LayoutSet _layoutSet;
 	private String _layoutSetLogo = StringPool.BLANK;

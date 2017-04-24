@@ -95,6 +95,29 @@ public class JSPSourceUtil {
 		}
 	}
 
+	public static String compressImportsOrTaglibs(
+		String fileName, String content, String attributePrefix) {
+
+		int x = content.indexOf(attributePrefix);
+
+		int y = content.lastIndexOf(attributePrefix);
+
+		y = content.indexOf("%>", y);
+
+		if ((x == -1) || (y == -1) || (x > y)) {
+			return content;
+		}
+
+		String importsOrTaglibs = content.substring(x, y);
+
+		importsOrTaglibs = StringUtil.replace(
+			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+			new String[] {"%><%@\r\n", "%><%@\n"});
+
+		return content.substring(0, x) + importsOrTaglibs +
+			content.substring(y);
+	}
+
 	public static Set<String> getJSPIncludeFileNames(
 		String fileName, Collection<String> fileNames,
 		Map<String, String> contentsMap) {
@@ -228,19 +251,47 @@ public class JSPSourceUtil {
 	}
 
 	public static boolean isJavaSource(String content, int pos) {
+		return isJavaSource(content, pos, false);
+	}
+
+	public static boolean isJavaSource(
+		String content, int pos, boolean checkInsideTags) {
+
 		String s = content.substring(pos);
 
 		Matcher matcher = _javaEndTagPattern.matcher(s);
 
-		if (!matcher.find()) {
+		if (matcher.find()) {
+			s = s.substring(0, matcher.start());
+
+			matcher = _javaStartTagPattern.matcher(s);
+
+			if (!matcher.find()) {
+				return true;
+			}
+		}
+
+		if (!checkInsideTags) {
 			return false;
 		}
 
-		s = s.substring(0, matcher.start());
+		int x = content.indexOf(CharPool.NEW_LINE, pos);
 
-		matcher = _javaStartTagPattern.matcher(s);
+		if (x == -1) {
+			return false;
+		}
 
-		if (!matcher.find()) {
+		s = content.substring(pos, x);
+
+		int y = s.indexOf("%>");
+
+		if (y == -1) {
+			return false;
+		}
+
+		s = s.substring(0, y);
+
+		if (!s.contains("<%")) {
 			return true;
 		}
 

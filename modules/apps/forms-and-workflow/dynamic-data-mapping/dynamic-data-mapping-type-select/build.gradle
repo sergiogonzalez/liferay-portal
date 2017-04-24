@@ -4,7 +4,8 @@ apply plugin: "com.liferay.lang.merger"
 task testJS
 
 configJSModules {
-	includes = ["**/*.es.js*"]
+	dependsOn = []
+	enabled = false
 }
 
 dependencies {

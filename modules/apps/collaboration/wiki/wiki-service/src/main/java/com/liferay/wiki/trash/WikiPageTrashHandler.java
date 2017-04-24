@@ -57,19 +57,17 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for the wiki page entity.
  *
- * @author Eudaldo Alonso
- * @author Roberto Díaz
+ * @author     Eudaldo Alonso
+ * @author     Roberto Díaz
+ * @deprecated As of 1.1.0, moved to {@link
+ *             com.liferay.wiki.internal.trash.WikiPageTrashHandler}
  */
-@Component(
-	property = {"model.class.name=com.liferay.wiki.model.WikiPage"},
-	service = TrashHandler.class
-)
+@Deprecated
 public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	@Override

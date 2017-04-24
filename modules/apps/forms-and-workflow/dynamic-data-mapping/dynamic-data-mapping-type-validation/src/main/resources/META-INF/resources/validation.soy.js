@@ -28,25 +28,16 @@ if (goog.DEBUG) {
 
 
 ddm.validation = function(opt_data, opt_ignored) {
-  var output = '<div class="form-group lfr-ddm-form-field-validation" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '"><div class="form-group"><label class="control-label" for="' + soy.$$escapeHtmlAttribute(opt_data.name) + 'EnableValidation"><input class="enable-validation toggle-switch" ' + soy.$$filterHtmlAttributes(opt_data.enableValidationValue ? 'checked' : '') + ' id="' + soy.$$escapeHtmlAttribute(opt_data.name) + 'EnableValidation" type="checkbox" value="true" /><span aria-hidden="true" class="toggle-switch-bar"><span class="toggle-switch-handle" data-label-off="' + soy.$$escapeHtmlAttribute(opt_data.enableValidationMessage) + '" data-label-on="' + soy.$$escapeHtmlAttribute(opt_data.disableValidationMessage) + '"></span></span></label></div><div class="' + soy.$$escapeHtmlAttribute(opt_data.enableValidationValue ? '' : 'hide') + ' row"><div class="col-md-6"><select class="form-control types-select">';
-  if (opt_data.typesOptions) {
-    var optionList32 = opt_data.typesOptions;
-    var optionListLen32 = optionList32.length;
-    for (var optionIndex32 = 0; optionIndex32 < optionListLen32; optionIndex32++) {
-      var optionData32 = optionList32[optionIndex32];
-      output += ddm.validationOption(soy.$$augmentMap(opt_data, {option: optionData32}));
-    }
-  }
-  output += '</select></div><div class="col-md-6"><select class="form-control validations-select">';
+  var output = '<div class="form-group lfr-ddm-form-field-validation" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '"><div class="form-group"><label class="control-label" for="' + soy.$$escapeHtmlAttribute(opt_data.name) + 'EnableValidation"><input class="enable-validation toggle-switch" ' + soy.$$filterHtmlAttributes(opt_data.enableValidationValue ? 'checked' : '') + ' id="' + soy.$$escapeHtmlAttribute(opt_data.name) + 'EnableValidation" type="checkbox" value="true" /><span aria-hidden="true" class="toggle-switch-bar"><span class="toggle-switch-handle"></span></span><span class="toggle-switch-text toggle-switch-text-right">' + soy.$$escapeHtml(opt_data.validationMessage) + '</span></label></div><div class="' + soy.$$escapeHtmlAttribute(opt_data.enableValidationValue ? '' : 'hide') + ' row"><div class="col-md-6"><select class="form-control validations-select">';
   if (opt_data.validationsOptions) {
-    var optionList39 = opt_data.validationsOptions;
-    var optionListLen39 = optionList39.length;
-    for (var optionIndex39 = 0; optionIndex39 < optionListLen39; optionIndex39++) {
-      var optionData39 = optionList39[optionIndex39];
-      output += ddm.validationOption(soy.$$augmentMap(opt_data, {option: optionData39}));
+    var optionList30 = opt_data.validationsOptions;
+    var optionListLen30 = optionList30.length;
+    for (var optionIndex30 = 0; optionIndex30 < optionListLen30; optionIndex30++) {
+      var optionData30 = optionList30[optionIndex30];
+      output += ddm.validationOption(soy.$$augmentMap(opt_data, {option: optionData30}));
     }
   }
-  output += '</select></div></div><div class="' + soy.$$escapeHtmlAttribute(opt_data.enableValidationValue ? '' : 'hide') + ' row"><div class="col-md-6"><input class="field form-control ' + soy.$$escapeHtmlAttribute(opt_data.parameterMessagePlaceholder ? '' : ' hide') + ' parameter-input" placeholder="' + soy.$$escapeHtmlAttribute(opt_data.parameterMessagePlaceholder) + '" type="text" value="' + soy.$$escapeHtmlAttribute(opt_data.parameterValue) + '" /></div><div class="col-md-6"><input class="field form-control message-input" placeholder="' + soy.$$escapeHtmlAttribute(opt_data.errorMessagePlaceholder) + '" type="text" value="' + soy.$$escapeHtmlAttribute(opt_data.errorMessageValue) + '" /></div></div><input name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" type="hidden" value="' + soy.$$escapeHtmlAttribute(opt_data.value) + '" /></div>';
+  output += '</select></div><div class="col-md-6"><input class="field form-control ' + soy.$$escapeHtmlAttribute(opt_data.parameterMessagePlaceholder ? '' : ' hide') + ' parameter-input" placeholder="' + soy.$$escapeHtmlAttribute(opt_data.parameterMessagePlaceholder) + '" type="text" value="' + soy.$$escapeHtmlAttribute(opt_data.parameterValue) + '" /></div></div><div class="' + soy.$$escapeHtmlAttribute(opt_data.enableValidationValue ? '' : 'hide') + ' row"><div class="col-md-12"><input class="field form-control message-input" placeholder="' + soy.$$escapeHtmlAttribute(opt_data.errorMessagePlaceholder) + '" type="text" value="' + soy.$$escapeHtmlAttribute(opt_data.errorMessageValue) + '" /></div></div><input name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" type="hidden" value="' + soy.$$escapeHtmlAttribute(opt_data.value) + '" /></div>';
   return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
 };
 if (goog.DEBUG) {

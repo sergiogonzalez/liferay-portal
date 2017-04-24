@@ -383,7 +383,7 @@ public class DDMStructureLocalServiceImpl
 
 		String resourceName =
 			DDMStructurePermission.getStructureModelResourceName(
-				structure.getClassNameId());
+				structure.getClassName());
 
 		resourceLocalService.addResources(
 			structure.getCompanyId(), structure.getGroupId(),
@@ -404,7 +404,7 @@ public class DDMStructureLocalServiceImpl
 
 		String resourceName =
 			DDMStructurePermission.getStructureModelResourceName(
-				structure.getClassNameId());
+				structure.getClassName());
 
 		resourceLocalService.addModelResources(
 			structure.getCompanyId(), structure.getGroupId(),
@@ -529,7 +529,7 @@ public class DDMStructureLocalServiceImpl
 
 		String resourceName =
 			DDMStructurePermission.getStructureModelResourceName(
-				structure.getClassNameId());
+				structure.getClassName());
 
 		resourceLocalService.deleteResource(
 			structure.getCompanyId(), resourceName,
@@ -676,9 +676,8 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public DDMStructure fetchStructure(
-			long groupId, long classNameId, String structureKey,
-			boolean includeAncestorStructures)
-		throws PortalException {
+		long groupId, long classNameId, String structureKey,
+		boolean includeAncestorStructures) {
 
 		structureKey = getStructureKey(structureKey);
 

@@ -37,7 +37,7 @@ if (delta > 0) {
 navigationPortletURL.setParameter("orderBycol", orderByCol);
 navigationPortletURL.setParameter("orderByType", orderByType);
 
-PortletURL portletURL = PortletURLUtil.clone(navigationPortletURL, liferayPortletResponse);
+PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("definitionsNavigation", definitionsNavigation);
 

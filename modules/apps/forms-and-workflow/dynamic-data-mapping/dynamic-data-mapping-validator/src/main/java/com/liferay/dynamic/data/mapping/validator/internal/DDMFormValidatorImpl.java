@@ -20,6 +20,8 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
@@ -33,7 +35,9 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidFormRuleExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -75,6 +79,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		validateDDMFormFields(
 			ddmFormFields, new HashSet<String>(), ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
+
+		validateDDMFormRules(ddmForm.getDDMFormRules());
 	}
 
 	@Reference(unbind = "-")
@@ -82,6 +88,24 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		DDMExpressionFactory ddmExpressionFactory) {
 
 		_ddmExpressionFactory = ddmExpressionFactory;
+	}
+
+	protected void validateDDMExpression(
+			String expressionType, String ddmExpressionString)
+		throws DDMFormValidationException {
+
+		if (Validator.isNull(ddmExpressionString)) {
+			return;
+		}
+
+		try {
+			_ddmExpressionFactory.createBooleanDDMExpression(
+				ddmExpressionString);
+		}
+		catch (DDMExpressionException ddmee) {
+			throw new MustSetValidFormRuleExpression(
+				expressionType, ddmExpressionString, ddmee);
+		}
 	}
 
 	protected void validateDDMFormAvailableLocales(
@@ -217,6 +241,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 				ddmFormField, "tip", ddmFormAvailableLocales,
 				ddmFormDefaultLocale);
 
+			validateDDMFormFieldValidationExpression(ddmFormField);
 			validateDDMFormFieldVisibilityExpression(ddmFormField);
 
 			validateDDMFormFields(
@@ -238,6 +263,33 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		if (!matcher.matches()) {
 			throw new MustSetValidCharactersForFieldType(
 				ddmFormField.getType());
+		}
+	}
+
+	protected void validateDDMFormFieldValidationExpression(
+			DDMFormField ddmFormField)
+		throws DDMFormValidationException {
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			ddmFormField.getDDMFormFieldValidation();
+
+		if (ddmFormFieldValidation == null) {
+			return;
+		}
+
+		String validationExpression = ddmFormFieldValidation.getExpression();
+
+		if (Validator.isNull(validationExpression)) {
+			return;
+		}
+
+		try {
+			_ddmExpressionFactory.createBooleanDDMExpression(
+				validationExpression);
+		}
+		catch (DDMExpressionException ddmee) {
+			throw new MustSetValidValidationExpression(
+				ddmFormField.getName(), validationExpression);
 		}
 	}
 
@@ -272,6 +324,24 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		validateDDMFormAvailableLocales(
 			ddmForm.getAvailableLocales(), defaultLocale);
+	}
+
+	protected void validateDDMFormRule(DDMFormRule ddmFormRule)
+		throws DDMFormValidationException {
+
+		for (String action : ddmFormRule.getActions()) {
+			validateDDMExpression("action", action);
+		}
+
+		validateDDMExpression("condition", ddmFormRule.getCondition());
+	}
+
+	protected void validateDDMFormRules(List<DDMFormRule> ddmFormRules)
+		throws DDMFormValidationException {
+
+		for (DDMFormRule ddmFormRule : ddmFormRules) {
+			validateDDMFormRule(ddmFormRule);
+		}
 	}
 
 	protected void validateOptionalDDMFormFieldLocalizedProperty(

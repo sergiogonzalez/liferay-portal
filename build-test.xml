@@ -1884,6 +1884,14 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-spa-configuration" >
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.frontend.js.spa.web.configuration.SPAConfiguration.cfg">
+				userNotificationTimeout=0
+			</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-bundles">
 		<attribute name="unit" />
 		<sequential>
@@ -2070,6 +2078,8 @@ tell application "Safari" to quit
 							<setup-testable-tomcat />
 
 							<prepare-elasticsearch-configuration />
+
+							<prepare-spa-configuration />
 						</else>
 					</if>
 				</else>
@@ -2400,19 +2410,19 @@ ${tomcat-gc-log}
 							new String[] {
 								"modules/apps/chat/**",
 								"modules/apps/mail-reader/**",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/override/LPKGOverrideTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGDowngradeTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeLogAssertorTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGVersionChangeLogAssertorTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/deployer/override/LPKGOverrideTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/deployer/LPKGDowngradeTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/deployer/LPKGUpgradeLogAssertorTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/deployer/LPKGUpgradeTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/deployer/LPKGVersionChangeLogAssertorTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/override/test/LPKGOverrideVerifyCleanStartupTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/override/test/LPKGOverrideVerifySecondStartupTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/override/test/LPKGOverrideVerifyTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/override/test/LPKGRevertOverrideVerifyTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerCleanStartupTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerDowngradeTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerUpgradeTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyCleanStartupTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifySecondStartupTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGRevertOverrideVerifyTest.java",
 								"modules/apps/web-experience/export-import/export-import-resources-importer-test/src/testIntegration/java/com/liferay/exportimport/resources/importer/test/ResourcesImporterTest.java",
 								"modules/private/apps/osb-lcs/**",
 								"modules/private/apps/saml/**",
@@ -6008,6 +6018,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.frontend.js.spa.web.internal.servlet.taglib">
+		<priority value="DEBUG" />
+	</category>
+
 	<category name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper">
 		<priority value="INFO" />
 	</category>
@@ -6035,6 +6049,21 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<stop-android-device />
 
 		<start-android-device />
+	</target>
+
+	<target name="prepare-osgi-module-configurations">
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<if>
+			<not>
+				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
+			</not>
+			<then>
+				<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
+maxChallenges=&quot;-1&quot;
+sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-portal-ext-properties">
@@ -6089,8 +6118,6 @@ jdbc.counter.maxActive=5
 jdbc.counter.maxIdle=0
 jdbc.counter.minIdle=0
 
-captcha.max.challenges=-1
-
 browser.launcher.url=
 
 index.on.startup=true
@@ -6114,15 +6141,6 @@ tunnel.servlet.hosts.allowed=</echo>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties"><![CDATA[
 jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="captcha.max.challenges" />
-
-		<if>
-			<isset property="captcha.max.challenges" />
-			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="captcha.max.challenges=-1" value="captcha.max.challenges=${captcha.max.challenges}" />
 			</then>
 		</if>
 
@@ -6648,6 +6666,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.run.environment=${test.run.environment}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.subrepo.dirs" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.subrepo.dirs=${test.subrepo.dirs}
 				</echo>
 			</then>
 		</if>
@@ -9023,6 +9050,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<delete failonerror="false" file="${app.server.classes.portal.dir}/system-ext.properties" />
 			</then>
 			<else>
+				<antcall target="prepare-osgi-module-configurations" />
+
 				<antcall target="prepare-portal-properties" />
 
 				<antcall target="prepare-portal-ext-properties" />

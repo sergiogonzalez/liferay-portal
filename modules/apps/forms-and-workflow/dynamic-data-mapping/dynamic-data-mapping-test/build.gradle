@@ -1,4 +1,5 @@
 configJSModules {
+	dependsOn = []
 	enabled = false
 }
 

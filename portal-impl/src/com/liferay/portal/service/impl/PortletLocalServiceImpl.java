@@ -1179,10 +1179,19 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
 			portlet.getRootPortletId());
 
-		String actionId = ActionKeys.ADD_TO_PAGE;
+		if (actionIds.contains(ActionKeys.ADD_TO_PAGE)) {
+			List<String> guestUnsupportedActionIds =
+				ResourceActionsUtil.getPortletResourceGuestUnsupportedActions(
+					portlet.getRootPortletId());
 
-		if (actionIds.contains(actionId)) {
+			boolean skipGuestRole = guestUnsupportedActionIds.contains(
+				ActionKeys.ADD_TO_PAGE);
+
 			for (String roleName : roleNames) {
+				if (skipGuestRole && roleName.equals(RoleConstants.GUEST)) {
+					continue;
+				}
+
 				Role role = roleLocalService.getRole(
 					portlet.getCompanyId(), roleName);
 
@@ -1190,7 +1199,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					portlet.getCompanyId(), portlet.getRootPortletId(),
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(portlet.getCompanyId()), role.getRoleId(),
-					actionId);
+					ActionKeys.ADD_TO_PAGE);
 			}
 		}
 

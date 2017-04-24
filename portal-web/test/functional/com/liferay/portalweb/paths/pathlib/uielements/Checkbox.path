@@ -14,8 +14,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADAPTIVE_MEDIA_IMAGE</td>
+	<td>//td[contains(.,'${key_imageName}')]//..//td/input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_EXPLANATION_POST</td>
 	<td>//input[contains(@id,'addExplanationPost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_HIGH_DENSITY_DISPLAY</td>
+	<td>//label/input[contains(@id,'addHighResolution')]</td>
 	<td></td>
 </tr>
 <tr>

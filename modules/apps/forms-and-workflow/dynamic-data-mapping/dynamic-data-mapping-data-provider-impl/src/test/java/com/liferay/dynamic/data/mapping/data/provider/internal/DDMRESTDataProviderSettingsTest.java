@@ -118,8 +118,28 @@ public class DDMRESTDataProviderSettingsTest {
 			ddmFormField.getNestedDDMFormFieldsMap();
 
 		Assert.assertEquals(
-			nestedDDMFormFieldsMap.toString(), 3,
+			nestedDDMFormFieldsMap.toString(), 4,
 			nestedDDMFormFieldsMap.size());
+
+		// Label
+
+		DDMFormField inputParameterLabelDDMFormField =
+			nestedDDMFormFieldsMap.get("inputParameterLabel");
+
+		Assert.assertNotNull(inputParameterLabelDDMFormField);
+
+		Assert.assertEquals("text", inputParameterLabelDDMFormField.getType());
+		Assert.assertEquals(
+			"string", inputParameterLabelDDMFormField.getDataType());
+
+		Map<String, Object> inputParameterLabelDDMFormFieldProperties =
+			inputParameterLabelDDMFormField.getProperties();
+
+		Assert.assertTrue(
+			inputParameterLabelDDMFormFieldProperties.containsKey(
+				"placeholder"));
+
+		// Name
 
 		DDMFormField inputParameterNameDDMFormField =
 			nestedDDMFormFieldsMap.get("inputParameterName");
@@ -136,6 +156,8 @@ public class DDMRESTDataProviderSettingsTest {
 		Assert.assertTrue(
 			inputParameterNameDDMFormFieldProperties.containsKey(
 				"placeholder"));
+
+		// Type
 
 		DDMFormField inputParameterTypeDDMFormField =
 			nestedDDMFormFieldsMap.get("inputParameterType");
@@ -157,6 +179,8 @@ public class DDMRESTDataProviderSettingsTest {
 		Assert.assertTrue(optionValues.contains("text"));
 		Assert.assertTrue(optionValues.contains("number"));
 
+		// Required
+
 		DDMFormField inputParameterRequiredDDMFormField =
 			nestedDDMFormFieldsMap.get("inputParameterRequired");
 
@@ -166,17 +190,6 @@ public class DDMRESTDataProviderSettingsTest {
 			"checkbox", inputParameterRequiredDDMFormField.getType());
 		Assert.assertEquals(
 			"boolean", inputParameterRequiredDDMFormField.getDataType());
-	}
-
-	protected void assertKey(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-
-		Assert.assertTrue(ddmFormField.isRequired());
-
-		Map<String, Object> properties = ddmFormField.getProperties();
-
-		Assert.assertTrue(properties.containsKey("placeholder"));
-		Assert.assertTrue(properties.containsKey("tooltip"));
 	}
 
 	protected void assertOutputParameters(DDMFormField ddmFormField) {
@@ -191,6 +204,8 @@ public class DDMRESTDataProviderSettingsTest {
 		Assert.assertEquals(
 			nestedDDMFormFieldsMap.toString(), 3,
 			nestedDDMFormFieldsMap.size());
+
+		// Name
 
 		DDMFormField outputParameterNameDDMFormField =
 			nestedDDMFormFieldsMap.get("outputParameterName");
@@ -208,6 +223,8 @@ public class DDMRESTDataProviderSettingsTest {
 			outputParameterNameDDMFormFieldProperties.containsKey(
 				"placeholder"));
 
+		// Path
+
 		DDMFormField outputParameterPathDDMFormField =
 			nestedDDMFormFieldsMap.get("outputParameterPath");
 
@@ -223,6 +240,8 @@ public class DDMRESTDataProviderSettingsTest {
 		Assert.assertTrue(
 			outputParameterPathDDMFormFieldProperties.containsKey(
 				"placeholder"));
+
+		// Type
 
 		DDMFormField outputParameterTypeDDMFormField =
 			nestedDDMFormFieldsMap.get("outputParameterType");

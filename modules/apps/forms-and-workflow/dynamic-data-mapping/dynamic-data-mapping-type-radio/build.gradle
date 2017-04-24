@@ -1,7 +1,11 @@
+apply plugin: "com.liferay.gulp"
 apply plugin: "com.liferay.lang.merger"
 
+task testJS
+
 configJSModules {
-	includes = ["**/*.es.js*"]
+	dependsOn = []
+	enabled = false
 }
 
 dependencies {
@@ -19,6 +23,10 @@ mergeLang {
 		"../dynamic-data-mapping-lang/src/main/resources/content",
 		"src/main/resources/content"
 	]
+}
+
+testJS {
+	dependsOn gulpTest
 }
 
 transpileJS {

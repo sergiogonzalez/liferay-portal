@@ -14,12 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Pablo Carvalho
  */
+@ProviderType
 public interface DDMFormXSDDeserializer {
 
 	public DDMForm deserialize(String serializedDDMForm) throws PortalException;

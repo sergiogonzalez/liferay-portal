@@ -83,7 +83,9 @@ AUI.add(
 									delete fieldContext.valid;
 								}
 
-								field.setValue(fieldContext.value);
+								if (!Util.compare(field.get('value'), fieldContext.value)) {
+									field.setValue(fieldContext.value);
+								}
 							}
 
 							if (fieldContext.valid) {

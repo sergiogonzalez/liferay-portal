@@ -34,41 +34,8 @@ List<AddMenuItem> addMenuItems = new ArrayList<>();
 addMenuItems.add(new AddMenuItem(HtmlUtil.escape(LanguageUtil.get(request, "upload-definition")), addWorkflowDefinitionURL.toString()));
 %>
 
-<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
-
-	<%
-	String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
-
-	addMenuItems.add(new AddMenuItem(LanguageUtil.format(request, "add-new-x", "definition"), taglibHREF));
-	%>
-
-</c:if>
-
 <c:if test="<%= !addMenuItems.isEmpty() %>">
 	<liferay-frontend:add-menu
 		addMenuItems="<%= addMenuItems %>"
 	/>
-</c:if>
-
-<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
-	<aui:script>
-		Liferay.provide(
-			window,
-			'<portlet:namespace />openKaleoDesigner',
-			function(workflowDefinitionName, workflowDefinitionVersion, saveCallback, openerWindowName) {
-				Liferay.Util.openKaleoDesignerPortlet(
-					{
-						availablePropertyModels: 'Liferay.KaleoDesigner.AVAILABLE_PROPERTY_MODELS.KALEO_FORMS_EDIT',
-						name: workflowDefinitionName,
-						openerWindowName: openerWindowName,
-						portletResourceNamespace: '<%= renderResponse.getNamespace() %>',
-						saveCallback: saveCallback,
-						version: workflowDefinitionVersion,
-						versionLabel: '<liferay-ui:message key="version" />'
-					}
-				);
-			},
-			['aui-base']
-		);
-	</aui:script>
 </c:if>

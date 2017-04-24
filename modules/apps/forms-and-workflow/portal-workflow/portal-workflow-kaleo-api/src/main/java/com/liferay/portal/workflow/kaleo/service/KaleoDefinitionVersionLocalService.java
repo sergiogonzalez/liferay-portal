@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -89,6 +90,12 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	public KaleoDefinitionVersion addKaleoDefinitionVersion(
 		KaleoDefinitionVersion kaleoDefinitionVersion);
 
+	public KaleoDefinitionVersion addKaleoDefinitionVersion(
+		java.lang.String name, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String version, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new kaleo definition version with the primary key. Does not add the kaleo definition version to the database.
 	*
@@ -108,6 +115,10 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	public KaleoDefinitionVersion deleteKaleoDefinitionVersion(
 		KaleoDefinitionVersion kaleoDefinitionVersion);
 
+	public KaleoDefinitionVersion deleteKaleoDefinitionVersion(long companyId,
+		java.lang.String name, java.lang.String version)
+		throws PortalException;
+
 	/**
 	* Deletes the kaleo definition version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -124,13 +135,14 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 		long kaleoDefinitionVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoDefinitionVersion getKaleoDefinitionVersion(long companyId,
-		java.lang.String name, java.lang.String version)
+	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
+		long companyId, java.lang.String name,
+		OrderByComparator<KaleoDefinitionVersion> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoDefinitionVersion getKaleoDefinitionVersion(
-		long kaleoDefinitionId, java.lang.String version)
+	public KaleoDefinitionVersion getKaleoDefinitionVersion(long companyId,
+		java.lang.String name, java.lang.String version)
 		throws PortalException;
 
 	/**
@@ -146,7 +158,7 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinitionVersion getLatestKaleoDefinitionVersion(
-		long kaleoDefinitionId) throws PortalException;
+		long companyId, java.lang.String name) throws PortalException;
 
 	/**
 	* Updates the kaleo definition version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -157,6 +169,11 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoDefinitionVersion updateKaleoDefinitionVersion(
 		KaleoDefinitionVersion kaleoDefinitionVersion);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDefinitionVersion[] getKaleoDefinitionVersionsPrevAndNext(
+		long companyId, java.lang.String name, java.lang.String version)
+		throws PortalException;
 
 	/**
 	* Returns the number of kaleo definition versions.
@@ -170,15 +187,12 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	public int getKaleoDefinitionVersionsCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoDefinitionVersionsCount(long companyId, boolean active);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoDefinitionVersionsCount(long companyId,
 		java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoDefinitionVersionsCount(long companyId,
-		java.lang.String name, boolean active);
+	public int getLatestKaleoDefinitionVersionsCount(long companyId,
+		java.lang.String keywords);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -243,11 +257,6 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoDefinitionVersion> getKaleoDefinitionVersions(
-		long companyId, boolean active, int start, int end,
-		OrderByComparator<KaleoDefinitionVersion> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDefinitionVersion> getKaleoDefinitionVersions(
 		long companyId, int start, int end,
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator);
 
@@ -257,12 +266,12 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoDefinitionVersion> getKaleoDefinitionVersions(
-		long companyId, java.lang.String name, boolean active, int start,
-		int end, OrderByComparator<KaleoDefinitionVersion> orderByComparator);
+		long companyId, java.lang.String name, int start, int end,
+		OrderByComparator<KaleoDefinitionVersion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDefinitionVersion> getKaleoDefinitionVersions(
-		long companyId, java.lang.String name, int start, int end,
+	public List<KaleoDefinitionVersion> getLatestKaleoDefinitionVersions(
+		long companyId, java.lang.String keywords, int start, int end,
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator);
 
 	/**
@@ -282,4 +291,8 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateKaleoDefinitionVersionTitle(long companyId,
+		java.lang.String name, java.lang.String version, java.lang.String title)
+		throws PortalException;
 }

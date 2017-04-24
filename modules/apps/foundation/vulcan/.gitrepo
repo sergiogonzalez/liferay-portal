@@ -1,0 +1,11 @@
+;
+; Do not manually edit this file.
+;
+[subrepo]
+	autopull = true
+	cmdver = liferay
+	commit = 07b66396d74f62b6d44b5da9531a98a7b9508511
+	mergebuttonmergecommits = false
+	mode = pull
+	parent = 45bce458b6b0a8501b77d9b8ba77c858002a64b0
+	remote = git@github.com:liferay/com-liferay-vulcan.git

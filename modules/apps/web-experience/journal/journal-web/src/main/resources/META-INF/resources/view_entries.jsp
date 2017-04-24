@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer articleSearchContainer = journalDisplayContext.getSearchContainer();
+SearchContainer articleSearchContainer = journalDisplayContext.getSearchContainer(false);
 
 String displayStyle = journalDisplayContext.getDisplayStyle();
 

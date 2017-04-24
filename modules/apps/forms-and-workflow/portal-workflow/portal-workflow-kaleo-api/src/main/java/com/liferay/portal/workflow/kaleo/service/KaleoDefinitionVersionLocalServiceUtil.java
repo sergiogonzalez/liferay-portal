@@ -79,6 +79,17 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		return getService().addKaleoDefinitionVersion(kaleoDefinitionVersion);
 	}
 
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion addKaleoDefinitionVersion(
+		java.lang.String name, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addKaleoDefinitionVersion(name, title, description,
+			content, version, serviceContext);
+	}
+
 	/**
 	* Creates a new kaleo definition version with the primary key. Does not add the kaleo definition version to the database.
 	*
@@ -102,6 +113,13 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		return getService().deleteKaleoDefinitionVersion(kaleoDefinitionVersion);
 	}
 
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion deleteKaleoDefinitionVersion(
+		long companyId, java.lang.String name, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteKaleoDefinitionVersion(companyId, name, version);
+	}
+
 	/**
 	* Deletes the kaleo definition version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -121,16 +139,19 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		return getService().fetchKaleoDefinitionVersion(kaleoDefinitionVersionId);
 	}
 
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
+		long companyId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchLatestKaleoDefinitionVersion(companyId, name,
+			orderByComparator);
+	}
+
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getKaleoDefinitionVersion(
 		long companyId, java.lang.String name, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKaleoDefinitionVersion(companyId, name, version);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getKaleoDefinitionVersion(
-		long kaleoDefinitionId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoDefinitionVersion(kaleoDefinitionId, version);
 	}
 
 	/**
@@ -147,9 +168,9 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getLatestKaleoDefinitionVersion(
-		long kaleoDefinitionId)
+		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestKaleoDefinitionVersion(kaleoDefinitionId);
+		return getService().getLatestKaleoDefinitionVersion(companyId, name);
 	}
 
 	/**
@@ -161,6 +182,14 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion updateKaleoDefinitionVersion(
 		com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion kaleoDefinitionVersion) {
 		return getService().updateKaleoDefinitionVersion(kaleoDefinitionVersion);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion[] getKaleoDefinitionVersionsPrevAndNext(
+		long companyId, java.lang.String name, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getKaleoDefinitionVersionsPrevAndNext(companyId, name,
+			version);
 	}
 
 	/**
@@ -177,19 +206,14 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	}
 
 	public static int getKaleoDefinitionVersionsCount(long companyId,
-		boolean active) {
-		return getService().getKaleoDefinitionVersionsCount(companyId, active);
-	}
-
-	public static int getKaleoDefinitionVersionsCount(long companyId,
 		java.lang.String name) {
 		return getService().getKaleoDefinitionVersionsCount(companyId, name);
 	}
 
-	public static int getKaleoDefinitionVersionsCount(long companyId,
-		java.lang.String name, boolean active) {
+	public static int getLatestKaleoDefinitionVersionsCount(long companyId,
+		java.lang.String keywords) {
 		return getService()
-				   .getKaleoDefinitionVersionsCount(companyId, name, active);
+				   .getLatestKaleoDefinitionVersionsCount(companyId, keywords);
 	}
 
 	/**
@@ -268,14 +292,6 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> getKaleoDefinitionVersions(
-		long companyId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator) {
-		return getService()
-				   .getKaleoDefinitionVersions(companyId, active, start, end,
-			orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> getKaleoDefinitionVersions(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator) {
 		return getService()
@@ -290,20 +306,19 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> getKaleoDefinitionVersions(
-		long companyId, java.lang.String name, boolean active, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator) {
-		return getService()
-				   .getKaleoDefinitionVersions(companyId, name, active, start,
-			end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> getKaleoDefinitionVersions(
 		long companyId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator) {
 		return getService()
 				   .getKaleoDefinitionVersions(companyId, name, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> getLatestKaleoDefinitionVersions(
+		long companyId, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator) {
+		return getService()
+				   .getLatestKaleoDefinitionVersions(companyId, keywords,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -328,6 +343,13 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void updateKaleoDefinitionVersionTitle(long companyId,
+		java.lang.String name, java.lang.String version, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateKaleoDefinitionVersionTitle(companyId, name, version, title);
 	}
 
 	public static KaleoDefinitionVersionLocalService getService() {

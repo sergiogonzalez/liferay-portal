@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DDL_RECORD_NAME</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_ddlListName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>
@@ -331,6 +336,11 @@
 <tr>
 	<td>DETAILS</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISABLE</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'Disable')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -371,6 +381,11 @@
 <tr>
 	<td>DOWNLOAD</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'Enable')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -444,6 +459,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KNOWLEDGE_BASE_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Knowledge Base Article')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMPERSONATE_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Impersonate User')]</td>
 	<td></td>
@@ -496,6 +516,11 @@
 <tr>
 	<td>MANAGE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_ACTIONS</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Actions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -631,6 +656,11 @@
 <tr>
 	<td>ONLINE_TRAINING</td>
 	<td>//li[contains(@class,'open')]//a[contains(.,'Online Training')] | //div[contains(@class,'open')]//a[contains(.,'Online Training')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIMIZE_REMAINING</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'Optimize Remaining')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1014,9 +1044,9 @@
 	<td></td>
 </tr>
 <tr>
- 	<td>WORKFLOW_DEFINITIONS</td>
- 	<td>//a[@role='menuitem' and contains(.,'Workflow Definitions')]</td>
- 	<td></td>
+	<td>WORKFLOW_DEFINITIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Workflow Definitions')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>VIEW_MEMBERSHIP_REQUESTS</td>

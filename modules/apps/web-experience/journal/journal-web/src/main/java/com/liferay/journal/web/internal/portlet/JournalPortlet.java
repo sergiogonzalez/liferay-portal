@@ -109,6 +109,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -741,6 +742,10 @@ public class JournalPortlet extends MVCPortlet {
 		boolean neverExpire = ParamUtil.getBoolean(
 			uploadPortletRequest, "neverExpire");
 
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			neverExpire = true;
+		}
+
 		if (expirationDateAmPm == Calendar.PM) {
 			expirationDateHour += 12;
 		}
@@ -759,6 +764,10 @@ public class JournalPortlet extends MVCPortlet {
 			uploadPortletRequest, "reviewDateAmPm");
 		boolean neverReview = ParamUtil.getBoolean(
 			uploadPortletRequest, "neverReview");
+
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			neverReview = true;
+		}
 
 		if (reviewDateAmPm == Calendar.PM) {
 			reviewDateHour += 12;

@@ -44,7 +44,6 @@ import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.exception.ArticleContentException;
-import com.liferay.journal.exception.ArticleDisplayDateException;
 import com.liferay.journal.exception.ArticleExpirationDateException;
 import com.liferay.journal.exception.ArticleIdException;
 import com.liferay.journal.exception.ArticleReviewDateException;
@@ -332,8 +331,7 @@ public class JournalArticleLocalServiceImpl
 		if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 			displayDate = PortalUtil.getDate(
 				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, user.getTimeZone(),
-				ArticleDisplayDateException.class);
+				displayDateHour, displayDateMinute, user.getTimeZone(), null);
 
 			if (!neverExpire) {
 				expirationDate = PortalUtil.getDate(
@@ -5359,8 +5357,7 @@ public class JournalArticleLocalServiceImpl
 
 			displayDate = PortalUtil.getDate(
 				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, user.getTimeZone(),
-				ArticleDisplayDateException.class);
+				displayDateHour, displayDateMinute, user.getTimeZone(), null);
 
 			if (!neverExpire) {
 				expirationDate = PortalUtil.getDate(

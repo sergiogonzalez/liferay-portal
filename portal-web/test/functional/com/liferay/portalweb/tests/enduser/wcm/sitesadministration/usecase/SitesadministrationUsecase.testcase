@@ -36,6 +36,24 @@
 	<command name="AddOrganizationSitesAndDeactivate" priority="4">
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Inactive Request Handler" />
+		</execute>
+
+		<execute macro="SystemSettings#enableSetting">
+			<var name="checkboxSetting" value="SHOW_INACTIVE_REQUEST_MESSAGE" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -208,7 +226,9 @@
 			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This site is inactive. Please contact the administrator." />
+		<execute macro="Page#viewInactiveRequestMessage">
+			<var name="resource" value="site" />
+		</execute>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -849,6 +869,24 @@
 	<command name="SitesDeactivated" priority="3">
 		<property name="testray.component.names" value="Site Administration" />
 
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Inactive Request Handler" />
+		</execute>
+
+		<execute macro="SystemSettings#enableSetting">
+			<var name="checkboxSetting" value="SHOW_INACTIVE_REQUEST_MESSAGE" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -953,7 +991,9 @@
 			<var name="siteName" value="Site1 Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+		<execute macro="Page#viewInactiveRequestMessage">
+			<var name="resource" value="site" />
+		</execute>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

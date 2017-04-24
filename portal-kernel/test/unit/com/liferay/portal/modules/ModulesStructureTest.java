@@ -753,23 +753,19 @@ public class ModulesStructureTest {
 				Files.exists(resourcesImporterIgnorePath));
 		}
 
-		if (!dirPath.startsWith("private")) {
-			Path gitIgnorePath = dirPath.resolve(".gitignore");
+		Path gitIgnorePath = dirPath.resolve(".gitignore");
 
-			String gitIgnore = _read(gitIgnorePath);
+		String gitIgnore = _read(gitIgnorePath);
 
-			Assert.assertEquals(
-				"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
-		}
+		Assert.assertEquals(
+			"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
 
-		if (!dirPath.startsWith("private")) {
-			Path npmIgnorePath = dirPath.resolve(".npmignore");
+		Path npmIgnorePath = dirPath.resolve(".npmignore");
 
-			String npmIgnore = _read(npmIgnorePath);
+		String npmIgnore = _read(npmIgnorePath);
 
-			Assert.assertEquals(
-				"Incorrect " + npmIgnorePath, npmIgnoreTemplate, npmIgnore);
-		}
+		Assert.assertEquals(
+			"Incorrect " + npmIgnorePath, npmIgnoreTemplate, npmIgnore);
 	}
 
 	private static final String _APP_BUILD_GRADLE =

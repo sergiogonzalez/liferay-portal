@@ -37,8 +37,8 @@ import java.util.List;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Iván Zaera
+ * @author     Brian Wing Shun Chan
+ * @author     Iván Zaera
  * @deprecated As of 1.4.0, replaced by {@link
  *             com.liferay.wiki.internal.verify.WikiServiceVerifyProcess}
  */

@@ -23,18 +23,20 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
+import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,8 +63,8 @@ public class NavigationTag extends IncludeTag {
 		DDMTemplate portletDisplayDDMTemplate =
 			portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 				getDisplayStyleGroupId(),
-				PortalUtil.getClassNameId(NavItem.class), getDisplayStyle(),
-				true);
+				NavItemClassNameIdUtil.getNavItemClassNameId(),
+				getDisplayStyle(), true);
 
 		if (portletDisplayDDMTemplate == null) {
 			return EVAL_PAGE;
@@ -157,20 +159,31 @@ public class NavigationTag extends IncludeTag {
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
 
-		List<NavItem> navItems = new ArrayList<>();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
-		NavItem navItem = new NavItem(request, layout, null);
-
-		navItems.add(navItem);
-
-		for (Layout ancestorLayout : layout.getAncestors()) {
-			navItems.add(0, new NavItem(request, ancestorLayout, null));
+		if (layout.isRootLayout()) {
+			return Collections.singletonList(
+				new NavItem(request, themeDisplay, layout, null));
 		}
+
+		List<Layout> ancestorLayouts = layout.getAncestors();
+
+		List<NavItem> navItems = new ArrayList<>(ancestorLayouts.size() + 1);
+
+		ListIterator<Layout> listIterator = ancestorLayouts.listIterator(
+			ancestorLayouts.size());
+
+		while (listIterator.hasPrevious()) {
+			Layout ancestorLayout = listIterator.previous();
+
+			navItems.add(
+				new NavItem(request, themeDisplay, ancestorLayout, null));
+		}
+
+		navItems.add(new NavItem(request, themeDisplay, layout, null));
 
 		return navItems;
 	}
@@ -221,8 +234,7 @@ public class NavigationTag extends IncludeTag {
 				rootNavItem = branchNavItems.get(ancestorIndex);
 			}
 			else if (ancestorIndex == branchNavItems.size()) {
-				navItems = NavItem.fromLayouts(
-					request, themeDisplay.getLayouts(), null);
+				navItems = NavItem.fromLayouts(request, themeDisplay, null);
 			}
 		}
 		else if (_rootLayoutType.equals("select")) {
@@ -234,11 +246,11 @@ public class NavigationTag extends IncludeTag {
 						_rootLayoutUuid, layout.getGroupId(),
 						layout.isPrivateLayout());
 
-				rootNavItem = new NavItem(request, rootLayout, null);
+				rootNavItem = new NavItem(
+					request, themeDisplay, rootLayout, null);
 			}
 			else {
-				navItems = NavItem.fromLayouts(
-					request, themeDisplay.getLayouts(), null);
+				navItems = NavItem.fromLayouts(request, themeDisplay, null);
 			}
 		}
 

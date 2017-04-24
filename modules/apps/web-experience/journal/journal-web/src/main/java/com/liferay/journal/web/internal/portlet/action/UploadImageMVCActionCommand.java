@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.internal.upload.ImageJournalUploadHandler;
@@ -30,6 +31,7 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -49,6 +51,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_uploadHandler = new ImageJournalUploadHandler(
+			_dlValidator,
 			ConfigurableUtil.createConfigurable(
 				JournalFileUploadsConfiguration.class, properties));
 	}
@@ -60,6 +63,9 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 		_uploadHandler.upload(actionRequest, actionResponse);
 	}
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	private volatile UploadHandler _uploadHandler;
 

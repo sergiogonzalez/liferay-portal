@@ -274,59 +274,63 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 			}
 		}
 
-		JournalServiceConfiguration journalServiceConfiguration = null;
+		if (actionId.equals(ActionKeys.VIEW)) {
+			JournalServiceConfiguration journalServiceConfiguration = null;
 
-		try {
-			journalServiceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					JournalServiceConfiguration.class,
-					permissionChecker.getCompanyId());
-		}
-		catch (ConfigurationException ce) {
-			_log.error(
-				"Unable to get journal service configuration for company " +
-					permissionChecker.getCompanyId(),
-				ce);
-
-			return false;
-		}
-
-		if (actionId.equals(ActionKeys.VIEW) &&
-			!journalServiceConfiguration.articleViewPermissionsCheckEnabled()) {
-
-			return true;
-		}
-
-		if (actionId.equals(ActionKeys.VIEW) &&
-			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-
-			long folderId = article.getFolderId();
-
-			if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				if (!JournalPermission.contains(
-						permissionChecker, article.getGroupId(), actionId)) {
-
-					return false;
-				}
+			try {
+				journalServiceConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						JournalServiceConfiguration.class,
+						permissionChecker.getCompanyId());
 			}
-			else {
-				JournalFolder folder = _journalFolderLocalService.fetchFolder(
-					folderId);
+			catch (ConfigurationException ce) {
+				_log.error(
+					"Unable to get journal service configuration for company " +
+						permissionChecker.getCompanyId(),
+					ce);
 
-				if (folder != null) {
-					if (!JournalFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.ACCESS) &&
-						!JournalFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.VIEW)) {
+				return false;
+			}
+
+			if (!journalServiceConfiguration.
+					articleViewPermissionsCheckEnabled()) {
+
+				return true;
+			}
+
+			if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+				long folderId = article.getFolderId();
+
+				if (folderId ==
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+					if (!JournalPermission.contains(
+							permissionChecker, article.getGroupId(),
+							actionId)) {
 
 						return false;
 					}
 				}
 				else {
-					if (!article.isInTrash()) {
-						_log.error("Unable to get journal folder " + folderId);
+					JournalFolder folder =
+						_journalFolderLocalService.fetchFolder(folderId);
 
-						return false;
+					if (folder != null) {
+						if (!JournalFolderPermission.contains(
+								permissionChecker, folder, ActionKeys.ACCESS) &&
+							!JournalFolderPermission.contains(
+								permissionChecker, folder, ActionKeys.VIEW)) {
+
+							return false;
+						}
+					}
+					else {
+						if (!article.isInTrash()) {
+							_log.error(
+								"Unable to get journal folder " + folderId);
+
+							return false;
+						}
 					}
 				}
 			}

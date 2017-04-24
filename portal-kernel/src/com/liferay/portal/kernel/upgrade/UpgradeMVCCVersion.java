@@ -47,7 +47,8 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 		tableName = normalizeName(tableName, databaseMetaData);
 
 		try (ResultSet tableResultSet = databaseMetaData.getTables(
-				null, null, tableName, null)) {
+				connection.getCatalog(), connection.getSchema(), tableName,
+				null)) {
 
 			if (!tableResultSet.next()) {
 				_log.error("Table " + tableName + " does not exist");
@@ -56,7 +57,7 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 			}
 
 			try (ResultSet columnResultSet = databaseMetaData.getColumns(
-					null, null, tableName,
+					connection.getCatalog(), connection.getSchema(), tableName,
 					normalizeName("mvccVersion", databaseMetaData))) {
 
 				if (columnResultSet.next()) {

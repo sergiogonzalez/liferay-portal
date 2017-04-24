@@ -60,8 +60,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -345,6 +347,15 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			return null;
+		}
+
+		return super.getDisplayDate();
+	}
+
+	@Override
 	public Document getDocument() {
 		if (_document == null) {
 			try {
@@ -358,6 +369,15 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 
 		return _document;
+	}
+
+	@Override
+	public Date getExpirationDate() {
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			return null;
+		}
+
+		return super.getExpirationDate();
 	}
 
 	@Override
@@ -465,6 +485,15 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Deprecated
 	public String getLegacyTitle() {
 		return _title;
+	}
+
+	@Override
+	public Date getReviewDate() {
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			return null;
+		}
+
+		return super.getReviewDate();
 	}
 
 	@Override

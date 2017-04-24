@@ -32,15 +32,18 @@ import com.liferay.exportimport.test.util.TestReaderWriter;
 import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -237,6 +241,9 @@ public class DefaultExportImportContentProcessorTest {
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
 
+		_exportImportContentProcessor.validateContentReferences(
+			_stagingGroup.getGroupId(), content);
+
 		List<String> urls = getURLs(content);
 
 		content = _exportImportContentProcessor.replaceExportContentReferences(
@@ -301,6 +308,9 @@ public class DefaultExportImportContentProcessorTest {
 
 		portalUtil.setPortal(portalImpl);
 
+		Portal originalPortal = ReflectionTestUtil.getAndSetFieldValue(
+			_exportImportContentProcessor, "_portal", portalImpl);
+
 		_oldLayoutFriendlyURLPrivateUserServletMapping =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
@@ -346,6 +356,9 @@ public class DefaultExportImportContentProcessorTest {
 				StringPool.SLASH);
 
 		portalUtil.setPortal(new PortalImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			_exportImportContentProcessor, "_portal", originalPortal);
 	}
 
 	@Test
@@ -688,6 +701,9 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	protected String replaceParameters(String content, FileEntry fileEntry) {
+		Company company = CompanyLocalServiceUtil.fetchCompany(
+			fileEntry.getCompanyId());
+
 		content = StringUtil.replace(
 			content,
 			new String[] {
@@ -698,7 +714,8 @@ public class DefaultExportImportContentProcessorTest {
 				"[$PATH_FRIENDLY_URL_PRIVATE_USER$]",
 				"[$PATH_FRIENDLY_URL_PUBLIC$]",
 				"[$PRIVATE_LAYOUT_FRIENDLY_URL$]",
-				"[$PUBLIC_LAYOUT_FRIENDLY_URL$]", "[$TITLE$]", "[$UUID$]"
+				"[$PUBLIC_LAYOUT_FRIENDLY_URL$]", "[$TITLE$]", "[$UUID$]",
+				"[$WEB_ID$]"
 			},
 			new String[] {
 				_stagingGroup.getFriendlyURL(),
@@ -712,7 +729,7 @@ public class DefaultExportImportContentProcessorTest {
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_stagingPrivateLayout.getFriendlyURL(),
 				_stagingPublicLayout.getFriendlyURL(), fileEntry.getTitle(),
-				fileEntry.getUuid()
+				fileEntry.getUuid(), company.getWebId()
 			});
 
 		if (!content.contains("[$TIMESTAMP")) {

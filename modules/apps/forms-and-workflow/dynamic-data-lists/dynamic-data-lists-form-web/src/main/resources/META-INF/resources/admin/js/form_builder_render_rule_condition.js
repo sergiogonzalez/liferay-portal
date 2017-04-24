@@ -110,8 +110,7 @@ AUI.add(
 								condition.operands.push(
 									{
 										type: 'constant',
-										value: instance._getSecondOperandValue(index, 'input'),
-										visible: true
+										value: instance._getSecondOperandValue(index, 'input')
 									}
 								);
 							}
@@ -120,8 +119,7 @@ AUI.add(
 									{
 										label: instance._getOptionsLabel(instance._getSecondOperand(index, 'options'), instance._getSecondOperandValue(index, 'options')),
 										type: 'constant',
-										value: instance._getSecondOperandValue(index, 'options'),
-										visible: true
+										value: instance._getSecondOperandValue(index, 'options')
 									}
 								);
 							}
@@ -130,18 +128,10 @@ AUI.add(
 							condition.operands.push(
 								{
 									type: 'field',
-									value: instance._getSecondOperandValue(index, 'fields'),
-									visible: true
+									value: instance._getSecondOperandValue(index, 'fields')
 								}
 							);
 						}
-					}
-					else if (instance._isUnaryCondition(index)) {
-						condition.operands.push(
-							{
-								visible: false
-							}
-						);
 					}
 
 					conditions.push(condition);

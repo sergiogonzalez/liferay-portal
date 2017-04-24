@@ -19,19 +19,32 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-WorkflowDefinition workflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
+WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
 
-WorkflowDefinition workflowDefinitionVersion = (WorkflowDefinition)request.getAttribute("WORKFLOW_DEFINITION_VERSION");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= workflowDefinition.getVersion() != workflowDefinitionVersion.getVersion() %>">
-		<portlet:renderURL var="revertURL">
-			<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
+	<portlet:renderURL var="viewURL">
+		<portlet:param name="mvcPath" value="/view_workflow_definition.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="view"
+		url="<%= viewURL %>"
+	/>
+
+	<c:if test="<%= currentWorkflowDefinition.getVersion() != workflowDefinition.getVersion() %>">
+		<liferay-portlet:actionURL name="revertWorkflowDefinition" var="revertURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="name" value="<%= workflowDefinitionVersion.getName() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(workflowDefinitionVersion.getVersion()) %>" />
-		</portlet:renderURL>
+			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
 			message="revert"

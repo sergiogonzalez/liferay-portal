@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
 		"gulp": "^3.9.0",
-		"liferay-forms-gulp-tasks": "^0.0.8",
+		"liferay-forms-gulp-tasks": "^0.0.9",
 		"liferay-karma-alloy-config": "^0.0.14",
 		"liferay-karma-config": "0.0.3",
 		"soyutils-nogoog": "^1.0.0"

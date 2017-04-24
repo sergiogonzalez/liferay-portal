@@ -43,13 +43,11 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -97,7 +95,7 @@ public class ProjectTemplatesTest {
 
 		_gradleDistribution = URI.create(gradleDistribution);
 
-		_projectTemplateVersions = FileTestUtil.readProperties(
+		_projectTemplateVersions = FileUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
 	}
 
@@ -1109,10 +1107,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testListTemplates() throws Exception {
-		Set<String> templates = new HashSet<>(
-			Arrays.asList(ProjectTemplates.getTemplates()));
-
-		final Set<String> expectedTemplates = new HashSet<>();
+		final Map<String, String> expectedTemplates = new TreeMap<>();
 
 		try (DirectoryStream<Path> directoryStream =
 				FileTestUtil.getProjectTemplatesDirectoryStream()) {
@@ -1124,12 +1119,18 @@ public class ProjectTemplatesTest {
 					FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());
 
 				if (!template.equals(WorkspaceUtil.WORKSPACE)) {
-					expectedTemplates.add(template);
+					Properties properties = FileUtil.readProperties(
+						path.resolve("bnd.bnd"));
+
+					String bundleDescription = properties.getProperty(
+						"Bundle-Description");
+
+					expectedTemplates.put(template, bundleDescription);
 				}
 			}
 		}
 
-		Assert.assertEquals(expectedTemplates, templates);
+		Assert.assertEquals(expectedTemplates, ProjectTemplates.getTemplates());
 	}
 
 	@Rule

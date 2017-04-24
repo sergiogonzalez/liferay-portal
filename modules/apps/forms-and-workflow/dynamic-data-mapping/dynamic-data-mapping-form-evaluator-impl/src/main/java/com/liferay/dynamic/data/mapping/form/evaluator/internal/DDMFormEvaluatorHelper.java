@@ -45,9 +45,17 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,6 +67,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,7 +82,10 @@ public class DDMFormEvaluatorHelper {
 		DDMDataProviderInvoker ddmDataProviderInvoker,
 		DDMExpressionFactory ddmExpressionFactory,
 		DDMFormEvaluatorContext ddmFormEvaluatorContext,
-		JSONFactory jsonFactory, UserLocalService userLocalService) {
+		JSONFactory jsonFactory, GroupLocalService groupLocalService,
+		RoleLocalService roleLocalService,
+		UserGroupRoleLocalService userGroupRoleLocalService,
+		UserLocalService userLocalService) {
 
 		_ddmDataProviderContextFactory = ddmDataProviderContextFactory;
 		_ddmDataProviderInvoker = ddmDataProviderInvoker;
@@ -84,14 +96,21 @@ public class DDMFormEvaluatorHelper {
 		_ddmFormFieldsMap = _ddmForm.getDDMFormFieldsMap(true);
 
 		_jsonFactory = jsonFactory;
-		_userLocalService = userLocalService;
 		_locale = ddmFormEvaluatorContext.getLocale();
 
+		_groupLocalService = groupLocalService;
+		_roleLocalService = roleLocalService;
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+		_userLocalService = userLocalService;
+
 		_request = ddmFormEvaluatorContext.getProperty("request");
+		_groupId = ddmFormEvaluatorContext.getProperty("groupId");
 
 		createDDMFormFieldValues(ddmFormEvaluatorContext.getDDMFormValues());
 
 		createDDMFormFieldRuleEvaluationResultsMap();
+
+		_resourceBundle = createResourceBundle();
 
 		registerDDMExpressionCustomFunctions();
 	}
@@ -142,8 +161,15 @@ public class DDMFormEvaluatorHelper {
 		setDDMFormFieldEvaluationResultValidation(
 			ddmFormFieldEvaluationResult, ddmFormField, ddmFormFieldValue);
 
-		String valueString = getValueString(
-			ddmFormFieldValue.getValue(), ddmFormField.getType());
+		String type = ddmFormField.getType();
+
+		String valueString = getValueString(ddmFormFieldValue.getValue(), type);
+
+		if (Objects.equals(type, "validation")) {
+			ddmFormFieldEvaluationResult.setValue(valueString);
+
+			return ddmFormFieldEvaluationResult;
+		}
 
 		Object value = FieldConstants.getSerializable(
 			ddmFormField.getDataType(), valueString);
@@ -207,6 +233,22 @@ public class DDMFormEvaluatorHelper {
 		}
 	}
 
+	protected ResourceBundle createResourceBundle() {
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
+		String languageId = LocaleUtil.toLanguageId(_locale);
+
+		ResourceBundle portalResourceBundle =
+			portalResourceBundleLoader.loadResourceBundle(languageId);
+
+		ResourceBundle portletResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", _locale, getClass());
+
+		return new AggregateResourceBundle(
+			portletResourceBundle, portalResourceBundle);
+	}
+
 	protected void evaluateDDMFormRule(DDMFormRule ddmFormRule)
 		throws DDMFormEvaluationException {
 
@@ -231,6 +273,18 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		return ddmFormFieldEvaluationResults;
+	}
+
+	protected String getDDMFormFieldValidationErrorMessage(
+		DDMFormFieldValidation ddmFormFieldValidation) {
+
+		String errorMessage = ddmFormFieldValidation.getErrorMessage();
+
+		if (Validator.isNotNull(errorMessage)) {
+			return errorMessage;
+		}
+
+		return LanguageUtil.get(_resourceBundle, "this-field-is-invalid");
 	}
 
 	protected DDMFormFieldValue getDDMFormFieldValue(
@@ -381,7 +435,9 @@ public class DDMFormEvaluatorHelper {
 				_ddmExpressionFactory, _ddmExpressionFunctionRegistry));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"belongsTo",
-			new BelongsToRoleFunction(_request, _userLocalService));
+			new BelongsToRoleFunction(
+				_request, _groupId, _groupLocalService, _roleLocalService,
+				_userGroupRoleLocalService, _userLocalService));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"calculate",
 			new SetPropertyFunction(
@@ -520,7 +576,7 @@ public class DDMFormEvaluatorHelper {
 
 		if (required && visible && emptyValue) {
 			ddmFormFieldEvaluationResult.setErrorMessage(
-				LanguageUtil.get(_locale, "this-field-is-required"));
+				LanguageUtil.get(_resourceBundle, "this-field-is-required"));
 
 			ddmFormFieldEvaluationResult.setValid(false);
 
@@ -551,7 +607,9 @@ public class DDMFormEvaluatorHelper {
 
 			if (!valid) {
 				ddmFormFieldEvaluationResult.setErrorMessage(
-					ddmFormFieldValidation.getErrorMessage());
+					getDDMFormFieldValidationErrorMessage(
+						ddmFormFieldValidation));
+
 				ddmFormFieldEvaluationResult.setValid(false);
 			}
 		}
@@ -619,10 +677,15 @@ public class DDMFormEvaluatorHelper {
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap =
 		new LinkedHashMap<>();
+	private final long _groupId;
+	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private final Map<Integer, Integer> _pageFlow = new HashMap<>();
 	private final HttpServletRequest _request;
+	private final ResourceBundle _resourceBundle;
+	private final RoleLocalService _roleLocalService;
+	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 	private final UserLocalService _userLocalService;
 
 }

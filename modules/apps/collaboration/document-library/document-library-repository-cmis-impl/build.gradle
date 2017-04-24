@@ -1,9 +1,12 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
-	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.13.0"
-	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-bindings", version: "0.13.0"
-	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-impl", version: "0.13.0"
-	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-api", version: "0.13.0"
-	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-impl", version: "0.13.0"
+	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.14.0"
+	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-bindings", version: "0.14.0"
+	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-impl", version: "0.14.0"
+	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-api", version: "0.14.0"
+	compileInclude group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-impl", version: "0.14.0"
 	compileInclude group: "org.apache.cxf", name: "cxf-api", version: "2.7.11"
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "2.7.11"
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "2.7.11"

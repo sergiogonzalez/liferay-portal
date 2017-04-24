@@ -49,9 +49,12 @@ public class FormNavigatorEntryConfigurationParser {
 
 		List<String> formNavigatorEntryKeys = null;
 
-		if (Validator.isNotNull(context)) {
+		if (Validator.isNotNull(categoryKey) && Validator.isNotNull(context)) {
 			formNavigatorEntryKeys = _formNavigatorEntryKeysMap.get(
 				context + StringPool.PERIOD + categoryKey);
+		}
+		else if (Validator.isNotNull(context)) {
+			formNavigatorEntryKeys = _formNavigatorEntryKeysMap.get(context);
 		}
 
 		if (formNavigatorEntryKeys == null) {
@@ -84,6 +87,10 @@ public class FormNavigatorEntryConfigurationParser {
 				String key = matcher.group("key");
 				String value = matcher.group("value");
 
+				if (key == null) {
+					key = StringPool.BLANK;
+				}
+
 				_formNavigatorEntryKeysMap.put(key.trim(), _splitKeys(value));
 			}
 		}
@@ -100,7 +107,7 @@ public class FormNavigatorEntryConfigurationParser {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"^(?<key>.*)=(?<value>.*)$", Pattern.MULTILINE);
+		"^(?:(?<key>.*)=)?(?<value>.*)$", Pattern.MULTILINE);
 
 	private FormNavigatorConfiguration _formNavigatorConfiguration;
 	private Map<String, List<String>> _formNavigatorEntryKeysMap;

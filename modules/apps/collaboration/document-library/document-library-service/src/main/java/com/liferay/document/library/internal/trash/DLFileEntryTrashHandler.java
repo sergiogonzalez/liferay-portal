@@ -24,7 +24,7 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.service.DLTrashLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.kernel.util.DLValidatorUtil;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -187,10 +187,17 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+	public TrashedModel getTrashedModel(long classPK) {
+		try {
+			return getDLFileEntry(classPK);
+		}
+		catch (PortalException | UnsupportedCapabilityException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
-		return dlFileEntry.getTrashEntry();
+			return null;
+		}
 	}
 
 	@Override
@@ -206,38 +213,6 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		return super.hasTrashPermission(
 			permissionChecker, groupId, classPK, trashActionId);
-	}
-
-	@Override
-	public boolean isInTrash(long classPK) throws PortalException {
-		try {
-			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
-
-			return dlFileEntry.isInTrash();
-		}
-		catch (UnsupportedCapabilityException uce) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(uce, uce);
-			}
-
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		try {
-			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
-
-			return dlFileEntry.isInTrashContainer();
-		}
-		catch (UnsupportedCapabilityException uce) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(uce, uce);
-			}
-
-			return false;
-		}
 	}
 
 	@Override
@@ -328,7 +303,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		throws PortalException {
 
 		if (Validator.isNotNull(newName) &&
-			!DLValidatorUtil.isValidName(newName)) {
+			!_dlValidator.isValidName(newName)) {
 
 			RestoreEntryException ree = new RestoreEntryException(
 				RestoreEntryException.INVALID_NAME);
@@ -493,5 +468,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
 	private DLTrashLocalService _dlTrashLocalService;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 }

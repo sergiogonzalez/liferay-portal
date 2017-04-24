@@ -245,6 +245,29 @@ public class DDMFormValidationException extends PortalException {
 
 	}
 
+	public static class MustSetValidFormRuleExpression
+		extends DDMFormValidationException {
+
+		public MustSetValidFormRuleExpression(
+			String expressionType, String expression, Throwable cause) {
+
+			super(
+				String.format(
+					"Invalid form rule %s expression set: \"%s\"",
+					expressionType, expression),
+				cause);
+
+			_expression = expression;
+		}
+
+		public String getExpression() {
+			return _expression;
+		}
+
+		private final String _expression;
+
+	}
+
 	public static class MustSetValidIndexType
 		extends DDMFormValidationException {
 
@@ -264,31 +287,61 @@ public class DDMFormValidationException extends PortalException {
 
 	}
 
-	public static class MustSetValidVisibilityExpression
-		extends DDMFormValidationException {
+	public static class MustSetValidValidationExpression
+		extends MustSetValidDDMFormFieldExpression {
 
-		public MustSetValidVisibilityExpression(
-			String fieldName, String visibilityExpression) {
+		public MustSetValidValidationExpression(
+			String fieldName, String expression) {
 
-			super(
-				String.format(
-					"Invalid visibility expression set for field %s: %s",
-					fieldName, visibilityExpression));
-
-			_fieldName = fieldName;
-			_visibilityExpression = visibilityExpression;
+			super(fieldName, "validation", expression);
 		}
 
-		public String getFieldName() {
-			return _fieldName;
+		public String getValidationExpression() {
+			return expression;
+		}
+
+	}
+
+	public static class MustSetValidVisibilityExpression
+		extends MustSetValidDDMFormFieldExpression {
+
+		public MustSetValidVisibilityExpression(
+			String fieldName, String expression) {
+
+			super(fieldName, "visibility", expression);
 		}
 
 		public String getVisibilityExpression() {
-			return _visibilityExpression;
+			return expression;
 		}
 
-		private String _fieldName;
-		private final String _visibilityExpression;
+	}
+
+	private static class MustSetValidDDMFormFieldExpression
+		extends DDMFormValidationException {
+
+		public MustSetValidDDMFormFieldExpression(
+			String fieldName, String expressionType, String expression) {
+
+			super(
+				String.format(
+					"Invalid %s expression set for field %s: %s",
+					expressionType, fieldName, expression));
+
+			this.fieldName = fieldName;
+			this.expression = expression;
+		}
+
+		public String getExpression() {
+			return expression;
+		}
+
+		public String getFieldName() {
+			return fieldName;
+		}
+
+		protected String expression;
+		protected String fieldName;
 
 	}
 

@@ -382,6 +382,20 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addPGViaAP">
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Calendar Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#_viewNewEventIframe" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+	</command>
+
 	<command name="addRegular">
 		<execute macro="CalendarEvent#editTitle">
 			<var name="eventTitle" value="${eventTitle}" />

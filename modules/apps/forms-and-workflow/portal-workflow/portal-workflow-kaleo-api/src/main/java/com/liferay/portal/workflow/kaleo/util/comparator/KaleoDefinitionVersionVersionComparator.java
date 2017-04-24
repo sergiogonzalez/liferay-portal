@@ -35,13 +35,13 @@ public class KaleoDefinitionVersionVersionComparator
 
 	@Override
 	public int compare(
-		KaleoDefinitionVersion definitionVersion1,
-		KaleoDefinitionVersion definitionVersion2) {
+		KaleoDefinitionVersion kaleoDefinitionVersion1,
+		KaleoDefinitionVersion kaleoDefinitionVersion2) {
 
 		int value = 0;
 
-		String version1 = definitionVersion1.getVersion();
-		String version2 = definitionVersion2.getVersion();
+		String version1 = kaleoDefinitionVersion1.getVersion();
+		String version2 = kaleoDefinitionVersion2.getVersion();
 
 		int[] versionParts1 = StringUtil.split(version1, StringPool.PERIOD, 0);
 		int[] versionParts2 = StringUtil.split(version2, StringPool.PERIOD, 0);

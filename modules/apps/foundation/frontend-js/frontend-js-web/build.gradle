@@ -23,7 +23,7 @@ task testJS
 String alloyUIVersion = "3.1.0-deprecated.9"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
-String lexiconVersion = "1.0.18"
+String lexiconVersion = "1.0.19"
 String lodashVersion = "3.10.1"
 String svg4everybodyVersion = "2.0.0"
 
@@ -126,6 +126,7 @@ buildLiferayAMDLoader {
 	eachFile new StripPathSegmentsAction(2)
 	from npmInstall.nodeModulesDir
 	include "liferay-amd-loader/dist/loader.js"
+	include "liferay-amd-loader/dist/es6-promise.map"
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")
 }

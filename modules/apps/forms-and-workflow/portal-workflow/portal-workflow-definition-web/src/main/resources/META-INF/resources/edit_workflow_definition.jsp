@@ -22,19 +22,19 @@ String redirect = ParamUtil.getString(request, "redirect");
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
 
 String content = StringPool.BLANK;
+String name = StringPool.BLANK;
+int version = 0;
 
 if (workflowDefinition != null) {
 	content = workflowDefinition.getContent();
+	name = workflowDefinition.getName();
+	version = workflowDefinition.getVersion();
 }
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view.jsp");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName()) : workflowDefinition.getName());
+renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, (workflowDefinition == null) ? "new-definition" : workflowDefinition.getName()) : workflowDefinition.getName());
 %>
 
 <liferay-portlet:actionURL name='<%= (workflowDefinition == null) ? "addWorkflowDefinition" : "updateWorkflowDefinition" %>' var="editWorkflowDefinitionURL">
@@ -69,6 +69,8 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 							<div>
 								<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
+
+								<aui:workflow-status model="<%= WorkflowDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
 							</div>
 						</div>
 					</liferay-ui:section>
@@ -89,10 +91,12 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		<aui:form action="<%= editWorkflowDefinitionURL %>" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="content" type="hidden" value="<%= content %>" />
+			<aui:input name="name" type="hidden" value="<%= name %>" />
+			<aui:input name="version" type="hidden" value="<%= version %>" />
 
 			<div class="card-horizontal">
 				<div class="card-row-padded">
-					<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-a-valid-file" />
+					<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="please-enter-a-valid-definition" />
 
 					<aui:fieldset>
 						<aui:col>

@@ -18,19 +18,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
-import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,184 +59,97 @@ public class KaleoDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddKaleoDefinitionShouldCreateVersion() throws Exception {
-		addKaleoDefinition();
+	public void testAddKaleoDefinition() throws Exception {
+		KaleoDefinition kaleoDefinition = addKaleoDefinition();
 
-		Assert.assertEquals(1, _kaleoDefinition.getVersion());
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			KaleoDefinitionVersionLocalServiceUtil.
-				getLatestKaleoDefinitionVersion(
-					_kaleoDefinition.getKaleoDefinitionId());
-
-		Assert.assertEquals("1.0", kaleoDefinitionVersion.getVersion());
+		Assert.assertEquals(1, kaleoDefinition.getVersion());
 	}
 
 	@Test
 	public void testDeactivateKaleoDefinition() throws Exception {
-		addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition();
 
-		deactivateKaleoDefinition(1);
+		deactivateKaleoDefinition(kaleoDefinition);
 
-		Assert.assertFalse(_kaleoDefinition.getActive());
-	}
-
-	@Test
-	public void testDeactivateKaleoDefinitionShouldDeactivateVersion1()
-		throws Exception {
-
-		addKaleoDefinition();
-
-		updateKaleoDefinition();
-
-		deactivateKaleoDefinition(1);
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
-				_kaleoDefinition.getKaleoDefinitionId(), "1.0");
-
-		Assert.assertFalse(kaleoDefinitionVersion.getActive());
-
-		kaleoDefinitionVersion =
-			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
-				_kaleoDefinition.getKaleoDefinitionId(), "2.0");
-
-		Assert.assertTrue(kaleoDefinitionVersion.getActive());
-	}
-
-	@Test
-	public void testDeactivateKaleoDefinitionShouldDeactivateVersion2()
-		throws Exception {
-
-		addKaleoDefinition();
-
-		updateKaleoDefinition();
-
-		deactivateKaleoDefinition(2);
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
-				_kaleoDefinition.getKaleoDefinitionId(), "1.0");
-
-		Assert.assertTrue(kaleoDefinitionVersion.getActive());
-
-		kaleoDefinitionVersion =
-			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
-				_kaleoDefinition.getKaleoDefinitionId(), "2.0");
-
-		Assert.assertFalse(kaleoDefinitionVersion.getActive());
+		Assert.assertFalse(kaleoDefinition.getActive());
 	}
 
 	@Test(expected = WorkflowException.class)
 	public void testDeleteKaleoDefinition1() throws Exception {
-		addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition();
 
-		deleteKaleoDefinition(1);
+		deleteKaleoDefinition(kaleoDefinition);
 	}
 
 	@Test(expected = NoSuchDefinitionException.class)
 	public void testDeleteKaleoDefinition2() throws Exception {
-		addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition();
 
-		deactivateKaleoDefinition(1);
+		deactivateKaleoDefinition(kaleoDefinition);
 
-		deleteKaleoDefinition(1);
-
-		KaleoDefinitionLocalServiceUtil.getKaleoDefinition(
-			_kaleoDefinition.getKaleoDefinitionId());
-	}
-
-	@Test(expected = NoSuchDefinitionVersionException.class)
-	public void testDeleteKaleoDefinitionShouldDeleteVersion()
-		throws Exception {
-
-		addKaleoDefinition();
-
-		deactivateKaleoDefinition(1);
-
-		deleteKaleoDefinition(1);
-
-		KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersion(
-			_kaleoDefinition.getKaleoDefinitionId());
-	}
-
-	@Test
-	public void testDeleteKaleoDefinitionShouldDeleteVersionOnly()
-		throws Exception {
-
-		addKaleoDefinition();
-
-		updateKaleoDefinition();
-
-		deactivateKaleoDefinition(1);
-
-		deleteKaleoDefinition(1);
+		deleteKaleoDefinition(kaleoDefinition);
 
 		KaleoDefinitionLocalServiceUtil.getKaleoDefinition(
-			_kaleoDefinition.getKaleoDefinitionId());
+			kaleoDefinition.getKaleoDefinitionId());
 	}
 
 	@Test
 	public void testUpdateKaleoDefinitionShouldIncrementVersion1()
 		throws Exception {
 
-		addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition();
 
-		updateKaleoDefinition();
+		kaleoDefinition = updateKaleoDefinition(kaleoDefinition);
 
-		Assert.assertEquals(2, _kaleoDefinition.getVersion());
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			KaleoDefinitionVersionLocalServiceUtil.
-				getLatestKaleoDefinitionVersion(
-					_kaleoDefinition.getKaleoDefinitionId());
-
-		Assert.assertEquals("2.0", kaleoDefinitionVersion.getVersion());
+		Assert.assertEquals(2, kaleoDefinition.getVersion());
 	}
 
 	@Test
 	public void testUpdateKaleoDefinitionShouldIncrementVersion2()
 		throws Exception {
 
-		addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition();
 
-		updateKaleoDefinition();
+		updateKaleoDefinition(kaleoDefinition);
 
-		deactivateKaleoDefinition(1);
+		deactivateKaleoDefinition(kaleoDefinition);
 
-		deleteKaleoDefinition(1);
+		deleteKaleoDefinition(kaleoDefinition);
 
-		updateKaleoDefinition();
+		kaleoDefinition = updateKaleoDefinition(kaleoDefinition);
 
-		Assert.assertEquals(3, _kaleoDefinition.getVersion());
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
-				_kaleoDefinition.getKaleoDefinitionId(), "3.0");
-
-		Assert.assertEquals("3.0", kaleoDefinitionVersion.getVersion());
+		Assert.assertEquals(3, kaleoDefinition.getVersion());
 	}
 
-	protected void addKaleoDefinition() throws IOException, PortalException {
-		_kaleoDefinition = KaleoDefinitionLocalServiceUtil.addKaleoDefinition(
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), read("single-approver-definition.xml"),
-			1, _serviceContext);
+	protected KaleoDefinition addKaleoDefinition()
+		throws IOException, PortalException {
+
+		KaleoDefinition kaleoDefinition =
+			KaleoDefinitionLocalServiceUtil.addKaleoDefinition(
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringUtil.randomString(),
+				read("legal-marketing-definition.xml"), 1, _serviceContext);
 
 		KaleoDefinitionLocalServiceUtil.activateKaleoDefinition(
-			_kaleoDefinition.getKaleoDefinitionId(), _serviceContext);
+			kaleoDefinition.getKaleoDefinitionId(), _serviceContext);
+
+		return kaleoDefinition;
 	}
 
-	protected void deactivateKaleoDefinition(int version)
+	protected void deactivateKaleoDefinition(KaleoDefinition kaleoDefinition)
 		throws PortalException {
 
 		KaleoDefinitionLocalServiceUtil.deactivateKaleoDefinition(
-			_kaleoDefinition.getName(), version, _serviceContext);
+			kaleoDefinition.getName(), kaleoDefinition.getVersion(),
+			_serviceContext);
 	}
 
-	protected void deleteKaleoDefinition(int version) throws PortalException {
+	protected void deleteKaleoDefinition(KaleoDefinition kaleoDefinition)
+		throws PortalException {
+
 		KaleoDefinitionLocalServiceUtil.deleteKaleoDefinition(
-			_kaleoDefinition.getName(), version, _serviceContext);
+			kaleoDefinition.getName(), kaleoDefinition.getVersion(),
+			_serviceContext);
 	}
 
 	protected String read(String name) throws IOException {
@@ -260,20 +170,23 @@ public class KaleoDefinitionLocalServiceTest {
 		_serviceContext.setUserId(TestPropsValues.getUserId());
 	}
 
-	protected void updateKaleoDefinition() throws IOException, PortalException {
-		_kaleoDefinition =
-			KaleoDefinitionLocalServiceUtil.updateKaleoDefinition(
-				_kaleoDefinition.getName(), StringUtil.randomString(),
-				StringUtil.randomString(),
-				read("single-approver-definition.xml"), _serviceContext,
-				_kaleoDefinition);
+	protected KaleoDefinition updateKaleoDefinition(
+			KaleoDefinition kaleoDefinition)
+		throws IOException, PortalException {
+
+		Definition definition = new Definition(
+			kaleoDefinition.getName(), kaleoDefinition.getDescription(),
+			kaleoDefinition.getContent(), kaleoDefinition.getVersion());
+
+		kaleoDefinition =
+			KaleoDefinitionLocalServiceUtil.incrementKaleoDefinition(
+				definition, StringUtil.randomString(), _serviceContext);
 
 		KaleoDefinitionLocalServiceUtil.activateKaleoDefinition(
-			_kaleoDefinition.getKaleoDefinitionId(), _serviceContext);
-	}
+			kaleoDefinition.getKaleoDefinitionId(), _serviceContext);
 
-	@DeleteAfterTestRun
-	private KaleoDefinition _kaleoDefinition;
+		return kaleoDefinition;
+	}
 
 	private ServiceContext _serviceContext;
 

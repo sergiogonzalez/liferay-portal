@@ -53,7 +53,7 @@ public class WorkflowListedTaskResource {
 
 		List<WorkflowTask> userWorkflowTasks =
 			_workflowTaskManager.getWorkflowTasksByUser(
-				user.getCompanyId(), user.getUserId(), false, QueryUtil.ALL_POS,
+				user.getCompanyId(), user.getUserId(), null, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
 		populateWorkflowTaskModels(
@@ -61,7 +61,7 @@ public class WorkflowListedTaskResource {
 
 		List<WorkflowTask> roleWorkflowTasks =
 			_workflowTaskManager.getWorkflowTasksByUserRoles(
-				user.getCompanyId(), user.getUserId(), false, QueryUtil.ALL_POS,
+				user.getCompanyId(), user.getUserId(), null, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
 		populateWorkflowTaskModels(

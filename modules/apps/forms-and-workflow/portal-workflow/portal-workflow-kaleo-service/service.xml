@@ -180,17 +180,15 @@
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
 		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
-		<column name="kaleoDefinitionId" type="long" />
 		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="description" type="String" />
 		<column name="content" type="String" />
 		<column name="version" type="String" />
-		<column name="active" type="boolean" />
-		<column name="startKaleoNodeId" type="long" />
 		<column name="status" type="int" />
 
 		<!-- Finder methods -->
@@ -198,30 +196,14 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="KaleoDefinitionId" return-type="Collection">
-			<finder-column name="kaleoDefinitionId" />
-		</finder>
 		<finder name="C_N" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
-		</finder>
-		<finder name="C_A" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="active" />
-		</finder>
-		<finder name="D_V" return-type="KaleoDefinitionVersion" unique="true">
-			<finder-column name="kaleoDefinitionId" />
-			<finder-column name="version" />
 		</finder>
 		<finder name="C_N_V" return-type="KaleoDefinitionVersion" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="version" />
-		</finder>
-		<finder name="C_N_A" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="name" />
-			<finder-column name="active" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="KaleoInstance" remote-service="false">

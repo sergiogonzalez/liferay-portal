@@ -23,7 +23,12 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 @DDMForm
 public interface DDMDataProviderInputParametersSettings {
 
-	@DDMFormField(label = "%name", properties = {"placeholder=%enter-a-name"})
+	@DDMFormField(label = "%label", properties = {"placeholder=%enter-a-label"})
+	public String inputParameterLabel();
+
+	@DDMFormField(
+		label = "%parameter", properties = {"placeholder=%enter-the-parameter"}
+	)
 	public String inputParameterName();
 
 	@DDMFormField(label = "%required", type = "checkbox")

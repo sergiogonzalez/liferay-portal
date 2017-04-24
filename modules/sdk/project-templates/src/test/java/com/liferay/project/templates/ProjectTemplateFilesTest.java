@@ -34,7 +34,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,6 +109,24 @@ public class ProjectTemplateFilesTest {
 	private void _testProjectTemplateFiles(
 			Path projectTemplateDirPath, String gitIgnoreTemplate)
 		throws IOException {
+
+		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
+
+		Properties properties = FileUtil.readProperties(bndBndPath);
+
+		String bundleDescription = properties.getProperty("Bundle-Description");
+
+		Assert.assertTrue(
+			"Missing 'Bundle-Description' header in " + bndBndPath,
+			Validator.isNotNull(bundleDescription));
+
+		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
+
+		Assert.assertTrue(
+			"Header 'Bundle-Description' in " + bndBndPath +
+				" must match pattern '" + _bundleDescriptionPattern.pattern() +
+					"'",
+			matcher.matches());
 
 		String projectTemplateDirName = String.valueOf(
 			projectTemplateDirPath.getFileName());
@@ -183,6 +203,14 @@ public class ProjectTemplateFilesTest {
 
 		Assert.assertTrue("Missing " + pomXmlPath, Files.exists(pomXmlPath));
 
+		String pomXml = FileUtil.read(pomXmlPath);
+
+		Assert.assertFalse(
+			"Packaging \"jar\" is implicit in " + pomXmlPath,
+			pomXml.contains("<packaging>jar</packaging>"));
+
+		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
+
 		Files.walkFileTree(
 			archetypeResourcesDirPath,
 			new SimpleFileVisitor<Path>() {
@@ -217,8 +245,14 @@ public class ProjectTemplateFilesTest {
 
 					String extension = FileTestUtil.getExtension(fileName);
 
+					boolean javaFile = extension.equals("java");
+
+					if (javaFile) {
+						hasJavaFiles.set(true);
+					}
+
 					if (!fileName.equals(".gitkeep") &&
-						(_isInJavaSrcDir(path) != extension.equals("java"))) {
+						(_isInJavaSrcDir(path) != javaFile)) {
 
 						Assert.fail("Wrong source directory " + path);
 					}
@@ -231,6 +265,22 @@ public class ProjectTemplateFilesTest {
 				}
 
 			});
+
+		boolean hasArchetypeMetadataAuthorProperty =
+			archetypeMetadataXml.contains("<requiredProperty key=\"author\">");
+
+		if (hasJavaFiles.get()) {
+			Assert.assertTrue(
+				"Missing \"author\" required property in " +
+					archetypeMetadataXmlPath,
+				hasArchetypeMetadataAuthorProperty);
+		}
+		else {
+			Assert.assertFalse(
+				"Forbidden \"author\" required property in " +
+					archetypeMetadataXmlPath,
+				hasArchetypeMetadataAuthorProperty);
+		}
 	}
 
 	private void _testTextFile(Path path, String fileName, String extension)
@@ -269,6 +319,12 @@ public class ProjectTemplateFilesTest {
 				"#if (" + condition.trim() + ")", matcher.group());
 		}
 
+		if (extension.equals("java")) {
+			Assert.assertTrue(
+				"Missing @author tag in " + path,
+				text.contains("* @author ${author}"));
+		}
+
 		if (extension.equals("xml") &&
 			!fileName.equals("liferay-layout-templates.xml") &&
 			Validator.isNotNull(text)) {
@@ -294,6 +350,8 @@ public class ProjectTemplateFilesTest {
 	private static final String _XML_DECLARATION =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 
+	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
+		"Creates a .+\\.");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));

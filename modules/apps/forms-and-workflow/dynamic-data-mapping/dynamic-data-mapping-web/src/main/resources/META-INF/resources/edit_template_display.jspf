@@ -49,7 +49,11 @@ if (Validator.isNotNull(scriptContent)) {
 								clazz = templateHandler.getClass();
 							}
 
-							ResourceBundle templateHandlerResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, clazz);
+							Bundle bundle = FrameworkUtil.getBundle(clazz);
+
+							ResourceBundleLoader resourceBundleLoader = ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(bundle.getSymbolicName());
+
+							ResourceBundle templateHandlerResourceBundle = resourceBundleLoader.loadResourceBundle(LocaleUtil.toLanguageId(locale));
 
 							for (TemplateVariableGroup templateVariableGroup : templateVariableGroups.values()) {
 								if (templateVariableGroup.isEmpty()) {

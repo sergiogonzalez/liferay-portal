@@ -83,7 +83,9 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, displayContext);
 
-			if (Objects.equals(path, "/edit_workflow_definition.jsp")) {
+			if (Objects.equals(path, "/edit_workflow_definition.jsp") ||
+				Objects.equals(path, "/view_workflow_definition.jsp")) {
+
 				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
 			}
 		}

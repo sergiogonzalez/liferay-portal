@@ -4,7 +4,8 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 configJSModules {
-	includes = ["**/*.es.js*"]
+	dependsOn = []
+	enabled = false
 }
 
 dependencies {

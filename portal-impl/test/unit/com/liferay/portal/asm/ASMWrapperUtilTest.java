@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -125,6 +127,11 @@ public class ASMWrapperUtilTest {
 		Method[] expectedMethods = _getDeclaredMethods(TestInterface.class);
 		Method[] actualMethods = _getDeclaredMethods(asmWrapperClass);
 
+		// See LPS-71495
+
+		Assert.assertTrue(asmWrapper.equals(null));
+		Assert.assertEquals(0, asmWrapper.hashCode());
+		Assert.assertEquals("test", asmWrapper.toString());
 		Assert.assertEquals(
 			"Expected: " + Arrays.toString(expectedMethods) + ", actual: " +
 				Arrays.toString(actualMethods),
@@ -226,8 +233,23 @@ public class ASMWrapperUtilTest {
 
 	public static class TestDelegate {
 
+		@Override
+		public boolean equals(Object object) {
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			return 0;
+		}
+
 		public Object objectMethod(Object object) {
 			return new Object();
+		}
+
+		@Override
+		public String toString() {
+			return "test";
 		}
 
 	}
@@ -279,6 +301,25 @@ public class ASMWrapperUtilTest {
 
 	private Method[] _getDeclaredMethods(Class<?> clazz) {
 		Method[] methods = clazz.getDeclaredMethods();
+
+		methods = ArrayUtil.<Method>filter(
+			methods,
+			new PredicateFilter<Method>() {
+
+				@Override
+				public boolean filter(Method method) {
+					String name = method.getName();
+
+					if (name.equals("equals") || name.equals("hashCode") ||
+						name.equals("toString")) {
+
+						return false;
+					}
+
+					return true;
+				}
+
+			});
 
 		Arrays.sort(
 			methods,

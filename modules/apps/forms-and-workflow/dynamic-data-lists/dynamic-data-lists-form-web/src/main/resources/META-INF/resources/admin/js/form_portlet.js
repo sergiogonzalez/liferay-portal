@@ -68,6 +68,10 @@ AUI.add(
 						value: ''
 					},
 
+					getFunctionsURL: {
+						value: ''
+					},
+
 					getRolesURL: {
 						value: ''
 					},
@@ -429,12 +433,10 @@ AUI.add(
 					_afterAutosave: function(event) {
 						var instance = this;
 
-						var modifiedDate = new Date(event.modifiedDate);
-
 						var autosaveMessage = A.Lang.sub(
 							Liferay.Language.get('draft-saved-on-x'),
 							[
-								modifiedDate
+								event.modifiedDate
 							]
 						);
 

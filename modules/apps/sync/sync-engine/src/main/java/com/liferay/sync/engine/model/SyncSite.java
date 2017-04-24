@@ -90,15 +90,15 @@ public class SyncSite extends StateAwareModel {
 	}
 
 	public String getName() {
-		if (type == 0) {
-			if (friendlyURL == null) {
-				return "";
-			}
-
-			return friendlyURL.substring(1);
+		if (isRegularSite()) {
+			return name.replace(" LFR_ORGANIZATION", " (Org)");
 		}
 
-		return name.replace(" LFR_ORGANIZATION", " (Org)");
+		if (friendlyURL == null) {
+			return "";
+		}
+
+		return friendlyURL.substring(1);
 	}
 
 	public long getParentGroupId() {
@@ -146,6 +146,30 @@ public class SyncSite extends StateAwareModel {
 
 	public boolean isActive() {
 		return getActive();
+	}
+
+	public boolean isGlobalSite() {
+		if ((type == 0) && site) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isPersonalSite() {
+		if ((type == 0) && !site) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isRegularSite() {
+		if ((type != 0) && site) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSite() {

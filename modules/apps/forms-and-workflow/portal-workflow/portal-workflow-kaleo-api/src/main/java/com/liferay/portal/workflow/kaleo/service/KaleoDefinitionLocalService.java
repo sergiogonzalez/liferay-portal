@@ -125,10 +125,6 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoDefinition fetchKaleoDefinition(long companyId,
-		java.lang.String name, int version) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinition fetchKaleoDefinition(long kaleoDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -167,11 +163,6 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoDefinition updateKaleoDefinition(
 		KaleoDefinition kaleoDefinition);
-
-	public KaleoDefinition updateKaleoDefinition(java.lang.String name,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, ServiceContext serviceContext,
-		KaleoDefinition kaleoDefinition) throws PortalException;
 
 	public KaleoDefinition updateTitle(java.lang.String name, int version,
 		java.lang.String title, ServiceContext serviceContext)

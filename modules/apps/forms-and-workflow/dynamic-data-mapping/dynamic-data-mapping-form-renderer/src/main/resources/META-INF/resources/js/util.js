@@ -5,28 +5,8 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var MAP_DATA_TYPES = {
-			number: 'integer',
-			text: 'string'
-		};
-
 		var VALIDATIONS = {
 			number: [
-				{
-					label: Liferay.Language.get('is-integer'),
-					name: 'integer',
-					parameterMessage: '',
-					regex: /^isInteger\((\w+)\)$/,
-					template: 'isInteger({name})'
-				},
-				{
-					dataType: 'double',
-					label: Liferay.Language.get('is-decimal'),
-					name: 'decimal',
-					parameterMessage: '',
-					regex: /^isDecimal\((\w+)\)$/,
-					template: 'isDecimal({name})'
-				},
 				{
 					label: Liferay.Language.get('is-greater-than-or-equal-to'),
 					name: 'gteq',
@@ -63,7 +43,7 @@ AUI.add(
 					template: '{name}<{parameter}'
 				}
 			],
-			text: [
+			string: [
 				{
 					label: Liferay.Language.get('contains'),
 					name: 'contains',
@@ -72,7 +52,7 @@ AUI.add(
 					template: 'contains({name}, "{parameter}")'
 				},
 				{
-					label: Liferay.Language.get('does-not-contain'),
+					label: Liferay.Language.get('not-contains'),
 					name: 'notContains',
 					parameterMessage: Liferay.Language.get('this-text'),
 					regex: /^NOT\(contains\((\w+), "(\w+)"\)\)$/,
@@ -91,6 +71,13 @@ AUI.add(
 					parameterMessage: '',
 					regex: /^isEmailAddress\((\w+)\)$/,
 					template: 'isEmailAddress({name})'
+				},
+				{
+					label: Liferay.Language.get('regular-expression'),
+					name: 'regularExpression',
+					parameterMessage: Liferay.Language.get('this-text'),
+					regex: /^match\((\w+), "(.*)"\)$/,
+					template: 'match({name}, "{parameter}")'
 				}
 			]
 		};
@@ -169,37 +156,6 @@ AUI.add(
 				return text;
 			},
 
-			getDataTypeFromValidation: function(dataType, validation) {
-				var instance = this;
-
-				var expression = validation.expression;
-
-				var validationTypes = instance.getValidations();
-
-				for (var type in validationTypes) {
-					var validations = validationTypes[type];
-
-					for (var i = 0; i < validations.length; i++) {
-						var regex = validations[i].regex;
-
-						if (regex.test(expression)) {
-							if (validations[i].dataType) {
-								dataType = validations[i].dataType;
-							}
-							else {
-								dataType = type;
-							}
-
-							break;
-						}
-					}
-				}
-
-				dataType = MAP_DATA_TYPES[dataType] || dataType;
-
-				return dataType;
-			},
-
 			getFieldByKey: function(haystack, needle, searchKey) {
 				var instance = this;
 
@@ -234,8 +190,8 @@ AUI.add(
 				return name.split('$')[1];
 			},
 
-			getValidations: function() {
-				return VALIDATIONS;
+			getValidations: function(selectedType) {
+				return VALIDATIONS[selectedType];
 			},
 
 			searchFieldsByKey: function(haystack, needle, searchKey) {
