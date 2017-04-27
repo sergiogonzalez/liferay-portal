@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -75,80 +76,90 @@ public class PrivateMessagingUtil {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		if (type.equals("site")) {
-			params.put("inherit", Boolean.TRUE);
-
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-			groupParams.put("inherit", Boolean.FALSE);
-			groupParams.put("site", Boolean.TRUE);
-			groupParams.put("usersGroups", userId);
-
-			List<Group> groups = GroupLocalServiceUtil.search(
-				user.getCompanyId(), groupParams, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-			params.put(
-				"usersGroups",
-				SitesUtil.filterGroups(
-					groups,
-					getAutocompleteRecipientSiteExcludes(user.getCompanyId())));
-		}
-		else if (!type.equals("all")) {
-			params.put(
-				"socialRelationType",
-				new Long[] {
-					userId,
-					Long.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION)
-				});
-		}
-
-		try {
-			Role role = RoleLocalServiceUtil.getRole(
-				user.getCompanyId(), RoleConstants.SOCIAL_OFFICE_USER);
-
-			if (role != null) {
-				params.put("inherit", Boolean.TRUE);
-				params.put("usersRoles", Long.valueOf(role.getRoleId()));
-			}
-		}
-		catch (NoSuchRoleException nsre) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsre, nsre);
-			}
-		}
-
 		List<User> users = new ArrayList<>();
 
-		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		if (indexer.isIndexerEnabled() && _USERS_SEARCH_WITH_INDEX) {
-			Sort sort = SortFactoryUtil.getSort(User.class, "firstName", "asc");
-
-			BaseModelSearchResult<User> baseModelSearchResult =
-				UserLocalServiceUtil.searchUsers(
-					user.getCompanyId(), keywords, keywords, keywords, keywords,
-					keywords, WorkflowConstants.STATUS_APPROVED, params, false,
-					start, end, sort);
-
-			jsonObject.put("total", baseModelSearchResult.getLength());
-
-			users = baseModelSearchResult.getBaseModels();
+		if (type.equals("connection")) {
+			users = UserLocalServiceUtil.getSocialUsers(
+				userId, SocialRelationConstants.TYPE_BI_CONNECTION,
+				StringPool.EQUAL, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new UserFirstNameComparator(true));
 		}
 		else {
-			int total = UserLocalServiceUtil.searchCount(
-				user.getCompanyId(), keywords,
-				WorkflowConstants.STATUS_APPROVED, params);
-
-			jsonObject.put("total", total);
-
-			users = UserLocalServiceUtil.search(
-				user.getCompanyId(), keywords,
-				WorkflowConstants.STATUS_APPROVED, params, start, end,
-				new UserFirstNameComparator(true));
+			if (type.equals("site")) {
+				params.put("inherit", Boolean.TRUE);
+	
+				LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+	
+				groupParams.put("inherit", Boolean.FALSE);
+				groupParams.put("site", Boolean.TRUE);
+				groupParams.put("usersGroups", userId);
+	
+				List<Group> groups = GroupLocalServiceUtil.search(
+					user.getCompanyId(), groupParams, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+	
+				params.put(
+					"usersGroups",
+					SitesUtil.filterGroups(
+						groups,
+						getAutocompleteRecipientSiteExcludes(user.getCompanyId())));
+			}
+			else if (!type.equals("all")) {
+				params.put(
+					"socialRelationType",
+					new Long[] {
+						userId,
+						Long.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION)
+					});
+			}
+	
+			try {
+				Role role = RoleLocalServiceUtil.getRole(
+					user.getCompanyId(), RoleConstants.SOCIAL_OFFICE_USER);
+	
+				if (role != null) {
+					params.put("inherit", Boolean.TRUE);
+					params.put("usersRoles", Long.valueOf(role.getRoleId()));
+				}
+			}
+			catch (NoSuchRoleException nsre) {
+	
+				// LPS-52675
+	
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsre, nsre);
+				}
+			}
+	
+			
+	
+			Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+	
+			if (indexer.isIndexerEnabled() && _USERS_SEARCH_WITH_INDEX) {
+				Sort sort = SortFactoryUtil.getSort(User.class, "firstName", "asc");
+	
+				BaseModelSearchResult<User> baseModelSearchResult =
+					UserLocalServiceUtil.searchUsers(
+						user.getCompanyId(), keywords, keywords, keywords, keywords,
+						keywords, WorkflowConstants.STATUS_APPROVED, params, false,
+						start, end, sort);
+	
+				jsonObject.put("total", baseModelSearchResult.getLength());
+	
+				users = baseModelSearchResult.getBaseModels();
+			}
+			else {
+				int total = UserLocalServiceUtil.searchCount(
+					user.getCompanyId(), keywords,
+					WorkflowConstants.STATUS_APPROVED, params);
+	
+				jsonObject.put("total", total);
+	
+				users = UserLocalServiceUtil.search(
+					user.getCompanyId(), keywords,
+					WorkflowConstants.STATUS_APPROVED, params, start, end,
+					new UserFirstNameComparator(true));
+			}
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
