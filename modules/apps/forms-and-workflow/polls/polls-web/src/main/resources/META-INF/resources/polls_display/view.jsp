@@ -103,7 +103,7 @@ catch (NoSuchQuestionException nsqe) {
 							</div>
 
 							<aui:button-row>
-								<aui:button type="submit" value="vote[action]" />
+								<aui:button cssClass="btn-lg" type="submit" value="vote[action]" />
 							</aui:button-row>
 						</c:when>
 						<c:otherwise>
