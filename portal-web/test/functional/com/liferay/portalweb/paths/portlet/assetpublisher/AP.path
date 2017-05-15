@@ -178,7 +178,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK</td>
-	<td>//div/a[contains(@title,'(Opens New Window)')]</td>
+	<td>//div[@class='asset-content']/a</td>
 	<td></td>
 </tr>
 <tr>

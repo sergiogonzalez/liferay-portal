@@ -50,10 +50,14 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 	<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 </portlet:actionURL>
 
+<%
+String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, trashHelper.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+%>
+
 <liferay-trash:empty
 	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-message"
 	emptyMessage="remove-the-attachments-for-this-message"
-	infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
+	infoMessage='<%= LanguageUtil.format(request, "attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted", trashEntriesMaxAgeTimeDescription, false) %>'
 	portletURL="<%= emptyTrashURL.toString() %>"
 	totalEntries="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 />
@@ -93,7 +97,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 				icon="<%= assetRenderer.getIconCssClass() %>"
 				label="<%= true %>"
 				markupView="lexicon"
-				message="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
+				message="<%= trashHelper.getOriginalTitle(fileEntry.getTitle()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 

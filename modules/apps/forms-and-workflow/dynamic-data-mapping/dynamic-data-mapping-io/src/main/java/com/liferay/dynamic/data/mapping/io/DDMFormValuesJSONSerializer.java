@@ -14,11 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 /**
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface DDMFormValuesJSONSerializer {
 
 	public String serialize(DDMFormValues ddmFormValues);

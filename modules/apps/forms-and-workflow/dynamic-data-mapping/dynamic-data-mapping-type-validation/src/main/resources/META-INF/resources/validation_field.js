@@ -18,10 +18,6 @@ AUI.add(
 						value: ''
 					},
 
-					selectedType: {
-						value: 'text'
-					},
-
 					selectedValidation: {
 						getter: '_getSelectedValidation',
 						value: 'notEmpty'
@@ -29,12 +25,9 @@ AUI.add(
 
 					strings: {
 						value: {
-							disableValidation: Liferay.Language.get('disable-validation'),
 							email: Liferay.Language.get('email'),
-							enableValidation: Liferay.Language.get('enable-validation'),
 							errorMessageGoesHere: Liferay.Language.get('error-message-goes-here'),
-							number: Liferay.Language.get('number'),
-							text: Liferay.Language.get('text'),
+							validation: Liferay.Language.get('validation'),
 							url: Liferay.Language.get('url')
 						}
 					},
@@ -43,12 +36,8 @@ AUI.add(
 						value: 'validation'
 					},
 
-					typesOptions: {
-						value: []
-					},
-
 					validations: {
-						value: Util.getValidations()
+						getter: '_getValidations'
 					},
 
 					value: {
@@ -103,15 +92,13 @@ AUI.add(
 						return A.merge(
 							ValidationField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								disableValidationMessage: strings.disableValidation,
-								enableValidationMessage: strings.enableValidation,
 								enableValidationValue: !!(value && value.expression),
 								errorMessagePlaceholder: strings.errorMessageGoesHere,
 								errorMessageValue: instance.get('errorMessageValue'),
 								parameterMessagePlaceholder: parameterMessage,
 								parameterValue: instance.get('parameterValue'),
-								typesOptions: instance._getTypesOptions(),
-								validationsOptions: instance._getValidatiionsOptions()
+								validationMessage: strings.validation,
+								validationsOptions: instance._getValidationsOptions()
 							}
 						);
 					},
@@ -184,59 +171,36 @@ AUI.add(
 					_getSelectedValidation: function(val) {
 						var instance = this;
 
-						var selectedType = instance.get('selectedType');
-
 						var validations = instance.get('validations');
 
 						var selectedValidation = A.Array.find(
-							validations[selectedType],
+							validations,
 							function(validation) {
 								return validation.name === val;
 							}
 						);
 
 						if (!selectedValidation) {
-							selectedValidation = validations[selectedType][0];
+							selectedValidation = validations[0];
 						}
 
 						return selectedValidation;
 					},
 
-					_getTypesOptions: function() {
+					_getValidations: function() {
 						var instance = this;
 
-						var selectedType = instance.get('selectedType');
-
-						var strings = instance.get('strings');
-
-						var options = [];
-
-						A.each(
-							instance.get('validations'),
-							function(validation, validationType) {
-								var status = selectedType === validationType ? 'selected' : '';
-
-								options.push(
-									{
-										label: strings[validationType],
-										status: status,
-										value: validationType
-									}
-								);
-							}
-						);
-
-						return options;
+						return Util.getValidations(instance.get('dataType')) || [];
 					},
 
-					_getValidatiionsOptions: function() {
+					_getValidationsOptions: function() {
 						var instance = this;
 
 						var selectedValidation = instance.get('selectedValidation');
 
 						var validations = instance.get('validations');
 
-						return validations[instance.get('selectedType')].map(
+						return validations.map(
 							function(validation) {
 								var status = '';
 
@@ -281,23 +245,18 @@ AUI.add(
 
 							A.each(
 								instance.get('validations'),
-								function(validation, type) {
-									validation.forEach(
-										function(item) {
-											var regex = item.regex;
+								function(item, type) {
+									var regex = item.regex;
 
-											if (regex.test(expression)) {
-												instance.set('errorMessageValue', errorMessage);
-												instance.set('selectedType', type);
-												instance.set('selectedValidation', item.name);
+									if (regex.test(expression)) {
+										instance.set('errorMessageValue', errorMessage);
+										instance.set('selectedValidation', item.name);
 
-												instance.set(
-													'parameterValue',
-													instance.extractParameterValue(regex, expression)
-												);
-											}
-										}
-									);
+										instance.set(
+											'parameterValue',
+											instance.extractParameterValue(regex, expression)
+										);
+									}
 								}
 							);
 						}
@@ -315,11 +274,9 @@ AUI.add(
 						var selectedValidation = newVal;
 
 						if (currentTarget.hasClass('types-select')) {
-							instance.set('selectedType', newVal);
-
 							var validations = instance.get('validations');
 
-							selectedValidation = validations[newVal][0].name;
+							selectedValidation = validations[0].name;
 						}
 
 						instance.set('selectedValidation', selectedValidation);

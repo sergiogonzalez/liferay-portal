@@ -308,6 +308,7 @@
 				<classpath mode="compile">lib/development/saxpath.jar</classpath>
 				<classpath mode="compile">lib/development/sdk-addon-api-0.2.jar</classpath>
 				<classpath mode="compile">lib/development/servlet-api.jar</classpath>
+				<classpath mode="compile">lib/development/slf4j-simple.jar</classpath>
 				<classpath mode="compile">lib/development/smtp.jar</classpath>
 				<classpath mode="compile">lib/development/spring-instrument.jar</classpath>
 				<classpath mode="compile">lib/development/spring-instrument-tomcat.jar</classpath>
@@ -318,6 +319,7 @@
 				<classpath mode="compile">lib/development/velocity.jar</classpath>
 				<classpath mode="compile">lib/development/velocity-tools.jar</classpath>
 				<classpath mode="compile">lib/development/websocket-api.jar</classpath>
+				<classpath mode="compile">lib/development/xmlresolver.jar</classpath>
 				<classpath mode="compile">lib/development/xmltask.jar</classpath>
 				<classpath mode="compile">lib/global/portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/abdera.jar</classpath>
@@ -415,7 +417,13 @@
 				<classpath mode="compile">lib/portal/jmatio.jar</classpath>
 				<classpath mode="compile">lib/portal/jna.jar</classpath>
 				<classpath mode="compile">lib/portal/jodconverter.jar</classpath>
-				<classpath mode="compile">lib/portal/jodd.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-bean.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-core.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-http.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-json.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-proxetta.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-servlet.jar</classpath>
+				<classpath mode="compile">lib/portal/jodd-upload.jar</classpath>
 				<classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>
 				<classpath mode="compile">lib/portal/json-java.jar</classpath>
 				<classpath mode="compile">lib/portal/json-schema-validator.jar</classpath>

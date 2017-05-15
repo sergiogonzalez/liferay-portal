@@ -285,14 +285,14 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 					</aui:fieldset>
 
 					<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
-
-					<liferay-staging:permissions action="<%= Constants.IMPORT %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 				</c:if>
+
+				<liferay-staging:permissions action="<%= Constants.IMPORT %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="update-data">
 					<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "mirror") %>' helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />
 
-					<aui:input data-name='<%= LanguageUtil.get(request, "mirror-with-overwriting") %>' helpMessage="import-data-strategy-mirror-with-overwriting-help" id="mirrorWithOverwriting" label="mirror-with-overwriting" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE %>" />
+					<aui:input data-name='<%= LanguageUtil.get(request, "mirror-with-overwriting") %>' disabled="<%= !portletDataHandler.isSupportsDataStrategyMirrorWithOverwriting() %>" helpMessage='<%= portletDataHandler.isSupportsDataStrategyMirrorWithOverwriting() ? "import-data-strategy-mirror-with-overwriting-help" : "not-supported" %>' id="mirrorWithOverwriting" label="mirror-with-overwriting" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE %>" />
 
 					<aui:input data-name='<%= LanguageUtil.get(request, "copy-as-new") %>' disabled="<%= !portletDataHandler.isSupportsDataStrategyCopyAsNew() %>" helpMessage='<%= portletDataHandler.isSupportsDataStrategyCopyAsNew() ? "import-data-strategy-copy-as-new-help" : "not-supported" %>' id="copyAsNew" label="copy-as-new" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW %>" />
 				</aui:fieldset>

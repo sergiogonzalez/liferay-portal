@@ -14,8 +14,8 @@
 
 package com.liferay.asset.publisher.web.internal.messaging;
 
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -45,14 +47,18 @@ import org.osgi.service.component.annotations.Reference;
 public class CheckAssetEntryMessageListener extends BaseMessageListener {
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		AssetPublisherWebConfiguration assetPublisherWebConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AssetPublisherWebConfiguration.class, properties);
+
 		Class<?> clazz = getClass();
 
 		String className = clazz.getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			AssetPublisherWebConfigurationValues.CHECK_INTERVAL, TimeUnit.HOUR);
+			assetPublisherWebConfiguration.checkInterval(), TimeUnit.HOUR);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -68,14 +74,14 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_assetPublisherUtil.checkAssetEntries();
+		_assetEntriesCheckerUtil.checkAssetEntries();
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetPublisherUtil(
-		AssetPublisherUtil assetPublisherUtil) {
+	protected void setAssetEntriesCheckerUtil(
+		AssetEntriesCheckerUtil assetEntriesCheckerUtil) {
 
-		_assetPublisherUtil = assetPublisherUtil;
+		_assetEntriesCheckerUtil = assetEntriesCheckerUtil;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -94,7 +100,7 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private AssetPublisherUtil _assetPublisherUtil;
+	private AssetEntriesCheckerUtil _assetEntriesCheckerUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

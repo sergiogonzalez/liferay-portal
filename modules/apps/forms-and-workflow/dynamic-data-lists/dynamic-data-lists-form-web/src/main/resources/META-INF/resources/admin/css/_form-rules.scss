@@ -106,6 +106,168 @@
 		& .timeline-item .panel .no-padding-bottom {
 			padding-bottom: 0;
 		}
+
+		.calculate-container-fields {
+			padding: 8px 25px 25px 25px;
+
+			textarea {
+				background-color: #F5F5F5;
+				border: 1px solid #CCC;
+				border-radius: 2px;
+				color: #333;
+				font-family: Menlo;
+				font-size: 13px;
+				min-height: 200px;
+				padding: 10px;
+			}
+
+			textarea[readOnly] {
+				cursor: not-allowed;
+			}
+
+			.calculate-field-target {
+				padding-top: 45px;
+			}
+		}
+
+		.calculate-container-calculator-component {
+			min-width: 238px;
+			padding-bottom: 30px;
+			padding-top: 30px;
+
+			.liferay-ddl-form-builder-calculator {
+				align-content: center;
+				align-items: center;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+
+			.calculator-add-field-button-container {
+				display: inline-block;
+				margin: 0 auto;
+				padding: 0;
+
+				.calculator-add-field-button {
+					height: 49px;
+					margin-bottom: 5px;
+					margin-left: 1px;
+					width: 206px;
+				}
+
+				.form-builder-select-field {
+					margin-left: -9px;
+					margin-top: -28px;
+
+					.select-field-trigger {
+						display: none;
+					}
+				}
+			}
+
+			.calculator-button-area {
+				display: inline-block;
+				margin: 0 auto;
+				padding: 0;
+
+				& ul {
+					list-style-type: none;
+				}
+
+				.calculator-buttons {
+					display: inline-block;
+					margin: 0;
+					overflow: hidden;
+					padding: 0;
+
+					li.calculator-button, li.calculator-add-operator-button-area {
+						background-color: rgba(209, 214, 217, 0.5);
+						color: #869CAD;
+						cursor: pointer;
+						float: left;
+						font-size: 14px;
+						font-weight: 500;
+						height: 49px;
+						margin: 1px;
+						padding-top: 16px;
+						text-align: center;
+						width: 49px;
+					}
+
+					li.calculator-add-operator-button-area {
+						.calculator-add-operator-button {
+							height: 50px;
+							margin-top: -43px;
+							position: absolute;
+							width: 50px;
+						}
+
+						.form-builder-select-field {
+							margin-left: -10px;
+							margin-top: -10px;
+							position: absolute;
+
+							.select-field-trigger {
+								display: none;
+							}
+
+							.drop-chosen {
+								border: solid 1px #DDE1E3;
+								border-radius: 4px;
+								padding: 5px 0;
+								text-align: left;
+								width: 100px;
+
+								.search-chosen {
+									display: none;
+								}
+							}
+						}
+					}
+
+					li.button-padding-icons {
+						padding-top: 10px;
+					}
+
+					li.button-two-columns {
+						width: 100px;
+					}
+
+					li.calculator-button:hover, li.calculator-add-operator-button-area:hover {
+						background-color: rgba(209, 214, 217, 0.7);
+					}
+
+					li.calculator-button:active, li.calculator-add-operator-button-area:active {
+						background-color: rgba(209, 214, 217, 0.85);
+					}
+
+					li.border-top-left {
+						border-top-left-radius: 4px;
+					}
+
+					li.border-top-right {
+						border-top-right-radius: 4px;
+					}
+
+					li.border-bottom-right {
+						border-bottom-right-radius: 4px;
+					}
+
+					li.border-bottom-left {
+						border-bottom-left-radius: 4px;
+					}
+				}
+
+				.calculator-buttons-numbers {
+					margin-right: 4px;
+					width: 153px;
+				}
+
+				.calculator-buttons-operators {
+					width: 51px;
+				}
+			}
+		}
 	}
 
 	.panel-body {
@@ -159,7 +321,7 @@
 
 .liferay-ddl-form-rule-builder-footer {
 	margin: $baseline * 3 0;
-	padding: 12px 24px;
+	padding: 12px 54px;
 }
 
 .liferay-ddl-form-builder-rule-content {

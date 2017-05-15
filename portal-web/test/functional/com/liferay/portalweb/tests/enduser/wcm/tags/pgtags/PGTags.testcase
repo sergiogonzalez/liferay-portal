@@ -230,22 +230,11 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
+		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
-		</execute>
-
-		<execute macro="BlogsEntry#addTagList">
 			<var name="tagNameList" value="tag1,tag3" />
 		</execute>
-
-		<execute macro="PortletEntry#publish" />
 
 		<for list="tag1,tag3" param="tagName">
 			<execute macro="Navigator#gotoSitePage">
@@ -808,6 +797,33 @@
 		<execute macro="Search#viewSearchAssetTitle">
 			<var name="searchAssetSummary" value="Entry Content 3" />
 			<var name="searchAssetTitle" value="Entry Title 3" />
+		</execute>
+	</command>
+
+	<command name="ViewDuplicateTagWarningMessage" priority="3">
+		<property name="testray.component.names" value="Tags" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Metadata" />
+		</execute>
+
+		<execute macro="AssetCategorization#addTag">
+			<var name="tagName" value="tagname" />
+		</execute>
+
+		<execute macro="AssetCategorization#addDuplicateTag">
+			<var name="tagName" value="tagname" />
 		</execute>
 	</command>
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -79,6 +78,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
 
+		linkEditJSONObject.put("appendProtocol", false);
 		linkEditJSONObject.put("showTargetSelector", false);
 
 		buttonCfgJSONObject.put("linkEdit", linkEditJSONObject);
@@ -135,8 +135,7 @@ public class AlloyEditorCreoleConfigContributor
 		ResourceBundle resourceBundle = null;
 
 		try {
-			resourceBundle = _resourceBundleLoader.loadResourceBundle(
-				LocaleUtil.toLanguageId(locale));
+			resourceBundle = _resourceBundleLoader.loadResourceBundle(locale);
 		}
 		catch (MissingResourceException mre) {
 			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
@@ -273,6 +272,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject cfgJSONObject = JSONFactoryUtil.createJSONObject();
 
+		cfgJSONObject.put("appendProtocol", false);
 		cfgJSONObject.put("showTargetSelector", false);
 
 		linkEditJSONObject.put("cfg", cfgJSONObject);

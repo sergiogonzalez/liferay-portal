@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.image.gallery.display.kernel.display.context.IGDisplayContextFactory;
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -56,11 +57,12 @@ public class IGDisplayContextProvider {
 
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(
-					themeDisplay.getLanguageId());
+					themeDisplay.getLocale());
 
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					request, response, fileShortcut, resourceBundle);
+					request, response, fileShortcut, resourceBundle,
+					_dlTrashUtil);
 
 			if (fileShortcut == null) {
 				return igViewFileVersionDisplayContext;
@@ -93,11 +95,12 @@ public class IGDisplayContextProvider {
 
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(
-					themeDisplay.getLanguageId());
+					themeDisplay.getLocale());
 
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					request, response, fileVersion, resourceBundle);
+					request, response, fileVersion, resourceBundle,
+					_dlTrashUtil);
 
 			if (fileVersion == null) {
 				return igViewFileVersionDisplayContext;
@@ -140,6 +143,9 @@ public class IGDisplayContextProvider {
 		_resourceBundleLoader = new AggregateResourceBundleLoader(
 			resourceBundleLoader, LanguageUtil.getPortalResourceBundleLoader());
 	}
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
 
 	private ServiceTrackerList<IGDisplayContextFactory, IGDisplayContextFactory>
 		_igDisplayContextFactories;

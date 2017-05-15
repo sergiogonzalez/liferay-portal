@@ -55,6 +55,10 @@ AUI.add(
 						}
 					},
 
+					triggers: {
+						value: []
+					},
+
 					type: {
 						value: 'select'
 					},
@@ -140,17 +144,11 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
+						var value = instance.get('value');
 
-						var value = [];
-
-						inputNode.all('option').each(
-							function(optionNode) {
-								if (optionNode.attr('selected')) {
-									value.push(optionNode.val());
-								}
-							}
-						);
+						if (!Lang.isArray(value)) {
+							value = [value];
+						}
 
 						value = value.join();
 
@@ -221,17 +219,9 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
-
 						if (!Lang.isArray(value)) {
 							value = [value];
 						}
-
-						inputNode.all('option').each(
-							function(optionNode) {
-								instance._setSelectNodeOptions(optionNode, value);
-							}
-						);
 
 						instance.set('value', value);
 
@@ -373,14 +363,14 @@ AUI.add(
 						var currentTarget = target;
 
 						if (instance.get('multiple')) {
-							value = instance.get('value');
+							value = instance.get('value').slice();
 
 							instance._open = true;
 
 							var itemValue = currentTarget.getAttribute('data-option-value');
 
 							if (currentTarget.getAttribute('data-option-selected')) {
-								instance._removeBadge(itemValue);
+								value = instance._removeBadge(itemValue);
 							}
 							else {
 								value.push(itemValue);
@@ -434,6 +424,17 @@ AUI.add(
 
 						var container = instance.get('container');
 
+						var triggers = instance.get('triggers');
+
+						if (triggers.length) {
+							for (var i = 0; i < triggers.length; i++) {
+								if (triggers[i].contains(event.target)) {
+
+									return false;
+								}
+							}
+						}
+
 						return !container.contains(event.target);
 					},
 
@@ -442,9 +443,15 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var openList = container.one('.' + CSS_DROP_CHOSEN).hasClass(CSS_HIDE);
+						var dropChosen = container.one('.' + CSS_DROP_CHOSEN);
 
-						return !openList;
+						if (dropChosen) {
+							var openList = dropChosen.hasClass(CSS_HIDE);
+
+							return !openList;
+						}
+
+						return false;
 					},
 
 					_removeBadge: function(value) {

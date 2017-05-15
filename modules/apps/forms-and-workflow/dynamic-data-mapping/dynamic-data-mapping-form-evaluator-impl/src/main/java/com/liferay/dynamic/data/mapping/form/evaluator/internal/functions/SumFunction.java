@@ -22,7 +22,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.evaluator.function.name=sum",
+	immediate = true,
+	property = {
+		"ddm.form.evaluator.function.available.on.calculation.rule=true",
+		"ddm.form.evaluator.function.name=sum"
+	},
 	service = DDMExpressionFunction.class
 )
 public class SumFunction implements DDMExpressionFunction {

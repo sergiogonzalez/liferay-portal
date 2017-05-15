@@ -70,6 +70,10 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		long dataProviderInstanceId = GetterUtil.getLong(
 			ddmDataProviderRequest.getParameter("dataProviderInstanceId"));
 
+		if (dataProviderInstanceId == 0) {
+			return DDMDataProviderResponse.of();
+		}
+
 		List<KeyValuePair> data = new ArrayList<>();
 
 		try {

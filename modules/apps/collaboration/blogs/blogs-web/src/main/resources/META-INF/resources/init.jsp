@@ -119,7 +119,6 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Portal" %><%@
@@ -132,6 +131,7 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
+page import="com.liferay.portal.kernel.util.URLCodec" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -140,8 +140,7 @@ page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>
 
@@ -157,6 +156,8 @@ page import="javax.portlet.WindowState" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-trash:defineObjects />
 
 <portlet:defineObjects />
 

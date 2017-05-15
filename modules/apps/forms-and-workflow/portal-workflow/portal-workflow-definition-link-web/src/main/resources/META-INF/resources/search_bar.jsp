@@ -24,6 +24,10 @@ portletURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="workflow-configuration" selected="<%= true %>" />
+	</aui:nav>
+
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 			<liferay-util:include page="/workflow_definition_link_search.jsp" servletContext="<%= application %>" />

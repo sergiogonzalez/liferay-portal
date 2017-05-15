@@ -83,6 +83,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: []
+		requires: ['aui-component', 'liferay-ddm-form-renderer-util']
 	}
 );

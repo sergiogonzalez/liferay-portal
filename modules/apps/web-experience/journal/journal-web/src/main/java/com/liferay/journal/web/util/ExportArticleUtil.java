@@ -15,7 +15,9 @@
 package com.liferay.journal.web.util;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
 import java.io.File;
@@ -103,9 +106,12 @@ public class ExportArticleUtil {
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			portletResponse);
 
+		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
+			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+
 		JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
-			groupId, articleId, null, "export", languageId, 1,
-			portletRequestModel, themeDisplay);
+			groupId, articleId, article.getVersion(), null, "export",
+			languageId, 1, portletRequestModel, themeDisplay);
 
 		int pages = articleDisplay.getNumberOfPages();
 
@@ -169,10 +175,18 @@ public class ExportArticleUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}
 
+	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalContent _journalContent;
 
 	@Reference

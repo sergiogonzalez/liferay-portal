@@ -58,6 +58,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	var articlePreview = A.one('#<portlet:namespace />articlePreview');
 
+	removeWebContentHandler();
+
 	articlePreview.plug(A.Plugin.ParseContent);
 
 	articlePreview.delegate(
@@ -93,36 +95,54 @@ String redirect = ParamUtil.getString(request, "redirect");
 					uri: baseSelectWebContentURI.replace(encodeURIComponent('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.attr('<portlet:namespace/>assetEntryId').val())
 				},
 				function(event) {
-					form.attr('<portlet:namespace/>assetEntryId').val(event.entityid);
-
-					articlePreview.html('<div class="loading-animation"></div>');
-
-					var data = Liferay.Util.ns(
-						'<%= PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT) %>',
-						{
-							articleResourcePrimKey: event.assetclasspk
-						}
-					);
-
-					A.io.request(
-						'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_resources.jsp" /><portlet:param name="refererPortletName" value="<%= renderResponse.getNamespace() %>" /></liferay-portlet:resourceURL>',
-						{
-							data: data,
-							on: {
-								failure: function() {
-									articlePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');
-								},
-								success: function(event, id, obj) {
-									var responseData = this.get('responseData');
-
-									articlePreview.setContent(responseData);
-								}
-							}
-						}
-					);
+					retrieveWebContent(event.entityid, event.assetclasspk);
 				}
 			);
 		},
 		'.web-content-selector'
 	);
+
+	function removeWebContentHandler() {
+		articlePreview.delegate(
+			'click',
+			function(event) {
+				event.preventDefault();
+
+				retrieveWebContent('', 0);
+			},
+			'.selector-button'
+		);
+	}
+
+	function retrieveWebContent(entityId, assetClassPK) {
+		form.attr('<portlet:namespace/>assetEntryId').val(entityId);
+
+		articlePreview.html('<div class="loading-animation"></div>');
+
+		var data = Liferay.Util.ns(
+			'<%= PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT) %>',
+			{
+				articleResourcePrimKey: assetClassPK
+			}
+		);
+
+		A.io.request(
+			'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_resources.jsp" /><portlet:param name="refererPortletName" value="<%= renderResponse.getNamespace() %>" /></liferay-portlet:resourceURL>',
+			{
+				data: data,
+				on: {
+					failure: function() {
+						articlePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');
+					},
+					success: function(event, id, obj) {
+						var responseData = this.get('responseData');
+
+						articlePreview.setContent(responseData);
+
+						removeWebContentHandler();
+					}
+				}
+			}
+		);
+	}
 </aui:script>

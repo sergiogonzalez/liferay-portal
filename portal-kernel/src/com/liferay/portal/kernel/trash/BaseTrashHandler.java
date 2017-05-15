@@ -267,6 +267,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
@@ -289,6 +293,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
@@ -299,8 +307,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
-	public TrashEntry getTrashEntry(long classPK) throws PortalException {
+	public TrashedModel getTrashedModel(long classPK) {
 		return null;
 	}
 
@@ -310,6 +317,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getTrashModelTrashedModels(long, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashModelTrashRenderers(
@@ -371,12 +383,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@Override
 	public boolean isDeletable() {
 		return true;
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public boolean isInTrashContainer(long classPK) throws PortalException {
-		return false;
 	}
 
 	@Override

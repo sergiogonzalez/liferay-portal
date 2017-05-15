@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,21 +24,13 @@ import java.util.regex.Pattern;
  */
 public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 
-	public JavaDeserializationSecurityCheck(
-		List<String> secureDeserializationExcludes,
-		List<String> runOutsidePortalExcludes) {
-
-		_secureDeserializationExcludes = secureDeserializationExcludes;
-		_runOutsidePortalExcludes = runOutsidePortalExcludes;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
 		if (fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/") ||
-			isExcludedPath(_secureDeserializationExcludes, absolutePath)) {
+			isExcludedPath(_SECURE_DESERIALIZATION_EXCLUDES, absolutePath)) {
 
 			return content;
 		}
@@ -63,7 +54,7 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 
 			StringBundler sb = new StringBundler(3);
 
-			if (isExcludedPath(_runOutsidePortalExcludes, absolutePath)) {
+			if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 				sb.append("Possible Java Serialization Remote Code Execution ");
 				sb.append("vulnerability using ");
 			}
@@ -77,6 +68,9 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 		}
 	}
 
+	private static final String _SECURE_DESERIALIZATION_EXCLUDES =
+		"secure.deserialization.excludes";
+
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {
 			Pattern.compile(
@@ -84,7 +78,5 @@ public class JavaDeserializationSecurityCheck extends BaseFileCheck {
 			Pattern.compile(
 				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 		};
-	private final List<String> _runOutsidePortalExcludes;
-	private final List<String> _secureDeserializationExcludes;
 
 }

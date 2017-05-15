@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributor;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
@@ -46,17 +47,16 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_dlPortletToolbarContributor);
+		renderRequest.setAttribute(
+			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashUtil);
 
 		return "/document_library/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributor(
-		DLPortletToolbarContributor dlPortletToolbarContributor) {
-
-		_dlPortletToolbarContributor = dlPortletToolbarContributor;
-	}
-
+	@Reference
 	private DLPortletToolbarContributor _dlPortletToolbarContributor;
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
 
 }

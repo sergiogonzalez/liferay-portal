@@ -76,7 +76,7 @@ public class WorkflowAssetModel {
 		return _url;
 	}
 
-	@XmlElement
+	@XmlElement(name = "author")
 	public WorkflowUserModel getWorkflowUserModel() {
 		return _workflowUserModel;
 	}

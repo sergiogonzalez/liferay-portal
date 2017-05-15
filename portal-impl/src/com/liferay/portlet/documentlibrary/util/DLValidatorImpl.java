@@ -38,7 +38,10 @@ import java.io.InputStream;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.document.library.internal.util.DLValidatorImpl}
  */
+@Deprecated
 public final class DLValidatorImpl implements DLValidator {
 
 	@Override
@@ -55,6 +58,18 @@ public final class DLValidatorImpl implements DLValidator {
 		name = replaceDLCharLastBlacklist(name);
 
 		return replaceDLNameBlacklist(name);
+	}
+
+	@Override
+	public long getMaxAllowableSize() {
+		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+		if (fileMaxSize == 0) {
+			fileMaxSize = PrefsPropsUtil.getLong(
+				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		}
+
+		return fileMaxSize;
 	}
 
 	@Override

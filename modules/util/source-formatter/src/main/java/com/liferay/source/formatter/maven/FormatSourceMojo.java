@@ -72,13 +72,6 @@ public class FormatSourceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setCopyright(String copyright) {
-		_sourceFormatterArgs.setCopyrightFileName(copyright);
-	}
-
-	/**
-	 * @parameter
-	 */
 	public void setFileNames(String[] fileNames) {
 		_sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
 	}
@@ -151,13 +144,6 @@ public class FormatSourceMojo extends AbstractMojo {
 	 */
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
-	}
-
-	/**
-	 * @parameter
-	 */
-	public void setUseProperties(boolean useProperties) {
-		_sourceFormatterArgs.setUseProperties(useProperties);
 	}
 
 	private final SourceFormatterArgs _sourceFormatterArgs =

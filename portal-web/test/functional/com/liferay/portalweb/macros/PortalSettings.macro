@@ -208,6 +208,12 @@
 		<execute macro="PortalSettings#_saveDisplaySettings" />
 	</command>
 
+	<command name="configureWikiService">
+		<var name="key_counter" value="${counter}" />
+
+		<execute function="Type" locator1="TextArea#CONFIGURATION" value1="${editor}" />
+	</command>
+
 	<command name="disableLDAPCP">
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 

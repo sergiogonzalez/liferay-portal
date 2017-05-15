@@ -104,8 +104,7 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 			"validation");
 
 		Assert.assertNotNull(validationDDMFormField);
-		Assert.assertEquals(
-			"ddm-validation", validationDDMFormField.getDataType());
+		Assert.assertEquals("string", validationDDMFormField.getDataType());
 		Assert.assertEquals("validation", validationDDMFormField.getType());
 		Assert.assertEquals(
 			"FALSE", validationDDMFormField.getVisibilityExpression());

@@ -353,6 +353,9 @@ public class JspServlet extends HttpServlet {
 
 			});
 
+		_logVerbosityLevelDebug = Objects.equals(
+			_jspServlet.getInitParameter("logVerbosityLevel"), "DEBUG");
+
 		_bundleTracker = new BundleTracker<>(
 			_bundle.getBundleContext(), Bundle.RESOLVED,
 			new JspFragmentTrackerCustomizer());
@@ -382,10 +385,7 @@ public class JspServlet extends HttpServlet {
 		try {
 			currentThread.setContextClassLoader(_jspBundleClassloader);
 
-			if (Objects.equals(
-					_jspServlet.getInitParameter("logVerbosityLevel"),
-					"DEBUG")) {
-
+			if (_logVerbosityLevelDebug) {
 				String path = (String)request.getAttribute(
 					RequestDispatcher.INCLUDE_SERVLET_PATH);
 
@@ -584,6 +584,7 @@ public class JspServlet extends HttpServlet {
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
 	private Logger _logger;
+	private boolean _logVerbosityLevelDebug;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 

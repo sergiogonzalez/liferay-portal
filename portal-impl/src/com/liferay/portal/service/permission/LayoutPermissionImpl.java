@@ -231,43 +231,9 @@ public class LayoutPermissionImpl
 			return false;
 		}
 
-		User user = permissionChecker.getUser();
-
-		if (!user.isDefaultUser() && !group.isUser()) {
-
-			// This is new way of doing an ownership check without having to
-			// have a userId field on the model. When the instance model was
-			// first created, we set the user's userId as the ownerId of the
-			// individual scope ResourcePermission of the Owner Role. Therefore,
-			// ownership can be determined by obtaining the Owner role
-			// ResourcePermission for the current instance model and testing it
-			// with the hasOwnerPermission call.
-
-			ResourcePermission resourcePermission =
-				ResourcePermissionLocalServiceUtil.getResourcePermission(
-					layout.getCompanyId(), Layout.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(layout.getPlid()),
-					permissionChecker.getOwnerRoleId());
-
-			if (permissionChecker.hasOwnerPermission(
-					layout.getCompanyId(), Layout.class.getName(),
-					String.valueOf(layout.getPlid()),
-					resourcePermission.getOwnerId(), actionId)) {
-
-				return true;
-			}
-		}
-
 		if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
 			GroupPermissionUtil.contains(
 				permissionChecker, group, ActionKeys.ADD_LAYOUT)) {
-
-			return true;
-		}
-
-		if (GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.MANAGE_LAYOUTS)) {
 
 			return true;
 		}
@@ -317,8 +283,47 @@ public class LayoutPermissionImpl
 				addGroupPermission, addGuestPermission);
 		}
 
-		return permissionChecker.hasPermission(
-			group, Layout.class.getName(), layout.getPlid(), actionId);
+		if (permissionChecker.hasPermission(
+				group, Layout.class.getName(), layout.getPlid(), actionId)) {
+
+			return true;
+		}
+
+		if (GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.MANAGE_LAYOUTS)) {
+
+			return true;
+		}
+
+		User user = permissionChecker.getUser();
+
+		if (!user.isDefaultUser() && !group.isUser()) {
+
+			// This is new way of doing an ownership check without having to
+			// have a userId field on the model. When the instance model was
+			// first created, we set the user's userId as the ownerId of the
+			// individual scope ResourcePermission of the Owner Role. Therefore,
+			// ownership can be determined by obtaining the Owner role
+			// ResourcePermission for the current instance model and testing it
+			// with the hasOwnerPermission call.
+
+			ResourcePermission resourcePermission =
+				ResourcePermissionLocalServiceUtil.getResourcePermission(
+					layout.getCompanyId(), Layout.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(layout.getPlid()),
+					permissionChecker.getOwnerRoleId());
+
+			if (permissionChecker.hasOwnerPermission(
+					layout.getCompanyId(), Layout.class.getName(),
+					String.valueOf(layout.getPlid()),
+					resourcePermission.getOwnerId(), actionId)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

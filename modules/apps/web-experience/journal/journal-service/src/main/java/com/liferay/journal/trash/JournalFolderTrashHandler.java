@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
-import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -37,18 +36,16 @@ import com.liferay.trash.kernel.model.TrashEntryConstants;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for the journal folder entity.
  *
  * @author Eudaldo Alonso
+ * @deprecated As of 4.0.0, moved to {@link
+ *             com.liferay.journal.internal.trash.JournalFolderTrashHandler}
  */
-@Component(
-	property = {"model.class.name=com.liferay.journal.model.JournalFolder"},
-	service = TrashHandler.class
-)
+@Deprecated
 public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 
 	@Override

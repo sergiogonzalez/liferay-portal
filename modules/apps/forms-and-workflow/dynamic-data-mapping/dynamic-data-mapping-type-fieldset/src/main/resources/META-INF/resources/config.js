@@ -27,7 +27,10 @@
 						},
 						'liferay-ddm-form-field-fieldset-util': {
 							path: 'fieldset_field_util.js',
-							requires: []
+							requires: [
+								'aui-component',
+								'liferay-ddm-form-renderer-util'
+							]
 						}
 					},
 					root: MODULE_PATH + '/'

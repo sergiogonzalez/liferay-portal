@@ -17,8 +17,11 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.display.context.DLViewFileEntryHistoryDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -60,7 +63,8 @@ public class DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				request, response, dlFileEntryType, _storageEngine);
+				request, response, dlFileEntryType, _dlValidator,
+				_storageEngine);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -80,7 +84,7 @@ public class DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				request, response, fileEntry, _storageEngine);
+				request, response, _dlValidator, fileEntry, _storageEngine);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -94,6 +98,39 @@ public class DLDisplayContextProvider {
 		return dlEditFileEntryDisplayContext;
 	}
 
+	public DLViewFileEntryHistoryDisplayContext
+		getDLViewFileEntryHistoryDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
+
+		DLViewFileEntryHistoryDisplayContext
+			dlViewFileEntryHistoryDisplayContext =
+				new DefaultDLViewFileEntryHistoryDisplayContext(
+					request, fileVersion, resourceBundle, _dlTrashUtil);
+
+		if (fileVersion == null) {
+			return dlViewFileEntryHistoryDisplayContext;
+		}
+
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				_dlDisplayContextFactories) {
+
+			dlViewFileEntryHistoryDisplayContext =
+				dlDisplayContextFactory.getDLViewFileEntryHistoryDisplayContext(
+					dlViewFileEntryHistoryDisplayContext, request, response,
+					fileVersion);
+		}
+
+		return dlViewFileEntryHistoryDisplayContext;
+	}
+
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
@@ -105,12 +142,12 @@ public class DLDisplayContextProvider {
 
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(
-					themeDisplay.getLanguageId());
+					themeDisplay.getLocale());
 
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlMimeTypeDisplayContext,
-					resourceBundle, _storageEngine);
+					resourceBundle, _storageEngine, _dlTrashUtil);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -141,13 +178,12 @@ public class DLDisplayContextProvider {
 			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				themeDisplay.getLanguageId());
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion, _dlMimeTypeDisplayContext,
-				resourceBundle, _storageEngine);
+				resourceBundle, _storageEngine, _dlTrashUtil);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -214,6 +250,13 @@ public class DLDisplayContextProvider {
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private DLValidator _dlValidator;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 	private StorageEngine _storageEngine;
 

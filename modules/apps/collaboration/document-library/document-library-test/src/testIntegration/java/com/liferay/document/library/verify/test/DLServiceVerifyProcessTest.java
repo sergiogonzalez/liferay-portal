@@ -278,7 +278,6 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		Assert.assertNotNull(
 			DLFileEntryLocalServiceUtil.fetchDLFileEntry(fileEntryId));
-
 		Assert.assertNull(
 			AssetEntryLocalServiceUtil.fetchEntry(
 				DLFileEntry.class.getName(), fileEntryId));
@@ -287,7 +286,6 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		Assert.assertNotNull(
 			DLFileEntryLocalServiceUtil.fetchDLFileEntry(fileEntryId));
-
 		Assert.assertNotNull(
 			AssetEntryLocalServiceUtil.fetchEntry(
 				DLFileEntry.class.getName(), fileEntryId));

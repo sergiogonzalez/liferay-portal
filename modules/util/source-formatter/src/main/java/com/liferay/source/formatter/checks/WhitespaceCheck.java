@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,12 +31,8 @@ import java.util.regex.Pattern;
  */
 public class WhitespaceCheck extends BaseFileCheck {
 
-	public WhitespaceCheck() {
-		this(false);
-	}
-
-	public WhitespaceCheck(boolean allowLeadingSpaces) {
-		_allowLeadingSpaces = allowLeadingSpaces;
+	public void setAllowLeadingSpaces(String allowLeadingSpaces) {
+		_allowLeadingSpaces = GetterUtil.getBoolean(allowLeadingSpaces);
 	}
 
 	@Override
@@ -46,6 +43,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 		content = _trimContent(fileName, content);
 
 		content = StringUtil.replace(content, "\n\n\n", "\n\n");
+
+		if (content.endsWith(StringPool.RETURN)) {
+			content = content.substring(0, content.length() - 1);
+		}
 
 		return content;
 	}
@@ -297,6 +298,6 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final boolean _allowLeadingSpaces;
+	private boolean _allowLeadingSpaces;
 
 }

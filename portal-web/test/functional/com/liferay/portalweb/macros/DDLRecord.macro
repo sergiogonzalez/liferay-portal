@@ -15,6 +15,19 @@
 		</execute>
 	</command>
 
+	<command name="addPGViaAP">
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
+
 	<command name="addRepeatableField">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -144,13 +157,31 @@
 	<command name="gotoLinkToPageChildPages">
 		<var name="key_pageName" value="${parentPage}" />
 
-		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_TOGGLER" />
+			</on>
+
+			<off>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+			</off>
+		</toggle>
 	</command>
 
 	<command name="gotoLinkToPageNavItem">
 		<var name="key_navItem" value="${pagePrivacy} Pages" />
 
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_BAR" value1="${pagePrivacy} Pages" />
+			</on>
+
+			<off>
+				<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
+			</off>
+		</toggle>
 	</command>
 
 	<command name="gotoLinkToPageSelect">
@@ -282,16 +313,43 @@
 			<var name="pagePrivacy" value="${pagePrivacy}" />
 		</execute>
 
-		<execute macro="DDLRecord#selectLinkToPageRadio">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="parentPage" value="${parentPage}" />
-		</execute>
+		<toggle name="LPS-68869">
+			<on>
+				<execute macro="DDLRecord#selectLinkToPagePage">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
 
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+				<execute function="SelectFrameTop" />
 
-		<var name="key_fieldName" value="${fieldName}" />
+				<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 
-		<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${ddlRecordFieldData}" />
+				<var name="key_fieldName" value="${fieldName}" />
+
+				<if>
+					<isset var="parentPage" />
+					<then>
+						<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${pagePrivacy} Pages &gt; ${parentPage} &gt; ${ddlRecordFieldData}" />
+					</then>
+					<else>
+						<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${pagePrivacy} Pages &gt; ${ddlRecordFieldData}" />
+					</else>
+				</if>
+			</on>
+
+			<off>
+				<execute macro="DDLRecord#selectLinkToPageRadio">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
+
+				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+				<var name="key_fieldName" value="${fieldName}" />
+
+				<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${ddlRecordFieldData}" />
+			</off>
+		</toggle>
 	</command>
 
 	<command name="populateFieldNumber">
@@ -438,6 +496,23 @@
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="selectLinkToPagePage">
+		<if>
+			<isset var="parentPage" />
+			<then>
+				<execute macro="DDLRecord#gotoLinkToPageChildPages">
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
+			</then>
+		</if>
+
+		<var name="key_pageName" value="${ddlRecordFieldData}" />
+
+		<execute function="RunScript" locator1="$('.top-ended').scrollTop(1000)" />
+
+		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE" />
 	</command>
 
 	<command name="selectLinkToPageRadio">
@@ -831,6 +906,14 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${ddlDataDefinitionName} records were found" />
 	</command>
 
+	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${ddlRecordFieldData}" />
+		<var name="key_assetTitle" value="${ddlListName}" />
+
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${ddlRecordFieldData}" />
+	</command>
+
 	<command name="viewPopulatedField">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
@@ -889,7 +972,19 @@
 
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 
-		<execute function="AssertChecked" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="AssertElementPresent" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECTED" />
+
+				<execute function="SelectFrameTop" />
+			</on>
+
+			<off>
+				<execute function="AssertChecked" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
+			</off>
+		</toggle>
 
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>

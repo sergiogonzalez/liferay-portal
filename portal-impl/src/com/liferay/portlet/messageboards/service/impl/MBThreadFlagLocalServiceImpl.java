@@ -17,13 +17,14 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadFlag;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portlet.messageboards.service.base.MBThreadFlagLocalServiceBaseImpl;
 
@@ -37,6 +38,7 @@ public class MBThreadFlagLocalServiceImpl
 	extends MBThreadFlagLocalServiceBaseImpl {
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBThreadFlag addThreadFlag(
 			long userId, MBThread thread, ServiceContext serviceContext)
 		throws PortalException {
@@ -52,6 +54,13 @@ public class MBThreadFlagLocalServiceImpl
 		MBThreadFlag threadFlag = mbThreadFlagPersistence.fetchByU_T(
 			userId, threadId);
 
+		if ((threadFlag != null) &&
+			DateUtil.equals(
+				threadFlag.getModifiedDate(), thread.getLastPostDate())) {
+
+			return threadFlag;
+		}
+
 		if (threadFlag == null) {
 			long threadFlagId = counterLocalService.increment();
 
@@ -65,34 +74,12 @@ public class MBThreadFlagLocalServiceImpl
 			threadFlag.setModifiedDate(
 				serviceContext.getModifiedDate(thread.getLastPostDate()));
 			threadFlag.setThreadId(threadId);
-
-			try {
-				mbThreadFlagPersistence.update(threadFlag);
-			}
-			catch (SystemException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Add failed, fetch {userId=" + userId + ", threadId=" +
-							threadId + "}");
-				}
-
-				threadFlag = mbThreadFlagPersistence.fetchByU_T(
-					userId, threadId, false);
-
-				if (threadFlag == null) {
-					throw se;
-				}
-			}
 		}
-		else if (!DateUtil.equals(
-					threadFlag.getModifiedDate(), thread.getLastPostDate())) {
-
+		else {
 			threadFlag.setModifiedDate(thread.getLastPostDate());
-
-			mbThreadFlagPersistence.update(threadFlag);
 		}
 
-		return threadFlag;
+		return mbThreadFlagLocalService.updateMBThreadFlag(threadFlag);
 	}
 
 	@Override

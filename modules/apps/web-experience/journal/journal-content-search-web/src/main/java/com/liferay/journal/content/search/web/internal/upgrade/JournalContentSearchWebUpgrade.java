@@ -15,6 +15,7 @@
 package com.liferay.journal.content.search.web.internal.upgrade;
 
 import com.liferay.journal.content.search.web.internal.constants.JournalContentSearchPortletKeys;
+import com.liferay.journal.content.search.web.internal.upgrade.v1_0_1.UpgradePortletId;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -30,7 +31,7 @@ public class JournalContentSearchWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.journal.content.search.web", "0.0.0", "1.0.0",
+			"com.liferay.journal.content.search.web", "0.0.0", "1.0.1",
 			new DummyUpgradeStep());
 
 		registry.register(
@@ -49,6 +50,10 @@ public class JournalContentSearchWebUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"com.liferay.journal.content.search.web", "1.0.0", "1.0.1",
+			new UpgradePortletId());
 	}
 
 }

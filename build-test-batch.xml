@@ -379,11 +379,6 @@ app.server.type=@{app.server.type}]]></echo>
 				<equals arg1="@{app.server.type}" arg2="tomcat" />
 				<then>
 					<setup-testable-tomcat />
-
-					<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
-						<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
-						<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xms512m -Xmx512m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:+UseParNewGC]]></replacevalue>
-					</replace>
 				</then>
 			</if>
 
@@ -434,7 +429,7 @@ app.server.type=@{app.server.type}]]></echo>
 						<![CDATA[
 							git add -A
 
-							git diff --cached --name-only | grep -v -E '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -n 1000 zip -v liferay-portal-source.zip
+							git diff --cached --name-only -z | grep -E -v -z '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -0 -n 1000 zip -v liferay-portal-source.zip
 						]]>
 					</execute>
 				</then>
@@ -550,6 +545,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.plugin.zip.url" />
 		<attribute default="" name="test.plugins.war.zip.url" />
+		<attribute default="false" name="test.portal.log.assert" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
 		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
 		<attribute default="" name="test.portal.bundle.version" />
@@ -578,31 +574,51 @@ app.server.type=@{app.server.type}]]></echo>
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
 						<test-action>
-							<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
-								<property name="database.type" value="@{database.type}" />
-								<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
-								<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
-								<property name="test.class" value="${test.class}" />
-							</ant>
+							<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+								<param name="database.type" value="@{database.type}" />
+							</antcall>
 
-							<if>
-								<equals arg1="@{test.legacy.database.dump}" arg2="true" />
-								<then>
-									<get-testcase-property property.name="data.archive.type" />
-
-									<ant dir="${portal.legacy.dir}" target="export-database">
-										<property name="data.archive.type" value="${data.archive.type}" />
+							<trycatch>
+								<try>
+									<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
 										<property name="database.type" value="@{database.type}" />
-										<property name="database.version" value="@{database.version}" />
+										<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
+										<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
 										<property name="test.class" value="${test.class}" />
 									</ant>
-								</then>
-							</if>
+
+									<if>
+										<equals arg1="@{test.legacy.database.dump}" arg2="true" />
+										<then>
+											<get-testcase-property property.name="data.archive.type" />
+
+											<ant dir="${portal.legacy.dir}" target="export-database">
+												<property name="data.archive.type" value="${data.archive.type}" />
+												<property name="database.type" value="@{database.type}" />
+												<property name="database.version" value="@{database.version}" />
+												<property name="test.class" value="${test.class}" />
+											</ant>
+										</then>
+									</if>
+								</try>
+								<finally>
+									<if>
+										<equals arg1="@{test.portal.log.assert}" arg2="true" />
+										<then>
+											<ant dir="portal-kernel" inheritAll="false" target="test-class">
+												<property name="test.class" value="PortalLogAssertorTest" />
+											</ant>
+										</then>
+									</if>
+								</finally>
+							</trycatch>
 						</test-action>
 					</database-test-run-test>
 				</test-action>
 
 				<test-set-up>
+					<antcall target="record-test-generated-properties" />
+
 					<if>
 						<and>
 							<or>
@@ -622,6 +638,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<param name="test.build.portal.dependencies.zip.url" value="@{test.portal.bundle.dependencies.zip.url}" />
 								<param name="test.build.portal.osgi.zip.url" value="@{test.portal.bundle.osgi.zip.url}" />
 								<param name="test.build.portal.war.url" value="@{test.portal.bundle.war.url}" />
+								<param name="test.class" value="${test.class}" />
 								<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
 							</antcall>
 
@@ -668,6 +685,13 @@ app.server.type=@{app.server.type}]]></echo>
 							</antcall>
 
 							<antcall inheritAll="false" target="setup-sdk" />
+
+							<if>
+								<equals arg1="${app.server.type}" arg2="tomcat" />
+								<then>
+									<setup-testable-tomcat />
+								</then>
+							</if>
 						</then>
 						<elseif>
 							<and>
@@ -697,7 +721,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<if>
 								<equals arg1="${app.server.type}" arg2="tomcat" />
 								<then>
-									<prepare-tomcat-setenv />
+									<setup-testable-tomcat />
 								</then>
 							</if>
 						</else>
@@ -714,8 +738,6 @@ app.server.type=@{app.server.type}]]></echo>
 							/>
 						</then>
 					</if>
-
-					<antcall target="record-test-generated-properties" />
 
 					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 				</test-set-up>
@@ -1217,42 +1239,25 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
+							<print-test-class-group test.class.group.index="${axis.variable}" />
+
+							<gradle-execute dir="modules" task="testIntegration">
+								<arg value="-Ddatabase.type=@{database.type}" />
+								<arg value="-Dbuild.exclude.ant.plugin=true" />
+								<arg value="-Dtest.class.group.index=${axis.variable}" />
+							</gradle-execute>
+
 							<if>
-								<equals arg1="@{subrepository.name}" arg2="" />
+								<and>
+									<available file="${app.server.parent.dir}/logs" />
+									<available file="${app.server.parent.dir}/osgi/state" />
+								</and>
 								<then>
-									<print-test-class-group test.class.group.index="${axis.variable}" />
-
-									<gradle-execute dir="modules" task="testIntegration">
-										<arg value="-Ddatabase.type=@{database.type}" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg value="-Dtest.class.group.index=${axis.variable}" />
-									</gradle-execute>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
 								</then>
-								<else>
-									<get-module-base-dir-from-subrepository-name subrepository.name="@{subrepository.name}" />
-
-									<trycatch property="failure.property">
-										<try>
-											<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
-
-											<gradle-execute dir="${module.base.dir}" task="testIntegration">
-												<arg value="-Ddatabase.type=@{database.type}" />
-												<arg value="-Dbuild.exclude.ant.plugin=true" />
-											</gradle-execute>
-										</try>
-										<catch>
-											<fail message="${failure.property}" />
-										</catch>
-										<finally>
-											<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-										</finally>
-									</trycatch>
-								</else>
 							</if>
-
-							<ant dir="portal-kernel" inheritAll="false" target="test-class">
-								<property name="test.class" value="PortalLogAssertorTest" />
-							</ant>
 						</test-action>
 					</database-test-run-test>
 				</test-action>
@@ -1262,13 +1267,26 @@ app.server.type=@{app.server.type}]]></echo>
 						<isset property="env.DIST_PATH" />
 						<then>
 							<prepare-test-environment />
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
 
+					<if>
+						<equals arg1="@{subrepository.name}" arg2="" />
+						<then>
 							<antcall inheritAll="false" target="record-test-class-file-names">
 								<param name="test.class.groups.size" value="${test.batch.size}" />
 							</antcall>
 						</then>
 						<else>
-							<prepare-test-build />
+							<get-module-base-dir-from-subrepository-name subrepository.name="@{subrepository.name}" />
+
+							<antcall inheritAll="false" target="record-test-class-file-names">
+								<param name="test.class.modules.base.dir" value="${module.base.dir}" />
+								<param name="test.class.groups.size" value="${test.batch.size}" />
+							</antcall>
 						</else>
 					</if>
 				</test-set-up>
@@ -1302,6 +1320,45 @@ app.server.type=@{app.server.type}]]></echo>
 			</ant>
 		</sequential>
 	</macrodef>
+
+	<target name="central-requirements-jdk8">
+		<fail message="Please set the property ${central.requirements.tests}." unless="central.requirements.tests" />
+
+		<run-batch-test>
+			<test-action>
+				<propertyfile file="${project.dir}/test.class.file.names.properties">
+					<entry key="TEST_CLASS_GROUP_0" value="${central.requirements.tests}" />
+				</propertyfile>
+
+				<ant dir="portal-kernel" inheritAll="false" target="test-class-group">
+					<property name="test.class.group.index" value="0" />
+				</ant>
+
+				<ant dir="portal-impl" inheritAll="false" target="test-class-group">
+					<property name="test.class.group.index" value="0" />
+					<property name="test.type" value="unit" />
+				</ant>
+
+				<ant dir="util-java" inheritAll="false" target="test-class-group">
+					<property name="test.class.group.index" value="0" />
+				</ant>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<ant target="compile" />
+
+						<ant target="install-portal-snapshots" />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
 
 	<target name="compile-jsp-jdk8">
 		<run-batch-test>
@@ -1556,51 +1613,51 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="functional-smoke-jboss70-mysql56-jdk8">
-		<run-functional-test app.server.type="jboss" database.type="mysql" />
+		<run-functional-test app.server.type="jboss" database.type="mysql" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-resin40-mysql56-jdk8">
-		<run-functional-test app.server.type="resin" database.type="mysql" />
+		<run-functional-test app.server.type="resin" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tcserver31-mysql56-jdk8">
-		<run-functional-test app.server.type="tcserver" database.type="mysql" />
+		<run-functional-test app.server.type="tcserver" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-db2105-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="db2" />
+		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-mariadb100-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
+		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-mysql56-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-oracle121-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="oracle" />
+		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-postgresql94-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-sybase160-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="sybase" />
+		<run-functional-test app.server.type="tomcat" database.type="sybase" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-weblogic121-mysql56-jdk8">
-		<run-functional-test app.server.type="weblogic" database.type="mysql" />
+		<run-functional-test app.server.type="weblogic" database.type="mysql" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-websphere85-mysql56-jdk8">
-		<run-functional-test app.server.type="websphere" database.type="mysql" />
+		<run-functional-test app.server.type="websphere" database.type="mysql" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-wildfly100-mariadb100-jdk8">
-		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
+		<run-functional-test app.server.type="wildfly" database.type="mariadb" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-tomcat80-hypersonic20-jdk8">
@@ -1721,6 +1778,16 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="integration-sybase160-jdk8">
 		<run-integration-test database.type="sybase" />
+	</target>
+
+	<target name="javadoc-jdk8">
+		<run-batch-test>
+			<test-action>
+				<antcall target="compile" />
+
+				<antcall target="doc" />
+			</test-action>
+		</run-batch-test>
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-db2105-jdk7">
@@ -2361,7 +2428,19 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute dir="${module.base.dir}" task="compileJava" />
+				<local name="tasks.output" />
+
+				<gradle-execute dir="${module.base.dir}" outputproperty="tasks.output" task="tasks" />
+
+				<if>
+					<contains string="${tasks.output}" substring="assemble" />
+					<then>
+						<gradle-execute dir="${module.base.dir}" task="assemble" />
+					</then>
+					<else>
+						<gradle-execute dir="${module.base.dir}" task="jar" />
+					</else>
+				</if>
 			</try>
 			<catch>
 				<fail message="${failure.property}" />

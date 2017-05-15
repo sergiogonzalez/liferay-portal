@@ -62,7 +62,9 @@ public class DefaultJournalTransformerListenerRegistryImpl
 	public void unregisterTransformerListener(
 		TransformerListener transformerListener) {
 
-		_transformerListeners.remove(transformerListener);
+		Class<?> clazz = transformerListener.getClass();
+
+		_transformerListeners.remove(clazz.getName());
 	}
 
 	private final Map<String, TransformerListener> _transformerListeners =

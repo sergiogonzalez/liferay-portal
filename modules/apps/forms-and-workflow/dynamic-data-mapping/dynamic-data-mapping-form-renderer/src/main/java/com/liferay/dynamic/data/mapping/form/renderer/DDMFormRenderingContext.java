@@ -40,6 +40,10 @@ public class DDMFormRenderingContext {
 		return _ddmFormValues;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
 	}
@@ -84,6 +88,10 @@ public class DDMFormRenderingContext {
 		_ddmFormValues = ddmFormValues;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
 	}
@@ -122,6 +130,7 @@ public class DDMFormRenderingContext {
 
 	private String _containerId;
 	private DDMFormValues _ddmFormValues;
+	private long _groupId;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private Locale _locale;

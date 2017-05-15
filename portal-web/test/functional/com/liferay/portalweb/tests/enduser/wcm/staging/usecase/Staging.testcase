@@ -41,6 +41,8 @@
 	</tear-down>
 
 	<command name="ActivateStagingPageVersioningWithCustomDefaultLanguage" priority="5">
+		<property name="test.name.skip.portal.instance" value="Staging#ActivateStagingPageVersioningWithCustomDefaultLanguage" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -527,6 +529,7 @@
 
 	<command name="StagingDemoDocumentsAndMedia" priority="3">
 		<property name="custom.properties" value="default.layout.template.id=1_column" />
+		<property name="test.name.skip.portal.instance" value="Staging#StagingDemoDocumentsAndMedia" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -1143,7 +1146,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
+		<execute macro="WebContentDisplayPortlet#viewDeletedArticle" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -1154,11 +1157,12 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
+		<execute macro="WebContentDisplayPortlet#viewDeletedArticle" />
 	</command>
 
 	<command name="StagingRemoteDocumentSubtypeViaAP" priority="3">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteDocumentSubtypeViaAP" />
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="siteName" value="Site Name" />
@@ -1234,6 +1238,7 @@
 
 	<command name="StagingRemoteLiveWebContent" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="test.name.skip.portal.instance" value="Staging#StagingRemoteLiveWebContent" />
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="siteName" value="Site Name" />

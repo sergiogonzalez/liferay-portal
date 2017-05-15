@@ -40,16 +40,13 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.service.*" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@
 page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />
 
 <%
 FlagsGroupServiceConfiguration flagsGroupServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(FlagsGroupServiceConfiguration.class, themeDisplay.getCompanyId());

@@ -31,8 +31,8 @@
 				<name>reject</name>
 				<script>
 					<![CDATA[
-						Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.toStatus("denied"), workflowContext);
-						Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.toStatus("pending"), workflowContext);
+						Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("denied"), workflowContext);
+						Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("pending"), workflowContext);
 					]]>
 				</script>
 				<script-language>javascript</script-language>
@@ -40,9 +40,10 @@
 			</action>
 			<notification>
 				<name>Creator Modification Notification</name>
-				<template>Your submission was rejected by a reviewer, please modify and resubmit.</template>
-				<template-language>text</template-language>
+				<template>Your submission was rejected by ${userName}, please modify and resubmit.</template>
+				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
@@ -64,15 +65,15 @@
 		<actions>
 			<notification>
 				<name>Review Notification</name>
-				<template>You have a new submission waiting for your review in the workflow.</template>
-				<template-language>text</template-language>
+				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
+				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
-				<template>
-					Your submission has been reviewed and the reviewer has applied the following ${taskComments}.</template>
+				<template><![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]></template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>
@@ -144,7 +145,7 @@
 						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 						import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.toStatus("approved"), workflowContext);
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
 					]]>
 				</script>
 				<script-language>groovy</script-language>

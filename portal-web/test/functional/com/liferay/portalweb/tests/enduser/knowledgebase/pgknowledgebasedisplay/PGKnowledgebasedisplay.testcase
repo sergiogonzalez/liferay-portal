@@ -1,5 +1,6 @@
 <definition component-name="portal-knowledge-base">
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
+	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
 
@@ -848,6 +849,8 @@
 	</command>
 
 	<command name="ViewKBArticleWithEditedStarRatings" priority="3">
+		<property name="test.name.skip.portal.instance" value="PGKnowledgebasedisplay#ViewKBArticleWithEditedStarRatings" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1008,6 +1011,8 @@
 	</command>
 
 	<command name="ViewKBArticleWithStarRatings" priority="4">
+		<property name="test.name.skip.portal.instance" value="PGKnowledgebasedisplay#ViewKBArticleWithStarRatings" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

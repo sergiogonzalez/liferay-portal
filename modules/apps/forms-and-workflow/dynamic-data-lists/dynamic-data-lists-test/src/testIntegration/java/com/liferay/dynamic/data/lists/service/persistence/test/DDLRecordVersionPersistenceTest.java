@@ -139,6 +139,8 @@ public class DDLRecordVersionPersistenceTest {
 
 		newDDLRecordVersion.setRecordSetId(RandomTestUtil.nextLong());
 
+		newDDLRecordVersion.setRecordSetVersion(RandomTestUtil.randomString());
+
 		newDDLRecordVersion.setRecordId(RandomTestUtil.nextLong());
 
 		newDDLRecordVersion.setVersion(RandomTestUtil.randomString());
@@ -174,6 +176,8 @@ public class DDLRecordVersionPersistenceTest {
 			newDDLRecordVersion.getDDMStorageId());
 		Assert.assertEquals(existingDDLRecordVersion.getRecordSetId(),
 			newDDLRecordVersion.getRecordSetId());
+		Assert.assertEquals(existingDDLRecordVersion.getRecordSetVersion(),
+			newDDLRecordVersion.getRecordSetVersion());
 		Assert.assertEquals(existingDDLRecordVersion.getRecordId(),
 			newDDLRecordVersion.getRecordId());
 		Assert.assertEquals(existingDDLRecordVersion.getVersion(),
@@ -199,6 +203,15 @@ public class DDLRecordVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_R() throws Exception {
+		_persistence.countByR_R(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByR_R(0L, StringPool.NULL);
+
+		_persistence.countByR_R(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByR_V() throws Exception {
 		_persistence.countByR_V(RandomTestUtil.nextLong(), StringPool.BLANK);
 
@@ -213,6 +226,17 @@ public class DDLRecordVersionPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByR_S(0L, 0);
+	}
+
+	@Test
+	public void testCountByU_R_R_S() throws Exception {
+		_persistence.countByU_R_R_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK,
+			RandomTestUtil.nextInt());
+
+		_persistence.countByU_R_R_S(0L, 0L, StringPool.NULL, 0);
+
+		_persistence.countByU_R_R_S(0L, 0L, (String)null, 0);
 	}
 
 	@Test
@@ -241,9 +265,10 @@ public class DDLRecordVersionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DDLRecordVersion",
 			"recordVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"DDMStorageId", true, "recordSetId", true, "recordId", true,
-			"version", true, "displayIndex", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"DDMStorageId", true, "recordSetId", true, "recordSetVersion",
+			true, "recordId", true, "version", true, "displayIndex", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -475,6 +500,8 @@ public class DDLRecordVersionPersistenceTest {
 		ddlRecordVersion.setDDMStorageId(RandomTestUtil.nextLong());
 
 		ddlRecordVersion.setRecordSetId(RandomTestUtil.nextLong());
+
+		ddlRecordVersion.setRecordSetVersion(RandomTestUtil.randomString());
 
 		ddlRecordVersion.setRecordId(RandomTestUtil.nextLong());
 

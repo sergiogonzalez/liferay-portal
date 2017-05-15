@@ -61,7 +61,7 @@ com.liferay.portal.kernel.lock.Lock lock = fileEntry.getLock();
 
 String[] conversions = new String[0];
 
-if (PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED)) {
+if (PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled()) {
 	conversions = (String[])DocumentConversionUtil.getConversions(fileVersion.getExtension());
 }
 
@@ -236,6 +236,7 @@ if (portletTitleBasedNavigation) {
 								%>
 
 									<liferay-ui:icon
+										data="<%= data %>"
 										iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
 										label="<%= true %>"
 										message="<%= StringUtil.toUpperCase(conversion) %>"

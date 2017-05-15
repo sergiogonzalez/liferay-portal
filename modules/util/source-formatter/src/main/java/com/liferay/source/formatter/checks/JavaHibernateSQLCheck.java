@@ -16,22 +16,16 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
 public class JavaHibernateSQLCheck extends BaseFileCheck {
 
-	public JavaHibernateSQLCheck(List<String> excludes) {
-		_excludes = excludes;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isExcludedPath(_excludes, absolutePath) &&
+		if (!isExcludedPath(_HIBERNATE_SQL_QUERY_EXCLUDES, absolutePath) &&
 			content.contains("= session.createSynchronizedSQLQuery(") &&
 			content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
 
@@ -43,6 +37,7 @@ public class JavaHibernateSQLCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final List<String> _excludes;
+	private static final String _HIBERNATE_SQL_QUERY_EXCLUDES =
+		"hibernate.sql.query.excludes";
 
 }

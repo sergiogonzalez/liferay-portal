@@ -53,8 +53,7 @@ public class UserNotificationDefinition {
 	}
 
 	public String getDescription(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle = getResourceBundle(locale);
 
 		String description = ResourceBundleUtil.getString(
 			resourceBundle, _description);
@@ -84,6 +83,11 @@ public class UserNotificationDefinition {
 		getUserNotificationDeliveryTypes() {
 
 		return _userNotificationDeliveryTypes;
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	private final long _classNameId;

@@ -123,15 +123,9 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		boolean forceDisable = ParamUtil.getBoolean(
-			actionRequest, "forceDisable");
-
 		boolean stagedGroup = true;
 
-		if (forceDisable) {
-			_groupLocalService.disableStaging(liveGroupId);
-		}
-		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
+		if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
 			stagedGroup = liveGroup.hasStagingGroup();
 
 			_stagingLocalService.enableLocalStaging(

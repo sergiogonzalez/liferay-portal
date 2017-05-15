@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ page import="com.liferay.dynamic.data.mapping.model.DDMForm" %>
-<%@ page import="com.liferay.dynamic.data.mapping.model.DDMFormField" %>
-<%@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %>
-<%@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer" %>
-<%@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil" %>
-<%@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext" %>
-<%@ page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %>
-<%@ page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
+<%@ page import="com.liferay.dynamic.data.mapping.model.DDMForm" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMFormField" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
+page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer" %><%@
+page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext");

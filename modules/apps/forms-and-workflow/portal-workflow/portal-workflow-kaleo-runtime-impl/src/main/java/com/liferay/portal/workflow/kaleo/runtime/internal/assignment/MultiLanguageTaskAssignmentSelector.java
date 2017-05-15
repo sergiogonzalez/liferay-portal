@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
@@ -65,7 +66,7 @@ public class MultiLanguageTaskAssignmentSelector
 		else {
 			String taskAssignmentSelectorKey = getTaskAssignmentSelectKey(
 				kaleoTaskAssignment.getAssigneeScriptLanguage(),
-				kaleoTaskAssignment.getAssigneeScript());
+				StringUtil.trim(kaleoTaskAssignment.getAssigneeScript()));
 
 			taskAssignmentSelector = _taskAssignmentSelectors.get(
 				taskAssignmentSelectorKey);

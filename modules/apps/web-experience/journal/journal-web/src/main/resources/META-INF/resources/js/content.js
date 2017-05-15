@@ -95,6 +95,20 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					_afterDeletingAvailableLocale: function(event) {
+						var instance = this;
+
+						var descriptionInputLocalized = instance.get(STR_DESCRIPTION_INPUT_LOCALIZED);
+
+						var titleInputLocalized = instance.get(STR_TITLE_INPUT_LOCALIZED);
+
+						var locale = event.locale;
+
+						descriptionInputLocalized.removeInputLanguage(locale);
+
+						titleInputLocalized.removeInputLanguage(locale);
+					},
+
 					_afterEditingLocaleChange: function(event) {
 						var instance = this;
 
@@ -155,6 +169,9 @@ AUI.add(
 						var translationManager = instance.get(STR_TRANSLATION_MANAGER);
 
 						if (translationManager) {
+							eventHandles.push(
+								translationManager.on('deleteAvailableLocale', instance._afterDeletingAvailableLocale.bind(instance))
+							);
 							eventHandles.push(
 								translationManager.on('editingLocaleChange', instance._afterEditingLocaleChange.bind(instance))
 							);

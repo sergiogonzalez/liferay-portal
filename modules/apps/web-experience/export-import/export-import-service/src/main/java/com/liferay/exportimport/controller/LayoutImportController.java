@@ -204,6 +204,8 @@ public class LayoutImportController implements ImportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_IMPORT_STARTED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
@@ -218,6 +220,8 @@ public class LayoutImportController implements ImportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_IMPORT_SUCCEEDED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				userId);
@@ -227,6 +231,8 @@ public class LayoutImportController implements ImportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_IMPORT_FAILED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				t);
@@ -648,6 +654,9 @@ public class LayoutImportController implements ImportController {
 				group.getCompanyId(), targetGroupId, parameterMap,
 				userIdStrategy, zipReader);
 
+		portletDataContext.setExportImportProcessId(
+			String.valueOf(
+				exportImportConfiguration.getExportImportConfigurationId()));
 		portletDataContext.setPrivateLayout(privateLayout);
 
 		return portletDataContext;
@@ -829,9 +838,8 @@ public class LayoutImportController implements ImportController {
 		}
 		else {
 			BiPredicate<Version, Version> majorVersionBiPredicate =
-				(currentVersion, importVersion) ->
-					Objects.equals(
-						currentVersion.getMajor(), importVersion.getMajor());
+				(currentVersion, importVersion) -> Objects.equals(
+					currentVersion.getMajor(), importVersion.getMajor());
 
 			BiPredicate<Version, Version> minorVersionBiPredicate =
 				(currentVersion, importVersion) -> {

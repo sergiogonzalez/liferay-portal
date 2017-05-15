@@ -14,28 +14,12 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.source.formatter.checks.FileCheck;
-import com.liferay.source.formatter.checks.TLDElementOrderCheck;
-import com.liferay.source.formatter.checks.TLDTypeCheck;
-import com.liferay.source.formatter.checks.WhitespaceCheck;
-
-import java.io.File;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Hugo Huijser
  */
 public class TLDSourceProcessor extends BaseSourceProcessor {
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
-	}
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
@@ -49,21 +33,6 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	@Override
-	protected List<FileCheck> getFileChecks() {
-		return _fileChecks;
-	}
-
-	@Override
-	protected void populateFileChecks() {
-		_fileChecks.add(new WhitespaceCheck());
-
-		_fileChecks.add(new TLDElementOrderCheck());
-		_fileChecks.add(new TLDTypeCheck());
-	}
-
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
-
-	private final List<FileCheck> _fileChecks = new ArrayList<>();
 
 }

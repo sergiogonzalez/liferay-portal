@@ -38,7 +38,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
@@ -146,6 +145,8 @@ public class PortletExportController implements ExportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
@@ -155,6 +156,8 @@ public class PortletExportController implements ExportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
@@ -165,6 +168,8 @@ public class PortletExportController implements ExportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				t);
@@ -583,12 +588,6 @@ public class PortletExportController implements ExportController {
 			data = portletDataHandler.exportData(
 				portletDataContext, portletId, jxPortletPreferences);
 		}
-		catch (PortletDataException pde) {
-			throw pde;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 		finally {
 			portletDataContext.setGroupId(groupId);
 			portletDataContext.setStartDate(originalStartDate);
@@ -621,6 +620,7 @@ public class PortletExportController implements ExportController {
 				portletLastPublishDate, portletDataContext.getEndDate());
 
 			ExportImportProcessCallbackRegistryUtil.registerCallback(
+				portletDataContext.getExportImportProcessId(),
 				new UpdatePortletLastPublishDateCallable(
 					adjustedDateRange, portletDataContext.getEndDate(),
 					portletDataContext.getGroupId(), plid, portletId));
@@ -683,8 +683,14 @@ public class PortletExportController implements ExportController {
 		if (!layout.isTypeControlPanel() && !layout.isTypePanel() &&
 			!layout.isTypePortlet()) {
 
-			throw new LayoutImportException(
-				"Layout type " + layout.getType() + " is not valid");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Unable to export layout ");
+			sb.append(layout.getPlid());
+			sb.append(" because it has an invalid type: ");
+			sb.append(layout.getType());
+
+			throw new LayoutImportException(sb.toString());
 		}
 
 		ServiceContext serviceContext =
@@ -828,7 +834,10 @@ public class PortletExportController implements ExportController {
 				"/manifest.xml", document.formattedString());
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"Unable to create the export LAR manifest file for portlet " +
+					portletDataContext.getPortletId(),
+				ioe);
 		}
 
 		ZipWriter zipWriter = portletDataContext.getZipWriter();
@@ -1273,6 +1282,9 @@ public class PortletExportController implements ExportController {
 				layout.getCompanyId(), sourceGroupId, parameterMap,
 				dateRange.getStartDate(), dateRange.getEndDate(), zipWriter);
 
+		portletDataContext.setExportImportProcessId(
+			String.valueOf(
+				exportImportConfiguration.getExportImportConfigurationId()));
 		portletDataContext.setOldPlid(sourcePlid);
 		portletDataContext.setPlid(sourcePlid);
 		portletDataContext.setPortletId(portletId);

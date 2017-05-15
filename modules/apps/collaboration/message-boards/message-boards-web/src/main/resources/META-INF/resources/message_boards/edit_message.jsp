@@ -163,21 +163,8 @@ if (portletTitleBasedNavigation) {
 
 		<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
-		<%
-		long uploadServletRequestImplMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-		%>
-
 		<liferay-ui:error exception="<%= FileSizeException.class %>">
-
-			<%
-			long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-			if (fileMaxSize == 0) {
-				fileMaxSize = uploadServletRequestImplMaxSize;
-			}
-			%>
-
-			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
@@ -185,7 +172,7 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
 
 		<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
-			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(uploadServletRequestImplMaxSize, locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:asset-categories-error />
@@ -254,7 +241,7 @@ if (portletTitleBasedNavigation) {
 
 								String taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "trashAttachment(" + (i + 1) + ", '" + Constants.MOVE_TO_TRASH + "');";
 
-								if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
+								if (!trashHelper.isTrashEnabled(scopeGroupId)) {
 									taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
 								}
 							%>
@@ -282,13 +269,13 @@ if (portletTitleBasedNavigation) {
 									<liferay-ui:icon-delete
 										id='<%= "removeExisting" + (i + 1) %>'
 										label="<%= true %>"
-										message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
+										message='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
 										method="get"
-										trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+										trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 										url="<%= taglibDeleteAttachment %>"
 									/>
 
-									<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+									<c:if test="<%= trashHelper.isTrashEnabled(scopeGroupId) %>">
 
 										<%
 										StringBundler sb = new StringBundler(7);
@@ -429,7 +416,7 @@ if (portletTitleBasedNavigation) {
 				</aui:fieldset>
 			</c:if>
 
-			<c:if test="<%= (message == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE %>">
+			<c:if test="<%= (message == null) && captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
 				<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
 				<liferay-captcha:captcha url="<%= captchaURL %>" />
@@ -500,7 +487,7 @@ if (portletTitleBasedNavigation) {
 
 <aui:script>
 	<c:choose>
-		<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+		<c:when test="<%= trashHelper.isTrashEnabled(scopeGroupId) %>">
 			function <portlet:namespace />trashAttachment(index, action) {
 				var $ = AUI.$;
 

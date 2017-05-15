@@ -35,10 +35,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.struts.StrutsActionPortletURL;
 import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 import com.liferay.trash.kernel.service.TrashEntryService;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
@@ -56,7 +56,9 @@ import com.liferay.wiki.web.internal.WikiAttachmentsHelper;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -135,9 +137,11 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+			Map<String, Object> data = new HashMap<>();
 
-			hideDefaultSuccessMessage(actionRequest);
+			data.put("trashedModels", trashedModels);
+
+			addDeleteSuccessData(actionRequest, data);
 		}
 	}
 
@@ -268,7 +272,8 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 				_wikiPageResourceLocalService.getPageResource(
 					trashEntry.getClassPK());
 
-			String title = TrashUtil.getOriginalTitle(pageResource.getTitle());
+			String title = _trashHelper.getOriginalTitle(
+				pageResource.getTitle());
 
 			WikiWebComponentProvider wikiWebComponentProvider =
 				WikiWebComponentProvider.getWikiWebComponentProvider();
@@ -402,6 +407,10 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 	private TrashEntryLocalService _trashEntryLocalService;
 	private TrashEntryService _trashEntryService;
+
+	@Reference
+	private TrashHelper _trashHelper;
+
 	private WikiAttachmentsHelper _wikiAttachmentsHelper;
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;

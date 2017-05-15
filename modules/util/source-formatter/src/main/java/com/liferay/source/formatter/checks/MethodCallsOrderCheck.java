@@ -29,10 +29,6 @@ import java.util.regex.Pattern;
  */
 public class MethodCallsOrderCheck extends BaseFileCheck {
 
-	public MethodCallsOrderCheck(List<String> excludes) {
-		_excludes = excludes;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -140,7 +136,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortMethodCalls(String absolutePath, String content) {
-		if (isExcludedPath(_excludes, absolutePath)) {
+		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
 			return content;
 		}
 
@@ -154,8 +150,6 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private final List<String> _excludes;
 
 	private class PutOrSetParameterNameComparator
 		extends NaturalOrderStringComparator {

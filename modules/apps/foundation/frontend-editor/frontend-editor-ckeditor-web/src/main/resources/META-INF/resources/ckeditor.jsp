@@ -398,11 +398,22 @@ name = HtmlUtil.escapeJS(name);
 		return toolbarSet;
 	}
 
+	var afterVal = function() {
+		return new A.Do.AlterReturn(
+			'Return editor content',
+			window['<%= name %>'].getHTML()
+		);
+	};
+
 	var createEditor = function() {
 		var editorNode = A.one('#<%= name %>');
 
 		editorNode.attr('contenteditable', true);
 		editorNode.addClass('lfr-editable');
+
+		var eventHandles = [
+			A.Do.after(afterVal, editorNode, 'val', this)
+		];
 
 		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
@@ -599,6 +610,8 @@ name = HtmlUtil.escapeJS(name);
 						catch (e) {
 						}
 
+						(new A.EventHandle(eventHandles)).detach();
+
 						Liferay.detach('destroyPortlet', destroyInstance);
 					}
 				};
@@ -631,7 +644,7 @@ public String marshallParams(Map<String, String> params) {
 		sb.append(StringPool.AMPERSAND);
 		sb.append(configParam.getKey());
 		sb.append(StringPool.EQUAL);
-		sb.append(HttpUtil.encodeURL(configParam.getValue()));
+		sb.append(URLCodec.encodeURL(configParam.getValue()));
 	}
 
 	return sb.toString();

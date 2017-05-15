@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -80,7 +81,9 @@ public class UpgradeJournal extends UpgradeProcess {
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		GroupLocalService groupLocalService,
 		ResourceActionLocalService resourceActionLocalService,
-		ResourceActions resourceActions, UserLocalService userLocalService) {
+		ResourceActions resourceActions,
+		ResourceLocalService resourceLocalService,
+		UserLocalService userLocalService) {
 
 		_companyLocalService = companyLocalService;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
@@ -90,6 +93,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		_groupLocalService = groupLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourceActions = resourceActions;
+		_resourceLocalService = resourceLocalService;
 		_userLocalService = userLocalService;
 	}
 
@@ -111,6 +115,8 @@ public class UpgradeJournal extends UpgradeProcess {
 			"com/liferay/journal/internal/upgrade/v1_0_0/dependencies" +
 				"/basic-web-content-structure.xml",
 			new ServiceContext());
+
+		addDefaultResourcePermissions(group.getGroupId());
 
 		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
 			companyId);
@@ -216,6 +222,21 @@ public class UpgradeJournal extends UpgradeProcess {
 				}
 			}
 		}
+	}
+
+	protected void addDefaultResourcePermissions(long groupId)
+		throws Exception {
+
+		String modelResource = _resourceActions.getCompositeModelName(
+			DDMStructure.class.getName(), JournalArticle.class.getName());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			groupId, PortalUtil.getClassNameId(JournalArticle.class),
+			"BASIC-WEB-CONTENT");
+
+		_resourceLocalService.addResources(
+			ddmStructure.getCompanyId(), 0, 0, modelResource,
+			ddmStructure.getStructureId(), false, false, true);
 	}
 
 	protected boolean containsDateFieldType(String content) {
@@ -606,6 +627,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		"name=\"([^\"]+)\"");
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourceActions _resourceActions;
+	private final ResourceLocalService _resourceLocalService;
 	private final UserLocalService _userLocalService;
 
 }

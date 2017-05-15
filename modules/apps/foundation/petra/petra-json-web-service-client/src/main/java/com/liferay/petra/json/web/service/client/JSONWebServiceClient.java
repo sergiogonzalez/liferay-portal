@@ -14,6 +14,8 @@
 
 package com.liferay.petra.json.web.service.client;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.security.KeyStore;
 
 import java.util.Map;
@@ -22,7 +24,10 @@ import java.util.Map;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@ProviderType
 public interface JSONWebServiceClient {
+
+	public void destroy();
 
 	public String doDelete(String url, Map<String, String> parameters)
 		throws JSONWebServiceTransportException;

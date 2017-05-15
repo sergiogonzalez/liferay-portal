@@ -18,8 +18,6 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.journal.model.JournalFeed;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -145,9 +143,6 @@ public class JournalFeedExportImportContentProcessor
 
 		_layoutLocalService = layoutLocalService;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalFeedExportImportContentProcessor.class);
 
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;

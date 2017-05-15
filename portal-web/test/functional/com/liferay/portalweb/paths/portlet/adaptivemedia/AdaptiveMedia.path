@@ -16,7 +16,7 @@
 <!--IMAGE_VARIANT-->
 <tr>
 	<td>IMAGE_VARIANT_SOURCE_URL</td>
-	<td>//picture/source[contains(@srcset,'adaptive-media') and contains(@srcset,'${key_imageName}') and contains(@srcset,'${key_dmDocumentTitle}')]</td>
+	<td>//img[contains(@src,'${key_imageName}') and contains(@data-fileentryid,'')]</td>
 	<td></td>
 </tr>
 </tbody>

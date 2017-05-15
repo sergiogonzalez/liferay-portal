@@ -176,13 +176,16 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	<%
 	DDMFormValues ddmFormValues = journalDisplayContext.getDDMFormValues(ddmStructure);
 
-	Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
+	Set<Locale> availableLocalesSet = new HashSet<>();
+
+	availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
+	availableLocalesSet.addAll(journalDisplayContext.getAvailableArticleLocales());
 
 	if (ddmFormValues != null) {
-		Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
-
-		availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+		availableLocalesSet.addAll(ddmFormValues.getAvailableLocales());
 	}
+
+	Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 	%>
 
 	<div class="lfr-form-content">

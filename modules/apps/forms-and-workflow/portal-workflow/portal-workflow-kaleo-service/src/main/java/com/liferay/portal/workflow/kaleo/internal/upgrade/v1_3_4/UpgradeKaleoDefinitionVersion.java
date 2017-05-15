@@ -41,26 +41,29 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 	}
 
 	protected void upgradeKaleoDefinitionVersion() throws SQLException {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb1 = new StringBundler(3);
 
-		sb.append("insert into KaleoDefinitionVersion ");
-		sb.append("(kaleoDefinitionVersionId, groupId, companyId, userId, ");
-		sb.append("userName, statusByUserId, statusByUserName, statusDate, ");
-		sb.append("createDate, kaleoDefinitionId, name, title, description, ");
-		sb.append("content, version, active_, startKaleoNodeId, status) ");
-		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?)");
+		sb1.append("select * from KaleoDefinition kd where not exists ");
+		sb1.append("(select 1 from KaleoDefinitionVersion kdv where ");
+		sb1.append("kdv.name = kd.name and kdv.companyId = kd.companyId)");
+
+		StringBundler sb2 = new StringBundler(6);
+
+		sb2.append("insert into KaleoDefinitionVersion ");
+		sb2.append("(kaleoDefinitionVersionId, groupId, companyId, userId, ");
+		sb2.append("userName, statusByUserId, statusByUserName, statusDate, ");
+		sb2.append("createDate, modifiedDate, name, title, description, ");
+		sb2.append("content, version, status) values (?, ?, ?, ?, ?, ?, ?, ");
+		sb2.append("?, ?, ?, ?, ?, ?, ?, ?, ? )");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
-				"select * from KaleoDefinition");
+			PreparedStatement ps1 = connection.prepareStatement(sb1.toString());
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sb.toString());
+					connection, sb2.toString());
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long kaleoDefinitionId = rs.getLong("kaleoDefinitionId");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
@@ -72,8 +75,6 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 				String description = rs.getString("description");
 				String content = rs.getString("content");
 				int version = rs.getInt("version");
-				boolean active = rs.getBoolean("active_");
-				long startKaleoNodeId = rs.getLong("startKaleoNodeId");
 
 				ps2.setLong(1, increment());
 				ps2.setLong(2, groupId);
@@ -84,15 +85,13 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 				ps2.setString(7, userName);
 				ps2.setTimestamp(8, modifiedDate);
 				ps2.setTimestamp(9, createDate);
-				ps2.setLong(10, kaleoDefinitionId);
+				ps2.setTimestamp(10, modifiedDate);
 				ps2.setString(11, name);
 				ps2.setString(12, title);
 				ps2.setString(13, description);
 				ps2.setString(14, content);
 				ps2.setString(15, getVersion(version));
-				ps2.setBoolean(16, active);
-				ps2.setLong(17, startKaleoNodeId);
-				ps2.setInt(18, WorkflowConstants.STATUS_APPROVED);
+				ps2.setInt(16, WorkflowConstants.STATUS_APPROVED);
 
 				ps2.addBatch();
 			}

@@ -25,6 +25,24 @@
 	</tear-down>
 
 	<command name="ActivateSite" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Inactive Request Handler" />
+		</execute>
+
+		<execute macro="SystemSettings#enableSetting">
+			<var name="checkboxSetting" value="SHOW_INACTIVE_REQUEST_MESSAGE" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -40,10 +58,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -62,7 +76,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+		<execute macro="Page#viewInactiveRequestMessage">
+			<var name="resource" value="site" />
+		</execute>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -81,7 +97,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+		<execute function="AssertTextNotPresent" value1="This site is inactive. Please contact the administrator." />
 	</command>
 
 	<command name="AddChildChildSite" priority="4">
@@ -127,7 +143,7 @@
 	</command>
 
 	<command name="AddChildSite" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -380,6 +396,8 @@
 	</command>
 
 	<command name="EditSiteFriendlyURL" priority="4">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -421,7 +439,7 @@
 		<execute macro="Site#viewSiteFriendlyURLPG">
 			<var name="pageName" value="Public Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageURL" value="http://localhost:8080/web/alpha" />
+			<var name="sitePageURL" value="${portalURL}/web/alpha" />
 		</execute>
 
 		<execute macro="Navigator#openPrivateSiteURL">
@@ -431,11 +449,13 @@
 		<execute macro="Site#viewSiteFriendlyURLPG">
 			<var name="pageName" value="Private Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageURL" value="http://localhost:8080/group/alpha" />
+			<var name="sitePageURL" value="${portalURL}/group/alpha" />
 		</execute>
 	</command>
 
 	<command name="EditSiteFriendlyURLInvalid" priority="3">
+		<property name="test.name.skip.portal.instance" value="CPSites#EditSiteFriendlyURLInvalid" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

@@ -1,4 +1,9 @@
 <toggles>
+	<toggle name="LPS-70946">
+		<date>2017-04-17</date>
+		<description>Add confirmation message when changing structures in a web content article.</description>
+		<owner>Anthony Chu</owner>
+	</toggle>
 	<toggle name="LRQA-COM_LIFERAY_JOURNAL">
 		<date>2016-08-09</date>
 		<description>Testing toggles in a subrepository.</description>

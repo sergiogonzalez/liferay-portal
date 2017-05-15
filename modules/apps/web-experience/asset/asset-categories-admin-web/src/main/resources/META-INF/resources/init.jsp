@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext" %><%@
+<%@ page import="com.liferay.asset.categories.admin.web.constants.AssetCategoriesConstants" %><%@
+page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.asset.kernel.NoSuchClassTypeException" %><%@
@@ -65,9 +66,6 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetCategoriesPermission" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetCategoryPermission" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetVocabularyPermission" %><%@
 page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %>
 
 <%@ page import="java.util.ArrayList" %><%@

@@ -78,6 +78,8 @@ public interface Build {
 
 	public String getJobVariant();
 
+	public Long getLatestStartTimestamp();
+
 	public String getMaster();
 
 	public String getOperatingSystem();
@@ -91,6 +93,8 @@ public interface Build {
 	public String getResult();
 
 	public Map<String, String> getStartPropertiesTempMap();
+
+	public Long getStartTimestamp();
 
 	public String getStatus();
 
@@ -113,6 +117,8 @@ public interface Build {
 	public boolean hasBuildURL(String buildURL);
 
 	public void reinvoke();
+
+	public void reinvoke(ReinvokeRule reinvokeRule);
 
 	public String replaceBuildURL(String text);
 

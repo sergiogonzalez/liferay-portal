@@ -34,6 +34,12 @@ public class BrowserSnifferUtil {
 		return getBrowserSniffer().getBrowserId(request);
 	}
 
+	public static BrowserMetadata getBrowserMetadata(
+		HttpServletRequest request) {
+
+		return getBrowserSniffer().getBrowserMetadata(request);
+	}
+
 	public static BrowserSniffer getBrowserSniffer() {
 		PortalRuntimePermission.checkGetBeanProperty(BrowserSnifferUtil.class);
 

@@ -2,32 +2,39 @@
 
 /**
  * This renders the main element.
- *
- * @param? elementClasses
- * @param nodes
  */
 {template .render}
-	<div class="treeview{$elementClasses ? ' ' + $elementClasses : ''}" role="tree">
-		{call .nodes data="all"}
+	{@param nodes: list<?>}
+	{@param pathThemeImages: string}
+	{@param? viewType: string}
+
+	<div class="treeview" role="tree">
+		{call .nodes}
 			{param nodes: $nodes /}
+			{param pathThemeImages: $pathThemeImages /}
+			{param viewType: $viewType /}
 		{/call}
 	</div>
 {/template}
 
 /**
  * Renders the list of tree nodes. Uses the same markup as the parent Treeview component
- *
- * @param nodes
- * @param? parentPath
  */
 {template .nodes}
+	{@param nodes: list<?>}
+	{@param? parentPath: string}
+	{@param pathThemeImages: string}
+	{@param? viewType: string}
+
 	{if $nodes}
 		<ul class="treeview-nodes">
 			{foreach $node in $nodes}
 				{let $index: index($node) /}
-				{call .node data="all"}
+				{call .node}
 					{param node: $node /}
-					{param path: isNonnull($parentPath) ? ($parentPath + '-' + $index) : $index /}
+					{param path: isNonnull($parentPath) ? ($parentPath + '-' + $index) : '' + $index /}
+					{param pathThemeImages: $pathThemeImages /}
+					{param viewType: $viewType /}
 				{/call}
 			{/foreach}
 		</ul>
@@ -36,11 +43,22 @@
 
 /**
  * Overrides the parent Treeview node template to show a Lexicon card instead of the simple label
- *
- * @param node
- * @param path
  */
 {template .node}
+	{@param node: [
+		children: list<?>,
+		disabled: bool,
+		expanded: bool,
+		icon: string,
+		id: string,
+		name: string,
+		selected: bool,
+		value: string
+	]}
+	{@param path: string}
+	{@param pathThemeImages: string}
+	{@param? viewType: string}
+
 	<li class="treeview-node" data-treeview-path="{$path}">
 		{if $node}
 			<div class="treeview-node-wrapper{$node.expanded ? ' expanded' : ''}">
@@ -52,29 +70,38 @@
 					"
 					data-treeitemid="{$node.id}"
 					data-treeitemname="{$node.name}"
-					data-treeitemvalue="{$node.value}"
+
+					{if $node.value}
+						data-treeitemvalue="{$node.value}"
+					{/if}
+
 					aria-expanded="{$node.expanded ? 'true' : 'false'}"
 					role="treeitem"
 				{/let}
+
 				<div {$nodeAttributes}>
-					{if $node.children}
+					{if $viewType == 'tree' and $node.children}
 						<div
 							class="treeview-node-toggler"
 							data-onclick="handleNodeTogglerClicked_">
 						</div>
 					{/if}
 
-					{call .card data="all"}
+					{call .card}
 						{param disabled: $node.disabled /}
 						{param icon: $node.icon /}
+						{param path: $path /}
+						{param pathThemeImages: $pathThemeImages /}
 						{param title: $node.name /}
 					{/call}
 				</div>
 
-				{if $node.expanded}
-					{call .nodes data="all"}
+				{if $viewType == 'tree' and $node.expanded}
+					{call .nodes}
 						{param nodes: $node.children /}
 						{param parentPath: $path /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param viewType: $viewType /}
 					{/call}
 				{/if}
 			</div>
@@ -84,14 +111,14 @@
 
 /**
  * Renders a Lexicon Horizontal Card
- *
- * @param disabled
- * @param icon
- * @param path
- * @param pathThemeImages
- * @param title
  */
 {template .card}
+	{@param? disabled: bool}
+	{@param icon: string}
+	{@param path: string}
+	{@param pathThemeImages: string}
+	{@param title: string}
+
 	{let $nodeAttributes kind="attributes"}
 		class="card card-horizontal"
 		{if not $disabled}

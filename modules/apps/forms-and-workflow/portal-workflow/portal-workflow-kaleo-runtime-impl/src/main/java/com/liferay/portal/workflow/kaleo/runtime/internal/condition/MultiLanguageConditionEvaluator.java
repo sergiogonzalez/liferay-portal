@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -45,7 +46,8 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 		throws PortalException {
 
 		String conditionEvaluatorKey = getConditionEvaluatorKey(
-			kaleoCondition.getScriptLanguage(), kaleoCondition.getScript());
+			kaleoCondition.getScriptLanguage(),
+			StringUtil.trim(kaleoCondition.getScript()));
 
 		ConditionEvaluator conditionEvaluator = _conditionEvaluators.get(
 			conditionEvaluatorKey);

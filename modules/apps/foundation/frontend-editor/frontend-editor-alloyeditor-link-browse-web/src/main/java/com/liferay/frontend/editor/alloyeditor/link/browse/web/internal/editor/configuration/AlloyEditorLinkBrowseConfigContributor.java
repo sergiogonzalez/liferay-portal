@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
+ * @author Roberto Díaz
  */
 @Component(
 	property = {
@@ -55,6 +58,13 @@ public class AlloyEditorLinkBrowseConfigContributor
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		JSONObject buttonCfgJSONObject = jsonObject.getJSONObject("buttonCfg");
+
+		if (buttonCfgJSONObject != null) {
+			jsonObject.put(
+				"buttonCfg", updateButtonCfgJSONObject(buttonCfgJSONObject));
+		}
 
 		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
 
@@ -117,14 +127,21 @@ public class AlloyEditorLinkBrowseConfigContributor
 
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
-		ItemSelectorCriterion itemSelectorCriterion =
+		ItemSelectorCriterion fileItemSelectorCriterion =
 			new FileItemSelectorCriterion();
 
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, eventName, itemSelectorCriterion);
+			requestBackedPortletURLFactory, eventName,
+			fileItemSelectorCriterion, layoutItemSelectorCriterion);
 
 		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
 	}
@@ -132,6 +149,53 @@ public class AlloyEditorLinkBrowseConfigContributor
 	@Reference(unbind = "-")
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
+	}
+
+	protected JSONObject updateButtonCfgJSONObject(
+		JSONObject oldButtonCfgJSONObject) {
+
+		Iterator<String> buttonNames = oldButtonCfgJSONObject.keys();
+
+		JSONObject newButtonCfgJSONObject = JSONFactoryUtil.createJSONObject();
+
+		while (buttonNames.hasNext()) {
+			String buttonName = buttonNames.next();
+
+			if (buttonName.equals("link")) {
+				newButtonCfgJSONObject.put(
+					"linkBrowse",
+					oldButtonCfgJSONObject.getJSONObject(buttonName));
+			}
+			else if (buttonName.equals("linkEdit")) {
+				newButtonCfgJSONObject.put(
+					"linkEditBrowse",
+					oldButtonCfgJSONObject.getJSONObject(buttonName));
+			}
+			else {
+				newButtonCfgJSONObject.put(
+					buttonName,
+					oldButtonCfgJSONObject.getJSONObject(buttonName));
+			}
+		}
+
+		return newButtonCfgJSONObject;
+	}
+
+	protected void updateButtonJSONObject(
+		JSONArray buttonsJSONArray, JSONObject buttonJSONObject,
+		String buttonName) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject cfgJSONObject = buttonJSONObject.getJSONObject("cfg");
+
+		if (cfgJSONObject != null) {
+			jsonObject.put("cfg", cfgJSONObject);
+		}
+
+		jsonObject.put("name", buttonName);
+
+		buttonsJSONArray.put(jsonObject);
 	}
 
 	protected JSONArray updateButtonsJSONArray(JSONArray oldButtonsJSONArray) {
@@ -155,7 +219,20 @@ public class AlloyEditorLinkBrowseConfigContributor
 				}
 			}
 			else {
-				newButtonsJSONArray.put(oldButtonJSONObject);
+				String buttonName = oldButtonJSONObject.getString("name");
+
+				if (buttonName.equals("link")) {
+					updateButtonJSONObject(
+						newButtonsJSONArray, oldButtonJSONObject, "linkBrowse");
+				}
+				else if (buttonName.equals("linkEdit")) {
+					updateButtonJSONObject(
+						newButtonsJSONArray, oldButtonJSONObject,
+						"linkEditBrowse");
+				}
+				else {
+					newButtonsJSONArray.put(oldButtonJSONObject);
+				}
 			}
 		}
 

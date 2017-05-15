@@ -37,6 +37,8 @@ create index IX_B2A61B55 on AssetEntries_AssetTags (tagId);
 create unique index IX_1E9D371D on AssetEntry (classNameId, classPK);
 create index IX_7306C60 on AssetEntry (companyId);
 create index IX_75D42FF9 on AssetEntry (expirationDate);
+create index IX_6418BB52 on AssetEntry (groupId, classNameId, publishDate, expirationDate);
+create index IX_82C4BEF6 on AssetEntry (groupId, classNameId, visible);
 create index IX_1EBA6821 on AssetEntry (groupId, classUuid[$COLUMN_LENGTH:75$]);
 create index IX_FEC4A201 on AssetEntry (layoutUuid[$COLUMN_LENGTH:75$]);
 create index IX_2E4E3885 on AssetEntry (publishDate);
@@ -219,6 +221,7 @@ create index IX_63ED2532 on LayoutPrototype (uuid_[$COLUMN_LENGTH:75$], companyI
 
 create index IX_43E8286A on LayoutRevision (head, plid);
 create index IX_E10AC39 on LayoutRevision (layoutSetBranchId, head, plid);
+create index IX_38C5DF14 on LayoutRevision (layoutSetBranchId, layoutBranchId, head, plid);
 create index IX_13984800 on LayoutRevision (layoutSetBranchId, layoutBranchId, plid);
 create index IX_4A84AF43 on LayoutRevision (layoutSetBranchId, parentLayoutRevisionId, plid);
 create index IX_70DA9ECB on LayoutRevision (layoutSetBranchId, plid, status);
@@ -503,7 +506,7 @@ create index IX_14D8BCC0 on UserTrackerPath (userTrackerId);
 
 create index IX_BCFDA257 on User_ (companyId, createDate, modifiedDate);
 create index IX_C6EA4F34 on User_ (companyId, defaultUser, status);
-create unique index IX_615E9F7A on User_ (companyId, emailAddress[$COLUMN_LENGTH:75$]);
+create unique index IX_615E9F7A on User_ (companyId, emailAddress[$COLUMN_LENGTH:254$]);
 create index IX_1D731F03 on User_ (companyId, facebookId);
 create index IX_B6E3AE1 on User_ (companyId, googleUserId[$COLUMN_LENGTH:75$]);
 create index IX_EE8ABD19 on User_ (companyId, modifiedDate);
@@ -512,7 +515,7 @@ create unique index IX_C5806019 on User_ (companyId, screenName[$COLUMN_LENGTH:7
 create index IX_F6039434 on User_ (companyId, status);
 create unique index IX_9782AD88 on User_ (companyId, userId);
 create unique index IX_5ADBE171 on User_ (contactId);
-create index IX_762F63C6 on User_ (emailAddress[$COLUMN_LENGTH:75$]);
+create index IX_762F63C6 on User_ (emailAddress[$COLUMN_LENGTH:254$]);
 create index IX_A18034A4 on User_ (portraitId);
 create index IX_405CC0E on User_ (uuid_[$COLUMN_LENGTH:75$], companyId);
 

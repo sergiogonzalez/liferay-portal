@@ -74,7 +74,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.index.IndexStatusManager;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
 
@@ -495,7 +495,7 @@ public class JournalArticleIndexer
 		String articleId = journalArticle.getArticleId();
 
 		if (journalArticle.isInTrash()) {
-			articleId = TrashUtil.getOriginalTitle(articleId);
+			articleId = _trashHelper.getOriginalTitle(articleId);
 		}
 
 		document.addKeywordSortable(Field.ARTICLE_ID, articleId);
@@ -944,5 +944,8 @@ public class JournalArticleIndexer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

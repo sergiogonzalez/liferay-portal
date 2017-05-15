@@ -96,6 +96,42 @@
 		</execute>
 	</command>
 
+	<command name="CKEditorSmoke" priority="5">
+		<property name="custom.properties" value="editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp=ckeditor" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="CKEditor Entry Subject" />
+
+		<execute macro="CKEditor#assertEditorPresent" />
+
+		<execute macro="CKEditor#addContent">
+			<var name="content" value="CKEditor Entry Body" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="CKEditor Entry Body" />
+			<var name="threadSubject" value="CKEditor Entry Subject" />
+		</execute>
+	</command>
+
 	<command name="DeleteMBCategories" priority="4">
 		<execute macro="Navigator#openURL" />
 

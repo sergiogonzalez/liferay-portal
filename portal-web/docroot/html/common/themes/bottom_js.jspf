@@ -52,6 +52,7 @@
 	if (Liferay.Data.ICONS_INLINE_SVG) {
 		svg4everybody(
 			{
+				attributeName: 'data-href',
 				polyfill: true
 			}
 		);
@@ -233,7 +234,7 @@ if (layout != null) {
 		%>
 
 		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(HttpUtil.encodeURL(currentURL)) %>';
+		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)) %>';
 
 	// ]]>
 </script>

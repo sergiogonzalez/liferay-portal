@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
 
@@ -116,7 +116,7 @@ public class JournalFolderIndexer
 		String title = journalFolder.getName();
 
 		if (journalFolder.isInTrash()) {
-			title = TrashUtil.getOriginalTitle(title);
+			title = _trashHelper.getOriginalTitle(title);
 		}
 
 		document.addText(Field.TITLE, title);
@@ -216,5 +216,8 @@ public class JournalFolderIndexer
 	private IndexWriterHelper _indexWriterHelper;
 
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

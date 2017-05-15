@@ -68,14 +68,12 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("kaleoDefinitionId", getKaleoDefinitionId());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
 		attributes.put("version", getVersion());
-		attributes.put("active", getActive());
-		attributes.put("startKaleoNodeId", getStartKaleoNodeId());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -138,10 +136,10 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 			setCreateDate(createDate);
 		}
 
-		Long kaleoDefinitionId = (Long)attributes.get("kaleoDefinitionId");
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
 
-		if (kaleoDefinitionId != null) {
-			setKaleoDefinitionId(kaleoDefinitionId);
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		String name = (String)attributes.get("name");
@@ -174,18 +172,6 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 			setVersion(version);
 		}
 
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
-
-		Long startKaleoNodeId = (Long)attributes.get("startKaleoNodeId");
-
-		if (startKaleoNodeId != null) {
-			setStartKaleoNodeId(startKaleoNodeId);
-		}
-
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -203,29 +189,9 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 		return new KaleoDefinitionVersionWrapper(_kaleoDefinitionVersion.toUnescapedModel());
 	}
 
-	/**
-	* Returns the active of this kaleo definition version.
-	*
-	* @return the active of this kaleo definition version
-	*/
-	@Override
-	public boolean getActive() {
-		return _kaleoDefinitionVersion.getActive();
-	}
-
 	@Override
 	public boolean hasIncompleteKaleoInstances() {
 		return _kaleoDefinitionVersion.hasIncompleteKaleoInstances();
-	}
-
-	/**
-	* Returns <code>true</code> if this kaleo definition version is active.
-	*
-	* @return <code>true</code> if this kaleo definition version is active; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isActive() {
-		return _kaleoDefinitionVersion.isActive();
 	}
 
 	/**
@@ -541,6 +507,16 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	/**
+	* Returns the modified date of this kaleo definition version.
+	*
+	* @return the modified date of this kaleo definition version
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _kaleoDefinitionVersion.getModifiedDate();
+	}
+
+	/**
 	* Returns the status date of this kaleo definition version.
 	*
 	* @return the status date of this kaleo definition version
@@ -581,16 +557,6 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	/**
-	* Returns the kaleo definition ID of this kaleo definition version.
-	*
-	* @return the kaleo definition ID of this kaleo definition version
-	*/
-	@Override
-	public long getKaleoDefinitionId() {
-		return _kaleoDefinitionVersion.getKaleoDefinitionId();
-	}
-
-	/**
 	* Returns the kaleo definition version ID of this kaleo definition version.
 	*
 	* @return the kaleo definition version ID of this kaleo definition version
@@ -608,16 +574,6 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	@Override
 	public long getPrimaryKey() {
 		return _kaleoDefinitionVersion.getPrimaryKey();
-	}
-
-	/**
-	* Returns the start kaleo node ID of this kaleo definition version.
-	*
-	* @return the start kaleo node ID of this kaleo definition version
-	*/
-	@Override
-	public long getStartKaleoNodeId() {
-		return _kaleoDefinitionVersion.getStartKaleoNodeId();
 	}
 
 	/**
@@ -656,16 +612,6 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 		_kaleoDefinitionVersion.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	/**
-	* Sets whether this kaleo definition version is active.
-	*
-	* @param active the active of this kaleo definition version
-	*/
-	@Override
-	public void setActive(boolean active) {
-		_kaleoDefinitionVersion.setActive(active);
 	}
 
 	@Override
@@ -740,16 +686,6 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	/**
-	* Sets the kaleo definition ID of this kaleo definition version.
-	*
-	* @param kaleoDefinitionId the kaleo definition ID of this kaleo definition version
-	*/
-	@Override
-	public void setKaleoDefinitionId(long kaleoDefinitionId) {
-		_kaleoDefinitionVersion.setKaleoDefinitionId(kaleoDefinitionId);
-	}
-
-	/**
 	* Sets the kaleo definition version ID of this kaleo definition version.
 	*
 	* @param kaleoDefinitionVersionId the kaleo definition version ID of this kaleo definition version
@@ -757,6 +693,16 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
 		_kaleoDefinitionVersion.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+	}
+
+	/**
+	* Sets the modified date of this kaleo definition version.
+	*
+	* @param modifiedDate the modified date of this kaleo definition version
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_kaleoDefinitionVersion.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -787,16 +733,6 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_kaleoDefinitionVersion.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the start kaleo node ID of this kaleo definition version.
-	*
-	* @param startKaleoNodeId the start kaleo node ID of this kaleo definition version
-	*/
-	@Override
-	public void setStartKaleoNodeId(long startKaleoNodeId) {
-		_kaleoDefinitionVersion.setStartKaleoNodeId(startKaleoNodeId);
 	}
 
 	/**

@@ -1,4 +1,16 @@
 <definition>
+	<command name="addContent">
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
+
+		<execute function="KeyPress" locator1="CKEditor#BODY" value1="${content}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="assertEditorPresent">
+		<execute function="AssertElementPresent" locator1="CKEditor#BODY_FIELD" />
+	</command>
+
 	<command name="selectHeading">
 		<execute function="Click" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON" />
 
@@ -17,5 +29,9 @@
 		<execute function="KeyPress" locator1="CKEditor#BODY" value1="\RETURN" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewEntryContent">
+		<execute function="AssertTextEquals" locator1="CKEditor#BODY" value1="${content}" />
 	</command>
 </definition>

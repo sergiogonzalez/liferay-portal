@@ -14,8 +14,6 @@
 
 package com.liferay.taglib.theme;
 
-import static jodd.datetime.JDateTimeDefault.locale;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,8 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-
-import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -85,20 +81,20 @@ public class MetaTagsTag extends com.liferay.taglib.util.IncludeTag {
 		}
 
 		String currentLanguageId = LanguageUtil.getLanguageId(request);
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
 
 		String w3cCurrentLanguageId = LocaleUtil.toW3cLanguageId(
 			currentLanguageId);
 		String w3cDefaultLanguageId = LocaleUtil.toW3cLanguageId(
 			defaultLanguageId);
 
-		String metaRobots = layout.getRobots(locale, false);
+		String metaRobots = layout.getRobots(
+			themeDisplay.getLanguageId(), false);
 		String metaRobotsLanguageId = w3cCurrentLanguageId;
 
 		if (Validator.isNull(metaRobots)) {
-			metaRobots = layout.getRobots(defaultLocale);
+			metaRobots = layout.getRobots(defaultLanguageId);
 			metaRobotsLanguageId = w3cDefaultLanguageId;
 		}
 
@@ -107,11 +103,12 @@ public class MetaTagsTag extends com.liferay.taglib.util.IncludeTag {
 				HtmlUtil.escape(metaRobots), metaRobotsLanguageId, "robots");
 		}
 
-		String metaDescription = layout.getDescription(locale, false);
+		String metaDescription = layout.getDescription(
+			themeDisplay.getLanguageId(), false);
 		String metaDescriptionLanguageId = w3cCurrentLanguageId;
 
 		if (Validator.isNull(metaDescription)) {
-			metaDescription = layout.getDescription(defaultLocale);
+			metaDescription = layout.getDescription(defaultLanguageId);
 			metaDescriptionLanguageId = w3cDefaultLanguageId;
 		}
 
@@ -144,11 +141,12 @@ public class MetaTagsTag extends com.liferay.taglib.util.IncludeTag {
 				"description");
 		}
 
-		String metaKeywords = layout.getKeywords(locale, false);
+		String metaKeywords = layout.getKeywords(
+			themeDisplay.getLanguageId(), false);
 		String metaKeywordsLanguageId = w3cCurrentLanguageId;
 
 		if (Validator.isNull(metaKeywords)) {
-			metaKeywords = layout.getKeywords(defaultLocale);
+			metaKeywords = layout.getKeywords(defaultLanguageId);
 			metaKeywordsLanguageId = w3cDefaultLanguageId;
 		}
 

@@ -95,6 +95,29 @@ executing the `PublishNodeModuleTask`.
 ### Changed
 - [LPS-71222]: Always sort the generated `npm-shrinkwrap.json` files.
 
+## 2.1.0 - 2017-04-11
+
+### Added
+- [LPS-71826]: Add the ability to set the NPM log level by setting the property
+`logLevel` of `ExecuteNPMTask`.
+
+## 2.2.0 - 2017-04-25
+
+### Added
+- [LPS-72152]: Add property `npmUrl` to all tasks that extend
+`DownloadNodeTask`. If set, it downloads a specific version of NPM to override
+the one that comes with the Node.js installation.
+- [LPS-72152]: Add properties `npmUrl` and `npmVersion` to the `node` extension
+object. By default, `npmUrl` is equal to
+`https://registry.npmjs.org/npm/-/npm-${node.npmVersion}.tgz`. These properties
+let you set a specific version of NPM to download with the `downloadNode` task.
+
+## 2.2.1 - 2017-05-03
+
+### Fixed
+- [LPS-72340]: Skip task `npmShrinkwrap` if project does not contain a
+`package.json` file.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -107,3 +130,6 @@ executing the `PublishNodeModuleTask`.
 [LPS-70634]: https://issues.liferay.com/browse/LPS-70634
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
+[LPS-71826]: https://issues.liferay.com/browse/LPS-71826
+[LPS-72152]: https://issues.liferay.com/browse/LPS-72152
+[LPS-72340]: https://issues.liferay.com/browse/LPS-72340

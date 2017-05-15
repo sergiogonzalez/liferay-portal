@@ -17,10 +17,10 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -222,7 +222,7 @@ public class HtmlImpl implements Html {
 			prefix = "\\x";
 		}
 		else if (mode == ESCAPE_MODE_URL) {
-			return HttpUtil.encodeURL(text, true);
+			return URLCodec.encodeURL(text, true);
 		}
 		else {
 			return escape(text);
@@ -279,6 +279,25 @@ public class HtmlImpl implements Html {
 				}
 
 				sb.append(CharPool.SPACE);
+
+				lastReplacementIndex = i + 1;
+			}
+			else if ((mode == ESCAPE_MODE_JS) &&
+					 ((c == '\u2028') || (c == '\u2029'))) {
+
+				if (sb == null) {
+					sb = new StringBuilder(text.length() + 64);
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(text, lastReplacementIndex, i);
+				}
+
+				sb.append("\\u");
+
+				_appendHexChars(sb, hexBuffer, c);
+
+				sb.append(postfix);
 
 				lastReplacementIndex = i + 1;
 			}

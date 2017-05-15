@@ -15,7 +15,19 @@
 package com.liferay.portal.workflow.definition.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,5 +43,30 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class AddWorkflowDefinitionMVCActionCommand
-	extends UpdateWorkflowDefitionMVCActionCommand {
+	extends UpdateWorkflowDefinitionMVCActionCommand {
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
+
+		String content = ParamUtil.getString(actionRequest, "content");
+
+		if (Validator.isNull(content)) {
+			throw new WorkflowDefinitionFileException();
+		}
+
+		workflowDefinitionManager.deployWorkflowDefinition(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+			getTitle(titleMap), content.getBytes());
+
+		sendRedirect(actionRequest, actionResponse);
+	}
+
 }

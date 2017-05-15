@@ -25,16 +25,7 @@ boolean showButtons = GroupPermissionUtil.contains(permissionChecker, layoutsAdm
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="logo" />
 
 <liferay-ui:error exception="<%= FileSizeException.class %>">
-
-	<%
-	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-	if (fileMaxSize == 0) {
-		fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-	}
-	%>
-
-	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <p class="text-muted">

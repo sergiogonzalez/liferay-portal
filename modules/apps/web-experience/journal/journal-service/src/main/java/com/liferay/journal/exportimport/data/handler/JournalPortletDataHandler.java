@@ -129,6 +129,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		return true;
 	}
 
+	@Override
+	public boolean isSupportsDataStrategyMirrorWithOverwriting() {
+		return false;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLocalized(true);

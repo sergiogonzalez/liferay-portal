@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
@@ -30,6 +30,9 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,8 +63,17 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
+
+			httpServletRequest = _portal.getOriginalServletRequest(
+				httpServletRequest);
+
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(actionResponse);
+
 			_openIdConnectServiceHandler.processAuthenticationResponse(
-				themeDisplay, actionRequest, actionResponse);
+				themeDisplay, httpServletRequest, httpServletResponse);
 
 			actionResponse.sendRedirect(themeDisplay.getURLHome());
 		}
@@ -72,7 +84,7 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			else {
 				_log.error("Unable to process the OpenID login", e);
 
-				PortalUtil.sendError(e, actionRequest, actionResponse);
+				_portal.sendError(e, actionRequest, actionResponse);
 			}
 		}
 	}
@@ -85,5 +97,8 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 
 	@Reference
 	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
+
+	@Reference
+	private Portal _portal;
 
 }

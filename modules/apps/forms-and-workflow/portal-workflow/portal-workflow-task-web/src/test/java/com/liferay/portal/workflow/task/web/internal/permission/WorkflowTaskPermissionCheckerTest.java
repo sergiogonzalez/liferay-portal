@@ -16,9 +16,11 @@ package com.liferay.portal.workflow.task.web.internal.permission;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -46,15 +48,21 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Adam Brandizzi
  */
-@PrepareForTest(WorkflowHandlerRegistryUtil.class)
+@PrepareForTest(
+	{GroupLocalServiceUtil.class, WorkflowHandlerRegistryUtil.class}
+)
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
-	"com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil"
+	{
+		"com.liferay.portal.kernel.service.GroupLocalServiceUtil",
+		"com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil"
+	}
 )
 public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws PortalException {
+		setUpGroupLocalServiceUtil();
 		setUpWorkflowHandlerRegistryUtil();
 	}
 
@@ -397,6 +405,18 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	protected long[] randomPermissionCheckerRoleIds() {
 		return new long[] {RandomTestUtil.randomLong()};
+	}
+
+	protected void setUpGroupLocalServiceUtil() throws PortalException {
+		mockStatic(GroupLocalServiceUtil.class);
+
+		Group group = mock(Group.class);
+
+		when(
+			GroupLocalServiceUtil.getGroup(Matchers.anyLong())
+		).thenReturn(
+			group
+		);
 	}
 
 	protected void setUpWorkflowHandlerRegistryUtil() {

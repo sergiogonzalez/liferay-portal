@@ -26,16 +26,18 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -144,14 +146,17 @@ public class ConfigurationImpl
 
 	@Override
 	public void clearCache() {
-		_values.clear();
+		_configurationArrayCache.clear();
+		_configurationCache.clear();
+		_configurationFilterArrayCache.clear();
+		_configurationFilterCache.clear();
 
 		_properties = null;
 	}
 
 	@Override
 	public boolean contains(String key) {
-		Object value = _values.get(key);
+		Object value = _configurationCache.get(key);
 
 		if (value == null) {
 			ComponentProperties componentProperties = getComponentProperties();
@@ -162,7 +167,7 @@ public class ConfigurationImpl
 				value = _nullValue;
 			}
 
-			_values.put(key, value);
+			_configurationCache.put(key, value);
 		}
 
 		if (value == _nullValue) {
@@ -174,7 +179,7 @@ public class ConfigurationImpl
 
 	@Override
 	public String get(String key) {
-		Object value = _values.get(key);
+		Object value = _configurationCache.get(key);
 
 		if (value == null) {
 			ComponentProperties componentProperties = getComponentProperties();
@@ -185,7 +190,7 @@ public class ConfigurationImpl
 				value = _nullValue;
 			}
 
-			_values.put(key, value);
+			_configurationCache.put(key, value);
 		}
 		else if (_PRINT_DUPLICATE_CALLS_TO_GET) {
 			System.out.println("Duplicate call to get " + key);
@@ -200,12 +205,12 @@ public class ConfigurationImpl
 
 	@Override
 	public String get(String key, Filter filter) {
-		String filterCacheKey = buildFilterCacheKey(key, filter, false);
+		FilterCacheKey filterCacheKey = _buildFilterCacheKey(key, filter);
 
 		Object value = null;
 
 		if (filterCacheKey != null) {
-			value = _values.get(filterCacheKey);
+			value = _configurationFilterCache.get(filterCacheKey);
 		}
 
 		if (value == null) {
@@ -219,7 +224,7 @@ public class ConfigurationImpl
 					value = _nullValue;
 				}
 
-				_values.put(filterCacheKey, value);
+				_configurationFilterCache.put(filterCacheKey, value);
 			}
 		}
 
@@ -232,16 +237,16 @@ public class ConfigurationImpl
 
 	@Override
 	public String[] getArray(String key) {
-		String cacheKey = _ARRAY_KEY_PREFIX.concat(key);
-
-		Object value = _values.get(cacheKey);
+		Object value = _configurationArrayCache.get(key);
 
 		if (value == null) {
 			ComponentProperties componentProperties = getComponentProperties();
 
 			String[] array = componentProperties.getStringArray(key);
 
-			value = fixArrayValue(cacheKey, array);
+			value = _fixArrayValue(array);
+
+			_configurationArrayCache.put(key, value);
 		}
 
 		if (value instanceof String[]) {
@@ -253,12 +258,12 @@ public class ConfigurationImpl
 
 	@Override
 	public String[] getArray(String key, Filter filter) {
-		String filterCacheKey = buildFilterCacheKey(key, filter, true);
+		FilterCacheKey filterCacheKey = _buildFilterCacheKey(key, filter);
 
 		Object value = null;
 
 		if (filterCacheKey != null) {
-			value = _values.get(filterCacheKey);
+			value = _configurationFilterArrayCache.get(filterCacheKey);
 		}
 
 		if (value == null) {
@@ -267,7 +272,11 @@ public class ConfigurationImpl
 			String[] array = componentProperties.getStringArray(
 				key, getEasyConfFilter(filter));
 
-			value = fixArrayValue(filterCacheKey, array);
+			value = _fixArrayValue(array);
+
+			if (filterCacheKey != null) {
+				_configurationFilterArrayCache.put(filterCacheKey, value);
+			}
 		}
 
 		if (value instanceof String[]) {
@@ -373,68 +382,6 @@ public class ConfigurationImpl
 		clearCache();
 	}
 
-	protected String buildFilterCacheKey(
-		String key, Filter filter, boolean arrayValue) {
-
-		if (filter.getVariables() != null) {
-			return null;
-		}
-
-		String[] selectors = filter.getSelectors();
-
-		int length = 0;
-
-		if (arrayValue) {
-			length = selectors.length + 2;
-		}
-		else {
-			length = selectors.length + 1;
-		}
-
-		StringBundler sb = new StringBundler(length);
-
-		if (arrayValue) {
-			sb.append(_ARRAY_KEY_PREFIX);
-		}
-
-		sb.append(key);
-		sb.append(selectors);
-
-		return sb.toString();
-	}
-
-	protected Object fixArrayValue(String cacheKey, String[] array) {
-		if (cacheKey == null) {
-			return array;
-		}
-
-		Object value = _nullValue;
-
-		if (ArrayUtil.isNotEmpty(array)) {
-
-			// Commons Configuration parses an empty property into a String
-			// array with one String containing one space. It also leaves a
-			// trailing array member if you set a property in more than one
-			// line.
-
-			if (Validator.isNull(array[array.length - 1])) {
-				String[] subarray = new String[array.length - 1];
-
-				System.arraycopy(array, 0, subarray, 0, subarray.length);
-
-				array = subarray;
-			}
-
-			if (array.length > 0) {
-				value = array;
-			}
-		}
-
-		_values.put(cacheKey, value);
-
-		return value;
-	}
-
 	protected ComponentProperties getComponentProperties() {
 		return _componentConfiguration.getProperties();
 	}
@@ -486,7 +433,39 @@ public class ConfigurationImpl
 		return (Map)properties;
 	}
 
-	private static final String _ARRAY_KEY_PREFIX = "ARRAY_";
+	private FilterCacheKey _buildFilterCacheKey(String key, Filter filter) {
+		if (filter.getVariables() != null) {
+			return null;
+		}
+
+		return new FilterCacheKey(key, filter);
+	}
+
+	private Object _fixArrayValue(String[] array) {
+		Object value = _nullValue;
+
+		if (ArrayUtil.isNotEmpty(array)) {
+
+			// Commons Configuration parses an empty property into a String
+			// array with one String containing one space. It also leaves a
+			// trailing array member if you set a property in more than one
+			// line.
+
+			if (Validator.isNull(array[array.length - 1])) {
+				String[] subarray = new String[array.length - 1];
+
+				System.arraycopy(array, 0, subarray, 0, subarray.length);
+
+				array = subarray;
+			}
+
+			if (array.length > 0) {
+				value = array;
+			}
+		}
+
+		return value;
+	}
 
 	private static final boolean _PRINT_DUPLICATE_CALLS_TO_GET = false;
 
@@ -497,8 +476,51 @@ public class ConfigurationImpl
 	private static final Object _nullValue = new Object();
 
 	private final ComponentConfiguration _componentConfiguration;
+	private final Map<String, Object> _configurationArrayCache =
+		new ConcurrentHashMap<>();
+	private final Map<String, Object> _configurationCache =
+		new ConcurrentHashMap<>();
+	private final Map<FilterCacheKey, Object> _configurationFilterArrayCache =
+		new ConcurrentHashMap<>();
+	private final Map<FilterCacheKey, Object> _configurationFilterCache =
+		new ConcurrentHashMap<>();
 	private final Set<String> _printedSources = new HashSet<>();
 	private Properties _properties;
-	private final Map<String, Object> _values = new ConcurrentHashMap<>();
+
+	private static class FilterCacheKey {
+
+		@Override
+		public boolean equals(Object object) {
+			FilterCacheKey filterCacheKey = (FilterCacheKey)object;
+
+			if (Objects.equals(_key, filterCacheKey._key) &&
+				Arrays.equals(_selectors, filterCacheKey._selectors)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _key);
+
+			for (String selector : _selectors) {
+				hashCode = HashUtil.hash(hashCode, selector);
+			}
+
+			return hashCode;
+		}
+
+		private FilterCacheKey(String key, Filter filter) {
+			_key = key;
+			_selectors = filter.getSelectors();
+		}
+
+		private final String _key;
+		private final String[] _selectors;
+
+	}
 
 }

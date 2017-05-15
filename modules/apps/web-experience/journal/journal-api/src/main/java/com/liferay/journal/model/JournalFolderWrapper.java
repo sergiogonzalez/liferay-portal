@@ -353,7 +353,9 @@ public class JournalFolderWrapper implements JournalFolder,
 	* Returns the trash handler for this journal folder.
 	*
 	* @return the trash handler for this journal folder
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _journalFolder.getTrashHandler();

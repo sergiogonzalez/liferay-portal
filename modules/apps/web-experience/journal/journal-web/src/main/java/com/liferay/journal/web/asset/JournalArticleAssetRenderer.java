@@ -569,7 +569,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of 1.7.0, with no direct replacement
 	 */
 	@Deprecated
 	protected void setJournalServiceConfiguration() {

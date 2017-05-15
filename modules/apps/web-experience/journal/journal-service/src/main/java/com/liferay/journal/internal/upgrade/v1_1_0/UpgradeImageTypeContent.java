@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -76,9 +77,24 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 			for (Element dynamicContentEl : dynamicContentEls) {
 				String id = dynamicContentEl.attributeValue("id");
 
+				if (Validator.isNull(id)) {
+					continue;
+				}
+
 				long folderId = getFolderId(userId, groupId, resourcePrimKey);
 
-				FileEntry fileEntry = getFileEntry(groupId, folderId, id);
+				FileEntry fileEntry = null;
+
+				try {
+					fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+						groupId, folderId, id);
+				}
+				catch (PortalException pe) {
+					_log.error(
+						"Unable to get file entry with group ID " + groupId +
+							", folder ID " + folderId + ", and file name " + id,
+						pe);
+				}
 
 				if (fileEntry == null) {
 					continue;
@@ -136,14 +152,19 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 					long folderId = getFolderId(
 						userId, groupId, resourcePrimKey);
 
-					FileEntry fileEntry = getFileEntry(
-						groupId, folderId, String.valueOf(articleImageId));
+					FileEntry fileEntry =
+						PortletFileRepositoryUtil.fetchPortletFileEntry(
+							groupId, folderId, String.valueOf(articleImageId));
 
 					if (fileEntry != null) {
 						continue;
 					}
 
 					Image image = _imageLocalService.getImage(articleImageId);
+
+					if (image == null) {
+						continue;
+					}
 
 					PortletFileRepositoryUtil.addPortletFileEntry(
 						groupId, userId, JournalArticle.class.getName(),
@@ -160,25 +181,6 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		copyJournalArticleImagesToJournalRepository();
 
 		updateContentImages();
-	}
-
-	protected FileEntry getFileEntry(
-		long groupId, long folderId, String fileName) {
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-				groupId, folderId, fileName);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get file entry with group ID " + groupId +
-					", folder ID " + folderId + ", and file name " + fileName,
-				pe);
-		}
-
-		return fileEntry;
 	}
 
 	protected long getFolderId(long userId, long groupId, long resourcePrimKey)

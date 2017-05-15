@@ -242,6 +242,12 @@ public class DDMFormTemplateContextFactoryHelper {
 			referencedFieldNames.addAll(
 				getReferencedFieldNamesByExpression(
 					condition, ddmFormFieldNames));
+
+			for (String action : ddmFormRule.getActions()) {
+				referencedFieldNames.addAll(
+					getReferencedFieldNamesByExpression(
+						action, ddmFormFieldNames));
+			}
 		}
 
 		return referencedFieldNames;

@@ -113,8 +113,8 @@ portlet URLs without passing the request as a necessary parameter.
 #### What changed?
 
 The Users File Uploads portlet properties have been moved from Server
-Administration to an OSGI configuration named `UserFileUploadsConfiguration`
-in the `users-admin-api` module.
+Administration to an OSGI configuration named
+`UserFileUploadsConfiguration.java` in the `users-admin-api` module.
 
 #### Who is affected?
 
@@ -129,9 +129,97 @@ This affects anyone who is using the following portlet properties:
 
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
-navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
-Settings* &rarr; *Foundation* &rarr; *User Images* and editing the settings
-there.
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Foundation* &rarr; *User Images* and editing the
+settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
+
+---------------------------------------
+### Moved CAPTCHA Portal Properties to OSGi Configuration
+- **Date:** 2017-Feb-13
+- **JIRA Ticket:** LPS-67830
+
+#### What changed?
+
+The CAPTCHA properties have been moved from `portal.properties` and Server
+Administration to an OSGi configuration named `CaptchaConfiguration.java` in the
+`captcha-api` module.
+
+#### Who is affected?
+
+This affects anyone who is using the following portal properties:
+
+- `captcha.max.challenges`
+- `captcha.check.portal.create_account`
+- `captcha.check.portal.send_password`
+- `captcha.check.portlet.message_boards.edit_category`
+- `captcha.check.portlet.message_boards.edit_message`
+- `captcha.engine.impl`
+- `captcha.engine.recaptcha.key.private`
+- `captcha.engine.recaptcha.key.public`
+- `captcha.engine.recaptcha.url.script`
+- `captcha.engine.recaptcha.url.noscript`
+- `captcha.engine.recaptcha.url.verify`
+- `captcha.engine.simplecaptcha.height`
+- `captcha.engine.simplecaptcha.width`
+- `captcha.engine.simplecaptcha.background.producers`
+- `captcha.engine.simplecaptcha.gimpy.renderers`
+- `captcha.engine.simplecaptcha.noise.producers`
+- `captcha.engine.simplecaptcha.text.producers`
+- `captcha.engine.simplecaptcha.word.renderers`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Captcha* and editing the settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
+
+---------------------------------------
+
+### Moved OpenOffice Properties to OSGi Configuration
+- **Date:** 2017-March-24
+- **JIRA Ticket:** LPS-71382
+
+#### What changed?
+
+The OpenOffice properties have been moved from Server Administration to an OSGi
+configuration named `OpenOfficeConfiguration.java` in the
+`document-library-document-conversion` module.
+
+#### Who is affected?
+
+This affects anyone who is using the following portal properties:
+
+- `openoffice.cache.enabled`
+- `openoffice.server.enabled`
+- `openoffice.server.host`
+- `openoffice.server.port`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Other* &rarr; *OpenOffice Integration* and editing the
+settings there.
 
 If you would like to include the new configuration in your application, follow
 the instructions for

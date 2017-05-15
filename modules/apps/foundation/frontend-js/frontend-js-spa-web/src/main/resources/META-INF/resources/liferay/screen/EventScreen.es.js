@@ -54,8 +54,6 @@ class EventScreen extends HtmlScreen {
 	deactivate() {
 		super.deactivate();
 
-		Utils.resetAllPortlets();
-
 		Liferay.fire(
 			'screenDeactivate',
 			{

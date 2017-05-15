@@ -12,6 +12,8 @@ AUI.add(
 			return Lang.toInt(value, 10, 0);
 		};
 
+		var REGEX_UNFILLED_PARAMETER = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
+
 		var STR_DASH = '-';
 
 		var STR_SPACE = ' ';
@@ -97,6 +99,14 @@ AUI.add(
 				scheduler.removeEvents(schedulerEvent);
 
 				scheduler.syncEventsUI();
+			},
+
+			fillURLParameters: function(url, data) {
+				var instance = this;
+
+				url = Lang.sub(url, data);
+
+				return url.replace(REGEX_UNFILLED_PARAMETER, '');
 			},
 
 			getCalendarName: function(name, calendarResourceName) {

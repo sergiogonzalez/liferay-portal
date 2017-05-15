@@ -16,13 +16,16 @@ AUI.add(
 		var Field = A.Component.create(
 			{
 				ATTRS: {
+					autoFocus: {
+						value: false
+					},
+
 					container: {
 						setter: A.one,
 						valueFn: '_valueContainer'
 					},
 
 					dataType: {
-						getter: '_getDataType',
 						value: 'string'
 					},
 
@@ -374,18 +377,6 @@ AUI.add(
 						}
 
 						return container;
-					},
-
-					_getDataType: function(dataType) {
-						var instance = this;
-
-						var validation = instance.get('validation');
-
-						if (validation) {
-							dataType = Util.getDataTypeFromValidation(dataType, validation);
-						}
-
-						return dataType;
 					},
 
 					_setParent: function(val) {

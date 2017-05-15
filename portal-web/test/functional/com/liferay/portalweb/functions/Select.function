@@ -4,7 +4,7 @@
 
 		<execute argument1="5000" selenium="pause" />
 
-		<execute function="Select#select" />
+		<execute selenium="select" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -19,20 +19,6 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="select" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="selectAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="selectAndWait" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

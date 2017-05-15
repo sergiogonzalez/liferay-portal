@@ -159,6 +159,13 @@ public class PortletFileRepositoryUtil {
 		getPortletFileRepository().deletePortletRepository(groupId, portletId);
 	}
 
+	public static FileEntry fetchPortletFileEntry(
+		long groupId, long folderId, String fileName) {
+
+		return getPortletFileRepository().fetchPortletFileEntry(
+			groupId, folderId, fileName);
+	}
+
 	public static Repository fetchPortletRepository(
 		long groupId, String portletId) {
 
@@ -214,6 +221,15 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId, obc);
 	}
 
+	public static List<FileEntry> getPortletFileEntries(
+			long groupId, long folderId, String[] mimeTypes, int status,
+			int start, int end, OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return getPortletFileRepository().getPortletFileEntries(
+			groupId, folderId, mimeTypes, status, start, end, obc);
+	}
+
 	public static int getPortletFileEntriesCount(long groupId, long folderId)
 		throws PortalException {
 
@@ -227,6 +243,14 @@ public class PortletFileRepositoryUtil {
 
 		return getPortletFileRepository().getPortletFileEntriesCount(
 			groupId, folderId, status);
+	}
+
+	public static int getPortletFileEntriesCount(
+			long groupId, long folderId, String[] mimeTypes, int status)
+		throws PortalException {
+
+		return getPortletFileRepository().getPortletFileEntriesCount(
+			groupId, folderId, mimeTypes, status);
 	}
 
 	public static FileEntry getPortletFileEntry(long fileEntryId)

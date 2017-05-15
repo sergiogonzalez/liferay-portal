@@ -942,6 +942,8 @@
 	<command name="AddSelectFieldWithTranslationAndViewInSpreadsheetView" priority="4">
 		<description message="This is a use case for LPS-68216." />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1059,7 +1061,7 @@
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/ja/" />
+			<var name="url" value="${portalURL}/ja/" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2150,6 +2152,8 @@
 	<command name="EditDefaultLanguageAndPublishRecord" priority="3">
 		<description message="This is a use case for LPS-59154 and LPS-62523." />
 
+		<property name="test.name.skip.portal.instance" value="DynamicdatalistUsecase#EditDefaultLanguageAndPublishRecord" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -3235,9 +3239,19 @@
 			<var name="parentPage" value="Parent Page Name" />
 		</execute>
 
-		<execute macro="DDLRecord#selectLinkToPageRadio">
-			<var name="ddlRecordFieldData" value="Child Page Name" />
-		</execute>
+		<toggle name="LPS-68869">
+			<on>
+				<execute macro="DDLRecord#selectLinkToPagePage">
+					<var name="ddlRecordFieldData" value="Child Page Name" />
+				</execute>
+			</on>
+
+			<off>
+				<execute macro="DDLRecord#selectLinkToPageRadio">
+					<var name="ddlRecordFieldData" value="Child Page Name" />
+				</execute>
+			</off>
+		</toggle>
 
 		<execute macro="DDLRecord#viewLinkToPageBreadcrumbCount">
 			<var name="count" value="2" />

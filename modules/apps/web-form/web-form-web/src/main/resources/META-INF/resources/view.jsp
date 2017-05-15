@@ -66,14 +66,14 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				<liferay-ui:error key='<%= "error" + fieldLabel %>' message="<%= fieldValidationErrorMessage %>" />
 
 				<c:if test="<%= Validator.isNotNull(fieldValidationScript) %>">
-					<div class="hide" id="<portlet:namespace />validationError<%= fieldName %>">
+					<div class="hide" id="<portlet:namespace />validationError<%= fieldName %>" role="alert">
 						<span class="alert alert-danger"><%= fieldValidationErrorMessage %></span>
 					</div>
 				</c:if>
 			</c:if>
 
 			<c:if test="<%= !fieldOptional %>">
-				<div class="hide" id="<portlet:namespace />fieldOptionalError<%= fieldName %>">
+				<div class="hide" id="<portlet:namespace />fieldOptionalError<%= fieldName %>" role="alert">
 					<span class="alert alert-danger"><liferay-ui:message key="this-field-is-mandatory" /></span>
 				</div>
 			</c:if>
@@ -225,6 +225,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				for (var i = 1; i < keys.length; i++) {
 					var key = keys[i];
 
+					var field = A.one('#<portlet:namespace />' + key);
+
 					var currentFieldValue = fieldsMap[key];
 
 					var optionalFieldError = A.one('#<portlet:namespace />fieldOptionalError' + key);
@@ -237,7 +239,10 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 						if (optionalFieldError) {
 							optionalFieldError.show();
+							optionalFieldError.replace(optionalFieldError);
 						}
+
+						field.attr('aria-invalid', true);
 					}
 					else if (!fieldValidationFunctions[key](currentFieldValue, fieldsMap)) {
 						validationErrors = true;
@@ -250,7 +255,10 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 						if (validationError) {
 							validationError.show();
+							validationError.replace(validationError);
 						}
+
+						field.attr('aria-invalid', true);
 					}
 					else {
 						if (optionalFieldError) {
@@ -260,6 +268,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 						if (validationError) {
 							validationError.hide();
 						}
+
+						field.attr('aria-invalid', false);
 					}
 				}
 

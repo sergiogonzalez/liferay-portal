@@ -118,6 +118,8 @@ public class LayoutExportController implements ExportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_EXPORT_STARTED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
@@ -127,6 +129,8 @@ public class LayoutExportController implements ExportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_EXPORT_SUCCEEDED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
@@ -137,6 +141,8 @@ public class LayoutExportController implements ExportController {
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_EXPORT_FAILED, getProcessFlag(),
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				t);
@@ -404,6 +410,9 @@ public class LayoutExportController implements ExportController {
 		long[] layoutIds = GetterUtil.getLongValues(
 			settingsMap.get("layoutIds"));
 
+		portletDataContext.setExportImportProcessId(
+			String.valueOf(
+				exportImportConfiguration.getExportImportConfigurationId()));
 		portletDataContext.setPrivateLayout(privateLayout);
 		portletDataContext.setLayoutIds(layoutIds);
 

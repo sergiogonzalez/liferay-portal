@@ -68,7 +68,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.verify.extender.marker.VerifyProcessCompletionMarker;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -156,7 +156,7 @@ public class FileEntryStagedModelDataHandler
 	@Override
 	public String getDisplayName(FileEntry fileEntry) {
 		if (fileEntry.isInTrash()) {
-			return TrashUtil.getOriginalTitle(fileEntry.getTitle());
+			return _trashHelper.getOriginalTitle(fileEntry.getTitle());
 		}
 
 		return fileEntry.getTitle();
@@ -883,8 +883,12 @@ public class FileEntryStagedModelDataHandler
 				!ArrayUtil.contains(
 					getExportableStatuses(), fileVersion.getStatus())) {
 
-				throw new PortletDataException(
+				PortletDataException pde = new PortletDataException(
 					PortletDataException.STATUS_UNAVAILABLE);
+
+				pde.setStagedModel(fileVersion);
+
+				throw pde;
 			}
 		}
 		catch (PortletDataException pde) {
@@ -934,5 +938,8 @@ public class FileEntryStagedModelDataHandler
 		<DLPluggableContentDataHandler, DLPluggableContentDataHandler>
 			_serviceTrackerList;
 	private StorageEngine _storageEngine;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

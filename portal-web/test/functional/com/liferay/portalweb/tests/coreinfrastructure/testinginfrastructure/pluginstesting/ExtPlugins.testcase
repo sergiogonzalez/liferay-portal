@@ -5,60 +5,6 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
 
-	<set-up>
-		<execute macro="Portlet#shutdownServer" />
-
-		<var name="shutdownPauseCount" value="0" />
-
-		<while>
-			<and>
-				<condition function="IsElementPresent" locator1="//body" />
-				<not>
-					<equals arg1="${shutdownPauseCount}" arg2="12" />
-				</not>
-			</and>
-			<then>
-				<execute function="Refresh" />
-
-				<execute function="Pause" locator1="10000" />
-
-				<var method="MathUtil#sum('${shutdownPauseCount}', '1')" name="shutdownPauseCount" />
-
-				<echo>Shutdown pause count: ${shutdownPauseCount}</echo>
-			</then>
-		</while>
-
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
-
-		<var name="startupPauseCount" value="0" />
-
-		<while>
-			<and>
-				<not>
-					<condition function="IsElementPresent" locator1="UserBar#USER_SIGN_IN" />
-				</not>
-				<not>
-					<equals arg1="${startupPauseCount}" arg2="12" />
-				</not>
-			</and>
-			<then>
-				<execute function="Refresh" />
-
-				<execute function="Pause" locator1="10000" />
-
-				<var method="MathUtil#sum('${startupPauseCount}', '1')" name="startupPauseCount" />
-
-				<echo>Startup pause count: ${startupPauseCount}</echo>
-			</then>
-		</while>
-
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
 	<tear-down>
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
@@ -78,9 +24,23 @@
 	</tear-down>
 
 	<command name="ViewSampleExtPluginValidationViaDeploy" priority="5">
+		<execute macro="Portlet#assertServerStartup" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#assertServerShutdown" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="Portlet#assertServerStartup" />
+
 		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
 
 		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
+
+		<execute macro="User#firstLoginPG" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
 
@@ -90,7 +50,7 @@
 
 		<execute function="Pause" locator1="120000" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerWarning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
@@ -103,6 +63,8 @@
 
 		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
 
+		<execute macro="User#firstLoginPG" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
 
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
@@ -111,7 +73,7 @@
 
 		<execute function="Pause" locator1="120000" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerWarning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />

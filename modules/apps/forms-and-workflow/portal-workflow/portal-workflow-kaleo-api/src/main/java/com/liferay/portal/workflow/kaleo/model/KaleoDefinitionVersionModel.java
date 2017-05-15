@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVersion>,
-	LocalizedModel, ShardedModel, WorkflowedModel {
+	GroupedModel, LocalizedModel, ShardedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,6 +89,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @return the group ID of this kaleo definition version
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -95,6 +97,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @param groupId the group ID of this kaleo definition version
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -118,6 +121,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @return the user ID of this kaleo definition version
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -125,6 +129,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @param userId the user ID of this kaleo definition version
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -132,6 +137,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @return the user uuid of this kaleo definition version
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -139,6 +145,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @param userUuid the user uuid of this kaleo definition version
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -147,6 +154,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 * @return the user name of this kaleo definition version
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -154,6 +162,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @param userName the user name of this kaleo definition version
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -226,6 +235,7 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @return the create date of this kaleo definition version
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -233,21 +243,24 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 *
 	 * @param createDate the create date of this kaleo definition version
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the kaleo definition ID of this kaleo definition version.
+	 * Returns the modified date of this kaleo definition version.
 	 *
-	 * @return the kaleo definition ID of this kaleo definition version
+	 * @return the modified date of this kaleo definition version
 	 */
-	public long getKaleoDefinitionId();
+	@Override
+	public Date getModifiedDate();
 
 	/**
-	 * Sets the kaleo definition ID of this kaleo definition version.
+	 * Sets the modified date of this kaleo definition version.
 	 *
-	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo definition version
+	 * @param modifiedDate the modified date of this kaleo definition version
 	 */
-	public void setKaleoDefinitionId(long kaleoDefinitionId);
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the name of this kaleo definition version.
@@ -407,41 +420,6 @@ public interface KaleoDefinitionVersionModel extends BaseModel<KaleoDefinitionVe
 	 * @param version the version of this kaleo definition version
 	 */
 	public void setVersion(String version);
-
-	/**
-	 * Returns the active of this kaleo definition version.
-	 *
-	 * @return the active of this kaleo definition version
-	 */
-	public boolean getActive();
-
-	/**
-	 * Returns <code>true</code> if this kaleo definition version is active.
-	 *
-	 * @return <code>true</code> if this kaleo definition version is active; <code>false</code> otherwise
-	 */
-	public boolean isActive();
-
-	/**
-	 * Sets whether this kaleo definition version is active.
-	 *
-	 * @param active the active of this kaleo definition version
-	 */
-	public void setActive(boolean active);
-
-	/**
-	 * Returns the start kaleo node ID of this kaleo definition version.
-	 *
-	 * @return the start kaleo node ID of this kaleo definition version
-	 */
-	public long getStartKaleoNodeId();
-
-	/**
-	 * Sets the start kaleo node ID of this kaleo definition version.
-	 *
-	 * @param startKaleoNodeId the start kaleo node ID of this kaleo definition version
-	 */
-	public void setStartKaleoNodeId(long startKaleoNodeId);
 
 	/**
 	 * Returns the status of this kaleo definition version.

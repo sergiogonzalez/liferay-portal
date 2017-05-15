@@ -70,7 +70,7 @@ if (editorOptions != null) {
 		%>
 
 		<script type="text/javascript">
-			window.ALLOYEDITOR_BASEPATH = '<%= application.getContextPath() %>/alloyeditor/';
+			window.ALLOYEDITOR_BASEPATH = '<%= PortalUtil.getPathProxy() + application.getContextPath() %>/alloyeditor/';
 		</script>
 
 		<script data-senna-track="permanent" id="<%= namespace %>ckEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>

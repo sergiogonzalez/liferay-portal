@@ -68,7 +68,10 @@ public class BackgroundTaskModelListener
 			}
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			throw new ModelListenerException(
+				"Unable to delete the process configuration for background " +
+					"task " + backgroundTask.getBackgroundTaskId(),
+				e);
 		}
 	}
 

@@ -60,7 +60,7 @@ EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, lifera
 entriesChecker.setCssClass("entry-selector");
 entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(folderId=" + String.valueOf(folderId) + ")");
 
-EntriesMover entriesMover = new EntriesMover(scopeGroupId, repositoryId);
+EntriesMover entriesMover = new EntriesMover(dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId));
 
 String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 
@@ -259,13 +259,13 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 						draggable = true;
 
-						if (dlSearchContainer.getRowChecker() == null) {
-							dlSearchContainer.setRowChecker(entriesChecker);
-						}
-
 						if (dlSearchContainer.getRowMover() == null) {
 							dlSearchContainer.setRowMover(entriesMover);
 						}
+					}
+
+					if (dlSearchContainer.getRowChecker() == null) {
+						dlSearchContainer.setRowChecker(entriesChecker);
 					}
 
 					Map<String, Object> rowData = new HashMap<String, Object>();

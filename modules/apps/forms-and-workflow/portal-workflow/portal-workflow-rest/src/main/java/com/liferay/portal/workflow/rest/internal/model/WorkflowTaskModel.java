@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WorkflowTaskModel {
 
 	public WorkflowTaskModel() {
+		_completed = false;
 		_description = null;
 		_dueDate = null;
 		_name = null;
@@ -47,6 +48,7 @@ public class WorkflowTaskModel {
 		_workflowAssigneeModel = workflowAssigneeModel;
 		_workflowAssetModel = workflowAssetModel;
 
+		_completed = workflowTask.isCompleted();
 		_description = workflowTask.getDescription();
 		_dueDate = workflowTask.getDueDate();
 		_name = workflowTask.getName();
@@ -95,6 +97,12 @@ public class WorkflowTaskModel {
 		return _workflowTaskId;
 	}
 
+	@XmlElement
+	public boolean isCompleted() {
+		return _completed;
+	}
+
+	private final boolean _completed;
 	private final String _description;
 	private final Date _dueDate;
 	private final String _name;

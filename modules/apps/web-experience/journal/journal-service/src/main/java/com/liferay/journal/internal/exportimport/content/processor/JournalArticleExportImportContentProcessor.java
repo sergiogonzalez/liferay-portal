@@ -123,7 +123,18 @@ public class JournalArticleExportImportContentProcessor
 			return content;
 		}
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = null;
+
+		try {
+			document = SAXReaderUtil.read(content);
+		}
+		catch (DocumentException de) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Invalid content:\n" + content);
+			}
+
+			return content;
+		}
 
 		XPath xPath = SAXReaderUtil.createXPath(
 			"//dynamic-element[@type='ddm-journal-article']");

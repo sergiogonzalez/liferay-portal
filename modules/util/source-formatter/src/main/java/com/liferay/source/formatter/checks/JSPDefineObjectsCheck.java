@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,16 +24,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JSPDefineObjectsCheck extends BaseFileCheck {
-
-	public JSPDefineObjectsCheck(
-		boolean portalSource, boolean subrepository,
-		List<String> pluginsInsideModulesDirectoryNames) {
-
-		_portalSource = portalSource;
-		_subrepository = subrepository;
-		_pluginsInsideModulesDirectoryNames =
-			pluginsInsideModulesDirectoryNames;
-	}
 
 	@Override
 	protected String doProcess(
@@ -62,11 +51,11 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 				defineObject[2], "portlet");
 		}
 
-		if (!_portalSource && !_subrepository) {
+		if (!isPortalSource() && !isSubrepository()) {
 			return;
 		}
 
-		for (String directoryName : _pluginsInsideModulesDirectoryNames) {
+		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
 			if (absolutePath.contains(directoryName)) {
 				return;
 			}
@@ -281,8 +270,5 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		"\n\t*(<.*:defineObjects />)(\n|$)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
-	private final List<String> _pluginsInsideModulesDirectoryNames;
-	private final boolean _portalSource;
-	private final boolean _subrepository;
 
 }

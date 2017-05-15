@@ -16,19 +16,12 @@ package com.liferay.source.formatter.checks;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
  */
 public class JSPLanguageKeysCheck extends LanguageKeysCheck {
-
-	public JSPLanguageKeysCheck(
-		List<String> excludes, Properties portalLanguageProperties) {
-
-		super(excludes, portalLanguageProperties);
-	}
 
 	@Override
 	protected List<Pattern> getPatterns() {

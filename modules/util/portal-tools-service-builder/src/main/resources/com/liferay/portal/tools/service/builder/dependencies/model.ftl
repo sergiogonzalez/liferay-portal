@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -363,6 +361,18 @@ public interface ${entity.name}Model extends
 		</#if>
 	</#list>
 
+	<#list entity.localizationColumns as column>
+		public String get${column.methodName}();
+
+		public String get${column.methodName}(String languageId);
+
+		public String get${column.methodName}(String languageId, boolean useDefault);
+
+		public String get${column.methodName}MapAsXML();
+
+		public Map<String, String> getLanguageIdTo${column.methodName}Map();
+	</#list>
+
 	<#if entity.isTrashEnabled()>
 		<#if !entity.isWorkflowEnabled()>
 			/**
@@ -380,7 +390,7 @@ public interface ${entity.name}Model extends
 		 * @return the trash entry created when this ${entity.humanName} was moved to the Recycle Bin
 		 */
 		@Override
-		public TrashEntry getTrashEntry() throws PortalException;
+		public com.liferay.trash.kernel.model.TrashEntry getTrashEntry() throws PortalException;
 
 		/**
 		 * Returns the class primary key of the trash entry for this ${entity.humanName}.
@@ -394,9 +404,11 @@ public interface ${entity.name}Model extends
 		 * Returns the trash handler for this ${entity.humanName}.
 		 *
 		 * @return the trash handler for this ${entity.humanName}
+		 * @deprecated As of 7.0.0, with no direct replacement
 		 */
+		@Deprecated
 		@Override
-		public TrashHandler getTrashHandler();
+		public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
 
 		/**
 		 * Returns <code>true</code> if this ${entity.humanName} is in the Recycle Bin.

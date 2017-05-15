@@ -71,7 +71,7 @@ public class BlogsContentEditorConfigContributor
 
 		sb.append("a[*](*); ");
 		sb.append(getAllowedContentText());
-		sb.append(" div(*); img[alt, class, !src] {height, width}; ");
+		sb.append(" div(*); img[*] {height, width}; ");
 		sb.append(getAllowedContentLists());
 		sb.append(" p {text-align}; ");
 		sb.append(getAllowedContentTable());
@@ -156,7 +156,7 @@ public class BlogsContentEditorConfigContributor
 
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				uploadURL.toString(),
+				PortletKeys.BLOGS, uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
 				PropsValues.BLOGS_IMAGE_MAX_SIZE, extensions);
 

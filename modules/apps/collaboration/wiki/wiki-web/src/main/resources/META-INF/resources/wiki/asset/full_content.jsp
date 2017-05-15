@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/wiki/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 PortletURL viewPageURL = PortletURLFactoryUtil.create(request, WikiPortletKeys.WIKI, PortletRequest.ACTION_PHASE);
 
@@ -26,17 +26,45 @@ viewPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
 viewPageURL.setPortletMode(PortletMode.VIEW);
 viewPageURL.setWindowState(WindowState.MAXIMIZED);
 
-PortletURL editPageURL = PortletURLFactoryUtil.create(request, WikiPortletKeys.WIKI, PortletRequest.ACTION_PHASE);
+StringBundler sb = new StringBundler(8);
 
-editPageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
-editPageURL.setParameter("redirect", currentURL);
-editPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-editPageURL.setPortletMode(PortletMode.VIEW);
-editPageURL.setWindowState(WindowState.MAXIMIZED);
+sb.append(themeDisplay.getPathMain());
+sb.append("/wiki/get_page_attachment?p_l_id=");
+sb.append(themeDisplay.getPlid());
+sb.append("&nodeId=");
+sb.append(wikiPage.getNodeId());
+sb.append("&title=");
+sb.append(URLCodec.encodeURL(wikiPage.getTitle()));
+sb.append("&fileName=");
 
-String attachmentURLPrefix = themeDisplay.getPathMain() + "/wiki/get_page_attachment?p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + HttpUtil.encodeURL(wikiPage.getTitle()) + "&fileName=";
+final String redirectURL = currentURL;
 
-WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(wikiPage, viewPageURL, editPageURL, attachmentURLPrefix, ServiceContextFactory.getInstance(request));
+final HttpServletRequest httpServletRequest = request;
+
+WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
+	wikiPage, viewPageURL,
+	new Supplier<PortletURL>() {
+
+		public PortletURL get() {
+			PortletURL editPageURL = PortletURLFactoryUtil.create(httpServletRequest, WikiPortletKeys.WIKI, PortletRequest.ACTION_PHASE);
+
+			editPageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
+			editPageURL.setParameter("redirect", redirectURL);
+			editPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+
+			try {
+				editPageURL.setPortletMode(PortletMode.VIEW);
+				editPageURL.setWindowState(WindowState.MAXIMIZED);
+			}
+			catch (Exception e) {
+				ReflectionUtil.throwException(e);
+			}
+
+			return editPageURL;
+		}
+
+	},
+	sb.toString(), ServiceContextFactory.getInstance(request));
 %>
 
 <%= pageDisplay.getFormattedContent() %>

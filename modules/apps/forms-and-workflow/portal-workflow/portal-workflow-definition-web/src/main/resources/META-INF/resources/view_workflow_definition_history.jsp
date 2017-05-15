@@ -17,22 +17,29 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WorkflowDefinition workflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
-
-List<WorkflowDefinition> workflowDefinitionVersions = workflowDefinitionDisplayContext.getWorkflowDefinitions(workflowDefinition.getName());
-
-for (WorkflowDefinition workflowDefinitionVersion : workflowDefinitionVersions) {
-	request.setAttribute("WORKFLOW_DEFINITION_VERSION", workflowDefinitionVersion);
+WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
 %>
 
-	<div class="sidebar-header">
-		<ul class="sidebar-header-actions">
-			<li>
-				<liferay-util:include page="/workflow_definition_version_action.jsp" servletContext="<%= application %>" />
-			</li>
-		</ul>
+<liferay-ui:search-container
+	id="workflowDefinitions"
+>
+	<liferay-ui:search-container-results
+		results="<%= workflowDefinitionDisplayContext.getWorkflowDefinitions(currentWorkflowDefinition.getName()) %>"
+	/>
 
-		<h4><liferay-ui:message arguments="<%= workflowDefinitionVersion.getVersion() %>" key="version-x" /></h4>
-	</div>
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
+		modelVar="workflowDefinition"
+	>
+		<liferay-ui:search-container-column-text
+			name="version"
+			value="<%= workflowDefinitionDisplayContext.getVersion(workflowDefinition) %>"
+		/>
 
-	<%} %>
+		<liferay-ui:search-container-column-jsp
+			path="/workflow_definition_version_action.jsp"
+		/>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+</liferay-ui:search-container>

@@ -36,6 +36,7 @@ page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
+page import="com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
@@ -66,16 +67,15 @@ page import="com.liferay.portal.kernel.search.SearchResultUtil" %><%@
 page import="com.liferay.portal.kernel.search.Summary" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContext" %><%@
+page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@
 page import="com.liferay.portal.kernel.service.TicketLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.DocumentConversionUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
@@ -85,10 +85,13 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.ReflectionUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
+page import="com.liferay.portal.kernel.util.URLCodec" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -99,7 +102,16 @@ page import="com.liferay.social.kernel.model.SocialActivityConstants" %><%@
 page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
+page import="com.liferay.wiki.constants.WikiConstants" %><%@
+page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
+page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
+page import="com.liferay.wiki.model.WikiNode" %><%@
+page import="com.liferay.wiki.model.WikiPage" %><%@
+page import="com.liferay.wiki.model.WikiPageConstants" %><%@
+page import="com.liferay.wiki.model.WikiPageDisplay" %><%@
+page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
+page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
+page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
 page import="com.liferay.wiki.web.internal.search.NodesChecker" %><%@
 page import="com.liferay.wiki.web.internal.search.PagesChecker" %><%@
 page import="com.liferay.wiki.web.util.WikiPortletUtil" %>
@@ -116,7 +128,8 @@ page import="java.util.HashSet" %><%@
 page import="java.util.Iterator" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Set" %>
+page import="java.util.Set" %><%@
+page import="java.util.function.Supplier" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletMode" %><%@
@@ -127,6 +140,8 @@ page import="javax.portlet.WindowState" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-trash:defineObjects />
 
 <portlet:defineObjects />
 

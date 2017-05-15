@@ -51,12 +51,12 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 		setLiferayHome(archiveLocation);
 
-		File archive = new File(archiveLocation + "." + format);
+		File archiveFile = new File(archiveLocation + "." + format);
 
 		String packaging = project.getPackaging();
 
-		if (packaging.equals("jar") || packaging.equals("war")) {
-			try {
+		try {
+			if (packaging.equals("jar") || packaging.equals("war")) {
 				String deployDirName = BundleSupportUtil.getDeployDirName(
 					deployFile.getName());
 
@@ -67,31 +67,26 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				Path entryPath = Paths.get(deployDirName, outputFileName);
 
 				if (format.equals("zip")) {
-					FileUtil.appendZip(deployFile, entryPath, archive);
+					FileUtil.appendZip(deployFile, entryPath, archiveFile);
 				}
 				else if (format.equals("gz") || format.equals("tar") ||
 						 format.equals("tar.gz") || format.equals("tgz")) {
 
-					FileUtil.appendTar(deployFile, entryPath, archive);
+					FileUtil.appendTar(deployFile, entryPath, archiveFile);
 				}
 				else {
 					throw new IllegalArgumentException(
 						"Please specify either zip or tar.gz or tgz");
 				}
 			}
-			catch (Exception e) {
-				throw new MojoExecutionException(
-					"Unable to create distributable bundle", e);
-			}
-		}
-		else if (!project.hasParent()) {
-			try {
-				archive.delete();
+			else if (!project.hasParent()) {
+				archiveFile.delete();
 
 				File liferayHomeDir = getLiferayHomeDir();
 
 				InitBundleCommand initBundleCommand = new InitBundleCommand();
 
+				initBundleCommand.setCacheDir(cacheDir);
 				initBundleCommand.setConfigsDir(
 					new File(project.getBasedir(), configs));
 				initBundleCommand.setEnvironment(environment);
@@ -108,16 +103,16 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				distBundleCommand.setFormat(format);
 				distBundleCommand.setIncludeFolder(includeFolder);
 				distBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
-				distBundleCommand.setOutputFile(archive);
+				distBundleCommand.setOutputFile(archiveFile);
 
 				distBundleCommand.execute();
 
 				FileUtil.deleteDirectory(liferayHomeDir.toPath());
 			}
-			catch (Exception e) {
-				throw new MojoExecutionException(
-					"Unable to create distributable bundle", e);
-			}
+		}
+		catch (Exception e) {
+			throw new MojoExecutionException(
+				"Unable to create distributable bundle", e);
 		}
 	}
 

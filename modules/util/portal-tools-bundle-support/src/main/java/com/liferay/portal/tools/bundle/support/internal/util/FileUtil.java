@@ -43,13 +43,12 @@ import java.nio.file.attribute.FileTime;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
@@ -59,6 +58,7 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -71,6 +71,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.client.utils.DateUtils;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -224,15 +225,12 @@ public class FileUtil {
 				}
 
 				Header lastModifiedHeader =
-					closeableHttpResponse.getFirstHeader("Last-Modified");
+					closeableHttpResponse.getFirstHeader(
+						HttpHeaders.LAST_MODIFIED);
 
 				if (lastModifiedHeader != null) {
-					String lastModifiedValue = lastModifiedHeader.getValue();
-
-					DateFormat dateFormat = new SimpleDateFormat(
-						"EEE, dd MMM yyyy HH:mm:ss zzz");
-
-					lastModifiedDate = dateFormat.parse(lastModifiedValue);
+					lastModifiedDate = DateUtils.parseDate(
+						lastModifiedHeader.getValue());
 				}
 				else {
 					lastModifiedDate = new Date();
@@ -328,6 +326,15 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static boolean isPosixSupported(Path path) {
+		FileSystem fileSystem = path.getFileSystem();
+
+		Set<String> supportedFileAttributeViews =
+			fileSystem.supportedFileAttributeViews();
+
+		return supportedFileAttributeViews.contains("posix");
 	}
 
 	public static void tar(Path sourcePath, File tarFile, boolean includeFolder)

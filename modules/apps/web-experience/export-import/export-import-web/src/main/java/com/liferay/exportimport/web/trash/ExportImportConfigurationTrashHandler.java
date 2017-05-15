@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -34,19 +33,14 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Levente Hudák
+ * @author     Levente Hudák
+ * @deprecated As of 1.0.0, moved to {@link
+ *             com.liferay.exportimport.web.internal.trash.ExportImportConfigurationTrashHandler}
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration"
-	},
-	service = TrashHandler.class
-)
+@Deprecated
 @ProviderType
 public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 

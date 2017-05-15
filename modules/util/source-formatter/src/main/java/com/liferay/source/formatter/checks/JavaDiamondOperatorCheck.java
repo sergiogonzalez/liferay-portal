@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,15 +24,11 @@ import java.util.regex.Pattern;
  */
 public class JavaDiamondOperatorCheck extends BaseFileCheck {
 
-	public JavaDiamondOperatorCheck(List<String> excludes) {
-		_excludes = excludes;
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isExcludedPath(_excludes, absolutePath)) {
+		if (!isExcludedPath(_DIAMOND_OPERATOR_EXCLUDES, absolutePath)) {
 			content = _applyDiamondOperator(content);
 		}
 
@@ -74,10 +69,12 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String _DIAMOND_OPERATOR_EXCLUDES =
+		"diamond.operator.excludes";
+
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<([^>][^;]*?)>" +
 			"\\(\n*\t*.*?\\);\n",
 		Pattern.DOTALL);
-	private final List<String> _excludes;
 
 }

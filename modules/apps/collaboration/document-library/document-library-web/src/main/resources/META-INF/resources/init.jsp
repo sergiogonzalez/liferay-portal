@@ -40,8 +40,10 @@ page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.persistence.AssetEntryQuery" %><%@
 page import="com.liferay.document.library.display.context.DLEditFileEntryDisplayContext" %><%@
 page import="com.liferay.document.library.display.context.DLFilePicker" %><%@
+page import="com.liferay.document.library.display.context.DLViewFileEntryHistoryDisplayContext" %><%@
 page import="com.liferay.document.library.display.context.DLViewFileVersionDisplayContext" %><%@
 page import="com.liferay.document.library.kernel.antivirus.AntivirusScannerException" %><%@
+page import="com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil" %><%@
 page import="com.liferay.document.library.kernel.exception.DuplicateFileEntryException" %><%@
 page import="com.liferay.document.library.kernel.exception.DuplicateFileEntryTypeException" %><%@
 page import="com.liferay.document.library.kernel.exception.DuplicateFolderNameException" %><%@
@@ -232,7 +234,6 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryT
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -251,8 +252,7 @@ page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.Set" %>
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
@@ -265,6 +265,8 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
+DLTrashUtil dlTrashUtil = (DLTrashUtil)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
+
 DLWebComponentProvider dlWebComponentProvider = DLWebComponentProvider.getDLWebComponentProvider();
 
 DLDisplayContextProvider dlDisplayContextProvider = dlWebComponentProvider.getDLDisplayContextProvider();

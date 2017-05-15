@@ -539,7 +539,9 @@ public class JournalArticleWrapper implements JournalArticle,
 	* Returns the trash handler for this journal article.
 	*
 	* @return the trash handler for this journal article
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _journalArticle.getTrashHandler();

@@ -15,11 +15,16 @@
 package com.liferay.source.formatter.checks.util;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +98,65 @@ public class JSPSourceUtil {
 
 			path = path.substring(0, y);
 		}
+	}
+
+	public static String compressImportsOrTaglibs(
+		String fileName, String content, String attributePrefix) {
+
+		int x = content.indexOf(attributePrefix);
+
+		int y = content.lastIndexOf(attributePrefix);
+
+		y = content.indexOf("%>", y);
+
+		if ((x == -1) || (y == -1) || (x > y)) {
+			return content;
+		}
+
+		String importsOrTaglibs = content.substring(x, y);
+
+		importsOrTaglibs = StringUtil.replace(
+			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+			new String[] {"%><%@\r\n", "%><%@\n"});
+
+		return content.substring(0, x) + importsOrTaglibs +
+			content.substring(y);
+	}
+
+	public static Map<String, String> getContentsMap(List<String> fileNames)
+		throws Exception {
+
+		Map<String, String> contentsMap = new HashMap<>();
+
+		if (ListUtil.isEmpty(fileNames)) {
+			return contentsMap;
+		}
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			File file = new File(fileName);
+
+			String content = FileUtil.read(file);
+
+			if (content == null) {
+				continue;
+			}
+
+			Matcher matcher = _includeFilePattern.matcher(content);
+
+			while (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, matcher.group(),
+					"@ include file=\"" + matcher.group(1) + "\"",
+					matcher.start());
+			}
+
+			contentsMap.put(fileName, content);
+		}
+
+		return contentsMap;
 	}
 
 	public static Set<String> getJSPIncludeFileNames(
@@ -228,25 +292,55 @@ public class JSPSourceUtil {
 	}
 
 	public static boolean isJavaSource(String content, int pos) {
+		return isJavaSource(content, pos, false);
+	}
+
+	public static boolean isJavaSource(
+		String content, int pos, boolean checkInsideTags) {
+
 		String s = content.substring(pos);
 
 		Matcher matcher = _javaEndTagPattern.matcher(s);
 
-		if (!matcher.find()) {
+		if (matcher.find()) {
+			s = s.substring(0, matcher.start());
+
+			matcher = _javaStartTagPattern.matcher(s);
+
+			if (!matcher.find()) {
+				return true;
+			}
+		}
+
+		if (!checkInsideTags) {
 			return false;
 		}
 
-		s = s.substring(0, matcher.start());
+		int x = content.indexOf(CharPool.NEW_LINE, pos);
 
-		matcher = _javaStartTagPattern.matcher(s);
+		if (x == -1) {
+			return false;
+		}
 
-		if (!matcher.find()) {
+		s = content.substring(pos, x);
+
+		int y = s.indexOf("%>");
+
+		if (y == -1) {
+			return false;
+		}
+
+		s = s.substring(0, y);
+
+		if (!s.contains("<%")) {
 			return true;
 		}
 
 		return false;
 	}
 
+	private static final Pattern _includeFilePattern = Pattern.compile(
+		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 	private static final Pattern _javaEndTagPattern = Pattern.compile(
 		"[\n\t]%>(\n|\\Z)");
 	private static final Pattern _javaStartTagPattern = Pattern.compile(

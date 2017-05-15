@@ -62,6 +62,7 @@ class ImageEditor extends Component {
 		// Polyfill svg usage for lexicon icons
 		svg4everybody(
 			{
+				attributeName: 'data-href',
 				polyfill: true
 			}
 		);

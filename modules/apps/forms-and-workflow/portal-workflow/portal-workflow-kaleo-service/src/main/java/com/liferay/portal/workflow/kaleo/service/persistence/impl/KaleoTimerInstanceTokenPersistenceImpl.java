@@ -2615,7 +2615,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		query.append(_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(String.valueOf(primaryKey));
+			query.append((long)primaryKey);
 
 			query.append(StringPool.COMMA);
 		}

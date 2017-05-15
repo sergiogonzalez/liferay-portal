@@ -30,6 +30,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_BUILDER_ADD_ACTION</td>
+	<td>//a[contains(@class,'form-builder-rule-add-action')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RULE_BUILDER_ADD_CONDITION</td>
 	<td>//a[contains(@class,'form-builder-rule-add-condition')]</td>
 	<td></td>
@@ -96,7 +101,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_FIELD</td>
-	<td>//div[contains(@id,'target') and contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -143,6 +148,52 @@
 <tr>
 	<td>RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD</td>
 	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//div[contains(@id,'action')]/following-sibling::div//li[contains(.,'${key_dataProviderOutput}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RULE_BUILDER_CALCULATE-->
+<tr>
+	<td>RULE_BUILDER_CALCULATE_NUMERIC_VALUE</td>
+	<td>//ul[contains(@class,'calculator-buttons-numbers')]//li[@data-calculator-key='${key_calculateNumericValue}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CALCULATE_OPERATOR</td>
+	<td>//ul[contains(@class,'calculator-buttons-operators')]//li[@data-calculator-key='${key_calculateOperator}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CALCULATE_ELLIPSIS</td>
+	<td>//*[name()='svg'][contains(@class,'icon-ellipsis-h')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CALCULATE_ADVANCED_OPERATOR</td>
+	<td>//div[@class='container-list-advanced-operators']//ul[@class='results-chosen']//li[contains(.,'${key_calculateAdvancedOperator}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CALCULATE_ADD_FIELD_BUTTON</td>
+	<td>//button[contains(@class,'calculator-add-field-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CALCULATE_ADD_FIELD_LIST</td>
+	<td>//div[@class='calculator-add-field-button-container']//ul[@class='results-chosen']//li[contains(.,'${key_calculateFieldOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CALCULATE_RESULT_FIELD</td>
+	<td>//div[contains(@class,'calculate-container-fields')]//div[contains(@id,'action')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CALCULATE_RESULT_FIELD_LIST</td>
+	<td>//div[contains(@class,'calculate-container-fields')]//ul[@class='results-chosen']//li[contains(.,'${key_calculateResultField}')]</td>
 	<td></td>
 </tr>
 <tr>

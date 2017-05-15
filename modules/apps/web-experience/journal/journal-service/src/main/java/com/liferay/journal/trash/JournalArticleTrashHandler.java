@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
-import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,7 +48,6 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -58,11 +56,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  * @author Sergio González
  * @author Zsolt Berentey
+ * @deprecated As of 4.0.0, moved to {@link
+ *             com.liferay.journal.internal.trash.JournalArticleTrashHandler}
  */
-@Component(
-	property = {"model.class.name=com.liferay.journal.model.JournalArticle"},
-	service = TrashHandler.class
-)
+@Deprecated
 public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 	@Override

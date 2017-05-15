@@ -142,6 +142,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_DELIVERY_TEXT_5</td>
+	<td>//div[contains(@id,'${key_contentType}')]//table//tr[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_TEXT_6</td>
+	<td>//div[contains(@id,'${key_contentType}')]//table//tr[7]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX</td>
 	<td>//table[contains(.,'Contacts Center')]//tr[contains(.,'sends you a social relationship request.')]//label[contains(.,'Website')]/input[@type='checkbox' and contains(@class,'disabled')]</td>
 	<td></td>

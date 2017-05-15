@@ -130,6 +130,9 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PARENT_THEMES_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.frontend.theme.unstyled", "latest.release");
+		GradleUtil.addDependency(
+			project, PARENT_THEMES_CONFIGURATION_NAME, "com.liferay.plugins",
+			"classic-theme", "latest.release");
 	}
 
 	private void _addDependenciesThemeBuilder(Project project) {
@@ -305,12 +308,21 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		throws IOException {
 
 		for (File file : files) {
-			try (ZipFile zipFile = new ZipFile(file)) {
-				ZipEntry zipEntry = zipFile.getEntry(
-					"META-INF/resources/" + name + "/");
+			String fileName = file.getName();
 
-				if (zipEntry != null) {
+			if (fileName.endsWith(".war")) {
+				if (fileName.startsWith(name + "-theme-")) {
 					return file;
+				}
+			}
+			else {
+				try (ZipFile zipFile = new ZipFile(file)) {
+					ZipEntry zipEntry = zipFile.getEntry(
+						"META-INF/resources/" + name + "/");
+
+					if (zipEntry != null) {
+						return file;
+					}
 				}
 			}
 		}

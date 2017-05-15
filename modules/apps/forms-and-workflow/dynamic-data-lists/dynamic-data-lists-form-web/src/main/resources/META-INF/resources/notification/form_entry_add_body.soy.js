@@ -19,11 +19,11 @@ if (goog.DEBUG) {
 
 form.fields = function(opt_data, opt_ignored) {
   var output = '';
-  var fieldList299 = opt_data.fields;
-  var fieldListLen299 = fieldList299.length;
-  for (var fieldIndex299 = 0; fieldIndex299 < fieldListLen299; fieldIndex299++) {
-    var fieldData299 = fieldList299[fieldIndex299];
-    output += form.field(soy.$$augmentMap(opt_data, {field: fieldData299}));
+  var fieldList332 = opt_data.fields;
+  var fieldListLen332 = fieldList332.length;
+  for (var fieldIndex332 = 0; fieldIndex332 < fieldListLen332; fieldIndex332++) {
+    var fieldData332 = fieldList332[fieldIndex332];
+    output += form.field(soy.$$augmentMap(opt_data, {field: fieldData332}));
   }
   return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
 };
@@ -42,11 +42,11 @@ if (goog.DEBUG) {
 
 form.pages = function(opt_data, opt_ignored) {
   var output = '';
-  var pageList333 = opt_data.pages;
-  var pageListLen333 = pageList333.length;
-  for (var pageIndex333 = 0; pageIndex333 < pageListLen333; pageIndex333++) {
-    var pageData333 = pageList333[pageIndex333];
-    output += '<div style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;"><h4 style="color: #9aa2a6; font-size: 21px; font-weight: 500; margin: 0;">' + soy.$$escapeHtml(pageData333.title) + '</h4>' + form.fields(soy.$$augmentMap(opt_data, {fields: pageData333.fields})) + '</div>';
+  var pageList366 = opt_data.pages;
+  var pageListLen366 = pageList366.length;
+  for (var pageIndex366 = 0; pageIndex366 < pageListLen366; pageIndex366++) {
+    var pageData366 = pageList366[pageIndex366];
+    output += '<div style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;"><h4 style="color: #9aa2a6; font-size: 21px; font-weight: 500; margin: 0;">' + soy.$$escapeHtml(pageData366.title) + '</h4>' + form.fields(soy.$$augmentMap(opt_data, {fields: pageData366.fields})) + '</div>';
   }
   return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
 };

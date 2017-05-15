@@ -16,11 +16,13 @@ package com.liferay.taglib.theme;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.taglib.ui.MessageTag;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -55,12 +57,19 @@ public class LayoutIconTag
 			jspWriter.write("\" src=\"");
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
-				"themeDisplay");
+				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay == null) {
+				ServletRequest servletRequest = pageContext.getRequest();
+
+				themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+			}
 
 			jspWriter.write(themeDisplay.getPathImage());
 
 			jspWriter.write("/layout_icon?img_id=");
-			jspWriter.write(String.valueOf(layout.getIconImage()));
+			jspWriter.write(String.valueOf(layout.getIconImageId()));
 			jspWriter.write("&t=");
 			jspWriter.write(
 				WebServerServletTokenUtil.getToken(layout.getIconImageId()));

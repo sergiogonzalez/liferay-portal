@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -169,7 +170,6 @@ page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
-page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.util.CustomAttributesUtil" %><%@
@@ -180,6 +180,7 @@ page import="com.liferay.trash.kernel.util.TrashUtil" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
+page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@

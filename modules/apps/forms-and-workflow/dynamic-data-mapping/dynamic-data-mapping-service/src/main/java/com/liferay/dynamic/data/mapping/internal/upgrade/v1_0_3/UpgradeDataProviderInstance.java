@@ -128,6 +128,11 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 		ddmFormFieldValue.addNestedDDMFormFieldValue(
 			createDDMFormFieldValue(
+				ddmFormValues, "outputParameterLabel",
+				_DEFAULT_OUTPUT_PARAMETER_LABEL));
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			createDDMFormFieldValue(
 				ddmFormValues, "outputParameterName",
 				_DEFAULT_OUTPUT_PARAMETER_NAME));
 
@@ -137,7 +142,7 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 		ddmFormFieldValue.addNestedDDMFormFieldValue(
 			createDDMFormFieldValue(
-				ddmFormValues, "outputParameterType", "text"));
+				ddmFormValues, "outputParameterType", "[\"list\"]"));
 
 		return ddmFormFieldValue;
 	}
@@ -200,6 +205,9 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 		return _ddmFormValuesJSONSerializer.serialize(ddmFormValues);
 	}
+
+	private static final String _DEFAULT_OUTPUT_PARAMETER_LABEL =
+		"Default Output";
 
 	private static final String _DEFAULT_OUTPUT_PARAMETER_NAME =
 		"Default-Output";

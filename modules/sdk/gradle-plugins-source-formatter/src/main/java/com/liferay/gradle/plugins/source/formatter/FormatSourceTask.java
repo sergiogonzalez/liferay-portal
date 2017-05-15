@@ -42,7 +42,7 @@ public class FormatSourceTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -54,15 +54,6 @@ public class FormatSourceTask extends JavaExec {
 
 	public String getBaseDirName() {
 		return _sourceFormatterArgs.getBaseDirName();
-	}
-
-	public File getCopyrightFile() {
-		return GradleUtil.toFile(
-			getProject(), _sourceFormatterArgs.getCopyrightFileName());
-	}
-
-	public String getCopyrightFileName() {
-		return _sourceFormatterArgs.getCopyrightFileName();
 	}
 
 	public List<String> getFileNames() {
@@ -125,20 +116,12 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isThrowException();
 	}
 
-	public boolean isUseProperties() {
-		return _sourceFormatterArgs.isUseProperties();
-	}
-
 	public void setAutoFix(boolean autoFix) {
 		_sourceFormatterArgs.setAutoFix(autoFix);
 	}
 
 	public void setBaseDirName(String baseDirName) {
 		_sourceFormatterArgs.setBaseDirName(baseDirName);
-	}
-
-	public void setCopyrightFileName(String copyrightFileName) {
-		_sourceFormatterArgs.setCopyrightFileName(copyrightFileName);
 	}
 
 	public void setFileNames(Iterable<String> fileNames) {
@@ -190,11 +173,7 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
-	public void setUseProperties(boolean useProperties) {
-		_sourceFormatterArgs.setUseProperties(useProperties);
-	}
-
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("format.current.branch=" + isFormatCurrentBranch());
@@ -206,12 +185,8 @@ public class FormatSourceTask extends JavaExec {
 		args.add("processor.thread.count=" + getProcessorThreadCount());
 		args.add("show.documentation=" + isShowDocumentation());
 		args.add("source.auto.fix=" + isAutoFix());
-		args.add(
-			"source.copyright.file=" +
-				FileUtil.relativize(getCopyrightFile(), getWorkingDir()));
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("source.throw.exception=" + isThrowException());
-		args.add("source.use.properties=" + isUseProperties());
 
 		FileCollection fileCollection = getFiles();
 

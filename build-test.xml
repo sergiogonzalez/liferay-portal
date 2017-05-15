@@ -31,7 +31,7 @@
 
 	<propertycopy from="browser.${browser.type}.version" name="browser.version" />
 
-	<propertycopy from="java.jdk.${java.jdk.type}.version" name="java.jdk.version" />
+	<propertycopy from="java.jdk.${java.jdk.architecture}.version" name="java.jdk.version" />
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
 
@@ -388,7 +388,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 	<macrodef name="get-env-java-jdk">
 		<sequential>
 			<propertycopy
-				from="env.option.java.jdk.${java.jdk.type}.${java.jdk.version}"
+				from="env.option.java.jdk.${java.jdk.type}.${java.jdk.version}.${java.jdk.architecture}"
 				name="env.option.java.jdk"
 				override="true"
 			/>
@@ -621,6 +621,37 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</for>
 
 			<fail message="No module base directory found for '@{subrepository.name}'." unless="module.base.dir" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-patch-requirements">
+		<attribute name="patch.file.zip.url" />
+
+		<sequential>
+			<var name="patch.requirements" unset="true" />
+
+			<local name="tstamp.value" />
+
+			<tstamp>
+				<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+			</tstamp>
+
+			<mirrors-get dest="${tstamp.value}.zip" src="@{patch.file.zip.url}" />
+
+			<mkdir dir="${tstamp.value}-dir" />
+
+			<unzip dest="${tstamp.value}-dir" src="${tstamp.value}.zip" />
+
+			<xmlproperty file="${tstamp.value}-dir/fixpack_documentation.xml" />
+
+			<antelope:stringutil property="patch.requirements" string="${patch.requirements}">
+				<antelope:replace regex="!" replacement="" />
+				<antelope:replace regex="&gt;=" replacement="-" />
+				<antelope:replace regex="=" replacement="-" />
+			</antelope:stringutil>
+
+			<delete dir="${tstamp.value}-dir" />
+			<delete file="${tstamp.value}.zip" />
 		</sequential>
 	</macrodef>
 
@@ -1153,7 +1184,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				replace="\1"
 			/>
 
-			<property name="testray.run.id" value="${app.server.type}-${app.server.major.version} ${database.type}-${database.major.version} ${browser.type}-${browser.major.version} ${operating.system.type}-${operating.system.version} jdk${java.jdk.version}-${java.jdk.type}" />
+			<property name="testray.run.id" value="${app.server.type}-${app.server.major.version} ${database.type}-${database.major.version} ${browser.type}-${browser.major.version} ${operating.system.type}-${operating.system.version} ${java.jdk.type}-jdk${java.jdk.version}-${java.jdk.architecture}" />
 		</sequential>
 	</macrodef>
 
@@ -1282,6 +1313,82 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</if>
 
 			<property name="testray.testcase.warnings" value="" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="install-patch">
+		<attribute name="patch.file.zip.url" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="patch.file.name" />
+
+			<basename file="@{patch.file.zip.url}" property="patch.file.name" />
+
+			<mirrors-get dest="@{patching.tool.dir}/patches/${patch.file.name}" src="@{patch.file.zip.url}" />
+
+			<if>
+				<contains string="${patch.file.name}" substring="hotfix" />
+				<then>
+					<install-patch-dependencies hotfix.file.zip.url="@{patch.file.zip.url}" />
+				</then>
+			</if>
+
+			<delete file="@{patching.tool.dir}/default.properties" />
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
+liferay.home=${liferay.home}
+patching.mode=binary
+war.path=${app.server.weblogic.portal.dir}/</echo>
+
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</then>
+				<else>
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="install-patch-dependencies">
+		<attribute name="hotfix.file.zip.url" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="hotfix.build.version" />
+			<local name="hotfix.portal.version" />
+			<local name="patch.requirements" />
+
+			<get-patch-requirements patch.file.zip.url="@{hotfix.file.zip.url}" />
+
+			<propertyregex
+				input="@{hotfix.file.zip.url}"
+				property="hotfix.build.version"
+				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+				replace="\1\2\3"
+			/>
+
+			<propertyregex
+				input="@{hotfix.file.zip.url}"
+				property="hotfix.portal.version"
+				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+				replace="\1.\2.\3"
+			/>
+
+			<mirrors-get
+				dest="@{patching.tool.dir}/patches"
+				src="http://files.liferay.com/private/ee/fix-packs/${hotfix.portal.version}/de/liferay-fix-pack-${patch.requirements}-${hotfix.build.version}.zip"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -1418,6 +1525,14 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<var name="database.index" unset="true" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-captcha-configuration" >
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
+maxChallenges=&quot;-1&quot;
+sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
@@ -1564,144 +1679,33 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 	<macrodef name="prepare-elasticsearch-configuration" >
 		<sequential>
-			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
-				additionalConfigurations=\
-					cluster.routing.allocation.disk.threshold_enabled: false\n\
-					cluster.service.slow_task_logging_threshold: 1800s\n\
-					httpEnabled: false\n\
-					index.indexing.slowlog.threshold.index.warn: 1800s\n\
-					index.search.slowlog.threshold.fetch.warn: 1800s\n\
-					index.search.slowlog.threshold.query.warn: 1800s\n\
-					monitor.jvm.gc.old.warn: 1800s\n\
-					monitor.jvm.gc.young.warn: 1800s\n\
-					threadpool.bulk.size: 1\n\
-					threadpool.fetch_shard_started.size: 1\n\
-					threadpool.fetch_shard_store.size: 1\n\
-					threadpool.flush.size: 1\n\
-					threadpool.force_merge.size: 1\n\
-					threadpool.generic.size: 1\n\
-					threadpool.get.size: 1\n\
-					threadpool.index.size: 1\n\
-					threadpool.listener.size: 1\n\
-					threadpool.management.size: 1\n\
-					threadpool.percolate.size: 1\n\
-					threadpool.refresh.size: 1\n\
-					threadpool.search.size: 1\n\
-					threadpool.snapshot.size: 1\n\
-					threadpool.suggest.size: 1\n\
-					threadpool.warmer.size: 1\n\
-					transport.local.workers: 1
-				logExceptionsOnly=false
-			</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-fix-pack">
-		<attribute default="${app.server.parent.dir}" name="bundles.dir" />
-		<attribute name="fix.pack.zip.url" />
-		<attribute name="patching.tool.zip.url" />
-
-		<sequential>
-			<mirrors-get
-				dest="${basedir}"
-				src="@{patching.tool.zip.url}"
-			/>
-
-			<unzip dest="@{bundles.dir}">
-				<fileset
-					dir="${basedir}"
-					includes="patching-tool*"
-				/>
-			</unzip>
-
-			<chmod perm="a+x">
-				<fileset dir="@{bundles.dir}/patching-tool">
-					<include name="*.sh" />
-				</fileset>
-			</chmod>
-
-			<mirrors-get
-				dest="@{bundles.dir}/patching-tool/patches"
-				src="@{fix.pack.zip.url}"
-			/>
-
-			<local name="fix.pack.file.name" />
-
-			<basename file="@{fix.pack.zip.url}" property="fix.pack.file.name" />
-
-			<check-fix-pack-requirements
-				fix.pack.dir="@{bundles.dir}/patching-tool/patches"
-				fix.pack.file.name="${fix.pack.file.name}"
-			/>
-
-			<delete file="@{bundles.dir}/patching-tool/default.properties" />
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<then>
-					<echo file="@{bundles.dir}/patching-tool/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
-liferay.home=${liferay.home}
-patching.mode=binary
-war.path=${app.server.weblogic.portal.dir}/</echo>
-
-					<execute dir="@{bundles.dir}/patching-tool">
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-				</then>
-				<else>
-					<execute dir="@{bundles.dir}/patching-tool">
-						patching-tool${file.suffix.bat} auto-discovery
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-				</else>
-			</if>
-
-			<local name="patching.tool.file.name" />
-
-			<basename file="@{patching.tool.zip.url}" property="patching.tool.file.name" />
-
-			<delete file="${basedir}/${patching.tool.file.name}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-fix-pack-bundle" >
-		<sequential>
-			<if>
-				<and>
-					<isset property="test.fix.pack.base.url" />
-					<isset property="test.fix.pack.zip.name" />
-				</and>
-				<then>
-					<property name="test.build.fix.pack.zip.url" value="${test.fix.pack.base.url}/${test.fix.pack.zip.name}" />
-				</then>
-			</if>
-
-			<if>
-				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
-				<then>
-					<mirrors-get
-						dest="${basedir}"
-						src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
-					/>
-
-					<loadfile
-						property="patching.tool.version"
-						srcFile="${patching.tool.latest.txt}"
-					/>
-
-					<delete file="${basedir}/${patching.tool.latest.txt}" />
-
-					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
-
-					<prepare-fix-pack
-						bundles.dir="${app.server.parent.dir}"
-						fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-						patching.tool.zip.url="${test.build.patching.tool.zip.url}"
-					/>
-				</then>
-			</if>
+			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">additionalConfigurations=&quot;
+cluster.routing.allocation.disk.threshold_enabled:\ false
+cluster.service.slow_task_logging_threshold:\ 1800s
+httpEnabled:\ false
+index.indexing.slowlog.threshold.index.warn:\ 1800s
+index.search.slowlog.threshold.fetch.warn:\ 1800s
+index.search.slowlog.threshold.query.warn:\ 1800s
+monitor.jvm.gc.old.warn:\ 1800s
+monitor.jvm.gc.young.warn:\ 1800s
+threadpool.bulk.size:\ 1
+threadpool.fetch_shard_started.size:\ 1
+threadpool.fetch_shard_store.size:\ 1
+threadpool.flush.size:\ 1
+threadpool.force_merge.size:\ 1
+threadpool.generic.size:\ 1
+threadpool.get.size:\ 1
+threadpool.index.size:\ 1
+threadpool.listener.size:\ 1
+threadpool.management.size:\ 1
+threadpool.percolate.size:\ 1
+threadpool.refresh.size:\ 1
+threadpool.search.size:\ 1
+threadpool.snapshot.size:\ 1
+threadpool.suggest.size:\ 1
+threadpool.warmer.size:\ 1
+transport.local.workers:\ 1&quot;
+logExceptionsOnly=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
@@ -1730,6 +1734,38 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 					</if>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-patching-tool" >
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="patching.tool.name" />
+			<local name="patching.tool.version" />
+
+			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
+
+			<loadfile property="patching.tool.version" srcFile="${patching.tool.latest.txt}" />
+
+			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
+
+			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.name}" />
+
+			<delete dir="@{patching.tool.dir}" />
+
+			<unzip dest="@{patching.tool.dir}/..">
+				<fileset dir="${basedir}" includes="patching-tool*" />
+			</unzip>
+
+			<chmod perm="a+x">
+				<fileset dir="@{patching.tool.dir}">
+					<include name="*.sh" />
+				</fileset>
+			</chmod>
+
+			<delete file="${basedir}/${patching.tool.latest.txt}" />
+			<delete file="${basedir}/${patching.tool.name}" />
 		</sequential>
 	</macrodef>
 
@@ -2066,16 +2102,12 @@ tell application "Safari" to quit
 						</then>
 						<else>
 							<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-tomcat" />
-
-							<setup-testable-tomcat />
-
-							<prepare-elasticsearch-configuration />
 						</else>
 					</if>
 				</else>
 			</if>
 
-			<prepare-tomcat-setenv />
+			<setup-testable-tomcat />
 
 			<antcall inheritAll="false" target="prepare-test-build-tomcat-dependents" />
 
@@ -2217,12 +2249,6 @@ tell application "Safari" to quit
 					<var name="app.server.bundle.index" unset="true" />
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-tomcat-setenv">
-		<sequential>
-			<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
 		</sequential>
 	</macrodef>
 
@@ -2395,36 +2421,32 @@ ${tomcat-gc-log}
 					List getClassFileNames() {
 						DirectoryScanner directoryScanner = new DirectoryScanner();
 
+						String testClassModulesBaseDir = project.getProperty("test.class.modules.base.dir");
+						String testClassNamesExcludes = project.getProperty("test.class.names.excludes");
+						String testClassNamesIncludes = project.getProperty("test.class.names.includes");
+
+						if (testClassModulesBaseDir != null) {
+							int x = testClassModulesBaseDir.indexOf("modules");
+
+							if (x != -1) {
+								testClassModulesBaseDir = testClassModulesBaseDir.substring(x);
+
+								StringBuilder sb = new StringBuilder();
+
+								for (String testClassNamesInclude : testClassNamesIncludes.split(",")) {
+									sb.append(testClassModulesBaseDir);
+									sb.append(File.separator);
+									sb.append(testClassNamesInclude);
+									sb.append(",");
+								}
+
+								testClassNamesIncludes = sb.toString();
+							}
+						}
+
 						directoryScanner.setBasedir(project.getBaseDir());
-						directoryScanner.setExcludes(
-							new String[] {
-								"modules/apps/chat/**",
-								"modules/apps/mail-reader/**",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/override/LPKGOverrideTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGDowngradeTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeLogAssertorTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGVersionChangeLogAssertorTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerCleanStartupTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerDowngradeTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerUpgradeTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyCleanStartupTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifySecondStartupTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGRevertOverrideVerifyTest.java",
-								"modules/apps/web-experience/export-import/export-import-resources-importer-test/src/testIntegration/java/com/liferay/exportimport/resources/importer/test/ResourcesImporterTest.java",
-								"modules/private/apps/osb-lcs/**",
-								"modules/private/apps/saml/**",
-								"portal-impl/test/integration/com/liferay/portlet/asset/service/AssetTagStatsServiceTest.java",
-								"portal-impl/test/integration/com/liferay/portlet/documentlibrary/service/persistence/DLFileEntryFinderTest.java",
-								"portal-kernel/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
-								"*/pacl/test/[\\w]+Test.class",
-								"**/*ServiceHttpTest.java",
-								"**/*ServiceJsonTest.java",
-								"**/*ServiceSoapTest.java"
-							});
-						directoryScanner.setIncludes(new String[] {"**/src/test/**/*Test.java", "**/src/testIntegration/**/*Test.java", "**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+						directoryScanner.setExcludes(testClassNamesExcludes.split(","));
+						directoryScanner.setIncludes(testClassNamesIncludes.split(","));
 
 						directoryScanner.scan();
 
@@ -2954,15 +2976,11 @@ go</echo>
 		<sequential>
 			<setup-testable-tomcat-logging />
 
-			<setup-testable-tomcat-aspectj-agent />
-
-			<setup-testable-tomcat-jmx />
-
-			<setup-testable-tomcat-jpda-address />
-
 			<setup-testable-tomcat-manager />
 
 			<setup-testable-tomcat-osgi-modules />
+
+			<setup-testable-tomcat-setenv />
 		</sequential>
 	</macrodef>
 
@@ -2976,6 +2994,77 @@ go</echo>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
 						<![CDATA[
 							CATALINA_OPTS="${CATALINA_OPTS} ${aspectj.agent} -Dorg.aspectj.weaver.loadtime.configuration=${aspectj.configuration}"
+						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-gc">
+		<sequential>
+			<if>
+				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${app.server.tomcat.setenv.gc.old}" />
+				<then>
+					<replace file="${app.server.tomcat.dir}/bin/setenv.bat" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${app.server.tomcat.setenv.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.bat" />
+						</then>
+					</if>
+				</else>
+			</if>
+
+			<if>
+				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${app.server.tomcat.setenv.gc.old}" />
+				<then>
+					<replace file="${app.server.tomcat.dir}/bin/setenv.sh" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${app.server.tomcat.setenv.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.sh" />
+						</then>
+					</if>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-heap-dump-on-oom">
+		<sequential>
+			<local name="heap.dump.on.oom" />
+
+			<property name="heap.dump.on.oom" value="-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${app.server.tomcat.setenv.heap.dump.path}" />
+
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${heap.dump.on.oom}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+						<![CDATA[
+							set "CATALINA_OPTS=%CATALINA_OPTS% ${heap.dump.on.oom}"
+						]]>
+					</echo>
+				</then>
+			</if>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${heap.dump.on.oom}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${heap.dump.on.oom}"
 						]]>
 					</echo>
 				</then>
@@ -3186,6 +3275,55 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-testable-tomcat-print-final-flags">
+		<sequential>
+			<local name="print.final.flags" />
+
+			<property name="print.final.flags" value="-XX:+PrintFlagsFinal" />
+
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${print.final.flags}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+						<![CDATA[
+							set "CATALINA_OPTS=%CATALINA_OPTS% ${print.final.flags}"
+						]]>
+					</echo>
+				</then>
+			</if>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${print.final.flags}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${print.final.flags}"
+						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-setenv">
+		<sequential>
+			<setup-testable-tomcat-aspectj-agent />
+
+			<setup-testable-tomcat-gc />
+
+			<setup-testable-tomcat-heap-dump-on-oom />
+
+			<setup-testable-tomcat-jmx />
+
+			<setup-testable-tomcat-jpda-address />
+
+			<setup-testable-tomcat-print-final-flags />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-android-device">
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
@@ -3368,10 +3506,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 						</then>
 						<else>
+							<get-testcase-property property.name="ext.plugins.includes" />
+
 							<parallel>
-								<sequential>
-									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
-								</sequential>
+								<if>
+									<not>
+										<isset property="ext.plugins.includes" />
+									</not>
+									<then>
+										<sequential>
+											<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
+										</sequential>
+									</then>
+								</if>
+
 								<daemons>
 									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
 										<arg line="${app.server.start.executable.arg.line}" />
@@ -3685,6 +3833,40 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<socket port="@{app.server.leading.port.number}080" server="localhost" />
 				</not>
 			</waitfor>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="uninstall-patches">
+		<attribute name="patching.tool.dir" />
+
+		<sequential>
+			<delete file="@{patching.tool.dir}/default.properties" />
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
+liferay.home=${liferay.home}
+patching.mode=binary
+war.path=${app.server.weblogic.portal.dir}/</echo>
+
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} revert -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</then>
+				<else>
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} revert -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</else>
+			</if>
+
+			<delete dir="@{patching.tool.dir}/patches" />
+
+			<mkdir dir="@{patching.tool.dir}/patches" />
 		</sequential>
 	</macrodef>
 
@@ -4160,6 +4342,7 @@ go]]></replacevalue>
 					<property name="liferay.portal.branch" value="${liferay.portal.branch}" />
 					<property name="liferay.portal.bundle" value="${liferay.portal.bundle}" />
 					<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
+					<property name="java.jdk.architecture" value="${java.jdk.architecture}" />
 					<property name="java.jdk.type" value="${java.jdk.type}" />
 					<property name="java.jdk.version" value="${java.jdk.version}" />
 					<property name="operating.system.type" value="${operating.system.type}" />
@@ -5600,6 +5783,12 @@ go]]></replacevalue>
 		/>
 	</target>
 
+	<target name="install-patch">
+		<fail message="Please set the property ${patch.file.zip.url}." unless="patch.file.zip.url" />
+
+		<install-patch patching.tool.dir="${app.server.parent.dir}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+	</target>
+
 	<target name="kill-spi">
 		<if>
 			<os family="unix" />
@@ -6008,6 +6197,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.frontend.js.spa.web.internal.servlet.taglib">
+		<priority value="DEBUG" />
+	</category>
+
 	<category name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper">
 		<priority value="INFO" />
 	</category>
@@ -6035,6 +6228,25 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<stop-android-device />
 
 		<start-android-device />
+	</target>
+
+	<target name="prepare-osgi-module-configurations">
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<if>
+			<not>
+				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
+			</not>
+			<then>
+				<prepare-captcha-configuration />
+			</then>
+		</if>
+
+		<prepare-elasticsearch-configuration />
+	</target>
+
+	<target name="prepare-patching-tool">
+		<prepare-patching-tool patching.tool.dir="${app.server.parent.dir}/patching-tool" />
 	</target>
 
 	<target name="prepare-portal-ext-properties">
@@ -6089,8 +6301,6 @@ jdbc.counter.maxActive=5
 jdbc.counter.maxIdle=0
 jdbc.counter.minIdle=0
 
-captcha.max.challenges=-1
-
 browser.launcher.url=
 
 index.on.startup=true
@@ -6114,15 +6324,6 @@ tunnel.servlet.hosts.allowed=</echo>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties"><![CDATA[
 jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="captcha.max.challenges" />
-
-		<if>
-			<isset property="captcha.max.challenges" />
-			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="captcha.max.challenges=-1" value="captcha.max.challenges=${captcha.max.challenges}" />
 			</then>
 		</if>
 
@@ -6583,6 +6784,24 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="test.build.fix.pack.zip.url" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.build.fix.pack.zip.url=${test.build.fix.pack.zip.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.build.fix.pack.zip.url.previous" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.build.fix.pack.zip.url.previous=${test.build.fix.pack.zip.url.previous}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.case.required.property.names" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -6648,6 +6867,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.run.environment=${test.run.environment}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.subrepo.dirs" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.subrepo.dirs=${test.subrepo.dirs}
 				</echo>
 			</then>
 		</if>
@@ -7711,6 +7939,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<property name="default.timeout.explicit.wait" value="${timeout.explicit.wait}" />
+
 		<get-testcase-property property.name="timeout.explicit.wait" />
 
 		<if>
@@ -7720,6 +7950,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					timeout.explicit.wait=${timeout.explicit.wait}
 				</echo>
 			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					timeout.explicit.wait=${default.timeout.explicit.wait}
+				</echo>
+			</else>
 		</if>
 	</target>
 
@@ -8017,7 +8252,25 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</else>
 		</if>
 
-		<prepare-fix-pack-bundle />
+		<if>
+			<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+			<then>
+				<antcall target="prepare-patching-tool" />
+
+				<get-testcase-property property.name="skip.install-patch" />
+
+				<if>
+					<not>
+						<equals arg1="${skip.install-patch}" arg2="true" />
+					</not>
+					<then>
+						<antcall target="install-patch">
+							<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
+						</antcall>
+					</then>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">
@@ -9023,6 +9276,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<delete failonerror="false" file="${app.server.classes.portal.dir}/system-ext.properties" />
 			</then>
 			<else>
+				<antcall target="prepare-osgi-module-configurations" />
+
 				<antcall target="prepare-portal-properties" />
 
 				<antcall target="prepare-portal-ext-properties" />
@@ -9597,6 +9852,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="portal-impl" inheritAll="false" target="test-unit" />
 
 		<ant dir="util-java" inheritAll="false" target="test-unit" />
+	</target>
+
+	<target name="uninstall-patches">
+		<uninstall-patches patching.tool.dir="${app.server.parent.dir}/patching-tool" />
 	</target>
 
 	<target name="upgrade-legacy-database">

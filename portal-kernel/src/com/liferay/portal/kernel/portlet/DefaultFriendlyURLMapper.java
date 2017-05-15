@@ -216,19 +216,14 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		// Hide reserved parameters removed by the router or set to the defaults
 
-		Map<String, String> reservedParameters =
-			liferayPortletURL.getReservedParameterMap();
+		liferayPortletURL.visitReservedParameters(
+			(key, value) -> {
+				if (!routeParameters.containsKey(key) ||
+					value.equals(defaultReservedParameters.get(key))) {
 
-		for (Map.Entry<String, String> entry : reservedParameters.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue();
-
-			if (!routeParameters.containsKey(key) ||
-				value.equals(defaultReservedParameters.get(key))) {
-
-				liferayPortletURL.addParameterIncludedInPath(key);
-			}
-		}
+					liferayPortletURL.addParameterIncludedInPath(key);
+				}
+			});
 	}
 
 	/**
@@ -286,7 +281,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		// Copy reserved parameters
 
-		routeParameters.putAll(liferayPortletURL.getReservedParameterMap());
+		liferayPortletURL.visitReservedParameters(routeParameters::put);
 	}
 
 	/**

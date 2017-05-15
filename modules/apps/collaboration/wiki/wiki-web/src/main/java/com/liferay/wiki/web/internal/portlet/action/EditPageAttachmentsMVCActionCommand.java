@@ -27,6 +27,7 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -54,11 +55,15 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.web.internal.WikiAttachmentsHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -102,10 +107,17 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, moveToTrash);
 
 		if (moveToTrash && (trashedModel != null)) {
-			TrashUtil.addTrashSessionMessages(
-				actionRequest, trashedModel, Constants.REMOVE);
+			Map<String, Object> data = new HashMap<>();
 
-			hideDefaultSuccessMessage(actionRequest);
+			data.put(Constants.CMD, Constants.REMOVE);
+
+			List<TrashedModel> trashedModels = new ArrayList<>();
+
+			trashedModels.add(trashedModel);
+
+			data.put("trashedModels", trashedModels);
+
+			addDeleteSuccessData(actionRequest, data);
 		}
 	}
 
@@ -284,20 +296,12 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 				}
 				else if (e instanceof FileSizeException) {
-					long fileMaxSize = PrefsPropsUtil.getLong(
-						PropsKeys.DL_FILE_MAX_SIZE);
-
-					if (fileMaxSize == 0) {
-						fileMaxSize = PrefsPropsUtil.getLong(
-							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-					}
-
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-" +
 							"larger-than-x",
 						TextFormatter.formatStorageSize(
-							fileMaxSize, themeDisplay.getLocale()));
-
+							_dlValidator.getMaxAllowableSize(),
+							themeDisplay.getLocale()));
 					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 				}
 
@@ -346,6 +350,9 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	@Reference
 	private Portal _portal;

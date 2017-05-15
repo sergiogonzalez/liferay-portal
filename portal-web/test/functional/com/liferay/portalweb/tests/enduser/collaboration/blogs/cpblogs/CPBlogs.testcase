@@ -240,7 +240,7 @@
 		<execute macro="ItemSelector#gotoItemSelectorViaAlloyEditor" />
 
 		<execute macro="ItemSelector#addFromURL">
-			<var name="imageSourceURL" value="https://cdn.lfrs.sl/www.liferay.com/osb-community-theme/images/custom/heading.png" />
+			<var name="imageSourceURL" value="https://dummyimage.com/600x400/000/fff.jpg" />
 		</execute>
 
 		<execute function="Pause" locator1="1000" />
@@ -263,7 +263,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewInlineImage">
-			<var name="uploadFileName" value="https://cdn.lfrs.sl/www.liferay.com/osb-community-theme/images/custom/heading.png" />
+			<var name="uploadFileName" value="https://dummyimage.com/600x400/000/fff.jpg" />
 		</execute>
 	</command>
 
@@ -294,6 +294,50 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
+	<command name="CKEditorSmoke" priority="5">
+		<property name="custom.properties" value="editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp=ckeditor" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="AlloyEditor#addTitle">
+			<var name="title" value="CKEditor Entry Title" />
+		</execute>
+
+		<execute macro="CKEditor#assertEditorPresent" />
+
+		<execute macro="CKEditor#addContent">
+			<var name="content" value="CKEditor Entry Content" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="CKEditor Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewTitle">
+			<var name="entryTitle" value="CKEditor Entry Title" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
+
+		<execute macro="CKEditor#viewEntryContent">
+			<var name="content" value="CKEditor Entry Content" />
 		</execute>
 	</command>
 

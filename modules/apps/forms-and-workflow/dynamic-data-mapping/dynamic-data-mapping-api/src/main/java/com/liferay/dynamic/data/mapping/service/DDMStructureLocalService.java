@@ -307,8 +307,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure fetchStructure(long groupId, long classNameId,
-		java.lang.String structureKey, boolean includeAncestorStructures)
-		throws PortalException;
+		java.lang.String structureKey, boolean includeAncestorStructures);
 
 	/**
 	* Returns the structure with the ID.

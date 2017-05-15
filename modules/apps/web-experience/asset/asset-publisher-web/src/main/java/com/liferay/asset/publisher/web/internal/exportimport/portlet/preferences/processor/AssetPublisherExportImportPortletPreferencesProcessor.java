@@ -23,13 +23,15 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -40,6 +42,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -84,7 +87,9 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -161,6 +166,13 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
+	}
+
 	protected void exportAssetObjects(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
@@ -178,7 +190,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			"selectionStyle", "dynamic");
 
 		if (selectionStyle.equals("dynamic")) {
-			if (!AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_ENABLED) {
+			if (!_assetPublisherWebConfiguration.dynamicExportEnabled()) {
 				return;
 			}
 
@@ -211,7 +223,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			assetEntries = baseModelSearchResult.getBaseModels();
 		}
 		else {
-			if (!AssetPublisherWebConfigurationValues.MANUAL_EXPORT_ENABLED) {
+			if (!_assetPublisherWebConfiguration.manualExportEnabled()) {
 				return;
 			}
 
@@ -257,7 +269,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		assetEntryQuery.setEnablePermissions(false);
 
-		int end = AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_LIMIT;
+		int end = _assetPublisherWebConfiguration.dynamicExportLimit();
 
 		if (end == 0) {
 			end = QueryUtil.ALL_POS;
@@ -443,6 +455,20 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(
 					uuid, groupId);
+
+			if (ddmStructure == null) {
+				Map<String, String> structureUuids =
+					(Map<String, String>)
+						portletDataContext.getNewPrimaryKeysMap(
+							DDMStructure.class + ".ddmStructureUuid");
+
+				String defaultStructureUuid = MapUtil.getString(
+					structureUuids, uuid, uuid);
+
+				ddmStructure =
+					_ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(
+						defaultStructureUuid, groupId);
+			}
 
 			if (ddmStructure != null) {
 				return ddmStructure.getStructureId();
@@ -696,6 +722,45 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		portletPreferences.setValues(key, newValues);
 	}
 
+	protected void updateExportOrderByColumnClassPKs(
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, String key)
+		throws Exception {
+
+		String oldValue = portletPreferences.getValue(key, null);
+
+		String[] ddmStructureFieldNameParts = StringUtil.split(
+			oldValue, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+		String primaryKey = ddmStructureFieldNameParts[2];
+
+		if (!Validator.isNumber(primaryKey)) {
+			return;
+		}
+
+		long primaryKeyLong = GetterUtil.getLong(primaryKey);
+
+		String newPreferencesValue = getExportPortletPreferencesValue(
+			portletDataContext, portlet, DDMStructure.class.getName(),
+			primaryKeyLong);
+
+		if (Validator.isNull(newPreferencesValue)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to export portlet preferences value for class " +
+						DDMStructure.class.getName() + " with primary key " +
+							primaryKeyLong);
+			}
+
+			return;
+		}
+
+		String newValue = StringUtil.replace(
+			oldValue, primaryKey, newPreferencesValue);
+
+		portletPreferences.setValue(key, newValue);
+	}
+
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -883,6 +948,14 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
 					AssetVocabulary.class.getName());
+			}
+			else if (name.startsWith("orderByColumn") &&
+					 StringUtil.startsWith(
+						 value,
+						 DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
+
+				updateExportOrderByColumnClassPKs(
+					portletDataContext, portlet, portletPreferences, name);
 			}
 			else if (name.startsWith("queryName") &&
 					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {
@@ -1072,6 +1145,43 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		portletPreferences.setValues(key, newValues);
 	}
 
+	protected void updateImportOrderByColumnClassPKs(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String key,
+			long companyGroupId)
+		throws Exception {
+
+		String oldValue = portletPreferences.getValue(key, null);
+
+		Map<Long, Long> primaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
+
+		String[] ddmStructureFieldNameParts = StringUtil.split(
+			oldValue, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+		String portletPreferencesOldValue = ddmStructureFieldNameParts[2];
+
+		Long newPrimaryKey = getImportPortletPreferencesNewValue(
+			portletDataContext, DDMStructure.class, companyGroupId, primaryKeys,
+			portletPreferencesOldValue);
+
+		if (Validator.isNull(newPrimaryKey)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to import portlet preferences value " +
+						portletPreferencesOldValue);
+			}
+
+			return;
+		}
+
+		String newValue = StringUtil.replace(
+			oldValue, portletPreferencesOldValue, newPrimaryKey.toString());
+
+		portletPreferences.setValue(key, newValue);
+	}
+
 	protected PortletPreferences updateImportPortletPreferences(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
@@ -1124,6 +1234,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
+			}
+			else if (name.startsWith("orderByColumn") &&
+					 StringUtil.startsWith(
+						 value,
+						 DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
+
+				updateImportOrderByColumnClassPKs(
+					portletDataContext, portletPreferences, name,
+					companyGroup.getGroupId());
 			}
 			else if (name.startsWith("queryName") &&
 					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {
@@ -1263,6 +1382,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		_assetPublisherPortletDisplayTemplateExportCapability;
 	private AssetPublisherPortletDisplayTemplateImportCapability
 		_assetPublisherPortletDisplayTemplateImportCapability;
+	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private CompanyLocalService _companyLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;

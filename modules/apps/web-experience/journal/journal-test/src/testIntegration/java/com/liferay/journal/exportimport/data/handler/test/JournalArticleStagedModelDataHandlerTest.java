@@ -141,6 +141,20 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Test
+	public void testArticleWithSmallImageURL() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		journalArticle.setSmallImage(true);
+		journalArticle.setSmallImageURL(RandomTestUtil.randomString());
+
+		journalArticle = JournalTestUtil.updateArticle(journalArticle);
+
+		exportImportStagedModel(journalArticle);
+	}
+
+	@Test
 	public void testCompanyScopeDependencies() throws Exception {
 		initExport();
 

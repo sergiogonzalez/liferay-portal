@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl
 import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -56,6 +57,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -68,6 +70,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -134,6 +137,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		record.setDDMStorageId(ddmStorageId);
 
 		record.setRecordSetId(recordSetId);
+		record.setRecordSetVersion(recordSet.getVersion());
 		record.setVersion(DDLRecordConstants.VERSION_DEFAULT);
 		record.setDisplayIndex(displayIndex);
 
@@ -141,9 +145,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Record version
 
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_DRAFT);
+
 		DDLRecordVersion recordVersion = addRecordVersion(
 			user, record, ddmStorageId, DDLRecordConstants.VERSION_DEFAULT,
-			displayIndex, WorkflowConstants.STATUS_DRAFT);
+			displayIndex, status);
 
 		// Asset
 
@@ -156,10 +164,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId,
-			getWorkflowAssetClassName(recordSet),
-			recordVersion.getRecordVersionId(), recordVersion, serviceContext);
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), groupId, userId,
+				getWorkflowAssetClassName(recordSet),
+				recordVersion.getRecordVersionId(), recordVersion,
+				serviceContext);
+		}
 
 		return record;
 	}
@@ -901,10 +914,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), record.getGroupId(), userId,
-			DDLRecord.class.getName(), recordVersion.getRecordVersionId(),
-			recordVersion, serviceContext);
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), record.getGroupId(), userId,
+				DDLRecord.class.getName(), recordVersion.getRecordVersionId(),
+				recordVersion, serviceContext);
+		}
 
 		return record;
 	}
@@ -1105,6 +1122,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		recordVersion.setCreateDate(record.getModifiedDate());
 		recordVersion.setDDMStorageId(ddmStorageId);
 		recordVersion.setRecordSetId(record.getRecordSetId());
+		recordVersion.setRecordSetVersion(record.getRecordSetVersion());
 		recordVersion.setRecordId(record.getRecordId());
 		recordVersion.setVersion(version);
 		recordVersion.setDisplayIndex(displayIndex);
@@ -1275,10 +1293,25 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			field.setDDMStructureId(ddmStructureId);
 			field.setName(entry.getKey());
-			field.addValue(locale, String.valueOf(entry.getValue()));
 
-			if (!locale.equals(defaultLocale)) {
-				field.addValue(defaultLocale, String.valueOf(entry.getValue()));
+			Serializable value = entry.getValue();
+
+			List<Serializable> serializableValues = _getSerializableValues(
+				value);
+
+			if (serializableValues != null) {
+				field.addValues(locale, serializableValues);
+
+				if (!locale.equals(defaultLocale)) {
+					field.addValues(defaultLocale, serializableValues);
+				}
+			}
+			else {
+				field.addValue(locale, value);
+
+				if (!locale.equals(defaultLocale)) {
+					field.addValue(defaultLocale, value);
+				}
 			}
 
 			field.setDefaultLocale(defaultLocale);
@@ -1344,6 +1377,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@ServiceReference(type = DDMFormValuesToFieldsConverter.class)
 	protected DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter;
 
+	@ServiceReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
+
 	@ServiceReference(type = FieldsToDDMFormValuesConverter.class)
 	protected FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter;
 
@@ -1352,6 +1388,77 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@ServiceReference(type = StorageEngine.class)
 	protected StorageEngine storageEngine;
+
+	private List<Serializable> _getSerializableValues(Serializable value) {
+		List<Serializable> serializableValues = null;
+
+		if (value instanceof Collection) {
+			Collection<Serializable> values = (Collection<Serializable>)value;
+
+			serializableValues = new ArrayList<>(values);
+		}
+		else if (value instanceof Serializable[]) {
+			Serializable[] values = (Serializable[])value;
+
+			serializableValues = ListUtil.toList(values);
+		}
+		else if (value instanceof boolean[]) {
+			boolean[] values = (boolean[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (boolean serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof double[]) {
+			double[] values = (double[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (double serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof float[]) {
+			float[] values = (float[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (float serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof int[]) {
+			int[] values = (int[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (int serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof long[]) {
+			long[] values = (long[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (long serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+		else if (value instanceof short[]) {
+			short[] values = (short[])value;
+
+			serializableValues = new ArrayList<>(values.length);
+
+			for (short serializableValue : values) {
+				serializableValues.add(serializableValue);
+			}
+		}
+
+		return serializableValues;
+	}
 
 	private static final String _FIELDS_DISPLAY_NAME = "_fieldsDisplay";
 

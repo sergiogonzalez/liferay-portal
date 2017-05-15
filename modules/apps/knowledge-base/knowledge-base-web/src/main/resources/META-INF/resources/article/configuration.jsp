@@ -42,7 +42,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 								<div class="form-group kb-field-wrapper">
 
 									<%
-									KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(kbArticlePortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
+									KBArticle kbArticle = KBArticleServiceUtil.fetchLatestKBArticle(kbArticlePortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 									%>
 
 									<aui:input label="article" name="configurationKBArticle" type="resource" value="<%= (kbArticle != null) ? kbArticle.getTitle() : StringPool.BLANK %>" />
@@ -120,7 +120,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							<portlet:param name="selectableClassNameIds" value="<%= String.valueOf(PortalUtil.getClassNameId(KBArticleConstants.getClassName())) %>" />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= selectKBObjectURL %>'
+						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
 					},
 					function(event) {
 						var kbArticleData = {

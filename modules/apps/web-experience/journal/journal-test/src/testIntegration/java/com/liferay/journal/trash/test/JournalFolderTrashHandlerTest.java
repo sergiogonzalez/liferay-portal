@@ -33,7 +33,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
 import com.liferay.trash.test.util.DefaultWhenIsAssetable;
 import com.liferay.trash.test.util.DefaultWhenIsIndexableBaseModel;
@@ -48,7 +51,9 @@ import com.liferay.trash.test.util.WhenIsRestorableBaseModel;
 import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
 import com.liferay.trash.test.util.WhenParentModelIsSameType;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -72,6 +77,20 @@ public class JournalFolderTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(TrashHelper.class.getName());
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
 
 	@Override
 	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
@@ -145,6 +164,8 @@ public class JournalFolderTrashHandlerTest
 	@Override
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		_trashHelper = _serviceTracker.getService();
 
 		super.setUp();
 	}
@@ -251,7 +272,7 @@ public class JournalFolderTrashHandlerTest
 
 		String name = folder.getName();
 
-		return TrashUtil.getOriginalTitle(name);
+		return _trashHelper.getOriginalTitle(name);
 	}
 
 	@Override
@@ -263,6 +284,9 @@ public class JournalFolderTrashHandlerTest
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
+	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
+
+	private TrashHelper _trashHelper;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();
 	private final WhenIsIndexableBaseModel _whenIsIndexableBaseModel =

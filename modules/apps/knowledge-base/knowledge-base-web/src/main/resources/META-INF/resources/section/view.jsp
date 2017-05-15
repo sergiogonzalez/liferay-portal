@@ -50,7 +50,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 				%>
 
 				<div class="kb-articles-sections-title">
-					<%= StringUtil.merge(titles, StringPool.COMMA_AND_SPACE) %>
+					<%= HtmlUtil.escape(StringUtil.merge(titles, StringPool.COMMA_AND_SPACE)) %>
 				</div>
 			</c:if>
 
@@ -74,7 +74,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 						<liferay-ui:icon
 							iconCssClass="icon-file-alt"
 							label="<%= true %>"
-							message="<%= kbArticle.getTitle() %>"
+							message="<%= HtmlUtil.escape(kbArticle.getTitle()) %>"
 							method="get"
 							url="<%= viewKBArticleURL.toString() %>"
 						/>
@@ -84,7 +84,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 						<div class="kb-article-content">
 							<c:choose>
 								<c:when test='<%= kbArticleDisplayStyle.equals("abstract") && Validator.isNotNull(kbArticle.getDescription()) %>'>
-									<%= kbArticle.getDescription() %>
+									<%= HtmlUtil.escape(kbArticle.getDescription()) %>
 								</c:when>
 								<c:when test='<%= kbArticleDisplayStyle.equals("abstract") %>'>
 									<%= StringUtil.shorten(HtmlUtil.extractText(kbArticle.getContent()), 500) %>

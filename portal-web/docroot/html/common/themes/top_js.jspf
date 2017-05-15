@@ -43,53 +43,58 @@
 			getVersion: function() {
 				return '<%= version %>';
 			},
+
+			<%
+			BrowserMetadata browserMetadata = BrowserSnifferUtil.getBrowserMetadata(request);
+			%>
+
 			isAir: function() {
-				return <%= BrowserSnifferUtil.isAir(request) %>;
+				return <%= browserMetadata.isAir() %>;
 			},
 			isChrome: function() {
-				return <%= BrowserSnifferUtil.isChrome(request) %>;
+				return <%= browserMetadata.isChrome() %>;
 			},
 			isFirefox: function() {
-				return <%= BrowserSnifferUtil.isFirefox(request) %>;
+				return <%= browserMetadata.isFirefox() %>;
 			},
 			isGecko: function() {
-				return <%= BrowserSnifferUtil.isGecko(request) %>;
+				return <%= browserMetadata.isGecko() %>;
 			},
 			isIe: function() {
-				return <%= BrowserSnifferUtil.isIe(request) %>;
+				return <%= browserMetadata.isIe() %>;
 			},
 			isIphone: function() {
-				return <%= BrowserSnifferUtil.isIphone(request) %>;
+				return <%= browserMetadata.isIphone() %>;
 			},
 			isLinux: function() {
-				return <%= BrowserSnifferUtil.isLinux(request) %>;
+				return <%= browserMetadata.isLinux() %>;
 			},
 			isMac: function() {
-				return <%= BrowserSnifferUtil.isMac(request) %>;
+				return <%= browserMetadata.isMac() %>;
 			},
 			isMobile: function() {
-				return <%= BrowserSnifferUtil.isMobile(request) %>;
+				return <%= browserMetadata.isMobile() %>;
 			},
 			isMozilla: function() {
-				return <%= BrowserSnifferUtil.isMozilla(request) %>;
+				return <%= browserMetadata.isMozilla() %>;
 			},
 			isOpera: function() {
-				return <%= BrowserSnifferUtil.isOpera(request) %>;
+				return <%= browserMetadata.isOpera() %>;
 			},
 			isRtf: function() {
-				return <%= BrowserSnifferUtil.isRtf(request) %>;
+				return <%= browserMetadata.isRtf(version) %>;
 			},
 			isSafari: function() {
-				return <%= BrowserSnifferUtil.isSafari(request) %>;
+				return <%= browserMetadata.isSafari() %>;
 			},
 			isSun: function() {
-				return <%= BrowserSnifferUtil.isSun(request) %>;
+				return <%= browserMetadata.isSun() %>;
 			},
 			isWebKit: function() {
-				return <%= BrowserSnifferUtil.isWebKit(request) %>;
+				return <%= browserMetadata.isWebKit() %>;
 			},
 			isWindows: function() {
-				return <%= BrowserSnifferUtil.isWindows(request) %>;
+				return <%= browserMetadata.isWindows() %>;
 			}
 		};
 
@@ -344,7 +349,7 @@
 		%>
 
 		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(HttpUtil.encodeURL(currentURL)) %>';
+		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)) %>';
 	// ]]>
 </script>
 
@@ -497,6 +502,16 @@ for (String analyticsType : analyticsTypes) {
 
 					ga('create', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>', 'auto');
 					ga('send', 'pageview');
+
+					<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
+						Liferay.on(
+							'endNavigate',
+							function(event) {
+								ga('set', 'page', event.path);
+								ga('send', 'pageview');
+							}
+						);
+					</c:if>
 				</script>
 			</c:if>
 		</c:when>

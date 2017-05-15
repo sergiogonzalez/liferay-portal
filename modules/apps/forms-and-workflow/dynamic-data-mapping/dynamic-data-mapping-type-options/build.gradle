@@ -3,7 +3,8 @@ apply plugin: "com.liferay.gulp"
 task testJS
 
 configJSModules {
-	includes = ["**/*.es.js*"]
+	dependsOn = []
+	enabled = false
 }
 
 dependencies {

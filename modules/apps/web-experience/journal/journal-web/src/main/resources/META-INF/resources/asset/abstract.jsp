@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/asset/init.jsp" %>
 
 <%
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
@@ -39,13 +39,11 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 </c:if>
 
 <%
-String summary = HtmlUtil.escape(articleDisplay.getDescription());
-
-summary = HtmlUtil.replaceNewLine(summary);
+String summary = articleDisplay.getDescription();
 
 if (Validator.isNull(summary)) {
-	summary = HtmlUtil.stripHtml(articleDisplay.getContent());
+	summary = articleDisplay.getContent();
 }
 %>
 
-<%= StringUtil.shorten(summary, abstractLength) %>
+<%= HtmlUtil.stripHtml(StringUtil.shorten(summary, abstractLength)) %>

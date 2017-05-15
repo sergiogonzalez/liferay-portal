@@ -17,21 +17,10 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
 public class JavaIllegalImportsCheck extends BaseFileCheck {
-
-	public JavaIllegalImportsCheck(
-		List<String> proxyExcludes, List<String> runOutsidePortalExcludes,
-		List<String> secureRandomExcludes) {
-
-		_proxyExcludes = proxyExcludes;
-		_runOutsidePortalExcludes = runOutsidePortalExcludes;
-		_secureRandomExcludes = secureRandomExcludes;
-	}
 
 	@Override
 	protected String doProcess(
@@ -54,8 +43,8 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
 
-		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
-			!isExcludedPath(_proxyExcludes, absolutePath) &&
+		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
+			!isExcludedPath(_PROXY_EXCLUDES, absolutePath) &&
 			content.contains("import java.lang.reflect.Proxy;")) {
 
 			addMessage(
@@ -71,6 +60,20 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			addMessage(fileName, "Illegal import: jodd.util.StringPool");
 		}
 
+		// LPS-39508
+
+		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
+			!isExcludedPath(_SECURE_RANDOM_EXCLUDES, absolutePath) &&
+			content.contains("java.security.SecureRandom") &&
+			!content.contains("javax.crypto.KeyGenerator")) {
+
+			addMessage(
+				fileName,
+				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
+					"SecureRandom instead of java.security.SecureRandom, see " +
+						"LPS-39058");
+		}
+
 		// LPS-45027
 
 		if (content.contains(
@@ -83,18 +86,15 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 						"LPS-45027");
 		}
 
-		// LPS-39508
+		// LPS-47682
 
-		if (!isExcludedPath(_runOutsidePortalExcludes, absolutePath) &&
-			!isExcludedPath(_secureRandomExcludes, absolutePath) &&
-			content.contains("java.security.SecureRandom") &&
-			!content.contains("javax.crypto.KeyGenerator")) {
+		if (isPortalSource() && absolutePath.contains("/portal-kernel/") &&
+			content.contains("import javax.servlet.jsp.")) {
 
 			addMessage(
 				fileName,
-				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
-					"SecureRandom instead of java.security.SecureRandom, see " +
-						"LPS-39058");
+				"Never import javax.servlet.jsp.* from portal-kernel, see " +
+					"LPS-47682");
 		}
 
 		// LPS-55690
@@ -115,6 +115,17 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				fileName,
 				"Use AutoBatchPreparedStatementUtil instead of " +
 					"DatabaseMetaData.supportsBatchUpdates, see LPS-60473");
+		}
+
+		// LPS-62786
+
+		if (!fileName.endsWith("TypeConvertorUtil.java") &&
+			content.contains("org.apache.commons.beanutils.PropertyUtils")) {
+
+			addMessage(
+				fileName,
+				"Do not use org.apache.commons.beanutils.PropertyUtils, see " +
+					"LPS-62786");
 		}
 
 		// LPS-64056
@@ -167,8 +178,9 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final List<String> _proxyExcludes;
-	private final List<String> _runOutsidePortalExcludes;
-	private final List<String> _secureRandomExcludes;
+	private static final String _PROXY_EXCLUDES = "proxy.excludes";
+
+	private static final String _SECURE_RANDOM_EXCLUDES =
+		"secure.random.excludes";
 
 }

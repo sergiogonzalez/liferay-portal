@@ -14,15 +14,14 @@
 
 package com.liferay.source.formatter.checks;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
 public class ResourceBundleCheck extends BaseFileCheck {
 
-	public ResourceBundleCheck(List<String> excludes) {
-		_excludes = excludes;
+	@Override
+	public boolean isPortalCheck() {
+		return true;
 	}
 
 	@Override
@@ -31,7 +30,7 @@ public class ResourceBundleCheck extends BaseFileCheck {
 
 		if (fileName.endsWith("ResourceBundleCheck.java") ||
 			fileName.endsWith("ResourceBundleUtil.java") ||
-			isExcludedPath(_excludes, absolutePath)) {
+			isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 
 			return content;
 		}
@@ -58,7 +57,5 @@ public class ResourceBundleCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private final List<String> _excludes;
 
 }

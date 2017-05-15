@@ -471,6 +471,18 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	public com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
 		com.liferay.wiki.model.WikiPage page,
 		javax.portlet.PortletURL viewPageURL,
+		java.util.function.Supplier<javax.portlet.PortletURL> editPageURLSupplier,
+		java.lang.String attachmentURLPrefix,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getPageDisplay(page, viewPageURL,
+			editPageURLSupplier, attachmentURLPrefix, serviceContext);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
+		com.liferay.wiki.model.WikiPage page,
+		javax.portlet.PortletURL viewPageURL,
 		javax.portlet.PortletURL editPageURL,
 		java.lang.String attachmentURLPrefix)
 		throws com.liferay.portal.kernel.exception.PortalException {

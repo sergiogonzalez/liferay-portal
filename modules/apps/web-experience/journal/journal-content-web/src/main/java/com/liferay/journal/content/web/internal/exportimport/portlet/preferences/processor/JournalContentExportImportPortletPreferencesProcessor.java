@@ -14,6 +14,8 @@
 
 package com.liferay.journal.content.web.internal.exportimport.portlet.preferences.processor;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -273,6 +275,23 @@ public class JournalContentExportImportPortletPreferencesProcessor
 					portletPreferences.setValue(
 						"groupId", String.valueOf(groupId));
 
+					JournalArticle article =
+						_journalArticleLocalService.fetchLatestArticle(
+							groupId, articleId, WorkflowConstants.STATUS_ANY);
+
+					if (article != null) {
+						AssetEntry assetEntry =
+							_assetEntryLocalService.fetchEntry(
+								JournalArticle.class.getName(),
+								article.getResourcePrimKey());
+
+						if (assetEntry != null) {
+							portletPreferences.setValue(
+								"assetEntryId",
+								String.valueOf(assetEntry.getEntryId()));
+						}
+					}
+
 					if (portletDataContext.getPlid() > 0) {
 						Layout layout = _layoutLocalService.fetchLayout(
 							portletDataContext.getPlid());
@@ -314,6 +333,13 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		portletDataContext.setScopeType(previousScopeType);
 
 		return portletPreferences;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -361,6 +387,7 @@ public class JournalContentExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentExportImportPortletPreferencesProcessor.class);
 
+	private AssetEntryLocalService _assetEntryLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private GroupLocalService _groupLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;

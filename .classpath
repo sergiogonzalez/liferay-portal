@@ -82,6 +82,7 @@
 	<classpathentry kind="lib" path="lib/development/saxpath.jar"/>
 	<classpathentry kind="lib" path="lib/development/sdk-addon-api-0.2.jar"/>
 	<classpathentry kind="lib" path="lib/development/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/development/slf4j-simple.jar"/>
 	<classpathentry kind="lib" path="lib/development/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument-tomcat.jar"/>
@@ -92,6 +93,7 @@
 	<classpathentry kind="lib" path="lib/development/velocity.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity-tools.jar"/>
 	<classpathentry kind="lib" path="lib/development/websocket-api.jar"/>
+	<classpathentry kind="lib" path="lib/development/xmlresolver.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
 	<classpathentry kind="lib" path="lib/global/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/abdera.jar"/>
@@ -189,7 +191,13 @@
 	<classpathentry kind="lib" path="lib/portal/jmatio.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jna.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodconverter.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jodd.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-bean.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-http.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-json.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-proxetta.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-servlet.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jodd-upload.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jrcs-diff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/json-java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/json-schema-validator.jar"/>

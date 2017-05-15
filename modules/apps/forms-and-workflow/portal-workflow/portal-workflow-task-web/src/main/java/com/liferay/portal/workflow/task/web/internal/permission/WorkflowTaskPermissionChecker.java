@@ -18,9 +18,11 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -57,8 +59,7 @@ public class WorkflowTaskPermissionChecker {
 			return false;
 		}
 
-		long[] roleIds = permissionChecker.getRoleIds(
-			permissionChecker.getUserId(), groupId);
+		long[] roleIds = getRoleIds(groupId, permissionChecker);
 
 		for (WorkflowTaskAssignee workflowTaskAssignee :
 				workflowTask.getWorkflowTaskAssignees()) {
@@ -73,6 +74,29 @@ public class WorkflowTaskPermissionChecker {
 		}
 
 		return false;
+	}
+
+	protected long[] getRoleIds(
+		long groupId, PermissionChecker permissionChecker) {
+
+		long[] roleIds = permissionChecker.getRoleIds(
+			permissionChecker.getUserId(), groupId);
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			for (Group ancestorGroup : group.getAncestors()) {
+				long[] ancestorRoleIds = permissionChecker.getRoleIds(
+					permissionChecker.getUserId(), ancestorGroup.getGroupId());
+
+				roleIds = ArrayUtil.append(roleIds, ancestorRoleIds);
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return roleIds;
 	}
 
 	protected boolean hasAssetViewPermission(

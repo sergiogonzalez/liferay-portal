@@ -132,6 +132,24 @@ public class ServerDetector {
 		return false;
 	}
 
+	public static boolean isSupported(String serverType) {
+		if (serverType.equals(ServerDetector.GLASSFISH_ID) ||
+			serverType.equals(ServerDetector.JBOSS_ID) ||
+			serverType.equals(ServerDetector.JONAS_ID) ||
+			serverType.equals(ServerDetector.JETTY_ID) ||
+			serverType.equals(ServerDetector.OC4J_ID) ||
+			serverType.equals(ServerDetector.RESIN_ID) ||
+			serverType.equals(ServerDetector.TOMCAT_ID) ||
+			serverType.equals(ServerDetector.WEBLOGIC_ID) ||
+			serverType.equals(ServerDetector.WEBSPHERE_ID) ||
+			serverType.equals(ServerDetector.WILDFLY_ID)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isSupportsComet() {
 		return _SUPPORTS_COMET;
 	}

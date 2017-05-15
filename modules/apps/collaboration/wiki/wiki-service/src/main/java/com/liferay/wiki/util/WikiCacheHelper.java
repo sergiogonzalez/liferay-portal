@@ -32,6 +32,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.portlet.PortletURL;
 
@@ -60,6 +61,14 @@ public class WikiCacheHelper {
 		long nodeId, String title, PortletURL viewPageURL,
 		PortletURL editPageURL, String attachmentURLPrefix) {
 
+		return getDisplay(
+			nodeId, title, viewPageURL, () -> editPageURL, attachmentURLPrefix);
+	}
+
+	public WikiPageDisplay getDisplay(
+		long nodeId, String title, PortletURL viewPageURL,
+		Supplier<PortletURL> editPageURLSupplier, String attachmentURLPrefix) {
+
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -70,7 +79,8 @@ public class WikiCacheHelper {
 
 		if (pageDisplay == null) {
 			pageDisplay = _getPageDisplay(
-				nodeId, title, viewPageURL, editPageURL, attachmentURLPrefix);
+				nodeId, title, viewPageURL, editPageURLSupplier.get(),
+				attachmentURLPrefix);
 
 			if (pageDisplay != null) {
 				_portalCache.put(key, pageDisplay);
@@ -80,8 +90,8 @@ public class WikiCacheHelper {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"getDisplay for {" + nodeId + ", " + title + ", " +
-					viewPageURL + ", " + editPageURL + "} takes " +
-						stopWatch.getTime() + " ms");
+					viewPageURL + ", " + editPageURLSupplier.get() +
+						"} takes " + stopWatch.getTime() + " ms");
 		}
 
 		return pageDisplay;

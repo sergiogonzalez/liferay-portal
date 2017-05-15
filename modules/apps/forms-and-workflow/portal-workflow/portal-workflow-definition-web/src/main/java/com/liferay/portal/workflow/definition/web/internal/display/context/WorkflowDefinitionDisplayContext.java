@@ -91,6 +91,14 @@ public class WorkflowDefinitionDisplayContext {
 
 		searchContainer.setTotal(workflowDefinitions.size());
 
+		if (workflowDefinitions.size() >
+				(searchContainer.getEnd() - searchContainer.getStart())) {
+
+			workflowDefinitions = ListUtil.subList(
+				workflowDefinitions, searchContainer.getStart(),
+				searchContainer.getEnd());
+		}
+
 		return workflowDefinitions;
 	}
 

@@ -21,10 +21,18 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaConstructor;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,8 +45,16 @@ import java.util.regex.Pattern;
  */
 public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
-	public JavaOSGiReferenceCheck(Map<String, String> moduleFileNamesMap) {
-		_moduleFileNamesMap = moduleFileNamesMap;
+	@Override
+	public void init() throws Exception {
+		_moduleFileNamesMap = _getModuleFileNamesMap();
+		_serviceReferenceUtilClassNames = getPropertyList(
+			"service.reference.util.class.names");
+	}
+
+	@Override
+	public boolean isModulesCheck() {
+		return true;
 	}
 
 	@Override
@@ -58,8 +74,21 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		_checkMissingReference(fileName, content);
 
+		String className = JavaSourceUtil.getClassName(fileName);
+
+		String moduleSuperClassContent = _getModuleSuperClassContent(
+			content, className, packagePath);
+
 		content = _formatDuplicateReferenceMethods(
-			fileName, content, packagePath);
+			fileName, content, moduleSuperClassContent);
+
+		for (String serviceReferenceUtilClassName :
+				_serviceReferenceUtilClassNames) {
+
+			_checkUtilUsage(
+				fileName, content, serviceReferenceUtilClassName,
+				moduleSuperClassContent);
+		}
 
 		Matcher matcher = _referenceMethodPattern.matcher(content);
 
@@ -116,14 +145,52 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _formatDuplicateReferenceMethods(
-			String fileName, String content, String packagePath)
+	private void _checkUtilUsage(
+			String fileName, String content,
+			String serviceReferenceUtilClassName,
+			String moduleSuperClassContent)
 		throws Exception {
 
-		String className = JavaSourceUtil.getClassName(fileName);
+		if (!content.contains(serviceReferenceUtilClassName) ||
+			(Validator.isNotNull(moduleSuperClassContent) &&
+			 moduleSuperClassContent.contains("@Component"))) {
 
-		String moduleSuperClassContent = _getModuleSuperClassContent(
-			content, className, packagePath);
+			return;
+		}
+
+		int pos = serviceReferenceUtilClassName.lastIndexOf(StringPool.PERIOD);
+
+		String shortClassName = serviceReferenceUtilClassName.substring(
+			pos + 1);
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!javaTerm.isStatic() &&
+				(javaTerm instanceof JavaConstructor ||
+				 javaTerm instanceof JavaMethod) &&
+				!javaTerm.hasAnnotation("Reference")) {
+
+				String javaTermContent = javaTerm.getContent();
+
+				if (javaTermContent.contains(
+						shortClassName + StringPool.PERIOD)) {
+
+					addMessage(
+						fileName,
+						"Use portal service reference instead of '" +
+							serviceReferenceUtilClassName +
+								"' in modules, see LPS-69661");
+
+					return;
+				}
+			}
+		}
+	}
+
+	private String _formatDuplicateReferenceMethods(
+			String fileName, String content, String moduleSuperClassContent)
+		throws Exception {
 
 		if (Validator.isNull(moduleSuperClassContent) ||
 			!moduleSuperClassContent.contains("@Component") ||
@@ -214,9 +281,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				_bndFileNames.add(bndFileName)) {
 
 				addMessage(
-
-					bndSettings.getFileLocation() + "bnd.bnd",
-					"Add '-dsannotations-options: inherit'");
+					fileName,
+					"Add '-dsannotations-options: inherit' to '" +
+						bndSettings.getFileLocation() + "bnd.bnd'");
 			}
 		}
 
@@ -327,6 +394,44 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return classContent;
 	}
 
+	private Map<String, String> _getModuleFileNamesMap() throws Exception {
+		Map<String, String> moduleFileNamesMap = new HashMap<>();
+
+		List<String> fileNames = new ArrayList<>();
+
+		String moduleRootDirLocation = "modules/";
+
+		for (int i = 0; i < 6; i++) {
+			File file = new File(getBaseDirName() + moduleRootDirLocation);
+
+			if (file.exists()) {
+				fileNames = getFileNames(
+					getBaseDirName() + moduleRootDirLocation, new String[0],
+					new String[] {"**/*.java"});
+
+				break;
+			}
+
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
+		}
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String className = StringUtil.replace(
+				fileName, CharPool.SLASH, CharPool.PERIOD);
+
+			int pos = className.lastIndexOf(".com.liferay.");
+
+			className = className.substring(pos + 1, fileName.length() - 5);
+
+			moduleFileNamesMap.put(className, fileName);
+		}
+
+		return moduleFileNamesMap;
+	}
+
 	private String _getModuleServicePackagePath(String fileName) {
 		String serviceDirLocation = fileName;
 
@@ -411,12 +516,13 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
-	private final Map<String, String> _moduleFileNamesMap;
+	private Map<String, String> _moduleFileNamesMap;
 	private final Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private final Pattern _referenceMethodPattern = Pattern.compile(
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
+	private List<String> _serviceReferenceUtilClassNames;
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SAVE_NOTIFICATION</td>
-	<td>//div[contains(@class,'autosave-bar')]/span</td>
+	<td>//div[contains(@class,'autosave-bar')]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,6 +68,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ALT_PAGINATION-->
+<tr>
+	<td>ALT_PAGINATION_PAGE</td>
+	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(.,'${key_page}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALT_PAGINATION_SUCCESS_PAGE</td>
+	<td>//div[contains(@class,'form-builder-pagination')]//li[@class='pagination-success-page']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PAGE_CONTROLS-->
 <tr>
 	<td>PAGE_CONTROLS_ELLIPSIS_ICON</td>
@@ -82,6 +98,16 @@
 <tr>
 	<td>PAGE_CONTROLS_ADD_SUCCESS_PAGE</td>
 	<td>//li[@class='form-builder-page-manager-add-success-page' and contains(text(),'Add Success Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_CONTROLS_DELETE_CURRENT_PAGE</td>
+	<td>//li[@class='form-builder-page-manager-delete-page' and contains(text(),'Delete Current Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE</td>
+	<td>//li[@class='form-builder-page-manager-switch-mode' and contains(text(),'Switch Pagination Mode')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,7 +160,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_PAGE_DESCRIPTION_FIELD</td>
-	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-description')]</td>
+	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -161,6 +187,16 @@
 <tr>
 	<td>PUBLISH_URL_FORM_PAGE</td>
 	<td>//div[contains(@class,'form-builder-app')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_ICON</td>
+	<td>//button[contains(@id,'publishIcon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_UNPUBLISH_ICON_CLOSE</td>
+	<td>//div[contains(@class,'alert-dismissable')]//div[contains(.,'${key_alertMessage}')]/preceding-sibling::button[@class='close']</td>
 	<td></td>
 </tr>
 <tr>

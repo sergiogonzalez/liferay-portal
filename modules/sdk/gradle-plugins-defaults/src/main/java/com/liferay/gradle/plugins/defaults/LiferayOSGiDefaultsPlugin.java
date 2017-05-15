@@ -73,6 +73,12 @@ import groovy.time.TimeCategory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.lang.reflect.Method;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
@@ -100,6 +106,7 @@ import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -136,10 +143,12 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
+import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
 import org.gradle.api.execution.TaskExecutionGraph;
+import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
@@ -159,6 +168,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
+import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
@@ -166,14 +176,18 @@ import org.gradle.api.plugins.quality.Pmd;
 import org.gradle.api.plugins.quality.PmdExtension;
 import org.gradle.api.plugins.quality.PmdPlugin;
 import org.gradle.api.reporting.SingleFileReport;
+import org.gradle.api.resources.ResourceHandler;
+import org.gradle.api.resources.TextResourceFactory;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.StopActionException;
 import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.VerificationTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.CompileOptions;
@@ -256,6 +270,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String SYNC_RELEASE_PROPERTY_NAME = "syncRelease";
 
 	public static final String SYNC_VERSIONS_TASK_NAME = "syncVersions";
+
+	public static final String UPDATE_FILE_SNAPSHOT_VERSIONS_TASK_NAME =
+		"updateFileSnapshotVersions";
 
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
@@ -409,6 +426,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTasksPmd(project);
 		_configureTasksPublishNodeModule(project);
 
+		_addTaskUpdateFileSnapshotVersions(project);
+
 		if (publishing) {
 			_configureTasksEnabledIfStaleSnapshot(
 				project, testProject, MavenPlugin.INSTALL_TASK_NAME,
@@ -463,7 +482,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							updateVersionTask);
 					}
 
-					_configureTaskCompileJSP(project, liferayExtension);
+					_configureTaskCompileJSP(
+						project, jarJSPsTask, liferayExtension);
 
 					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -865,7 +885,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Copy _addTaskDownloadCompiledJSP(
-		JavaCompile compileJSPTask, Properties artifactProperties) {
+		JavaCompile compileJSPTask, final Jar jarJSPsTask,
+		Properties artifactProperties) {
 
 		final String artifactJspcURL = artifactProperties.getProperty(
 			"artifact.jspc.url");
@@ -886,7 +907,54 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public FileTree call() throws Exception {
-					File file = FileUtil.get(project, artifactJspcURL);
+					File file;
+
+					try {
+						file = FileUtil.get(project, artifactJspcURL);
+					}
+					catch (Exception e) {
+						String message = e.getMessage();
+
+						if (!message.equals("HTTP Authorization failure")) {
+							throw e;
+						}
+
+						int start = artifactJspcURL.lastIndexOf('/');
+
+						start = artifactJspcURL.indexOf('-', start) + 1;
+
+						String classifier = jarJSPsTask.getClassifier();
+						String extension = jarJSPsTask.getExtension();
+
+						int end =
+							artifactJspcURL.length() - classifier.length() -
+								extension.length() - 2;
+
+						String version = artifactJspcURL.substring(start, end);
+
+						DependencyHandler dependencyHandler =
+							project.getDependencies();
+
+						Map<String, Object> args = new HashMap<>();
+
+						args.put("classifier", classifier);
+						args.put("ext", extension);
+						args.put("group", project.getGroup());
+						args.put(
+							"name", GradleUtil.getArchivesBaseName(project));
+						args.put("version", version);
+
+						Dependency dependency = dependencyHandler.create(args);
+
+						ConfigurationContainer configurationContainer =
+							project.getConfigurations();
+
+						Configuration configuration =
+							configurationContainer.detachedConfiguration(
+								dependency);
+
+						file = configuration.getSingleFile();
+					}
 
 					return project.zipTree(file);
 				}
@@ -1081,6 +1149,44 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					Properties properties = GUtil.loadProperties(bndFile);
 
 					return properties.getProperty(Constants.BUNDLE_VERSION);
+				}
+
+			});
+
+		return replaceRegexTask;
+	}
+
+	private ReplaceRegexTask _addTaskUpdateFileSnapshotVersions(
+		final Project project) {
+
+		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
+			project, UPDATE_FILE_SNAPSHOT_VERSIONS_TASK_NAME,
+			ReplaceRegexTask.class);
+
+		replaceRegexTask.setDescription(
+			"Updates the project version in external files to the latest " +
+				"snapshot.");
+
+		String regex = _getModuleSnapshotDependencyRegex(project);
+
+		Map<String, Object> args = new HashMap<>();
+
+		File rootDir = project.getRootDir();
+
+		args.put("dir", rootDir.getParentFile());
+
+		args.put("include", "**/build.gradle");
+
+		replaceRegexTask.setMatches(
+			Collections.singletonMap(
+				regex, (FileCollection)project.fileTree(args)));
+
+		replaceRegexTask.setReplacement(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _getNexusLatestSnapshotVersion(project);
 				}
 
 			});
@@ -2167,16 +2273,22 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		PmdExtension pmdExtension = GradleUtil.getExtension(
 			project, PmdExtension.class);
 
-		Gradle gradle = project.getGradle();
+		ResourceHandler resourceHandler = project.getResources();
 
-		File ruleSetFile = new File(
-			gradle.getGradleUserHomeDir(),
-			"../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java" +
-				"/standard-rules.xml");
+		TextResourceFactory textResourceFactory = resourceHandler.getText();
 
-		if (ruleSetFile.exists()) {
-			pmdExtension.setRuleSetFiles(project.files(ruleSetFile));
+		String ruleSet;
+
+		try {
+			ruleSet = FileUtil.read(
+				"com/liferay/gradle/plugins/defaults/dependencies" +
+					"/standard-rules.xml");
 		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+
+		pmdExtension.setRuleSetConfig(textResourceFactory.fromString(ruleSet));
 
 		List<String> ruleSets = Collections.emptyList();
 
@@ -2505,7 +2617,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskCompileJSP(
-		Project project, LiferayExtension liferayExtension) {
+		Project project, Jar jarJSPsTask, LiferayExtension liferayExtension) {
 
 		boolean jspPrecompileEnabled = GradleUtil.getProperty(
 			project, "jsp.precompile.enabled", false);
@@ -2562,7 +2674,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (!jspPrecompileFromSource && (artifactProperties != null)) {
 			Copy copy = _addTaskDownloadCompiledJSP(
-				javaCompile, artifactProperties);
+				javaCompile, jarJSPsTask, artifactProperties);
 
 			if (copy != null) {
 				javaCompile.deleteAllActions();
@@ -2581,6 +2693,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskFindBugs(FindBugs findBugs) {
+		Project project = findBugs.getProject();
+
 		findBugs.setMaxHeapSize("3g");
 
 		FindBugsReports findBugsReports = findBugs.getReports();
@@ -2592,6 +2706,37 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		SingleFileReport xmlReport = findBugsReports.getXml();
 
 		xmlReport.setEnabled(false);
+
+		SourceSet sourceSet = null;
+
+		String name = findBugs.getName();
+
+		if (name.startsWith("findbugs")) {
+			name = GUtil.toLowerCamelCase(name.substring(8));
+
+			JavaPluginConvention javaPluginConvention =
+				GradleUtil.getConvention(project, JavaPluginConvention.class);
+
+			SourceSetContainer sourceSetContainer =
+				javaPluginConvention.getSourceSets();
+
+			sourceSet = sourceSetContainer.findByName(name);
+		}
+
+		if (sourceSet != null) {
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+			ConfigurableFileTree configurableFileTree = project.fileTree(
+				sourceSetOutput.getClassesDir());
+
+			configurableFileTree.setBuiltBy(
+				Collections.singleton(sourceSetOutput));
+
+			configurableFileTree.setIncludes(
+				Collections.singleton("**/*.class"));
+
+			findBugs.setClasses(configurableFileTree);
+		}
 	}
 
 	private void _configureTaskJar(Project project, boolean testProject) {
@@ -3333,6 +3478,113 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sb.append("\", version: \"");
 
 		return Pattern.quote(sb.toString()) + "(\\d.+)\"";
+	}
+
+	private String _getModuleSnapshotDependencyRegex(Project project) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("group: \"");
+		sb.append(project.getGroup());
+		sb.append("\", name: \"");
+		sb.append(GradleUtil.getArchivesBaseName(project));
+		sb.append("\", version: \"");
+
+		return Pattern.quote(sb.toString()) +
+			"(\\d+\\.\\d+\\.\\d+-\\d{8}\\.\\d{6}-\\d+)\"";
+	}
+
+	private String _getNexusLatestSnapshotVersion(Project project)
+		throws Exception {
+
+		Upload upload = (Upload)GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		RepositoryHandler repositoryHandler = upload.getRepositories();
+
+		MavenDeployer mavenDeployer =
+			(MavenDeployer)repositoryHandler.getByName(
+				MavenRepositoryHandlerConvention.DEFAULT_MAVEN_DEPLOYER_NAME);
+
+		Object remoteRepository = mavenDeployer.getSnapshotRepository();
+
+		Class<?> remoteRepositoryClass = remoteRepository.getClass();
+
+		Method getUrlMethod = remoteRepositoryClass.getMethod("getUrl");
+
+		String repositoryUrl = (String)getUrlMethod.invoke(remoteRepository);
+
+		int start = repositoryUrl.indexOf("/content/repositories/");
+
+		if (start == -1) {
+			throw new GradleException(
+				"Unable to get Nexus repository name from " + repositoryUrl);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(repositoryUrl, 0, start);
+		sb.append("/service/local/artifact/maven/resolve?g=");
+		sb.append(project.getGroup());
+		sb.append("&a=");
+		sb.append(GradleUtil.getArchivesBaseName(project));
+		sb.append("&v=LATEST&r=");
+
+		start += 22;
+
+		int end = repositoryUrl.indexOf('/', start);
+
+		if (end == -1) {
+			end = repositoryUrl.length();
+		}
+
+		sb.append(repositoryUrl, start, end);
+
+		URL url = new URL(sb.toString());
+
+		URLConnection urlConnection = url.openConnection();
+
+		Method getAuthenticationMethod = remoteRepositoryClass.getMethod(
+			"getAuthentication");
+
+		Object authentication = getAuthenticationMethod.invoke(
+			remoteRepository);
+
+		Class<?> authenticationClass = authentication.getClass();
+
+		Method getUserNameMethod = authenticationClass.getMethod("getUserName");
+
+		String userName = (String)getUserNameMethod.invoke(authentication);
+
+		Method getPasswordMethod = authenticationClass.getMethod("getPassword");
+
+		String password = (String)getPasswordMethod.invoke(authentication);
+
+		String authorization = userName + ":" + password;
+
+		authorization =
+			"Basic " +
+				DatatypeConverter.printBase64Binary(authorization.getBytes());
+
+		urlConnection.setRequestProperty("Authorization", authorization);
+
+		try (InputStream inputStream = urlConnection.getInputStream()) {
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			Document document = documentBuilder.parse(inputStream);
+
+			Element artifactResolutionElement = document.getDocumentElement();
+
+			NodeList versionNodeList =
+				artifactResolutionElement.getElementsByTagName("version");
+
+			Element versionElement = (Element)versionNodeList.item(0);
+
+			return versionElement.getTextContent();
+		}
 	}
 
 	private String _getProjectDependency(Project project) {

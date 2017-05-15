@@ -1,8 +1,8 @@
-import Soy from 'metal-soy/src/Soy';
-
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
+import core from 'metal';
+import dom from 'metal-dom';
+import Soy from 'metal-soy';
 import Treeview from 'metal-treeview';
+import { Config } from 'metal-state';
 
 import templates from './CardsTreeView.soy';
 
@@ -281,15 +281,19 @@ CardsTreeview.STATE = {
 	 * Enables multiple selection of tree elements
 	 * @type {boolean}
 	 */
-	multiSelection: {
-		validator: core.isBoolean,
-		value: false
-	},
+	multiSelection: Config.bool().value(false),
 
-	selectedNodes: {
-		validator: core.isArray,
-		value: []
-	}
+	/**
+	 * List of selected nodes
+	 * @type {Array.<Object>}
+	 */
+	selectedNodes: Config.array().value([]),
+
+	/**
+	 * Type of view to render. Accepted values are 'tree' and 'flat'
+	 * @type {String}
+	 */
+	viewType: Config.string().value('tree')
 };
 
 Soy.register(CardsTreeview, templates);

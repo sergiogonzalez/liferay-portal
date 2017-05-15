@@ -1,9 +1,25 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
 dependencies {
-	compileInclude group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.5.0"
+	provided group: "com.google.code.findbugs", name: "findbugs", version: "3.0.1"
+	provided group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.6.0"
 }
 
-liferayOSGi {
-	expandCompileInclude = true
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintClassConfig.java"
+	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfig.java"
+	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfigWithArgumentsAndLocation.java"
+	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java"
+
+	originalLibModuleName = "findsecbugs-plugin"
 }
 
 updateFileVersions {

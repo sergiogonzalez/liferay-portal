@@ -15,25 +15,18 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.dom4j.Element;
@@ -43,58 +36,16 @@ import org.dom4j.Text;
 /**
  * @author Hugo Huijser
  */
-public abstract class BaseFileCheck implements FileCheck {
-
-	@Override
-	public Set<SourceFormatterMessage> getSourceFormatterMessage(
-		String fileName) {
-
-		if (_sourceFormatterMessagesMap.containsKey(fileName)) {
-			return _sourceFormatterMessagesMap.get(fileName);
-		}
-
-		return Collections.emptySet();
-	}
+public abstract class BaseFileCheck
+	extends BaseSourceCheck implements FileCheck {
 
 	@Override
 	public String process(String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_sourceFormatterMessagesMap.remove(fileName);
+		clearSourceFormatterMessages(fileName);
 
 		return doProcess(fileName, absolutePath, content);
-	}
-
-	protected void addMessage(String fileName, String message) {
-		addMessage(fileName, message, -1);
-	}
-
-	protected void addMessage(String fileName, String message, int lineCount) {
-		addMessage(fileName, message, null, lineCount);
-	}
-
-	protected void addMessage(
-		String fileName, String message, String markdownFileName) {
-
-		addMessage(fileName, message, markdownFileName, -1);
-	}
-
-	protected void addMessage(
-		String fileName, String message, String markdownFileName,
-		int lineCount) {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			_sourceFormatterMessagesMap.get(fileName);
-
-		if (sourceFormatterMessages == null) {
-			sourceFormatterMessages = new TreeSet<>();
-		}
-
-		sourceFormatterMessages.add(
-			new SourceFormatterMessage(
-				fileName, message, markdownFileName, lineCount));
-
-		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	protected void checkElementOrder(
@@ -193,44 +144,6 @@ public abstract class BaseFileCheck implements FileCheck {
 		}
 	}
 
-	protected int getLeadingTabCount(String line) {
-		int leadingTabCount = 0;
-
-		while (line.startsWith(StringPool.TAB)) {
-			line = line.substring(1);
-
-			leadingTabCount++;
-		}
-
-		return leadingTabCount;
-	}
-
-	protected int getLevel(String s) {
-		return SourceUtil.getLevel(s);
-	}
-
-	protected int getLevel(
-		String s, String increaseLevelString, String decreaseLevelString) {
-
-		return SourceUtil.getLevel(s, increaseLevelString, decreaseLevelString);
-	}
-
-	protected int getLevel(
-		String s, String[] increaseLevelStrings,
-		String[] decreaseLevelStrings) {
-
-		return SourceUtil.getLevel(
-			s, increaseLevelStrings, decreaseLevelStrings);
-	}
-
-	protected int getLevel(
-		String s, String[] increaseLevelStrings, String[] decreaseLevelStrings,
-		int startLevel) {
-
-		return SourceUtil.getLevel(
-			s, increaseLevelStrings, decreaseLevelStrings, startLevel);
-	}
-
 	protected String getLine(String content, int lineCount) {
 		int nextLineStartPos = getLineStartPos(content, lineCount);
 
@@ -246,10 +159,6 @@ public abstract class BaseFileCheck implements FileCheck {
 		}
 
 		return content.substring(nextLineStartPos, nextLineEndPos);
-	}
-
-	protected int getLineCount(String content, int pos) {
-		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
 	}
 
 	protected int getLineLength(String line) {
@@ -293,158 +202,20 @@ public abstract class BaseFileCheck implements FileCheck {
 		return x + 1;
 	}
 
-	protected boolean isExcludedPath(List<String> excludes, String path) {
-		return isExcludedPath(excludes, path, -1);
-	}
-
-	protected boolean isExcludedPath(
-		List<String> excludes, String path, int lineCount) {
-
-		return isExcludedPath(excludes, path, lineCount, null);
-	}
-
-	protected boolean isExcludedPath(
-		List<String> excludes, String path, int lineCount, String parameter) {
-
-		if (ListUtil.isEmpty(excludes)) {
-			return false;
-		}
-
-		String pathWithParameter = null;
-
-		if (Validator.isNotNull(parameter)) {
-			pathWithParameter = path + StringPool.AT + parameter;
-		}
-
-		String pathWithLineCount = null;
-
-		if (lineCount > 0) {
-			pathWithLineCount = path + StringPool.AT + lineCount;
-		}
-
-		for (String exclude : excludes) {
-			if (Validator.isNull(exclude)) {
-				continue;
-			}
-
-			if (exclude.startsWith("**")) {
-				exclude = exclude.substring(2);
-			}
-
-			if (exclude.endsWith("**")) {
-				exclude = exclude.substring(0, exclude.length() - 2);
-
-				if (path.contains(exclude)) {
-					return true;
-				}
-
-				continue;
-			}
-
-			if (path.endsWith(exclude) ||
-				((pathWithParameter != null) &&
-				 pathWithParameter.endsWith(exclude)) ||
-				((pathWithLineCount != null) &&
-				 pathWithLineCount.endsWith(exclude))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected boolean isExcludedPath(
-		List<String> excludes, String path, String parameter) {
-
-		return isExcludedPath(excludes, path, -1, parameter);
-	}
-
-	protected boolean isModulesFile(
-		String absolutePath, boolean subrepository) {
-
-		return isModulesFile(absolutePath, subrepository, null);
-	}
-
-	protected boolean isModulesFile(
-		String absolutePath, boolean subrepository,
-		List<String> pluginsInsideModulesDirectoryNames) {
-
-		if (subrepository) {
-			return true;
-		}
-
-		if (pluginsInsideModulesDirectoryNames == null) {
-			return absolutePath.contains("/modules/");
-		}
-
-		try {
-			for (String directoryName : pluginsInsideModulesDirectoryNames) {
-				if (absolutePath.contains(directoryName)) {
-					return false;
-				}
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return absolutePath.contains("/modules/");
-	}
-
 	protected void putBNDSettings(BNDSettings bndSettings) {
 		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
 	}
 
-	protected String stripQuotes(String s) {
-		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
-	}
+	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =
+		"language.keys.check.excludes";
 
-	protected String stripQuotes(String s, char... delimeters) {
-		List<Character> delimetersList = ListUtil.toList(delimeters);
+	protected static final String METHOD_CALL_SORT_EXCLUDES =
+		"method.call.sort.excludes";
 
-		char delimeter = CharPool.SPACE;
-		boolean insideQuotes = false;
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (insideQuotes) {
-				if (c == delimeter) {
-					int precedingBackSlashCount = 0;
-
-					for (int j = i - 1; j >= 0; j--) {
-						if (s.charAt(j) == CharPool.BACK_SLASH) {
-							precedingBackSlashCount += 1;
-						}
-						else {
-							break;
-						}
-					}
-
-					if ((precedingBackSlashCount == 0) ||
-						((precedingBackSlashCount % 2) == 0)) {
-
-						insideQuotes = false;
-					}
-				}
-			}
-			else if (delimetersList.contains(c)) {
-				delimeter = c;
-				insideQuotes = true;
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
-	}
+	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
+		"run.outside.portal.excludes";
 
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
-	private final Map<String, Set<SourceFormatterMessage>>
-		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 
 }

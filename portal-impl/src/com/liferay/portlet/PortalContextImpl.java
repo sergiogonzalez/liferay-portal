@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
@@ -37,32 +39,12 @@ public class PortalContextImpl implements PortalContext {
 	public static Properties properties = new Properties();
 	public static List<WindowState> windowStates = new ArrayList<>();
 
-	static {
-		properties.setProperty(
-			MARKUP_HEAD_ELEMENT_SUPPORT, Boolean.TRUE.toString());
-
-		portletModes.add(PortletMode.EDIT);
-		portletModes.add(PortletMode.HELP);
-		portletModes.add(PortletMode.VIEW);
-		portletModes.add(LiferayPortletMode.ABOUT);
-		portletModes.add(LiferayPortletMode.CONFIG);
-		portletModes.add(LiferayPortletMode.EDIT_DEFAULTS);
-		portletModes.add(LiferayPortletMode.PREVIEW);
-		portletModes.add(LiferayPortletMode.PRINT);
-
-		windowStates.add(WindowState.MAXIMIZED);
-		windowStates.add(WindowState.MINIMIZED);
-		windowStates.add(WindowState.NORMAL);
-		windowStates.add(LiferayWindowState.EXCLUSIVE);
-		windowStates.add(LiferayWindowState.POP_UP);
-	}
-
 	public static boolean isSupportedPortletMode(PortletMode portletMode) {
-		return portletModes.contains(portletMode);
+		return _portletModes.contains(portletMode);
 	}
 
 	public static boolean isSupportedWindowState(WindowState windowState) {
-		return windowStates.contains(windowState);
+		return _windowStates.contains(windowState);
 	}
 
 	@Override
@@ -86,12 +68,39 @@ public class PortalContextImpl implements PortalContext {
 
 	@Override
 	public Enumeration<PortletMode> getSupportedPortletModes() {
-		return Collections.enumeration(portletModes);
+		return Collections.enumeration(_portletModes);
 	}
 
 	@Override
 	public Enumeration<WindowState> getSupportedWindowStates() {
-		return Collections.enumeration(windowStates);
+		return Collections.enumeration(_windowStates);
+	}
+
+	private static final List<PortletMode> _portletModes = new ArrayList<>();
+	private static final Set<WindowState> _windowStates = new HashSet<>();
+
+	static {
+		properties.setProperty(
+			MARKUP_HEAD_ELEMENT_SUPPORT, Boolean.TRUE.toString());
+
+		portletModes.add(PortletMode.EDIT);
+		portletModes.add(PortletMode.HELP);
+		portletModes.add(PortletMode.VIEW);
+		portletModes.add(LiferayPortletMode.ABOUT);
+		portletModes.add(LiferayPortletMode.CONFIG);
+		portletModes.add(LiferayPortletMode.EDIT_DEFAULTS);
+		portletModes.add(LiferayPortletMode.PREVIEW);
+		portletModes.add(LiferayPortletMode.PRINT);
+
+		_portletModes.addAll(portletModes);
+
+		windowStates.add(WindowState.MAXIMIZED);
+		windowStates.add(WindowState.MINIMIZED);
+		windowStates.add(WindowState.NORMAL);
+		windowStates.add(LiferayWindowState.EXCLUSIVE);
+		windowStates.add(LiferayWindowState.POP_UP);
+
+		_windowStates.addAll(windowStates);
 	}
 
 }

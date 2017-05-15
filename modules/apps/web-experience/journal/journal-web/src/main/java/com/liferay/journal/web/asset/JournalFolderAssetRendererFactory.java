@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -63,7 +64,7 @@ public class JournalFolderAssetRendererFactory
 		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
 
 		JournalFolderAssetRenderer journalFolderAssetRenderer =
-			new JournalFolderAssetRenderer(folder);
+			new JournalFolderAssetRenderer(folder, _trashHelper);
 
 		journalFolderAssetRenderer.setAssetRendererType(type);
 		journalFolderAssetRenderer.setServletContext(_servletContext);
@@ -131,5 +132,8 @@ public class JournalFolderAssetRendererFactory
 
 	private JournalFolderLocalService _journalFolderLocalService;
 	private ServletContext _servletContext;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

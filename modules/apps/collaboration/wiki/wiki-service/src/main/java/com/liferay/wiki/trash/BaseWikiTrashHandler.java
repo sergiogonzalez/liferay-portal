@@ -28,8 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Roberto Díaz
+ * @author     Roberto Díaz
+ * @deprecated As of 1.1.0, moved to {@link
+ *             com.liferay.wiki.internal.trash.BaseWikiTrashHandler}
  */
+@Deprecated
 public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 
 	@Override

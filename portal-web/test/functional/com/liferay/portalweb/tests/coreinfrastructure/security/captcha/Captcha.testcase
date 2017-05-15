@@ -1,5 +1,7 @@
 <definition component-name="portal-security">
-	<property name="portal.release" value="true" />
+	<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
+	<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Security" />
 
 	<set-up>
@@ -31,21 +33,41 @@
 	</command>
 
 	<command name="ViewRecaptchaEnabled" priority="4">
+		<property name="test.name.skip.portal.instance" value="Captcha#ViewRecaptchaEnabled" />
+
 		<var name="recaptchaPrivateKey" property-value="recaptcha.private.key" />
 		<var name="recaptchaPublicKey" property-value="recaptcha.public.key" />
 
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
+			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavBar#CAPTCHA" value1="CAPTCHA" />
-
-		<execute macro="ServerAdministration#enableRecaptcha">
-			<var name="privateKey" value="${recaptchaPrivateKey}" />
-			<var name="publicKey" value="${recaptchaPublicKey}" />
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
 		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="CAPTCHA" />
+		</execute>
+
+		<execute macro="FormFields#selectSelectOption">
+			<var name="fieldName" value="captchaEngine" />
+			<var name="selectOption" value="reCAPTCHA" />
+		</execute>
+
+		<execute macro="SystemSettings#editTextAreaSetting">
+			<var name="settingName" value="reCaptchaPrivateKey" />
+			<var name="settingValue" value="${recaptchaPrivateKey}" />
+		</execute>
+
+		<execute macro="SystemSettings#editTextAreaSetting">
+			<var name="settingName" value="reCaptchaPublicKey" />
+			<var name="settingValue" value="${recaptchaPublicKey}" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
 
 		<execute macro="User#logoutPG" />
 

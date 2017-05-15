@@ -1,7 +1,9 @@
 <definition>
 	<command name="_openDescriptiveMenulistCP">
 		<if>
-			<isset var="webContentTitleEscapeCharacter" />
+			<not>
+				<contains string="${webContentTitleEscapeCharacter}" substring="{webContentTitleEscapeCharacter}" />
+			</not>
 			<then>
 				<var name="key_webContentTitle" value="${webContentTitleEscapeCharacter}" />
 			</then>
@@ -24,7 +26,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="MenuItem#BASIC_WEB_CONTENT" />
@@ -69,11 +71,11 @@
 	</command>
 
 	<command name="gotoAddWithStructureCP">
-		<var name="key_structureName" value="${structureName}" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="AssertClick" locator1="MenuItem#STRUCTURE_NAME" value1="${structureName}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${structureName}">
+			<var name="key_menuItem" value="${structureName}" />
+		</execute>
 	</command>
 
 	<command name="gotoEditCP">
@@ -82,7 +84,9 @@
 			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#BACK" />
 	</command>
@@ -108,25 +112,26 @@
 	</command>
 
 	<command name="gotoEditStructure">
-		<var name="key_ddlDataDefinitionName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}">
+			<var name="key_ddlDataDefinitionName" value="${structureName}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="gotoEditTemplate">
-		<var name="key_rowEntry" value="${templateName}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${templateName}" />
+		</execute>
 	</command>
 
 	<command name="gotoFeeds">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Feeds">
+			<var name="key_menuItem" value="Feeds" />
+		</execute>
 	</command>
 
 	<command name="gotoLocalizedEditPGViaWCD">
@@ -198,7 +203,9 @@
 			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#PREVIEW" value1="Preview" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Preview">
+			<var name="key_menuItem" value="Preview" />
+		</execute>
 	</command>
 
 	<command name="gotoPreviewViaHeaderCP">
@@ -208,7 +215,9 @@
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PREVIEW" value1="Preview" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Preview">
+			<var name="key_menuItem" value="Preview" />
+		</execute>
 	</command>
 
 	<command name="gotoViewStatus">
@@ -227,8 +236,8 @@
 	</command>
 
 	<command name="gotoViewTemplate">
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${templateName}" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${templateName}">
+			<var name="key_ddlTemplateName" value="${templateName}" />
+		</execute>
 	</command>
 </definition>

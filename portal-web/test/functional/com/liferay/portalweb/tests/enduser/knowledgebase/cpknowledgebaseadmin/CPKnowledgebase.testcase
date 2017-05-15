@@ -1,4 +1,5 @@
 <definition component-name="portal-knowledge-base">
+	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
 
@@ -328,6 +329,8 @@
 	</command>
 
 	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">
+		<property name="test.name.skip.portal.instance" value="CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
 		</execute>

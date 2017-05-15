@@ -1100,7 +1100,8 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		createSortableTextField(name, Collections.min(Arrays.asList(values)));
+		createSortableTextField(
+			name, Collections.min(Arrays.<String>asList(values)));
 	}
 
 	protected Field doGetField(String name, boolean createIfNew) {

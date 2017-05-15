@@ -16,25 +16,21 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
 public class JavaXMLSecurityCheck extends BaseFileCheck {
 
-	public JavaXMLSecurityCheck(
-		List<String> runOutsidePortalExcludes, List<String> secureXMLExcludes) {
-
-		_runOutsidePortalExcludes = runOutsidePortalExcludes;
-		_secureXMLExcludes = secureXMLExcludes;
+	@Override
+	public boolean isPortalCheck() {
+		return true;
 	}
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (isExcludedPath(_secureXMLExcludes, absolutePath) ||
+		if (isExcludedPath(_SECURE_XML_EXCLUDES, absolutePath) ||
 			fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/")) {
 
@@ -61,7 +57,7 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 		};
 
 		boolean runOutsidePortalExclusion = isExcludedPath(
-			_runOutsidePortalExcludes, absolutePath);
+			RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath);
 
 		for (String xmlVulnerabitily : xmlVulnerabitilies) {
 			if (!content.contains(xmlVulnerabitily)) {
@@ -85,7 +81,6 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 		}
 	}
 
-	private final List<String> _runOutsidePortalExcludes;
-	private final List<String> _secureXMLExcludes;
+	private static final String _SECURE_XML_EXCLUDES = "secure.xml.excludes";
 
 }

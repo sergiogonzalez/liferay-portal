@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,8 +54,7 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 		DDLRecordLocalService ddlRecordLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
-		DDMFormValuesMerger ddmFormValuesMerger,
-		DDMStructureLocalService ddmStructureLocalService) {
+		DDMFormValuesMerger ddmFormValuesMerger) {
 
 		_formRecord = formRecord;
 		_recordVersion = recordVersion;
@@ -64,7 +62,6 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
-		_ddmStructureLocalService = ddmStructureLocalService;
 
 		_record = formRecord.getDDLRecord();
 
@@ -178,8 +175,7 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 		DDLFormViewRecordDisplayContext ddlFormViewRecordDisplayContext =
 			new DDLFormViewRecordDisplayContext(
 				request, response, _ddlRecordLocalService, _ddmFormRenderer,
-				_ddmFormValuesFactory, _ddmFormValuesMerger,
-				_ddmStructureLocalService);
+				_ddmFormValuesFactory, _ddmFormValuesMerger);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormViewRecordDisplayContext);
@@ -198,7 +194,6 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
-	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDLFormRecord _formRecord;
 	private final DDLRecord _record;
 	private final DDLRecordSet _recordSet;

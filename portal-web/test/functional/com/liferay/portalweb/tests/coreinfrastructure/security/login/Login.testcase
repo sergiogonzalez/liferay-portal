@@ -3,8 +3,15 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Security" />
 
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+	</set-up>
+
 	<command name="CASSmoke" priority="4">
+		<property name="test.name.skip.portal.instance" value="Login#CASSmoke" />
 		<property name="web.plugins.includes" value="cas-web" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -42,10 +49,10 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationAuthenticationCAS">
-			<var name="casLoginURL" value="http://localhost:8080/cas-web/login" />
-			<var name="casLogoutURL" value="http://localhost:8080/cas-web/logout" />
-			<var name="casServerURL" value="http://localhost:8080/cas-web" />
-			<var name="casServiceURL" value="http://localhost:8080/c/portal/login" />
+			<var name="casLoginURL" value="${portalURL}/cas-web/login" />
+			<var name="casLogoutURL" value="${portalURL}/cas-web/logout" />
+			<var name="casServerURL" value="${portalURL}/cas-web" />
+			<var name="casServiceURL" value="${portalURL}/c/portal/login" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -64,6 +71,8 @@
 	</command>
 
 	<command name="FacebookSSOSmoke" priority="4">
+		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
+
 		<var name="facebookApplicationID" property-value="facebook.application.id" />
 		<var name="facebookApplicationSecret" property-value="facebook.application.secret" />
 		<var name="facebookEmail" property-value="facebook.email" />
@@ -109,6 +118,8 @@
 	</command>
 
 	<command name="GoogleSSOSmoke" priority="4">
+		<property name="test.name.skip.portal.instance" value="Login#GoogleSSOSmoke" />
+
 		<var name="googleClientID" property-value="google.client.id" />
 		<var name="googleClientSecret" property-value="google.client.secret" />
 		<var name="userEmailAddress" property-value="email.address.1" />
@@ -153,6 +164,8 @@
 	</command>
 
 	<command name="Login" priority="4">
+		<property name="test.name.skip.portal.instance" value="Login#Login" />
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="User#logoutPG" />
@@ -171,6 +184,8 @@
 	</command>
 
 	<command name="OpenIDSmoke" priority="4">
+		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
+
 		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
 		<var method="TestPropsUtil#get('openid.username')" name="openIDUsername" />
 
@@ -208,6 +223,7 @@
 
 	<command name="OpenSSOSmoke" priority="5">
 		<property name="openam.enabled" value="true" />
+		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://test.able.com:8080/openam" />
@@ -276,6 +292,8 @@
 	</command>
 
 	<command name="TokenBasedSSOSmoke" priority="5">
+		<property name="test.name.skip.portal.instance" value="Login#TokenBasedSSOSmoke" />
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

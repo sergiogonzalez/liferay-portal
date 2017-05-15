@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>PUBLIC_PAGES_OPEN_PAGES</td>
-	<td>//a[contains(@title,'Opens New Window')]/span[contains(.,'Open Pages')]</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Open Pages')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -12,7 +12,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "2.0.2"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "2.2.1"
 	}
 
 	repositories {
@@ -39,6 +39,8 @@ Property Name | Type | Default Value | Description
 `nodeUrl` | `String` | `"http://nodejs.org/dist/v${node.nodeVersion}/node-v${node.nodeVersion}-${platform}-x${bitMode}.tar.gz"` | The URL of the Node.js distribution to download. If `download` is `false`, this property has no effect.
 `nodeVersion` | `String` | `"5.5.0"` | The version of the Node.js distribution to use. If `download` is `false`, this property has no effect.
 `npmArgs` | `List<String>` | `[]` | The arguments added automatically to every task of type [`ExecuteNpmTask`](#executenpmtask).
+`npmUrl` | `String` | `"https://registry.npmjs.org/npm/-/npm-${node.npmVersion}.tgz"` | The URL of the NPM version to download. If `download` is `false`, this property has no effect.
+`npmVersion` | `String` | `null` | The version of NPM to use. If `null`, the version of NPM embedded inside the Node.js distribution is used. If `download` is `false`, this property has no effect.
 
 It is possible to override the default value of the `download` property by
 setting the `nodeDownload` project property. For example, this can be done via
@@ -55,9 +57,23 @@ Method | Description
 `NodeExtension npmArgs(Iterable<?> npmArgs)` | Adds arguments to automatically add to every task of type [`ExecuteNpmTask`](#executenpmtask).
 `NodeExtension npmArgs(Object... npmArgs)` | Adds arguments to automatically add to every task of type [`ExecuteNpmTask`](#executenpmtask).
 
-The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
+The properties of type `File` support any type that can be resolved by
+[`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 Moreover, it is possible to use Closures and Callables as values for `String`,
 to defer evaluation until execution.
+
+Please note that setting the `global` property of the `node` extension via the
+command line is not supported. It can only be set via Gradle script, which can
+be done by adding the following code to the `build.gradle` file in the root of
+a project (e.g., Liferay Workspace):
+
+```gradle
+allprojects {
+	plugins.withId("com.liferay.node") {
+		node.global = true
+	}
+}
+```
 
 ## Tasks
 
@@ -81,6 +97,7 @@ Property Name | Type | Default Value | Description
 `nodeDir` | `File` | `null` | The directory where the Node.js distribution is unpacked.
 `nodeExeUrl` | `String` | `null` | The URL of `node.exe` to download when on Windows.
 `nodeUrl` | `String` | `null` | The URL of the Node.js distribution to download.
+`npmUrl` | `String` | `null` | The URL of the NPM version to download.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 Moreover, it is possible to use Closures and Callables as values for the
@@ -145,6 +162,7 @@ Property Name | Default Value
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `cacheDir` | `File` | <p>**If `nodeDir` is `null`:** `null`</p><p>**Otherwise:** `"${nodeDir}/.cache"` | The location of NPM's cache directory. It sets the [`--cache`](https://docs.npmjs.com/misc/config#cache) argument. Leave the property `null` to keep the default value.
+`logLevel` | `String` | Value to mirror the log level set in the task's [`logger`](https://docs.gradle.org/current/dsl/org.gradle.api.Task.html#org.gradle.api.Task:logger) object. | The NPM log level. It sets the [--loglevel](https://docs.npmjs.com/misc/config#loglevel) argument.
 `progress` | `boolean` | `true` | Whether to show a progress bar during the NPM invocation. It sets the [`--progress`](https://docs.npmjs.com/misc/config#progress) argument.
 <a name="registry"></a>`registry` | `String` | `null` | The base URL of the NPM package registry. It sets the [`--registry`](https://docs.npmjs.com/misc/config#registry) argument. Leave the property `null` or empty to keep the default value.
 
@@ -204,6 +222,9 @@ when your package is installed. Tasks of type `NpmShrinkwrapTask` extend
 
 The generated `npm-shrinkwrap.json` file is automatically sorted and formatted,
 so it's easier to see the changes with the previous version.
+
+`NpmShrinkwrapTask` instances are automatically disabled if the `package.json`
+file does not exist.
 
 #### Task Properties
 

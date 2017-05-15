@@ -49,6 +49,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-service-builder")
 	projectTemplates project(":sdk:project-templates-service-wrapper")
 	projectTemplates project(":sdk:project-templates-simulation-panel-entry")
+	projectTemplates project(":sdk:project-templates-soy-portlet")
 	projectTemplates project(":sdk:project-templates-template-context-contributor")
 	projectTemplates project(":sdk:project-templates-theme")
 	projectTemplates project(":sdk:project-templates-theme-contributor")
@@ -58,6 +59,7 @@ dependencies {
 
 	testCompile gradleTestKit()
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
+	testCompile group: "com.googlecode.java-diff-utils", name: "diffutils", version: "1.3.0"
 	testCompile group: "junit", name: "junit", version: "4.12"
 	testCompile group: "net.diibadaaba.zipdiff", name: "zipdiff", version: "1.0"
 	testCompile project(":test:maven-executor")
@@ -103,6 +105,7 @@ test {
 	systemProperty "maven.debug", System.properties["maven.debug"]
 	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 	systemProperty "repository.url", System.properties["repository.url"]
+	systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]
 
 	systemProperties projectTemplateTokens
 }

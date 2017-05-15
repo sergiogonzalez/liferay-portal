@@ -73,7 +73,8 @@ public class NestedPortletsDisplayContext {
 					persistentHttpServletRequestWrapper.clone();
 
 				if (originalRequest == null) {
-					originalRequest = persistentHttpServletRequestWrapper;
+					originalRequest =
+						persistentHttpServletRequestWrapper.clone();
 				}
 
 				if (currentRequestWrapper != null) {

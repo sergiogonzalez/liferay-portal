@@ -613,7 +613,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			if (location.startsWith("reference:")) {
 				bundle = _getStaticBundle(
-					bundleContext, unsyncBufferedInputStream);
+					bundleContext, unsyncBufferedInputStream, location);
 			}
 			else {
 				bundle = getBundle(bundleContext, unsyncBufferedInputStream);
@@ -778,13 +778,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Bundle _getStaticBundle(
-			BundleContext bundleContext, InputStream inputStream)
+			BundleContext bundleContext, InputStream inputStream,
+			String location)
 		throws PortalException {
 
 		try {
 			JarInputStream jarInputStream = new JarInputStream(inputStream);
 
 			Manifest manifest = jarInputStream.getManifest();
+
+			if (manifest == null) {
+				throw new IllegalStateException(
+					"No manifest found at location " + location);
+			}
 
 			Attributes attributes = manifest.getMainAttributes();
 
@@ -1144,8 +1150,22 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					String fileName = StringUtil.toLowerCase(
 						fileNamePath.toString());
 
-					if (fileName.endsWith(".jar")) {
+					if (!fileName.endsWith(".jar")) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					Matcher matcher = _pattern.matcher(fileName);
+
+					if (!matcher.matches()) {
 						jarPaths.add(filePath.toAbsolutePath());
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Override static jar " + fileName +
+								" has an invalid name and will be ignored");
 					}
 
 					return FileVisitResult.CONTINUE;

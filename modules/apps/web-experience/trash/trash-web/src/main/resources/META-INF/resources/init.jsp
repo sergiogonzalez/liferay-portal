@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
@@ -30,6 +31,8 @@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.exception.TrashPermissionException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.ClassedModel" %><%@
+page import="com.liferay.portal.kernel.model.TrashedModel" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.search.BaseModelSearchResult" %><%@
 page import="com.liferay.portal.kernel.search.Sort" %><%@
@@ -41,6 +44,7 @@ page import="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.trash.TrashRenderer" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -57,13 +61,13 @@ page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
 page import="com.liferay.trash.kernel.model.TrashEntryList" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryServiceUtil" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
 page import="com.liferay.trash.web.internal.constants.TrashWebKeys" %><%@
 page import="com.liferay.trash.web.internal.dao.search.TrashResultRowSplitter" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashContainerModelDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.search.EntrySearch" %><%@
-page import="com.liferay.trash.web.internal.search.EntrySearchTerms" %>
+page import="com.liferay.trash.web.internal.search.EntrySearchTerms" %><%@
+page import="com.liferay.trash.web.internal.util.TrashUtil" %>
 
 <%@ page import="java.text.Format" %>
 
@@ -79,14 +83,18 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 
+<liferay-trash:defineObjects />
+
 <portlet:defineObjects />
 
 <%
 TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletResponse);
 
+TrashUtil trashUtil = (TrashUtil)request.getAttribute(TrashWebKeys.TRASH_UTIL);
+
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, trashHelper.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
 
 String description = LanguageUtil.get(request, "javax.portlet.description.com_liferay_trash_web_portlet_TrashPortlet") + LanguageUtil.format(request, "entries-that-have-been-in-the-recycle-bin-for-more-than-x-are-automatically-deleted", StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription), false);
 

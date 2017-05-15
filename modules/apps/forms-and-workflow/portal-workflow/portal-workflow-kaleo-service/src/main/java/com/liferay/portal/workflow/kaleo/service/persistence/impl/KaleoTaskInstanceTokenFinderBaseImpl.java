@@ -24,6 +24,10 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTo
  * @generated
  */
 public class KaleoTaskInstanceTokenFinderBaseImpl extends BasePersistenceImpl<KaleoTaskInstanceToken> {
+	public KaleoTaskInstanceTokenFinderBaseImpl() {
+		setModelClass(KaleoTaskInstanceToken.class);
+	}
+
 	/**
 	 * Returns the kaleo task instance token persistence.
 	 *

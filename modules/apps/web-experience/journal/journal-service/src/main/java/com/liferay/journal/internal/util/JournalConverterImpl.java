@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,7 +154,13 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 		}
 
-		return XMLUtil.formatXML(document.asXML());
+		try {
+			return XMLUtil.formatXML(document.asXML());
+		}
+		catch (Exception e) {
+			throw new ArticleContentException(
+				"Unable to read content with an XML parser", e);
+		}
 	}
 
 	@Override

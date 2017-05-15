@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -314,7 +313,7 @@ public class DefaultTextExportImportContentProcessor
 
 		StringBuilder sb = new StringBuilder(content);
 
-		String contextPath = PortalUtil.getPathContext();
+		String contextPath = _portal.getPathContext();
 
 		String[] patterns = {
 			contextPath.concat("/c/document_library/get_file?"),
@@ -402,7 +401,7 @@ public class DefaultTextExportImportContentProcessor
 
 		boolean secure = HttpUtil.isSecure(url);
 
-		int serverPort = PortalUtil.getPortalServerPort(secure);
+		int serverPort = _portal.getPortalServerPort(secure);
 
 		if (serverPort == -1) {
 			return url;
@@ -418,7 +417,7 @@ public class DefaultTextExportImportContentProcessor
 		String portalUrl = StringPool.BLANK;
 
 		if (Validator.isNotNull(publicLayoutSetVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
+			portalUrl = _portal.getPortalURL(
 				publicLayoutSetVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
@@ -439,7 +438,7 @@ public class DefaultTextExportImportContentProcessor
 			privateLayoutSet.getVirtualHostname();
 
 		if (Validator.isNotNull(privateLayoutSetVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
+			portalUrl = _portal.getPortalURL(
 				privateLayoutSetVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
@@ -459,7 +458,7 @@ public class DefaultTextExportImportContentProcessor
 		String companyVirtualHostname = company.getVirtualHostname();
 
 		if (Validator.isNotNull(companyVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
+			portalUrl = _portal.getPortalURL(
 				companyVirtualHostname, serverPort, secure);
 
 			if (url.startsWith(portalUrl)) {
@@ -474,7 +473,7 @@ public class DefaultTextExportImportContentProcessor
 			}
 		}
 
-		portalUrl = PortalUtil.getPortalURL("localhost", serverPort, secure);
+		portalUrl = _portal.getPortalURL("localhost", serverPort, secure);
 
 		if (url.startsWith(portalUrl)) {
 			return url.substring(portalUrl.length());
@@ -547,7 +546,7 @@ public class DefaultTextExportImportContentProcessor
 					continue;
 				}
 
-				String pathContext = PortalUtil.getPathContext();
+				String pathContext = _portal.getPathContext();
 
 				if (pathContext.length() > 1) {
 					if (!url.startsWith(pathContext)) {
@@ -671,55 +670,52 @@ public class DefaultTextExportImportContentProcessor
 					continue;
 				}
 
-				String groupFriendlyURL = group.getFriendlyURL();
+				long groupId = group.getGroupId();
 
-				if (url.equals(groupFriendlyURL) ||
-					url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
+				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					groupId, privateLayout, url);
 
-					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+				if (layout != null) {
+					Element entityElement =
+						portletDataContext.getExportDataElement(stagedModel);
 
-					url = url.substring(groupFriendlyURL.length());
-				}
+					portletDataContext.addReferenceElement(
+						stagedModel, entityElement, layout,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
-				while (true) {
-					pos = url.indexOf(StringPool.SLASH, 1);
-
-					if (pos == -1) {
-						break;
-					}
-
-					String groupName = url.substring(1, pos);
-
-					groupFriendlyURL = StringPool.SLASH + groupName;
-
-					Group urlGroup = _groupLocalService.fetchFriendlyURLGroup(
-						group.getCompanyId(), groupFriendlyURL);
-
-					if (urlGroup != null) {
-						group = urlGroup;
-
-						if (!_DATA_HANDLER_GROUP_FRIENDLY_URL.equals(
-								urlSB.stringAt(urlSB.index() - 1))) {
-
-							urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
-						}
-
-						url = url.substring(groupFriendlyURL.length());
-					}
-					else {
-						throw new NoSuchLayoutException();
-					}
-				}
-
-				if (Validator.isNull(url)) {
 					continue;
 				}
 
+				pos = url.indexOf(StringPool.SLASH, 1);
+
+				String groupFriendlyURL = url;
+
+				if (pos != -1) {
+					groupFriendlyURL = url.substring(0, pos);
+				}
+
+				Group urlGroup = _groupLocalService.fetchFriendlyURLGroup(
+					group.getCompanyId(), groupFriendlyURL);
+
+				if (urlGroup == null) {
+					throw new NoSuchLayoutException();
+				}
+
+				urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+
+				if (pos == -1) {
+					url = StringPool.BLANK;
+
+					continue;
+				}
+
+				url = url.substring(pos);
+
+				layout = _layoutLocalService.getFriendlyURLLayout(
+					urlGroup.getGroupId(), privateLayout, url);
+
 				Element entityElement = portletDataContext.getExportDataElement(
 					stagedModel);
-
-				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-					group.getGroupId(), privateLayout, url);
 
 				portletDataContext.addReferenceElement(
 					stagedModel, entityElement, layout,
@@ -938,26 +934,26 @@ public class DefaultTextExportImportContentProcessor
 		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
-		int serverPort = PortalUtil.getPortalServerPort(false);
+		int serverPort = _portal.getPortalServerPort(false);
 
 		if (serverPort != -1) {
 			if (Validator.isNotNull(company.getVirtualHostname())) {
-				companyPortalURL = PortalUtil.getPortalURL(
+				companyPortalURL = _portal.getPortalURL(
 					company.getVirtualHostname(), serverPort, false);
 			}
 
 			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
-				privateLayoutSetPortalURL = PortalUtil.getPortalURL(
+				privateLayoutSetPortalURL = _portal.getPortalURL(
 					privateLayoutSet.getVirtualHostname(), serverPort, false);
 			}
 
 			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
-				publicLayoutSetPortalURL = PortalUtil.getPortalURL(
+				publicLayoutSetPortalURL = _portal.getPortalURL(
 					publicLayoutSet.getVirtualHostname(), serverPort, false);
 			}
 		}
 
-		int secureSecurePort = PortalUtil.getPortalServerPort(true);
+		int secureSecurePort = _portal.getPortalServerPort(true);
 
 		String companySecurePortalURL = StringPool.BLANK;
 		String privateLayoutSetSecurePortalURL = StringPool.BLANK;
@@ -965,18 +961,18 @@ public class DefaultTextExportImportContentProcessor
 
 		if (secureSecurePort != -1) {
 			if (Validator.isNotNull(company.getVirtualHostname())) {
-				companySecurePortalURL = PortalUtil.getPortalURL(
+				companySecurePortalURL = _portal.getPortalURL(
 					company.getVirtualHostname(), secureSecurePort, true);
 			}
 
 			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
-				privateLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
+				privateLayoutSetSecurePortalURL = _portal.getPortalURL(
 					privateLayoutSet.getVirtualHostname(), secureSecurePort,
 					true);
 			}
 
 			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
-				publicLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
+				publicLayoutSetSecurePortalURL = _portal.getPortalURL(
 					publicLayoutSet.getVirtualHostname(), secureSecurePort,
 					true);
 			}
@@ -989,7 +985,7 @@ public class DefaultTextExportImportContentProcessor
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
+			content, _DATA_HANDLER_PATH_CONTEXT, _portal.getPathContext());
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
@@ -1094,7 +1090,7 @@ public class DefaultTextExportImportContentProcessor
 	protected void validateDLReferences(long groupId, String content)
 		throws PortalException {
 
-		String portalURL = PortalUtil.getPathContext();
+		String portalURL = _portal.getPathContext();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1105,8 +1101,7 @@ public class DefaultTextExportImportContentProcessor
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			portalURL =
-				PortalUtil.getPortalURL(themeDisplay) +
-					PortalUtil.getPathContext();
+				_portal.getPortalURL(themeDisplay) + _portal.getPathContext();
 		}
 
 		String[] patterns = {
@@ -1115,47 +1110,55 @@ public class DefaultTextExportImportContentProcessor
 			portalURL.concat("/image/image_gallery?")
 		};
 
-		long[] companyIds = PortalUtil.getCompanyIds();
+		String[] completePatterns = new String[patterns.length];
 
-		String[] completePatterns =
-			new String[patterns.length * companyIds.length];
-
-		int i = 0;
+		long[] companyIds = _portal.getCompanyIds();
 
 		for (long companyId : companyIds) {
 			Company company = _companyLocalService.getCompany(companyId);
 
 			String webId = company.getWebId();
 
+			int i = 0;
+
 			for (String pattern : patterns) {
 				completePatterns[i] = webId.concat(pattern);
 
 				i++;
 			}
-		}
 
-		int beginPos = -1;
-		int endPos = content.length();
+			int beginPos = -1;
+			int endPos = content.length();
 
-		while (true) {
-			beginPos = StringUtil.lastIndexOfAny(
-				content, completePatterns, endPos);
+			while (true) {
+				beginPos = StringUtil.lastIndexOfAny(
+					content, completePatterns, endPos);
 
-			if (beginPos == -1) {
-				break;
+				if (beginPos == -1) {
+					break;
+				}
+
+				Map<String, String[]> dlReferenceParameters =
+					getDLReferenceParameters(
+						groupId, content,
+						beginPos + portalURL.length() + webId.length(), endPos);
+
+				FileEntry fileEntry = getFileEntry(dlReferenceParameters);
+
+				if (fileEntry == null) {
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("Validation failed for a referenced file entry ");
+					sb.append(
+						"because a file entry could not be found with the ");
+					sb.append("following parameters: ");
+					sb.append(dlReferenceParameters);
+
+					throw new NoSuchFileEntryException(sb.toString());
+				}
+
+				endPos = beginPos - 1;
 			}
-
-			Map<String, String[]> dlReferenceParameters =
-				getDLReferenceParameters(
-					groupId, content, beginPos + portalURL.length(), endPos);
-
-			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
-
-			if (fileEntry == null) {
-				throw new NoSuchFileEntryException();
-			}
-
-			endPos = beginPos - 1;
 		}
 	}
 
@@ -1222,7 +1225,7 @@ public class DefaultTextExportImportContentProcessor
 				continue;
 			}
 
-			String pathContext = PortalUtil.getPathContext();
+			String pathContext = _portal.getPathContext();
 
 			if (pathContext.length() > 1) {
 				if (!url.startsWith(pathContext)) {
@@ -1305,55 +1308,43 @@ public class DefaultTextExportImportContentProcessor
 				privateLayout = layoutSet.isPrivateLayout();
 			}
 
-			String groupFriendlyURL = group.getFriendlyURL();
-
-			if (url.equals(groupFriendlyURL)) {
-				continue;
-			}
-
-			if (url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
-				url = url.substring(groupFriendlyURL.length());
-			}
-
-			while (true) {
-				pos = url.indexOf(StringPool.SLASH, 1);
-
-				if (pos == -1) {
-					break;
-				}
-
-				String groupName = url.substring(1, pos);
-
-				groupFriendlyURL = StringPool.SLASH + groupName;
-
-				Group urlGroup = _groupLocalService.fetchFriendlyURLGroup(
-					group.getCompanyId(), groupFriendlyURL);
-
-				if (urlGroup != null) {
-					group = urlGroup;
-					groupId = urlGroup.getGroupId();
-
-					url = url.substring(groupFriendlyURL.length());
-				}
-				else {
-					throw new NoSuchLayoutException();
-				}
-			}
-
-			if (Validator.isNull(url)) {
-				continue;
-			}
-
 			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				groupId, privateLayout, url);
 
-			if (layout == null) {
-				group = _groupLocalService.fetchFriendlyURLGroup(
-					group.getCompanyId(), url);
+			if (layout != null) {
+				continue;
+			}
 
-				if (group == null) {
-					throw new NoSuchLayoutException();
-				}
+			pos = url.indexOf(StringPool.SLASH, 1);
+
+			String groupFriendlyURL = url;
+
+			if (pos != -1) {
+				groupFriendlyURL = url.substring(0, pos);
+			}
+
+			Group urlGroup = _groupLocalService.fetchFriendlyURLGroup(
+				group.getCompanyId(), groupFriendlyURL);
+
+			if (urlGroup == null) {
+				throw new NoSuchLayoutException(
+					"Unable validate referenced page because it cannot be " +
+						"found with url: " + url);
+			}
+
+			if (pos == -1) {
+				continue;
+			}
+
+			url = url.substring(pos);
+
+			layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+				urlGroup.getGroupId(), privateLayout, url);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException(
+					"Unable to validate referenced page because the page " +
+						"group cannot be found: " + groupId);
 			}
 		}
 	}
@@ -1376,7 +1367,17 @@ public class DefaultTextExportImportContentProcessor
 				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
-				throw new NoSuchLayoutException();
+				StringBundler exceptionMessage = new StringBundler(5);
+
+				exceptionMessage.append(
+					"Unable to validate referenced page because it cannot be");
+				exceptionMessage.append(
+					"found with the following parameters: ");
+				exceptionMessage.append("groupId " + groupId);
+				exceptionMessage.append(", layoutId " + layoutId);
+				exceptionMessage.append(", privateLayout " + privateLayout);
+
+				throw new NoSuchLayoutException(exceptionMessage.toString());
 			}
 		}
 	}
@@ -1472,5 +1473,8 @@ public class DefaultTextExportImportContentProcessor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

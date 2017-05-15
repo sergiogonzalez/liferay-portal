@@ -123,9 +123,13 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Override
 	public long getDDMTemplateGroupId(long groupId) {
-		try {
-			Group group = _groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.fetchGroup(groupId);
 
+		if (group == null) {
+			return groupId;
+		}
+
+		try {
 			if (group.isLayout()) {
 				group = group.getParentGroup();
 			}

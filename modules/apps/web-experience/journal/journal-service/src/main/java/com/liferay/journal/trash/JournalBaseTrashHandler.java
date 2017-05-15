@@ -32,7 +32,10 @@ import java.util.List;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 4.0.0, moved to {@link
+ *             com.liferay.journal.internal.trash.JournalBaseTrashHandler}
  */
+@Deprecated
 public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 
 	@Override

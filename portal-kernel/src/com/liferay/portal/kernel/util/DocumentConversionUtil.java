@@ -19,7 +19,10 @@ import java.io.InputStream;
 
 /**
  * @author Bruno Farache
+* @deprecated As of 7.0.0, replaced by {@link
+ * 			   com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
  */
+@Deprecated
 public class DocumentConversionUtil {
 
 	public static File convert(
@@ -27,38 +30,14 @@ public class DocumentConversionUtil {
 			String targetExtension)
 		throws Exception {
 
-		Object returnObj = PortalClassInvoker.invoke(
-			_convertMethodKey, id, inputStream, sourceExtension,
-			targetExtension);
-
-		if (returnObj != null) {
-			return (File)returnObj;
-		}
-		else {
-			return null;
-		}
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.convert(
+				id, inputStream, sourceExtension, targetExtension);
 	}
 
 	public static String[] getConversions(String extension) throws Exception {
-		Object returnObj = PortalClassInvoker.invoke(
-			_getConversionsMethodKey, extension);
-
-		if (returnObj != null) {
-			return (String[])returnObj;
-		}
-		else {
-			return null;
-		}
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.getConversions(extension);
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.portlet.documentlibrary.util.DocumentConversionUtil";
-
-	private static final MethodKey _convertMethodKey = new MethodKey(
-		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME), "convert",
-		String.class, InputStream.class, String.class, String.class);
-	private static final MethodKey _getConversionsMethodKey = new MethodKey(
-		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
-		"getConversions", String.class);
 
 }

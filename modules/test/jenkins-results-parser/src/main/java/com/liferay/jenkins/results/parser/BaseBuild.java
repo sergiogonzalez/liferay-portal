@@ -374,6 +374,24 @@ public abstract class BaseBuild implements Build {
 	public Element getGitHubMessageBuildAnchorElement() {
 		getResult();
 
+		int i = 0;
+
+		while (result == null) {
+			if (i == 20) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to create build anchor element. The process ",
+						"timed out while waiting for a build result for ",
+						getBuildURL(), "."));
+			}
+
+			JenkinsResultsParserUtil.sleep(1000 * 30);
+
+			getResult();
+
+			i++;
+		}
+
 		if (result.equals("SUCCESS")) {
 			return Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), getDisplayName());
@@ -505,6 +523,30 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Long getLatestStartTimestamp() {
+		Long latestStartTimestamp = getStartTimestamp();
+
+		if (latestStartTimestamp == null) {
+			return null;
+		}
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			Long downstreamBuildLatestStartTimestamp =
+				downstreamBuild.getLatestStartTimestamp();
+
+			if (downstreamBuildLatestStartTimestamp == null) {
+				return null;
+			}
+
+			latestStartTimestamp = Math.max(
+				latestStartTimestamp,
+				downstreamBuild.getLatestStartTimestamp());
+		}
+
+		return latestStartTimestamp;
+	}
+
+	@Override
 	public String getMaster() {
 		return master;
 	}
@@ -552,6 +594,23 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public Map<String, String> getStartPropertiesTempMap() {
 		return getTempMap("start.properties");
+	}
+
+	@Override
+	public Long getStartTimestamp() {
+		JSONObject buildJSONObject = getBuildJSONObject("timestamp");
+
+		if (buildJSONObject == null) {
+			return null;
+		}
+
+		long timestamp = buildJSONObject.getLong("timestamp");
+
+		if (timestamp == 0) {
+			return null;
+		}
+
+		return timestamp;
 	}
 
 	@Override
@@ -739,24 +798,52 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke() {
+		reinvoke(null);
+	}
+
+	@Override
+	public void reinvoke(ReinvokeRule reinvokeRule) {
 		String hostName = JenkinsResultsParserUtil.getHostName("");
 
 		Build parentBuild = getParentBuild();
 
 		String parentBuildStatus = parentBuild.getStatus();
 
-		if (!parentBuildStatus.equals("running")) {
-			System.out.println(
-				"Parent build is no longer running. Reinvocation has been " +
-					"aborted.");
+		if (!parentBuildStatus.equals("running") ||
+			!hostName.startsWith("cloud-10-0")) {
 
 			return;
 		}
 
-		if (!hostName.startsWith("cloud-10-0")) {
-			System.out.println("A build may not be reinvoked by " + hostName);
+		if ((reinvokeRule != null) && !fromArchive) {
+			String message = JenkinsResultsParserUtil.combine(
+				reinvokeRule.getName(), " failure detected at ", getBuildURL(),
+				". This build will be reinvoked.\n\n", reinvokeRule.toString(),
+				"\n\n");
 
-			return;
+			System.out.println(message);
+
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			if (topLevelBuild != null) {
+				message = JenkinsResultsParserUtil.combine(
+					message, "Top Level Build URL: ",
+					topLevelBuild.getBuildURL());
+			}
+
+			String notificationList = reinvokeRule.getNotificationList();
+
+			if ((notificationList != null) && !notificationList.isEmpty()) {
+				try {
+					JenkinsResultsParserUtil.sendEmail(
+						message, "jenkins", "Build Reinvoked",
+						reinvokeRule.notificationList);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(
+						"Unable to send reinvoke notification", e);
+				}
+			}
 		}
 
 		String invocationURL = getInvocationURL();
@@ -878,13 +965,33 @@ public abstract class BaseBuild implements Build {
 
 						setStatus("completed");
 					}
+
+					findDownstreamBuilds();
+
+					if (this instanceof AxisBuild ||
+						this instanceof BatchBuild ||
+						this instanceof TopLevelBuild || fromArchive ||
+						(badBuildNumbers.size() >= MAX_REINVOCATIONS)) {
+
+						return;
+					}
+
+					if ((result != null) && !result.equals("SUCCESS")) {
+						for (ReinvokeRule reinvokeRule : reinvokeRules) {
+							if (!reinvokeRule.matches(this)) {
+								continue;
+							}
+
+							reinvoke(reinvokeRule);
+
+							break;
+						}
+					}
 				}
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-
-			findDownstreamBuilds();
 		}
 	}
 
@@ -1118,7 +1225,7 @@ public abstract class BaseBuild implements Build {
 				String url = downstreamBuildURLMatcher.group("url");
 
 				Pattern reinvocationPattern = Pattern.compile(
-					Pattern.quote(url) + " restarted at (?<url>[^\\n]*)\\.\\n");
+					Pattern.quote(url) + " restarted at (?<url>[^\\s]*)\\.");
 
 				Matcher reinvocationMatcher = reinvocationPattern.matcher(
 					consoleText);
@@ -1227,7 +1334,7 @@ public abstract class BaseBuild implements Build {
 				}
 
 				sb.append(getBuildURL());
-				sb.append(".");
+				sb.append(".\n");
 
 				return sb.toString();
 			}
@@ -1595,17 +1702,21 @@ public abstract class BaseBuild implements Build {
 		setBuildNumber(-1);
 
 		downstreamBuilds.clear();
-
-		_consoleReadCursor = 0;
-
-		setStatus("starting");
 	}
 
 	protected void setBuildNumber(int buildNumber) {
-		_buildNumber = buildNumber;
+		if (_buildNumber != buildNumber) {
+			_buildNumber = buildNumber;
 
-		if (_buildNumber != -1) {
-			setStatus("running");
+			_consoleReadCursor = 0;
+			_consoleText = null;
+
+			if (_buildNumber == -1) {
+				setStatus("starting");
+			}
+			else {
+				setStatus("running");
+			}
 		}
 	}
 
@@ -1723,8 +1834,10 @@ public abstract class BaseBuild implements Build {
 				JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE.substring(
 					"file:".length()),
 				"/", path),
-			replaceBuildURL(content));
+			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
+
+	protected static final int MAX_REINVOCATIONS = 1;
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
@@ -1755,6 +1868,8 @@ public abstract class BaseBuild implements Build {
 	protected boolean fromArchive;
 	protected String jobName;
 	protected String master;
+	protected List<ReinvokeRule> reinvokeRules =
+		ReinvokeRule.getReinvokeRules();
 	protected String repositoryName;
 	protected String result;
 	protected long statusModifiedTime;

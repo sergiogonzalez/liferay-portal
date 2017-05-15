@@ -110,7 +110,7 @@
 	</command>
 
 	<command name="AddWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -219,6 +219,67 @@
 		<execute macro="WikiPage#viewCP">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+	</command>
+
+	<command name="CKEditorSmoke" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Collaboration" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Wiki Service" />
+		</execute>
+
+		<execute macro="PortalSettings#configureWikiService">
+			<var name="counter" value="12" />
+			<var name="editor" value="ckeditor_creole" />
+		</execute>
+
+		<execute macro="PortalSettings#configureWikiService">
+			<var name="counter" value="13" />
+			<var name="editor" value="creole" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="CKEditor Wiki Page Title" />
+		</execute>
+
+		<execute macro="CKEditor#addContent">
+			<var name="content" value="CKEditor Wiki Page Content" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="WikiNavigator#gotoCP">
+			<var name="wikiPageTitle" value="CKEditor Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewCP">
+			<var name="wikiPageContent" value="CKEditor Wiki Page Content" />
+			<var name="wikiPageTitle" value="CKEditor Wiki Page Title" />
 		</execute>
 	</command>
 

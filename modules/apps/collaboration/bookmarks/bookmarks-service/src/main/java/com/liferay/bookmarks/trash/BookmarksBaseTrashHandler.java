@@ -33,8 +33,11 @@ import java.util.List;
 /**
  * Represents the trash handler for bookmarks folder entity.
  *
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
+ * @deprecated As of 1.1.0, moved to {@link
+ *             com.liferay.bookmarks.internal.trash.BookmarksBaseTrashHandler}
  */
+@Deprecated
 public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 
 	@Override

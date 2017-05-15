@@ -17,7 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= workflowDefinitionLinkDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="list"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= workflowDefinitionLinkDisplayContext.getPortletURL() %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= workflowDefinitionLinkDisplayContext.getOrderByCol() %>"
 			orderByType="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"

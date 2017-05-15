@@ -171,6 +171,10 @@ public interface DLFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long folderId,
+		java.lang.String[] mimeTypes, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileEntriesCount(long groupId, long folderId,
 		long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -191,9 +195,11 @@ public interface DLFileEntryService extends BaseService {
 		long rootFolderId, java.lang.String[] mimeTypes, int status)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws PortalException;
@@ -218,6 +224,11 @@ public interface DLFileEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
 		java.lang.String[] mimeTypes, int start, int end,
+		OrderByComparator<DLFileEntry> obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
+		java.lang.String[] mimeTypes, int status, int start, int end,
 		OrderByComparator<DLFileEntry> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

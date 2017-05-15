@@ -141,8 +141,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="lang.file=${lang.file}" />
 			<arg value="lang.plugin=false" />
 			<arg value="lang.translate=true" />
-			<arg value="lang.translate.client.id=${microsoft.translator.client.id}" />
-			<arg value="lang.translate.client.secret=${microsoft.translator.client.secret}" />
+			<arg value="lang.translate.subscription.key=${microsoft.translator.subscription.key}" />
 		</java>
 	</target>
 
@@ -208,6 +207,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="service.hbm.file=${basedir}/src/META-INF/portal-hbm.xml" />
 			<arg value="service.impl.dir=${basedir}/src" />
 			<arg value="service.input.file=${service.file}" />
+			<arg value="service.model.hints.configs=${basedir}/src/META-INF/portal-model-hints.xml" />
 			<arg value="service.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml" />
 			<arg value="service.osgi.module=false" />
 			<arg value="service.plugin.name=" />
@@ -587,12 +587,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="show.documentation=${source.formatter.show.documentation}" />
 			<arg value="source.auto.fix=${source.auto.fix}" />
 			<arg value="source.base.dir=${source.base.dir}" />
-			<arg value="source.copyright.file=${source.copyright.file}" />
 			<arg value="source.file.extensions=${source.file.extensions}" />
 			<arg value="source.files=${source.files}" />
 			<arg value="source.print.errors=${source.print.errors}" />
 			<arg value="source.throw.exception=${source.throw.exception}" />
-			<arg value="source.use.properties=${source.use.properties}" />
 		</java>
 
 		<delete file="ServiceBuilder.temp" />

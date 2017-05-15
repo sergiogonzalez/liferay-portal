@@ -196,6 +196,64 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 
 	}
 
+	public static class WhenNeitherACategoryNorAContextAreSpecifiedInTheConfig
+		extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
+
+		@Override
+		public void setUp() throws Exception {
+			super.setUp();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("formNavigatorEntryKey1,");
+			sb.append("formNavigatorEntryKey2");
+
+			createConfiguration("form1", new String[] {sb.toString()});
+		}
+
+		@Test
+		public void testContainsValuesForTheEmptyCategoryAndAnyContext() {
+			List<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form1", "", "add").get();
+
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 2,
+				formNavigatorEntryKeys.size());
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
+		}
+
+		@Test
+		public void testContainsValuesForTheEmptyCategoryAndNoContext() {
+			List<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form1", "", null).get();
+
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 2,
+				formNavigatorEntryKeys.size());
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
+		}
+
+		@Test
+		public void testDoesNotContainValuesForANonemptyCategory() {
+			Optional<List<String>> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form1", "general", null);
+
+			Assert.assertFalse(formNavigatorEntryKeys.isPresent());
+		}
+
+	}
+
 	public static class WhenNoContextIsSet
 		extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
 
@@ -234,6 +292,41 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 			List<String> formNavigatorEntryKeys =
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", null).get();
+
+			Assert.assertEquals(
+				formNavigatorEntryKeys.toString(), 2,
+				formNavigatorEntryKeys.size());
+
+			Iterator<String> iterator = formNavigatorEntryKeys.iterator();
+
+			Assert.assertEquals("formNavigatorEntryKey1", iterator.next());
+			Assert.assertEquals("formNavigatorEntryKey2", iterator.next());
+		}
+
+	}
+
+	public static class WhenNullCategoryIsRequested
+		extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
+
+		@Override
+		public void setUp() throws Exception {
+			super.setUp();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("add");
+			sb.append(StringPool.EQUAL);
+			sb.append("formNavigatorEntryKey1,");
+			sb.append("formNavigatorEntryKey2");
+
+			createConfiguration("form1", new String[] {sb.toString()});
+		}
+
+		@Test
+		public void testReturnsTheKeysInThatLineWhenAskedForANullCategory() {
+			List<String> formNavigatorEntryKeys =
+				formNavigatorEntryConfigurationRetriever.
+					getFormNavigatorEntryKeys("form1", null, "add").get();
 
 			Assert.assertEquals(
 				formNavigatorEntryKeys.toString(), 2,

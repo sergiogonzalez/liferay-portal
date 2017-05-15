@@ -63,8 +63,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	public String getConfirmSelectStructureMessage(Locale locale) {
 		return LanguageUtil.get(
 			getResourceBundle(locale),
-			"selecting-a-new-structure-changes-the-available-input-fields-" +
-				"and-available-templates");
+			"selecting-a-new-structure-deletes-all-unsaved-content");
 	}
 
 	public String getConfirmSelectTemplateMessage(Locale locale) {

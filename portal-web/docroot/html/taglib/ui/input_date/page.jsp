@@ -70,6 +70,15 @@ else {
 	}
 }
 
+String dayAbbreviation = LanguageUtil.get(resourceBundle, "day-abbreviation");
+String monthAbbreviation = LanguageUtil.get(resourceBundle, "month-abbreviation");
+String yearAbbreviation = LanguageUtil.get(resourceBundle, "year-abbreviation");
+
+String[] dateAbbreviations = {"M", "d", "y"};
+String[] localizedDateAbbreviations = {monthAbbreviation, dayAbbreviation, yearAbbreviation};
+
+String placeholderValue = StringUtil.replace(simpleDateFormatPattern, dateAbbreviations, localizedDateAbbreviations);
+
 boolean nullDate = false;
 
 if (nullable && !required && (dayValue == 0) && (monthValue == -1) && (yearValue == 0)) {
@@ -94,7 +103,7 @@ else {
 			<input class="form-control" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="date" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" required="<%= required %>" title="" type="text" value="<%= dateString %>" wrappedField="<%= true %>">
+			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(placeholderValue) %>" required="<%= required %>" title="" type="text" value="<%= dateString %>" wrappedField="<%= true %>">
 				<aui:validator errorMessage="please-enter-a-valid-date" name="custom">
 					function(val) {
 						return AUI().use('aui-datatype-date-parse').Parsers.date('<%= mask %>', val);

@@ -36,7 +36,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 <liferay-frontend:management-bar
 	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
-	includeCheckBox="<%= !user.isDefaultUser() && dlPortletInstanceSettingsHelper.isShowActions() %>"
+	includeCheckBox="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -146,7 +146,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		Group scopeGroup = themeDisplay.getScopeGroup();
 		%>
 
-		<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY) %>">
+		<c:if test="<%= !user.isDefaultUser() && (!scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY)) %>">
 
 			<%
 			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'download'}); void(0);";
@@ -173,17 +173,19 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="change" label="move" />
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? "trash" : "times" %>' id="deleteAction" label='<%= DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? "recycle-bin" : "delete" %>' />
+		<c:if test="<%= !user.isDefaultUser() %>">
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? "trash" : "times" %>' id="deleteAction" label='<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? "recycle-bin" : "delete" %>' />
+		</c:if>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
-		if (<%= DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+		if (<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
 				{
-					action: '<%= DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+					action: '<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
 				}
 			);
 		}

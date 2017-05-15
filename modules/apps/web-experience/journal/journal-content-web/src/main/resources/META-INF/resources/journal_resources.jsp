@@ -32,6 +32,10 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 		<div class="button-holder">
 			<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+
+			<c:if test="<%= article != null %>">
+				<aui:button cssClass="selector-button" name="removeWebContent" value="remove" />
+			</c:if>
 		</div>
 	</div>
 </div>

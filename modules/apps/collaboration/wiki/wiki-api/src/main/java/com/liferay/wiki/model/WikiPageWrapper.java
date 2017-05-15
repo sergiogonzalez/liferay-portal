@@ -439,7 +439,9 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* Returns the trash handler for this wiki page.
 	*
 	* @return the trash handler for this wiki page
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _wikiPage.getTrashHandler();
@@ -502,6 +504,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	public int getAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getAttachmentsFileEntriesCount();
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount(java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
 	}
 
 	@Override
@@ -723,6 +731,14 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getAttachmentsFileEntries(start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		java.lang.String[] mimeTypes, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, obc);
 	}
 
 	@Override

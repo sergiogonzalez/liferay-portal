@@ -63,11 +63,11 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -655,7 +655,7 @@ public class JournalFolderLocalServiceImpl
 			folder.getFolderId(), folder.getUuid(), null,
 			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
 
-		folder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
+		folder.setName(_trashHelper.getTrashTitle(trashEntry.getEntryId()));
 
 		journalFolderPersistence.update(folder);
 
@@ -734,7 +734,7 @@ public class JournalFolderLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		folder.setName(TrashUtil.getOriginalTitle(folder.getName()));
+		folder.setName(_trashHelper.getOriginalTitle(folder.getName()));
 
 		journalFolderPersistence.update(folder);
 
@@ -1558,5 +1558,8 @@ public class JournalFolderLocalServiceImpl
 
 	@ServiceReference(type = SubscriptionLocalService.class)
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@ServiceReference(type = TrashHelper.class)
+	private TrashHelper _trashHelper;
 
 }

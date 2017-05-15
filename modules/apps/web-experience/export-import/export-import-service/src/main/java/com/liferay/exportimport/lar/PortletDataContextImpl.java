@@ -86,7 +86,6 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -540,7 +539,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, bytes);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"Unable to add data bytes to the LAR file with path: " + path,
+				ioe);
 		}
 	}
 
@@ -556,7 +557,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, is);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"Unable to add data stream to the LAR file with path: " + path,
+				ioe);
 		}
 	}
 
@@ -577,7 +580,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, s);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"Unable to add data string to the LAR file with path: " + path,
+				ioe);
 		}
 	}
 
@@ -907,6 +912,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public Element getExportDataRootElement() {
 		return _exportDataRootElement;
+	}
+
+	@Override
+	public String getExportImportProcessId() {
+		return _exportImportProcessId;
 	}
 
 	@Override
@@ -1870,6 +1880,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void setExportImportProcessId(String exportImportProcessId) {
+		_exportImportProcessId = exportImportProcessId;
+	}
+
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
@@ -2371,7 +2386,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected Element getExportDataGroupElement(String name) {
 		if (_exportDataRootElement == null) {
 			throw new IllegalStateException(
-				"Root data element not initialized");
+				"Unable to return the export data group element for group " +
+					name + " because the root data element is not initialized");
 		}
 
 		Element groupElement = _exportDataRootElement.element(name);
@@ -2386,7 +2402,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected Element getImportDataGroupElement(String name) {
 		if (_importDataRootElement == null) {
 			throw new IllegalStateException(
-				"Root data element not initialized");
+				"Unable to return the import data group element for group " +
+					name + " because the root data element is not initialized");
 		}
 
 		if (Validator.isNull(name)) {
@@ -2622,6 +2639,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected void initXStream() {
+		Set<XStreamConfigurator> xStreamConfigurators =
+			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
+
+		if ((_xStream != null) &&
+			xStreamConfigurators.equals(xStreamConfigurators)) {
+
+			return;
+		}
+
+		_xStreamConfigurators = xStreamConfigurators;
+
 		_xStream = new XStream(
 			null, new XppDriver(),
 			new ClassLoaderReference(
@@ -2630,10 +2658,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
-		Set<XStreamConfigurator> xStreamConfigurators =
-			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
-
-		if (SetUtil.isEmpty(xStreamConfigurators)) {
+		if (xStreamConfigurators.isEmpty()) {
 			return;
 		}
 
@@ -2735,6 +2760,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDataContextImpl.class);
 
+	private static transient XStream _xStream;
+	private static Set<XStreamConfigurator> _xStreamConfigurators;
+
 	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
 	private final Set<Long> _assetLinkIds = new HashSet<>();
 	private final Map<String, String[]> _assetTagNamesMap = new HashMap<>();
@@ -2749,6 +2777,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<>();
 	private transient Element _exportDataRootElement;
+	private String _exportImportProcessId;
 	private long _groupId;
 	private transient Element _importDataRootElement;
 	private transient long[] _layoutIds;
@@ -2783,7 +2812,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private String _type;
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
-	private transient XStream _xStream;
 	private transient ZipReader _zipReader;
 	private transient ZipWriter _zipWriter;
 

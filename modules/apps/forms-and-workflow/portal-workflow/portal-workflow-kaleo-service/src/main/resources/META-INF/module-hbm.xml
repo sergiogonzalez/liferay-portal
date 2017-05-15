@@ -89,14 +89,12 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="kaleoDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="startKaleoNodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceImpl" table="KaleoInstance">

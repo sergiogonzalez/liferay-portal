@@ -27,12 +27,9 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 <c:if test="<%= totalEntries > 0 %>">
 	<div class="alert alert-info taglib-trash-empty">
 		<aui:form action="<%= portletURL %>" name="emptyForm">
-
-			<%
-			String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
-			%>
-
-			<liferay-ui:message arguments="<%= StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription) %>" key="<%= infoMessage %>" translateArguments="<%= false %>" />
+			<c:if test="<%= Validator.isNotNull(infoMessage) %>">
+				<liferay-ui:message key="<%= infoMessage %>" />
+			</c:if>
 
 			<aui:a cssClass="alert-link trash-empty-link" href="javascript:;" id="empty" label="<%= emptyMessage %>" />
 
