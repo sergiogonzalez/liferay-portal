@@ -170,10 +170,7 @@ for (int i = 0; i < pages.size(); i++) {
 	}
 
 	rowURL.setParameter("title", curWikiPage.getTitle());
-
-	if (navigation.equals("history")) {
-		rowURL.setParameter("version", String.valueOf(curWikiPage.getVersion()));
-	}
+	rowURL.setParameter("version", String.valueOf(curWikiPage.getVersion()));
 
 	// Title
 

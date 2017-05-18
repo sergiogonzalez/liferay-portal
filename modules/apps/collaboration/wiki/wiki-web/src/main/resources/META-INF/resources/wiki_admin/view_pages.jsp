@@ -199,6 +199,7 @@ else {
 					}
 
 					rowURL.setParameter("title", curPage.getTitle());
+					rowURL.setParameter("version", String.valueOf(curPage.getVersion()));
 					%>
 
 					<c:choose>
