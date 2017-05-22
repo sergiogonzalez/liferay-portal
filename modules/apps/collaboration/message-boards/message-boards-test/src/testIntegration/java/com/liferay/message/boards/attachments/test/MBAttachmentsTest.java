@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.attachments.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
@@ -49,12 +50,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Julio Camarero
  * @author Roberto Díaz
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 public class MBAttachmentsTest {
 
 	@ClassRule
