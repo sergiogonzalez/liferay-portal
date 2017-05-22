@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.attachments;
+package com.liferay.message.boards.attachments.test;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
