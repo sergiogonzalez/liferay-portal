@@ -2012,7 +2012,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.setFileEntryTypeId(
 					dlFileVersion.getFileEntryTypeId());
 				dlFileEntry.setVersion(dlFileVersion.getVersion());
-				dlFileEntry.setModifiedDate(dlFileVersion.getCreateDate());
+				dlFileEntry.setModifiedDate(dlFileVersion.getModifiedDate());
 				dlFileEntry.setSize(dlFileVersion.getSize());
 
 				dlFileEntryPersistence.update(dlFileEntry);

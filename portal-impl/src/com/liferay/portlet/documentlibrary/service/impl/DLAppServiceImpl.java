@@ -2648,6 +2648,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, majorVersion, changeLog, serviceContext);
 
+		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+
+		fileEntry.setModifiedDate(latestFileVersion.getModifiedDate());
+
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
