@@ -209,12 +209,12 @@ $microblogs-border-color: #EAEAEA;
 		margin-left: 50px;
 
 		.entry-bubble {
-			margin-left: 40px;
+			margin-left: 60px;
 		}
 
 		.thumbnail {
-			height: 26px;
-			width: 26px;
+			height: 45px;
+			width: 45px;
 
 			img {
 				max-width: 26px;
@@ -236,7 +236,7 @@ $microblogs-border-color: #EAEAEA;
 		}
 
 		.microblogs-entry-content, .autocomplete {
-			margin-left: 40px;
+			margin-left: 60px;
 		}
 
 		.microblogs-entry .footer {
