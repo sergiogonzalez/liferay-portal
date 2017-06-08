@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
@@ -102,6 +101,7 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected void getPage(RenderRequest renderRequest) throws Exception {
+		boolean addPage = ParamUtil.getBoolean(renderRequest, "addPage");
 		long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
 		String title = ParamUtil.getString(renderRequest, "title");
 		double version = ParamUtil.getDouble(renderRequest, "version");
@@ -119,7 +119,7 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 		WikiPage page = null;
 
-		if (Validator.isNull(title)) {
+		if (addPage) {
 			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
 			return;
@@ -165,6 +165,8 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 			page.setRedirectTitle(StringPool.BLANK);
 		}
 
+		renderRequest.setAttribute("nodeId", page.getNodeId());
+		renderRequest.setAttribute("title", page.getTitle());
 		renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
 

@@ -72,6 +72,7 @@ addPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 addPageURL.setParameter("title", StringPool.BLANK);
 addPageURL.setParameter("editTitle", "1");
 addPageURL.setParameter("parentTitle", wikiPage.getTitle());
+addPageURL.setParameter("addPage", "true");
 
 PortletURL editPageURL = renderResponse.createRenderURL();
 
