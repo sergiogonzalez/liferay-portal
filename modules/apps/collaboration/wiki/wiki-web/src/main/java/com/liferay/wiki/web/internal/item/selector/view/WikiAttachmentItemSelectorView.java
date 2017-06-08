@@ -17,11 +17,10 @@ package com.liferay.wiki.web.internal.item.selector.view;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.PortletFileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.web.internal.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
 
@@ -44,13 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
- * @author Roberto Díaz
  */
-@Component(
-	property = {
-		"item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY
-	}
-)
+@Component
 public class WikiAttachmentItemSelectorView
 	implements ItemSelectorView<WikiAttachmentItemSelectorCriterion> {
 
@@ -137,7 +131,7 @@ public class WikiAttachmentItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
-					new PortletFileEntryItemSelectorReturnType()
+					new FileEntryItemSelectorReturnType()
 				}));
 
 	private ItemSelectorReturnTypeResolverHandler
