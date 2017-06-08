@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -39,6 +40,15 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 	public static final String[] CLASS_NAMES =
 		{FriendlyURLEntry.class.getName()};
+
+	@Override
+	public FriendlyURLEntry fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntryByUuidAndGroupId(
+				uuid, groupId);
+	}
 
 	@Override
 	public List<FriendlyURLEntry> fetchStagedModelsByUuidAndCompanyId(
@@ -104,7 +114,8 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 		FriendlyURLEntry existingFriendlyURLEntry =
 			fetchStagedModelByUuidAndGroupId(
-				friendlyURLEntry.getUuid(), friendlyURLEntry.getGroupId());
+				friendlyURLEntry.getUuid(),
+				portletDataContext.getScopeGroupId());
 
 		if ((existingFriendlyURLEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
@@ -144,7 +155,15 @@ public class FriendlyURLEntryStagedModelDataHandler
 		_classNameLocalService = classNameLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setFriendlyURLEntryLocalService(
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
+
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
+	}
+
 	private ClassNameLocalService _classNameLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 	private StagedModelRepository<FriendlyURLEntry> _stagedModelRepository;
 
 }
