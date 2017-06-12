@@ -24,7 +24,7 @@ import com.liferay.vulcan.resource.CollectionResource;
 public interface CollectionResourceURITransformer {
 
 	public <T> String transformCollectionItemSingleResourceURI(
-		String uri, Class<T> modelClass, T t,
+		String uri, Class<T> modelClass, T model,
 		CollectionResource<T> collectionResource);
 
 	public <T> String transformPageURI(

@@ -203,7 +203,8 @@ public class DLFileEntryIndexer
 			addRelatedClassNames(contextBooleanFilter, searchContext);
 		}
 
-		if (ArrayUtil.contains(
+		if (ArrayUtil.isEmpty(searchContext.getFolderIds()) ||
+			ArrayUtil.contains(
 				searchContext.getFolderIds(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 

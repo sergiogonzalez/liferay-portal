@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -99,6 +100,8 @@ public class EmbeddedElasticsearchConnection
 		_node.close();
 
 		_node = null;
+
+		_file.deltree(_JNA_TMP_DIR);
 	}
 
 	public Node getNode() {
@@ -310,6 +313,10 @@ public class EmbeddedElasticsearchConnection
 
 		thread.setContextClassLoader(clazz.getClassLoader());
 
+		String jnaTmpDir = System.getProperty("jna.tmpdir");
+
+		System.setProperty("jna.tmpdir", _JNA_TMP_DIR);
+
 		try {
 			NodeBuilder nodeBuilder = new NodeBuilder();
 
@@ -331,6 +338,13 @@ public class EmbeddedElasticsearchConnection
 		}
 		finally {
 			thread.setContextClassLoader(contextClassLoader);
+
+			if (jnaTmpDir == null) {
+				System.clearProperty("jna.tmpdir");
+			}
+			else {
+				System.setProperty("jna.tmpdir", jnaTmpDir);
+			}
 		}
 	}
 
@@ -410,8 +424,15 @@ public class EmbeddedElasticsearchConnection
 			});
 	}
 
+	private static final String _JNA_TMP_DIR =
+		SystemProperties.get(SystemProperties.TMP_DIR) +
+			"/elasticSearch-tmpDir";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
+
+	@Reference
+	private File _file;
 
 	private Node _node;
 

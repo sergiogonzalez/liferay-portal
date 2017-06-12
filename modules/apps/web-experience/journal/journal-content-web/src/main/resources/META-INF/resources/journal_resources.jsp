@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = journalContentDisplayContext.getArticle();
 String refererPortletName = ParamUtil.getString(request, "refererPortletName");
+
+JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
 <aui:input name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.getDDMTemplateKey() %>" />

@@ -29,13 +29,13 @@ public class LiferayURITransformer implements CollectionResourceURITransformer {
 
 	@Override
 	public <T> String transformCollectionItemSingleResourceURI(
-		String uri, Class<T> modelClass, T t,
+		String uri, Class<T> modelClass, T model,
 		CollectionResource<T> collectionResource) {
 
 		if (collectionResource instanceof GroupScoped) {
 			GroupScoped<T> groupScoped = (GroupScoped<T>)collectionResource;
 
-			long groupId = groupScoped.getGroupId(t);
+			long groupId = groupScoped.getGroupId(model);
 
 			return String.format("/group/%d/%s", groupId, uri);
 		}

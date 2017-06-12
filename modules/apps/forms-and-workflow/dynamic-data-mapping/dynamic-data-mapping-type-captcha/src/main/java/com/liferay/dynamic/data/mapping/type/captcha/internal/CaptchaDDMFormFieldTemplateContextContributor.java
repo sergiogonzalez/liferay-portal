@@ -19,18 +19,16 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateCont
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.taglib.servlet.PipingPageContext;
+import com.liferay.taglib.servlet.PageContextFactoryUtil;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,27 +77,22 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 		captchaTag.setUrl(
 			GetterUtil.getString(ddmFormField.getProperty("url")));
 
-		JspFactory jspFactory = JspFactory.getDefaultFactory();
-
 		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();
 		HttpServletResponse httpServletResponse =
 			ddmFormFieldRenderingContext.getHttpServletResponse();
 
-		PageContext pageContext = jspFactory.getPageContext(
-			new JSPSupportServlet(httpServletRequest.getServletContext()),
-			httpServletRequest, httpServletResponse, null, false, 0, false);
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		captchaTag.setPageContext(
-			new PipingPageContext(pageContext, unsyncStringWriter));
+		PageContext pageContext = PageContextFactoryUtil.create(
+			httpServletRequest,
+			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
+
+		captchaTag.setPageContext(pageContext);
 
 		captchaTag.runTag();
 
-		StringBundler sb = unsyncStringWriter.getStringBundler();
-
-		return sb.toString();
+		return unsyncStringWriter.toString();
 	}
 
 }

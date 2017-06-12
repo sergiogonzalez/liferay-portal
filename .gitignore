@@ -49,6 +49,8 @@
 /lib/development/appium.jar
 /lib/development/catalina.jar
 /lib/development/cobertura.jar
+/lib/development/com.liferay.ant.bnd.jar
+/lib/development/com.liferay.util.taglib.compat.jar
 /lib/development/db2jcc.jar
 /lib/development/db2jcc_license_cu.jar
 /lib/development/deployment.jar
@@ -114,6 +116,7 @@
 /lib/development/velocity-tools.jar
 /lib/development/websocket-api.jar
 /lib/development/xmlresolver.jar
+/lib/global/portlet.jar
 /lib/portal/abdera.jar
 /lib/portal/ant.jar
 /lib/portal/antlr2.jar
@@ -126,6 +129,7 @@
 /lib/portal/axiom-api.jar
 /lib/portal/axiom-impl.jar
 /lib/portal/axis-ant.jar
+/lib/portal/axis.jar
 /lib/portal/bcmail.jar
 /lib/portal/bcprov.jar
 /lib/portal/boilerpipe.jar

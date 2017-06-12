@@ -4958,7 +4958,7 @@ public class PortalImpl implements Portal {
 		String portletName) {
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
+			getLiferayPortletResponse(portletResponse);
 
 		LiferayPortletURL siteAdministrationURL =
 			liferayPortletResponse.createRenderURL(portletName);
@@ -8411,16 +8411,9 @@ public class PortalImpl implements Portal {
 				}
 			}
 			else {
-				LayoutSet curLayoutSet = layoutSet;
-
-				if (layoutSet.getGroupId() != themeDisplay.getSiteGroupId()) {
-					curLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-						themeDisplay.getSiteGroupId(), privateLayoutSet);
-				}
-
 				if (canonicalURL ||
-					((layoutSet.getLayoutSetId() !=
-						curLayoutSet.getLayoutSetId()) &&
+					((layoutSet.getGroupId() !=
+						themeDisplay.getSiteGroupId()) &&
 					 (group.getClassPK() != themeDisplay.getUserId()))) {
 
 					if (group.isControlPanel()) {
@@ -8429,6 +8422,11 @@ public class PortalImpl implements Portal {
 						if (Validator.isNull(virtualHostname) ||
 							StringUtil.equalsIgnoreCase(
 								virtualHostname, _LOCALHOST)) {
+
+							LayoutSet curLayoutSet =
+								LayoutSetLocalServiceUtil.getLayoutSet(
+									themeDisplay.getSiteGroupId(),
+									privateLayoutSet);
 
 							virtualHostname = curLayoutSet.getVirtualHostname();
 						}

@@ -49,8 +49,8 @@ public class LiferayRootEndpoint implements RootEndpoint {
 	public void activate(BundleContext bundleContext) {
 		ServiceReferenceMapper<String, APIContributor> serviceReferenceMapper =
 			ServiceReferenceMapperFactory.create(
-				bundleContext, (service, emitter) -> emitter.emit(
-					service.getPath()));
+				bundleContext,
+				(service, emitter) -> emitter.emit(service.getPath()));
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, APIContributor.class, null, serviceReferenceMapper);
