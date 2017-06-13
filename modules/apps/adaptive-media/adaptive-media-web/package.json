@@ -11,7 +11,7 @@
 	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.2.0",
-		"metal-cli": "^2.1.2"
+		"metal-cli": "^4.2.0"
 	},
 	"name": "adaptive-media-web",
 	"version": "1.0.0"
