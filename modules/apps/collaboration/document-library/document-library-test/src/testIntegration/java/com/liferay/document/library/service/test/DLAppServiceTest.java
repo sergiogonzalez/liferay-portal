@@ -74,11 +74,13 @@ import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.PrefsPropsTemporarySwapper;
+import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 
 import java.io.File;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1594,6 +1596,46 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				serviceContext);
+		}
+
+	}
+
+	@RunWith(Arquillian.class)
+	@Sync
+	public static class WhenUpdatingAndCheckInAFileEntry
+		extends BaseDLAppTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(),
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Test
+		public void assetEntryShouldHaveSameModifiedDate() throws Exception {
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
+				fileEntry.getFileEntryId(), fileEntry.getFileName(),
+				fileEntry.getMimeType(), fileEntry.getTitle(),
+				RandomTestUtil.randomString(), StringPool.BLANK, false, null,
+				serviceContext);
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
+			Date assetEntryModifiedDate = assetEntry.getModifiedDate();
+
+			Date fileEntryModifiedDate = fileEntry.getModifiedDate();
+
+			Assert.assertTrue(
+				fileEntryModifiedDate.equals(assetEntryModifiedDate));
 		}
 
 	}
