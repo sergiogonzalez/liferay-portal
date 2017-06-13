@@ -87,7 +87,7 @@ public class UpgradeDocumentLibraryPortletId extends UpgradePortletId {
 	protected void updateDuplicatePortletPreferences() throws SQLException {
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("select portletPreferencesId, portletId from ");
+		sb.append("select portletPreferencesId, plid, portletId from ");
 		sb.append("portletPreferences where portletId = '");
 		sb.append(_PORTLET_ID_DL_DISPLAY);
 		sb.append("' or portletId = '");
@@ -95,15 +95,24 @@ public class UpgradeDocumentLibraryPortletId extends UpgradePortletId {
 		sb.append("'");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 =
+			ResultSet rs1 = ps1.executeQuery();
+			PreparedStatement ps2 = connection.prepareStatement(
+				"select typeSettings from layout where plid = ?");
+			PreparedStatement ps3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update layout set typeSettings = ? where plid = ?");
+			PreparedStatement ps4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update portletpreferences set portletId = ?" +
 						"where portletPreferencesId = ?")) {
 
-			while (rs.next()) {
-				String oldPortletId = rs.getString("portletId");
+			Map<String, String> plidsEncountered = new HashMap();
+
+			while (rs1.next()) {
+				String oldPortletId = rs1.getString("portletId");
+				String plid = rs1.getString("plid");
 
 				sb = new StringBundler(3);
 
@@ -111,14 +120,40 @@ public class UpgradeDocumentLibraryPortletId extends UpgradePortletId {
 				sb.append(_INSTANCE_SEPARATOR);
 				sb.append(StringUtil.randomString(12));
 
-				ps2.setString(1, sb.toString());
+				ps2.setString(1, plid);
 
-				ps2.setInt(2, rs.getInt("portletPreferencesId"));
+				ResultSet rs2 = ps2.executeQuery();
 
-				ps2.addBatch();
+				if (rs2.next()) {
+					String typeSettings = null;
+
+					if (plidsEncountered.containsKey(plid)) {
+						typeSettings = plidsEncountered.get(plid);
+					}
+					else {
+						typeSettings = rs2.getString("typeSettings");
+					}
+
+					typeSettings = StringUtil.replace(
+						typeSettings, oldPortletId, sb.toString());
+
+					plidsEncountered.put(plid, typeSettings);
+
+					ps3.setString(1, typeSettings);
+
+					ps3.setString(2, plid);
+
+					ps3.addBatch();
+				}
+
+				ps4.setString(1, sb.toString());
+				ps4.setInt(2, rs1.getInt("portletPreferencesId"));
+
+				ps4.addBatch();
 			}
 
-			ps2.executeBatch();
+			ps3.executeBatch();
+			ps4.executeBatch();
 		}
 	}
 
