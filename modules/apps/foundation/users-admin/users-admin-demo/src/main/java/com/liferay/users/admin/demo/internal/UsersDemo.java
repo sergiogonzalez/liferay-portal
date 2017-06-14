@@ -19,9 +19,13 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.roles.admin.demo.data.creator.RoleDemoDataCreator;
 import com.liferay.site.demo.data.creator.SiteDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.CompanyAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.SiteMemberUserDemoDataCreator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -43,13 +47,45 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 		_siteAdminUserDemoDataCreator.create(
 			acmeCorpGroup.getGroupId(), "helen@liferay.com");
+
+		// Web Content Author role
+
+		String webContentAuthorPermissionsXML = StringUtil.read(
+			UsersDemo.class, "dependencies/permissions-web-content-author.xml");
+
+		Role webContentAuthorRole = _siteRoleDemoDataCreator.create(
+			company.getCompanyId(), "Web Content Author",
+			webContentAuthorPermissionsXML);
+
+		_siteMemberUserDemoDataCreator.create(
+			acmeCorpGroup.getGroupId(), "joe@liferay.com",
+			new long[] {webContentAuthorRole.getRoleId()});
+
+		// Forum Moderator role
+
+		Group petLoversGroup = _siteDemoDataCreator.create(
+			company.getCompanyId(), "Pet Lovers");
+
+		String forumModeratorPermissionsXML = StringUtil.read(
+			UsersDemo.class, "dependencies/permissions-forum-moderator.xml");
+
+		Role forumModeratorRole = _siteRoleDemoDataCreator.create(
+			company.getCompanyId(), "Forum Moderator",
+			forumModeratorPermissionsXML);
+
+		_siteMemberUserDemoDataCreator.create(
+			petLoversGroup.getGroupId(), "maria@liferay.com",
+			new long[] {forumModeratorRole.getRoleId()});
 	}
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
 		_companyAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
+		_siteMemberUserDemoDataCreator.delete();
+
 		_siteDemoDataCreator.delete();
+		_siteRoleDemoDataCreator.delete();
 	}
 
 	@Reference
@@ -60,5 +96,11 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private SiteDemoDataCreator _siteDemoDataCreator;
+
+	@Reference
+	private SiteMemberUserDemoDataCreator _siteMemberUserDemoDataCreator;
+
+	@Reference(target = "(role.type=site)")
+	private RoleDemoDataCreator _siteRoleDemoDataCreator;
 
 }
