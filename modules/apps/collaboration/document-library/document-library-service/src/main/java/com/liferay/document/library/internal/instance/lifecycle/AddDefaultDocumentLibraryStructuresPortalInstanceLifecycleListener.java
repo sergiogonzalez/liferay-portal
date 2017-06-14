@@ -36,6 +36,7 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -422,8 +423,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		dlFileEntryType = _dlFileEntryTypeLocalService.createDLFileEntryType(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-		dlFileEntryType.setCompanyId(
-			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT);
+		dlFileEntryType.setCompanyId(CompanyConstants.SYSTEM);
 		dlFileEntryType.setFileEntryTypeKey(
 			StringUtil.toUpperCase(
 				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
