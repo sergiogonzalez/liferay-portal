@@ -43,9 +43,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -179,6 +181,8 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	protected void addDLFileEntryTypes(
 			long userId, long groupId, ServiceContext serviceContext)
 		throws Exception {
+
+		_addBasicDocumentDLFileEntryType();
 
 		List<String> ddmStructureNames = new ArrayList<>();
 
@@ -401,6 +405,33 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	/**
+	 * @see com.liferay.document.library.internal.verify.DLServiceVerifyProcess#checkDLFileEntryType()
+	 */
+	private void _addBasicDocumentDLFileEntryType() throws Exception {
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+		if (dlFileEntryType != null) {
+			return;
+		}
+
+		dlFileEntryType = _dlFileEntryTypeLocalService.createDLFileEntryType(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+		dlFileEntryType.setCompanyId(
+			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT);
+		dlFileEntryType.setFileEntryTypeKey(
+			StringUtil.toUpperCase(
+				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
+		dlFileEntryType.setName(
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
+			LocaleUtil.getDefault());
+
+		_dlFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
 	}
 
 	private DDM _ddm;

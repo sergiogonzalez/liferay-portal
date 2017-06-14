@@ -168,6 +168,9 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	/**
+	 * @see com.liferay.document.library.internal.instance.lifecycle.AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener#_addBasicDocumentDLFileEntryType()
+	 */
 	protected void checkDLFileEntryType() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			DLFileEntryType dlFileEntryType =
