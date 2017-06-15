@@ -73,6 +73,22 @@ public interface LayoutLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutLocalServiceUtil} to access the layout local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	* Returns <code>true</code> if there is a matching layout with the UUID,
+	* group, and privacy.
+	*
+	* @param uuid the layout's UUID
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return <code>true</code> if the layout is found; <code>false</code>
+	otherwise
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, long companyId,
@@ -339,6 +355,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	be set to specify whether site administrators can modify this
 	page within their site.
 	* @return the layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout addLayout(long userId, long groupId, boolean privateLayout,
 		long parentLayoutId, java.lang.String name, java.lang.String title,
@@ -390,6 +407,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	activate propagation of changes made to the linked page in the
 	prototype.
 	* @return the layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout addLayout(long userId, long groupId, boolean privateLayout,
 		long parentLayoutId, Map<Locale, java.lang.String> nameMap,
@@ -466,12 +484,13 @@ public interface LayoutLocalService extends BaseLocalService,
 		long groupId, boolean privateLayout);
 
 	/**
-	* Returns the layout for the friendly URL
+	* Returns the layout for the friendly URL.
 	*
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @param friendlyURL the friendly URL of the layout
 	* @return the layout for the friendly URL
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout getFriendlyURLLayout(long groupId, boolean privateLayout,
@@ -485,6 +504,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @return the matching layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout getLayout(long groupId, boolean privateLayout, long layoutId)
@@ -506,6 +526,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	*
 	* @param iconImageId the primary key of the icon image
 	* @return Returns the layout for the icon image
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout getLayoutByIconImageId(long iconImageId)
@@ -534,6 +555,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param friendlyURL the friendly URL to be assigned
 	* @param languageId the primary key of the language
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateFriendlyURL(long,
 	long, String, String)}
 	*/
@@ -549,6 +571,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param friendlyURL the friendly URL to be assigned
 	* @param languageId the primary key of the language
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateFriendlyURL(long userId, long plid,
 		java.lang.String friendlyURL, java.lang.String languageId)
@@ -575,6 +598,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param typeSettings the settings to load the unicode properties object.
 	See {@link UnicodeProperties #fastLoad(String)}.
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateLayout(long groupId, boolean privateLayout,
 		long layoutId, java.lang.String typeSettings) throws PortalException;
@@ -615,6 +639,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	activate propagation of changes made to the linked page in the
 	prototype.
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateLayout(long groupId, boolean privateLayout,
 		long layoutId, long parentLayoutId,
@@ -637,6 +662,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param colorSchemeId the primary key of the layout's new color scheme
 	* @param css the layout's new CSS
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateLookAndFeel(long groupId, boolean privateLayout,
 		long layoutId, java.lang.String themeId,
@@ -651,6 +677,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language. For more information
 	see {@link Locale}.
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateName(Layout layout, java.lang.String name,
 		java.lang.String languageId) throws PortalException;
@@ -666,6 +693,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language. For more information
 	see {@link Locale}.
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateName(long groupId, boolean privateLayout,
 		long layoutId, java.lang.String name, java.lang.String languageId)
@@ -679,6 +707,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param languageId the primary key of the language. For more information
 	see {@link Locale}.
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateName(long plid, java.lang.String name,
 		java.lang.String languageId) throws PortalException;
@@ -693,6 +722,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param parentLayoutId the primary key to be assigned to the parent
 	layout
 	* @return the matching layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateParentLayoutId(long groupId, boolean privateLayout,
 		long layoutId, long parentLayoutId) throws PortalException;
@@ -706,6 +736,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param plid the primary key of the layout
 	* @param parentPlid the primary key of the parent layout
 	* @return the layout matching the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateParentLayoutId(long plid, long parentPlid)
 		throws PortalException;
@@ -717,6 +748,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param parentPlid the primary key of the parent layout
 	* @param priority the layout's new priority
 	* @return the layout matching the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updateParentLayoutIdAndPriority(long plid, long parentPlid,
 		int priority) throws PortalException;
@@ -727,6 +759,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param layout the layout to be updated
 	* @param priority the layout's new priority
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updatePriority(Layout layout, int priority)
 		throws PortalException;
@@ -740,6 +773,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param layoutId the primary key of the layout
 	* @param priority the layout's new priority
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updatePriority(long groupId, boolean privateLayout,
 		long layoutId, int priority) throws PortalException;
@@ -755,6 +789,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param nextLayoutId the primary key of the next layout
 	* @param previousLayoutId the primary key of the previous layout
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updatePriority(long groupId, boolean privateLayout,
 		long layoutId, long nextLayoutId, long previousLayoutId)
@@ -766,6 +801,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param plid the primary key of the layout
 	* @param priority the layout's new priority
 	* @return the updated layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	public Layout updatePriority(long plid, int priority)
 		throws PortalException;
@@ -1047,6 +1083,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param privateLayout whether the layout is private to the group
 	* @param layoutIds the primary keys of the layouts
 	* @return the matching layouts, or an empty list if no matches were found
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, boolean privateLayout,
@@ -1104,10 +1141,12 @@ public interface LayoutLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns all the layouts within scope of the group
+	* Returns all the layouts within scope of the group.
 	*
+	* @param parentGroupId the primary key of the group's parent group
 	* @param privateLayout whether the layout is private to the group
 	* @return the layouts within scope of the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getScopeGroupLayouts(long parentGroupId,
@@ -1376,6 +1415,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param updateLayoutSet whether the layout set's page counter needs to be
 	updated
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	*/
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteLayout(Layout layout, boolean updateLayoutSet,
@@ -1389,6 +1429,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteLayout(long groupId, boolean privateLayout,
 		long layoutId, ServiceContext serviceContext) throws PortalException;
@@ -1399,6 +1440,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	*
 	* @param plid the primary key of the layout
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws PortalException;
@@ -1413,6 +1455,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	layout set's page count will be updated by default, unless an
 	attribute named <code>updatePageCount</code> is set to
 	<code>false</code>.
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteLayouts(long groupId, boolean privateLayout,
 		ServiceContext serviceContext) throws PortalException;
@@ -1614,6 +1657,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param parentLayoutId the primary key of the parent layout
 	* @param layoutIds the primary keys of the layouts
 	* @param serviceContext the service context to be applied
+	* @throws PortalException if a portal exception occurred
 	*/
 	public void setLayouts(long groupId, boolean privateLayout,
 		long parentLayoutId, long[] layoutIds, ServiceContext serviceContext)
