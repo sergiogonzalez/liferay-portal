@@ -1602,7 +1602,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@RunWith(Arquillian.class)
 	@Sync
-	public static class WhenUpdatingAndCheckInAFileEntry
+	public static class WhenUpdatingAndCheckingInAFileEntry
 		extends BaseDLAppTestCase {
 
 		@ClassRule
@@ -1613,7 +1613,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
-		public void assetEntryShouldHaveSameModifiedDate() throws Exception {
+		public void assetEntryAndFileEntryShouldHaveSameModifiedDate()
+			throws Exception {
+
 			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId());
 
@@ -1634,8 +1636,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			Date fileEntryModifiedDate = fileEntry.getModifiedDate();
 
-			Assert.assertTrue(
-				fileEntryModifiedDate.equals(assetEntryModifiedDate));
+			Assert.assertEquals(fileEntryModifiedDate, assetEntryModifiedDate);
 		}
 
 	}
