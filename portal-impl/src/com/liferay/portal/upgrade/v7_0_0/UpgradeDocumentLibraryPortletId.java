@@ -108,7 +108,7 @@ public class UpgradeDocumentLibraryPortletId extends UpgradePortletId {
 					"update portletpreferences set portletId = ?" +
 						"where portletPreferencesId = ?")) {
 
-			Map<String, String> plidsEncountered = new HashMap();
+			Map<String, String> layoutTypeSettingsEncountered = new HashMap();
 
 			while (rs1.next()) {
 				String oldPortletId = rs1.getString("portletId");
@@ -127,8 +127,8 @@ public class UpgradeDocumentLibraryPortletId extends UpgradePortletId {
 				if (rs2.next()) {
 					String typeSettings = null;
 
-					if (plidsEncountered.containsKey(plid)) {
-						typeSettings = plidsEncountered.get(plid);
+					if (layoutTypeSettingsEncountered.containsKey(plid)) {
+						typeSettings = layoutTypeSettingsEncountered.get(plid);
 					}
 					else {
 						typeSettings = rs2.getString("typeSettings");
@@ -137,7 +137,7 @@ public class UpgradeDocumentLibraryPortletId extends UpgradePortletId {
 					typeSettings = StringUtil.replace(
 						typeSettings, oldPortletId, sb.toString());
 
-					plidsEncountered.put(plid, typeSettings);
+					layoutTypeSettingsEncountered.put(plid, typeSettings);
 
 					ps3.setString(1, typeSettings);
 
