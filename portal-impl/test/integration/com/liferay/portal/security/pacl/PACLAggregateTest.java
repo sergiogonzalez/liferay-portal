@@ -58,6 +58,7 @@ import java.net.URL;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -302,10 +303,19 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 
 			List<CaptureAppender> captureAppenders = null;
 
-			Path tempStatePath = null;
+			String originalTempDirName = System.getProperty(
+				SystemProperties.TMP_DIR);
+
+			Path newTempDirPath = Paths.get(originalTempDirName, "PACL");
 
 			try {
-				tempStatePath = Files.createTempDirectory(null);
+				Files.createDirectories(newTempDirPath);
+
+				System.setProperty(
+					SystemProperties.TMP_DIR, newTempDirPath.toString());
+
+				Path tempStatePath = Files.createTempDirectory(
+					newTempDirPath, null);
 
 				System.setProperty(
 					"portal:" + PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
@@ -337,10 +347,13 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 
 				MPIHelperUtil.shutdown();
 
-				if (tempStatePath != null) {
+				System.setProperty(
+					SystemProperties.TMP_DIR, originalTempDirName);
+
+				if (newTempDirPath != null) {
 					try {
 						Files.walkFileTree(
-							tempStatePath,
+							newTempDirPath,
 							new SimpleFileVisitor<Path>() {
 
 								@Override
