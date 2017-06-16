@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -40,19 +41,19 @@ public class FriendlyURLEntryLocalServiceImpl
 	@Override
 	public FriendlyURLEntry addFriendlyURLEntry(
 			long groupId, long companyId, Class<?> clazz, long classPK,
-			String urlTitle)
+			String urlTitle, ServiceContext serviceContext)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
 		return addFriendlyURLEntry(
-			groupId, companyId, classNameId, classPK, urlTitle);
+			groupId, companyId, classNameId, classPK, urlTitle, serviceContext);
 	}
 
 	@Override
 	public FriendlyURLEntry addFriendlyURLEntry(
 			long groupId, long companyId, long classNameId, long classPK,
-			String urlTitle)
+			String urlTitle, ServiceContext serviceContext)
 		throws PortalException {
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
@@ -85,6 +86,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		FriendlyURLEntry friendlyURLEntry = createFriendlyURLEntry(
 			friendlyURLEntryId);
 
+		friendlyURLEntry.setUuid(serviceContext.getUuid());
 		friendlyURLEntry.setCompanyId(companyId);
 		friendlyURLEntry.setGroupId(groupId);
 		friendlyURLEntry.setClassNameId(classNameId);

@@ -535,6 +535,14 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					content, line, trimmedLine, lineLength, lineCount,
 					previousLine, null, false, false, 0);
 			}
+
+			if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
+				trimmedLine.equals(");")) {
+
+				return _getCombinedLinesContent(
+					content, line, trimmedLine, lineLength, lineCount,
+					previousLine, null, false, false, 0);
+			}
 		}
 
 		if ((previousLine.endsWith(StringPool.EQUAL) ||
@@ -656,6 +664,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 		if (previousLine.endsWith(StringPool.COMMA) &&
 			(previousLineTabCount == lineTabCount) &&
+			!line.matches(".*[\\^\\|\\&]") &&
 			!trimmedPreviousLine.equals("},")) {
 
 			String nextLine = getLine(content, lineCount + 1);
