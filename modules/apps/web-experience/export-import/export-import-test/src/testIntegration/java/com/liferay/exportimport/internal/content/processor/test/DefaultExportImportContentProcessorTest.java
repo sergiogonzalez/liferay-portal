@@ -87,6 +87,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -260,7 +261,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		List<String> entries = testReaderWriter.getEntries();
 
-		Assert.assertEquals(entries.toString(), 1, entries.size());
+		_assertContainsReference(entries, _fileEntry);
 
 		List<String> binaryEntries = testReaderWriter.getBinaryEntries();
 
@@ -837,6 +838,23 @@ public class DefaultExportImportContentProcessorTest {
 		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
 		field.set(null, newValue);
+	}
+
+	private void _assertContainsReference(
+		List<String> entries, StagedModel stagedModel) {
+
+		String expected = String.format(
+			"/%s/%s.xml", stagedModel.getModelClassName(),
+			stagedModel.getPrimaryKeyObj());
+
+		Stream<String> entriesStream = entries.stream();
+
+		Assert.assertTrue(
+			String.format(
+				"%s does not contain an entry for %s with primary key %s",
+				stagedModel.getModelClassName(),
+				stagedModel.getPrimaryKeyObj()),
+			entriesStream.anyMatch(entry -> entry.endsWith(expected)));
 	}
 
 	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
