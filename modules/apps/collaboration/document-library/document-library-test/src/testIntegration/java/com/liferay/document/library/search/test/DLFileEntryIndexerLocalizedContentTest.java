@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -45,8 +46,11 @@ import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,7 +85,34 @@ public class DLFileEntryIndexerLocalizedContentTest {
 	}
 
 	@Test
-	public void testJapaneseFullWordOnly() throws Exception {
+	public void testJapaneseContent() throws Exception {
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), null, LocaleUtil.JAPAN);
+
+		String firstDoc = "ContentSearch.txt";
+
+		addFileEntry(firstDoc);
+
+		List<String> contentStrings = new ArrayList<>(
+			Collections.singletonList("content_ja_JP"));
+
+		String word1 = "新規";
+		String word2 = "作成";
+		String prefix1 = "新";
+		String prefix2 = "作";
+
+		Stream<String> searchTerms = Stream.of(word1, word2, prefix1, prefix2);
+
+		searchTerms.forEach(
+			searchTerm -> {
+				Document document = _search(searchTerm, LocaleUtil.JAPAN);
+
+				assertLocalization(contentStrings, document);
+			});
+	}
+
+	@Test
+	public void testJapaneseContentFullWordOnly() throws Exception {
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), null, LocaleUtil.JAPAN);
 
@@ -93,19 +124,71 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		addFileEntry(secondDoc);
 		addFileEntry(thirdDoc);
 
-		String searchTerm = "新規";
+		List<String> contentStrings = new ArrayList<>(
+			Collections.singletonList("content_ja_JP"));
 
-		List<Document> documents = _search(searchTerm, LocaleUtil.JAPAN);
+		String word1 = "新規";
+		String word2 = "作成";
 
-		Assert.assertEquals(documents.toString(), 1, documents.size());
+		Stream<String> searchTerms = Stream.of(word1, word2);
 
-		Assert.assertEquals(
-			firstDoc, documents.get(0).getField("title").getValue());
+		searchTerms.forEach(
+			searchTerm -> {
+				Document document = _search(searchTerm, LocaleUtil.JAPAN);
+
+				assertLocalization(contentStrings, document);
+			});
+	}
+
+	@Test
+	public void testSiteLocale() throws Exception {
+		Group testGroup = GroupTestUtil.addGroup();
+
+		String firstDoc = "LocaleJa.txt";
+		String secondDoc = "LocaleEn.txt";
+
+		List<String> contentStringsJa = new ArrayList<>(
+			Collections.singletonList("content_ja_JP"));
+		List<String> contentStringsEn = new ArrayList<>(
+			Collections.singletonList("content_en_US"));
+
+		try {
+			GroupTestUtil.updateDisplaySettings(
+				_group.getGroupId(), null, LocaleUtil.JAPAN);
+			GroupTestUtil.updateDisplaySettings(
+				testGroup.getGroupId(), null, LocaleUtil.US);
+
+			addFileEntry(firstDoc, _group.getGroupId());
+			addFileEntry(secondDoc, testGroup.getGroupId());
+
+			String searchTerm = "新規";
+
+			Document documentJa = _search(
+				searchTerm, LocaleUtil.JAPAN, _group.getGroupId());
+
+			assertLocalization(contentStringsJa, documentJa);
+
+			searchTerm = "Locale Test";
+
+			Document documentEn = _search(
+				searchTerm, LocaleUtil.ENGLISH, testGroup.getGroupId());
+
+			assertLocalization(contentStringsEn, documentEn);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(testGroup);
+		}
 	}
 
 	protected FileEntry addFileEntry(String fileName) throws Exception {
+		return addFileEntry(fileName, _group.getGroupId());
+	}
+
+	protected FileEntry addFileEntry(String fileName, Long groupId)
+		throws Exception {
+
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		File file = null;
 		FileEntry fileEntry;
@@ -131,11 +214,34 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		return fileEntry;
 	}
 
-	private SearchContext _getSearchContext(String searchTerm, Locale locale)
+	protected void assertLocalization(
+		List<String> contentStrings, Document document) {
+
+		List<String> fields = _getFieldValues("content", document);
+
+		Assert.assertEquals(contentStrings.toString(), fields.toString());
+	}
+
+	private static List<String> _getFieldValues(
+		String prefix, Document document) {
+
+		List<String> fields = new ArrayList<>();
+
+		for (String field : document.getFields().keySet()) {
+			if (field.contains(prefix)) {
+				fields.add(field);
+			}
+		}
+
+		return fields;
+	}
+
+	private SearchContext _getSearchContext(
+			String searchTerm, Locale locale, Long groupId)
 		throws Exception {
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
+			groupId);
 
 		searchContext.setKeywords(searchTerm);
 
@@ -148,13 +254,28 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		return searchContext;
 	}
 
-	private List<Document> _search(String searchTerm, Locale locale) {
+	private Document _getSingleDocument(String searchTerm, Hits hits) {
+		List<Document> documents = hits.toList();
+
+		if (documents.size() == 1) {
+			return documents.get(0);
+		}
+
+		throw new AssertionError(searchTerm + "->" + documents);
+	}
+
+	private Document _search(String searchTerm, Locale locale) {
+		return _search(searchTerm, locale, _group.getGroupId());
+	}
+
+	private Document _search(String searchTerm, Locale locale, Long groupId) {
 		try {
-			SearchContext searchContext = _getSearchContext(searchTerm, locale);
+			SearchContext searchContext = _getSearchContext(
+				searchTerm, locale, groupId);
 
 			Hits hits = _indexer.search(searchContext);
 
-			return hits.toList();
+			return _getSingleDocument(searchTerm, hits);
 		}
 		catch (RuntimeException re) {
 			throw re;
