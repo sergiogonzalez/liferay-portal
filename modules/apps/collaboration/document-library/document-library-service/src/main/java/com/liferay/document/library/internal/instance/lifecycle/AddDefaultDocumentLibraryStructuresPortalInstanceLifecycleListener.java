@@ -408,9 +408,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		_userLocalService = userLocalService;
 	}
 
-	/**
-	 * @see com.liferay.document.library.internal.verify.DLServiceVerifyProcess#checkDLFileEntryType()
-	 */
 	private void _addBasicDocumentDLFileEntryType() throws Exception {
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
