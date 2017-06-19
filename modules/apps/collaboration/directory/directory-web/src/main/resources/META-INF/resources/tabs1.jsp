@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean showInputSearch = ParamUtil.getBoolean(request, "inputSearch", true);
+boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -48,7 +48,7 @@ portletURL.setParameter("mvcRenderCommandName", "/directory/view");
 		</aui:nav>
 	</c:if>
 
-	<c:if test="<%= showInputSearch %>">
+	<c:if test="<%= showSearch %>">
 		<aui:nav-bar-search>
 			<c:choose>
 				<c:when test='<%= tabs1.equals("organizations") %>'>
