@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -168,6 +169,9 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	/**
+	 * @see com.liferay.document.library.internal.instance.lifecycle.AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener#_addBasicDocumentDLFileEntryType()
+	 */
 	protected void checkDLFileEntryType() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			DLFileEntryType dlFileEntryType =
@@ -182,8 +186,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 				_dlFileEntryTypeLocalService.createDLFileEntryType(
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-			dlFileEntryType.setCompanyId(
-				DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT);
+			dlFileEntryType.setCompanyId(CompanyConstants.SYSTEM);
 			dlFileEntryType.setFileEntryTypeKey(
 				StringUtil.toUpperCase(
 					DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
