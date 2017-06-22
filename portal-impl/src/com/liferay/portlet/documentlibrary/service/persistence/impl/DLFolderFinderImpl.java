@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -169,6 +170,12 @@ public class DLFolderFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_F_BY_NO_ASSETS);
+
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				DLFolder.class);
+
+			sql = StringUtil.replace(
+				sql, "classNameId = ?", "classNameId = " + classNameId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
