@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -434,6 +435,12 @@ public class DLFileEntryFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				DLFileEntry.class);
+
+			sql = StringUtil.replace(
+				sql, "classNameId = ?", "classNameId = " + classNameId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
