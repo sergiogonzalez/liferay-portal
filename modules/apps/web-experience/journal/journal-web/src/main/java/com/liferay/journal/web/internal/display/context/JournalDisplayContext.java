@@ -88,7 +88,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
 
@@ -115,12 +115,13 @@ public class JournalDisplayContext {
 	public JournalDisplayContext(
 		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletPreferences portletPreferences) {
+		PortletPreferences portletPreferences, TrashHelper trashHelper) {
 
 		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletPreferences = portletPreferences;
+		_trashHelper = trashHelper;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_request);
@@ -731,7 +732,7 @@ public class JournalDisplayContext {
 		articleSearchContainer.setOrderByType(getOrderByType());
 
 		EntriesChecker entriesChecker = new EntriesChecker(
-			_liferayPortletRequest, _liferayPortletResponse);
+			_liferayPortletRequest, _liferayPortletResponse, _trashHelper);
 
 		entriesChecker.setCssClass("entry-selector");
 		entriesChecker.setRememberCheckBoxStateURLRegex(
@@ -741,7 +742,7 @@ public class JournalDisplayContext {
 		articleSearchContainer.setRowChecker(entriesChecker);
 
 		EntriesMover entriesMover = new EntriesMover(
-			TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()));
+			_trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()));
 
 		articleSearchContainer.setRowMover(entriesMover);
 
@@ -1379,5 +1380,6 @@ public class JournalDisplayContext {
 	private Boolean _showEditActions;
 	private Integer _status;
 	private String _tabs1;
+	private final TrashHelper _trashHelper;
 
 }

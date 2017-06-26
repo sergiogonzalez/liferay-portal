@@ -145,6 +145,15 @@
 	}
 }
 
+.radio-options {
+	.radio-inline {
+		span {
+			display: inline-block;
+			height: 28px;
+		}
+	}
+}
+
 .multi-step-progress-bar {
 	> .complete {
 		color: #65B6F0;
