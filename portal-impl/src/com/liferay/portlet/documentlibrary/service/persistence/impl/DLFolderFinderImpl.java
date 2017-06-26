@@ -172,15 +172,16 @@ public class DLFolderFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_F_BY_NO_ASSETS);
 
-			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-				DLFolderConstants.getClassName());
-
-			sql = StringUtil.replace(
-				sql, "classNameId = ?", "classNameId = " + classNameId);
-
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DLFolder", DLFolderImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				DLFolderConstants.getClassName());
+
+			qPos.add(classNameId);
 
 			return q.list(true);
 		}
