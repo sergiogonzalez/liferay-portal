@@ -218,6 +218,10 @@ public class WikiPageFinderImpl
 
 			q.addEntity("WikiPage", WikiPageImpl.class);
 
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
 			return q.list(true);
 		}
 		catch (Exception e) {
