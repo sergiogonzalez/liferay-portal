@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -105,6 +106,13 @@ public class BookmarksFolderFinderImpl
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("BookmarksFolder", BookmarksFolderImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				BookmarksFolder.class.getName());
+
+			qPos.add(classNameId);
 
 			return q.list(true);
 		}
