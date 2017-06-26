@@ -437,15 +437,16 @@ public class DLFileEntryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
 
-			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-				DLFolderConstants.getClassName());
-
-			sql = StringUtil.replace(
-				sql, "classNameId = ?", "classNameId = " + classNameId);
-
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				DLFolderConstants.getClassName());
+
+			qPos.add(classNameId);
 
 			return q.list(true);
 		}
