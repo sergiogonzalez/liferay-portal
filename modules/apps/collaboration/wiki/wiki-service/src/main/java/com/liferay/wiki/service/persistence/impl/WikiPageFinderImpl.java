@@ -216,6 +216,10 @@ public class WikiPageFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
 			q.addEntity("WikiPage", WikiPageImpl.class);
 
 			return q.list(true);
