@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import java.nio.charset.CharsetEncoder;
@@ -235,6 +234,17 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
+	protected String sanitizeName(String name) {
+		CharsetEncoder charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
+			"US-ASCII");
+
+		if (!charsetEncoder.canEncode(name)) {
+			name = HtmlUtil.escapeURL(name);
+		}
+
+		return name;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDLAppService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
@@ -244,17 +254,10 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			FileEntry fileEntry, String path, ZipWriter zipWriter)
 		throws Exception {
 
-		try {
-			zipWriter.addEntry(
-				path + StringPool.SLASH + fileEntry.getFileName(),
-				fileEntry.getContentStream());
-		}
-		catch (FileNotFoundException fnfe) {
-			zipWriter.addEntry(
-				path + StringPool.SLASH +
-					HtmlUtil.escapeURL(fileEntry.getFileName()),
-				fileEntry.getContentStream());
-		}
+		String fileName = sanitizeName(fileEntry.getFileName());
+
+		zipWriter.addEntry(
+			path + StringPool.SLASH + fileName, fileEntry.getContentStream());
 	}
 
 	protected void zipFolder(
@@ -270,14 +273,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			if (entry instanceof Folder) {
 				Folder folder = (Folder)entry;
 
-				String folderName = folder.getName();
-
-				CharsetEncoder charsetEncoder =
-					CharsetEncoderUtil.getCharsetEncoder("US-ASCII");
-
-				if (!charsetEncoder.canEncode(folderName)) {
-					folderName = HtmlUtil.escapeURL(folderName);
-				}
+				String folderName = sanitizeName(folder.getName());
 
 				zipFolder(
 					folder.getRepositoryId(), folder.getFolderId(),
