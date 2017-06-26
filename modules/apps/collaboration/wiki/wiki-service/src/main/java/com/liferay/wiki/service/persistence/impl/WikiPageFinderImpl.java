@@ -206,15 +206,14 @@ public class WikiPageFinderImpl
 
 			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
 
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
 			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 				WikiPage.class);
 
-			sql = StringUtil.replace(
-				sql,
-				"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
-				String.valueOf(classNameId));
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			qPos.add(classNameId);
 
 			q.addEntity("WikiPage", WikiPageImpl.class);
 

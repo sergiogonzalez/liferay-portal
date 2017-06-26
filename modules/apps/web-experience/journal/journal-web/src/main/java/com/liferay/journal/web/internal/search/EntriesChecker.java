@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.TrashHelper;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,14 +44,15 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 	public EntriesChecker(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		TrashHelper trashHelper) {
 
 		super(liferayPortletResponse);
 
 		_journalDisplayContext = new JournalDisplayContext(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest),
 			liferayPortletRequest, liferayPortletResponse,
-			liferayPortletRequest.getPreferences());
+			liferayPortletRequest.getPreferences(), trashHelper);
 
 		_liferayPortletResponse = liferayPortletResponse;
 
