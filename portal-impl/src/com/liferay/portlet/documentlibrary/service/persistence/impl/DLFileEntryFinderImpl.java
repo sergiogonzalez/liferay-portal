@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -437,7 +438,7 @@ public class DLFileEntryFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
 
 			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-				DLFileEntry.class);
+				DLFolderConstants.getClassName());
 
 			sql = StringUtil.replace(
 				sql, "classNameId = ?", "classNameId = " + classNameId);
