@@ -190,14 +190,14 @@ else {
 	</c:if>
 
 	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-		<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveToTrash" : "deleteArticles" %>' var="deleteURL">
+		<portlet:actionURL name='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "moveToTrash" : "deleteArticles" %>' var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

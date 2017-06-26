@@ -29,7 +29,7 @@ ddm.radio = function(opt_data, opt_ignored) {
     var optionData60 = optionList60[optionIndex60];
     output += ((! opt_data.inline) ? '<div class="radio">' : '') + '<label class="' + soy.$$escapeHtmlAttribute(opt_data.inline ? ' radio-inline' : '') + ' radio-option-' + soy.$$escapeHtmlAttribute(optionData60.value) + '" for="' + soy.$$escapeHtmlAttribute(opt_data.name) + '_' + soy.$$escapeHtmlAttribute(optionData60.value) + '">';
     var checked__soy37 = optionData60.value == displayValue__soy5 ? 'checked' : '';
-    output += '<input ' + soy.$$filterHtmlAttributes(checked__soy37) + ' class="field" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir || '') + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' id="' + soy.$$escapeHtmlAttribute(opt_data.name) + '_' + soy.$$escapeHtmlAttribute(optionData60.value) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" type="radio" value="' + soy.$$escapeHtmlAttribute(optionData60.value) + '" /> ' + soy.$$escapeHtml(optionData60.label) + '</label>' + ((! opt_data.inline) ? '</div>' : '');
+    output += '<input ' + soy.$$filterHtmlAttributes(checked__soy37) + ' class="field" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir || '') + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' id="' + soy.$$escapeHtmlAttribute(opt_data.name) + '_' + soy.$$escapeHtmlAttribute(optionData60.value) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" type="radio" value="' + soy.$$escapeHtmlAttribute(optionData60.value) + '" /><span> ' + soy.$$escapeHtml(optionData60.label) + '</span></label>' + ((! opt_data.inline) ? '</div>' : '');
   }
   output += '</div>' + ((opt_data.childElementsHTML) ? soy.$$filterNoAutoescape(opt_data.childElementsHTML) : '') + '</div>';
   return output;

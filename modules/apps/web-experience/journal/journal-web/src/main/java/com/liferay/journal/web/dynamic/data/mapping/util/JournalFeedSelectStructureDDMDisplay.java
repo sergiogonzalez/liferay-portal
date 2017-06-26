@@ -14,20 +14,17 @@
 
 package com.liferay.journal.web.dynamic.data.mapping.util;
 
-import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.util.Portal;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 2.0.0, moved to {@link
+ *             com.liferay.journal.web.internal.dynamic.data.mapping.util.JournalFeedSelectStructureDDMDisplay}
  */
-@Component(
-	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL + ".selectStructureFeed"},
-	service = DDMDisplay.class
-)
+@Deprecated
 public class JournalFeedSelectStructureDDMDisplay extends JournalDDMDisplay {
 
 	@Override

@@ -112,6 +112,7 @@
 				JournalArticle
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = JournalArticle.resourcePrimKey)
 			WHERE
 				AssetEntry.classPK IS NULL

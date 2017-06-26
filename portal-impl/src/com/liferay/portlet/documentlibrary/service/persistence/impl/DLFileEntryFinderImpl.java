@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -434,6 +436,12 @@ public class DLFileEntryFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				DLFolderConstants.getClassName());
+
+			sql = StringUtil.replace(
+				sql, "classNameId = ?", "classNameId = " + classNameId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
