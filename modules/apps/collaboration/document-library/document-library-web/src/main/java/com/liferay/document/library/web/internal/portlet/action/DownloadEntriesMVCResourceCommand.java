@@ -234,17 +234,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	protected String sanitizeName(String name) {
-		CharsetEncoder charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
-			"US-ASCII");
-
-		if (!charsetEncoder.canEncode(name)) {
-			name = HtmlUtil.escapeURL(name);
-		}
-
-		return name;
-	}
-
 	@Reference(unbind = "-")
 	protected void setDLAppService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
@@ -254,7 +243,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			FileEntry fileEntry, String path, ZipWriter zipWriter)
 		throws Exception {
 
-		String fileName = sanitizeName(fileEntry.getFileName());
+		String fileName = _sanitizeName(fileEntry.getFileName());
 
 		zipWriter.addEntry(
 			path + StringPool.SLASH + fileName, fileEntry.getContentStream());
@@ -273,7 +262,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			if (entry instanceof Folder) {
 				Folder folder = (Folder)entry;
 
-				String folderName = sanitizeName(folder.getName());
+				String folderName = _sanitizeName(folder.getName());
 
 				zipFolder(
 					folder.getRepositoryId(), folder.getFolderId(),
@@ -292,6 +281,17 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				zipFileEntry(fileEntry, path, zipWriter);
 			}
 		}
+	}
+
+	private String _sanitizeName(String name) {
+		CharsetEncoder charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
+			"US-ASCII");
+
+		if (!charsetEncoder.canEncode(name)) {
+			name = HtmlUtil.escapeURL(name);
+		}
+
+		return name;
 	}
 
 	private DLAppService _dlAppService;
