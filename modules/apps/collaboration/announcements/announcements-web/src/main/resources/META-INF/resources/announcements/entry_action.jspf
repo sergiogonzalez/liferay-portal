@@ -20,7 +20,6 @@
 			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
 			<portlet:param name="redirect" value="<%= announcementsRequestHelper.getCurrentURL() %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-			<portlet:param name="alert" value="<%= String.valueOf(portletName.equals(AnnouncementsPortletKeys.ALERTS)) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
