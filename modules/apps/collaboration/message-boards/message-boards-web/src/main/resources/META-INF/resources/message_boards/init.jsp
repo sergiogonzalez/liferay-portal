@@ -163,7 +163,8 @@ page import="com.liferay.portlet.messageboards.service.permission.MBPermission" 
 page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %>
+page import="com.liferay.taglib.search.ResultRow" %><%@
+page import="com.liferay.taglib.ui.InputEditorTag" %>
 
 <%@ page import="java.text.Format" %><%@
 page import="java.text.NumberFormat" %>
