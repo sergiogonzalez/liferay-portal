@@ -78,7 +78,7 @@ AUI.add(
 							cancelRemoveRow: Liferay.Language.get('cancel'),
 							confirmRemoveRow: Liferay.Language.get('delete'),
 							formTitle: Liferay.Language.get('build-your-form'),
-							modalHeader: Liferay.Language.get('remove-confirmation'),
+							modalHeader: Liferay.Language.get('are-you-sure-you-want-to-delete-this-row'),
 							pasteHere: Liferay.Language.get('paste-here'),
 							removeRowModal: Liferay.Language.get('you-will-also-delete-fields-with-this-row-are-you-sure-you-want-delete-it')
 						},
@@ -217,6 +217,8 @@ AUI.add(
 						var fieldList = field.get('container').ancestor('.col').getData('layout-col').get('value');
 
 						fieldList.addField(fieldCopy, fieldList.get('fields').length);
+
+						instance.showFieldSettingsPanel(fieldCopy);
 
 						var activeLayout = instance.getActiveLayout();
 

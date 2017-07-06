@@ -83,15 +83,31 @@ public class JournalContentImpl
 	public void clearCache(
 		long groupId, String articleId, String ddmTemplateKey) {
 
-		_portalCacheIndexer.removeKeys(
-			JournalContentKeyIndexEncoder.encode(
+		_journalArticlePortalCacheIndexer.removeKeys(
+			JournalContentArticleKeyIndexEncoder.encode(
 				groupId, articleId, ddmTemplateKey));
 
 		if (ClusterInvokeThreadLocal.isEnabled()) {
 			try {
 				ClusterableInvokerUtil.invokeOnCluster(
-					ClusterInvokeAcceptor.class, this, _clearCacheMethod,
+					ClusterInvokeAcceptor.class, this, _clearArticleCacheMethod,
 					new Object[] {groupId, articleId, ddmTemplateKey});
+			}
+			catch (Throwable t) {
+				ReflectionUtil.throwException(t);
+			}
+		}
+	}
+
+	@Override
+	public void clearCache(String ddmTemplateKey) {
+		_journalTemplatePortalCacheIndexer.removeKeys(ddmTemplateKey);
+
+		if (ClusterInvokeThreadLocal.isEnabled()) {
+			try {
+				ClusterableInvokerUtil.invokeOnCluster(
+					ClusterInvokeAcceptor.class, this,
+					_clearTemplateCacheMethod, new Object[] {ddmTemplateKey});
 			}
 			catch (Throwable t) {
 				ReflectionUtil.throwException(t);
@@ -411,8 +427,10 @@ public class JournalContentImpl
 			(PortalCache<JournalContentKey, JournalArticleDisplay>)
 				multiVMPool.getPortalCache(CACHE_NAME);
 
-		_portalCacheIndexer = new PortalCacheIndexer<>(
-			new JournalContentKeyIndexEncoder(), _portalCache);
+		_journalArticlePortalCacheIndexer = new PortalCacheIndexer<>(
+			new JournalContentArticleKeyIndexEncoder(), _portalCache);
+		_journalTemplatePortalCacheIndexer = new PortalCacheIndexer<>(
+			new JournalContentTemplateKeyIndexEncoder(), _portalCache);
 	}
 
 	protected static final String CACHE_NAME = JournalContent.class.getName();
@@ -431,16 +449,24 @@ public class JournalContentImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentImpl.class);
 
-	private static final Method _clearCacheMethod;
+	private static final Method _clearArticleCacheMethod;
+	private static final Method _clearTemplateCacheMethod;
+	private static PortalCacheIndexer
+		<String, JournalContentKey, JournalArticleDisplay>
+			_journalArticlePortalCacheIndexer;
+	private static PortalCacheIndexer
+		<String, JournalContentKey, JournalArticleDisplay>
+			_journalTemplatePortalCacheIndexer;
 	private static PortalCache<JournalContentKey, JournalArticleDisplay>
 		_portalCache;
-	private static PortalCacheIndexer
-		<String, JournalContentKey, JournalArticleDisplay> _portalCacheIndexer;
 
 	static {
 		try {
-			_clearCacheMethod = JournalContent.class.getMethod(
+			_clearArticleCacheMethod = JournalContent.class.getMethod(
 				"clearCache", long.class, String.class, String.class);
+
+			_clearTemplateCacheMethod = JournalContent.class.getMethod(
+				"clearCache", String.class);
 		}
 		catch (NoSuchMethodException nsme) {
 			throw new ExceptionInInitializerError(nsme);
@@ -448,6 +474,32 @@ public class JournalContentImpl
 	}
 
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	private static class JournalContentArticleKeyIndexEncoder
+		implements IndexEncoder<String, JournalContentKey> {
+
+		public static String encode(
+			long groupId, String articleId, String ddmTemplateKey) {
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(groupId);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(articleId);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(ddmTemplateKey);
+
+			return sb.toString();
+		}
+
+		@Override
+		public String encode(JournalContentKey journalContentKey) {
+			return encode(
+				journalContentKey._groupId, journalContentKey._articleId,
+				journalContentKey._ddmTemplateKey);
+		}
+
+	}
 
 	private static class JournalContentKey implements Serializable {
 
@@ -517,28 +569,12 @@ public class JournalContentImpl
 
 	}
 
-	private static class JournalContentKeyIndexEncoder
+	private static class JournalContentTemplateKeyIndexEncoder
 		implements IndexEncoder<String, JournalContentKey> {
-
-		public static String encode(
-			long groupId, String articleId, String ddmTemplateKey) {
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(groupId);
-			sb.append(StringPool.UNDERLINE);
-			sb.append(articleId);
-			sb.append(StringPool.UNDERLINE);
-			sb.append(ddmTemplateKey);
-
-			return sb.toString();
-		}
 
 		@Override
 		public String encode(JournalContentKey journalContentKey) {
-			return encode(
-				journalContentKey._groupId, journalContentKey._articleId,
-				journalContentKey._ddmTemplateKey);
+			return journalContentKey._ddmTemplateKey;
 		}
 
 	}

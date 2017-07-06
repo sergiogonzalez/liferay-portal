@@ -498,9 +498,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @param  classNameId the primary key of the class name of the model the
 	 *         structure is related to
-	 * @param  status the workflow's status.
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         structure's name or description (optionally <code>null</code>)
+	 * @param  status the workflow's status.
 	 * @param  start the lower bound of the range of structures to return
 	 * @param  end the upper bound of the range of structures to return (not
 	 *         inclusive)

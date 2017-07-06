@@ -154,7 +154,7 @@ public class DDMFormPagesTemplateContextFactory {
 			new DDMFormFieldTemplateContextFactory(
 				_ddmFormFieldsMap, _ddmFormEvaluationResult,
 				_ddmFormFieldValuesMap.get(ddmFormFieldName),
-				_ddmFormRenderingContext);
+				_ddmFormRenderingContext, _pageEnabled);
 
 		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
 			_ddmFormFieldTypeServicesTracker);
@@ -186,7 +186,10 @@ public class DDMFormPagesTemplateContextFactory {
 
 		pageTemplateContext.put("description", description.getString(_locale));
 
-		pageTemplateContext.put("enabled", isPageEnabled(pageIndex));
+		_pageEnabled = isPageEnabled(pageIndex);
+
+		pageTemplateContext.put("enabled", _pageEnabled);
+
 		pageTemplateContext.put(
 			"localizedDescription", getLocalizedValueMap(description));
 
@@ -336,5 +339,6 @@ public class DDMFormPagesTemplateContextFactory {
 	private final DDMFormRenderingContext _ddmFormRenderingContext;
 	private final DDMFormValues _ddmFormValues;
 	private final Locale _locale;
+	private boolean _pageEnabled;
 
 }
