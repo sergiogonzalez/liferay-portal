@@ -92,6 +92,11 @@ public class NotificationsPortlet extends MVCPortlet {
 		}
 	}
 
+	public void markAllNotificationsAsRead(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+	}
+
 	public void markAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
