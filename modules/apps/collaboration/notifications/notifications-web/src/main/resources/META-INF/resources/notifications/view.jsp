@@ -18,11 +18,11 @@
 
 <%
 boolean actionRequired = ParamUtil.getBoolean(request, "actionRequired");
-String filterBy = ParamUtil.getString(request, "filterBy", "all");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "date");
-String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
-SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest, currentURLObj, null, actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications");
+SearchContainer notificationsSearchContainer = new SearchContainer(
+	renderRequest, currentURLObj, null,
+	actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications");
+
 notificationsSearchContainer.setId("userNotificationEvents");
 
 int allNotificationEventsCount =
@@ -32,34 +32,7 @@ int allNotificationEventsCount =
 			UserNotificationDeliveryConstants.TYPE_WEBSITE,
 			true, actionRequired);
 
-if ("read".equals(filterBy) || "unread".equals(filterBy)) {
-	boolean archived = "read".equals(filterBy);
-
-	notificationsSearchContainer.setTotal(
-		UserNotificationEventLocalServiceUtil.
-			getArchivedUserNotificationEventsCount(
-				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				actionRequired, archived));
-
-	notificationsSearchContainer.setResults(
-		UserNotificationEventLocalServiceUtil.
-			getArchivedUserNotificationEvents(
-				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired,
-				archived, notificationsSearchContainer.getStart(),
-				notificationsSearchContainer.getEnd()));
-}
-else {
-	notificationsSearchContainer.setTotal(allNotificationEventsCount);
-	notificationsSearchContainer.setResults(
-		UserNotificationEventLocalServiceUtil.
-			getDeliveredUserNotificationEvents(
-				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
-				actionRequired, notificationsSearchContainer.getStart(),
-				notificationsSearchContainer.getEnd()));
-}
+NotificationsUtil.populateResults(notificationsSearchContainer);
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -109,8 +82,8 @@ else {
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol='<%= ParamUtil.getString(request, "orderByCol", "date") %>'
+			orderByType='<%= ParamUtil.getString(request, "orderByType", "desc") %>'
 			orderColumns='<%= new String[] {"date"} %>'
 			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
 		/>
