@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.UserNotificationEventLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -220,6 +221,17 @@ public class UserNotificationEventLocalServiceImpl
 
 	@Override
 	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean actionRequired, boolean archived,
+		int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return userNotificationEventPersistence.findByU_DT_A_A(
+			userId, deliveryType, actionRequired, archived, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
 		long userId, int deliveryType, boolean archived, int start, int end) {
 
 		return userNotificationEventPersistence.findByU_DT_A(
@@ -314,6 +326,17 @@ public class UserNotificationEventLocalServiceImpl
 
 		return userNotificationEventPersistence.findByU_DT_D_A(
 			userId, deliveryType, delivered, actionRequired, start, end);
+	}
+
+	@Override
+	public List<UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return userNotificationEventPersistence.findByU_DT_D_A(
+			userId, deliveryType, delivered, actionRequired, start, end,
+			orderByComparator);
 	}
 
 	@Override
