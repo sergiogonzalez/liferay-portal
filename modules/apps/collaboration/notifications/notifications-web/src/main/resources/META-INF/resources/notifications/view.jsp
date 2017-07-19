@@ -19,6 +19,8 @@
 <%
 boolean actionRequired = ParamUtil.getBoolean(request, "actionRequired");
 String filterBy = ParamUtil.getString(request, "filterBy", "all");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "date");
+String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest, currentURLObj, null, actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications");
 notificationsSearchContainer.setId("userNotificationEvents");
@@ -103,6 +105,13 @@ else {
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "unread", "read"} %>'
 			navigationParam="filterBy"
+			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"date"} %>'
 			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
