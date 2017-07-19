@@ -25,13 +25,6 @@ SearchContainer notificationsSearchContainer = new SearchContainer(
 
 notificationsSearchContainer.setId("userNotificationEvents");
 
-int allNotificationEventsCount =
-	UserNotificationEventLocalServiceUtil.
-		getDeliveredUserNotificationEventsCount(
-			themeDisplay.getUserId(),
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			true, actionRequired);
-
 NotificationsUtil.populateResults(notificationsSearchContainer);
 %>
 
@@ -62,7 +55,6 @@ NotificationsUtil.populateResults(notificationsSearchContainer);
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= allNotificationEventsCount == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userNotificationEvents"
 >
