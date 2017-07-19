@@ -41,7 +41,7 @@ public class CheckboxMultipleDDMFormFieldValueAccessorTest {
 	}
 
 	@Test
-	public void testGetCheckboxMultipleValue() {
+	public void testGetCheckboxMultipleValue1() {
 		JSONArray expectedJSONArray = createJSONArray("value 1");
 
 		DDMFormFieldValue ddmFormFieldValue =

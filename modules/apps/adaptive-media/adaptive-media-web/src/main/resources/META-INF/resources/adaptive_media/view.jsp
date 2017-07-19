@@ -154,7 +154,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 						href="<%= rowURL %>"
 						name="name"
 						orderable="<%= false %>"
-						value="<%= configurationEntry.getName() %>"
+						value="<%= HtmlUtil.escape(configurationEntry.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

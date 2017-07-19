@@ -171,9 +171,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 								name.concat("_geolocation"), latitude,
 								longitude);
 						}
-						else if (type.equals(DDMImpl.TYPE_RADIO) ||
-								 type.equals(DDMImpl.TYPE_SELECT)) {
-
+						else if (type.equals(DDMImpl.TYPE_SELECT)) {
 							JSONArray jsonArray =
 								JSONFactoryUtil.createJSONArray(valueString);
 
@@ -319,9 +317,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 					String type = field.getType();
 
-					if (type.equals(DDMImpl.TYPE_RADIO) ||
-						type.equals(DDMImpl.TYPE_SELECT)) {
-
+					if (type.equals(DDMImpl.TYPE_SELECT)) {
 						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 							valueString);
 

@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var AEscape = A.Escape;
+
 		var FormBuilderTextField = A.FormBuilderTextField;
 		var FormBuilderTypes = A.FormBuilderField.types;
 
@@ -61,6 +63,20 @@ AUI.add(
 				'<label class="control-label">' + A.Escape.html(Liferay.Language.get('image-description')) + '</label>' +
 				'<input class="field form-control" type="text" value="" disabled>' +
 			'</div>';
+
+		CSS_RADIO = A.getClassName('radio'),
+		CSS_FIELD = A.getClassName('field'),
+		CSS_FIELD_CHOICE = A.getClassName('field', 'choice'),
+		CSS_FIELD_RADIO = A.getClassName('field', 'radio'),
+		CSS_FORM_BUILDER_FIELD = A.getClassName('form-builder-field'),
+		CSS_FORM_BUILDER_FIELD_NODE = A.getClassName('form-builder-field', 'node'),
+		CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER = A.getClassName('form-builder-field', 'options', 'container'),
+
+		TPL_OPTIONS_CONTAINER = '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
+		TPL_RADIO =
+			'<div class="' + CSS_RADIO + '"><label class="radio-inline" for="{id}"><input id="{id}" class="' +
+			[CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_RADIO, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
+			'" name="{name}" type="radio" value="{value}" {checked} {disabled} />{label}</label></div>';
 
 		var UNIQUE_FIELD_NAMES_MAP = Liferay.FormBuilder.UNIQUE_FIELD_NAMES_MAP;
 
@@ -1502,6 +1518,72 @@ AUI.add(
 			}
 		);
 
+		var DDMRadioField = A.Component.create(
+			{
+				ATTRS: {
+					dataType: {
+						value: 'radio'
+					},
+
+					predefinedValue: {
+						setter: function(val) {
+							return val;
+						}
+					}
+				},
+
+				EXTENDS: A.FormBuilderRadioField,
+
+				NAME: 'ddm-radio',
+
+				OVERRIDE_TYPE: 'radio',
+
+				prototype: {
+					_uiSetPredefinedValue: function(val) {
+						var instance = this,
+							optionNodes = instance.optionNodes;
+
+						if (!optionNodes) {
+							return;
+						}
+
+						optionNodes.set('checked', false);
+
+						optionNodes.all('input[value="' + AEscape.html(val) + '"]').set('checked', true);
+					},
+
+					_uiSetOptions: function(val) {
+						var instance = this,
+							buffer = [],
+							counter = 0,
+							predefinedValue = instance.get('predefinedValue'),
+							templateNode = instance.get('templateNode');
+
+						A.each(val, function(item) {
+							var checked = predefinedValue === item.value;
+
+							buffer.push(
+								Lang.sub(
+									TPL_RADIO, {
+										checked: checked ? 'checked="checked"' : '',
+										disabled: instance.get('disabled') ? 'disabled="disabled"' : '',
+										id: AEscape.html(instance.get('id') + counter++),
+										label: AEscape.html(item.label),
+										name: AEscape.html(instance.get('name')),
+										value: AEscape.html(item.value)
+									}
+								)
+							);
+						});
+
+						instance.optionNodes = A.NodeList.create(buffer.join(''));
+
+						templateNode.setContent(instance.optionNodes);
+					}
+				}
+			}
+		);
+
 		var DDMSeparatorField = A.Component.create(
 			{
 				ATTRS: {
@@ -1678,6 +1760,7 @@ AUI.add(
 			DDMLinkToPageField,
 			DDMNumberField,
 			DDMParagraphField,
+			DDMRadioField,
 			DDMSeparatorField,
 			DDMHTMLTextField,
 			DDMTextAreaField
@@ -1685,7 +1768,7 @@ AUI.add(
 
 		plugins.forEach(
 			function(item, index) {
-				FormBuilderTypes[item.NAME] = item;
+				FormBuilderTypes[item.OVERRIDE_TYPE || item.NAME] = item;
 			}
 		);
 	},

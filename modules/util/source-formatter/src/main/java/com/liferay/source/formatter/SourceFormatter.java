@@ -182,6 +182,13 @@ public class SourceFormatter {
 
 	public SourceFormatter(SourceFormatterArgs sourceFormatterArgs) {
 		_sourceFormatterArgs = sourceFormatterArgs;
+
+		if (sourceFormatterArgs.isShowDocumentation()) {
+			System.setProperty("java.awt.headless", "false");
+		}
+		else {
+			System.setProperty("java.awt.headless", "true");
+		}
 	}
 
 	public void format() throws Exception {
@@ -205,7 +212,9 @@ public class SourceFormatter {
 		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
 		sourceProcessors.add(new BNDSourceProcessor());
+		sourceProcessors.add(new CQLSourceProcessor());
 		sourceProcessors.add(new CSSSourceProcessor());
+		sourceProcessors.add(new DockerfileSourceProcessor());
 		sourceProcessors.add(new FTLSourceProcessor());
 		sourceProcessors.add(new GradleSourceProcessor());
 		sourceProcessors.add(new GroovySourceProcessor());
@@ -343,7 +352,7 @@ public class SourceFormatter {
 		_allFileNames = SourceFormatterUtil.scanForFiles(
 			_sourceFormatterArgs.getBaseDirName(),
 			excludesList.toArray(new String[excludesList.size()]),
-			new String[] {"**/*.*"},
+			new String[] {"**/*.*", "**/Dockerfile"},
 			_sourceFormatterArgs.isIncludeSubrepositories());
 	}
 
@@ -490,8 +499,8 @@ public class SourceFormatter {
 	private static final List<String> _defaultExcludes = Arrays.asList(
 		"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
 		"**/classes/**", "**/node_modules/**", "**/npm-shrinkwrap.json",
-		"**/test-classes/**", "**/test-coverage/**", "**/test-results/**",
-		"**/tmp/**");
+		"**/package-lock.json", "**/test-classes/**", "**/test-coverage/**",
+		"**/test-results/**", "**/tmp/**");
 
 	private List<String> _allFileNames;
 	private volatile SourceMismatchException _firstSourceMismatchException;

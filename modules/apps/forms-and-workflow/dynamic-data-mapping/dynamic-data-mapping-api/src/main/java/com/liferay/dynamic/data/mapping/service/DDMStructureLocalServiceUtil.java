@@ -1071,8 +1071,8 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the structures matching the group,
-	* class name ID, name, and description.
+	* Returns an ordered range of all the structures matching the group, class
+	* name ID, name, and description.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -

@@ -43,12 +43,6 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	public void setUp() throws Exception {
 		_radioDDMFormFieldTemplateContextContributor =
 			new RadioDDMFormFieldTemplateContextContributor();
-
-		field(
-			RadioDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			_radioDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
 	}
 
 	@Test

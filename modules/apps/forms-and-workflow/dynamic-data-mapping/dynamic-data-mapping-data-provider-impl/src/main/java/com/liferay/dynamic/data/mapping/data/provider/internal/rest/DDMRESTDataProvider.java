@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -237,6 +238,12 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		HttpRequest httpRequest = HttpRequest.get(
 			ddmRESTDataProviderSettings.url());
+
+		if (StringUtil.startsWith(
+				ddmRESTDataProviderSettings.url(), Http.HTTPS)) {
+
+			httpRequest.trustAllCerts(true);
+		}
 
 		if (Validator.isNotNull(ddmRESTDataProviderSettings.username())) {
 			httpRequest.basicAuthentication(

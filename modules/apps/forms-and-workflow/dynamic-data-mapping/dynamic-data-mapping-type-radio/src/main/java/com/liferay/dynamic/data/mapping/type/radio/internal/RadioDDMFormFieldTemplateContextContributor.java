@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -29,7 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -105,11 +103,8 @@ public class RadioDDMFormFieldTemplateContextContributor
 
 		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
 			new RadioDDMFormFieldContextHelper(
-				jsonFactory,
 				getDDMFormFieldOptions(
 					ddmFormField, ddmFormFieldRenderingContext),
-				ddmFormFieldRenderingContext.getValue(),
-				ddmFormField.getPredefinedValue(),
 				ddmFormFieldRenderingContext.getLocale());
 
 		return radioDDMFormFieldContextHelper.getOptions();
@@ -137,8 +132,5 @@ public class RadioDDMFormFieldTemplateContextContributor
 
 		return ddmFormFieldRenderingContext.getValue();
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 }

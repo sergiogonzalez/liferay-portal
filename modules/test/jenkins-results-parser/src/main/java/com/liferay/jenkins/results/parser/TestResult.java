@@ -78,7 +78,10 @@ public class TestResult {
 
 		status = caseJSONObject.getString("status");
 
-		if (status.equals("FAILED")) {
+		if (status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
+			caseJSONObject.has("errorStackTrace")) {
+
+			errorDetails = caseJSONObject.getString("errorDetails");
 			errorStackTrace = caseJSONObject.getString("errorStackTrace");
 		}
 	}
@@ -121,14 +124,6 @@ public class TestResult {
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
 
-		if (errorStackTrace != null) {
-			String trimmedStackTrace = StringUtils.abbreviate(
-				errorStackTrace, _MAX_ERROR_STACK_DISPLAY_LENGTH);
-
-			downstreamBuildListItemElement.add(
-				Dom4JUtil.toCodeSnippetElement(trimmedStackTrace));
-		}
-
 		if (testReportURL.contains("com.liferay.poshi.runner/PoshiRunner")) {
 			Dom4JUtil.addToElement(
 				downstreamBuildListItemElement, " - ",
@@ -141,12 +136,24 @@ public class TestResult {
 				Dom4JUtil.getNewAnchorElement(
 					getConsoleOutputURL(testrayLogsURL), "Console Output"));
 
+			if (errorDetails != null) {
+				Dom4JUtil.addToElement(
+					Dom4JUtil.toCodeSnippetElement(errorDetails));
+			}
+
 			if (hasLiferayLog(testrayLogsURL)) {
 				Dom4JUtil.addToElement(
 					downstreamBuildListItemElement, " - ",
 					Dom4JUtil.getNewAnchorElement(
 						getLiferayLogURL(testrayLogsURL), "Liferay Log"));
 			}
+		}
+		else if (errorStackTrace != null) {
+			String trimmedStackTrace = StringUtils.abbreviate(
+				errorStackTrace, _MAX_ERROR_STACK_DISPLAY_LENGTH);
+
+			downstreamBuildListItemElement.add(
+				Dom4JUtil.toCodeSnippetElement(trimmedStackTrace));
 		}
 
 		return downstreamBuildListItemElement;
@@ -241,6 +248,7 @@ public class TestResult {
 	protected AxisBuild axisBuild;
 	protected String className;
 	protected long duration;
+	protected String errorDetails;
 	protected String errorStackTrace;
 	protected String packageName;
 	protected String simpleClassName;

@@ -1402,7 +1402,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 			<if>
 				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
 				<then>
-					<gradle-execute dir="modules/test/poshi-runner" task="deploy" />
+					<gradle-execute dir="modules/test/poshi-runner/poshi-runner" task="deploy" />
 				</then>
 			</if>
 
@@ -3052,110 +3052,6 @@ go</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-dummy-socket-proxy">
-		<sequential>
-			<local name="dummy.socket.proxy" />
-
-			<property name="dummy.socket.proxy" value="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=8888" />
-
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${dummy.socket.proxy}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-						<![CDATA[
-							set "CATALINA_OPTS=%CATALINA_OPTS% ${dummy.socket.proxy}"
-						]]>
-					</echo>
-				</then>
-			</if>
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${dummy.socket.proxy}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-						<![CDATA[
-							CATALINA_OPTS="${CATALINA_OPTS} ${dummy.socket.proxy}"
-						]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="setup-testable-tomcat-gc">
-		<sequential>
-			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${app.server.tomcat.setenv.gc.old}" />
-				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.bat" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
-				</then>
-				<else>
-					<if>
-						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${app.server.tomcat.setenv.gc.new}" />
-						</not>
-						<then>
-							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.bat" />
-						</then>
-					</if>
-				</else>
-			</if>
-
-			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${app.server.tomcat.setenv.gc.old}" />
-				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.sh" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
-				</then>
-				<else>
-					<if>
-						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${app.server.tomcat.setenv.gc.new}" />
-						</not>
-						<then>
-							<fail message="Unable to setup tomcat gc properties for ${app.server.tomcat.dir}/bin/setenv.sh" />
-						</then>
-					</if>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="setup-testable-tomcat-heap-dump-on-oom">
-		<sequential>
-			<local name="heap.dump.on.oom" />
-
-			<property name="heap.dump.on.oom" value="-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${app.server.tomcat.setenv.heap.dump.path}" />
-
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${heap.dump.on.oom}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-						<![CDATA[
-							set "CATALINA_OPTS=%CATALINA_OPTS% ${heap.dump.on.oom}"
-						]]>
-					</echo>
-				</then>
-			</if>
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${heap.dump.on.oom}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-						<![CDATA[
-							CATALINA_OPTS="${CATALINA_OPTS} ${heap.dump.on.oom}"
-						]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-jmx">
 		<sequential>
 			<var name="testable.tomcat.jmx.opts" value="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=${jmx.remote.authenticate} -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.ssl=${jmx.remote.ssl}" />
@@ -3359,54 +3255,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-print-final-flags">
-		<sequential>
-			<local name="print.final.flags" />
-
-			<property name="print.final.flags" value="-XX:+PrintFlagsFinal" />
-
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${print.final.flags}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-						<![CDATA[
-							set "CATALINA_OPTS=%CATALINA_OPTS% ${print.final.flags}"
-						]]>
-					</echo>
-				</then>
-			</if>
-			<if>
-				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${print.final.flags}" />
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-						<![CDATA[
-							CATALINA_OPTS="${CATALINA_OPTS} ${print.final.flags}"
-						]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-setenv">
 		<sequential>
 			<setup-testable-tomcat-aspectj-agent />
 
-			<setup-testable-tomcat-dummy-socket-proxy />
-
-			<setup-testable-tomcat-gc />
-
-			<setup-testable-tomcat-heap-dump-on-oom />
-
 			<setup-testable-tomcat-jmx />
 
 			<setup-testable-tomcat-jpda-address />
-
-			<setup-testable-tomcat-print-final-flags />
 		</sequential>
 	</macrodef>
 
@@ -4392,10 +4247,10 @@ go]]></replacevalue>
 			<![CDATA[
 				<properties>
 					<property name="testray.case.defect" value="${testray.case.defect}" />
+					<property name="testray.case.type.name" value="Automated Functional Test" />
 					<property name="testray.component.names" value="${testray.component.names}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />
-					<property name="testray.case.type.name" value="Automated Functional Test" />
 					<property name="testray.testcase.description" value="${testray.testcase.description}" />
 					<property name="testray.testcase.name" value="${testray.testcase.name}" />
 					<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
@@ -6414,6 +6269,8 @@ index.on.startup=true
 
 setup.wizard.enabled=false
 
+cluster.link.autodetect.address=
+
 mail.session.jndi.name=
 
 sprite.root.dir=/tmp/sprite
@@ -6458,8 +6315,6 @@ cluster.link.channel.system.properties=\
 	jgroups.mping.mcast_addr:${multicast.group.address["cluster-link-mping"]},\
 	jgroups.mping.mcast_port:${multicast.group.port["cluster-link-mping"]},\
 	jgroups.mping.ip_ttl:8
-
-cluster.link.autodetect.address=
 
 web.server.display.node=true</echo>
 			</then>
@@ -6809,7 +6664,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			product.names=${product.names}
 			project.dir=${project.dir}
 			test.case.available.property.names=${test.case.available.property.names}
-			test.console.log.file.name=${liferay.home}/logs/liferay.*.xml
+			test.console.log.file.name=${liferay.home}/logs/**.xml
 			test.console.shut.down.file.name=${project.dir}/console-shut-down
 			test.dependencies.dir.name=dependencies
 			test.poshi.warnings.file.name=${project.dir}/poshi-warnings.xml
@@ -8378,17 +8233,62 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</if>
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<then>
+				<antcall target="prepare-tomcat-ext-environment" />
+			</then>
+		</if>
 	</target>
 
-	<target name="prepare-tomcat-ext-env">
+	<target name="prepare-tomcat-ext-environment">
 		<if>
-			<not>
-		    	<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
-		    </not>
+			<and>
+				<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
+				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+				<not>
+					<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
+				</not>
+			</and>
 			<then>
-				<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
-					<replacetoken><![CDATA[</Context>]]></replacetoken>
-					<replacevalue><![CDATA[	<Resources>
+				<local name="enable.ext.environment" />
+
+				<get-patch-requirements patch.file.zip.url="${test.build.fix.pack.zip.url}" />
+
+				<beanshell>
+					<![CDATA[
+						import java.util.regex.Matcher;
+						import java.util.regex.Pattern;
+
+						int fixpackVersion = -1;
+
+						String fixPackZipURL = project.getProperty("test.build.fix.pack.zip.url");
+						String patchRequirements = project.getProperty("patch.requirements");
+
+						Pattern pattern = Pattern.compile("https?://.*/liferay-fix-pack-de-(\\d+)-\\d{4}[^/]*.zip");
+
+						Matcher matcher = pattern.matcher(fixPackZipURL);
+
+						if (matcher.find()) {
+							fixpackVersion = Integer.valueOf(matcher.group(1));
+						}
+						else if ((patchRequirements != null) && patchRequirements.startsWith("de-")) {
+							fixpackVersion = Integer.valueOf(patchRequirements.substring(3));
+						}
+
+						if (fixpackVersion >= 16) {
+							project.setProperty("enable.ext.environment", "true");
+						}
+					]]>
+				</beanshell>
+
+				<if>
+					<equals arg1="${enable.ext.environment}" arg2="true" />
+					<then>
+						<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
+							<replacetoken><![CDATA[</Context>]]></replacetoken>
+							<replacevalue><![CDATA[	<Resources>
 		<PreResources
 			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
 			base="${catalina.base}/lib/ext/portal"
@@ -8396,7 +8296,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		/>
 	</Resources>
 </Context>]]></replacevalue>
-				</replace>
+						</replace>
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>
@@ -9420,8 +9322,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<ant antfile="build-dist.xml" target="update-java-security-tomcat" />
-
-				<antcall target="prepare-tomcat-ext-env" />
 			</then>
 		</if>
 

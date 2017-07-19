@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.Comparator;
@@ -31,6 +32,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
+ * @author Peter Shin
  */
 public class GradleDependenciesCheck extends BaseFileCheck {
 
@@ -84,6 +86,24 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				continue;
 			}
 
+			matcher = _incorrectGroupNameVersionPattern.matcher(dependency);
+
+			if (matcher.find()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append(matcher.group(1));
+				sb.append(" group: \"");
+				sb.append(matcher.group(2));
+				sb.append("\", name: \"");
+				sb.append(matcher.group(3));
+				sb.append("\", version: \"");
+				sb.append(matcher.group(4));
+				sb.append("\"");
+				sb.append(matcher.group(5));
+
+				dependency = sb.toString();
+			}
+
 			uniqueDependencies.add(dependency);
 		}
 
@@ -95,7 +115,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			String configuration = _getConfiguration(dependency);
 
 			if (configuration.equals("compile") &&
-				isModulesApp(absolutePath, _projectPathPrefix, false)) {
+				isModulesApp(absolutePath, _projectPathPrefix, false) &&
+				_hasBNDFile(absolutePath)) {
 
 				dependency = StringUtil.replaceFirst(
 					dependency, "compile", "provided");
@@ -123,8 +144,22 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return dependency.substring(0, pos);
 	}
 
+	private boolean _hasBNDFile(String absolutePath) {
+		if (!absolutePath.endsWith("/build.gradle")) {
+			return false;
+		}
+
+		int pos = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		File file = new File(absolutePath.substring(0, pos + 1) + "bnd.bnd");
+
+		return file.exists();
+	}
+
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"^dependencies \\{(.+?\n)\\}", Pattern.DOTALL | Pattern.MULTILINE);
+	private final Pattern _incorrectGroupNameVersionPattern = Pattern.compile(
+		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
 	private String _projectPathPrefix;

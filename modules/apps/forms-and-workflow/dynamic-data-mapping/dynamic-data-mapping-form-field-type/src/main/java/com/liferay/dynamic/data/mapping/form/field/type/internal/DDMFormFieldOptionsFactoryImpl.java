@@ -22,6 +22,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFacto
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -92,8 +94,9 @@ public class DDMFormFieldOptionsFactoryImpl
 			ddmFormFieldRenderingContext.getLocale());
 
 		try {
-			String ddmDataProviderInstanceId = GetterUtil.getString(
-				ddmFormField.getProperty("ddmDataProviderInstanceId"));
+			String ddmDataProviderInstanceId = getJSONArrayFirstValue(
+				GetterUtil.getString(
+					ddmFormField.getProperty("ddmDataProviderInstanceId")));
 
 			DDMDataProviderRequest ddmDataProviderRequest =
 				new DDMDataProviderRequest(
@@ -107,9 +110,10 @@ public class DDMFormFieldOptionsFactoryImpl
 			DDMDataProviderResponse ddmDataProviderResponse =
 				ddmDataProviderInvoker.invoke(ddmDataProviderRequest);
 
-			String ddmDataProviderInstanceOutput = GetterUtil.getString(
-				ddmFormField.getProperty("ddmDataProviderInstanceOutput"),
-				"Default-Output");
+			String ddmDataProviderInstanceOutput = getJSONArrayFirstValue(
+				GetterUtil.getString(
+					ddmFormField.getProperty("ddmDataProviderInstanceOutput"),
+					"Default-Output"));
 
 			DDMDataProviderResponseOutput dataProviderResponseOutput =
 				ddmDataProviderResponse.get(ddmDataProviderInstanceOutput);
@@ -139,8 +143,22 @@ public class DDMFormFieldOptionsFactoryImpl
 		return ddmFormFieldOptions;
 	}
 
+	protected String getJSONArrayFirstValue(String value) {
+		try {
+			JSONArray jsonArray = jsonFactory.createJSONArray(value);
+
+			return jsonArray.getString(0);
+		}
+		catch (Exception e) {
+			return value;
+		}
+	}
+
 	@Reference
 	protected DDMDataProviderInvoker ddmDataProviderInvoker;
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldOptionsFactoryImpl.class);

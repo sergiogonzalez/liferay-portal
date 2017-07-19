@@ -379,6 +379,8 @@ app.server.type=@{app.server.type}]]></echo>
 				<equals arg1="@{app.server.type}" arg2="tomcat" />
 				<then>
 					<setup-testable-tomcat />
+
+					<setup-test-batch-testable-tomcat />
 				</then>
 			</if>
 
@@ -392,7 +394,6 @@ app.server.type=@{app.server.type}]]></echo>
 /release.*.properties
 /sql/sql.*.properties
 /test.*.properties
-/tools/cobertura-agent/classes
 /tools/maven/*.asc
 /tools/node*
 /tools/selenium/*.exe
@@ -593,6 +594,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="true" name="setup.proxy" />
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
@@ -748,6 +750,8 @@ app.server.type=@{app.server.type}]]></echo>
 								</and>
 								<then>
 									<setup-testable-tomcat />
+
+									<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
 								</then>
 							</if>
 						</then>
@@ -783,6 +787,8 @@ app.server.type=@{app.server.type}]]></echo>
 								</and>
 								<then>
 									<setup-testable-tomcat />
+
+									<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
 								</then>
 							</if>
 						</else>
@@ -1383,6 +1389,162 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-test-batch-testable-tomcat">
+		<attribute default="true" name="setup.proxy" />
+
+		<sequential>
+			<if>
+				<equals arg1="@{setup.proxy}" arg2="true" />
+				<then>
+					<setup-testable-tomcat-dummy-socket-proxy />
+				</then>
+			</if>
+
+			<setup-testable-tomcat-gc />
+
+			<setup-testable-tomcat-heap-dump-on-oom />
+
+			<setup-testable-tomcat-print-final-flags />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-dummy-socket-proxy">
+		<sequential>
+			<local name="dummy.socket.proxy" />
+
+			<property name="dummy.socket.proxy" value="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=8888" />
+
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${dummy.socket.proxy}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+						<![CDATA[
+							set "CATALINA_OPTS=%CATALINA_OPTS% ${dummy.socket.proxy}"
+						]]>
+					</echo>
+				</then>
+			</if>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${dummy.socket.proxy}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${dummy.socket.proxy}"
+						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-gc">
+		<sequential>
+			<if>
+				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
+				<then>
+					<replace file="${app.server.tomcat.dir}/bin/setenv.bat" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup Tomcat GC properties for ${app.server.tomcat.dir}/bin/setenv.bat." />
+						</then>
+					</if>
+				</else>
+			</if>
+
+			<if>
+				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
+				<then>
+					<replace file="${app.server.tomcat.dir}/bin/setenv.sh" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup Tomcat GC properties for ${app.server.tomcat.dir}/bin/setenv.sh." />
+						</then>
+					</if>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-heap-dump-on-oom">
+		<sequential>
+			<local name="heap.dump.on.oom" />
+
+			<property name="heap.dump.on.oom" value="-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${test.batch.app.server.tomcat.setenv.heap.dump.path}" />
+
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${heap.dump.on.oom}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+						<![CDATA[
+							set "CATALINA_OPTS=%CATALINA_OPTS% ${heap.dump.on.oom}"
+						]]>
+					</echo>
+				</then>
+			</if>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${heap.dump.on.oom}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${heap.dump.on.oom}"
+						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-print-final-flags">
+		<sequential>
+			<local name="print.final.flags" />
+
+			<property name="print.final.flags" value="-XX:+PrintFlagsFinal" />
+
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${print.final.flags}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+						<![CDATA[
+							set "CATALINA_OPTS=%CATALINA_OPTS% ${print.final.flags}"
+						]]>
+					</echo>
+				</then>
+			</if>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${print.final.flags}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${print.final.flags}"
+						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<target name="blade-samples-jdk8">
 		<run-batch-test>
 			<test-action>
@@ -1574,6 +1736,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mariadb"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1592,6 +1755,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1610,6 +1774,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1628,6 +1793,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="oracle"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1646,6 +1812,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="postgresql"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -1664,6 +1831,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="sybase"
+			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -2207,6 +2375,66 @@ ${output.content}</echo>
 				</if>
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="portal-startup-space-in-path-jdk8">
+		<sequential>
+			<run-batch-test>
+				<test-action>
+					<database-test-run-test database.type="mysql" stop.app.server="true">
+						<test-action>
+							<trycatch>
+								<try>
+									<sequential>
+										<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+											<param name="database.type" value="@{database.type}" />
+										</antcall>
+
+										<antcall inheritAll="false" target="prepare-portal-ext-properties">
+											<param name="database.type" value="@{database.type}" />
+										</antcall>
+
+										<antcall inheritAll="false" target="prepare-system-ext-properties" />
+
+										<antcall inheritAll="false" target="start-app-server" />
+									</sequential>
+								</try>
+							</trycatch>
+
+								<antcall inheritall="false" target="stop-app-server" />
+
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<isset property="env.DIST_PATH" />
+						<then>
+							<sequential>
+
+								<propertyfile file="app.server.${env.HOSTNAME}.properties">
+									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
+								</propertyfile>
+
+								<propertyfile file="build.${env.HOSTNAME}.properties">
+									<entry key="liferay.home" value="${project.dir}/bun dles" />
+								</propertyfile>
+
+								<prepare-test-environment />
+
+								<move file="bundles" tofile="bun dles" />
+
+							</sequential>
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
 	</target>
 
 	<target name="portal-web-jdk8">

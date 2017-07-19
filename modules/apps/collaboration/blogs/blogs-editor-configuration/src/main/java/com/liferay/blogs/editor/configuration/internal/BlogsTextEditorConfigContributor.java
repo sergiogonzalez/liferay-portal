@@ -49,8 +49,6 @@ public class BlogsTextEditorConfigContributor
 
 		jsonObject.put("allowedContent", "p");
 		jsonObject.put("disallowedContent", "br");
-		jsonObject.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
 		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 

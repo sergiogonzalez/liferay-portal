@@ -327,9 +327,7 @@ public class DDMImpl implements DDM {
 
 			fieldValue = _portal.getLayoutFriendlyURL(layout, themeDisplay);
 		}
-		else if (type.equals(DDMImpl.TYPE_RADIO) ||
-				 type.equals(DDMImpl.TYPE_SELECT)) {
-
+		else if (type.equals(DDMImpl.TYPE_SELECT)) {
 			String valueString = String.valueOf(fieldValue);
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
@@ -458,9 +456,7 @@ public class DDMImpl implements DDM {
 
 			fieldValue = dateFormat.format(valueDate);
 		}
-		else if (type.equals(DDMImpl.TYPE_RADIO) ||
-				 type.equals(DDMImpl.TYPE_SELECT)) {
-
+		else if (type.equals(DDMImpl.TYPE_SELECT)) {
 			String valueString = (String)fieldValue;
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
@@ -611,9 +607,7 @@ public class DDMImpl implements DDM {
 			propertyValue = localizedValue.getString(defaultLocale);
 		}
 
-		if (type.equals(DDMImpl.TYPE_RADIO) ||
-			type.equals(DDMImpl.TYPE_SELECT)) {
-
+		if (type.equals(DDMImpl.TYPE_SELECT)) {
 			if (propertyName.equals("predefinedValue")) {
 				try {
 					jsonObject.put(
@@ -1046,9 +1040,7 @@ public class DDMImpl implements DDM {
 				return null;
 			}
 
-			if (DDMImpl.TYPE_RADIO.equals(fieldType) ||
-				DDMImpl.TYPE_SELECT.equals(fieldType)) {
-
+			if (DDMImpl.TYPE_SELECT.equals(fieldType)) {
 				String predefinedValueString = predefinedValue.getString(
 					serviceContext.getLocale());
 

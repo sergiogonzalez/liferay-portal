@@ -397,8 +397,8 @@ public abstract class TestOrderHelper {
 			String indexType, String type)
 		throws Exception {
 
-		_unsortedValues = toJsonArrays(unsortedValues);
-		_sortedValues = toJsonArrays(sortedValues);
+		_unsortedValues = unsortedValues;
+		_sortedValues = sortedValues;
 		_dataType = dataType;
 		_indexType = indexType;
 		_type = type;

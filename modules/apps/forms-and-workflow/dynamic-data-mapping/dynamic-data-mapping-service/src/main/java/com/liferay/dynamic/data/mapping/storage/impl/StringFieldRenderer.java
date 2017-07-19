@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,10 +53,13 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 				continue;
 			}
 
-			if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
-				fieldType.equals(DDMImpl.TYPE_SELECT)) {
-
-				valueString = handleJSON(field, valueString, locale);
+			if (fieldType.equals(DDMImpl.TYPE_SELECT)) {
+				valueString = handleSelectFieldValue(
+					field, valueString, locale);
+			}
+			else if (fieldType.equals(DDMImpl.TYPE_RADIO)) {
+				return handleRadioFieldValue(
+					field, String.valueOf(value), locale);
 			}
 
 			values.add(valueString);
@@ -76,13 +80,16 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 		String fieldType = getFieldType(field);
 
-		if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
-			fieldType.equals(DDMImpl.TYPE_SELECT)) {
+		String valueString = String.valueOf(value);
 
-			return handleJSON(field, String.valueOf(value), locale);
+		if (fieldType.equals(DDMImpl.TYPE_SELECT)) {
+			return handleSelectFieldValue(field, valueString, locale);
+		}
+		else if (fieldType.equals(DDMImpl.TYPE_RADIO)) {
+			return handleRadioFieldValue(field, valueString, locale);
 		}
 
-		return String.valueOf(value);
+		return valueString;
 	}
 
 	protected LocalizedValue getFieldOptionLabel(
@@ -106,7 +113,25 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 		return ddmStructure.getFieldType(field.getName());
 	}
 
-	protected String handleJSON(Field field, String json, Locale locale)
+	protected String handleRadioFieldValue(
+			Field field, String value, Locale locale)
+		throws Exception {
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		LocalizedValue label = getFieldOptionLabel(field, value);
+
+		if (label == null) {
+			return StringPool.BLANK;
+		}
+
+		return GetterUtil.getString(label.getString(locale));
+	}
+
+	protected String handleSelectFieldValue(
+			Field field, String json, Locale locale)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);

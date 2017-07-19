@@ -14,28 +14,33 @@
 
 package com.liferay.portal.servlet;
 
-import static org.mockito.Mockito.verify;
-
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -111,6 +116,9 @@ public class ComboServletTest extends PowerMockito {
 					else if (Objects.equals(PortletKeys.PORTAL, args[0])) {
 						return _portalPortlet;
 					}
+					else if (Objects.equals(_NONEXISTING_PORTLET_ID, args[0])) {
+						return null;
+					}
 
 					return _portletUndeployed;
 				}
@@ -162,13 +170,27 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	@Test
+	public void testEmptyParameters() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
+	}
+
+	@Test
 	public void testGetResourceRequestDispatcherWithNonexistingPortletId()
 		throws Exception {
 
 		RequestDispatcher requestDispatcher =
 			_comboServlet.getResourceRequestDispatcher(
 				_mockHttpServletRequest, _mockHttpServletResponse,
-				"2345678:/js/javascript.js");
+				_NONEXISTING_PORTLET_ID + ":/js/javascript.js");
 
 		Assert.assertNull(requestDispatcher);
 	}
@@ -183,7 +205,7 @@ public class ComboServletTest extends PowerMockito {
 			_mockHttpServletRequest, _mockHttpServletResponse,
 			"/js/javascript.js");
 
-		verify(_portalServletContext);
+		Mockito.verify(_portalServletContext);
 
 		_portalServletContext.getRequestDispatcher(path);
 	}
@@ -194,9 +216,37 @@ public class ComboServletTest extends PowerMockito {
 			_mockHttpServletRequest, _mockHttpServletResponse,
 			_TEST_PORTLET_ID + ":/js/javascript.js");
 
-		verify(_pluginServletContext);
+		Mockito.verify(_pluginServletContext);
 
 		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
+	}
+
+	@Test
+	public void testMixedExtensionsRequest() throws Exception {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
+		PropsUtil.setProps(new PropsImpl());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setQueryString(
+			"/js/javascript.js&/css/styles.css");
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_BAD_REQUEST,
+			mockHttpServletResponse.getStatus());
 	}
 
 	@Test
@@ -248,6 +298,12 @@ public class ComboServletTest extends PowerMockito {
 
 	protected void setUpPortalPortlet() {
 		when(
+			_portalPortlet.getContextPath()
+		).thenReturn(
+			"portal"
+		);
+
+		when(
 			_portalPortletApp.getServletContext()
 		).thenReturn(
 			_portalServletContext
@@ -291,6 +347,8 @@ public class ComboServletTest extends PowerMockito {
 			_TEST_PORTLET_ID
 		);
 	}
+
+	private static final String _NONEXISTING_PORTLET_ID = "2345678";
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 

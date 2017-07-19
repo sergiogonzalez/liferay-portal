@@ -130,7 +130,8 @@ AUI.add(
 									var repeatedContext = repeatedSibling.get('context');
 
 									if (repeatedSibling) {
-										var foundFieldContext = columnFieldContexts.find(
+										var foundFieldContext = AArray.find(
+											columnFieldContexts,
 											function(columnFieldContext) {
 												if (columnFieldContext.fieldName === repeatedContext.fieldName &&
 														columnFieldContext.instanceId === repeatedContext.instanceId) {

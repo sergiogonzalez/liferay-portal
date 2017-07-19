@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -208,7 +209,11 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		if (options.size() == 1) {
 			KeyValuePair keyValuePair = options.get(0);
 
-			ddmFormFieldEvaluationResult.setValue(keyValuePair.getValue());
+			JSONArray valueJSONArray = _jsonFactory.createJSONArray();
+
+			valueJSONArray.put(keyValuePair.getValue());
+
+			ddmFormFieldEvaluationResult.setValue(valueJSONArray);
 		}
 	}
 

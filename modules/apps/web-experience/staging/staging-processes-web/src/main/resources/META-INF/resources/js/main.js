@@ -111,7 +111,7 @@ AUI.add(
 						};
 
 						if (instance._isChecked('rangeDateRangeNode')) {
-							dateRangeChecker.validRange = instance._rangeEndsLater() && instance._rangeEndsInPast(today) && instance._rangeStartsInPast(today);
+							dateRangeChecker.validRange = instance._rangeEndsLater() && instance._rangeEndsInPast(adjustedDate) && instance._rangeStartsInPast(adjustedDate);
 						}
 
 						return dateRangeChecker;
@@ -937,6 +937,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'aui-toggler', 'aui-tree-view', 'liferay-notice', 'liferay-portlet-base', 'liferay-portlet-url', 'liferay-store', 'liferay-util-window']
+		requires: ['aui-datatype', 'aui-dialog-iframe-deprecated', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'aui-toggler', 'aui-tree-view', 'liferay-notice', 'liferay-portlet-base', 'liferay-portlet-url', 'liferay-store', 'liferay-util-window']
 	}
 );

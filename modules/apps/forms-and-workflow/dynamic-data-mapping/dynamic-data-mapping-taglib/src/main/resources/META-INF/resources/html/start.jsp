@@ -59,7 +59,7 @@
 			);
 
 			var onDestroyPortlet = function(event) {
-				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				if (event.portletId === '<%= portletDisplay.getId() %>') {
 					liferayDDMForm.destroy();
 
 					Liferay.detach('destroyPortlet', onDestroyPortlet);

@@ -43,8 +43,8 @@ AUI.add(
 						var instance = this;
 
 						return {
-							source: instance._sourceField.getValue(),
-							target: instance._targetField.getValue()
+							source: instance._sourceField.getValue()[0] || '',
+							target: instance._targetField.getValue()[0] || ''
 						};
 					},
 
@@ -130,7 +130,7 @@ AUI.add(
 					_setSourcePage: function(pageIndex) {
 						var instance = this;
 
-						instance._sourceField.setValue(String(pageIndex));
+						instance._sourceField.setValue([String(pageIndex)]);
 					},
 
 					_setTargetOptions: function(pages) {

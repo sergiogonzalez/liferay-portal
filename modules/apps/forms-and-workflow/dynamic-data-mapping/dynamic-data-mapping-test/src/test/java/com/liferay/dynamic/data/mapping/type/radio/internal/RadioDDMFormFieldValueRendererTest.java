@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
@@ -55,7 +54,7 @@ public class RadioDDMFormFieldValueRendererTest {
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Radio", new UnlocalizedValue("[\"value 1\"]"));
+				"Radio", new UnlocalizedValue("value 1"));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -68,17 +67,6 @@ public class RadioDDMFormFieldValueRendererTest {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected RadioDDMFormFieldValueAccessor
-		createRadioDDMFormFieldValueAccessor() {
-
-		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor =
-			new RadioDDMFormFieldValueAccessor();
-
-		radioDDMFormFieldValueAccessor.jsonFactory = new JSONFactoryImpl();
-
-		return radioDDMFormFieldValueAccessor;
-	}
-
 	protected RadioDDMFormFieldValueRenderer
 			createRadioDDMFormFieldValueRenderer()
 		throws Exception {
@@ -87,7 +75,7 @@ public class RadioDDMFormFieldValueRendererTest {
 			new RadioDDMFormFieldValueRenderer();
 
 		radioDDMFormFieldValueRenderer.radioDDMFormFieldValueAccessor =
-			createRadioDDMFormFieldValueAccessor();
+			new RadioDDMFormFieldValueAccessor();
 
 		return radioDDMFormFieldValueRenderer;
 	}

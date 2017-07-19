@@ -31,9 +31,13 @@ public class DestinationReplacer implements AutoCloseable {
 	public DestinationReplacer(String... destinationNames) {
 		MessageBus messageBus = MessageBusUtil.getMessageBus();
 
-		_destinations =
-			Stream.of(destinationNames).map(messageBus::getDestination).collect(
-				Collectors.toList());
+		Stream<String> destinationNamesStream = Stream.of(destinationNames);
+
+		_destinations = destinationNamesStream.map(
+			messageBus::getDestination
+		).collect(
+			Collectors.toList()
+		);
 
 		for (String destinationName : destinationNames) {
 			SynchronousDestination synchronousDestination =

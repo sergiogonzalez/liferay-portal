@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.apache.commons.lang.math.NumberUtils;
 
@@ -43,11 +44,11 @@ public class EqualsFunction implements DDMExpressionFunction {
 		}
 
 		if (NumberUtils.isNumber(parameter1.toString())) {
-			parameter1 = Double.parseDouble(parameter1.toString());
+			parameter1 = GetterUtil.getDouble(parameter1);
 		}
 
 		if (NumberUtils.isNumber(parameter2.toString())) {
-			parameter2 = Double.parseDouble(parameter2.toString());
+			parameter2 = GetterUtil.getDouble(parameter2);
 		}
 
 		return parameter1.equals(parameter2);

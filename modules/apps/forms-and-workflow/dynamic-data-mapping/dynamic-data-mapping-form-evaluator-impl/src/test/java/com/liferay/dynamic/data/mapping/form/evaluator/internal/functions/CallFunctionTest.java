@@ -15,6 +15,9 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.functions;
 
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
@@ -47,7 +50,7 @@ public class CallFunctionTest {
 			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
 
 		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, null);
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -55,7 +58,13 @@ public class CallFunctionTest {
 
 		callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
 
-		Assert.assertEquals("value_1", ddmFormFieldEvaluationResult.getValue());
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		jsonArray.put("value_1");
+
+		Object value = ddmFormFieldEvaluationResult.getValue();
+
+		Assert.assertEquals(jsonArray.toString(), value.toString());
 	}
 
 	@Test
@@ -70,7 +79,7 @@ public class CallFunctionTest {
 			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
 
 		CallFunction callFunction = new CallFunction(
-			null, ddmFormFieldEvaluationResults, null, null);
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -81,5 +90,7 @@ public class CallFunctionTest {
 
 		Assert.assertNull(ddmFormFieldEvaluationResult.getValue());
 	}
+
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

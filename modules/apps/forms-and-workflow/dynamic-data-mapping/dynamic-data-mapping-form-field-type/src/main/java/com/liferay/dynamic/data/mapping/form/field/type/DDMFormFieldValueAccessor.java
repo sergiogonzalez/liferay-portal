@@ -42,4 +42,8 @@ public interface DDMFormFieldValueAccessor<T> {
 		return Validator.isNull(valueString);
 	}
 
+	public default Object map(Object value) {
+		return value;
+	}
+
 }

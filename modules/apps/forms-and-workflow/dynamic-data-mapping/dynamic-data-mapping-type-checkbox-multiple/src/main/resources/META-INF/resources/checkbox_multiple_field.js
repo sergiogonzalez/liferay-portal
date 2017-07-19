@@ -80,7 +80,7 @@ AUI.add(
 							}
 						);
 
-						return values.join();
+						return values;
 					},
 
 					setValue: function(value) {

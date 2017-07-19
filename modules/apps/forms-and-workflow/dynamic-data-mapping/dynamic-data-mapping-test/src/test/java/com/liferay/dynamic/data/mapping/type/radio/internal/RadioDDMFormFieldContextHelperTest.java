@@ -15,9 +15,7 @@
 package com.liferay.dynamic.data.mapping.type.radio.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,9 +70,7 @@ public class RadioDDMFormFieldContextHelperTest {
 		DDMFormFieldOptions ddmFormFieldOptions, Locale locale) {
 
 		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
-			new RadioDDMFormFieldContextHelper(
-				new JSONFactoryImpl(), ddmFormFieldOptions, StringPool.BLANK,
-				null, locale);
+			new RadioDDMFormFieldContextHelper(ddmFormFieldOptions, locale);
 
 		return radioDDMFormFieldContextHelper.getOptions();
 	}

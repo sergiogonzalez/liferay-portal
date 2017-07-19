@@ -118,6 +118,25 @@ let you set a specific version of NPM to download with the `downloadNode` task.
 - [LPS-72340]: Skip task `npmShrinkwrap` if project does not contain a
 `package.json` file.
 
+## 2.3.0 - 2017-07-07
+
+### Added
+- [LPS-73472]: Add a `npmRum[script]` task for each [script](https://docs.npmjs.com/misc/scripts)
+declared in the `package.json` file.
+- [LPS-73472]: Run the `"build"` script (if declared in the `package.json` file)
+when compiling a Java project.
+
+## 3.0.0 - 2017-07-17
+
+### Added
+- [LPS-73472]: Recreate symbolic links in the `.bin` directories of
+`node_modules` if the `nodeModulesCacheDir` property of `NpmInstallTask` is set.
+
+### Removed
+- [LPS-73472]: Remove all deprecated methods.
+- [LPS-73472]: The property `nodeModulesCacheRemoveBinDirs` of `NpmInstallTask`
+is no longer available.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -133,3 +152,4 @@ let you set a specific version of NPM to download with the `downloadNode` task.
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
 [LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
+[LPS-73472]: https://issues.liferay.com/browse/LPS-73472

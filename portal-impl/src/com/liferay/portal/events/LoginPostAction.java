@@ -18,20 +18,25 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -107,12 +112,56 @@ public class LoginPostAction extends Action {
 
 			User user = PortalUtil.getUser(request);
 
-			if (UserLocalServiceUtil.isPasswordExpiringSoon(user)) {
-				SessionMessages.add(request, "passwordExpiringSoon");
+			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+			if ((passwordPolicy != null) && passwordPolicy.isExpireable() &&
+				(passwordPolicy.getWarningTime() > 0)) {
+
+				_setPasswordExpirationMessage(request, passwordPolicy, user);
 			}
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
+		}
+	}
+
+	private void _setPasswordExpirationMessage(
+			HttpServletRequest request, PasswordPolicy passwordPolicy,
+			User user)
+		throws PortalException {
+
+		Date now = new Date();
+
+		if (user.getPasswordModifiedDate() == null) {
+			user.setPasswordModifiedDate(now);
+
+			UserLocalServiceUtil.updateUser(user);
+		}
+
+		Date passwordModifiedDate = user.getPasswordModifiedDate();
+
+		long passwordExpirationTime =
+			(passwordPolicy.getMaxAge() * 1000) +
+				passwordModifiedDate.getTime();
+
+		long startWarningTime =
+			passwordExpirationTime - (passwordPolicy.getWarningTime() * 1000);
+
+		if (now.getTime() > startWarningTime) {
+			int passwordExpiresInXDays =
+				(int)((passwordExpirationTime - now.getTime()) / Time.DAY);
+
+			if (passwordExpiresInXDays >= 0) {
+				SessionMessages.add(
+					request, "passwordExpiresInXDays", passwordExpiresInXDays);
+			}
+			else {
+				int remainingGraceLogins =
+					passwordPolicy.getGraceLimit() - user.getGraceLoginCount();
+
+				SessionMessages.add(
+					request, "remainingGraceLogins", remainingGraceLogins);
+			}
 		}
 	}
 

@@ -27,8 +27,18 @@
 		</if>
 	</tear-down>
 
-	<command name="Smoke" priority="5">
-		<description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
+	<command description="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." name="Smoke" priority="5">
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="SmokeWithDeveloperProperties" priority="5">
+		<property name="custom.properties" value="include-and-override=portal-developer.properties" />
+		<property name="portal.acceptance" value="true" />
+		<property name="portal.smoke" value="false" />
 
 		<execute macro="Smoke#viewWelcomePage" />
 

@@ -266,7 +266,6 @@ public class DDMTemplateLocalServiceUtil {
 	search in the search
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
@@ -577,6 +576,21 @@ public class DDMTemplateLocalServiceUtil {
 	public static int getTemplatesCount(long groupId, long classNameId,
 		long classPK) {
 		return getService().getTemplatesCount(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of templates matching the group IDs, class name ID,
+	* and class PK.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param classNameId the primary key of the class name for the template's
+	related model
+	* @param classPK the primary key of the template's related entity
+	* @return the number of matching templates
+	*/
+	public static int getTemplatesCount(long[] groupIds, long classNameId,
+		long classPK) {
+		return getService().getTemplatesCount(groupIds, classNameId, classPK);
 	}
 
 	/**

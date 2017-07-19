@@ -15,14 +15,12 @@
 package com.liferay.dynamic.data.mapping.type.radio.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -36,14 +34,8 @@ public class RadioDDMFormFieldValueRequestParameterRetriever
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 
-		String[] parameterValues = ParamUtil.getParameterValues(
-			httpServletRequest, ddmFormFieldParameterName,
-			GetterUtil.DEFAULT_STRING_VALUES);
-
-		return jsonFactory.serialize(parameterValues);
+		return ParamUtil.getString(
+			httpServletRequest, ddmFormFieldParameterName, StringPool.BLANK);
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 }

@@ -70,10 +70,23 @@ public class PathInterpreterTest {
 
 		_pathInterpreter.interpretPath("/image/0/x/foo.jpg");
 
-		Mockito.verify(_dlAppLocalService).getFileEntry(0);
-		Mockito.verify(_fileVersion).getCompanyId();
-		Mockito.verify(_configurationEntry).getProperties();
-		Mockito.verify(_configurationEntry).getUUID();
+		Mockito.verify(
+			_dlAppLocalService
+		).getFileEntry(
+			0
+		);
+
+		Mockito.verify(
+			_fileVersion
+		).getCompanyId();
+
+		Mockito.verify(
+			_configurationEntry
+		).getProperties();
+
+		Mockito.verify(
+			_configurationEntry
+		).getUUID();
 	}
 
 	@Test(expected = AdaptiveMediaRuntimeException.class)
@@ -122,11 +135,29 @@ public class PathInterpreterTest {
 
 		_pathInterpreter.interpretPath("/image/0/1/x/foo.jpg");
 
-		Mockito.verify(_dlAppLocalService).getFileEntry(0);
-		Mockito.verify(_dlAppLocalService).getFileVersion(1);
-		Mockito.verify(_fileVersion).getCompanyId();
-		Mockito.verify(_configurationEntry).getProperties();
-		Mockito.verify(_configurationEntry).getUUID();
+		Mockito.verify(
+			_dlAppLocalService
+		).getFileEntry(
+			0
+		);
+
+		Mockito.verify(
+			_dlAppLocalService
+		).getFileVersion(
+			1
+		);
+
+		Mockito.verify(
+			_fileVersion
+		).getCompanyId();
+
+		Mockito.verify(
+			_configurationEntry
+		).getProperties();
+
+		Mockito.verify(
+			_configurationEntry
+		).getUUID();
 	}
 
 	@Test(expected = AdaptiveMediaRuntimeException.class)

@@ -74,7 +74,7 @@ public interface DefaultDDMFormFieldTypeSettings
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},
 		optionValues = {StringPool.BLANK, "keyword", "text"},
-		predefinedValue = "keyword", type = "select",
+		predefinedValue = "keyword", type = "radio",
 		visibilityExpression = "FALSE"
 	)
 	public String indexType();

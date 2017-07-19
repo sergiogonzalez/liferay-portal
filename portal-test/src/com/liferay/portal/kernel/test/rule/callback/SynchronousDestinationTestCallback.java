@@ -202,6 +202,12 @@ public class SynchronousDestinationTestCallback
 			replaceDestination(DestinationNames.SCHEDULER_ENGINE);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 			replaceDestination("liferay/adaptive_media_processor");
+			replaceDestination("liferay/report_request");
+			replaceDestination("liferay/reports_admin");
+
+			for (String name : _sync.destinationNames()) {
+				replaceDestination(name);
+			}
 
 			if (schedulerEnabled) {
 				replaceDestination("liferay/kaleo_graph_walker");

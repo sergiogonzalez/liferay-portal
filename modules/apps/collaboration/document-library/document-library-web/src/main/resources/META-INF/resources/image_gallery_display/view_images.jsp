@@ -36,6 +36,19 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			<c:when test="<%= fileEntry != null %>">
 
 				<%
+				String dataOptions = StringPool.BLANK;
+
+				FileVersion fileVersion = fileEntry.getFileVersion();
+
+				boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
+				boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
+				boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
+				boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
+
+				String imagePreviewURL = null;
+				String imageURL = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
+				int playerHeight = 500;
+
 				String thumbnailId = null;
 
 				if (fileShortcut != null) {
@@ -45,41 +58,32 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					thumbnailId = "entry_" + fileEntry.getFileEntryId();
 				}
 
-				FileVersion fileVersion = fileEntry.getFileVersion();
-
-				boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-				boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-				boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-				boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
-
-				String imageURL = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-
-				int playerHeight = 500;
-
-				String dataOptions = StringPool.BLANK;
-
 				if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 					if (hasAudio) {
-						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1");
-
 						for (String audioContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
 							dataOptions += "&" + audioContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedAudio=1&audioPreview=1&type=" + audioContainer));
 						}
 
+						imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
+						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1");
 						playerHeight = 43;
 					}
 					else if (hasImages) {
 						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
+
+						imagePreviewURL = imageURL;
 					}
 					else if (hasPDFImages) {
+						imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
 						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
 					}
 					else if (hasVideo) {
-						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1");
-
 						for (String videoContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
 							dataOptions += "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&videoPreview=1&type=" + videoContainer));
 						}
+
+						imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
+						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1");
 					}
 				}
 
@@ -95,7 +99,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<liferay-ui:search-container-column-text>
 					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= imageURL %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 						<c:choose>
-							<c:when test="<%= Validator.isNull(imageURL) %>">
+							<c:when test="<%= Validator.isNull(imagePreviewURL) %>">
 								<liferay-frontend:icon-vertical-card
 									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
 									actionJspServletContext="<%= application %>"
@@ -110,7 +114,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
 									actionJspServletContext="<%= application %>"
 									cssClass="entry-display-style"
-									imageUrl="<%= imageURL %>"
+									imageUrl="<%= imagePreviewURL %>"
 									resultRow="<%= row %>"
 									title="<%= dlPortletInstanceSettingsHelper.isShowActions() ? fileEntry.getTitle() : StringPool.BLANK %>"
 								/>
@@ -165,7 +169,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 	var maxHeight = (viewportRegion.height);
 	var maxWidth = (viewportRegion.width);
 
-	var playingVideoIndex = -1;
+	var playingMediaIndex = -1;
 
 	var imageViewer = new A.ImageViewer(
 		{
@@ -199,10 +203,17 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 			maxWidth: maxWidth,
 			on: {
 				'currentIndexChange': function() {
-					if (playingVideoIndex != -1) {
+					if (playingMediaIndex != -1) {
 						Liferay.fire('<portlet:namespace />ImageViewer:currentIndexChange');
 
-						playingVideoIndex = -1;
+						playingMediaIndex = -1;
+					}
+				},
+				'visibleChange': function(event) {
+					if (!event.newVal && playingMediaIndex != -1) {
+						Liferay.fire('<portlet:namespace />ImageViewer:close');
+
+						playingMediaIndex = -1;
 					}
 				}
 			},
@@ -238,7 +249,16 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 		function() {
 			imageViewer.pause();
 
-			playingVideoIndex = this.get('currentIndex');
+			playingMediaIndex = this.get('currentIndex');
+		}
+	);
+
+	Liferay.on(
+		'<portlet:namespace />Audio:play',
+		function() {
+			imageViewer.pause();
+
+			playingMediaIndex = this.get('currentIndex');
 		}
 	);
 

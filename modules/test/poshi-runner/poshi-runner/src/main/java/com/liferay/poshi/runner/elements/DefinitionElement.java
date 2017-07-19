@@ -14,16 +14,7 @@
 
 package com.liferay.poshi.runner.elements;
 
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.AND;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.BACKGROUND;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.FEATURE;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.GIVEN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_PROPERTIES;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_VARIABLES;
-import static com.liferay.poshi.runner.util.StringPool.COLON;
-
-import com.liferay.poshi.runner.util.StringUtil;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Element;
@@ -42,92 +33,134 @@ public class DefinitionElement extends PoshiElement {
 	}
 
 	@Override
-	public void addAttributes(String readableSyntax) {
-		addAttribute("component-name", "portal-acceptance");
-	}
+	public void parseReadableSyntax(String readableSyntax) {
+		for (String readableBlock : getReadableBlocks(readableSyntax)) {
+			if (readableBlock.startsWith("@") &&
+				!readableBlock.startsWith("@description") &&
+				!readableBlock.startsWith("@priority")) {
 
-	@Override
-	public void addElements(String readableSyntax) {
-		List<String> readableBlocks = StringUtil.partition(
-			readableSyntax, READABLE_COMMAND_BLOCK_KEYS);
+				String name = getNameFromAssignment(readableBlock);
+				String value = getQuotedContent(readableBlock);
 
-		for (String readableBlock : readableBlocks) {
-			if (readableBlock.startsWith(FEATURE)) {
-				continue;
-			}
-			else if (readableBlock.startsWith(BACKGROUND)) {
-				List<String> readableCommandBlocks = StringUtil.partition(
-					readableBlock, READABLE_COMMAND_BLOCK_KEYS);
-
-				for (String readableCommandBlock : readableCommandBlocks) {
-					addVariableElements(readableCommandBlock);
-				}
+				addAttribute(name, value);
 
 				continue;
 			}
 
-			PoshiElement poshiElement = PoshiElementFactory.newPoshiElement(
-				readableBlock);
-
-			add(poshiElement);
+			addElementFromReadableSyntax(readableBlock);
 		}
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		prepareVarElementsForReadableSyntax();
-
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(FEATURE);
-		sb.append(COLON);
-		sb.append("\n\n");
-		sb.append(BACKGROUND);
-		sb.append(": This executes once per feature file");
-		sb.append("\n\t");
-		sb.append(GIVEN);
-		sb.append(" ");
-		sb.append(THESE_PROPERTIES);
+		for (PoshiElementAttribute poshiElementAttribute :
+				toPoshiElementAttributes(attributeList())) {
+
+			sb.append("\n@");
+
+			sb.append(poshiElementAttribute.toReadableSyntax());
+		}
+
+		StringBuilder content = new StringBuilder();
 
 		for (PoshiElement poshiElement :
 				toPoshiElements(elements("property"))) {
 
-			sb.append(poshiElement.toReadableSyntax());
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		List<Element> elements = elements("var");
-
-		if (!elements.isEmpty()) {
-			sb.append("\n\t");
-			sb.append(AND);
-			sb.append(" ");
-			sb.append(THESE_VARIABLES);
-
-			for (PoshiElement poshiElement : toPoshiElements(elements())) {
-				sb.append(poshiElement.toReadableSyntax());
-			}
-		}
-
-		sb.append("\n");
+		content.append("\n");
 
 		for (PoshiElement poshiElement : toPoshiElements(elements("set-up"))) {
-			sb.append(poshiElement.toReadableSyntax());
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		sb.append("\n");
+		content.append("\n");
 
 		for (PoshiElement poshiElement :
 				toPoshiElements(elements("tear-down"))) {
 
-			sb.append(poshiElement.toReadableSyntax());
+			content.append(poshiElement.toReadableSyntax());
 		}
 
 		for (PoshiElement poshiElement : toPoshiElements(elements("command"))) {
-			sb.append("\n");
-			sb.append(poshiElement.toReadableSyntax());
+			content.append("\n");
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		return sb.toString();
+		sb.append(createReadableBlock(content.toString()));
+
+		String string = sb.toString();
+
+		return string.trim();
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "definition";
+	}
+
+	@Override
+	protected String getPad() {
+		return "";
+	}
+
+	protected List<String> getReadableBlocks(String readableSyntax) {
+		StringBuilder sb = new StringBuilder();
+
+		List<String> readableBlocks = new ArrayList<>();
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.length() == 0) {
+				continue;
+			}
+
+			if (line.startsWith("@") && !line.startsWith("@description") &&
+				!line.startsWith("@priority")) {
+
+				readableBlocks.add(line);
+
+				continue;
+			}
+
+			if (line.startsWith("definition {")) {
+				continue;
+			}
+
+			String readableBlock = sb.toString();
+
+			readableBlock = readableBlock.trim();
+
+			if (isValidReadableBlock(readableBlock)) {
+				readableBlocks.add(readableBlock);
+
+				sb.setLength(0);
+			}
+
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		return readableBlocks;
+	}
+
+	@Override
+	protected boolean isBalanceValidationRequired(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if ((readableSyntax.startsWith("@") && readableSyntax.contains("{")) ||
+			readableSyntax.startsWith("setUp") ||
+			readableSyntax.startsWith("tearDown") ||
+			readableSyntax.startsWith("test")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

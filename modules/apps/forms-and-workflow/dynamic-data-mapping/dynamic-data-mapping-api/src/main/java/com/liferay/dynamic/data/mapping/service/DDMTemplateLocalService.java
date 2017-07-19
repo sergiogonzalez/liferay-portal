@@ -256,7 +256,6 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	search in the search
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate fetchTemplate(long groupId, long classNameId,
@@ -513,6 +512,19 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTemplatesCount(long groupId, long classNameId, long classPK);
+
+	/**
+	* Returns the number of templates matching the group IDs, class name ID,
+	* and class PK.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param classNameId the primary key of the class name for the template's
+	related model
+	* @param classPK the primary key of the template's related entity
+	* @return the number of matching templates
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTemplatesCount(long[] groupIds, long classNameId, long classPK);
 
 	/**
 	* Returns the number of templates matching the group, class name ID, class

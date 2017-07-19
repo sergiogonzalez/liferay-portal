@@ -15,14 +15,19 @@
 package com.liferay.asset.publisher.web.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
@@ -33,12 +38,17 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -47,10 +57,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
@@ -60,14 +72,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.portlet.PortletConfig;
@@ -281,6 +296,100 @@ public class AssetPublisherDisplayContext {
 		return _attributes;
 	}
 
+	public JSONArray getAutoFieldRulesJSONArray() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String queryLogicIndexesParam = ParamUtil.getString(
+			_request, "queryLogicIndexes");
+
+		int[] queryLogicIndexes = null;
+
+		if (Validator.isNotNull(queryLogicIndexesParam)) {
+			queryLogicIndexes = StringUtil.split(queryLogicIndexesParam, 0);
+		}
+		else {
+			queryLogicIndexes = new int[0];
+
+			for (int i = 0; true; i++) {
+				String queryValues = PrefsParamUtil.getString(
+					_portletPreferences, _request, "queryValues" + i);
+
+				if (Validator.isNull(queryValues)) {
+					break;
+				}
+
+				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, i);
+			}
+
+			if (queryLogicIndexes.length == 0) {
+				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, -1);
+			}
+		}
+
+		JSONArray rulesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (int queryLogicIndex : queryLogicIndexes) {
+			JSONObject ruleJSONObject = JSONFactoryUtil.createJSONObject();
+
+			boolean queryAndOperator = PrefsParamUtil.getBoolean(
+				_portletPreferences, _request,
+				"queryAndOperator" + queryLogicIndex);
+
+			ruleJSONObject.put("queryAndOperator", queryAndOperator);
+
+			boolean queryContains = PrefsParamUtil.getBoolean(
+				_portletPreferences, _request,
+				"queryContains" + queryLogicIndex, true);
+
+			ruleJSONObject.put("queryContains", queryContains);
+
+			String queryValues = StringUtil.merge(
+				_portletPreferences.getValues(
+					"queryValues" + queryLogicIndex, new String[0]));
+
+			String queryName = PrefsParamUtil.getString(
+				_portletPreferences, _request, "queryName" + queryLogicIndex,
+				"assetTags");
+
+			if (Objects.equals(queryName, "assetTags")) {
+				queryValues = ParamUtil.getString(
+					_request, "queryTagNames" + queryLogicIndex, queryValues);
+
+				queryValues = AssetPublisherUtil.filterAssetTagNames(
+					themeDisplay.getScopeGroupId(), queryValues);
+			}
+			else {
+				queryValues = ParamUtil.getString(
+					_request, "queryCategoryIds" + queryLogicIndex,
+					queryValues);
+
+				JSONArray categoryIdsTitles = JSONFactoryUtil.createJSONArray();
+
+				long[] categoryIds = GetterUtil.getLongValues(
+					queryValues.split(","));
+
+				for (long categoryId : categoryIds) {
+					AssetCategory category =
+						AssetCategoryLocalServiceUtil.fetchAssetCategory(
+							categoryId);
+
+					categoryIdsTitles.put(
+						category.getTitle(themeDisplay.getLocale()));
+				}
+
+				ruleJSONObject.put("categoryIdsTitles", categoryIdsTitles);
+			}
+
+			ruleJSONObject.put("queryValues", queryValues);
+			ruleJSONObject.put("type", queryName);
+
+			rulesJSONArray.put(ruleJSONObject);
+		}
+
+		return rulesJSONArray;
+	}
+
 	public long[] getAvailableClassNameIds() {
 		if (_availableClassNameIds == null) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -292,6 +401,34 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _availableClassNameIds;
+	}
+
+	public String getCategorySelectorURL() {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				_request, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter(
+				"eventName",
+				_portletResponse.getNamespace() + "selectCategory");
+			portletURL.setParameter(
+				"selectedCategories", "{selectedCategories}");
+			portletURL.setParameter("singleSelect", "{singleSelect}");
+			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	public long[] getClassNameIds() {
@@ -614,6 +751,11 @@ public class AssetPublisherDisplayContext {
 		return _rssName;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link
+	 *             #getScopeAssetPublisherAddItemHolders(int)}
+	 */
+	@Deprecated
 	public Map<Long, Map<String, PortletURL>> getScopeAddPortletURLs(int max)
 		throws Exception {
 
@@ -623,28 +765,16 @@ public class AssetPublisherDisplayContext {
 			return Collections.emptyMap();
 		}
 
-		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs = new HashMap();
-
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_portletResponse);
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
+		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs =
+			new HashMap<>();
 
 		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(_portletRequest);
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
-		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+		String redirect = _getScopeAssetPortletRedirect(
 			liferayPortletRequest, liferayPortletResponse);
-
-		redirectURL.setParameter("redirect", currentURLObj.toString());
-
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		String redirect = redirectURL.toString();
 
 		for (long groupId : groupIds) {
 			Map<String, PortletURL> addPortletURLs =
@@ -663,6 +793,47 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return scopeAddPortletURLs;
+	}
+
+	public Map<Long, List<AssetPublisherAddItemHolder>>
+			getScopeAssetPublisherAddItemHolders(int max)
+		throws Exception {
+
+		long[] groupIds = getGroupIds();
+
+		if (groupIds.length == 0) {
+			return Collections.emptyMap();
+		}
+
+		Map<Long, List<AssetPublisherAddItemHolder>>
+			scopeAssetPublisherAddItemHolders = new HashMap<>();
+
+		LiferayPortletRequest liferayPortletRequest =
+			PortalUtil.getLiferayPortletRequest(_portletRequest);
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+		String redirect = _getScopeAssetPortletRedirect(
+			liferayPortletRequest, liferayPortletResponse);
+
+		for (long groupId : groupIds) {
+			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
+				AssetUtil.getAssetPublisherAddItemHolders(
+					liferayPortletRequest, liferayPortletResponse, groupId,
+					getClassNameIds(), getClassTypeIds(),
+					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
+
+			if (ListUtil.isNotEmpty(assetPublisherAddItemHolders)) {
+				scopeAssetPublisherAddItemHolders.put(
+					groupId, assetPublisherAddItemHolders);
+			}
+
+			if (scopeAssetPublisherAddItemHolders.size() > max) {
+				break;
+			}
+		}
+
+		return scopeAssetPublisherAddItemHolders;
 	}
 
 	public Long getScopeGroupId() {
@@ -715,6 +886,29 @@ public class AssetPublisherDisplayContext {
 		return _socialBookmarksDisplayStyle;
 	}
 
+	public String getTagSelectorURL() {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				_request, AssetTag.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter(
+				"eventName", _portletResponse.getNamespace() + "selectTag");
+			portletURL.setParameter("selectedTags", "{selectedTags}");
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	public TimeZone getTimeZone() {
 		if (_timeZone != null) {
 			return _timeZone;
@@ -739,6 +933,18 @@ public class AssetPublisherDisplayContext {
 		_userId = themeDisplay.getUserId();
 
 		return _userId;
+	}
+
+	public String getVocabularyIds() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				themeDisplay.getScopeGroupId());
+
+		return ListUtil.toString(
+			vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
 	}
 
 	public AssetEntry incrementViewCounter(AssetEntry assetEntry)
@@ -1221,6 +1427,27 @@ public class AssetPublisherDisplayContext {
 
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
+	}
+
+	private String _getScopeAssetPortletRedirect(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+		redirectURL.setParameter(
+			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
+
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		redirectURL.setParameter("redirect", currentURLObj.toString());
+
+		redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return redirectURL.toString();
 	}
 
 	private Integer _abstractLength;

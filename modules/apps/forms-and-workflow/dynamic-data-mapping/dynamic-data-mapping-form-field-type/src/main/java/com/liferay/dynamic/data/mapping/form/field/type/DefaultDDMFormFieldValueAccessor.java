@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 
@@ -28,6 +29,10 @@ public class DefaultDDMFormFieldValueAccessor
 	@Override
 	public String getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		Value value = ddmFormFieldValue.getValue();
+
+		if (value == null) {
+			return StringPool.BLANK;
+		}
 
 		return value.getString(locale);
 	}

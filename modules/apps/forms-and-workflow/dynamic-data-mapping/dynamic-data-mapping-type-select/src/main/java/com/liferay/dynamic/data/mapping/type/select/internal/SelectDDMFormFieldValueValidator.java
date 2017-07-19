@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,33 +52,25 @@ public class SelectDDMFormFieldValueValidator
 			ddmFormField.getProperty("dataSourceType"), "manual");
 
 		if (Objects.equals(dataSourceType, "manual")) {
-			validateDDMFormFieldOptions(ddmFormField, value);
-		}
-	}
-
-	protected JSONArray createJSONArray(String fieldName, String json)
-		throws DDMFormFieldValueValidationException {
-
-		try {
-			return jsonFactory.createJSONArray(json);
-		}
-		catch (JSONException jsone) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsone, jsone);
+			try {
+				validateDDMFormFieldOptions(ddmFormField, value);
 			}
+			catch (DDMFormFieldValueValidationException ddmffvve) {
+				throw ddmffvve;
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 
-			throw new DDMFormFieldValueValidationException(
-				String.format(
-					"Invalid data stored for select field \"%s\"", fieldName));
+				throw new DDMFormFieldValueValidationException(e);
+			}
 		}
 	}
 
 	protected void validateDDMFormFieldOptions(
 			DDMFormField ddmFormField, Value value)
-		throws DDMFormFieldValueValidationException {
+		throws Exception {
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
@@ -108,10 +99,9 @@ public class SelectDDMFormFieldValueValidator
 	protected void validateSelectedValue(
 			DDMFormField ddmFormField, Set<String> optionValues,
 			String selectedValue)
-		throws DDMFormFieldValueValidationException {
+		throws Exception {
 
-		JSONArray jsonArray = createJSONArray(
-			ddmFormField.getName(), selectedValue);
+		JSONArray jsonArray = jsonFactory.createJSONArray(selectedValue);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			if (Validator.isNull(jsonArray.getString(i)) &&

@@ -32,6 +32,8 @@ public interface JournalContent {
 	public void clearCache(
 		long groupId, String articleId, String ddmTemplateKey);
 
+	public void clearCache(String ddmTemplateKey);
+
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId);
 

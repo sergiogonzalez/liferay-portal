@@ -17,7 +17,7 @@ package com.liferay.staging.processes.web.internal.portlet.action;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationService;
@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import com.liferay.taglib.ui.util.SessionTreeJSClicks;
-import com.liferay.trash.kernel.service.TrashEntryService;
+import com.liferay.trash.service.TrashEntryService;
 
 import java.io.Serializable;
 
@@ -245,9 +245,8 @@ public class EditPublishConfigurationMVCActionCommand
 		String openNodes = SessionTreeJSClicks.getOpenNodes(
 			portletRequest, treeId + "SelectedNode");
 
-		String selectedLayoutsJSON =
-			ExportImportHelperUtil.getSelectedLayoutsJSON(
-				groupId, privateLayout, openNodes);
+		String selectedLayoutsJSON = _exportImportHelper.getSelectedLayoutsJSON(
+			groupId, privateLayout, openNodes);
 
 		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
@@ -310,6 +309,10 @@ public class EditPublishConfigurationMVCActionCommand
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 	private ExportImportConfigurationService _exportImportConfigurationService;
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
 	private GroupLocalService _groupLocalService;
 
 	@Reference

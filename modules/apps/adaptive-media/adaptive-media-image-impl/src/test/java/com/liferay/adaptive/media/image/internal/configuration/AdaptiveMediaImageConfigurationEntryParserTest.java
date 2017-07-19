@@ -14,9 +14,6 @@
 
 package com.liferay.adaptive.media.image.internal.configuration;
 
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-
 import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
 import com.liferay.portal.kernel.util.HttpUtil;
 
@@ -32,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -46,27 +44,27 @@ public class AdaptiveMediaImageConfigurationEntryParserTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		mockStatic(HttpUtil.class);
+		PowerMockito.mockStatic(HttpUtil.class);
 
-		when(
+		Mockito.when(
 			HttpUtil.encodeURL(Mockito.eq("desc"))
 		).thenReturn(
 			"desc"
 		);
 
-		when(
+		Mockito.when(
 			HttpUtil.decodeURL(Mockito.eq("desc"))
 		).thenReturn(
 			"desc"
 		);
 
-		when(
+		Mockito.when(
 			HttpUtil.encodeURL(Mockito.eq("test"))
 		).thenReturn(
 			"test"
 		);
 
-		when(
+		Mockito.when(
 			HttpUtil.decodeURL(Mockito.eq("test"))
 		).thenReturn(
 			"test"
@@ -121,13 +119,13 @@ public class AdaptiveMediaImageConfigurationEntryParserTest {
 
 	@Test
 	public void testEncodedDescription() {
-		when(
+		Mockito.when(
 			HttpUtil.encodeURL(Mockito.eq("desc:;"))
 		).thenReturn(
 			"desc%3A%3B"
 		);
 
-		when(
+		Mockito.when(
 			HttpUtil.decodeURL(Mockito.eq("desc%3A%3B"))
 		).thenReturn(
 			"desc:;"
@@ -150,13 +148,13 @@ public class AdaptiveMediaImageConfigurationEntryParserTest {
 
 	@Test
 	public void testEncodedName() {
-		when(
+		Mockito.when(
 			HttpUtil.encodeURL(Mockito.eq("test:;"))
 		).thenReturn(
 			"test%3A%3B"
 		);
 
-		when(
+		Mockito.when(
 			HttpUtil.decodeURL(Mockito.eq("test%3A%3B"))
 		).thenReturn(
 			"test:;"

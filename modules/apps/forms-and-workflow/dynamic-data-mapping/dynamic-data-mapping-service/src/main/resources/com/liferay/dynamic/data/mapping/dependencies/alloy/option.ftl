@@ -24,13 +24,15 @@
 
 <#assign
 	namespacedParentFieldName = namespacedParentName + parentFieldNamespace
-
-	parentFieldRawValues = getterUtil.getStringValues(jsonFactoryUtil.looseDeserialize(parentFieldRawValue))
-
-	selected = paramUtil.getParameterValues(request, namespacedParentFieldName, parentFieldRawValues)?seq_contains(fieldStructure.value)
 />
 
 <#if stringUtil.equals(parentType, "select")>
+	<#assign
+		parentFieldRawValues = getterUtil.getStringValues(jsonFactoryUtil.looseDeserialize(parentFieldRawValue))
+
+		selected = paramUtil.getParameterValues(request, namespacedParentFieldName, parentFieldRawValues)?seq_contains(fieldStructure.value)
+	/>
+
 	<@liferay_aui.option
 		cssClass=cssClass
 		label=escapeAttribute(fieldStructure.label)
@@ -38,7 +40,17 @@
 		value=escape(fieldStructure.value)
 	/>
 <#else>
-	<@liferay_aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentFieldName}" type="radio" value=fieldStructure.value>
+	<#assign
+		checked = paramUtil.getString(request, namespacedParentFieldName, parentFieldRawValue) == fieldStructure.value
+	/>
+	<@liferay_aui.input
+		checked=checked
+		cssClass=cssClass
+		label=escape(fieldStructure.label)
+		name="${namespacedParentFieldName}"
+		type="radio"
+		value=fieldStructure.value
+	>
 		<#if stringUtil.equals(parentFieldStructure.required, "true")>
 			<@liferay_aui.validator name="required" />
 		</#if>

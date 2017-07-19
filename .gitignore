@@ -48,7 +48,6 @@
 /lib/development/ant-apache-bsf.jar
 /lib/development/appium.jar
 /lib/development/catalina.jar
-/lib/development/cobertura.jar
 /lib/development/com.liferay.ant.bnd.jar
 /lib/development/com.liferay.util.taglib.compat.jar
 /lib/development/db2jcc.jar
@@ -308,6 +307,7 @@
 /lib/portal/xuggle-xuggler-noarch.jar
 /lib/portal/xz.jar
 /lib/portal/yui-compressor.jar
+/modules/private
 /nbproject/private
 /out
 /portal-client/*.ipr
@@ -422,7 +422,6 @@
 /test-results
 /test.*.properties
 /tmp
-/tools/cobertura-agent/classes
 /tools/maven/*.asc
 /tools/node*
 /tools/sdk
@@ -461,14 +460,3 @@
 /util-taglib/util-taglib*.jar
 /WEB-INF
 _sass_cache_*.css
-cobertura.ser
-
-!/.gradle
-/.gradle/*
-!/.gradle/caches
-/.gradle/caches/*
-!/.gradle/caches/modules-2
-/.gradle/caches/modules-2/*
-!/.gradle/caches/modules-2/files-2.1
-/.gradle/caches/modules-2/files-2.1/**/*-sources.jar
-/.gradle/caches/modules-2/files-2.1/com.liferay.portal/*/*-SNAPSHOT
