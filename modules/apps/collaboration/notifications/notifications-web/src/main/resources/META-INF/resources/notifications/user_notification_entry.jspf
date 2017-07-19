@@ -59,13 +59,12 @@ if (userNotificationEvent.isArchived()) {
 				<div class="body-container">
 					<%= userNotificationFeedEntry.getBody() %>
 				</div>
-
-				<div class="timestamp">
-					<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
-						<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
-					</span>
-				</div>
 			</a>
+			<div class="timestamp">
+				<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
+					<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
+				</span>
+			</div>
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>
 </c:choose>
