@@ -108,11 +108,10 @@ public class NotificationsPortlet extends MVCPortlet {
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
 					false);
 
-		for (UserNotificationEvent notification : userNotificationEvents) {
-			notification.setArchived(true);
+		for (UserNotificationEvent userNotificationEvent :
+				userNotificationEvents) {
 
-			_userNotificationEventLocalService.updateUserNotificationEvent(
-				notification);
+			updateArchived(userNotificationEvent);
 		}
 
 		ResourceBundle resourceBundle =
@@ -277,6 +276,12 @@ public class NotificationsPortlet extends MVCPortlet {
 		if (userNotificationEvent == null) {
 			return;
 		}
+
+		updateArchived(userNotificationEvent);
+	}
+
+	protected void updateArchived(UserNotificationEvent userNotificationEvent)
+		throws Exception {
 
 		userNotificationEvent.setArchived(true);
 
