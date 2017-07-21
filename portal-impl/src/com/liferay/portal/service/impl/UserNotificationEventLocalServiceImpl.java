@@ -174,9 +174,6 @@ public class UserNotificationEventLocalServiceImpl
 					updateUserNotificationEvent(userNotificationEvent);
 				}
 
-				intervalActionProcessor.incrementStart(
-					userNotificationEvents.size());
-
 				return null;
 			});
 
