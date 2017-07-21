@@ -82,18 +82,6 @@ public class NotificationsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void markAllAsRead(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] userNotificationEventIds = ParamUtil.getLongValues(
-			actionRequest, "rowIds");
-
-		for (long userNotificationEventId : userNotificationEventIds) {
-			updateArchived(userNotificationEventId);
-		}
-	}
-
 	public void markAllNotificationsAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -124,7 +112,7 @@ public class NotificationsPortlet extends MVCPortlet {
 				"all-notifications-were-marked-as-read-successfully"));
 	}
 
-	public void markAsRead(
+	public void markNotificationAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -137,6 +125,18 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
+		}
+	}
+
+	public void markNotificationsAsRead(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] userNotificationEventIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
+
+		for (long userNotificationEventId : userNotificationEventIds) {
+			updateArchived(userNotificationEventId);
 		}
 	}
 
@@ -159,11 +159,11 @@ public class NotificationsPortlet extends MVCPortlet {
 			if (actionName.equals("deleteUserNotificationEvent")) {
 				deleteUserNotificationEvent(actionRequest, actionResponse);
 			}
-			else if (actionName.equals("markAllAsRead")) {
-				markAllAsRead(actionRequest, actionResponse);
+			else if (actionName.equals("markNotificationsAsRead")) {
+				markNotificationsAsRead(actionRequest, actionResponse);
 			}
-			else if (actionName.equals("markAsRead")) {
-				markAsRead(actionRequest, actionResponse);
+			else if (actionName.equals("markNotificationAsRead")) {
+				markNotificationAsRead(actionRequest, actionResponse);
 			}
 			else if (actionName.equals("unsubscribe")) {
 				unsubscribe(actionRequest, actionResponse);
