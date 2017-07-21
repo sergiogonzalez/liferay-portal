@@ -100,7 +100,7 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 
 		form.attr('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markAllAsRead" />');
+		submitForm(form, '<portlet:actionURL name="markNotificationsAsRead" />');
 	}
 </aui:script>
 

@@ -15,8 +15,10 @@
 package com.liferay.notifications.web.internal.portlet;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
@@ -80,19 +82,31 @@ public class NotificationsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void markAllAsRead(
+	public void markAllNotificationsAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] userNotificationEventIds = ParamUtil.getLongValues(
-			actionRequest, "rowIds");
+		final ThemeDisplay themeDisplay =
+			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		for (long userNotificationEventId : userNotificationEventIds) {
-			updateArchived(userNotificationEventId);
-		}
+		boolean actionRequired = ParamUtil.getBoolean(
+			actionRequest, "actionRequired");
+
+		_userNotificationEventLocalService.archiveUserNotificationEvents(
+			themeDisplay.getUserId(),
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle,
+				"all-notifications-were-marked-as-read-successfully"));
 	}
 
-	public void markAsRead(
+	public void markNotificationAsRead(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -105,6 +119,18 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
+		}
+	}
+
+	public void markNotificationsAsRead(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] userNotificationEventIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
+
+		for (long userNotificationEventId : userNotificationEventIds) {
+			updateArchived(userNotificationEventId);
 		}
 	}
 
@@ -127,11 +153,11 @@ public class NotificationsPortlet extends MVCPortlet {
 			if (actionName.equals("deleteUserNotificationEvent")) {
 				deleteUserNotificationEvent(actionRequest, actionResponse);
 			}
-			else if (actionName.equals("markAllAsRead")) {
-				markAllAsRead(actionRequest, actionResponse);
+			else if (actionName.equals("markNotificationsAsRead")) {
+				markNotificationsAsRead(actionRequest, actionResponse);
 			}
-			else if (actionName.equals("markAsRead")) {
-				markAsRead(actionRequest, actionResponse);
+			else if (actionName.equals("markNotificationAsRead")) {
+				markNotificationAsRead(actionRequest, actionResponse);
 			}
 			else if (actionName.equals("unsubscribe")) {
 				unsubscribe(actionRequest, actionResponse);
@@ -244,6 +270,12 @@ public class NotificationsPortlet extends MVCPortlet {
 		if (userNotificationEvent == null) {
 			return;
 		}
+
+		updateArchived(userNotificationEvent);
+	}
+
+	protected void updateArchived(UserNotificationEvent userNotificationEvent)
+		throws PortalException {
 
 		userNotificationEvent.setArchived(true);
 
