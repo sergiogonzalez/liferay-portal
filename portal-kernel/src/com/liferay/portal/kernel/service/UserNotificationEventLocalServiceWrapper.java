@@ -460,6 +460,16 @@ public class UserNotificationEventLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean actionRequired,
+		boolean archived, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserNotificationEvent> orderByComparator) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
+			deliveryType, actionRequired, archived, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
 		long userId, int deliveryType, boolean archived) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
 			deliveryType, archived);
@@ -521,6 +531,16 @@ public class UserNotificationEventLocalServiceWrapper
 		boolean actionRequired, int start, int end) {
 		return _userNotificationEventLocalService.getDeliveredUserNotificationEvents(userId,
 			deliveryType, delivered, actionRequired, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserNotificationEvent> orderByComparator) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEvents(userId,
+			deliveryType, delivered, actionRequired, start, end,
+			orderByComparator);
 	}
 
 	@Override
