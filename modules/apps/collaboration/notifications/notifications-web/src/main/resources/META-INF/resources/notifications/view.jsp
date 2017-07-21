@@ -32,34 +32,9 @@ int allNotificationEventsCount =
 			UserNotificationDeliveryConstants.TYPE_WEBSITE,
 			true, actionRequired);
 
-if ("read".equals(filterBy) || "unread".equals(filterBy)) {
-	boolean archived = "read".equals(filterBy);
-
-	notificationsSearchContainer.setTotal(
-		UserNotificationEventLocalServiceUtil.
-			getArchivedUserNotificationEventsCount(
-				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				actionRequired, archived));
-
-	notificationsSearchContainer.setResults(
-		UserNotificationEventLocalServiceUtil.
-			getArchivedUserNotificationEvents(
-				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired,
-				archived, notificationsSearchContainer.getStart(),
-				notificationsSearchContainer.getEnd()));
-}
-else {
-	notificationsSearchContainer.setTotal(allNotificationEventsCount);
-	notificationsSearchContainer.setResults(
-		UserNotificationEventLocalServiceUtil.
-			getDeliveredUserNotificationEvents(
-				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
-				actionRequired, notificationsSearchContainer.getStart(),
-				notificationsSearchContainer.getEnd()));
-}
+NotificationsUtil.populateResults(
+	themeDisplay.getUserId(), actionRequired, filterBy, orderByCol, orderByType,
+	notificationsSearchContainer);
 %>
 
 <aui:nav-bar markupView="lexicon">
