@@ -25,13 +25,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest, currentURLObj, null, actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications");
 notificationsSearchContainer.setId("userNotificationEvents");
 
-int allNotificationEventsCount =
-	UserNotificationEventLocalServiceUtil.
-		getDeliveredUserNotificationEventsCount(
-			themeDisplay.getUserId(),
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			true, actionRequired);
-
 NotificationsUtil.populateResults(
 	themeDisplay.getUserId(), actionRequired, filterBy, orderByCol, orderByType,
 	notificationsSearchContainer);
@@ -64,7 +57,6 @@ NotificationsUtil.populateResults(
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= allNotificationEventsCount == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userNotificationEvents"
 >
