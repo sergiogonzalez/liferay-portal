@@ -27,13 +27,23 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  */
 public class NotificationsUtil {
 
+	public static long getAllNotificationsCount(
+			long userId, boolean actionRequired)
+		throws PortalException {
+
+		long allNotificationsCount =
+			UserNotificationEventLocalServiceUtil.
+				getDeliveredUserNotificationEventsCount(
+					userId, _DELIVERY_TYPE, true, actionRequired);
+
+		return allNotificationsCount;
+	}
+
 	public static void populateResults(
 			long userId, boolean actionRequired, String navigation,
 			String orderByType,
 			SearchContainer<UserNotificationEvent> searchContainer)
 		throws PortalException {
-
-		int deliveryType = UserNotificationDeliveryConstants.TYPE_WEBSITE;
 
 		OrderByComparator<UserNotificationEvent> obc =
 			new UserNotificationEventTimestampComparator(
@@ -43,12 +53,12 @@ public class NotificationsUtil {
 			searchContainer.setTotal(
 				UserNotificationEventLocalServiceUtil.
 					getDeliveredUserNotificationEventsCount(
-						userId, deliveryType, true, actionRequired));
+						userId, _DELIVERY_TYPE, true, actionRequired));
 
 			searchContainer.setResults(
 				UserNotificationEventLocalServiceUtil.
 					getDeliveredUserNotificationEvents(
-						userId, deliveryType, true, actionRequired,
+						userId, _DELIVERY_TYPE, true, actionRequired,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						obc));
 		}
@@ -62,15 +72,18 @@ public class NotificationsUtil {
 			searchContainer.setTotal(
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEventsCount(
-						userId, deliveryType, actionRequired, archived));
+						userId, _DELIVERY_TYPE, actionRequired, archived));
 
 			searchContainer.setResults(
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEvents(
-						userId, deliveryType, actionRequired, archived,
+						userId, _DELIVERY_TYPE, actionRequired, archived,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						obc));
 		}
 	}
+
+	private static final int _DELIVERY_TYPE =
+		UserNotificationDeliveryConstants.TYPE_WEBSITE;
 
 }
