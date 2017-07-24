@@ -91,7 +91,7 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), null, LocaleUtil.JAPAN);
 
-		String firstDoc = "ContentSearch.txt";
+		String firstDoc = "content_search.txt";
 
 		addFileEntry(firstDoc);
 
@@ -118,9 +118,9 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), null, LocaleUtil.JAPAN);
 
-		String firstDoc = "Japanese1.txt";
-		String secondDoc = "Japanese2.txt";
-		String thirdDoc = "Japanese3.txt";
+		String firstDoc = "japanese_1.txt";
+		String secondDoc = "japanese_2.txt";
+		String thirdDoc = "japanese_3.txt";
 
 		addFileEntry(firstDoc);
 		addFileEntry(secondDoc);
@@ -146,8 +146,8 @@ public class DLFileEntryIndexerLocalizedContentTest {
 	public void testSiteLocale() throws Exception {
 		Group testGroup = GroupTestUtil.addGroup();
 
-		String firstDoc = "LocaleJa.txt";
-		String secondDoc = "LocaleEn.txt";
+		String firstDoc = "locale_ja.txt";
+		String secondDoc = "locale_en.txt";
 
 		List<String> contentStringsJa = new ArrayList<>(
 			Collections.singletonList("content_ja_JP"));
