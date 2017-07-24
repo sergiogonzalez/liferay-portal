@@ -115,7 +115,7 @@ NotificationsUtil.populateResults(
 
 		form.attr('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markAllAsRead" />');
+		submitForm(form, '<portlet:actionURL name="markAllAsRead"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 	}
 </aui:script>
 
