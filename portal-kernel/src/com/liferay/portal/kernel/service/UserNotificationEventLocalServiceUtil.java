@@ -436,10 +436,10 @@ public class UserNotificationEventLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserNotificationEvent> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserNotificationEvent> obc) {
 		return getService()
 				   .getArchivedUserNotificationEvents(userId, deliveryType,
-			actionRequired, archived, start, end, orderByComparator);
+			actionRequired, archived, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getArchivedUserNotificationEvents(
@@ -508,10 +508,10 @@ public class UserNotificationEventLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserNotificationEvent> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserNotificationEvent> obc) {
 		return getService()
 				   .getDeliveredUserNotificationEvents(userId, deliveryType,
-			delivered, actionRequired, start, end, orderByComparator);
+			delivered, actionRequired, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
