@@ -337,7 +337,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator);
+		OrderByComparator<UserNotificationEvent> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
@@ -381,7 +381,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public List<UserNotificationEvent> getDeliveredUserNotificationEvents(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator);
+		OrderByComparator<UserNotificationEvent> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserNotificationEvent> getDeliveredUserNotificationEvents(
