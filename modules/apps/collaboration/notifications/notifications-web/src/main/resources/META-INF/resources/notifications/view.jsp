@@ -28,7 +28,7 @@ SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest
 
 notificationsSearchContainer.setId("userNotificationEvents");
 
-NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navigation, orderByCol, notificationsSearchContainer);
+NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navigation, orderByType, notificationsSearchContainer);
 %>
 
 <aui:nav-bar markupView="lexicon">
