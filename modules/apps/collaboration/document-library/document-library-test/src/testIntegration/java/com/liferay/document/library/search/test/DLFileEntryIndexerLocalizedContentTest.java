@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -50,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -184,7 +186,7 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		return addFileEntry(fileName, _group.getGroupId());
 	}
 
-	protected FileEntry addFileEntry(String fileName, Long groupId)
+	protected FileEntry addFileEntry(String fileName, long groupId)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -225,19 +227,21 @@ public class DLFileEntryIndexerLocalizedContentTest {
 	private static List<String> _getFieldValues(
 		String prefix, Document document) {
 
-		List<String> fields = new ArrayList<>();
+		List<String> filteredFields = new ArrayList<>();
 
-		for (String field : document.getFields().keySet()) {
+		Map<String, Field> fields = document.getFields();
+
+		for (String field : fields.keySet()) {
 			if (field.contains(prefix)) {
-				fields.add(field);
+				filteredFields.add(field);
 			}
 		}
 
-		return fields;
+		return filteredFields;
 	}
 
 	private SearchContext _getSearchContext(
-			String searchTerm, Locale locale, Long groupId)
+			String searchTerm, Locale locale, long groupId)
 		throws Exception {
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -268,7 +272,7 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		return _search(searchTerm, locale, _group.getGroupId());
 	}
 
-	private Document _search(String searchTerm, Locale locale, Long groupId) {
+	private Document _search(String searchTerm, Locale locale, long groupId) {
 		try {
 			SearchContext searchContext = _getSearchContext(
 				searchTerm, locale, groupId);

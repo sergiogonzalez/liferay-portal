@@ -389,12 +389,12 @@ public class DLFileEntryIndexer
 			if (indexContent) {
 				if (is != null) {
 					try {
-						String defaultLocale = PortalUtil.getSiteDefaultLocale(
-							dlFileEntry.getGroupId()).toString();
+						Locale defaultLocale = PortalUtil.getSiteDefaultLocale(
+							dlFileEntry.getGroupId());
 
 						String localizedField =
 							LocalizationUtil.getLocalizedName(
-								Field.CONTENT, defaultLocale);
+								Field.CONTENT, defaultLocale.toString());
 
 						document.addFile(
 							localizedField, is, dlFileEntry.getTitle(),
