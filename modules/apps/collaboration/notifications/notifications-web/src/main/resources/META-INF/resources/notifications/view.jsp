@@ -18,8 +18,16 @@
 
 <%
 boolean actionRequired = ParamUtil.getBoolean(request, "actionRequired");
+String filterBy = ParamUtil.getString(request, "filterBy", "all");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "date");
+String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
-int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, actionRequired);
+SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest, currentURLObj, null, actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications");
+notificationsSearchContainer.setId("userNotificationEvents");
+
+NotificationsUtil.populateResults(
+	themeDisplay.getUserId(), actionRequired, filterBy, orderByCol, orderByType,
+	notificationsSearchContainer);
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -49,7 +57,6 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= userNotificationEventsCount == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userNotificationEvents"
 >
@@ -61,6 +68,21 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 		/>
 	</liferay-frontend:management-bar-buttons>
 
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all", "unread", "read"} %>'
+			navigationParam="filterBy"
+			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"date"} %>'
+			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markAsRead();" %>' icon="times" label="mark-as-read" />
 	</liferay-frontend:management-bar-action-buttons>
@@ -70,16 +92,9 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 	<aui:form action="<%= currentURL %>" cssClass="row" method="get" name="fm">
 		<div class="user-notifications">
 			<liferay-ui:search-container
-				emptyResultsMessage='<%= actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications" %>'
-				id="userNotificationEvents"
-				iteratorURL="<%= currentURLObj %>"
 				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-				total="<%= userNotificationEventsCount %>"
+				searchContainer="<%= notificationsSearchContainer %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEvents(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, actionRequired, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.UserNotificationEvent"
 					keyProperty="userNotificationEventId"
@@ -100,7 +115,7 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 
 		form.attr('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markAllAsRead" />');
+		submitForm(form, '<portlet:actionURL name="markAllAsRead"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 	}
 </aui:script>
 

@@ -18,8 +18,6 @@ import com.liferay.portal.app.license.AppLicenseVerifier;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.Collection;
@@ -138,15 +136,20 @@ public class AppResolverHook implements ResolverHook {
 		}
 	}
 
-	private Properties _getAppLicenseProperties(Bundle bundle)
-		throws IOException {
-
+	private Properties _getAppLicenseProperties(Bundle bundle) {
 		Properties properties = new Properties();
 
-		URL url = bundle.getEntry("/META-INF/marketplace.properties");
+		try {
+			URL url = bundle.getEntry("/META-INF/marketplace.properties");
 
-		if (url != null) {
-			properties.load(url.openStream());
+			if (url != null) {
+				properties.load(url.openStream());
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to read bundle properties", e);
+			}
 		}
 
 		return properties;
