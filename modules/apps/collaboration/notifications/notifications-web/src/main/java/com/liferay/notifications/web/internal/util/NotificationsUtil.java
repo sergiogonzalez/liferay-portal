@@ -28,17 +28,35 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class NotificationsUtil {
 
 	public static void populateResults(
-			long userId, boolean actionRequired, String filterBy,
-			String orderByCol, String orderByType,
+			long userId, boolean actionRequired, String navigation,
+			String orderByType,
 			SearchContainer<UserNotificationEvent> searchContainer)
 		throws PortalException {
 
 		int deliveryType = UserNotificationDeliveryConstants.TYPE_WEBSITE;
+
 		OrderByComparator<UserNotificationEvent> orderByComparator =
 			new UserNotificationEventComparator(orderByType.equals("asc"));
 
-		if ("read".equals(filterBy) || "unread".equals(filterBy)) {
-			boolean archived = "read".equals(filterBy);
+		if (navigation.equals("all")) {
+			searchContainer.setTotal(
+				UserNotificationEventLocalServiceUtil.
+					getDeliveredUserNotificationEventsCount(
+						userId, deliveryType, true, actionRequired));
+
+			searchContainer.setResults(
+				UserNotificationEventLocalServiceUtil.
+					getDeliveredUserNotificationEvents(
+						userId, deliveryType, true, actionRequired,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						orderByComparator));
+		}
+		else {
+			boolean archived = false;
+
+			if (navigation.equals("read")) {
+				archived = true;
+			}
 
 			searchContainer.setTotal(
 				UserNotificationEventLocalServiceUtil.
@@ -49,19 +67,6 @@ public class NotificationsUtil {
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEvents(
 						userId, deliveryType, actionRequired, archived,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator));
-		}
-		else {
-			searchContainer.setTotal(
-				UserNotificationEventLocalServiceUtil.
-					getDeliveredUserNotificationEventsCount(
-						userId, deliveryType, true, actionRequired));
-
-			searchContainer.setResults(
-				UserNotificationEventLocalServiceUtil.
-					getDeliveredUserNotificationEvents(
-						userId, deliveryType, true, actionRequired,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						orderByComparator));
 		}
