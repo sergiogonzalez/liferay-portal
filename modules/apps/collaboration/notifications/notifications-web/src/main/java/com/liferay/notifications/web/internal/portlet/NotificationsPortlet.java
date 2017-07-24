@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import java.io.IOException;
+
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -104,6 +106,8 @@ public class NotificationsPortlet extends MVCPortlet {
 			LanguageUtil.get(
 				resourceBundle,
 				"all-notifications-were-marked-as-read-successfully"));
+
+		_setRedirect(actionRequest, actionResponse);
 	}
 
 	public void markNotificationAsRead(
@@ -115,11 +119,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		updateArchived(userNotificationEventId);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionResponse.sendRedirect(redirect);
-		}
+		_setRedirect(actionRequest, actionResponse);
 	}
 
 	public void markNotificationsAsRead(
@@ -223,11 +223,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			LanguageUtil.get(
 				resourceBundle, "your-configuration-was-saved-sucessfully"));
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionResponse.sendRedirect(redirect);
-		}
+		_setRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference(
@@ -281,6 +277,17 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		_userNotificationEventLocalService.updateUserNotificationEvent(
 			userNotificationEvent);
+	}
+
+	private void _setRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionResponse.sendRedirect(redirect);
+		}
 	}
 
 	@Reference(
