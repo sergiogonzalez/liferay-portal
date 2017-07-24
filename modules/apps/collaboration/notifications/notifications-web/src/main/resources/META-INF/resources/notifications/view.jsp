@@ -58,7 +58,7 @@ NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navi
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= notificationsSearchContainer.getTotal() == 0 %>"
+	disabled="<%= NotificationsUtil.getAllNotificationsCount(themeDisplay.getUserId(), actionRequired) == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userNotificationEvents"
 >
