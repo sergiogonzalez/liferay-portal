@@ -29,6 +29,10 @@ SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest
 notificationsSearchContainer.setId("userNotificationEvents");
 
 NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navigation, orderByType, notificationsSearchContainer);
+
+PortletURL navigationURLObj = PortletURLUtil.clone(currentURLObj, renderResponse);
+
+navigationURLObj.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -73,14 +77,14 @@ NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navi
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "unread", "read"} %>'
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
+			portletURL="<%= PortletURLUtil.clone(navigationURLObj, renderResponse) %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"date"} %>'
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
+			portletURL="<%= PortletURLUtil.clone(navigationURLObj, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
