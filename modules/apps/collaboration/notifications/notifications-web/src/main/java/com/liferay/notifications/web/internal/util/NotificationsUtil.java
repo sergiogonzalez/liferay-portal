@@ -35,7 +35,7 @@ public class NotificationsUtil {
 
 		int deliveryType = UserNotificationDeliveryConstants.TYPE_WEBSITE;
 		OrderByComparator<UserNotificationEvent> orderByComparator =
-			new UserNotificationEventComparator(orderByCol, orderByType);
+			new UserNotificationEventComparator(orderByType.equals("asc"));
 
 		if ("read".equals(filterBy) || "unread".equals(filterBy)) {
 			boolean archived = "read".equals(filterBy);

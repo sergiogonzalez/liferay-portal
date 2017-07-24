@@ -22,10 +22,16 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class UserNotificationEventComparator
 	extends OrderByComparator<UserNotificationEvent> {
 
-	public UserNotificationEventComparator(
-		String orderByCol, String orderByType) {
+	public static final String ORDER_BY_ASC =
+		"UserNotificationEvent.timestamp ASC";
 
-		_ascending = "asc".equals(orderByType);
+	public static final String ORDER_BY_DESC =
+		"UserNotificationEvent.timestamp DESC";
+
+	public static final String[] ORDER_BY_FIELDS = {"timestamp"};
+
+	public UserNotificationEventComparator(boolean ascending) {
+		_ascending = ascending;
 	}
 
 	@Override
@@ -33,26 +39,31 @@ public class UserNotificationEventComparator
 		UserNotificationEvent userNotificationEvent1,
 		UserNotificationEvent userNotificationEvent2) {
 
-		long difference =
-			userNotificationEvent1.getTimestamp() -
-				userNotificationEvent2.getTimestamp();
+		int value = Long.compare(
+			userNotificationEvent1.getTimestamp(),
+			userNotificationEvent2.getTimestamp());
 
 		if (_ascending) {
-			return (int)difference;
+			return value;
 		}
 		else {
-			return (int)-difference;
+			return -value;
 		}
 	}
 
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return "UserNotificationEvent.timestamp ASC";
+			return ORDER_BY_ASC;
 		}
 		else {
-			return "UserNotificationEvent.timestamp DESC";
+			return ORDER_BY_DESC;
 		}
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return ORDER_BY_FIELDS;
 	}
 
 	private final boolean _ascending;
