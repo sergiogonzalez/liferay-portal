@@ -107,7 +107,7 @@ public class NotificationsPortlet extends MVCPortlet {
 				resourceBundle,
 				"all-notifications-were-marked-as-read-successfully"));
 
-		_setRedirect(actionRequest, actionResponse);
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	public void markNotificationAsRead(
@@ -119,7 +119,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		updateArchived(userNotificationEventId);
 
-		_setRedirect(actionRequest, actionResponse);
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	public void markNotificationsAsRead(
@@ -223,7 +223,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			LanguageUtil.get(
 				resourceBundle, "your-configuration-was-saved-sucessfully"));
 
-		_setRedirect(actionRequest, actionResponse);
+		_sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference(
@@ -279,7 +279,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			userNotificationEvent);
 	}
 
-	private void _setRedirect(
+	private void _sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
 
