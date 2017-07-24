@@ -18,16 +18,17 @@
 
 <%
 boolean actionRequired = ParamUtil.getBoolean(request, "actionRequired");
-String filterBy = ParamUtil.getString(request, "filterBy", "all");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "date");
+
+String navigation = ParamUtil.getString(request, "navigation", "all");
+
+String orderByCol = "date";
 String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 SearchContainer notificationsSearchContainer = new SearchContainer(renderRequest, currentURLObj, null, actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications");
+
 notificationsSearchContainer.setId("userNotificationEvents");
 
-NotificationsUtil.populateResults(
-	themeDisplay.getUserId(), actionRequired, filterBy, orderByCol, orderByType,
-	notificationsSearchContainer);
+NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navigation, orderByCol, notificationsSearchContainer);
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -57,6 +58,7 @@ NotificationsUtil.populateResults(
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
+	disabled="<%= notificationsSearchContainer.getTotal() == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userNotificationEvents"
 >
@@ -71,7 +73,6 @@ NotificationsUtil.populateResults(
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "unread", "read"} %>'
-			navigationParam="filterBy"
 			portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
 		/>
 
