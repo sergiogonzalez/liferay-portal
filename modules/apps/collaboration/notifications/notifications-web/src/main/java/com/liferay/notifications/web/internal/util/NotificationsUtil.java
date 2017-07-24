@@ -14,7 +14,7 @@
 
 package com.liferay.notifications.web.internal.util;
 
-import com.liferay.notifications.web.internal.util.comparator.UserNotificationEventComparator;
+import com.liferay.notifications.web.internal.util.comparator.UserNotificationEventTimestampComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -35,8 +35,9 @@ public class NotificationsUtil {
 
 		int deliveryType = UserNotificationDeliveryConstants.TYPE_WEBSITE;
 
-		OrderByComparator<UserNotificationEvent> orderByComparator =
-			new UserNotificationEventComparator(orderByType.equals("asc"));
+		OrderByComparator<UserNotificationEvent> obc =
+			new UserNotificationEventTimestampComparator(
+				orderByType.equals("asc"));
 
 		if (navigation.equals("all")) {
 			searchContainer.setTotal(
@@ -49,7 +50,7 @@ public class NotificationsUtil {
 					getDeliveredUserNotificationEvents(
 						userId, deliveryType, true, actionRequired,
 						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator));
+						obc));
 		}
 		else {
 			boolean archived = false;
@@ -68,7 +69,7 @@ public class NotificationsUtil {
 					getArchivedUserNotificationEvents(
 						userId, deliveryType, actionRequired, archived,
 						searchContainer.getStart(), searchContainer.getEnd(),
-						orderByComparator));
+						obc));
 		}
 	}
 

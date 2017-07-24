@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Alejandro Tardín
  */
-public class UserNotificationEventComparator
+public class UserNotificationEventTimestampComparator
 	extends OrderByComparator<UserNotificationEvent> {
 
 	public static final String ORDER_BY_ASC =
@@ -30,7 +30,7 @@ public class UserNotificationEventComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"timestamp"};
 
-	public UserNotificationEventComparator(boolean ascending) {
+	public UserNotificationEventTimestampComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
