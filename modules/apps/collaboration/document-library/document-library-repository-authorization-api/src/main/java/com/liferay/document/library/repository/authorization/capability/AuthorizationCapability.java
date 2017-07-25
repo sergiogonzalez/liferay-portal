@@ -30,11 +30,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface AuthorizationCapability extends Capability {
 
-	public boolean authorize(
+	public void authorize(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, PortalException;
 
-	public boolean authorize(
+	public void authorize(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws IOException, PortalException;
+
+	public boolean hasCustomRedirectFlow(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, PortalException;
 

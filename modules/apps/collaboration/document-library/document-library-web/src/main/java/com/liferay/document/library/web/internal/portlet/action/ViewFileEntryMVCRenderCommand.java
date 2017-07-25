@@ -69,10 +69,12 @@ public class ViewFileEntryMVCRenderCommand
 					fileEntryRepository.getCapability(
 						AuthorizationCapability.class);
 
-				boolean requestHandled = authorizationCapability.authorize(
+				authorizationCapability.authorize(
 					renderRequest, renderResponse);
 
-				if (requestHandled) {
+				if (authorizationCapability.hasCustomRedirectFlow(
+						renderRequest, renderResponse)) {
+
 					return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 				}
 			}
