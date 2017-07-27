@@ -75,8 +75,17 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+
+		<%
+		String[] navigationKeys = new String[] {"all"};
+
+		if (!actionRequired) {
+			navigationKeys = new String[] {"all", "unread", "read"};
+		}
+		%>
+
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "unread", "read"} %>'
+			navigationKeys="<%= navigationKeys %>"
 			portletURL="<%= PortletURLUtil.clone(navigationURL, renderResponse) %>"
 		/>
 
@@ -89,8 +98,11 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="envelope-open" label="mark-as-read" />
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsUnread();" %>' icon="envelope-closed" label="mark-as-unread" />
+		<c:if test="<%= !actionRequired %>">
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="envelope-open" label="mark-as-read" />
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsUnread();" %>' icon="envelope-closed" label="mark-as-unread" />
+		</c:if>
+
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteAllNotifications();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
