@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -41,9 +40,8 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 	extends BaseBlogsEntryDemoDataCreator {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
-		Collections.addAll(
-			_availableIndexes, new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+	public void activate() {
+		Collections.addAll(_availableIndexes, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 		Collections.shuffle(_availableIndexes);
 	}

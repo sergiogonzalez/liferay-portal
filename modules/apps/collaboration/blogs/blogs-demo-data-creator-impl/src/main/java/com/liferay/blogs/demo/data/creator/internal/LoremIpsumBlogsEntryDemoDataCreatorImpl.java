@@ -17,8 +17,6 @@ package com.liferay.blogs.demo.data.creator.internal;
 import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -77,9 +75,6 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	private String _getRandomElement(List<String> list) {
 		return list.get(RandomUtil.nextInt(list.size()));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LoremIpsumBlogsEntryDemoDataCreatorImpl.class);
 
 	private static final List<String> _paragraphs = _read("paragraphs");
 	private static final List<String> _subtitles = _read("subtitles");
