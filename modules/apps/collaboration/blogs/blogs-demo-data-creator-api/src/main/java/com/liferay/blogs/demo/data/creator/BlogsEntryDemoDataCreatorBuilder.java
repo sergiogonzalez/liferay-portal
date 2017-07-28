@@ -14,8 +14,6 @@
 
 package com.liferay.blogs.demo.data.creator;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -24,14 +22,11 @@ import java.io.IOException;
 /**
  * @author Alejandro Hernández
  */
-@ProviderType
-public interface BlogsEntryDemoDataCreator {
+public interface BlogsEntryDemoDataCreatorBuilder {
 
-	public BlogsEntry create(long userId, long groupId)
+	public BlogsEntry build(long userId, long groupId)
 		throws IOException, PortalException;
 
-	public void delete() throws PortalException;
-
-	public BlogsEntryDemoDataCreatorBuilder newBuilder();
+	public BlogsEntryDemoDataCreatorBuilder withComments();
 
 }

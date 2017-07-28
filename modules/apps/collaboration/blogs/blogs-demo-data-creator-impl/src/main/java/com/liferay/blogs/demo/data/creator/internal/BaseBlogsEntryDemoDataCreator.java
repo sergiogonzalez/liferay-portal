@@ -15,9 +15,11 @@
 package com.liferay.blogs.demo.data.creator.internal;
 
 import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
+import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreatorBuilder;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
 import com.liferay.document.library.demo.data.creator.RootFolderDemoDataCreator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -90,7 +92,14 @@ public abstract class BaseBlogsEntryDemoDataCreator
 		}
 
 		fileEntryDemoDataCreator.delete();
+		multipleCommentDemoDataCreator.delete();
 		rootFolderDemoDataCreator.delete();
+	}
+
+	@Override
+	public BlogsEntryDemoDataCreatorBuilder newBuilder() {
+		return new BlogsEntryDemoDataCreatorBuilderImpl(
+			this, multipleCommentDemoDataCreator);
 	}
 
 	@Reference
@@ -98,6 +107,9 @@ public abstract class BaseBlogsEntryDemoDataCreator
 
 	@Reference
 	protected FileEntryDemoDataCreator fileEntryDemoDataCreator;
+
+	@Reference
+	protected MultipleCommentDemoDataCreator multipleCommentDemoDataCreator;
 
 	@Reference
 	protected RootFolderDemoDataCreator rootFolderDemoDataCreator;
