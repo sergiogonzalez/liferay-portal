@@ -98,6 +98,7 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 			blogsEntryDemoDataCreator.newBuilder();
 
 		blogsEntryDemoDataCreatorBuilder.withComments(
+		).withRatings(
 		).build(
 			user.getUserId(), guestGroup.getGroupId()
 		);

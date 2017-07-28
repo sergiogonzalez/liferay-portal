@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.ratings.demo.data.creator.MultipleRatingsDemoDataCreator;
 
 import java.io.IOException;
 
@@ -99,7 +100,8 @@ public abstract class BaseBlogsEntryDemoDataCreator
 	@Override
 	public BlogsEntryDemoDataCreatorBuilder newBuilder() {
 		return new BlogsEntryDemoDataCreatorBuilderImpl(
-			this, multipleCommentDemoDataCreator);
+			this, multipleCommentDemoDataCreator,
+			multipleRatingsDemoDataCreator);
 	}
 
 	@Reference
@@ -110,6 +112,9 @@ public abstract class BaseBlogsEntryDemoDataCreator
 
 	@Reference
 	protected MultipleCommentDemoDataCreator multipleCommentDemoDataCreator;
+
+	@Reference(target = "(type=thumbs)")
+	protected MultipleRatingsDemoDataCreator multipleRatingsDemoDataCreator;
 
 	@Reference
 	protected RootFolderDemoDataCreator rootFolderDemoDataCreator;

@@ -29,4 +29,6 @@ public interface BlogsEntryDemoDataCreatorBuilder {
 
 	public BlogsEntryDemoDataCreatorBuilder withComments();
 
+	public BlogsEntryDemoDataCreatorBuilder withRatings();
+
 }

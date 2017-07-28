@@ -9,4 +9,5 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:collaboration:blogs:blogs-demo-data-creator-api")
 	provided project(":apps:collaboration:comment:comment-demo-data-creator-api")
+	provided project(":apps:collaboration:ratings:ratings-demo-data-creator-api")
 }

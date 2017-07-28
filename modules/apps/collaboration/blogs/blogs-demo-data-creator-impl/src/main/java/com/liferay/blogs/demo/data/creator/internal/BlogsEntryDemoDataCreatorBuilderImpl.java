@@ -19,6 +19,7 @@ import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreatorBuilder;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.ratings.demo.data.creator.MultipleRatingsDemoDataCreator;
 
 import java.io.IOException;
 
@@ -30,10 +31,12 @@ public class BlogsEntryDemoDataCreatorBuilderImpl
 
 	public BlogsEntryDemoDataCreatorBuilderImpl(
 		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator,
-		MultipleCommentDemoDataCreator multipleCommentDemoDataCreator) {
+		MultipleCommentDemoDataCreator multipleCommentDemoDataCreator,
+		MultipleRatingsDemoDataCreator multipleRatingsDemoDataCreator) {
 
 		_blogsEntryDemoDataCreator = blogsEntryDemoDataCreator;
 		_multipleCommentDemoDataCreator = multipleCommentDemoDataCreator;
+		_multipleRatingsDemoDataCreator = multipleRatingsDemoDataCreator;
 	}
 
 	@Override
@@ -47,6 +50,10 @@ public class BlogsEntryDemoDataCreatorBuilderImpl
 			_multipleCommentDemoDataCreator.create(blogsEntry);
 		}
 
+		if (_addRatings) {
+			_multipleRatingsDemoDataCreator.create(blogsEntry);
+		}
+
 		return blogsEntry;
 	}
 
@@ -57,9 +64,19 @@ public class BlogsEntryDemoDataCreatorBuilderImpl
 		return this;
 	}
 
+	@Override
+	public BlogsEntryDemoDataCreatorBuilder withRatings() {
+		_addRatings = true;
+
+		return this;
+	}
+
 	private boolean _addComments;
+	private boolean _addRatings;
 	private final BlogsEntryDemoDataCreator _blogsEntryDemoDataCreator;
 	private final MultipleCommentDemoDataCreator
 		_multipleCommentDemoDataCreator;
+	private final MultipleRatingsDemoDataCreator
+		_multipleRatingsDemoDataCreator;
 
 }
