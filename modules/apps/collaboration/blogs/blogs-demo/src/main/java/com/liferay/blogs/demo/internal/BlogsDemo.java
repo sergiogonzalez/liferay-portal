@@ -15,8 +15,7 @@
 package com.liferay.blogs.demo.internal;
 
 import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
+import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreatorBuilder;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.OmniAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,58 +46,37 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		BlogsEntryDemoDataCreator randomBlogsEntryDemoDataCreator =
-			_getRandomElement(_blogsEntryDemoDataCreators);
-
-		User user1 = _basicUserDemoDataCreator.create(
-			company.getCompanyId(), "nikki.prudencio@liferay.com");
 		Group guestGroup = _groupLocalService.getGroup(
 			company.getCompanyId(), "Guest");
 
-		BlogsEntry blogsEntry1 = randomBlogsEntryDemoDataCreator.create(
-			user1.getUserId(), guestGroup.getGroupId());
+		final User user1 = _basicUserDemoDataCreator.create(
+			company.getCompanyId(), "nikki.prudencio@liferay.com");
 
-		_multipleCommentDemoDataCreator.create(blogsEntry1);
-
-		User user2 = _omniAdminUserDemoDataCreator.create(
+		final User user2 = _omniAdminUserDemoDataCreator.create(
 			company.getCompanyId(), "sergio.gonzalez@liferay.com");
 
-		BlogsEntry blogsEntry2 = randomBlogsEntryDemoDataCreator.create(
-			user2.getUserId(), guestGroup.getGroupId());
-
-		_multipleCommentDemoDataCreator.create(blogsEntry2);
-
-		User user3 = _siteAdminUserDemoDataCreator.create(
+		final User user3 = _siteAdminUserDemoDataCreator.create(
 			guestGroup.getGroupId(), "sharon.choi@liferay.com");
 
-		BlogsEntry blogsEntry3 = randomBlogsEntryDemoDataCreator.create(
-			user3.getUserId(), guestGroup.getGroupId());
-
-		_multipleCommentDemoDataCreator.create(blogsEntry3);
-
-		List<User> users = new ArrayList<>();
+		List<User> users = new ArrayList<User>() {
+			{
+				add(user1);
+				add(user2);
+				add(user3);
+			}
+		};
 
 		for (int i = 0; i < 30; i++) {
 			users.add(_basicUserDemoDataCreator.create(company.getCompanyId()));
 		}
 
-		for (int i = 0; i < 10; i++) {
-			BlogsEntryDemoDataCreator blogsEntryDemoDataCreator =
-				_getRandomElement(_blogsEntryDemoDataCreators);
-
-			User user = _getRandomElement(users);
-
-			BlogsEntry blogsEntry = blogsEntryDemoDataCreator.create(
-				user.getUserId(), guestGroup.getGroupId());
-
-			_multipleCommentDemoDataCreator.create(blogsEntry);
+		for (User user : users) {
+			_createRandomBlogsEntry(guestGroup, user);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
-		_multipleCommentDemoDataCreator.delete();
-
 		for (BlogsEntryDemoDataCreator blogsEntryDemoDataCreator :
 				_blogsEntryDemoDataCreators) {
 
@@ -106,6 +86,21 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 		_basicUserDemoDataCreator.delete();
 		_omniAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
+	}
+
+	private void _createRandomBlogsEntry(Group guestGroup, User user)
+		throws IOException, PortalException {
+
+		BlogsEntryDemoDataCreator blogsEntryDemoDataCreator = _getRandomElement(
+			_blogsEntryDemoDataCreators);
+
+		BlogsEntryDemoDataCreatorBuilder blogsEntryDemoDataCreatorBuilder =
+			blogsEntryDemoDataCreator.newBuilder();
+
+		blogsEntryDemoDataCreatorBuilder.withComments(
+		).build(
+			user.getUserId(), guestGroup.getGroupId()
+		);
 	}
 
 	private <T> T _getRandomElement(List<T> list) {
@@ -121,11 +116,8 @@ public class BlogsDemo extends BasePortalInstanceLifecycleListener {
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private MultipleCommentDemoDataCreator _multipleCommentDemoDataCreator;
 
 	@Reference
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;
