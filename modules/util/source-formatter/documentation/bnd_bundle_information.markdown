@@ -9,11 +9,11 @@ The ```Bundle-Name```, ```Bundle-SymbolicName``` and
 
 ### Example
 
-```\apps\shopping\shopping-api\bnd.bnd``` should contain the
+```\apps\marketplace\marketplace-api\bnd.bnd``` should contain the
 following ```Bundle-Name``` and ```Bundle-SymbolicName```:
 
-    Bundle-Name: Liferay Shopping API
-    Bundle-SymbolicName: com.liferay.shopping.api
+    Bundle-Name: Liferay Marketplace API
+    Bundle-SymbolicName: com.liferay.marketplace.api
 
 ---
 
@@ -22,7 +22,7 @@ For web modules (modules ending with ```-web```), the
 
 ### Example
 
-```\apps\shopping\shopping-web\bnd.bnd``` contains the following
+```\apps\marketplace\marketplace-web\bnd.bnd``` contains the following
 ```Web-ContextPath```:
 
-    Web-ContextPath: /shopping-web
+    Web-ContextPath: /marketplace-web
