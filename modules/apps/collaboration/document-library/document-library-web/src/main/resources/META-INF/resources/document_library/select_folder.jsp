@@ -77,7 +77,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible()) %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible(), searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= DLFolderUtil.getFolders(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible(), searchContainer, permissionChecker) %>"
 			/>
 
 			<liferay-ui:search-container-row
