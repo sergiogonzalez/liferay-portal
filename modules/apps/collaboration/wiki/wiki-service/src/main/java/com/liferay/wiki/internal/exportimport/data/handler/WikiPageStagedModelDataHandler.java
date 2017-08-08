@@ -280,7 +280,12 @@ public class WikiPageStagedModelDataHandler
 		}
 
 		if (existingPage != null) {
-			_deleteExistingAttachments(existingPage);
+			for (FileEntry fileEntry :
+					existingPage.getAttachmentsFileEntries()) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					fileEntry.getFileEntryId());
+			}
 		}
 
 		if (page.isHead()) {
@@ -397,17 +402,6 @@ public class WikiPageStagedModelDataHandler
 		WikiPageResourceLocalService wikiPageResourceLocalService) {
 
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
-	}
-
-	private void _deleteExistingAttachments(WikiPage page)
-		throws PortalException {
-
-		List<FileEntry> existingAttachments = page.getAttachmentsFileEntries();
-
-		for (FileEntry existingAttachment : existingAttachments) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				existingAttachment.getFileEntryId());
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
