@@ -378,13 +378,27 @@ if (portletTitleBasedNavigation) {
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 					<%
+					List<String> requiredActionIds = new ArrayList<>();
+
+					if (!validMoveFileEntries.isEmpty()) {
+						requiredActionIds.add(ActionKeys.ADD_DOCUMENT);
+					}
+
+					if (!validMoveFolders.isEmpty()) {
+						requiredActionIds.add(ActionKeys.ADD_FOLDER);
+					}
+
+					if (!validMoveShortcutEntries.isEmpty()) {
+						requiredActionIds.add(ActionKeys.ADD_SHORTCUT);
+					}
+
 					PortletURL selectFolderURL = renderResponse.createRenderURL();
 
 					selectFolderURL.setWindowState(LiferayWindowState.POP_UP);
 
 					selectFolderURL.setParameter("mvcRenderCommandName", "/document_library/select_folder");
 					selectFolderURL.setParameter("folderId", String.valueOf(newFolderId));
-					selectFolderURL.setParameter("actionIds", new String[] {ActionKeys.ADD_DOCUMENT});
+					selectFolderURL.setParameter("actionIds", requiredActionIds.toArray(new String[0]));
 					%>
 
 					uri: '<%= selectFolderURL.toString() %>'
