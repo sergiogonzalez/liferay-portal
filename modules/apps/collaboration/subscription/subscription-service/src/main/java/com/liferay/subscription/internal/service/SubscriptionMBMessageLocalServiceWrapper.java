@@ -272,6 +272,10 @@ public class SubscriptionMBMessageLocalServiceWrapper
 			contentURL, serviceContext.getAttribute("namespace") + "messageId",
 			message.getMessageId());
 
+		contentURL = _http.removeParameter(
+			contentURL,
+			serviceContext.getAttribute("namespace") + "skipEditorLoading");
+
 		String userAddress = StringPool.BLANK;
 		String userName = (String)serviceContext.getAttribute(
 			"pingbackUserName");
