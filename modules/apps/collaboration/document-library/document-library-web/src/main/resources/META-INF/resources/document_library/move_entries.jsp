@@ -377,10 +377,15 @@ if (portletTitleBasedNavigation) {
 					id: '<portlet:namespace />selectFolder',
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
-					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
-						<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
-					</portlet:renderURL>
+					<%
+					PortletURL selectFolderURL = renderResponse.createRenderURL();
+
+					selectFolderURL.setWindowState(LiferayWindowState.POP_UP);
+
+					selectFolderURL.setParameter("mvcRenderCommandName", "/document_library/select_folder");
+					selectFolderURL.setParameter("folderId", String.valueOf(newFolderId));
+					selectFolderURL.setParameter("actionIds", new String[] {ActionKeys.ADD_DOCUMENT});
+					%>
 
 					uri: '<%= selectFolderURL.toString() %>'
 				},
