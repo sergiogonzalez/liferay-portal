@@ -35,9 +35,6 @@ if (discussion == null) {
 DiscussionComment rootDiscussionComment = (discussion == null) ? null : discussion.getRootDiscussionComment();
 
 CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContextProviderUtil.getCommentSectionDisplayContext(request, response, discussionPermission, discussion);
-
-String contentURL = PortalUtil.getCanonicalURL(discussionTaglibHelper.getRedirect(), themeDisplay, layout);
-contentURL = HttpUtil.removeParameter(contentURL, namespace + "skipEditorLoading");
 %>
 
 <section>
@@ -48,6 +45,12 @@ contentURL = HttpUtil.removeParameter(contentURL, namespace + "skipEditorLoading
 			<liferay-ui:message key="maximum-number-of-comments-has-been-reached" />
 		</div>
 	</c:if>
+
+	<%
+	String contentURL = PortalUtil.getCanonicalURL(discussionTaglibHelper.getRedirect(), themeDisplay, layout);
+
+	contentURL = HttpUtil.removeParameter(contentURL, namespace + "skipEditorLoading");
+	%>
 
 	<c:if test="<%= commentSectionDisplayContext.isDiscussionVisible() %>">
 		<div class="taglib-discussion" id="<%= namespace %>discussionContainer">
