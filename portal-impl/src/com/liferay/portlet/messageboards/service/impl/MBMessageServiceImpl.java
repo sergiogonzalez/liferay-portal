@@ -608,6 +608,65 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBMessage> getMessages(
+			long groupId, String className, long classPK, long parentMessageId)
+		throws PortalException {
+
+		return mbMessagePersistence.filterFindByG_C_C_P(
+			groupId, classNameLocalService.getClassNameId(className), classPK,
+			parentMessageId);
+	}
+
+	@Override
+	public List<MBMessage> getMessages(
+			long groupId, String className, long classPK, long parentMessageId,
+			int start, int end)
+		throws PortalException {
+
+		return mbMessagePersistence.filterFindByG_C_C_P(
+			groupId, classNameLocalService.getClassNameId(className), classPK,
+			parentMessageId, start, end);
+	}
+
+	@Override
+	public int getMessagesCount(
+		long groupId, String className, long classPK, long parentMessageId) {
+
+		return mbMessagePersistence.filterCountByG_C_C_P(
+			groupId, classNameLocalService.getClassNameId(className), classPK,
+			parentMessageId);
+	}
+
+	@Override
+	public List<MBMessage> getRootMessages(
+			long groupId, String className, long classPK)
+		throws PortalException {
+
+		return getMessages(
+			groupId, className, classPK,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
+	}
+
+	@Override
+	public List<MBMessage> getRootMessages(
+			long groupId, String className, long classPK, int start, int end)
+		throws PortalException {
+
+		return getMessages(
+			groupId, className, classPK,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, start, end);
+	}
+
+	@Override
+	public int getRootMessagesCount(
+		long groupId, String className, long classPK) {
+
+		return getMessagesCount(
+			groupId, className, classPK,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
+	}
+
+	@Override
 	public int getThreadAnswersCount(
 		long groupId, long categoryId, long threadId) {
 

@@ -1269,6 +1269,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public List<MBMessage> getMessages(
+			long groupId, String className, long classPK, long parentMessageId)
+		throws PortalException {
+
+		return mbMessagePersistence.findByG_C_C_P(
+			groupId, classNameLocalService.getClassNameId(className), classPK,
+			parentMessageId);
+	}
+
+	@Override
+	public List<MBMessage> getMessages(
+			long groupId, String className, long classPK, long parentMessageId,
+			int start, int end)
+		throws PortalException {
+
+		return mbMessagePersistence.findByG_C_C_P(
+			groupId, classNameLocalService.getClassNameId(className), classPK,
+			parentMessageId, start, end);
+	}
+
+	@Override
+	public List<MBMessage> getMessages(
 		String className, long classPK, int status) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -1283,6 +1304,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getMessagesCount(
+		long groupId, String className, long classPK, long parentMessageId) {
+
+		return mbMessagePersistence.countByG_C_C_P(
+			groupId, classNameLocalService.getClassNameId(className), classPK,
+			parentMessageId);
+	}
+
+	@Override
 	public List<MBMessage> getNoAssetMessages() {
 		return mbMessageFinder.findByNoAssets();
 	}
@@ -1293,6 +1323,35 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return mbMessageFinder.countByC_T(
 			message.getCreateDate(), message.getThreadId());
+	}
+
+	@Override
+	public List<MBMessage> getRootMessages(
+			long groupId, String className, long classPK)
+		throws PortalException {
+
+		return getMessages(
+			groupId, className, classPK,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
+	}
+
+	@Override
+	public List<MBMessage> getRootMessages(
+			long groupId, String className, long classPK, int start, int end)
+		throws PortalException {
+
+		return getMessages(
+			groupId, className, classPK,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, start, end);
+	}
+
+	@Override
+	public int getRootMessagesCount(
+		long groupId, String className, long classPK) {
+
+		return getMessagesCount(
+			groupId, className, classPK,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
 	}
 
 	@Override
