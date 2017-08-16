@@ -484,6 +484,20 @@ public interface MBMessageLocalService extends BaseLocalService,
 		long classPK, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMessages(long groupId,
+		java.lang.String className, long classPK, long parentMessageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMessages(long groupId,
+		java.lang.String className, long classPK, long parentMessageId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMessagesCount(long groupId, java.lang.String className,
+		long classPK, long parentMessageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getNoAssetMessages();
 
 	/**
@@ -500,6 +514,19 @@ public interface MBMessageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPositionInThread(long messageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootMessages(long groupId,
+		java.lang.String className, long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootMessages(long groupId,
+		java.lang.String className, long classPK, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRootMessagesCount(long groupId, java.lang.String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getThreadMessages(long threadId, int status);

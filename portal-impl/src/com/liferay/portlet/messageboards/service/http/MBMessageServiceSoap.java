@@ -284,6 +284,104 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.kernel.model.MBMessageSoap[] getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.kernel.model.MBMessage> returnValue =
+				MBMessageServiceUtil.getMessages(groupId, className, classPK,
+					parentMessageId);
+
+			return com.liferay.message.boards.kernel.model.MBMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessageSoap[] getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.kernel.model.MBMessage> returnValue =
+				MBMessageServiceUtil.getMessages(groupId, className, classPK,
+					parentMessageId, start, end);
+
+			return com.liferay.message.boards.kernel.model.MBMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getMessagesCount(long groupId,
+		java.lang.String className, long classPK, long parentMessageId)
+		throws RemoteException {
+		try {
+			int returnValue = MBMessageServiceUtil.getMessagesCount(groupId,
+					className, classPK, parentMessageId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessageSoap[] getRootMessages(
+		long groupId, java.lang.String className, long classPK)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.kernel.model.MBMessage> returnValue =
+				MBMessageServiceUtil.getRootMessages(groupId, className, classPK);
+
+			return com.liferay.message.boards.kernel.model.MBMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessageSoap[] getRootMessages(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.kernel.model.MBMessage> returnValue =
+				MBMessageServiceUtil.getRootMessages(groupId, className,
+					classPK, start, end);
+
+			return com.liferay.message.boards.kernel.model.MBMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getRootMessagesCount(long groupId,
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			int returnValue = MBMessageServiceUtil.getRootMessagesCount(groupId,
+					className, classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getThreadAnswersCount(long groupId, long categoryId,
 		long threadId) throws RemoteException {
 		try {

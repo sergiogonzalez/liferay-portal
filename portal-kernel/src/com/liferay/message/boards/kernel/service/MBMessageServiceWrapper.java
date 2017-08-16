@@ -238,6 +238,31 @@ public class MBMessageServiceWrapper implements MBMessageService,
 			threadView, includePrevAndNext);
 	}
 
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getMessages(groupId, className, classPK,
+			parentMessageId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getMessages(groupId, className, classPK,
+			parentMessageId, start, end);
+	}
+
+	@Override
+	public int getMessagesCount(long groupId, java.lang.String className,
+		long classPK, long parentMessageId) {
+		return _mbMessageService.getMessagesCount(groupId, className, classPK,
+			parentMessageId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -246,6 +271,28 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _mbMessageService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getRootMessages(
+		long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getRootMessages(groupId, className, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getRootMessages(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getRootMessages(groupId, className, classPK,
+			start, end);
+	}
+
+	@Override
+	public int getRootMessagesCount(long groupId, java.lang.String className,
+		long classPK) {
+		return _mbMessageService.getRootMessagesCount(groupId, className,
+			classPK);
 	}
 
 	@Override

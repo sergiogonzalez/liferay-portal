@@ -227,6 +227,30 @@ public class MBMessageServiceUtil {
 			includePrevAndNext);
 	}
 
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMessages(groupId, className, classPK, parentMessageId);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMessages(groupId, className, classPK, parentMessageId,
+			start, end);
+	}
+
+	public static int getMessagesCount(long groupId,
+		java.lang.String className, long classPK, long parentMessageId) {
+		return getService()
+				   .getMessagesCount(groupId, className, classPK,
+			parentMessageId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -234,6 +258,24 @@ public class MBMessageServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getRootMessages(
+		long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRootMessages(groupId, className, classPK);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getRootMessages(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getRootMessages(groupId, className, classPK, start, end);
+	}
+
+	public static int getRootMessagesCount(long groupId,
+		java.lang.String className, long classPK) {
+		return getService().getRootMessagesCount(groupId, className, classPK);
 	}
 
 	public static int getThreadAnswersCount(long groupId, long categoryId,

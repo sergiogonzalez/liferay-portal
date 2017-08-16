@@ -693,6 +693,31 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getMessages(groupId, className, classPK,
+			parentMessageId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getMessages(
+		long groupId, java.lang.String className, long classPK,
+		long parentMessageId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getMessages(groupId, className, classPK,
+			parentMessageId, start, end);
+	}
+
+	@Override
+	public int getMessagesCount(long groupId, java.lang.String className,
+		long classPK, long parentMessageId) {
+		return _mbMessageLocalService.getMessagesCount(groupId, className,
+			classPK, parentMessageId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getNoAssetMessages() {
 		return _mbMessageLocalService.getNoAssetMessages();
 	}
@@ -718,6 +743,29 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	public int getPositionInThread(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getPositionInThread(messageId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getRootMessages(
+		long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getRootMessages(groupId, className,
+			classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getRootMessages(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getRootMessages(groupId, className,
+			classPK, start, end);
+	}
+
+	@Override
+	public int getRootMessagesCount(long groupId, java.lang.String className,
+		long classPK) {
+		return _mbMessageLocalService.getRootMessagesCount(groupId, className,
+			classPK);
 	}
 
 	@Override

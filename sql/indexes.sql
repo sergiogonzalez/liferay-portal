@@ -267,11 +267,13 @@ create unique index IX_76CE9CDD on MBMailingList (groupId, categoryId);
 create index IX_FC61676E on MBMailingList (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_E858F170 on MBMailingList (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_DB08BC7B on MBMessage (classNameId, classPK, parentMessageId);
 create index IX_F6687633 on MBMessage (classNameId, classPK, status);
 create index IX_1AD93C16 on MBMessage (companyId, status);
 create index IX_4257DB85 on MBMessage (groupId, categoryId, status);
 create index IX_CBFDBF0A on MBMessage (groupId, categoryId, threadId, answer);
 create index IX_385E123E on MBMessage (groupId, categoryId, threadId, status);
+create index IX_10B4B81 on MBMessage (groupId, classNameId, classPK, parentMessageId);
 create index IX_ED39AC98 on MBMessage (groupId, status);
 create index IX_377858D2 on MBMessage (groupId, userId, status);
 create index IX_9D7C3B23 on MBMessage (threadId, answer);

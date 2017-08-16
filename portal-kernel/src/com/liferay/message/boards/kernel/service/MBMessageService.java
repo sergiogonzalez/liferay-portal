@@ -171,12 +171,39 @@ public interface MBMessageService extends BaseService {
 		java.lang.String threadView, boolean includePrevAndNext)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMessages(long groupId,
+		java.lang.String className, long classPK, long parentMessageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMessages(long groupId,
+		java.lang.String className, long classPK, long parentMessageId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMessagesCount(long groupId, java.lang.String className,
+		long classPK, long parentMessageId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootMessages(long groupId,
+		java.lang.String className, long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootMessages(long groupId,
+		java.lang.String className, long classPK, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRootMessagesCount(long groupId, java.lang.String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadAnswersCount(long groupId, long categoryId,
