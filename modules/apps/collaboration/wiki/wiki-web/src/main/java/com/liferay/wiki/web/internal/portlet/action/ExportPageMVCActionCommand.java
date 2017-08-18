@@ -120,12 +120,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 				nodeId, title, version, targetExtension, viewPageURL,
 				editPageURL, themeDisplay, request, response);
 
-			boolean hideDefaultSuccessMessage = ParamUtil.getBoolean(
-				actionRequest, "hideDefaultSuccessMessage");
-
-			if (hideDefaultSuccessMessage) {
-				hideDefaultSuccessMessage(actionRequest);
-			}
+			hideDefaultSuccessMessage(actionRequest);
 
 			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}

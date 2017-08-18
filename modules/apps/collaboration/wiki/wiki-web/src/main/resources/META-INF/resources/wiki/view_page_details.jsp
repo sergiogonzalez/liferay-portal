@@ -110,7 +110,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 		PortletURL exportPageURL = renderResponse.createActionURL();
 
 		exportPageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/export_page");
-		exportPageURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		exportPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 		exportPageURL.setParameter("nodeName", node.getName());
 		exportPageURL.setParameter("title", wikiPage.getTitle());
