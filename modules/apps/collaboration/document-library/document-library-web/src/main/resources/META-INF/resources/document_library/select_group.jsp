@@ -98,10 +98,8 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			>
 
 				<%
-				Group stagingGroup = group.getStagingGroup();
-
-				if (stagingGroup != null) {
-					group = stagingGroup;
+				if (group.hasStagingGroup()) {
+					group = group.getStagingGroup();
 				}
 
 				String groupDescriptiveName = HtmlUtil.escape(group.getDescriptiveName(locale));
