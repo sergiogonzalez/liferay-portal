@@ -239,6 +239,18 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
+	public void deleteGroupFileShortcuts(long groupId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			dlFileShortcutLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setGroupId(groupId);
+		actionableDynamicQuery.setPerformActionMethod(
+			(DLFileShortcut fileShortcut) -> {
+				dlFileShortcutLocalService.deleteDLFileShortcut(fileShortcut);
+			});
+	}
+
+	@Override
 	public void disableFileShortcuts(long toFileEntryId) {
 		updateFileShortcutsActive(toFileEntryId, false);
 	}

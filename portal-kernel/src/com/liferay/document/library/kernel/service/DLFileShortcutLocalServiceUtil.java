@@ -155,6 +155,11 @@ public class DLFileShortcutLocalServiceUtil {
 			.deleteFileShortcuts(groupId, folderId, includeTrashedEntries);
 	}
 
+	public static void deleteGroupFileShortcuts(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteGroupFileShortcuts(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
