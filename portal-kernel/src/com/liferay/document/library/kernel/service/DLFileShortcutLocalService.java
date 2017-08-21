@@ -139,6 +139,9 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	public void deleteFileShortcuts(long groupId, long folderId,
 		boolean includeTrashedEntries) throws PortalException;
 
+	public void deleteGroupFileShortcuts(long groupId)
+		throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/

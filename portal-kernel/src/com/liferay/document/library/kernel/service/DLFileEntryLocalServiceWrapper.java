@@ -231,6 +231,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			version);
 	}
 
+	@Override
+	public void deleteGroupFileEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryLocalService.deleteGroupFileEntries(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -239,6 +245,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteRepositoryFileEntries(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryLocalService.deleteRepositoryFileEntries(repositoryId);
 	}
 
 	@Override

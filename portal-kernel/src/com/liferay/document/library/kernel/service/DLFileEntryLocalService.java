@@ -184,11 +184,16 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public DLFileEntry deleteFileVersion(long userId, long fileEntryId,
 		java.lang.String version) throws PortalException;
 
+	public void deleteGroupFileEntries(long groupId) throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public void deleteRepositoryFileEntries(long repositoryId)
 		throws PortalException;
 
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId)

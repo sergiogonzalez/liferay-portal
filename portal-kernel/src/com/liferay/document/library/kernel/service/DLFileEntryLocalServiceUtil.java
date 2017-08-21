@@ -222,6 +222,11 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().deleteFileVersion(userId, fileEntryId, version);
 	}
 
+	public static void deleteGroupFileEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteGroupFileEntries(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -229,6 +234,11 @@ public class DLFileEntryLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteRepositoryFileEntries(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRepositoryFileEntries(repositoryId);
 	}
 
 	public static void deleteRepositoryFileEntries(long repositoryId,
