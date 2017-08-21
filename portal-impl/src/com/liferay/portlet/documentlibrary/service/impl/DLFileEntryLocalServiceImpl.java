@@ -957,6 +957,60 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteGroupFileEntries(long groupId) throws PortalException {
+		final RepositoryEventTrigger repositoryEventTrigger =
+			getFolderRepositoryEventTrigger(
+				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			dlFileEntryLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setGroupId(groupId);
+		actionableDynamicQuery.setPerformActionMethod(
+			(DLFileEntry dlFileEntry) -> {
+				repositoryEventTrigger.trigger(
+					RepositoryEventType.Delete.class, FileEntry.class,
+					new LiferayFileEntry(dlFileEntry));
+
+				dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+			});
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Override
+	public void deleteRepositoryFileEntries(long repositoryId)
+		throws PortalException {
+
+		final RepositoryEventTrigger repositoryEventTrigger =
+			RepositoryUtil.getRepositoryEventTrigger(repositoryId);
+
+		int total = dlFileEntryPersistence.countByRepositoryId(repositoryId);
+
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(total);
+
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			(start, end) -> {
+				List<DLFileEntry> dlFileEntries =
+					dlFileEntryPersistence.findByRepositoryId(
+						repositoryId, start, end);
+
+				for (DLFileEntry dlFileEntry : dlFileEntries) {
+					repositoryEventTrigger.trigger(
+						RepositoryEventType.Delete.class, FileEntry.class,
+						new LiferayFileEntry(dlFileEntry));
+
+					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+				}
+
+				return null;
+			});
+
+		intervalActionProcessor.performIntervalActions();
+	}
+
+	@Override
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
 		throws PortalException {
 
