@@ -190,6 +190,11 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
 
+			long classNameId = PortalUtil.getClassNameId(MBMessage.class);
+
+			sql = StringUtil.replace(
+				sql, "classNameId = ?", "classNameId = " + classNameId);
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBMessage", MBMessageImpl.class);

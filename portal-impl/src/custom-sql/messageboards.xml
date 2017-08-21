@@ -151,6 +151,7 @@
 			LEFT JOIN
 				AssetEntry ON
 					(AssetEntry.classNameId = ?) AND
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = MBMessage.messageId)
 			WHERE
 				(AssetEntry.classPK IS NULL) AND
@@ -350,6 +351,7 @@
 				MBThread
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = MBThread.threadId)
 			WHERE
