@@ -20,10 +20,7 @@
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFileEntryType");
 %>
 
-<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" />
-	<liferay-util:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" />
-</liferay-util:include>
+<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>" />
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" />
