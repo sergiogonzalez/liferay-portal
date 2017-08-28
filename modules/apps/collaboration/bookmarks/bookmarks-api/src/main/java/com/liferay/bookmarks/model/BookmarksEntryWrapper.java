@@ -68,7 +68,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("folderId", getFolderId());
 		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
@@ -133,12 +132,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long resourceBlockId = (Long)attributes.get("resourceBlockId");
-
-		if (resourceBlockId != null) {
-			setResourceBlockId(resourceBlockId);
 		}
 
 		Long folderId = (Long)attributes.get("folderId");
@@ -357,16 +350,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	/**
-	* Returns the resource block ID of this bookmarks entry.
-	*
-	* @return the resource block ID of this bookmarks entry
-	*/
-	@Override
-	public long getResourceBlockId() {
-		return _bookmarksEntry.getResourceBlockId();
-	}
-
-	/**
 	* Returns the status of this bookmarks entry.
 	*
 	* @return the status of this bookmarks entry
@@ -575,6 +558,26 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	/**
+	* Returns <code>true</code> if this bookmarks entry is inactive.
+	*
+	* @return <code>true</code> if this bookmarks entry is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _bookmarksEntry.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is incomplete.
+	*
+	* @return <code>true</code> if this bookmarks entry is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _bookmarksEntry.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this bookmarks entry is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this bookmarks entry is in the Recycle Bin; <code>false</code> otherwise
@@ -602,26 +605,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _bookmarksEntry.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks entry is inactive.
-	*
-	* @return <code>true</code> if this bookmarks entry is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _bookmarksEntry.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks entry is incomplete.
-	*
-	* @return <code>true</code> if this bookmarks entry is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _bookmarksEntry.isIncomplete();
 	}
 
 	@Override
@@ -700,14 +683,14 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_bookmarksEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_bookmarksEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_bookmarksEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -793,16 +776,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	@Override
 	public void setPriority(int priority) {
 		_bookmarksEntry.setPriority(priority);
-	}
-
-	/**
-	* Sets the resource block ID of this bookmarks entry.
-	*
-	* @param resourceBlockId the resource block ID of this bookmarks entry
-	*/
-	@Override
-	public void setResourceBlockId(long resourceBlockId) {
-		_bookmarksEntry.setResourceBlockId(resourceBlockId);
 	}
 
 	/**

@@ -43,11 +43,13 @@ import java.nio.charset.CodingErrorAction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -76,6 +78,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> fileNames = getFileNames();
 
 		if (fileNames.isEmpty()) {
+			addProgressStatusUpdate(
+				new ProgressStatusUpdate(
+					ProgressStatus.SOURCE_CHECKS_INITIALIZED, 0));
+
 			return;
 		}
 
@@ -83,6 +89,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			getPluginsInsideModulesDirectoryNames();
 
 		_sourceChecks = _getSourceChecks(_containsModuleFile(fileNames));
+
+		addProgressStatusUpdate(
+			new ProgressStatusUpdate(
+				ProgressStatus.SOURCE_CHECKS_INITIALIZED, fileNames.size()));
 
 		_sourceChecksSuppressions = SuppressionsLoader.loadSuppressions(
 			getSuppressionsFiles("sourcechecks-suppressions.xml"));
@@ -167,6 +177,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public void setProgressStatusQueue(
+		BlockingQueue<ProgressStatusUpdate> progressStatusQueue) {
+
+		_progressStatusQueue = progressStatusQueue;
+	}
+
+	@Override
 	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
 		_propertiesMap = propertiesMap;
 	}
@@ -185,6 +202,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterExcludes sourceFormatterExcludes) {
 
 		_sourceFormatterExcludes = sourceFormatterExcludes;
+	}
+
+	protected void addProgressStatusUpdate(
+			ProgressStatusUpdate progressStatusUpdate)
+		throws Exception {
+
+		_progressStatusQueue.put(progressStatusUpdate);
 	}
 
 	protected abstract List<String> doGetFileNames() throws Exception;
@@ -279,6 +303,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return pluginsInsideModulesDirectoryNames;
+	}
+
+	protected BlockingQueue<ProgressStatusUpdate> getProgressStatusQueue() {
+		return _progressStatusQueue;
 	}
 
 	protected List<File> getSuppressionsFiles(String fileName)
@@ -463,7 +491,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private final String _format(
-			File file, String fileName, String absolutePath, String content)
+			File file, String fileName, String absolutePath, String content,
+			String originalContent, Set<String> modifiedContents, int count)
 		throws Exception {
 
 		_sourceFormatterMessagesMap.remove(fileName);
@@ -477,11 +506,36 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
-		return _format(file, fileName, absolutePath, newContent);
+		if (!modifiedContents.add(newContent)) {
+			processMessage(fileName, "Infinite loop in SourceFormatter");
+
+			return originalContent;
+		}
+
+		if (newContent.length() > content.length()) {
+			count++;
+
+			if (count > 100) {
+				processMessage(fileName, "Infinite loop in SourceFormatter");
+
+				return originalContent;
+			}
+		}
+		else {
+			count = 0;
+		}
+
+		return _format(
+			file, fileName, absolutePath, newContent, originalContent,
+			modifiedContents, count);
 	}
 
 	private final void _format(String fileName) throws Exception {
 		if (!_isMatchPath(fileName)) {
+			addProgressStatusUpdate(
+				new ProgressStatusUpdate(
+					ProgressStatus.SOURCE_CHECK_FILE_COMPLETED));
+
 			return;
 		}
 
@@ -494,9 +548,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String content = FileUtil.read(file);
 
-		String newContent = _format(file, fileName, absolutePath, content);
+		Set<String> modifiedContents = new HashSet<>();
+
+		String newContent = _format(
+			file, fileName, absolutePath, content, content, modifiedContents,
+			0);
 
 		processFormattedFile(file, fileName, content, newContent);
+
+		addProgressStatusUpdate(
+			new ProgressStatusUpdate(
+				ProgressStatus.SOURCE_CHECK_FILE_COMPLETED));
 	}
 
 	private List<SourceCheck> _getSourceChecks(boolean includeModuleChecks)
@@ -633,6 +695,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
+	private BlockingQueue<ProgressStatusUpdate> _progressStatusQueue;
 	private Map<String, Properties> _propertiesMap;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private SourceChecksSuppressions _sourceChecksSuppressions;

@@ -2152,6 +2152,106 @@ to version 2.0.53.
 - [LPS-74139]: Update the [Liferay Source Formatter] dependency to version
 1.0.442.
 
+## 3.4.32 - 2017-08-17
+
+### Changed
+- [LPS-74222]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.54.
+- [LPS-74222]: Update the [Liferay Source Formatter] dependency to version
+1.0.443.
+
+## 3.4.33 - 2017-08-18
+
+### Changed
+- [LPS-74126]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.55.
+- [LPS-74126]: Update the [Liferay Source Formatter] dependency to version
+1.0.444.
+- [LPS-74155]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.47.
+- [LPS-74155]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.163.
+
+## 3.4.34 - 2017-08-21
+
+### Changed
+- [LPS-74155]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.48.
+- [LPS-74155]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.164.
+- [LPS-74250]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
+version 2.1.0.
+- [LPS-74250]: Update the [Liferay Lang Builder] dependency to version 1.0.14.
+
+## 3.4.35 - 2017-08-22
+
+### Changed
+- [LPS-74269]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.56.
+- [LPS-74269]: Update the [Liferay Source Formatter] dependency to version
+1.0.445.
+
+## 3.4.36 - 2017-08-23
+
+### Changed
+- [LPS-74278]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.49.
+- [LPS-74278]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.165.
+
+## 3.4.37 - 2017-08-24
+
+### Added
+- [LPS-74314]: Add the ability to configure the `showStatusUpdates` property of
+all `FormatSourceTask` instances by setting the project property
+`source.formatter.show.status.updates`.
+
+### Changed
+- [LPS-74314]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.0.
+- [LPS-74314]: Update the [Liferay Source Formatter] dependency to version
+1.0.446.
+
+## 3.4.38 - 2017-08-24
+
+### Changed
+- [LPS-74343]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.17.
+- [LPS-74343]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.17.
+
+## 3.4.39 - 2017-08-24
+
+### Added
+- [LPS-74345]: Add the Liferay IDE project nature to the Eclipse files.
+- [LPS-74345]: Automatically apply the [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
+plugin to OSGi projects.
+
+### Changed
+- [LPS-74328]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.1.
+- [LPS-74328]: Update the [Liferay Source Formatter] dependency to version
+1.0.447.
+
+## 3.4.40 - 2017-08-28
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.2.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.448.
+
+## 3.4.41 - 2017-08-28
+
+### Changed
+- [LPS-74368]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
+version 2.0.2.
+- [LPS-74368]: Update the [Liferay Jasper JSPC] dependency to version 1.0.11.
+
+### Removed
+- [LPS-74368]: Remove all dependency exclusions from the
+`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2342,4 +2442,13 @@ to version 2.0.53.
 [LPS-74126]: https://issues.liferay.com/browse/LPS-74126
 [LPS-74139]: https://issues.liferay.com/browse/LPS-74139
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
+[LPS-74222]: https://issues.liferay.com/browse/LPS-74222
+[LPS-74250]: https://issues.liferay.com/browse/LPS-74250
+[LPS-74269]: https://issues.liferay.com/browse/LPS-74269
+[LPS-74278]: https://issues.liferay.com/browse/LPS-74278
+[LPS-74314]: https://issues.liferay.com/browse/LPS-74314
+[LPS-74328]: https://issues.liferay.com/browse/LPS-74328
+[LPS-74343]: https://issues.liferay.com/browse/LPS-74343
+[LPS-74345]: https://issues.liferay.com/browse/LPS-74345
+[LPS-74368]: https://issues.liferay.com/browse/LPS-74368
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023
