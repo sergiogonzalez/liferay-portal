@@ -263,7 +263,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			</div>
 		</div>
 
-		<div class="<%= (depth < 3) ? "card-tab" : StringPool.BLANK %> lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
+		<div class="card-tab lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
 			<div class="card list-group-card panel">
 				<div class="panel-body">
 					<div class="lfr-discussion-details">
