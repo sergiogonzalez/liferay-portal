@@ -255,7 +255,7 @@ public class DocumentLibraryConvertProcessTest {
 		FileEntry rootFileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -324,7 +324,7 @@ public class DocumentLibraryConvertProcessTest {
 		FileEntry fileEntry = addFileEntry(
 			folderId, RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN));
 
 		_convertProcess.convert();
 

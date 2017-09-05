@@ -104,7 +104,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), folderId,
 			sourceFileName, ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 	}
 
