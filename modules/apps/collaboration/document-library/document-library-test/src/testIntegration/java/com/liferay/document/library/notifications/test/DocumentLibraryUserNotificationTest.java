@@ -77,7 +77,7 @@ public class DocumentLibraryUserNotificationTest
 			TestPropsValues.getUserId(), group.getGroupId(),
 			_folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 
 		return (BaseModel<?>)fileEntry.getModel();
@@ -121,7 +121,7 @@ public class DocumentLibraryUserNotificationTest
 			(Long)baseModel.getPrimaryKeyObj(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, false,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 
 		return (BaseModel<?>)fileEntry.getModel();
