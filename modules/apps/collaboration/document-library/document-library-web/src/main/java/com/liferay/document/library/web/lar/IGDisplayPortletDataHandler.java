@@ -62,7 +62,6 @@ public class IGDisplayPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		portletPreferences.setValue("enable-comment-ratings", StringPool.BLANK);
 		portletPreferences.setValue("fileEntriesPerPage", StringPool.BLANK);
 		portletPreferences.setValue("fileEntryColumns", StringPool.BLANK);
 		portletPreferences.setValue("folderColumns", StringPool.BLANK);
