@@ -16,14 +16,11 @@ package com.liferay.vulcan.endpoint;
 
 import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.SingleModel;
-import com.liferay.vulcan.resource.Routes;
+import com.liferay.vulcan.result.Try;
 
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.io.InputStream;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
@@ -41,55 +38,62 @@ import javax.ws.rs.PathParam;
 public interface RootEndpoint {
 
 	/**
-	 * Returns the {@link SingleModel} for a given path.
+	 * Returns the {@link InputStream} for a given resource identifier or an
+	 * exception if an error occurred.
 	 *
 	 * @param  path the path from the URL.
-	 * @return the single model at the path.
+	 * @param  id the ID of the resource.
+	 * @param  binaryId the ID to the binary resource.
+	 * @return the input stream of the binary file, or an exception it there was
+	 *         an error.
+	 */
+	@GET
+	@Path("/b/{path}/{id}/{binaryId}")
+	public <T> Try<InputStream> getCollectionItemInputStreamTry(
+		@PathParam("path") String path, @PathParam("id") String id,
+		@PathParam("binaryId") String binaryId);
+
+	/**
+	 * Returns the {@link SingleModel} for a given path or an exception if an
+	 * error occurred.
+	 *
+	 * @param  path the path from the URL.
+	 * @param  id the ID of the resource.
+	 * @return the single model at the path, or an exception it there was an
+	 *         error.
 	 */
 	@GET
 	@Path("/p/{path}/{id}")
-	public default <T> SingleModel<T> getCollectionItemSingleModel(
-		@PathParam("path") String path, @PathParam("id") String id) {
-
-		Routes<T> routes = getRoutes(path);
-
-		Optional<Function<String, SingleModel<T>>> optional =
-			routes.getSingleModelFunctionOptional();
-
-		Function<String, SingleModel<T>> function = optional.orElseThrow(
-			NotFoundException::new);
-
-		return function.apply(id);
-	}
+	public <T> Try<SingleModel<T>> getCollectionItemSingleModelTry(
+		@PathParam("path") String path, @PathParam("id") String id);
 
 	/**
-	 * Returns the collection {@link Page} for a given path.
+	 * Returns the collection {@link Page} for a given path or an exception if
+	 * an error occurred.
 	 *
 	 * @param  path the path from the URL.
-	 * @return the collection page at the path.
+	 * @return the collection page at the path, or an exception if there was an
+	 *         error.
 	 */
 	@GET
 	@Path("/p/{path}")
-	public default <T> Page<T> getCollectionPage(
-		@PathParam("path") String path) {
-
-		Routes<T> routes = getRoutes(path);
-
-		Optional<Supplier<Page<T>>> optional = routes.getPageSupplierOptional();
-
-		Supplier<Page<T>> supplier = optional.orElseThrow(
-			NotFoundException::new);
-
-		return supplier.get();
-	}
+	public <T> Try<Page<T>> getCollectionPageTry(
+		@PathParam("path") String path);
 
 	/**
-	 * Returns the {@link Routes} instance for a given path. The result of this
-	 * method may vary depending on implementation.
+	 * Returns a nested collection {@link Page} for a given set of
+	 * path-id-nestedPath or an exception if an error occurred.
 	 *
 	 * @param  path the path from the URL.
-	 * @return the {@link Routes} instance for the path.
+	 * @param  id the ID of the resource.
+	 * @param  nestedPath the path of the nested resource.
+	 * @return the collection page at the path, or an exception if there was an
+	 *         error.
 	 */
-	public <T> Routes<T> getRoutes(String path);
+	@GET
+	@Path("/p/{path}/{id}/{nestedPath}")
+	public <T> Try<Page<T>> getNestedCollectionPageTry(
+		@PathParam("path") String path, @PathParam("id") String id,
+		@PathParam("nestedPath") String nestedPath);
 
 }

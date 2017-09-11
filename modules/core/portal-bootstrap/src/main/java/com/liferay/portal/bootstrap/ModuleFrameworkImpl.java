@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
-import com.liferay.portal.kernel.util.ServiceLoaderCondition;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,7 +55,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
@@ -78,6 +81,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -251,24 +255,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Initializing the OSGi framework");
 		}
 
+		_validateModuleFrameworkBaseDirForEquinox();
+
 		_initRequiredStartupDirs();
 
-		List<ServiceLoaderCondition> serviceLoaderConditions =
-			ServiceLoader.load(ServiceLoaderCondition.class);
-
-		ServiceLoaderCondition serviceLoaderCondition =
-			serviceLoaderConditions.get(0);
-
-		if (_log.isDebugEnabled()) {
-			Class<?> clazz = serviceLoaderCondition.getClass();
-
-			_log.debug(
-				"Using conditional loading to find the OSGi framework " +
-					"factory " + clazz.getName());
-		}
+		Thread currentThread = Thread.currentThread();
 
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			FrameworkFactory.class, serviceLoaderCondition);
+			new URLClassLoader(_getClassPathURLs(), null),
+			currentThread.getContextClassLoader(), FrameworkFactory.class,
+			null);
 
 		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 
@@ -588,6 +584,27 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	private static URL[] _getClassPathURLs() throws IOException {
+		File coreDir = new File(PropsValues.MODULE_FRAMEWORK_BASE_DIR, "core");
+
+		File[] files = coreDir.listFiles();
+
+		if (files == null) {
+			throw new IllegalStateException(
+				"Missing " + coreDir.getCanonicalPath());
+		}
+
+		URL[] urls = new URL[files.length];
+
+		for (int i = 0; i < urls.length; i++) {
+			URI uri = files[i].toURI();
+
+			urls[i] = uri.toURL();
+		}
+
+		return urls;
+	}
+
 	private Bundle _addBundle(
 			String location, InputStream inputStream, boolean checkPermission)
 		throws PortalException {
@@ -643,7 +660,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
+	private Map<String, String> _buildFrameworkProperties(Class<?> clazz)
+		throws URISyntaxException {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Building OSGi framework properties");
 		}
@@ -696,7 +715,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			FrameworkPropsKeys.OSGI_FRAMEWORK, codeSourceURL.toExternalForm());
 
-		File frameworkFile = new File(codeSourceURL.getFile());
+		File frameworkFile = new File(codeSourceURL.toURI());
 
 		properties.put(
 			FrameworkPropsKeys.OSGI_INSTALL_AREA, frameworkFile.getParent());
@@ -1132,7 +1151,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		bundleContext.registerService(
 			ThrowableCollector.class, throwableCollector, dictionary);
 
-		final List<Bundle> bundles = new ArrayList<>();
+		final Map<String, Bundle> bundles = new LinkedHashMap<>();
 
 		final List<Path> jarPaths = new ArrayList<>();
 
@@ -1173,6 +1192,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			});
 
+		for (String staticJarFileName :
+				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
+
+			File staticJarFile = new File(
+				PropsValues.LIFERAY_LIB_PORTAL_DIR, staticJarFileName);
+
+			if (staticJarFile.exists()) {
+				jarPaths.add(staticJarFile.toPath());
+			}
+			else {
+				_log.error("Missing " + staticJarFile);
+			}
+		}
+
 		Collections.sort(jarPaths);
 
 		String prefix = "reference:".concat(_STATIC_JAR);
@@ -1189,7 +1222,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Path filePath = Paths.get(location.substring(prefix.length()));
 
 			if (jarPaths.contains(filePath)) {
-				bundles.add(bundle);
+				bundles.put(bundle.getLocation(), bundle);
 
 				continue;
 			}
@@ -1209,20 +1242,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		refreshBundles.clear();
 
-		for (String staticJarFileName :
-				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
-
-			File staticJarFile = new File(
-				PropsValues.LIFERAY_LIB_PORTAL_DIR, staticJarFileName);
-
-			if (staticJarFile.exists()) {
-				jarPaths.add(staticJarFile.toPath());
-			}
-			else {
-				_log.error("Missing " + staticJarFile);
-			}
-		}
-
 		Set<String> overrideStaticFileNames = new HashSet<>();
 
 		for (Path jarPath : jarPaths) {
@@ -1233,7 +1252,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					_STATIC_JAR.concat(path), inputStream);
 
 				if (bundle != null) {
-					bundles.add(bundle);
+					bundles.put(bundle.getLocation(), bundle);
 
 					overrideStaticFileNames.add(
 						path.substring(path.lastIndexOf(StringPool.SLASH) + 1));
@@ -1317,7 +1336,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							StringPool.SLASH.concat(zipEntryName), inputStream);
 
 						if (bundle != null) {
-							bundles.add(bundle);
+							bundles.put(bundle.getLocation(), bundle);
 						}
 					}
 				}
@@ -1362,7 +1381,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		frameworkStartLevel.setStartLevel(
 			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
 
-		for (final Bundle bundle : bundles) {
+		for (final Bundle bundle : bundles.values()) {
 			if (_isFragmentBundle(bundle)) {
 				continue;
 			}
@@ -1541,6 +1560,37 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							" is already unregistered");
 				}
 			}
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	private void _validateModuleFrameworkBaseDirForEquinox()
+		throws MalformedURLException {
+
+		File baseDir = new File(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
+
+		baseDir = baseDir.getAbsoluteFile();
+
+		// See LPS-71758. Do what Equinox does internally to get a file path and
+		// validate it. Equinox converts a File into a URL using File#toURL(),
+		// and later creates the OSGi persistence directory using the URL, which
+		// does not properly handle special character escaping and decoding.
+
+		URL url = baseDir.toURL();
+
+		File equinoxBaseDir = new File(url.getFile());
+
+		if (!baseDir.equals(equinoxBaseDir) && _log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("The module.framework.base.dir path \"");
+			sb.append(baseDir);
+			sb.append("\" contains characters that Equinox cannot handle. ");
+			sb.append("The OSGi persistence data will be stored under \"");
+			sb.append(equinoxBaseDir);
+			sb.append("\"");
+
+			_log.warn(sb.toString());
 		}
 	}
 

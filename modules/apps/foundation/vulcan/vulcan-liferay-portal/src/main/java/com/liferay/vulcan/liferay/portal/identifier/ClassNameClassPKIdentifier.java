@@ -14,44 +14,33 @@
 
 package com.liferay.vulcan.liferay.portal.identifier;
 
+import com.liferay.vulcan.identifier.Identifier;
+
 /**
- * Allows developers to use a combination of className-classPK values as
- * identifier for a resource.
+ * Instances of this identifier represents an identifier with a class name and a
+ * <code>classPK</code>.
  *
  * <p>
- * To use this class, add it as the first parameter in
- * <code>collectionItem</code> {@link
- * com.liferay.vulcan.resource.builder.RoutesBuilder} methods.
+ * These values can be retrieved using {@link #getClassName()} {@link
+ * #getClassPK()} methods.
  * </p>
  *
  * @author Alejandro Hernández
  */
-public class ClassNameClassPKIdentifier {
-
-	public ClassNameClassPKIdentifier(String className, long classPK) {
-		_className = className;
-		_classPK = classPK;
-	}
+public interface ClassNameClassPKIdentifier extends Identifier {
 
 	/**
 	 * Returns the class name.
 	 *
-	 * @return className.
+	 * @return the class name.
 	 */
-	public String getClassName() {
-		return _className;
-	}
+	public String getClassName();
 
 	/**
-	 * Returns the class PK.
+	 * Returns the <code>classPK</code>.
 	 *
-	 * @return classPK.
+	 * @return the <code>classPK</code>.
 	 */
-	public long getClassPK() {
-		return _classPK;
-	}
-
-	private final String _className;
-	private final long _classPK;
+	public long getClassPK();
 
 }

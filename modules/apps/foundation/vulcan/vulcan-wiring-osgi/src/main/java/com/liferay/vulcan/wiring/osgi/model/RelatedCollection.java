@@ -14,10 +14,6 @@
 
 package com.liferay.vulcan.wiring.osgi.model;
 
-import com.liferay.vulcan.filter.QueryParamFilterType;
-
-import java.util.function.Function;
-
 /**
  * Represents the relation between a thing and a collection.
  *
@@ -25,23 +21,9 @@ import java.util.function.Function;
  */
 public class RelatedCollection<T, S> {
 
-	public RelatedCollection(
-		String key, Class<S> modelClass,
-		Function<T, QueryParamFilterType> filterFunction) {
-
+	public RelatedCollection(String key, Class<S> modelClass) {
 		_key = key;
 		_modelClass = modelClass;
-		_filterFunction = filterFunction;
-	}
-
-	/**
-	 * Returns the function that can be used to create the filter for the
-	 * related collection.
-	 *
-	 * @return function to calculate the related collection's filter.
-	 */
-	public Function<T, QueryParamFilterType> getFilterFunction() {
-		return _filterFunction;
 	}
 
 	/**
@@ -62,7 +44,6 @@ public class RelatedCollection<T, S> {
 		return _modelClass;
 	}
 
-	private final Function<T, QueryParamFilterType> _filterFunction;
 	private final String _key;
 	private final Class<S> _modelClass;
 

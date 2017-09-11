@@ -57,10 +57,12 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -82,10 +84,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -199,12 +203,17 @@ public class JournalArticleIndexer
 
 		boolean head = GetterUtil.getBoolean(
 			searchContext.getAttribute("head"), Boolean.TRUE);
+		boolean latest = GetterUtil.getBoolean(
+			searchContext.getAttribute("latest"));
 		boolean relatedClassName = GetterUtil.getBoolean(
 			searchContext.getAttribute("relatedClassName"));
 		boolean showNonindexable = GetterUtil.getBoolean(
 			searchContext.getAttribute("showNonindexable"));
 
-		if (head && !relatedClassName && !showNonindexable) {
+		if (latest && !relatedClassName && !showNonindexable) {
+			contextBooleanFilter.addRequiredTerm("latest", Boolean.TRUE);
+		}
+		else if (head && !relatedClassName && !showNonindexable) {
 			contextBooleanFilter.addRequiredTerm("head", Boolean.TRUE);
 		}
 
@@ -245,7 +254,10 @@ public class JournalArticleIndexer
 	public void reindexDDMStructures(List<Long> ddmStructureIds)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() || !isIndexerEnabled()) {
+		if (_indexStatusManager.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly(getClassName()) ||
+			!isIndexerEnabled()) {
+
 			return;
 		}
 
@@ -517,6 +529,10 @@ public class JournalArticleIndexer
 
 		document.addKeyword("headListable", headListable);
 
+		boolean latestArticle = JournalUtil.isLatestArticle(journalArticle);
+
+		document.addKeyword("latest", latestArticle);
+
 		// Scheduled listable articles should be visible in asset browser
 
 		if (journalArticle.isScheduled() && headListable) {
@@ -746,13 +762,26 @@ public class JournalArticleIndexer
 				LocaleUtil.toLanguageId(snippetLocale), 1, portletRequestModel,
 				themeDisplay);
 
-			content = articleDisplay.getDescription();
+			content = HtmlUtil.stripHtml(articleDisplay.getDescription());
 
 			content = HtmlUtil.replaceNewLine(content);
 
 			if (Validator.isNull(content)) {
 				content = HtmlUtil.extractText(articleDisplay.getContent());
 			}
+
+			String snippet = document.get(
+				snippetLocale,
+				Field.SNIPPET + StringPool.UNDERLINE + Field.CONTENT);
+
+			Set<String> highlights = new HashSet<>();
+
+			HighlightUtil.addSnippet(document, highlights, snippet, "temp");
+
+			content = HighlightUtil.highlight(
+				content, ArrayUtil.toStringArray(highlights),
+				HighlightUtil.HIGHLIGHT_TAG_OPEN,
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

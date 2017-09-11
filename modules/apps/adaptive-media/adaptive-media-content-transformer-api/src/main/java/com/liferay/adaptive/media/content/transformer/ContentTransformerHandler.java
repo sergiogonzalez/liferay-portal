@@ -55,7 +55,9 @@ public class ContentTransformerHandler {
 					transformedContent);
 			}
 			catch (Exception e) {
-				_log.error(e);
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 			}
 		}
 

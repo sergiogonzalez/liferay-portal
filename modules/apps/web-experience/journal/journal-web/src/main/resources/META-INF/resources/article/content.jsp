@@ -118,6 +118,7 @@ if (!searchRestriction) {
 
 	<div class="article-content-description">
 		<liferay-ui:input-localized
+			cssClass="form-control"
 			editorName="alloyeditor"
 			formName="fm"
 			ignoreRequestValue="<%= changeStructure %>"

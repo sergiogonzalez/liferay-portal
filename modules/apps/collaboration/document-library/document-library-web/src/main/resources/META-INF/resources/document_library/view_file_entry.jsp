@@ -241,10 +241,10 @@ if (portletTitleBasedNavigation) {
 							<span class="webdav-url">
 								<c:choose>
 									<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-										<liferay-ui:message key="get-url-or-webdav-url" />
+										<liferay-ui:message arguments='<%= new Object[] {"<a class='show-url-file' href='javascript:;'>", "</a>", "<a class='show-webdav-url-file' href='javascript:;'>", "</a>"} %>' key="get-url-or-webdav-url" />
 									</c:when>
 									<c:otherwise>
-										<liferay-ui:message key="get-url" />
+										<liferay-ui:message arguments='<%= new Object[] {"<a class='show-url-file' href='javascript:;'>", "</a>"} %>' key="get-url" />
 									</c:otherwise>
 								</c:choose>
 							</span>
@@ -485,7 +485,7 @@ if (portletTitleBasedNavigation) {
 
 					<c:if test="<%= (layoutAssetEntry != null) && dlPortletInstanceSettings.isEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
 						<div class="entry-links">
-							<liferay-ui:asset-links
+							<liferay-asset:asset-links
 								assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 							/>
 						</div>
@@ -497,14 +497,14 @@ if (portletTitleBasedNavigation) {
 
 					<c:if test="<%= fileEntry.isSupportsSocial() %>">
 						<div class="lfr-asset-categories">
-							<liferay-ui:asset-categories-summary
+							<liferay-asset:asset-categories-summary
 								className="<%= DLFileEntryConstants.getClassName() %>"
 								classPK="<%= assetClassPK %>"
 							/>
 						</div>
 
 						<div class="lfr-asset-tags">
-							<liferay-ui:asset-tags-summary
+							<liferay-asset:asset-tags-summary
 								className="<%= DLFileEntryConstants.getClassName() %>"
 								classPK="<%= assetClassPK %>"
 								message="tags"
