@@ -38,8 +38,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<aui:fieldset collapsible="<%= true %>" id="imageGalleryDisplayDisplay" label="display-settings">
 					<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
 
-					<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowTabs() %>" />
-
 					<aui:field-wrapper label="show-media-type">
 						<liferay-ui:input-move-boxes
 							leftBoxName="currentMimeTypes"
