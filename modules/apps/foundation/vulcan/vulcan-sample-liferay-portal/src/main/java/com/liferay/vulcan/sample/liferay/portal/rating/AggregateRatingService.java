@@ -27,10 +27,10 @@ public interface AggregateRatingService {
 	/**
 	 * Returns the {@link AggregateRating} for a className/classPK combination.
 	 *
-	 * @param  identifier the aggregate rating identifier.
+	 * @param  classNameClassPKIdentifier the className/classPK identifier.
 	 * @return the aggregate rating.
 	 */
 	public AggregateRating getAggregateRating(
-		ClassNameClassPKIdentifier identifier);
+		ClassNameClassPKIdentifier classNameClassPKIdentifier);
 
 }

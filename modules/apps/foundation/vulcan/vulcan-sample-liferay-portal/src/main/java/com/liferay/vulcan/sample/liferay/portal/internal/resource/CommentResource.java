@@ -28,8 +28,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.vulcan.identifier.LongIdentifier;
 import com.liferay.vulcan.liferay.portal.context.CurrentUser;
-import com.liferay.vulcan.liferay.portal.filter.ClassNameClassPKFilter;
+import com.liferay.vulcan.liferay.portal.identifier.ClassNameClassPKIdentifier;
 import com.liferay.vulcan.pagination.PageItems;
 import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.resource.Resource;
@@ -56,18 +57,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class CommentResource implements Resource<Comment> {
+public class CommentResource implements Resource<Comment, LongIdentifier> {
 
 	@Override
 	public void buildRepresentor(
-		RepresentorBuilder<Comment> representorBuilder) {
+		RepresentorBuilder<Comment, LongIdentifier> representorBuilder) {
 
 		representorBuilder.identifier(
-			comment -> String.valueOf(comment.getCommentId())
-		).addField(
-			"text", Comment::getBody
+			comment -> comment::getCommentId
 		).addEmbeddedModel(
 			"author", User.class, this::_getUserOptional
+		).addField(
+			"text", Comment::getBody
 		).addType(
 			"Comment"
 		);
@@ -79,28 +80,31 @@ public class CommentResource implements Resource<Comment> {
 	}
 
 	@Override
-	public Routes<Comment> routes(RoutesBuilder<Comment> routesBuilder) {
+	public Routes<Comment> routes(
+		RoutesBuilder<Comment, LongIdentifier> routesBuilder) {
+
 		return routesBuilder.collectionItem(
-			this::_getComment, Long.class
-		).filteredCollectionPage(
-			this::_getPageItems, ClassNameClassPKFilter.class, CurrentUser.class
+			this::_getComment
+		).collectionPage(
+			this::_getPageItems, ClassNameClassPKIdentifier.class,
+			CurrentUser.class
 		).build();
 	}
 
-	private Comment _getComment(Long id) {
-		return _commentManager.fetchComment(id);
+	private Comment _getComment(LongIdentifier commentIdentifier) {
+		long commentId = commentIdentifier.getIdAsLong();
+
+		return _commentManager.fetchComment(commentId);
 	}
 
 	private DiscussionCommentIterator _getDiscussionCommentIterator(
-		ClassNameClassPKFilter classNameClassPKFilter, Pagination pagination,
+		String className, long classPK, Pagination pagination,
 		CurrentUser currentUser) {
 
 		AssetEntry assetEntry = null;
 
 		try {
-			assetEntry = _assetEntryLocalService.getEntry(
-				classNameClassPKFilter.getClassName(),
-				classNameClassPKFilter.getClassPK());
+			assetEntry = _assetEntryLocalService.getEntry(className, classPK);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -110,9 +114,8 @@ public class CommentResource implements Resource<Comment> {
 
 		try {
 			discussion = _commentManager.getDiscussion(
-				currentUser.getUserId(), assetEntry.getGroupId(),
-				classNameClassPKFilter.getClassName(),
-				classNameClassPKFilter.getClassPK(),
+				currentUser.getUserId(), assetEntry.getGroupId(), className,
+				classPK,
 				new IdentityServiceContextFunction(new ServiceContext()));
 		}
 		catch (PortalException pe) {
@@ -127,14 +130,17 @@ public class CommentResource implements Resource<Comment> {
 	}
 
 	private PageItems<Comment> _getPageItems(
-		ClassNameClassPKFilter classNameClassPKFilter, Pagination pagination,
+		Pagination pagination,
+		ClassNameClassPKIdentifier classNameClassPKIdentifier,
 		CurrentUser currentUser) {
 
 		List<Comment> comments = new ArrayList<>();
 
 		DiscussionCommentIterator discussionCommentIterator =
 			_getDiscussionCommentIterator(
-				classNameClassPKFilter, pagination, currentUser);
+				classNameClassPKIdentifier.getClassName(),
+				classNameClassPKIdentifier.getClassPK(), pagination,
+				currentUser);
 
 		int i = pagination.getEndPosition() - pagination.getStartPosition();
 
@@ -147,11 +153,11 @@ public class CommentResource implements Resource<Comment> {
 			i--;
 		}
 
-		int commentsCount = _commentManager.getCommentsCount(
-			classNameClassPKFilter.getClassName(),
-			classNameClassPKFilter.getClassPK());
+		int count = _commentManager.getCommentsCount(
+			classNameClassPKIdentifier.getClassName(),
+			classNameClassPKIdentifier.getClassPK());
 
-		return new PageItems<>(comments, commentsCount);
+		return new PageItems<>(comments, count);
 	}
 
 	private Optional<User> _getUserOptional(Comment comment) {
@@ -160,7 +166,8 @@ public class CommentResource implements Resource<Comment> {
 				_userService.getUserById(comment.getUserId()));
 		}
 		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException(e);
+			throw new NotFoundException(
+				"Unable to get user " + comment.getUserId(), e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

@@ -46,6 +46,7 @@ import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
@@ -205,7 +206,6 @@ import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.plugins.ide.api.XmlFileContentMerger;
-import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.Classpath;
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
@@ -438,6 +438,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, testProject, MavenPlugin.INSTALL_TASK_NAME,
 				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 		}
+
+		GradleUtil.withPlugin(
+			project, JSTranspilerPlugin.class,
+			new Action<JSTranspilerPlugin>() {
+
+				@Override
+				public void execute(JSTranspilerPlugin jsTranspilerPlugin) {
+					_configureConfigurationNoCrossRepoDependencies(
+						project,
+						JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME);
+				}
+
+			});
 
 		GradleUtil.withPlugin(
 			project, ServiceBuilderPlugin.class,
@@ -1281,7 +1294,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, BaselinePlugin.class);
 		GradleUtil.applyPlugin(project, DependencyCheckerPlugin.class);
-		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
@@ -1322,7 +1334,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		String json = new String(
 			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		Matcher matcher = _jsonVersionPattern.matcher(json);
+		Matcher matcher = GradlePluginsDefaultsUtil.jsonVersionPattern.matcher(
+			json);
 
 		if (!matcher.find()) {
 			return;
@@ -1359,8 +1372,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project.setVersion(bundleVersion);
 
 			try {
-				_applyVersionOverrideJson(project, "npm-shrinkwrap.json");
-				_applyVersionOverrideJson(project, "package.json");
+				for (String fileName :
+						GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
+
+					_applyVersionOverrideJson(project, fileName);
+				}
 			}
 			catch (IOException ioe) {
 				throw new UncheckedIOException(ioe);
@@ -1508,8 +1524,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _checkVersion(Project project) {
-		_checkJsonVersion(project, "npm-shrinkwrap.json");
-		_checkJsonVersion(project, "package.json");
+		for (String fileName :
+				GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
+
+			_checkJsonVersion(project, fileName);
+			_checkJsonVersion(project, fileName);
+		}
 	}
 
 	private void _configureArtifacts(
@@ -1945,6 +1965,53 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+	}
+
+	private void _configureConfigurationNoCrossRepoDependencies(
+		final Project project, String name) {
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, name);
+
+		ResolvableDependencies resolvableDependencies =
+			configuration.getIncoming();
+
+		resolvableDependencies.beforeResolve(
+			new Action<ResolvableDependencies>() {
+
+				@Override
+				public void execute(
+					ResolvableDependencies resolvableDependencies) {
+
+					File rootDir = GradleUtil.getRootDir(
+						project, _GIT_REPO_FILE_NAME);
+
+					if (rootDir == null) {
+						return;
+					}
+
+					DependencySet dependencySet =
+						resolvableDependencies.getDependencies();
+
+					for (ProjectDependency projectDependency :
+							dependencySet.withType(ProjectDependency.class)) {
+
+						Project dependencyProject =
+							projectDependency.getDependencyProject();
+
+						File dependencyRootDir = GradleUtil.getRootDir(
+							dependencyProject, _GIT_REPO_FILE_NAME);
+
+						if (!rootDir.equals(dependencyRootDir)) {
+							throw new GradleException(
+								projectDependency + " in " + project +
+									" is not allowed to cross subrepository " +
+										"boundaries");
+						}
+					}
+				}
+
+			});
 	}
 
 	private void _configureConfigurations(
@@ -2958,18 +3025,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Project project = replaceRegexTask.getProject();
 
-		File npmShrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
+		for (String fileName :
+				GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
 
-		if (npmShrinkwrapJsonFile.exists()) {
-			replaceRegexTask.match(
-				_jsonVersionPattern.pattern(), npmShrinkwrapJsonFile);
-		}
+			File file = project.file(fileName);
 
-		File packageJsonFile = project.file("package.json");
-
-		if (packageJsonFile.exists()) {
-			replaceRegexTask.match(
-				_jsonVersionPattern.pattern(), packageJsonFile);
+			if (file.exists()) {
+				replaceRegexTask.match(
+					GradlePluginsDefaultsUtil.jsonVersionPattern.pattern(),
+					file);
+			}
 		}
 	}
 
@@ -3986,8 +4051,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();
-	private static final Pattern _jsonVersionPattern = Pattern.compile(
-		"\\n\\t\"version\": \"(.+)\"");
 
 	private static class GitRepo {
 

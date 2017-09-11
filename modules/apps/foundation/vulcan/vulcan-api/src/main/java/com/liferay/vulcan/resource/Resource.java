@@ -14,6 +14,7 @@
 
 package com.liferay.vulcan.resource;
 
+import com.liferay.vulcan.identifier.Identifier;
 import com.liferay.vulcan.resource.builder.RepresentorBuilder;
 import com.liferay.vulcan.resource.builder.RoutesBuilder;
 
@@ -41,7 +42,7 @@ import com.liferay.vulcan.resource.builder.RoutesBuilder;
  * @see    RepresentorBuilder
  * @see    RoutesBuilder
  */
-public interface Resource<T> {
+public interface Resource<T, U extends Identifier> {
 
 	/**
 	 * Creates a representor for a certain domain model from the provided {@link
@@ -56,7 +57,7 @@ public interface Resource<T> {
 	 * @param representorBuilder the builder used to create the representor.
 	 * @see   RepresentorBuilder
 	 */
-	public void buildRepresentor(RepresentorBuilder<T> representorBuilder);
+	public void buildRepresentor(RepresentorBuilder<T, U> representorBuilder);
 
 	/**
 	 * Returns the path for this resource.
@@ -76,6 +77,6 @@ public interface Resource<T> {
 	 * @param routesBuilder the builder used to create the routes.
 	 * @see   RoutesBuilder
 	 */
-	public Routes<T> routes(RoutesBuilder<T> routesBuilder);
+	public Routes<T> routes(RoutesBuilder<T, U> routesBuilder);
 
 }

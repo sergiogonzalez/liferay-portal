@@ -176,6 +176,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Edit Web Content" />
 			<var name="webContentTitle" value="WebContent Title" />
 		</execute>
 
@@ -835,19 +836,9 @@
 			<var name="site" value="Community Site Name" />
 		</execute>
 
-		<toggle name="LPS-73924">
-			<on>
-				<execute macro="ProductMenu#gotoSitesConfiguration">
-					<var name="portlet" value="Workflow" />
-				</execute>
-			</on>
-
-			<off>
-				<execute macro="ProductMenu#gotoSitesConfiguration">
-					<var name="portlet" value="Workflow Configuration" />
-				</execute>
-			</off>
-		</toggle>
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Workflow" />
+		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
@@ -893,19 +884,9 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<toggle name="LPS-73924">
-			<on>
-				<execute macro="ProductMenu#gotoSitesConfiguration">
-					<var name="portlet" value="Workflow" />
-				</execute>
-			</on>
-
-			<off>
-				<execute macro="ProductMenu#gotoSitesConfiguration">
-					<var name="portlet" value="Workflow Configuration" />
-				</execute>
-			</off>
-		</toggle>
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Workflow" />
+		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />

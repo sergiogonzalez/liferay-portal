@@ -18,14 +18,17 @@ import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIP
 import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
-import com.liferay.vulcan.filter.QueryParamFilterType;
-import com.liferay.vulcan.function.TriConsumer;
+import com.liferay.vulcan.binary.BinaryFunction;
+import com.liferay.vulcan.error.VulcanDeveloperError;
+import com.liferay.vulcan.identifier.Identifier;
 import com.liferay.vulcan.resource.Resource;
 import com.liferay.vulcan.resource.Routes;
+import com.liferay.vulcan.result.Try;
 import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RepresentorBuilderImpl;
 import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RoutesBuilderImpl;
 import com.liferay.vulcan.wiring.osgi.model.RelatedCollection;
 import com.liferay.vulcan.wiring.osgi.model.RelatedModel;
+import com.liferay.vulcan.wiring.osgi.util.GenericUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +57,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ResourceManager.class)
 public class ResourceManager extends BaseManager<Resource> {
+
+	/**
+	 * Returns the binary resources linked to a model
+	 *
+	 * @param  modelClass class name indexing the binary resources
+	 * @return the binary resources for the model class
+	 */
+	public <T> Map<String, BinaryFunction<T>>
+		getBinaryFunctions(Class<T> modelClass) {
+
+		return (Map)_binaryFunctions.get(modelClass.getName());
+	}
 
 	/**
 	 * Returns the model class name, exposed in a certain path.
@@ -95,18 +111,51 @@ public class ResourceManager extends BaseManager<Resource> {
 	}
 
 	/**
-	 * Returns the identifier of the model.
+	 * Returns the identifier of the model if present. Returns {@code
+	 * Optional#empty()} otherwise.
 	 *
 	 * @param  modelClass the model class of a {@link Resource}.
 	 * @param  model the model instance.
-	 * @return the identifier of the model.
+	 * @return the identifier of the model if present; {@code Optional#empty()}
+	 *         otherwise.
 	 * @see    Resource
 	 */
-	public <T> String getIdentifier(Class<T> modelClass, T model) {
-		Function<T, String> identifierFunction =
-			(Function<T, String>)_identifierFunctions.get(modelClass.getName());
+	public <T> Optional<Identifier> getIdentifierOptional(
+		Class<T> modelClass, T model) {
 
-		return identifierFunction.apply(model);
+		Function<T, Identifier> identifierFunction =
+			(Function<T, Identifier>)_identifierFunctions.get(
+				modelClass.getName());
+
+		Optional<Function<T, Identifier>> optional = Optional.ofNullable(
+			identifierFunction);
+
+		return optional.map(
+			function -> function.apply(model)
+		).flatMap(
+			identifier -> {
+				Optional<Resource<T, Identifier>> resourceOptional =
+					getResourceOptional(modelClass);
+
+				return resourceOptional.map(
+					Resource::getPath
+				).map(
+					path -> new Identifier() {
+
+						@Override
+						public String getId() {
+							return identifier.getId();
+						}
+
+						@Override
+						public String getType() {
+							return path;
+						}
+
+					}
+				);
+			}
+		);
 	}
 
 	/**
@@ -151,7 +200,9 @@ public class ResourceManager extends BaseManager<Resource> {
 	 * @return the {@link Resource}, if present; <code>Optional#empty()</code>
 	 *         otherwise.
 	 */
-	public <T> Optional<Resource<T>> getResourceOptional(Class<T> modelClass) {
+	public <T, U extends Identifier> Optional<Resource<T, U>>
+		getResourceOptional(Class<T> modelClass) {
+
 		return getResourceOptional(modelClass.getName());
 	}
 
@@ -163,11 +214,11 @@ public class ResourceManager extends BaseManager<Resource> {
 	 * @return the {@link Resource}, if present; <code>Optional#empty()</code>
 	 *         otherwise.
 	 */
-	public <T> Optional<Resource<T>> getResourceOptional(
-		String modelClassName) {
+	public <T, U extends Identifier> Optional<Resource<T, U>>
+		getResourceOptional(String modelClassName) {
 
 		return getServiceOptional(modelClassName).map(
-			resource -> (Resource<T>)resource);
+			resource -> (Resource<T, U>)resource);
 	}
 
 	/**
@@ -177,13 +228,17 @@ public class ResourceManager extends BaseManager<Resource> {
 	 * @param  httpServletRequest the actual request.
 	 * @return the routes of the model class.
 	 */
-	public <T> Routes<T> getRoutes(
+	public <T> Optional<Routes<T>> getRoutes(
 		String path, HttpServletRequest httpServletRequest) {
 
-		Function<HttpServletRequest, Routes<?>> routesFunction =
-			_routesFunctions.get(path);
+		Optional<Function<HttpServletRequest, Routes<?>>> optional =
+			Optional.ofNullable(_routesFunctions.get(path));
 
-		return (Routes<T>)routesFunction.apply(httpServletRequest);
+		return optional.map(
+			routesFunction -> routesFunction.apply(httpServletRequest)
+		).map(
+			routes -> (Routes<T>)routes
+		);
 	}
 
 	/**
@@ -211,19 +266,21 @@ public class ResourceManager extends BaseManager<Resource> {
 		_addModelClassMaps(modelClass);
 	}
 
-	protected <T> void unsetServiceReference(
+	protected <T, U extends Identifier> void unsetServiceReference(
 		ServiceReference<Resource> serviceReference) {
 
 		Class<T> modelClass = removeService(serviceReference, Resource.class);
 
 		_removeModelClassMaps(modelClass);
 
-		Optional<Resource<T>> optional = getResourceOptional(modelClass);
+		Optional<Resource<T, U>> optional = getResourceOptional(modelClass);
 
 		optional.ifPresent(firstResource -> _addModelClassMaps(modelClass));
 	}
 
-	private <T> void _addModelClassMaps(Class<T> modelClass) {
+	private <T, U extends Identifier> void _addModelClassMaps(
+		Class<T> modelClass) {
+
 		Map<String, Function<?, Object>> fieldFunctions = new HashMap<>();
 
 		_fieldFunctions.put(modelClass.getName(), fieldFunctions);
@@ -246,49 +303,59 @@ public class ResourceManager extends BaseManager<Resource> {
 
 		_relatedCollections.put(modelClass.getName(), relatedCollections);
 
+		Map<String, BinaryFunction<T>> binaryFunctions = new HashMap<>();
+
+		_binaryFunctions.put(modelClass.getName(), (Map)binaryFunctions);
+
 		List<String> types = new ArrayList<>();
 
 		_types.put(modelClass.getName(), types);
 
-		Optional<Resource<T>> optional = getResourceOptional(modelClass);
+		Optional<Resource<T, U>> optional = getResourceOptional(modelClass);
 
 		optional.ifPresent(
 			resource -> {
 				resource.buildRepresentor(
-					new RepresentorBuilderImpl<>(
+					new RepresentorBuilderImpl(
 						modelClass, _identifierFunctions,
-						_addRelatedCollectionTriConsumer(modelClass),
+						_addRelatedCollectionBiConsumer(modelClass),
 						fieldFunctions, embeddedRelatedModels,
-						linkedRelatedModels, links, relatedCollections, types));
+						linkedRelatedModels, links, relatedCollections,
+						binaryFunctions, types));
 
-				_routesFunctions.put(
-					resource.getPath(), _getRoutes(modelClass, resource));
+				Function<HttpServletRequest, Routes<?>> routesFunction =
+					_getRoutesFunction(
+						modelClass, _getIdentifierClass(resource), resource,
+						binaryFunctions);
+
+				_routesFunctions.put(resource.getPath(), routesFunction);
 			});
 	}
 
-	private <T> TriConsumer<String, Class<?>, Function<?, QueryParamFilterType>>
-		_addRelatedCollectionTriConsumer(Class<T> relatedModelClass) {
+	private <T> BiConsumer<String, Class<?>>
+		_addRelatedCollectionBiConsumer(Class<T> relatedModelClass) {
 
-		return (key, modelClass, filterFunction) -> {
+		return (key, modelClass) -> {
 			List<RelatedCollection<?, ?>> relatedCollections =
 				_relatedCollections.computeIfAbsent(
 					modelClass.getName(), className -> new ArrayList<>());
 
 			relatedCollections.add(
-				new RelatedCollection<>(
-					key, relatedModelClass, filterFunction));
+				new RelatedCollection<>(key, relatedModelClass));
 		};
 	}
 
-	private <U> Optional<U> _convert(Class<U> clazz, String id) {
-		return _converterManager.convert(clazz, id);
-	}
+	private <T, U extends Identifier> Class<U> _getIdentifierClass(
+		Resource<T, U> resource) {
 
-	private Optional<String> _getFilterName(
-		QueryParamFilterType queryParamFilterType) {
+		Class<? extends Resource> resourceClass = resource.getClass();
 
-		return _filterProviderManager.getFilterNameOptional(
-			queryParamFilterType);
+		Try<Class<U>> classTry = GenericUtil.getGenericClassTry(
+			resourceClass, Resource.class, 1);
+
+		return classTry.orElseThrow(
+			() -> new VulcanDeveloperError.MustHaveValidGenericType(
+				resourceClass));
 	}
 
 	private Function<Class<?>, Optional<?>> _getProvideClassFunction(
@@ -297,26 +364,21 @@ public class ResourceManager extends BaseManager<Resource> {
 		return clazz -> _providerManager.provide(clazz, httpServletRequest);
 	}
 
-	private Function<Class<? extends QueryParamFilterType>,
-		Optional<? extends QueryParamFilterType>>
-			_getProvideFilterFunction(HttpServletRequest httpServletRequest) {
-
-		return clazz -> _filterProviderManager.provide(
-			clazz, httpServletRequest);
-	}
-
-	private <T> Function<HttpServletRequest, Routes<?>> _getRoutes(
-		Class<T> modelClass, Resource<T> resource) {
+	private <T, U extends Identifier> Function<HttpServletRequest, Routes<?>>
+		_getRoutesFunction(
+			Class<T> modelClass, Class<U> identifierClass,
+			Resource<T, U> resource,
+			Map<String, BinaryFunction<T>> binaryFunctions) {
 
 		return httpServletRequest -> {
-			String filterName = httpServletRequest.getParameter("filterName");
+			RoutesBuilderImpl<T, U> routesBuilder = new RoutesBuilderImpl<>(
+				modelClass, identifierClass,
+				_getProvideClassFunction(httpServletRequest),
+				_identifierConverterManager::convert);
 
-			return resource.routes(
-				new RoutesBuilderImpl<>(
-					modelClass, this::_convert,
-					_getProvideClassFunction(httpServletRequest),
-					_getProvideFilterFunction(httpServletRequest),
-					this::_getFilterName, filterName));
+			routesBuilder.collectionBinary(binaryFunctions);
+
+			return resource.routes(routesBuilder);
 		};
 	}
 
@@ -326,24 +388,23 @@ public class ResourceManager extends BaseManager<Resource> {
 		_identifierFunctions.remove(modelClass.getName());
 		_linkedRelatedModels.remove(modelClass.getName());
 		_links.remove(modelClass.getName());
+		_binaryFunctions.remove(modelClass.getName());
 		_types.remove(modelClass.getName());
 	}
 
+	private final Map<String, Map<String, BinaryFunction<?>>> _binaryFunctions =
+		new ConcurrentHashMap<>();
 	private final Map<String, String> _classNames = new ConcurrentHashMap<>();
-
-	@Reference
-	private ConverterManager _converterManager;
-
 	private final Map<String, List<RelatedModel<?, ?>>> _embeddedRelatedModels =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, Function<?, Object>>>
 		_fieldFunctions = new ConcurrentHashMap<>();
 
 	@Reference
-	private FilterProviderManager _filterProviderManager;
+	private IdentifierConverterManager _identifierConverterManager;
 
-	private final Map<String, Function<?, String>> _identifierFunctions =
-		new ConcurrentHashMap<>();
+	private final Map<String, Function<?, ? extends Identifier>>
+		_identifierFunctions = new ConcurrentHashMap<>();
 	private final Map<String, List<RelatedModel<?, ?>>> _linkedRelatedModels =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, String>> _links =

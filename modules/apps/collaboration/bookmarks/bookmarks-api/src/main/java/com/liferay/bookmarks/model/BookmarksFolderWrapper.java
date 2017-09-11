@@ -68,7 +68,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("parentFolderId", getParentFolderId());
 		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
@@ -130,12 +129,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long resourceBlockId = (Long)attributes.get("resourceBlockId");
-
-		if (resourceBlockId != null) {
-			setResourceBlockId(resourceBlockId);
 		}
 
 		Long parentFolderId = (Long)attributes.get("parentFolderId");
@@ -368,16 +361,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Returns the resource block ID of this bookmarks folder.
-	*
-	* @return the resource block ID of this bookmarks folder
-	*/
-	@Override
-	public long getResourceBlockId() {
-		return _bookmarksFolder.getResourceBlockId();
-	}
-
-	/**
 	* Returns the status of this bookmarks folder.
 	*
 	* @return the status of this bookmarks folder
@@ -566,6 +549,26 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
+	* Returns <code>true</code> if this bookmarks folder is inactive.
+	*
+	* @return <code>true</code> if this bookmarks folder is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _bookmarksFolder.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is incomplete.
+	*
+	* @return <code>true</code> if this bookmarks folder is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _bookmarksFolder.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
@@ -593,26 +596,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _bookmarksFolder.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is inactive.
-	*
-	* @return <code>true</code> if this bookmarks folder is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _bookmarksFolder.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is incomplete.
-	*
-	* @return <code>true</code> if this bookmarks folder is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _bookmarksFolder.isIncomplete();
 	}
 
 	@Override
@@ -696,14 +679,14 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_bookmarksFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_bookmarksFolder.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_bookmarksFolder.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -799,16 +782,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_bookmarksFolder.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the resource block ID of this bookmarks folder.
-	*
-	* @param resourceBlockId the resource block ID of this bookmarks folder
-	*/
-	@Override
-	public void setResourceBlockId(long resourceBlockId) {
-		_bookmarksFolder.setResourceBlockId(resourceBlockId);
 	}
 
 	/**

@@ -14,12 +14,13 @@
 
 package com.liferay.vulcan.resource;
 
+import com.liferay.vulcan.binary.BinaryFunction;
+import com.liferay.vulcan.identifier.Identifier;
 import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.SingleModel;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * Instances of this interface will hold information about the routes supported
@@ -41,6 +42,19 @@ import java.util.function.Supplier;
 public interface Routes<T> {
 
 	/**
+	 * Returns the function used to create a binary resource of a {@link
+	 * Resource}. Returns <code>Optional#empty()</code> if no binary resource
+	 * has been added through {@link
+	 * com.liferay.vulcan.resource.builder.RepresentorBuilder.FirstStep#addBinary(
+	 * String, BinaryFunction)}.
+	 *
+	 * @return the function used to create the binary resource, if present;
+	 *         <code>Optional#empty()</code> otherwise.
+	 */
+	public Optional<Function<String, BinaryFunction<T>>>
+		getBinaryFunctionOptional();
+
+	/**
 	 * Returns the supplier used to create the page of a {@link Resource}.
 	 * Returns <code>Optional#empty()</code> if the endpoint wasn't added
 	 * through the {@link com.liferay.vulcan.resource.builder.RoutesBuilder}.
@@ -48,7 +62,7 @@ public interface Routes<T> {
 	 * @return the supplier used to create the page, if present;
 	 *         <code>Optional#empty()</code> otherwise.
 	 */
-	public Optional<Supplier<Page<T>>> getPageSupplierOptional();
+	public Optional<Function<Identifier, Page<T>>> getPageFunctionOptional();
 
 	/**
 	 * Returns the function used to create the single model of a {@link
@@ -59,7 +73,7 @@ public interface Routes<T> {
 	 * @return the function used to create the single model, if present;
 	 *         <code>Optional#empty()</code> otherwise.
 	 */
-	public Optional<Function<String, SingleModel<T>>>
+	public Optional<Function<Identifier, SingleModel<T>>>
 		getSingleModelFunctionOptional();
 
 }
