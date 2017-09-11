@@ -76,11 +76,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						</div>
 					</aui:field-wrapper>
 				</aui:fieldset>
-
-				<aui:fieldset collapsible="<%= true %>" id="imageGalleryImagesRatingsPanel" label="ratings">
-					<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRatings() %>" />
-					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>" />
-				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>
 	</div>
