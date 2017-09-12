@@ -43,6 +43,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,6 +76,8 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 
 		_checkName(name);
 		_checkProperties(properties);
+
+		_normalizeProperties(properties);
 
 		String normalizedUuid = FriendlyURLNormalizerUtil.normalize(uuid);
 
@@ -315,6 +318,8 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 		_checkName(name);
 		_checkProperties(properties);
 
+		_normalizeProperties(properties);
+
 		String normalizedUuid = FriendlyURLNormalizerUtil.normalize(newUuid);
 
 		_checkUuid(normalizedUuid);
@@ -410,13 +415,12 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 			String name)
 		throws AdaptiveMediaImageConfigurationException {
 
-		Stream<AdaptiveMediaImageConfigurationEntry>
-			adaptiveMediaImageConfigurationEntryStream =
-				configurationEntries.stream();
+		Stream<AdaptiveMediaImageConfigurationEntry> configurationEntryStream =
+			configurationEntries.stream();
 
 		Optional<AdaptiveMediaImageConfigurationEntry>
 			duplicateNameConfigurationEntryOptional =
-				adaptiveMediaImageConfigurationEntryStream.filter(
+				configurationEntryStream.filter(
 					configurationEntry -> name.equals(
 						configurationEntry.getName())
 				).findFirst();
@@ -433,13 +437,12 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 			String uuid)
 		throws AdaptiveMediaImageConfigurationException {
 
-		Stream<AdaptiveMediaImageConfigurationEntry>
-			adaptiveMediaImageConfigurationEntryStream =
-				configurationEntries.stream();
+		Stream<AdaptiveMediaImageConfigurationEntry> configurationEntryStream =
+			configurationEntries.stream();
 
 		Optional<AdaptiveMediaImageConfigurationEntry>
 			duplicateUuidConfigurationEntryOptional =
-				adaptiveMediaImageConfigurationEntryStream.filter(
+				configurationEntryStream.filter(
 					configurationEntry -> uuid.equals(
 						configurationEntry.getUUID())
 				).findFirst();
@@ -465,6 +468,7 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 		String maxHeightString = properties.get("max-height");
 
 		if (Validator.isNotNull(maxHeightString) &&
+			!maxHeightString.equals("0") &&
 			!_isPositiveNumber(maxHeightString)) {
 
 			throw new AdaptiveMediaImageConfigurationException.
@@ -474,14 +478,15 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 		String maxWidthString = properties.get("max-width");
 
 		if (Validator.isNotNull(maxWidthString) &&
-			!_isPositiveNumber(maxWidthString)) {
+			!maxWidthString.equals("0") && !_isPositiveNumber(maxWidthString)) {
 
 			throw new AdaptiveMediaImageConfigurationException.
 				InvalidWidthException();
 		}
 
-		if (Validator.isNull(maxHeightString) &&
-			Validator.isNull(maxWidthString)) {
+		if ((Validator.isNull(maxHeightString) ||
+			 maxHeightString.equals("0")) &&
+			(Validator.isNull(maxWidthString) || maxWidthString.equals("0"))) {
 
 			throw new AdaptiveMediaImageConfigurationException.
 				RequiredWidthOrHeightException();
@@ -500,6 +505,10 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 	private Stream<AdaptiveMediaImageConfigurationEntry>
 		_getConfigurationEntries(long companyId) {
 
+		if (_configurationEntries.containsKey(companyId)) {
+			return _configurationEntries.get(companyId).stream();
+		}
+
 		try {
 			Settings settings = SettingsFactoryUtil.getSettings(
 				new CompanyServiceSettingsLocator(
@@ -512,8 +521,18 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 			String[] imageVariants = nullableImageVariants.orElseGet(
 				() -> settings.getValues("imageVariants", new String[0]));
 
-			return Stream.of(imageVariants).map(
-				_configurationEntryParser::parse);
+			Stream<String> imageVariantsStream = Stream.of(imageVariants);
+
+			List<AdaptiveMediaImageConfigurationEntry> configurationEntries =
+				imageVariantsStream.map(
+					_configurationEntryParser::parse
+				).collect(
+					Collectors.toList()
+				);
+
+			_configurationEntries.put(companyId, configurationEntries);
+
+			return configurationEntries.stream();
 		}
 		catch (SettingsException se) {
 			throw new AdaptiveMediaRuntimeException.InvalidConfiguration(se);
@@ -530,6 +549,25 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 		Map<String, String[]> map = portletPreferences.getMap();
 
 		return Optional.ofNullable(map.get("imageVariants"));
+	}
+
+	private void _normalizeProperties(Map<String, String> properties) {
+		String maxHeightString = properties.get("max-height");
+		String maxWidthString = properties.get("max-width");
+
+		if (Validator.isNotNull(maxHeightString) &&
+			Validator.isNotNull(maxWidthString)) {
+
+			return;
+		}
+
+		if (Validator.isNull(maxHeightString)) {
+			properties.put("max-height", "0");
+		}
+
+		if (Validator.isNull(maxWidthString)) {
+			properties.put("max-width", "0");
+		}
 	}
 
 	private void _triggerConfigurationEvent(Object payload) {
@@ -571,6 +609,12 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 				imageVariants.toArray(new String[imageVariants.size()]));
 
 			modifiableSettings.store();
+
+			configurationEntryStream = configurationEntries.stream();
+
+			_configurationEntries.put(
+				companyId,
+				configurationEntryStream.collect(Collectors.toList()));
 		}
 		catch (SettingsException | ValidatorException e) {
 			throw new AdaptiveMediaRuntimeException.InvalidConfiguration(e);
@@ -584,6 +628,8 @@ public class AdaptiveMediaImageConfigurationHelperImpl
 	private AdaptiveMediaImageEntryLocalService
 		_adaptiveMediaImageEntryLocalService;
 
+	private final Map<Long, Collection<AdaptiveMediaImageConfigurationEntry>>
+		_configurationEntries = new ConcurrentHashMap<>();
 	private AdaptiveMediaImageConfigurationEntryParser
 		_configurationEntryParser;
 

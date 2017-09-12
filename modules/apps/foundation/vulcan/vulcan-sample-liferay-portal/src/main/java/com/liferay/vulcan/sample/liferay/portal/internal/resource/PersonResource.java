@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.vulcan.identifier.LongIdentifier;
+import com.liferay.vulcan.identifier.RootIdentifier;
 import com.liferay.vulcan.pagination.PageItems;
 import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.resource.Resource;
@@ -50,10 +52,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(immediate = true)
-public class PersonResource implements Resource<User> {
+public class PersonResource implements Resource<User, LongIdentifier> {
 
 	@Override
-	public void buildRepresentor(RepresentorBuilder<User> representorBuilder) {
+	public void buildRepresentor(
+		RepresentorBuilder<User, LongIdentifier> representorBuilder) {
+
 		Function<User, Object> birthDateFunction = user -> {
 			try {
 				DateFormat dateFormat = DateUtil.getISO8601Format();
@@ -66,7 +70,7 @@ public class PersonResource implements Resource<User> {
 		};
 
 		representorBuilder.identifier(
-			user -> String.valueOf(user.getUserId())
+			user -> user::getUserId
 		).addField(
 			"additionalName", User::getMiddleName
 		).addField(
@@ -78,9 +82,9 @@ public class PersonResource implements Resource<User> {
 		).addField(
 			"givenName", User::getFirstName
 		).addField(
-			"name", User::getFullName
-		).addField(
 			"jobTitle", User::getJobTitle
+		).addField(
+			"name", User::getFullName
 		).addType(
 			"Person"
 		);
@@ -91,16 +95,18 @@ public class PersonResource implements Resource<User> {
 		return "people";
 	}
 
-	public Routes<User> routes(RoutesBuilder<User> routesBuilder) {
+	public Routes<User> routes(
+		RoutesBuilder<User, LongIdentifier> routesBuilder) {
+
 		return routesBuilder.collectionPage(
-			this::_getPageItems, Company.class
+			this::_getPageItems, RootIdentifier.class, Company.class
 		).collectionItem(
-			this::_getUser, Long.class
+			this::_getUser
 		).build();
 	}
 
 	private PageItems<User> _getPageItems(
-		Pagination pagination, Company company) {
+		Pagination pagination, RootIdentifier rootIdentifier, Company company) {
 
 		try {
 			List<User> users = _userService.getCompanyUsers(
@@ -116,12 +122,13 @@ public class PersonResource implements Resource<User> {
 		}
 	}
 
-	private User _getUser(Long id) {
+	private User _getUser(LongIdentifier userLongIdentifier) {
 		try {
-			return _userService.getUserById(id);
+			return _userService.getUserById(userLongIdentifier.getIdAsLong());
 		}
 		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException(e);
+			throw new NotFoundException(
+				"Unable to get user " + userLongIdentifier.getIdAsLong(), e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

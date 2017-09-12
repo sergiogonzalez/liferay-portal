@@ -27,6 +27,12 @@ dependencies {
 	provided project(":apps:collaboration:flags:flags-taglib")
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:foundation:captcha:captcha-api")
+	provided project(":apps:web-experience:asset:asset-service")
+	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:trash:trash-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
+}
+
+node {
+	nodeVersion = "8.4.0"
 }

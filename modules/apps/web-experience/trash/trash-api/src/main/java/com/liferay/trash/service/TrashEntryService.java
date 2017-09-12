@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.TrashPermissionException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -66,7 +67,7 @@ public interface TrashEntryService extends BaseService {
 	* @param groupId the primary key of the group
 	*/
 	@Transactional(noRollbackFor =  {
-		com.liferay.portal.kernel.exception.TrashPermissionException.class}
+		TrashPermissionException.class}
 	)
 	public void deleteEntries(long groupId) throws PortalException;
 
@@ -76,9 +77,22 @@ public interface TrashEntryService extends BaseService {
 	* @param entryIds the primary keys of the trash entries
 	*/
 	@Transactional(noRollbackFor =  {
-		com.liferay.portal.kernel.exception.TrashPermissionException.class}
+		TrashPermissionException.class}
 	)
 	public void deleteEntries(long[] entryIds) throws PortalException;
+
+	/**
+	* Deletes the trash entry with the primary key.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} with type {@link
+	* TrashPermissionException#DELETE} if the user did not have permission to
+	* delete the trash entry.
+	* </p>
+	*
+	* @param entryId the primary key of the trash entry
+	*/
+	public void deleteEntry(long entryId) throws PortalException;
 
 	/**
 	* Deletes the trash entry with the entity class name and class primary key.
@@ -94,19 +108,6 @@ public interface TrashEntryService extends BaseService {
 	*/
 	public void deleteEntry(java.lang.String className, long classPK)
 		throws PortalException;
-
-	/**
-	* Deletes the trash entry with the primary key.
-	*
-	* <p>
-	* This method throws a {@link TrashPermissionException} with type {@link
-	* TrashPermissionException#DELETE} if the user did not have permission to
-	* delete the trash entry.
-	* </p>
-	*
-	* @param entryId the primary key of the trash entry
-	*/
-	public void deleteEntry(long entryId) throws PortalException;
 
 	/**
 	* Returns the trash entries with the matching group ID.
@@ -195,12 +196,6 @@ public interface TrashEntryService extends BaseService {
 		long destinationContainerModelId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public TrashEntry restoreEntry(java.lang.String className, long classPK)
-		throws PortalException;
-
-	public TrashEntry restoreEntry(java.lang.String className, long classPK,
-		long overrideClassPK, java.lang.String name) throws PortalException;
-
 	public TrashEntry restoreEntry(long entryId) throws PortalException;
 
 	/**
@@ -239,4 +234,10 @@ public interface TrashEntryService extends BaseService {
 	*/
 	public TrashEntry restoreEntry(long entryId, long overrideClassPK,
 		java.lang.String name) throws PortalException;
+
+	public TrashEntry restoreEntry(java.lang.String className, long classPK)
+		throws PortalException;
+
+	public TrashEntry restoreEntry(java.lang.String className, long classPK,
+		long overrideClassPK, java.lang.String name) throws PortalException;
 }

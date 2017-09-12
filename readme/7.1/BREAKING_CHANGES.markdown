@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `327db2f96b5c`.*
+*This document has been reviewed through commit `868fe06cbf30`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -350,5 +350,73 @@ the instructions for
 
 This change was made as part of the modularization efforts to ease portal
 configuration changes.
+
+---------------------------------------
+
+### Removed the soyutils Module
+- **Date:** 2017-Aug-28
+- **JIRA Ticket:** LPS-69102
+
+#### What changed?
+
+The module `frontend-js-soyutils-web` is no longer available.
+
+#### Who is affected?
+
+This affects anyone using the `soyutils` module.
+
+#### How should I update my code?
+
+In the rare case that a component is affected, it is recommended that the code
+is migrated to use the `metal-soy` module instead. You can do this by extending
+the `Metal.js` provided `Component` classes.
+
+#### Why was this change made?
+
+The removed module exposed a legacy version of `soyutils`. This caused
+interoperability issues between applications using different versions of the
+Closure Template library.
+
+---------------------------------------
+
+### Changed default value for browser cache properties
+- **Date:** 2017-Sep-05
+- **JIRA Ticket:** LPS-74452
+
+#### What changed?
+
+The default values for the portal properties `browser.cache.disabled` and
+`browser.cache.signed.in.disabled` were changed to `true`.
+
+#### Who is affected?
+
+This affects everyone who was relying on proxies and load balancers to cache
+HTML content.
+
+#### How should I update my code?
+
+As documented in `portal-legacy-7.0.properties`, you should set
+`browser.cache.disabled=false` and `browser.cache.signed.in.disabled=false`.
+
+#### Why was this change made?
+
+How a load balancer or web proxy should behave when Cache-Control headers are
+missing is not defined. In the past, many preferred to err on the side of
+not caching the content for correctness, but it is increasingly common for them
+to err on the side of caching the content for performance.
+
+As Liferay shifts towards use cases providing personalized experiences, then
+whenever an aggressively caching load balancer or web proxy appears in the
+network architecture, the default value may result in security problems such as
+personalized content for one user being seen by another user, including names or
+other personally identifiable information.
+
+While this is ultimately a load balancer or web proxy configuration issue, it
+is perceived as a Liferay issue because it is Liferay content that is being
+cached, and is viewed very negatively because leaking sensitive information in a
+production environment is a very serious security issue.
+
+A value of `true` will improve a portal administrator's experience, and a value
+of `false` can be considered during performance tuning, if needed.
 
 ---------------------------------------

@@ -1,8 +1,3 @@
-configJSModules {
-	dependsOn = []
-	enabled = false
-}
-
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.captcha.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
@@ -15,13 +10,6 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 }
 
-transpileJS {
-	soySrcIncludes = ""
-	srcIncludes = "**/*.es.js"
-}
-
-wrapSoyAlloyTemplate {
-	enabled = true
-	moduleName = "liferay-ddm-form-field-captcha-template"
-	namespace = "ddm"
+node {
+	nodeVersion = "8.4.0"
 }

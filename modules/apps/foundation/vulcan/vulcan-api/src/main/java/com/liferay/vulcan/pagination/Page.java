@@ -16,6 +16,8 @@ package com.liferay.vulcan.pagination;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.vulcan.identifier.Identifier;
+
 import java.util.Collection;
 
 /**
@@ -28,6 +30,13 @@ import java.util.Collection;
  */
 @ProviderType
 public interface Page<T> {
+
+	/**
+	 * Returns the identifier.
+	 *
+	 * @return the identifier.
+	 */
+	public Identifier getIdentifier();
 
 	/**
 	 * Returns the items of the page.

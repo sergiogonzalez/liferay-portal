@@ -216,7 +216,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					<liferay-ui:search-container-column-text
 						name="max-width"
 						orderable="<%= false %>"
-						value='<%= maxWidth.equals("0") ? LanguageUtil.get(request, "auto") : maxWidth + "px" %>'
+						value='<%= (Validator.isNull(maxWidth) || maxWidth.equals("0")) ? LanguageUtil.get(request, "auto") : maxWidth + "px" %>'
 					/>
 
 					<%
@@ -226,7 +226,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					<liferay-ui:search-container-column-text
 						name="max-height"
 						orderable="<%= false %>"
-						value='<%= maxHeight.equals("0") ? LanguageUtil.get(request, "auto") : maxHeight + "px" %>'
+						value='<%= (Validator.isNull(maxHeight) || maxHeight.equals("0")) ? LanguageUtil.get(request, "auto") : maxHeight + "px" %>'
 					/>
 
 					<liferay-ui:search-container-column-jsp

@@ -14,13 +14,14 @@
 
 package com.liferay.vulcan.wiring.osgi.internal.resource;
 
+import com.liferay.vulcan.binary.BinaryFunction;
+import com.liferay.vulcan.identifier.Identifier;
 import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.SingleModel;
 import com.liferay.vulcan.resource.Routes;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * @author Alejandro Hernández
@@ -28,28 +29,42 @@ import java.util.function.Supplier;
 public class RoutesImpl<T> implements Routes<T> {
 
 	@Override
-	public Optional<Supplier<Page<T>>> getPageSupplierOptional() {
-		return Optional.ofNullable(_pageSupplier);
+	public Optional<Function<String, BinaryFunction<T>>>
+		getBinaryFunctionOptional() {
+
+		return Optional.ofNullable(_binaryFunction);
 	}
 
 	@Override
-	public Optional<Function<String, SingleModel<T>>>
+	public Optional<Function<Identifier, Page<T>>> getPageFunctionOptional() {
+		return Optional.ofNullable(_pageFunction);
+	}
+
+	@Override
+	public Optional<Function<Identifier, SingleModel<T>>>
 		getSingleModelFunctionOptional() {
 
 		return Optional.ofNullable(_singleModelFunction);
 	}
 
-	public void setPageSupplier(Supplier<Page<T>> pageSupplier) {
-		_pageSupplier = pageSupplier;
+	public void setBinaryFunction(
+		Function<String, BinaryFunction<T>> binaryFunction) {
+
+		_binaryFunction = binaryFunction;
+	}
+
+	public void setPageFunction(Function<Identifier, Page<T>> pageFunction) {
+		_pageFunction = pageFunction;
 	}
 
 	public void setSingleModelFunction(
-		Function<String, SingleModel<T>> singleModelFunction) {
+		Function<Identifier, SingleModel<T>> singleModelFunction) {
 
 		_singleModelFunction = singleModelFunction;
 	}
 
-	private Supplier<Page<T>> _pageSupplier;
-	private Function<String, SingleModel<T>> _singleModelFunction;
+	private Function<String, BinaryFunction<T>> _binaryFunction;
+	private Function<Identifier, Page<T>> _pageFunction;
+	private Function<Identifier, SingleModel<T>> _singleModelFunction;
 
 }

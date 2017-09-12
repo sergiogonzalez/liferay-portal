@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.vulcan.identifier.LongIdentifier;
+import com.liferay.vulcan.identifier.RootIdentifier;
 import com.liferay.vulcan.pagination.PageItems;
 import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.resource.Resource;
@@ -42,12 +44,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class GroupResource implements Resource<Group> {
+public class GroupResource implements Resource<Group, LongIdentifier> {
 
 	@Override
-	public void buildRepresentor(RepresentorBuilder<Group> representorBuilder) {
+	public void buildRepresentor(
+		RepresentorBuilder<Group, LongIdentifier> representorBuilder) {
+
 		representorBuilder.identifier(
-			group -> String.valueOf(group.getGroupId())
+			group -> group::getGroupId
 		).addField(
 			"groupType", Group::getTypeLabel
 		).addType(
@@ -61,27 +65,34 @@ public class GroupResource implements Resource<Group> {
 	}
 
 	@Override
-	public Routes<Group> routes(RoutesBuilder<Group> routesBuilder) {
+	public Routes<Group> routes(
+		RoutesBuilder<Group, LongIdentifier> routesBuilder) {
+
 		return routesBuilder.collectionPage(
-			this::_getPageItems
+			this::_getPageItems, RootIdentifier.class
 		).collectionItem(
-			this::_getGroup, Long.class
+			this::_getGroup
 		).build();
 	}
 
-	private Group _getGroup(Long id) {
+	private Group _getGroup(LongIdentifier groupLongIdentifier) {
 		try {
-			return _groupLocalService.getGroup(id);
+			return _groupLocalService.getGroup(
+				groupLongIdentifier.getIdAsLong());
 		}
 		catch (NoSuchGroupException nsge) {
-			throw new NotFoundException(nsge);
+			throw new NotFoundException(
+				"Unable to get group " + groupLongIdentifier.getIdAsLong(),
+				nsge);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private PageItems<Group> _getPageItems(Pagination pagination) {
+	private PageItems<Group> _getPageItems(
+		Pagination pagination, RootIdentifier rootIdentifier) {
+
 		List<Group> groups = _groupLocalService.getGroups(
 			pagination.getStartPosition(), pagination.getEndPosition());
 		int groupsCount = _groupLocalService.getGroupsCount();

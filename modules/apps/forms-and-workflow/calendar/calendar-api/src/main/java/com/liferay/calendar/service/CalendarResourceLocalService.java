@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.service.PermissionedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -62,7 +62,7 @@ import java.util.Map;
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface CalendarResourceLocalService extends BaseLocalService,
-	PermissionedModelLocalService {
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -188,11 +188,11 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	public CalendarResource fetchCalendarResource(long calendarResourceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long groupId,
-		java.lang.String code);
+	public CalendarResource fetchCalendarResource(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarResource fetchCalendarResource(long classNameId, long classPK);
+	public CalendarResource fetchCalendarResource(long groupId,
+		java.lang.String code);
 
 	/**
 	* Returns the calendar resource matching the UUID and group.

@@ -21,6 +21,7 @@ import com.liferay.vulcan.resource.builder.RepresentorBuilder;
 import com.liferay.vulcan.resource.builder.RoutesBuilder;
 import com.liferay.vulcan.sample.liferay.portal.rating.AggregateRating;
 import com.liferay.vulcan.sample.liferay.portal.rating.AggregateRatingService;
+import com.liferay.vulcan.wiring.osgi.manager.ResourceManager;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,15 +33,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class AggregateRatingResource implements Resource<AggregateRating> {
+public class AggregateRatingResource
+	implements Resource<AggregateRating, ClassNameClassPKIdentifier> {
 
 	@Override
 	public void buildRepresentor(
-		RepresentorBuilder<AggregateRating> representorBuilder) {
+		RepresentorBuilder<AggregateRating, ClassNameClassPKIdentifier>
+			representorBuilder) {
 
 		representorBuilder.identifier(
-			aggregateRating ->
-				String.valueOf(aggregateRating.getClassNameClassPKIdentifier())
+			AggregateRating::getClassNameClassPKIdentifier
 		).addField(
 			"bestRating", aggregateRating -> 1
 		).addField(
@@ -61,15 +63,18 @@ public class AggregateRatingResource implements Resource<AggregateRating> {
 
 	@Override
 	public Routes<AggregateRating> routes(
-		RoutesBuilder<AggregateRating> routesBuilder) {
+		RoutesBuilder<AggregateRating, ClassNameClassPKIdentifier>
+			routesBuilder) {
 
 		return routesBuilder.collectionItem(
-			_aggregateRatingService::getAggregateRating,
-			ClassNameClassPKIdentifier.class
+			_aggregateRatingService::getAggregateRating
 		).build();
 	}
 
 	@Reference
 	private AggregateRatingService _aggregateRatingService;
+
+	@Reference
+	private ResourceManager _resourceManager;
 
 }

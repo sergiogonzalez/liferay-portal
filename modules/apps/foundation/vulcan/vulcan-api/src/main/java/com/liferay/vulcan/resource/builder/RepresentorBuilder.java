@@ -14,7 +14,8 @@
 
 package com.liferay.vulcan.resource.builder;
 
-import com.liferay.vulcan.filter.QueryParamFilterType;
+import com.liferay.vulcan.binary.BinaryFunction;
+import com.liferay.vulcan.identifier.Identifier;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -27,15 +28,15 @@ import java.util.function.Function;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-public interface RepresentorBuilder<T> {
+public interface RepresentorBuilder<T, U extends Identifier> {
 
 	/**
-	 * Provide a lambda function that can be used to obtain the identifier used
-	 * for a model.
+	 * Provide a lambda function that can be used to obtain the {@link
+	 * Identifier} used for a model.
 	 *
 	 * <p>
 	 * This identifier will be the same obtained in the {@link
-	 * com.liferay.vulcan.endpoint.RootEndpoint#getCollectionItemSingleModel(
+	 * com.liferay.vulcan.endpoint.RootEndpoint#getCollectionItemSingleModelTry(
 	 * String, String)}} method of a {@link
 	 * com.liferay.vulcan.endpoint.RootEndpoint} instance.
 	 * </p>
@@ -43,7 +44,7 @@ public interface RepresentorBuilder<T> {
 	 * @param  identifierFunction function used to obtain a model's identifier.
 	 * @return builder's next step.
 	 */
-	public FirstStep<T> identifier(Function<T, String> identifierFunction);
+	public FirstStep<T> identifier(Function<T, U> identifierFunction);
 
 	public interface FirstStep<T> {
 
@@ -56,14 +57,21 @@ public interface RepresentorBuilder<T> {
 		 * @param relatedKey name of the relation in the related resource.
 		 * @param modelClass class of the related model.
 		 * @param modelFunction function used to obtain the related model.
-		 * @param filterFunction function used to obtain the filter for the
-		 *                       collection.
 		 * @return builder's actual step.
 		 */
 		public <S> FirstStep<T> addBidirectionalModel(
 			String key, String relatedKey, Class<S> modelClass,
-			Function<T, Optional<S>> modelFunction,
-			Function<S, QueryParamFilterType> filterFunction);
+			Function<T, Optional<S>> modelFunction);
+
+		/**
+		 * @param key     		 name of the binary resource
+		 * @param binaryFunction function used to obtain the binaries.
+		 * @return builder's actual step.
+		 *
+		 * @review
+		 */
+		public <S> FirstStep<T> addBinary(
+			String key, BinaryFunction<T> binaryFunction);
 
 		/**
 		 * Use this method to provide information of an embeddable related
@@ -115,13 +123,10 @@ public interface RepresentorBuilder<T> {
 		 *
 		 * @param key name of the relation.
 		 * @param modelClass class of the collection's related models.
-		 * @param filterFunction function used to obtain the filter for the
-		 *                       collection.
 		 * @return builder's actual step.
 		 */
 		public <S> FirstStep<T> addRelatedCollection(
-			String key, Class<S> modelClass,
-			Function<T, QueryParamFilterType> filterFunction);
+			String key, Class<S> modelClass);
 
 		/**
 		 * Use this method to provide a type for this model. Multiple types are

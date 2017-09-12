@@ -55,22 +55,38 @@ if (configurationEntry != null) {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<div class="alert alert-info">
-					<c:choose>
-						<c:when test="<%= configurationEntryEditable %>">
-							<liferay-ui:message key="at-least-one-dimension-value-is-required" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="the-images-for-this-resolution-are-already-adapted" />
-						</c:otherwise>
-					</c:choose>
-				</div>
+				<div class="error-wrapper"></div>
+
+				<c:if test="<%= !configurationEntryEditable %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="the-images-for-this-resolution-are-already-adapted" />
+					</div>
+				</c:if>
 
 				<div class="row">
 					<div class="col-md-6">
 						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" required="<%= true %>" value="<%= (configurationEntry != null) ? configurationEntry.getName() : StringPool.BLANK %>" />
 
 						<aui:input name="description" type="textarea" value="<%= (configurationEntry != null) ? configurationEntry.getDescription() : StringPool.BLANK %>" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<h4>
+							<liferay-ui:message key="size" />
+
+							<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+
+							<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+						</h4>
+
+						<p>
+							<label class="control-label form-group">
+								<liferay-ui:message key="please-enter-at-least-one-of-the-following-fields" />
+								<liferay-ui:icon-help message="leave-a-size-field-empty-to-get-images-scaled-proportionally" />
+							</label>
+						</p>
 					</div>
 				</div>
 
@@ -89,7 +105,7 @@ if (configurationEntry != null) {
 						}
 						%>
 
-						<aui:input disabled="<%= !configurationEntryEditable %>" label="max-width-px" min="1" name="maxWidth" type="number" value="<%= maxWidth %>">
+						<aui:input disabled="<%= !configurationEntryEditable %>" label="max-width-px" min="0" name="maxWidth" type="number" value="<%= maxWidth %>">
 							<aui:validator name="number" />
 						</aui:input>
 					</div>
@@ -108,7 +124,7 @@ if (configurationEntry != null) {
 						}
 						%>
 
-						<aui:input disabled="<%= !configurationEntryEditable %>" label="max-height-px" min="1" name="maxHeight" type="number" value="<%= maxHeight %>">
+						<aui:input disabled="<%= !configurationEntryEditable %>" label="max-height-px" min="0" name="maxHeight" type="number" value="<%= maxHeight %>">
 							<aui:validator name="number" />
 						</aui:input>
 					</div>

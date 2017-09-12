@@ -106,7 +106,7 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 							String maxWidth = properties.get("max-width");
 							%>
 
-							<%= maxWidth.equals("0") ? LanguageUtil.get(request, "auto") : HtmlUtil.escape(maxWidth + "px") %>
+							<%= (Validator.isNull(maxWidth) || maxWidth.equals("0")) ? LanguageUtil.get(request, "auto") : HtmlUtil.escape(maxWidth + "px") %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="max-height" />
@@ -117,7 +117,7 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 							String maxHeight = properties.get("max-height");
 							%>
 
-							<%= maxHeight.equals("0") ? LanguageUtil.get(request, "auto") : HtmlUtil.escape(maxHeight + "px") %>
+							<%= (Validator.isNull(maxHeight) || maxHeight.equals("0")) ? LanguageUtil.get(request, "auto") : HtmlUtil.escape(maxHeight + "px") %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="id" />

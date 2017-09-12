@@ -173,6 +173,12 @@ public class ToolsUtil {
 	}
 
 	public static boolean isInsideQuotes(String s, int pos) {
+		return isInsideQuotes(s, pos, true);
+	}
+
+	public static boolean isInsideQuotes(
+		String s, int pos, boolean allowEscapedQuotes) {
+
 		int start = s.lastIndexOf(CharPool.NEW_LINE, pos);
 
 		if (start == -1) {
@@ -197,21 +203,26 @@ public class ToolsUtil {
 
 			if (insideQuotes) {
 				if (c == delimeter) {
-					int precedingBackSlashCount = 0;
-
-					for (int j = i - 1; j >= 0; j--) {
-						if (line.charAt(j) == CharPool.BACK_SLASH) {
-							precedingBackSlashCount += 1;
-						}
-						else {
-							break;
-						}
-					}
-
-					if ((precedingBackSlashCount == 0) ||
-						((precedingBackSlashCount % 2) == 0)) {
-
+					if (!allowEscapedQuotes) {
 						insideQuotes = false;
+					}
+					else {
+						int precedingBackSlashCount = 0;
+
+						for (int j = i - 1; j >= 0; j--) {
+							if (line.charAt(j) == CharPool.BACK_SLASH) {
+								precedingBackSlashCount += 1;
+							}
+							else {
+								break;
+							}
+						}
+
+						if ((precedingBackSlashCount == 0) ||
+							((precedingBackSlashCount % 2) == 0)) {
+
+							insideQuotes = false;
+						}
 					}
 				}
 			}
@@ -295,62 +306,63 @@ public class ToolsUtil {
 			break;
 		}
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				int x = line.indexOf("import ");
 
-			if (x == -1) {
-				continue;
-			}
-
-			String importPackageAndClassName = line.substring(
-				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
-
-			if (importPackageAndClassName.contains(StringPool.STAR)) {
-				continue;
-			}
-
-			Pattern pattern3 = Pattern.compile(
-				"\n(.*)(" +
-					StringUtil.replace(importPackageAndClassName, ".", "\\.") +
-						")\\W");
-
-			outerLoop:
-			while (true) {
-				Matcher matcher3 = pattern3.matcher(content);
-
-				while (matcher3.find()) {
-					String lineStart = StringUtil.trimLeading(
-						matcher3.group(1));
-
-					if (lineStart.startsWith("import ") ||
-						lineStart.contains("//") ||
-						isInsideQuotes(content, matcher3.start(2))) {
-
-						continue;
-					}
-
-					String importClassName =
-						importPackageAndClassName.substring(
-							importPackageAndClassName.lastIndexOf(
-								StringPool.PERIOD) + 1);
-
-					content = StringUtil.replaceFirst(
-						content, importPackageAndClassName, importClassName,
-						matcher3.start());
-
-					continue outerLoop;
+				if (x == -1) {
+					continue;
 				}
 
-				break;
-			}
-		}
+				String importPackageAndClassName = line.substring(
+					x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
-		return content;
+				if (importPackageAndClassName.contains(StringPool.STAR)) {
+					continue;
+				}
+
+				String s = StringUtil.replace(
+					importPackageAndClassName, ".", "\\.");
+
+				Pattern pattern3 = Pattern.compile("\n(.*)(" + s + ")\\W");
+
+				outerLoop:
+				while (true) {
+					Matcher matcher3 = pattern3.matcher(content);
+
+					while (matcher3.find()) {
+						String lineStart = StringUtil.trimLeading(
+							matcher3.group(1));
+
+						if (lineStart.startsWith("import ") ||
+							lineStart.contains("//") ||
+							isInsideQuotes(content, matcher3.start(2))) {
+
+							continue;
+						}
+
+						String importClassName =
+							importPackageAndClassName.substring(
+								importPackageAndClassName.lastIndexOf(
+									StringPool.PERIOD) + 1);
+
+						content = StringUtil.replaceFirst(
+							content, importPackageAndClassName, importClassName,
+							matcher3.start());
+
+						continue outerLoop;
+					}
+
+					break;
+				}
+			}
+
+			return content;
+		}
 	}
 
 	public static void writeFile(
@@ -365,7 +377,19 @@ public class ToolsUtil {
 			Map<String, Object> jalopySettings, Set<String> modifiedFileNames)
 		throws IOException {
 
-		String packagePath = getPackagePath(file);
+		writeFile(
+			file, content, author, jalopySettings, modifiedFileNames, null);
+	}
+
+	public static void writeFile(
+			File file, String content, String author,
+			Map<String, Object> jalopySettings, Set<String> modifiedFileNames,
+			String packagePath)
+		throws IOException {
+
+		if (Validator.isNull(packagePath)) {
+			packagePath = getPackagePath(file);
+		}
 
 		String className = file.getName();
 
