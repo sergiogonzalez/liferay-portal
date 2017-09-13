@@ -143,7 +143,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFolder(actionRequest);
+				updateFolder(actionRequest, cmd);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteFolders(actionRequest, false);
@@ -214,7 +214,9 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	protected void updateFolder(ActionRequest actionRequest) throws Exception {
+	protected void updateFolder(ActionRequest actionRequest, String cmd)
+		throws Exception {
+
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
@@ -226,7 +228,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFolder.class.getName(), actionRequest);
 
-		if (folderId <= 0) {
+		if (cmd.equals(Constants.ADD) || (folderId <= 0)) {
 
 			// Add folder
 

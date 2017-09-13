@@ -43,6 +43,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 		<aui:button-row>
 			<c:if test="<%= dlVisualizationHelper.isAddFolderButtonVisible() && DLFolderPermission.contains(permissionChecker, repositoryId, folderId, ActionKeys.ADD_FOLDER) %>">
 				<portlet:renderURL var="editFolderURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

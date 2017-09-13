@@ -17,6 +17,8 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+String cmd = ParamUtil.getString(request, Constants.CMD);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
@@ -77,7 +79,7 @@ if (portletTitleBasedNavigation) {
 	</portlet:actionURL>
 
 	<aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((cmd.equals(Constants.ADD) || (folder == null)) ? Constants.ADD : Constants.UPDATE) %>' />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
