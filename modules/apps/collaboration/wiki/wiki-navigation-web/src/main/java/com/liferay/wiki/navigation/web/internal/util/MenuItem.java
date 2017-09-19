@@ -211,7 +211,7 @@ public class MenuItem implements Serializable {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(?:(?:==\\s(.*)\\s==)*(?:\\Q[[\\E(.*)\\Q]]\\E)*)*");
+		"(?:(?:==\\s(.*?)\\s==)*(?:\\Q[[\\E(.*?)\\Q]]\\E)*)*");
 
 	private List<MenuItem> _children;
 	private boolean _externalURL;
