@@ -171,36 +171,23 @@ public class MenuItem implements Serializable {
 				if (index != -1) {
 					label = s.substring(index + 1);
 					url = s.substring(0, index);
-
-					if (!url.startsWith(Http.HTTP)) {
-						long nodeId = wikiPage.getNodeId();
-
-						portletURL.setParameter("title", url);
-						portletURL.setParameter(
-							"nodeId", String.valueOf(nodeId));
-
-						url = portletURL.toString();
-					}
-					else {
-						childMenuItem.setExternalURL(true);
-					}
 				}
 				else {
 					label = s;
 					url = s;
+				}
 
-					if (!url.startsWith(Http.HTTP)) {
-						long nodeId = wikiPage.getNodeId();
+				if (!url.startsWith(Http.HTTP)) {
+					long nodeId = wikiPage.getNodeId();
 
-						portletURL.setParameter("title", url);
-						portletURL.setParameter(
-							"nodeId", String.valueOf(nodeId));
+					portletURL.setParameter("title", url);
+					portletURL.setParameter(
+						"nodeId", String.valueOf(nodeId));
 
-						url = portletURL.toString();
-					}
-					else {
-						childMenuItem.setExternalURL(true);
-					}
+					url = portletURL.toString();
+				}
+				else {
+					childMenuItem.setExternalURL(true);
 				}
 
 				childMenuItem.setLabel(label);
