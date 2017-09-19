@@ -150,7 +150,7 @@ public class MenuItem implements Serializable {
 		Matcher matcher = _pattern.matcher(wikiPage.getContent());
 
 		while (matcher.find()) {
-			String title = GetterUtil.getString(matcher.group(3));
+			String title = GetterUtil.getString(matcher.group(1));
 
 			MenuItem menuItem = new MenuItem();
 
@@ -158,7 +158,7 @@ public class MenuItem implements Serializable {
 
 			menuItems.add(menuItem);
 
-			String s = matcher.group(6);
+			String s = matcher.group(2);
 
 			if (s != null) {
 				MenuItem childMenuItem = new MenuItem();
@@ -211,7 +211,7 @@ public class MenuItem implements Serializable {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"((==\\s((.)*)\\s==)*(\\Q[[\\E((.)*)\\Q]]\\E)*)*");
+		"(?:(?:==\\s(.*)\\s==)*(?:\\Q[[\\E(.*)\\Q]]\\E)*)*");
 
 	private List<MenuItem> _children;
 	private boolean _externalURL;
