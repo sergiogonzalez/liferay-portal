@@ -198,6 +198,9 @@ public class MenuItem implements Serializable {
 
 						url = portletURL.toString();
 					}
+					else {
+						childMenuItem.setExternalURL(true);
+					}
 				}
 
 				childMenuItem.setLabel(label);
