@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.navigation.web.internal.util;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.model.WikiNode;
@@ -148,26 +149,14 @@ public class MenuItem implements Serializable {
 
 		Matcher matcher = _pattern.matcher(wikiPage.getContent());
 
-		MenuItem menuItem = null;
-
 		while (matcher.find()) {
-			String title = matcher.group(3);
+			String title = GetterUtil.getString(matcher.group(3));
 
-			if (title != null) {
-				menuItem = new MenuItem();
+			MenuItem menuItem = new MenuItem();
 
-				menuItem.setLabel(title);
+			menuItem.setLabel(title);
 
-				menuItems.add(menuItem);
-			}
-
-			if (menuItem == null) {
-				menuItem = new MenuItem();
-
-				menuItem.setLabel(StringPool.BLANK);
-
-				menuItems.add(menuItem);
-			}
+			menuItems.add(menuItem);
 
 			String s = matcher.group(6);
 
