@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -66,7 +65,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -80,14 +79,11 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the local service helper for the document library application.
@@ -104,7 +100,7 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!DLAppHelperThreadLocal.isEnabled() ||
 			(!folder.isMountPoint() &&
-			 _isExternalRepository(folder.getRepositoryId()))) {
+			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
 
 			return;
 		}
@@ -199,7 +195,7 @@ public class DLAppHelperLocalServiceImpl
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
 		if (!DLAppHelperThreadLocal.isEnabled() ||
-			_isExternalRepository(fileEntry.getRepositoryId())) {
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 
 			return;
 		}
@@ -229,7 +225,7 @@ public class DLAppHelperLocalServiceImpl
 	public void deleteFolder(Folder folder) throws PortalException {
 		if (!DLAppHelperThreadLocal.isEnabled() ||
 			(!folder.isMountPoint() &&
-			 _isExternalRepository(folder.getRepositoryId()))) {
+			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
 
 			return;
 		}
@@ -1007,7 +1003,7 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException {
 
 		if (!DLAppHelperThreadLocal.isEnabled() ||
-			_isExternalRepository(fileEntry.getRepositoryId())) {
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 
 			return;
 		}
@@ -1034,7 +1030,7 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException {
 
 		if (!DLAppHelperThreadLocal.isEnabled() ||
-			_isExternalRepository(fileEntry.getRepositoryId())) {
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 
 			return;
 		}
@@ -1078,7 +1074,7 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException {
 
 		if (!DLAppHelperThreadLocal.isEnabled() ||
-			_isExternalRepository(fileEntry.getRepositoryId())) {
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 
 			return;
 		}
@@ -1915,23 +1911,5 @@ public class DLAppHelperLocalServiceImpl
 
 	@BeanReference(type = DLAppService.class)
 	protected DLAppService dlAppService;
-
-	private boolean _isExternalRepository(long repositoryId) {
-		com.liferay.portal.kernel.model.Repository repository =
-			_repositoryLocalService.fetchRepository(repositoryId);
-
-		if (repository == null) {
-			return false;
-		}
-
-		Collection<String> externalRepositoryClassNames =
-			RepositoryClassDefinitionCatalogUtil.
-				getExternalRepositoryClassNames();
-
-		return externalRepositoryClassNames.contains(repository.getClassName());
-	}
-
-	@Reference
-	private RepositoryLocalService _repositoryLocalService;
 
 }
