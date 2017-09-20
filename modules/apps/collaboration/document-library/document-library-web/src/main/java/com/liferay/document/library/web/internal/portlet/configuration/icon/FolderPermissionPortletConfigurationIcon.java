@@ -105,21 +105,27 @@ public class FolderPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			if (folder != null &&
-				(folder.isMountPoint() ||
-				 !_isExternalRepository(folder.getRepositoryId()))) {
-
-				return DLFolderPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), folder.getFolderId(),
-					ActionKeys.PERMISSIONS);
+			if (folder == null) {
+				return false;
 			}
+
+			if (!folder.isMountPoint() &&
+				_isExternalRepository(folder.getRepositoryId())) {
+
+				return false;
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return DLFolderPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), folder.getFolderId(),
+				ActionKeys.PERMISSIONS);
 		}
 		catch (Exception e) {
 		}
