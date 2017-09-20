@@ -93,14 +93,14 @@ public class FileEntryPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		FileEntry fileEntry = null;
-
 		try {
-			fileEntry = ActionUtil.getFileEntry(portletRequest);
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
-			if (fileEntry != null &&
-				!_isExternalRepository(fileEntry.getRepositoryId())) {
+			if (fileEntry == null) {
+				return false;
+			}
 
+			if (!_isExternalRepository(fileEntry.getRepositoryId())) {
 				return true;
 			}
 		}
