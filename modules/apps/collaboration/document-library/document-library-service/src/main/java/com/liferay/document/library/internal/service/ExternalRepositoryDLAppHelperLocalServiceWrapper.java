@@ -21,18 +21,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
+import com.liferay.portal.util.RepositoryUtil;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -130,7 +127,7 @@ public class ExternalRepositoryDLAppHelperLocalServiceWrapper
 			return false;
 		}
 
-		if (_isExternalRepository(fileEntry.getRepositoryId())) {
+		if (RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 			return false;
 		}
 
@@ -143,30 +140,12 @@ public class ExternalRepositoryDLAppHelperLocalServiceWrapper
 		}
 
 		if (!folder.isMountPoint() &&
-			_isExternalRepository(folder.getRepositoryId())) {
+			RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
 
 			return false;
 		}
 
 		return true;
 	}
-
-	private boolean _isExternalRepository(long repositoryId) {
-		com.liferay.portal.kernel.model.Repository repository =
-			_repositoryLocalService.fetchRepository(repositoryId);
-
-		if (repository == null) {
-			return false;
-		}
-
-		Collection<String> externalRepositoryClassNames =
-			RepositoryClassDefinitionCatalogUtil.
-				getExternalRepositoryClassNames();
-
-		return externalRepositoryClassNames.contains(repository.getClassName());
-	}
-
-	@Reference
-	private RepositoryLocalService _repositoryLocalService;
 
 }
