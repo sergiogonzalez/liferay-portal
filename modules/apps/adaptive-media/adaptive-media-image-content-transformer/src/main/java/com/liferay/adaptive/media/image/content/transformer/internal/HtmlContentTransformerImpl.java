@@ -39,7 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 public class HtmlContentTransformerImpl implements ContentTransformer<String> {
 
 	@Override
-	public ContentTransformerContentType<String> getContentType() {
+	public ContentTransformerContentType<String>
+		getContentTransformerContentType() {
+
 		return ContentTransformerContentTypes.HTML;
 	}
 

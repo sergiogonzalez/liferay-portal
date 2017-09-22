@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.blogs.web.internal.blogs.util;
 
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -36,6 +37,12 @@ public class AMBlogsEntryAttachmentContentUpdaterTest extends PowerMockito {
 	public void setUp() {
 		_fileEntry = mock(FileEntry.class);
 
+		when(
+			_fileEntry.getFileEntryId()
+		).thenReturn(
+			_IMAGE_FILE_ENTRY_ID
+		);
+
 		_portletFileRepository = mock(PortletFileRepository.class);
 
 		_amBlogsEntryAttachmentContentUpdater =
@@ -48,12 +55,6 @@ public class AMBlogsEntryAttachmentContentUpdaterTest extends PowerMockito {
 		).thenReturn(
 			_FILE_ENTRY_IMAGE_URL
 		);
-
-		when(
-			_fileEntry.getFileEntryId()
-		).thenReturn(
-			_FILE_ENTRY_IMAGE_ID
-		);
 	}
 
 	@Test
@@ -63,15 +64,17 @@ public class AMBlogsEntryAttachmentContentUpdaterTest extends PowerMockito {
 				getBlogsEntryAttachmentFileEntryImgTag(_fileEntry);
 
 		Assert.assertEquals(
-			"<img data-fileEntryId=\"" + _FILE_ENTRY_IMAGE_ID + "\" src=\"" +
+			"<img data-fileEntryId=\"" + _IMAGE_FILE_ENTRY_ID + "\" src=\"" +
 				_FILE_ENTRY_IMAGE_URL +
 					"\" />",
 			imgTag);
 	}
 
-	private static final long _FILE_ENTRY_IMAGE_ID = 1989L;
+	private static final String _FILE_ENTRY_IMAGE_URL =
+		RandomTestUtil.randomString();
 
-	private static final String _FILE_ENTRY_IMAGE_URL = "theUrl";
+	private static final long _IMAGE_FILE_ENTRY_ID =
+		RandomTestUtil.randomLong();
 
 	private AMBlogsEntryAttachmentContentUpdater
 		_amBlogsEntryAttachmentContentUpdater;
