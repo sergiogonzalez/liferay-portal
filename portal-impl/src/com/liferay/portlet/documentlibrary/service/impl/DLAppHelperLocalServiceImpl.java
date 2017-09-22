@@ -65,6 +65,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -97,7 +98,10 @@ public class DLAppHelperLocalServiceImpl
 			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			(!folder.isMountPoint() &&
+			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
+
 			return;
 		}
 
@@ -190,7 +194,9 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+
 			return;
 		}
 
@@ -217,7 +223,10 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void deleteFolder(Folder folder) throws PortalException {
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			(!folder.isMountPoint() &&
+			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
+
 			return;
 		}
 
@@ -993,7 +1002,9 @@ public class DLAppHelperLocalServiceImpl
 			FileVersion destinationFileVersion, long assetClassPK)
 		throws PortalException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+
 			return;
 		}
 
@@ -1018,7 +1029,9 @@ public class DLAppHelperLocalServiceImpl
 			FileVersion destinationFileVersion, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+
 			return;
 		}
 
@@ -1060,7 +1073,9 @@ public class DLAppHelperLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+
 			return;
 		}
 
