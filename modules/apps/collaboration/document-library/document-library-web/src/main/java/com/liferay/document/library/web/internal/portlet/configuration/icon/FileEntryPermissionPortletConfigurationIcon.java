@@ -94,7 +94,7 @@ public class FileEntryPermissionPortletConfigurationIcon
 				return false;
 			}
 
-			if (RepositoryUtil.isExternalRepository(
+			if (!RepositoryUtil.isExternalRepository(
 					fileEntry.getRepositoryId())) {
 
 				return true;
