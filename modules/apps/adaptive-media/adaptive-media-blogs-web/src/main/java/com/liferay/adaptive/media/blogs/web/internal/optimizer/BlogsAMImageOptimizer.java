@@ -20,7 +20,7 @@ import com.liferay.adaptive.media.image.counter.AMImageCounter;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
-import com.liferay.adaptive.media.web.constants.OptimizeImagesBackgroundTaskConstants;
+import com.liferay.adaptive.media.web.constants.AMOptimizeImagesBackgroundTaskConstants;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -64,7 +64,7 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 
 		int total = count * amImageConfigurationEntries.size();
 
-		final AtomicInteger atomicCounter = new AtomicInteger(0);
+		AtomicInteger atomicCounter = new AtomicInteger(0);
 
 		for (AMImageConfigurationEntry amImageConfigurationEntry :
 				amImageConfigurationEntries) {
@@ -79,9 +79,8 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 	public void optimize(long companyId, String configurationEntryUuid) {
 		int total = _amImageCounter.countExpectedAMImageEntries(companyId);
 
-		final AtomicInteger atomicCounter = new AtomicInteger(0);
-
-		_optimize(companyId, configurationEntryUuid, total, atomicCounter);
+		_optimize(
+			companyId, configurationEntryUuid, total, new AtomicInteger(0));
 	}
 
 	private void _optimize(
@@ -90,9 +89,6 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileEntryLocalService.getActionableDynamicQuery();
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			BlogsEntry.class.getName());
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -107,6 +103,9 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
 						"classNameId");
 
+					long classNameId = _classNameLocalService.getClassNameId(
+						BlogsEntry.class.getName());
+
 					dynamicQuery.add(classNameIdProperty.eq(classNameId));
 
 					Property mimeTypeProperty = PropertyFactoryUtil.forName(
@@ -118,7 +117,6 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 				}
 
 			});
-
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
@@ -137,7 +135,7 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 					}
 					catch (PortalException pe) {
 						_log.error(
-							"Unable to process file entry id " +
+							"Unable to process file entry " +
 								fileEntry.getFileEntryId(),
 							pe);
 					}
@@ -163,10 +161,11 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 		Class<? extends BlogsAMImageOptimizer> clazz = getClass();
 
 		message.put(
-			OptimizeImagesBackgroundTaskConstants.CLASS_NAME, clazz.getName());
+			AMOptimizeImagesBackgroundTaskConstants.CLASS_NAME,
+			clazz.getName());
 
-		message.put(OptimizeImagesBackgroundTaskConstants.COUNT, count);
-		message.put(OptimizeImagesBackgroundTaskConstants.TOTAL, total);
+		message.put(AMOptimizeImagesBackgroundTaskConstants.COUNT, count);
+		message.put(AMOptimizeImagesBackgroundTaskConstants.TOTAL, total);
 
 		message.put("status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
 

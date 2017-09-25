@@ -88,7 +88,7 @@ public class HtmlContentTransformerImplTest {
 	public void testContentTypeIsHTML() throws Exception {
 		Assert.assertEquals(
 			ContentTransformerContentTypes.HTML,
-			_htmlContentTransformer.getContentType());
+			_htmlContentTransformer.getContentTransformerContentType());
 	}
 
 	@Test
