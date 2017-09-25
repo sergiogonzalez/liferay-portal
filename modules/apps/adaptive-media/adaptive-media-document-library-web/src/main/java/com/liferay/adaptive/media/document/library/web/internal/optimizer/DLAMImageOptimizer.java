@@ -20,7 +20,7 @@ import com.liferay.adaptive.media.image.counter.AMImageCounter;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
-import com.liferay.adaptive.media.web.constants.OptimizeImagesBackgroundTaskConstants;
+import com.liferay.adaptive.media.web.constants.AMOptimizeImagesBackgroundTaskConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
@@ -194,10 +194,11 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 		Class<? extends DLAMImageOptimizer> clazz = getClass();
 
 		message.put(
-			OptimizeImagesBackgroundTaskConstants.CLASS_NAME, clazz.getName());
+			AMOptimizeImagesBackgroundTaskConstants.CLASS_NAME,
+			clazz.getName());
 
-		message.put(OptimizeImagesBackgroundTaskConstants.COUNT, count);
-		message.put(OptimizeImagesBackgroundTaskConstants.TOTAL, total);
+		message.put(AMOptimizeImagesBackgroundTaskConstants.COUNT, count);
+		message.put(AMOptimizeImagesBackgroundTaskConstants.TOTAL, total);
 
 		message.put("status", BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
