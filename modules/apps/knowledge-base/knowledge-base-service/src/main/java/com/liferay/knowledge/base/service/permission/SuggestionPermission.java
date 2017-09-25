@@ -31,7 +31,7 @@ public class SuggestionPermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			KBArticle kbArticle, String actionId)
-		throws PrincipalException {
+		throws PortalException {
 
 		if (!actionId.equals(KBActionKeys.VIEW_SUGGESTIONS)) {
 			throw new IllegalArgumentException(
