@@ -174,6 +174,69 @@ if (System.getenv('TRAVIS')) {
 
 		finalizedBy checkDocker
 	}
+
+	task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+		dependsOn = subprojects.findAll{!it.childProjects}.test
+		additionalSourceDirs = files(subprojects.findAll{!it.childProjects}.sourceSets.main.allSource.srcDirs)
+		sourceDirectories = files(subprojects.findAll{!it.childProjects}.sourceSets.main.allSource.srcDirs)
+		classDirectories = files(subprojects.findAll{!it.childProjects}.sourceSets.main.output)
+
+		executionData = files(subprojects.findAll{!it.childProjects}.jacocoTestReport.executionData, "${rootDir}/build/jacoco/testIntegration.exec")
+
+		afterEvaluate {
+			classDirectories = files(classDirectories.files.collect {
+				fileTree(dir: it,
+						exclude: [
+								'**/*Exception*',
+								'**/model/*Model*',
+								'**/model/*Soap*',
+								'**/model/*Wrapper*',
+								'**/model/impl/*BaseImpl*',
+								'**/model/impl/*CacheModel*',
+								'**/model/impl/*ModelImpl*',
+								'**/service/*ServiceUtil*',
+								'**/service/*ServiceWrapper*',
+								'**/service/base/*',
+								'**/service/http/*',
+								'**/service/persistence/*Util*',
+								'**/service/persistence/impl/*PersistenceImpl*',
+								'**/service/persistence/impl/*FinderBaseImpl*',
+								'**/service/util/*',
+								'**/test/util/*'
+						])
+			})
+		}
+
+		reports {
+			html.enabled = true
+			xml.enabled = true
+			xml.destination "${rootDir}/build/reports/jacoco/test/jacocoTestReport.xml"
+			csv.enabled = false
+		}
+
+		doFirst {
+			executionData = files(executionData.findAll { it.exists() })
+		}
+	}
+
+	task dumpJacoco {
+		doLast {
+			def serverUrl = 'service:jmx:rmi:///jndi/rmi://localhost:8099/jmxrmi'
+			String beanName = "org.jacoco:type=Runtime"
+			def server = JmxFactory.connect(new JmxUrl(serverUrl)).MBeanServerConnection
+			def gmxb = new GroovyMBean(server, beanName)
+
+			gmxb.dump(true)
+		}
+	}
+
+	tasks.coveralls {
+		dependsOn jacocoRootReport
+	}
+
+	coveralls.sourceDirs = files(subprojects.findAll{!it.childProjects}.sourceSets.main.allSource.srcDirs).collect {
+		file -> file.absolutePath
+	}
 }
 
 def getClientDeployDir() {
@@ -198,67 +261,4 @@ def getImageNameWithUser() {
 
 def getImageNameWithUserAndVersion() {
 	return getImageNameWithUser() + ":" + getImageVersion()
-}
-
-task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
-	dependsOn = subprojects.findAll{!it.childProjects}.test
-	additionalSourceDirs = files(subprojects.findAll{!it.childProjects}.sourceSets.main.allSource.srcDirs)
-	sourceDirectories = files(subprojects.findAll{!it.childProjects}.sourceSets.main.allSource.srcDirs)
-	classDirectories = files(subprojects.findAll{!it.childProjects}.sourceSets.main.output)
-
-	executionData = files(subprojects.findAll{!it.childProjects}.jacocoTestReport.executionData, "${rootDir}/build/jacoco/testIntegration.exec")
-
-	afterEvaluate {
-		classDirectories = files(classDirectories.files.collect {
-			fileTree(dir: it,
-					exclude: [
-							'**/*Exception*',
-							'**/model/*Model*',
-							'**/model/*Soap*',
-							'**/model/*Wrapper*',
-							'**/model/impl/*BaseImpl*',
-							'**/model/impl/*CacheModel*',
-							'**/model/impl/*ModelImpl*',
-							'**/service/*ServiceUtil*',
-							'**/service/*ServiceWrapper*',
-							'**/service/base/*',
-							'**/service/http/*',
-							'**/service/persistence/*Util*',
-							'**/service/persistence/impl/*PersistenceImpl*',
-							'**/service/persistence/impl/*FinderBaseImpl*',
-							'**/service/util/*',
-							'**/test/util/*'
-					])
-		})
-	}
-
-	reports {
-		html.enabled = true
-		xml.enabled = true
-		xml.destination "${rootDir}/build/reports/jacoco/test/jacocoTestReport.xml"
-		csv.enabled = false
-	}
-
-	doFirst {
-		executionData = files(executionData.findAll { it.exists() })
-	}
-}
-
-task dumpJacoco {
-	doLast {
-		def serverUrl = 'service:jmx:rmi:///jndi/rmi://localhost:8099/jmxrmi'
-		String beanName = "org.jacoco:type=Runtime"
-		def server = JmxFactory.connect(new JmxUrl(serverUrl)).MBeanServerConnection
-		def gmxb = new GroovyMBean(server, beanName)
-
-		gmxb.dump(true)
-	}
-}
-
-tasks.coveralls {
-	dependsOn jacocoRootReport
-}
-
-coveralls.sourceDirs = files(subprojects.findAll{!it.childProjects}.sourceSets.main.allSource.srcDirs).collect {
-	file -> file.absolutePath
 }
