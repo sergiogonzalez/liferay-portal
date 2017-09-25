@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface ContentTransformer<T> {
 
-	public ContentTransformerContentType<T> getContentType();
+	public ContentTransformerContentType<T> getContentTransformerContentType();
 
 	public T transform(T content) throws PortalException;
 
