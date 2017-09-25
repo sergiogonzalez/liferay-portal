@@ -19,7 +19,3 @@ dependencies {
 	provided project(":apps:adaptive-media:adaptive-media-api")
 	provided project(":apps:adaptive-media:adaptive-media-image-api")
 }
-
-node {
-	nodeVersion = "8.4.0"
-}
