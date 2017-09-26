@@ -17,7 +17,7 @@ package com.liferay.adaptive.media.web.constants;
 /**
  * @author Sergio González
  */
-public class OptimizeImagesBackgroundTaskConstants {
+public class AMOptimizeImagesBackgroundTaskConstants {
 
 	public static final String CLASS_NAME = "className";
 
