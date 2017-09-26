@@ -5,7 +5,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.2.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.docker.extension", version: "0.0.1-20170727.082539-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-api")
