@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = PortalUtil.getSelectedUser(request);
+boolean checkPermission = !UserServiceUtil.hasGroupUser(scopeGroupId, user.getUserId());
+
+User selUser = PortalUtil.getSelectedUser(request, checkPermission);
 
 selUser = selUser.toEscapedModel();
 
