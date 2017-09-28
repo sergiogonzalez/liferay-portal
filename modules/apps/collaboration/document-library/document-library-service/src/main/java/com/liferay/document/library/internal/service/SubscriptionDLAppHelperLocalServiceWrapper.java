@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -72,12 +73,24 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
-		super.deleteFileEntry(fileEntry);
+	public void addFolder(
+			long userId, Folder folder, ServiceContext serviceContext)
+		throws PortalException {
 
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!_isEnabled(folder)) {
 			return;
 		}
+
+		super.addFolder(userId, folder, serviceContext);
+	}
+
+	@Override
+	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
+		if (!_isEnabled(fileEntry)) {
+			return;
+		}
+
+		super.deleteFileEntry(fileEntry);
 
 		_subscriptionLocalService.deleteSubscriptions(
 			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
@@ -86,15 +99,57 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 	@Override
 	public void deleteFolder(Folder folder) throws PortalException {
-		super.deleteFolder(folder);
-
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!_isEnabled(folder)) {
 			return;
 		}
+
+		super.deleteFolder(folder);
 
 		_subscriptionLocalService.deleteSubscriptions(
 			folder.getCompanyId(), DLFolderConstants.getClassName(),
 			folder.getFolderId());
+	}
+
+	@Override
+	public void updateFileEntry(
+			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
+			FileVersion destinationFileVersion, long assetClassPK)
+		throws PortalException {
+
+		if (!_isEnabled(fileEntry)) {
+			return;
+		}
+
+		super.updateFileEntry(
+			userId, fileEntry, sourceFileVersion, destinationFileVersion,
+			assetClassPK);
+	}
+
+	@Override
+	public void updateFileEntry(
+			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
+			FileVersion destinationFileVersion, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!_isEnabled(fileEntry)) {
+			return;
+		}
+
+		super.updateFileEntry(
+			userId, fileEntry, sourceFileVersion, destinationFileVersion,
+			serviceContext);
+	}
+
+	@Override
+	public void updateFolder(
+			long userId, Folder folder, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!_isEnabled(folder)) {
+			return;
+		}
+
+		super.updateFolder(userId, folder, serviceContext);
 	}
 
 	@Override
@@ -104,12 +159,15 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
+		if (!_isEnabled(fileEntry)) {
+			return;
+		}
+
 		super.updateStatus(
 			userId, fileEntry, latestFileVersion, oldStatus, newStatus,
 			serviceContext, workflowContext);
 
-		if (DLAppHelperThreadLocal.isEnabled() &&
-			(newStatus == WorkflowConstants.STATUS_APPROVED) &&
+		if ((newStatus == WorkflowConstants.STATUS_APPROVED) &&
 			(oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 			!fileEntry.isInTrash()) {
 
@@ -278,6 +336,32 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	private boolean _isEnabled(FileEntry fileEntry) {
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return false;
+		}
+
+		if (RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isEnabled(Folder folder) {
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return false;
+		}
+
+		if (!folder.isMountPoint() &&
+			RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference
