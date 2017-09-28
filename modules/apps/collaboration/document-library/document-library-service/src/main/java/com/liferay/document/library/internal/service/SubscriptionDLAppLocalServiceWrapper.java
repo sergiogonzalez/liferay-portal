@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.internal.service;
+package com.liferay.document.library.internal.service;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
