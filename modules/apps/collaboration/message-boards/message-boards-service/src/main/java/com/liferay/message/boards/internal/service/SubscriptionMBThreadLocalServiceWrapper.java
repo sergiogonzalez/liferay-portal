@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.internal.service;
+package com.liferay.message.boards.internal.service;
 
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
