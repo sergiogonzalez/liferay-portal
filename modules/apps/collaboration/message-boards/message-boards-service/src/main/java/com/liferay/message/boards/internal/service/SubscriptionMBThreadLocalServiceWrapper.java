@@ -50,13 +50,7 @@ public class SubscriptionMBThreadLocalServiceWrapper
 			thread.getThreadId());
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

@@ -81,13 +81,7 @@ public class SubscriptionMBCategoryServiceWrapper
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBSubscriptionHelper(
-		MBSubscriptionHelper mbSubscriptionHelper) {
-
-		_mbSubscriptionHelper = mbSubscriptionHelper;
-	}
-
+	@Reference
 	private MBSubscriptionHelper _mbSubscriptionHelper;
 
 }

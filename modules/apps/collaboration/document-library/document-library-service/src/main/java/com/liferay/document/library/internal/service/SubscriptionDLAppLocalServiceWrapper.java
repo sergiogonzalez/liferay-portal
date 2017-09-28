@@ -106,13 +106,7 @@ public class SubscriptionDLAppLocalServiceWrapper
 			userId, DLFolder.class.getName(), folderId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }
