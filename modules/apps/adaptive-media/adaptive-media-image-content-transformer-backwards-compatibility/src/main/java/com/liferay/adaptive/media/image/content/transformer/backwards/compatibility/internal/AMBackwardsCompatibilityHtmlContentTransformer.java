@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.image.content.transformer.internal;
+package com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal;
 
 import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
@@ -22,7 +22,6 @@ import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,13 +30,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(
 	immediate = true, property = "content.transformer.content.type=html",
 	service = ContentTransformer.class
 )
-public class HtmlContentTransformerImpl
+public class AMBackwardsCompatibilityHtmlContentTransformer
 	extends BaseRegexStringContentTransformer {
 
 	@Override
@@ -48,25 +47,21 @@ public class HtmlContentTransformerImpl
 	}
 
 	@Override
-	public String transform(String html) throws PortalException {
-		if (html == null) {
-			return null;
-		}
-
-		String lowerCaseHtml = StringUtil.toLowerCase(html);
-
-		if (!lowerCaseHtml.contains("data-fileentryid")) {
-			return html;
-		}
-
-		return super.transform(html);
-	}
-
-	@Override
 	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
-		long fileEntryId = Long.valueOf(matcher.group(1));
+		if (matcher.group(4) != null) {
+			long groupId = Long.valueOf(matcher.group(1));
 
-		return _dlAppLocalService.getFileEntry(fileEntryId);
+			String uuid = matcher.group(4);
+
+			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
+		}
+
+		long groupId = Long.valueOf(matcher.group(1));
+		long folderId = Long.valueOf(matcher.group(2));
+		String title = matcher.group(3);
+
+		return _dlAppLocalService.getFileEntry(groupId, folderId, title);
 	}
 
 	@Override
@@ -94,8 +89,8 @@ public class HtmlContentTransformerImpl
 	}
 
 	private static final Pattern _IMG_PATTERN = Pattern.compile(
-		"<img [^>]*?\\s*data-fileEntryId=\"(\\d+)\".*?/>",
-		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		"<img\\s+src=['\"]/documents/(\\d+)/(\\d+)/([^/?]+)" +
+			"(?:/([-0-9a-fA-F]+))?(?:\\?t=\\d+)?['\"]\\s*/>");
 
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 	private DLAppLocalService _dlAppLocalService;
