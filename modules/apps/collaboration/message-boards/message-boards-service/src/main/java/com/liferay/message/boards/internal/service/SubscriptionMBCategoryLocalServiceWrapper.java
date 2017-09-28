@@ -123,21 +123,10 @@ public class SubscriptionMBCategoryLocalServiceWrapper
 			userId, MBCategory.class.getName(), categoryId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBSubscriptionHelper(
-		MBSubscriptionHelper mbSubscriptionHelper) {
-
-		_mbSubscriptionHelper = mbSubscriptionHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
+	@Reference
 	private MBSubscriptionHelper _mbSubscriptionHelper;
+
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }
