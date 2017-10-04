@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.webserver;
+package com.liferay.document.library.webserver.test;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portal.webserver.test.BaseWebServerTestCase;
 
 import java.util.Arrays;
