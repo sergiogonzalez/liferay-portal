@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Document Library File Rank API
+Bundle-SymbolicName: com.liferay.document.library.filerank.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.document.library.filerank.exception,\
+	com.liferay.document.library.filerank.model,\
+	com.liferay.document.library.filerank.service,\
+	com.liferay.document.library.filerank.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
