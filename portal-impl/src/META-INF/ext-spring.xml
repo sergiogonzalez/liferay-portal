@@ -9,4 +9,7 @@
 >
 	<bean class="com.liferay.portal.service.impl.SubscriptionLocalServiceImpl" id="com.liferay.portal.kernel.service.SubscriptionLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SubscriptionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileRankLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder" parent="basePersistence" />
 </beans>
