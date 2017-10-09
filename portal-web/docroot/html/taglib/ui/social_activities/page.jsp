@@ -75,6 +75,9 @@
 						<c:when test="<%= curDaysBetween == 1 %>">
 							<liferay-ui:message key="yesterday" />
 						</c:when>
+						<c:when test="<%= curDaysBetween >= 365 %>">
+							<%= yearDateFormatDate.format(activityDescriptor.getCreateDate()) %>
+						</c:when>
 						<c:otherwise>
 							<%= dateFormatDate.format(activityDescriptor.getCreateDate()) %>
 						</c:otherwise>
