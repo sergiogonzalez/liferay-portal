@@ -68,7 +68,9 @@ import java.util.Set;
  * @see DLFileRankPersistence
  * @see com.liferay.document.library.kernel.service.persistence.DLFileRankUtil
  * @generated
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.filerank.service.persistence.impl.DLFileRankPersistenceImpl}
  */
+@Deprecated
 @ProviderType
 public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	implements DLFileRankPersistence {

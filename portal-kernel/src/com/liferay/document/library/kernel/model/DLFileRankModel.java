@@ -39,7 +39,9 @@ import java.util.Date;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl
  * @generated
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.filerank.model.DLFileRankModel}
  */
+@Deprecated
 @ProviderType
 public interface DLFileRankModel extends BaseModel<DLFileRank>, ShardedModel {
 	/*

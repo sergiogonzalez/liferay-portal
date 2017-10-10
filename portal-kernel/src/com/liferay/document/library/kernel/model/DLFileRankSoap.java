@@ -27,7 +27,9 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @generated
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.filerank.model.DLFileRankSoap}
  */
+@Deprecated
 @ProviderType
 public class DLFileRankSoap implements Serializable {
 	public static DLFileRankSoap toSoapModel(DLFileRank model) {
