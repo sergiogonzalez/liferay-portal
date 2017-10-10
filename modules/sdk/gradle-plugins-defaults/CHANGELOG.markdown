@@ -2156,7 +2156,7 @@ belong to a different sub-repository.
 
 ### Added
 - [LPS-74749]: Update the [Liferay Gradle Plugins] dependency to version 3.4.71.
-- [LPS-74892]: For OSGi modules, publish an additional `sources-commercial` jar.
+- [LPS-74892]: For OSGi modules, publish an additional `sources-commercial` JAR.
 If the module is public, the original copyright in the source files is replaced
 with a commercial copyright.
 
@@ -2218,6 +2218,24 @@ version 1.1.7.
 ### Changed
 - [LPS-74426]: Update the [Liferay Gradle Plugins] dependency to version 3.5.3.
 
+## 5.1.9 - 2017-10-06
+
+### Changed
+- [LPS-74143]: Update the [Liferay Gradle Plugins] dependency to version 3.5.4.
+
+## 5.1.10 - 2017-10-08
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.5.
+
+## 5.1.11 - 2017-10-09
+
+### Fixed
+- [LPS-63943]: Disable up-to-date check of the `mergeArtifactsPublishCommands`
+task.
+- [LPS-63943]: Fix error when executing the `writeArtifactPublishCommands` task
+from the root project directory.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2227,6 +2245,7 @@ version 1.1.7.
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
+[Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
@@ -2430,6 +2449,7 @@ version 1.1.7.
 [LPS-74104]: https://issues.liferay.com/browse/LPS-74104
 [LPS-74110]: https://issues.liferay.com/browse/LPS-74110
 [LPS-74126]: https://issues.liferay.com/browse/LPS-74126
+[LPS-74139]: https://issues.liferay.com/browse/LPS-74139
 [LPS-74143]: https://issues.liferay.com/browse/LPS-74143
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
 [LPS-74207]: https://issues.liferay.com/browse/LPS-74207

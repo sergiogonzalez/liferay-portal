@@ -2503,8 +2503,8 @@ to version 2.1.2.
 ## 3.4.70 - 2017-09-25
 
 ### Added
-- [LPS-74884]: Exclude `node_modules` directory in Idea's `.iml` file to speed
-up indexing.
+- [LPS-74884]: Exclude the `node_modules` directory in IDEA's `.iml` file to
+speed up indexing.
 
 ## 3.4.71 - 2017-09-26
 
@@ -2583,6 +2583,22 @@ version 1.0.170.
 - [LPS-74426]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.1.4.
 
+## 3.5.4 - 2017-10-06
+
+### Changed
+- [LPS-74143]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.55.
+- [LPS-74143]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.171.
+
+## 3.5.5 - 2017-10-08
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.2.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.473.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2600,6 +2616,7 @@ version 2.1.4.
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Gradle Plugins Soy]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-soy
 [Liferay Gradle Plugins TLD Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-tld-formatter
+[Liferay Gradle Plugins TLDDoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-tlddoc-builder
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration
 [Liferay Gradle Plugins Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-theme-builder
 [Liferay Gradle Plugins Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-upgrade-table-builder
@@ -2653,6 +2670,7 @@ version 2.1.4.
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-68598]: https://issues.liferay.com/browse/LPS-68598
+[LPS-68611]: https://issues.liferay.com/browse/LPS-68611
 [LPS-68618]: https://issues.liferay.com/browse/LPS-68618
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666
 [LPS-68779]: https://issues.liferay.com/browse/LPS-68779

@@ -1093,13 +1093,20 @@ another task with the same name is being executed in a parent project.
 1.0.471.
 
 ### Fixed
-- [LPS-74314]: Fix passing of the `baseDir` property to Source Formatter.
+- [LPS-74314]: Fix the process of passing the `baseDir` property from the
+`FormatSourceTask` to the Source Formatter.
 
 ## 2.3.1 - 2017-10-05
 
 ### Changed
 - [LPS-75047]: Update the [Liferay Source Formatter] dependency to version
 1.0.472.
+
+## 2.3.2 - 2017-10-08
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.473.
 
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
