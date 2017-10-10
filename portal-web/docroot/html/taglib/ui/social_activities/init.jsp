@@ -47,7 +47,7 @@ if (activityDescriptors == null) {
 String selector = StringPool.BLANK;
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMM d", locale, timeZone);
-Format yearDateFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy MMMM d", locale, timeZone);
+Format yearDateFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMM d, yyyy", locale, timeZone);
 
 Format timeFormatDate = FastDateFormatFactoryUtil.getTime(locale, timeZone);
 %>
