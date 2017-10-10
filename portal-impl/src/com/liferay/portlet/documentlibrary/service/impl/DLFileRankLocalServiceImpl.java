@@ -36,7 +36,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -44,7 +44,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void checkFileRanks() {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -53,7 +53,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void deleteFileRank(DLFileRank dlFileRank) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -61,7 +61,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void deleteFileRank(long fileRankId) throws PortalException {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -69,7 +69,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void deleteFileRanksByFileEntryId(long fileEntryId) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -77,7 +77,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void deleteFileRanksByUserId(long userId) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -85,7 +85,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void disableFileRanks(long fileEntryId) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -95,7 +95,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -103,7 +103,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void enableFileRanks(long fileEntryId) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -113,7 +113,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -121,7 +121,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public List<DLFileRank> getFileRanks(long groupId, long userId) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
@@ -132,14 +132,14 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
 	protected void updateFileRanks(DLFolder dlFolder, boolean active) {
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
-				"com.liferay.document.library.filerank.service.impl." +
+				"com.liferay.document.library.file.rank.service.impl." +
 					"DLFileRankLocalServiceImpl");
 	}
 
