@@ -12,29 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.document.library.file.rank.service.persistence;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Alberto Chaparro
+ * @author Brian Wing Shun Chan
+ * @generated
  */
-public class UpgradeModules
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
+@ProviderType
+public interface DLFileRankFinder {
+	public java.util.List<java.lang.Object[]> findByStaleRanks(int count);
 
-	@Override
-	public String[] getBundleSymbolicNames() {
-		return _BUNDLE_SYMBOLIC_NAMES;
-	}
-
-	@Override
-	public String[][] getConvertedLegacyModules() {
-		return _CONVERTED_LEGACY_MODULES;
-	}
-
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.document.library.file.rank.service",
-		"com.liferay.subscription.service", "com.liferay.trash.service"
-	};
-
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
-
+	public java.util.List<com.liferay.document.library.file.rank.model.DLFileRank> findByFolderId(
+		long folderId);
 }
