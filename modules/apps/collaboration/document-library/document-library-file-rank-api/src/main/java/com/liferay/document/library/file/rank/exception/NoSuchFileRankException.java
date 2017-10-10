@@ -12,29 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.document.library.file.rank.exception;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Alberto Chaparro
+ * @author Brian Wing Shun Chan
  */
-public class UpgradeModules
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
+@ProviderType
+public class NoSuchFileRankException extends NoSuchModelException {
 
-	@Override
-	public String[] getBundleSymbolicNames() {
-		return _BUNDLE_SYMBOLIC_NAMES;
+	public NoSuchFileRankException() {
 	}
 
-	@Override
-	public String[][] getConvertedLegacyModules() {
-		return _CONVERTED_LEGACY_MODULES;
+	public NoSuchFileRankException(String msg) {
+		super(msg);
 	}
 
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.document.library.file.rank.service",
-		"com.liferay.subscription.service", "com.liferay.trash.service"
-	};
+	public NoSuchFileRankException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
+	public NoSuchFileRankException(Throwable cause) {
+		super(cause);
+	}
 
 }
