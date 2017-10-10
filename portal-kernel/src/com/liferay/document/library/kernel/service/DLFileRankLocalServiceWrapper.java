@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @author Brian Wing Shun Chan
  * @see DLFileRankLocalService
  * @generated
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.filerank.service.DLFileRankLocalServicWrapper}
  */
+@Deprecated
 @ProviderType
 public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	ServiceWrapper<DLFileRankLocalService> {

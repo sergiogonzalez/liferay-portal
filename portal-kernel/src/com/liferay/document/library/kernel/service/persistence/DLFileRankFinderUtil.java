@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 /**
  * @author Brian Wing Shun Chan
  * @generated
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 @ProviderType
 public class DLFileRankFinderUtil {
 	public static java.util.List<java.lang.Object[]> findByStaleRanks(int count) {

@@ -32,7 +32,9 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * @see com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankPersistenceImpl
  * @see DLFileRankUtil
  * @generated
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.filerank.service.persistence.DLFileRankPersistence}
  */
+@Deprecated
 @ProviderType
 public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	/*

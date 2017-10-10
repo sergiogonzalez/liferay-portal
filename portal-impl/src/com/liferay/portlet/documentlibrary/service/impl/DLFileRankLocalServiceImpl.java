@@ -32,7 +32,9 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.filerank.service.impl.DLFileRankLocalServiceImpl}
  */
+@Deprecated
 public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override

@@ -32,7 +32,9 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  * @generated
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.filerank.service.persistence.impl.DLFileRankFinderBaseImpl}
  */
+@Deprecated
 public class DLFileRankFinderBaseImpl extends BasePersistenceImpl<DLFileRank> {
 	public DLFileRankFinderBaseImpl() {
 		setModelClass(DLFileRank.class);
