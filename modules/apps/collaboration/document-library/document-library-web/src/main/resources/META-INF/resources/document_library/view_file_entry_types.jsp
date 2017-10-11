@@ -17,16 +17,9 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp");
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
