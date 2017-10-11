@@ -137,6 +137,8 @@ public class DocumentConversionImpl implements DocumentConversion {
 			file, unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
 			unsyncByteArrayOutputStream.size());
 
+		inputStream.close();
+
 		return file;
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.document.library.document.conversion.internal;
 
 import com.liferay.document.library.document.conversion.internal.auth.verifier.ImageRequestTokenUtil;
+import com.liferay.portal.kernel.io.AutoDeleteFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.Scanner;
@@ -80,7 +80,7 @@ public class DocumentHTMLProcessor {
 				}
 			}
 
-			processedInputStream = new FileInputStream(tempFile);
+			processedInputStream = new AutoDeleteFileInputStream(tempFile);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
