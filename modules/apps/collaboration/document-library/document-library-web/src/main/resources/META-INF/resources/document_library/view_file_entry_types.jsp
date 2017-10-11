@@ -34,6 +34,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 		<portlet:param name="mvcPath" value="/document_library/view_file_entry_types.jsp" />
 	</liferay-portlet:renderURL>
 
+	<liferay-util:include page="/document_library/navigation_tabs.jsp" servletContext="<%= application %>" />
+
 	<aui:nav-bar-search>
 		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
 			<liferay-ui:input-search markupView="lexicon" />

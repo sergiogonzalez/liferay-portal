@@ -16,6 +16,29 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<%
+String tab = ParamUtil.getString(request, "tab");
+
+PortletURL documentsAndMediaURL = renderResponse.createRenderURL();
+documentsAndMediaURL.setParameter("tab", "documents_and_media");
+documentsAndMediaURL.setParameter("redirect", currentURL);
+
+PortletURL documentTypesURL = renderResponse.createRenderURL();
+documentTypesURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp");
+documentTypesURL.setParameter("tab", "document_types");
+documentTypesURL.setParameter("redirect", currentURL);
+%>
+
 <aui:nav cssClass="navbar-nav">
-	<aui:nav-item label="documents-and-media" selected="<%= true %>" />
+	<aui:nav-item
+		href="<%= documentsAndMediaURL.toString() %>"
+		label="documents-and-media"
+		selected='<%= Validator.isNull(tab) || tab.equals("documents_and_media") %>'
+	/>
+
+	<aui:nav-item
+		href="<%= documentTypesURL.toString() %>"
+		label="document-types"
+		selected='<%= tab.equals("document_types") %>'
+	/>
 </aui:nav>
