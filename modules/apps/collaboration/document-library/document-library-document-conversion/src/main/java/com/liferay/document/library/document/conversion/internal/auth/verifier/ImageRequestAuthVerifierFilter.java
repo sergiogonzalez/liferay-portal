@@ -14,9 +14,13 @@
 
 package com.liferay.document.library.document.conversion.internal.auth.verifier;
 
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
 import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,4 +39,18 @@ import org.osgi.service.component.annotations.Component;
 	service = Filter.class
 )
 public class ImageRequestAuthVerifierFilter extends AuthVerifierFilter {
+
+	@Override
+	public boolean isFilterEnabled(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		String token = ParamUtil.getString(request, "auth_token");
+
+		if (Validator.isBlank(token)) {
+			return false;
+		}
+
+		return super.isFilterEnabled(request, response);
+	}
+
 }
