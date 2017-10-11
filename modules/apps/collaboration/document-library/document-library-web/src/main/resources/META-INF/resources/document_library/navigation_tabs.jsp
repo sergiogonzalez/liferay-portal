@@ -24,7 +24,6 @@ documentsAndMediaURL.setParameter("tab", "documents_and_media");
 documentsAndMediaURL.setParameter("redirect", currentURL);
 
 PortletURL documentTypesURL = renderResponse.createRenderURL();
-documentTypesURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp");
 documentTypesURL.setParameter("tab", "document_types");
 documentTypesURL.setParameter("redirect", currentURL);
 %>
