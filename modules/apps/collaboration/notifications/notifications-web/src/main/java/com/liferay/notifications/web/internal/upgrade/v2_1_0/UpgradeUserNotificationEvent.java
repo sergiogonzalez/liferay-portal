@@ -14,6 +14,7 @@
 
 package com.liferay.notifications.web.internal.upgrade.v2_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -68,10 +69,16 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 	protected void updateUserNotificationEvents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select userNotificationEventId, payload from " +
-					"UserNotificationEvent");
-			ResultSet rs = ps.executeQuery()) {
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select userNotificationEventId, payload, actionRequired " +
+					"from UserNotificationEvent where payload like " +
+						"'%actionRequired%'");
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update UserNotificationEvent set payload = ?, " +
+						"actionRequired = ? where userNotificationEventId = ?");
+			ResultSet rs = ps1.executeQuery()) {
 
 			runSQL("update UserNotificationEvent set delivered = TRUE");
 
@@ -84,28 +91,24 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 				long userNotificationEventId = rs.getLong(
 					"userNotificationEventId");
 				String payload = rs.getString("payload");
-
-				UserNotificationEvent userNotificationEvent =
-					_userNotificationEventLocalService.getUserNotificationEvent(
-						userNotificationEventId);
+				boolean actionRequired = rs.getBoolean("actionRequired");
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					payload);
 
-				boolean actionRequired = jsonObject.getBoolean(
-					"actionRequired");
+				actionRequired |= jsonObject.getBoolean("actionRequired");
 
 				jsonObject.remove("actionRequired");
 
-				userNotificationEvent.setPayload(jsonObject.toString());
+				ps2.setString(1, jsonObject.toString());
 
-				if (!userNotificationEvent.isActionRequired()) {
-					userNotificationEvent.setActionRequired(actionRequired);
-				}
+				ps2.setBoolean(2, actionRequired);
+				ps2.setLong(3, userNotificationEventId);
 
-				_userNotificationEventLocalService.updateUserNotificationEvent(
-					userNotificationEvent);
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 
