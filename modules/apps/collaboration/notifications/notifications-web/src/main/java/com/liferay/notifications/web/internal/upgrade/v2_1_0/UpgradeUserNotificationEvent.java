@@ -78,6 +78,13 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 					"UserNotificationEvent");
 			ResultSet rs = ps.executeQuery()) {
 
+			runSQL("update UserNotificationEvent set delivered = TRUE");
+
+			runSQL(
+				"update UserNotificationEvent set deliveryType = " +
+					UserNotificationDeliveryConstants.TYPE_WEBSITE + " where " +
+						"deliveryType = 0 or deliveryType is null");
+
 			while (rs.next()) {
 				long userNotificationEventId = rs.getLong(
 					"userNotificationEventId");
@@ -86,15 +93,6 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 				UserNotificationEvent userNotificationEvent =
 					_userNotificationEventLocalService.getUserNotificationEvent(
 						userNotificationEventId);
-
-				userNotificationEvent.setDelivered(true);
-
-				int deliveryType = userNotificationEvent.getDeliveryType();
-
-				if (deliveryType == 0) {
-					userNotificationEvent.setDeliveryType(
-						UserNotificationDeliveryConstants.TYPE_WEBSITE);
-				}
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					payload);
