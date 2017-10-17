@@ -17,27 +17,27 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "documents_and_media");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName", "/document_library/view");
 
-PortletURL documentsAndMediaURL = renderResponse.createRenderURL();
-documentsAndMediaURL.setParameter("tabs1", "documents_and_media");
-documentsAndMediaURL.setParameter("redirect", currentURL);
+PortletURL viewEntriesURL = renderResponse.createRenderURL();
+viewEntriesURL.setParameter("mvcRenderCommandName", "/document_library/view");
+viewEntriesURL.setParameter("redirect", currentURL);
 
-PortletURL documentTypesURL = renderResponse.createRenderURL();
-documentTypesURL.setParameter("tabs1", "document_types");
-documentTypesURL.setParameter("redirect", currentURL);
+PortletURL viewFileEntryTypesURL = renderResponse.createRenderURL();
+viewFileEntryTypesURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry_types");
+viewFileEntryTypesURL.setParameter("redirect", currentURL);
 %>
 
 <aui:nav cssClass="navbar-nav">
 	<aui:nav-item
-		href="<%= documentsAndMediaURL.toString() %>"
+		href="<%= viewEntriesURL.toString() %>"
 		label="documents-and-media"
-		selected='<%= Validator.isNull(tabs1) || tabs1.equals("documents_and_media") %>'
+		selected='<%= mvcRenderCommandName.equals("/document_library/view") %>'
 	/>
 
 	<aui:nav-item
-		href="<%= documentTypesURL.toString() %>"
+		href="<%= viewFileEntryTypesURL.toString() %>"
 		label="document-types"
-		selected='<%= tabs1.equals("document_types") %>'
+		selected='<%= mvcRenderCommandName.equals("/document_library/view_file_entry_types") %>'
 	/>
 </aui:nav>
