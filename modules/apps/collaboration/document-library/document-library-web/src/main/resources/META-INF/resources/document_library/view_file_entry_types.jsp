@@ -24,7 +24,7 @@ portletURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp"
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcPath" value="/document_library/view_file_entry_types.jsp" />
+		<portlet:param name="tabs1" value="document_types" />
 	</liferay-portlet:renderURL>
 
 	<liferay-util:include page="/document_library/navigation_tabs.jsp" servletContext="<%= application %>" />
