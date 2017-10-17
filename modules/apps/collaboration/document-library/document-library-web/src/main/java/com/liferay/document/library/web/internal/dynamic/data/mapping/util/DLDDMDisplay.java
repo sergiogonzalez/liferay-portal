@@ -96,6 +96,33 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 					return portletURL.toString();
 				}
 
+			},
+			new DDMDisplayTabItem() {
+
+				@Override
+				public String getTitle(Locale locale) {
+					return LanguageUtil.get(
+						getResourceBundle(locale), "document-types");
+				}
+
+				@Override
+				public String getURL(
+						LiferayPortletRequest liferayPortletRequest,
+						LiferayPortletResponse liferayPortletResponse)
+					throws Exception {
+
+					PortletURL portletURL = _portal.getControlPanelPortletURL(
+						liferayPortletRequest,
+						PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+						PortletRequest.RENDER_PHASE);
+
+					portletURL.setParameter(
+						"mvcRenderCommandName",
+						"/document_library/view_file_entry_types");
+
+					return portletURL.toString();
+				}
+
 			});
 	}
 
