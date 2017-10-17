@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+String tabs1 = ParamUtil.getString(request, "tabs1", "documents_and_media");
 
 PortletURL documentsAndMediaURL = renderResponse.createRenderURL();
 documentsAndMediaURL.setParameter("tabs1", "documents_and_media");

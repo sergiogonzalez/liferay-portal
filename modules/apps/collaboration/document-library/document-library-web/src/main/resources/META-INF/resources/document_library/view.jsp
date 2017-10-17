@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+String tabs1 = ParamUtil.getString(request, "tabs1", "documents_and_media");
 %>
 
 <c:choose>
@@ -27,7 +27,4 @@ String tabs1 = ParamUtil.getString(request, "tabs1");
 	<c:when test='<%= tabs1.equals("document_types") %>'>
 		<liferay-util:include page="/document_library/view_file_entry_types.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/document_library/view_documents_and_media.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
 </c:choose>
