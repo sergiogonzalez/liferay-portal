@@ -18,13 +18,26 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "documents_and_media");
+
+PortletURL documentsAndMediaURL = renderResponse.createRenderURL();
+documentsAndMediaURL.setParameter("tabs1", "documents_and_media");
+documentsAndMediaURL.setParameter("redirect", currentURL);
+
+PortletURL documentTypesURL = renderResponse.createRenderURL();
+documentTypesURL.setParameter("tabs1", "document_types");
+documentTypesURL.setParameter("redirect", currentURL);
 %>
 
-<c:choose>
-	<c:when test='<%= tabs1.equals("documents_and_media") %>'>
-		<liferay-util:include page="/document_library/view_documents_and_media.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= tabs1.equals("document_types") %>'>
-		<liferay-util:include page="/document_library/view_file_entry_types.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+<aui:nav cssClass="navbar-nav">
+	<aui:nav-item
+		href="<%= documentsAndMediaURL.toString() %>"
+		label="documents-and-media"
+		selected='<%= Validator.isNull(tabs1) || tabs1.equals("documents_and_media") %>'
+	/>
+
+	<aui:nav-item
+		href="<%= documentTypesURL.toString() %>"
+		label="document-types"
+		selected='<%= tabs1.equals("document_types") %>'
+	/>
+</aui:nav>
