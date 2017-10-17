@@ -205,7 +205,7 @@
 
 				<select class="form-control" data-onchange="{$_handleReasonChange}" name="{$portletNamespace}reason" ref="reason">
 					{foreach $reason in $reasons}
-						<option value="{$reason}">{$reason}</option>
+						<option value="{$reason}">{msg desc=""}{$reason}{/msg}</option>
 					{/foreach}
 
 					<option value="other">Other</option>
