@@ -18,26 +18,28 @@
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName", "/document_library/view");
-
-PortletURL viewEntriesURL = renderResponse.createRenderURL();
-viewEntriesURL.setParameter("mvcRenderCommandName", "/document_library/view");
-viewEntriesURL.setParameter("redirect", currentURL);
-
-PortletURL viewFileEntryTypesURL = renderResponse.createRenderURL();
-viewFileEntryTypesURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry_types");
-viewFileEntryTypesURL.setParameter("redirect", currentURL);
 %>
 
 <aui:nav cssClass="navbar-nav">
+	<portlet:renderURL var="viewEntriesURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
 	<aui:nav-item
-		href="<%= viewEntriesURL.toString() %>"
+		href="<%= viewEntriesURL %>"
 		label="documents-and-media"
 		selected='<%= mvcRenderCommandName.equals("/document_library/view") %>'
 	/>
 
+	<portlet:renderURL var="viewFileEntryTypesURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry_types" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
 	<c:if test="<%= DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(dlRequestHelper.getPortletName()) %>">
 		<aui:nav-item
-			href="<%= viewFileEntryTypesURL.toString() %>"
+			href="<%= viewFileEntryTypesURL %>"
 			label="document-types"
 			selected='<%= mvcRenderCommandName.equals("/document_library/view_file_entry_types") %>'
 		/>
