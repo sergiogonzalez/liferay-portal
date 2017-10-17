@@ -18,8 +18,8 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 -includeresource:\
-@google-collections-[0-9]*.jar,\
-@gson-[0-9]*.jar,\
-@httpclient-[0-9]*.jar,\
-@joda-time-[0-9]*.jar,\
-@jsontoken-[0-9]*.jar
+	@google-collections-[0-9]*.jar,\
+	@gson-[0-9]*.jar,\
+	@httpclient-[0-9]*.jar,\
+	@joda-time-[0-9]*.jar,\
+	@jsontoken-[0-9]*.jar
