@@ -14,10 +14,12 @@
 
 package com.liferay.document.library.google.docs.internal.instance.lifecycle;
 
+import com.liferay.document.library.ddm.DLFileEntryMetadataDDMPermissionSupport;
 import com.liferay.document.library.google.docs.internal.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -51,6 +53,17 @@ public class GoogleDocsPortalInstanceLifecycleListener
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureVersionLocalService(
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryMetadataDDMPermissionSupport(
+		DLFileEntryMetadataDDMPermissionSupport
+			dlFileEntryMetadataDDMPermissionSupport) {
 	}
 
 	@Reference
