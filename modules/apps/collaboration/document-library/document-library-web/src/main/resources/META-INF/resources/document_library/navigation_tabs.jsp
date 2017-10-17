@@ -35,9 +35,11 @@ viewFileEntryTypesURL.setParameter("redirect", currentURL);
 		selected='<%= mvcRenderCommandName.equals("/document_library/view") %>'
 	/>
 
-	<aui:nav-item
-		href="<%= viewFileEntryTypesURL.toString() %>"
-		label="document-types"
-		selected='<%= mvcRenderCommandName.equals("/document_library/view_file_entry_types") %>'
-	/>
+	<c:if test="<%= DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(dlRequestHelper.getPortletName()) %>">
+		<aui:nav-item
+			href="<%= viewFileEntryTypesURL.toString() %>"
+			label="document-types"
+			selected='<%= mvcRenderCommandName.equals("/document_library/view_file_entry_types") %>'
+		/>
+	</c:if>
 </aui:nav>
