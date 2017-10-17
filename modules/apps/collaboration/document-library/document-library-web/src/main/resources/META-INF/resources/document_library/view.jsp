@@ -17,14 +17,14 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String tab = ParamUtil.getString(request, "tab");
+String tabs1 = ParamUtil.getString(request, "tabs1");
 %>
 
 <c:choose>
-	<c:when test='<%= tab.equals("documents_and_media") %>'>
+	<c:when test='<%= tabs1.equals("documents_and_media") %>'>
 		<liferay-util:include page="/document_library/view_documents_and_media.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tab.equals("document_types") %>'>
+	<c:when test='<%= tabs1.equals("document_types") %>'>
 		<liferay-util:include page="/document_library/view_file_entry_types.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

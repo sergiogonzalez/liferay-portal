@@ -17,14 +17,14 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String tab = ParamUtil.getString(request, "tab");
+String tabs1 = ParamUtil.getString(request, "tabs1");
 
 PortletURL documentsAndMediaURL = renderResponse.createRenderURL();
-documentsAndMediaURL.setParameter("tab", "documents_and_media");
+documentsAndMediaURL.setParameter("tabs1", "documents_and_media");
 documentsAndMediaURL.setParameter("redirect", currentURL);
 
 PortletURL documentTypesURL = renderResponse.createRenderURL();
-documentTypesURL.setParameter("tab", "document_types");
+documentTypesURL.setParameter("tabs1", "document_types");
 documentTypesURL.setParameter("redirect", currentURL);
 %>
 
@@ -32,12 +32,12 @@ documentTypesURL.setParameter("redirect", currentURL);
 	<aui:nav-item
 		href="<%= documentsAndMediaURL.toString() %>"
 		label="documents-and-media"
-		selected='<%= Validator.isNull(tab) || tab.equals("documents_and_media") %>'
+		selected='<%= Validator.isNull(tabs1) || tabs1.equals("documents_and_media") %>'
 	/>
 
 	<aui:nav-item
 		href="<%= documentTypesURL.toString() %>"
 		label="document-types"
-		selected='<%= tab.equals("document_types") %>'
+		selected='<%= tabs1.equals("document_types") %>'
 	/>
 </aui:nav>
