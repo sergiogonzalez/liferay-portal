@@ -29,7 +29,7 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 	<aui:nav-item
 		href="<%= viewEntriesURL %>"
 		label="documents-and-media"
-		selected='<%= mvcRenderCommandName.equals("/document_library/view") %>'
+		selected='<%= !mvcRenderCommandName.equals("/document_library/view_file_entry_types") %>'
 	/>
 
 	<portlet:renderURL var="viewFileEntryTypesURL">
