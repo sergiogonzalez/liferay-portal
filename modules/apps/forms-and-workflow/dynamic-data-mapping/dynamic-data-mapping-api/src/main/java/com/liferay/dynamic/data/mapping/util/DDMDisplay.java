@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -66,6 +67,8 @@ public interface DDMDisplay {
 	public String getStructureName(Locale locale);
 
 	public String getStructureType();
+
+	public List<DDMDisplayTabItem> getTabItems();
 
 	public long[] getTemplateClassNameIds(long classNameId);
 
