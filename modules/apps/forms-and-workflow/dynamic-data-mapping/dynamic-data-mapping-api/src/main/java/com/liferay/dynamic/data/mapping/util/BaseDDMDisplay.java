@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -162,6 +163,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	@Override
 	public String getStructureType() {
 		return StringPool.BLANK;
+	}
+
+	public List<DDMDisplayTabItem> getTabItems() {
+		return Collections.emptyList();
 	}
 
 	@Override
