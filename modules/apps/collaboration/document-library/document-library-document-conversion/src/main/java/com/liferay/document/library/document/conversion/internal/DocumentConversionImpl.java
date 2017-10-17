@@ -117,7 +117,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 						outputDocumentFormat.getName());
 		}
 
-		if ("html".equals(inputDocumentFormat.getFileExtension())) {
+		if (sourceExtension.equals("html")) {
 			DocumentHTMLProcessor documentHTMLProcessor =
 				new DocumentHTMLProcessor();
 
