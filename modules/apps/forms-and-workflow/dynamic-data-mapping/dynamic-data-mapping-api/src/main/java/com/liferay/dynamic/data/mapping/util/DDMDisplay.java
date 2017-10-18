@@ -45,6 +45,8 @@ public interface DDMDisplay {
 
 	public String getDefaultTemplateLanguage();
 
+	public String getDescription(Locale locale);
+
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,

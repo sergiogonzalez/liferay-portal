@@ -95,6 +95,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		return null;
+	}
+
+	@Override
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
