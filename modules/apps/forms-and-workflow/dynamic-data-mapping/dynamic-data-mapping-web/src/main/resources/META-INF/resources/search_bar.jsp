@@ -21,7 +21,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "structures");
 
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 
-String scopedLabel = Validator.isNull(scopeTitle) ? ddmDisplay.getTitle(locale) : scopeTitle;
+String scopedLabel = Validator.isNull(scopeTitle) ? ddmDisplay.getDefaultTabTitle(locale) : scopeTitle;
 %>
 
 <portlet:renderURL var="portletURL">
@@ -32,6 +32,21 @@ String scopedLabel = Validator.isNull(scopeTitle) ? ddmDisplay.getTitle(locale) 
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
+
+		<%
+		for (DDMDisplayTabItem tabItem : ddmDisplay.getTabItems()) {
+		%>
+
+			<aui:nav-item
+				href="<%= tabItem.getURL(liferayPortletRequest, liferayPortletResponse) %>"
+				label="<%= tabItem.getTitle(locale) %>"
+				selected="<%= false %>"
+			/>
+
+		<%
+		}
+		%>
+
 		<aui:nav-item label="<%= scopedLabel %>" selected="<%= true %>" />
 	</aui:nav>
 
