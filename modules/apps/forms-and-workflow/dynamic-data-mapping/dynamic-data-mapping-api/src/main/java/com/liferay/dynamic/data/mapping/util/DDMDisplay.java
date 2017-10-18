@@ -41,6 +41,8 @@ public interface DDMDisplay {
 
 	public DDMNavigationHelper getDDMNavigationHelper();
 
+	public String getDefaultTabTitle(Locale locale);
+
 	public String getDefaultTemplateLanguage();
 
 	public String getEditStructureDefaultValuesURL(
