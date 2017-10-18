@@ -85,6 +85,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getDefaultTabTitle(Locale locale) {
+		return getTitle(locale);
+	}
+
+	@Override
 	public String getDefaultTemplateLanguage() {
 		return TemplateConstants.LANG_TYPE_FTL;
 	}
