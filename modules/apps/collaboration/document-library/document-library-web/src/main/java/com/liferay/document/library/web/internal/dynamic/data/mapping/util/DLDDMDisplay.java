@@ -97,7 +97,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public boolean isShowBackURLInTitleBar() {
-		return true;
+		return false;
 	}
 
 	@Reference(
