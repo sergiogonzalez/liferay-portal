@@ -261,6 +261,14 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #read(InputStream, Map)}
+	 */
+	@Deprecated
+	protected void read(InputStream stream) throws Exception {
+		read(stream, _extensionsMap);
+	}
+
 	protected void read(
 			InputStream stream, Map<String, Set<String>> extensionsMap)
 		throws Exception {
@@ -294,6 +302,14 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 				readMimeType(childElement, extensionsMap);
 			}
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #readMimeType(Element, Map)}
+	 */
+	@Deprecated
+	protected void readMimeType(Element element) {
+		readMimeType(element, _extensionsMap);
 	}
 
 	protected void readMimeType(
