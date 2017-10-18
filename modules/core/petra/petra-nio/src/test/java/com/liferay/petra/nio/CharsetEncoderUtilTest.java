@@ -59,21 +59,21 @@ public class CharsetEncoderUtilTest {
 			Assert.assertEquals(1, uce.getInputLength());
 		}
 
-		FakeCharset fakeCharset = new FakeCharset();
+		TestCharset testCharset = new TestCharset();
 
 		Object cache1 = ReflectionTestUtil.getAndSetFieldValue(
 			Charset.class, "cache1",
-			new Object[] {fakeCharset.name(), fakeCharset});
+			new Object[] {testCharset.name(), testCharset});
 
 		try {
 			CharsetEncoderUtil.encode(
-				fakeCharset.name(), CharBuffer.wrap(new char[0]));
+				testCharset.name(), CharBuffer.wrap(new char[0]));
 
 			Assert.fail();
 		}
 		catch (Error e) {
 			Assert.assertSame(
-				fakeCharset.getCharacterCodingException(), e.getCause());
+				testCharset.getCharacterCodingException(), e.getCause());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(Charset.class, "cache1", cache1);

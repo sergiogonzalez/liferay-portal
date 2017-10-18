@@ -61,21 +61,21 @@ public class CharsetDecoderUtilTest {
 			Assert.assertEquals(1, mie.getInputLength());
 		}
 
-		FakeCharset fakeCharset = new FakeCharset();
+		TestCharset testCharset = new TestCharset();
 
 		Object cache1 = ReflectionTestUtil.getAndSetFieldValue(
 			Charset.class, "cache1",
-			new Object[] {fakeCharset.name(), fakeCharset});
+			new Object[] {testCharset.name(), testCharset});
 
 		try {
 			CharsetDecoderUtil.decode(
-				fakeCharset.name(), ByteBuffer.wrap(new byte[0]));
+				testCharset.name(), ByteBuffer.wrap(new byte[0]));
 
 			Assert.fail();
 		}
 		catch (Error e) {
 			Assert.assertSame(
-				fakeCharset.getCharacterCodingException(), e.getCause());
+				testCharset.getCharacterCodingException(), e.getCause());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(Charset.class, "cache1", cache1);
