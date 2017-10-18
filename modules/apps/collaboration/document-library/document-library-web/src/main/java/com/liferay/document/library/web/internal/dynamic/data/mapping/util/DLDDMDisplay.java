@@ -43,6 +43,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
+	public String getDefaultTabTitle(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "metadata-sets");
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.DOCUMENT_LIBRARY;
 	}
@@ -73,7 +80,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "metadata-sets");
+		return LanguageUtil.get(resourceBundle, "documents-and-media");
 	}
 
 	@Override
