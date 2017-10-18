@@ -20,7 +20,9 @@ import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,16 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "metadata-sets");
+	}
+
+	@Override
+	public String getDescription(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(
+			resourceBundle,
+			JavaConstants.JAVAX_PORTLET_DESCRIPTION.concat(
+				StringPool.PERIOD).concat(PortletKeys.DOCUMENT_LIBRARY_ADMIN));
 	}
 
 	@Override
