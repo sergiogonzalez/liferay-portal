@@ -34,6 +34,10 @@ OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByC
 structureSearch.setOrderByCol(ddmDisplayContext.getOrderByCol());
 structureSearch.setOrderByComparator(orderByComparator);
 structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
+
+if (ddmDisplay.getDescription(locale) != null) {
+	portletDisplay.setDescription(ddmDisplay.getDescription(locale));
+}
 %>
 
 <c:if test="<%= showBackURL && ddmDisplay.isShowBackURLInTitleBar() %>">
