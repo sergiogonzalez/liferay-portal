@@ -171,14 +171,22 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
+		String contentType = null;
+
 		try {
-			Metadata metadata = new Metadata();
+			String extension = getFileNameExtension(fileName);
 
-			metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+			contentType = getCustomContentType(extension);
 
-			MediaType mediaType = _detector.detect(null, metadata);
+			if (contentType == ContentTypes.APPLICATION_OCTET_STREAM) {
+				Metadata metadata = new Metadata();
 
-			String contentType = mediaType.toString();
+				metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+
+				MediaType mediaType = _detector.detect(null, metadata);
+
+				contentType = mediaType.toString();
+			}
 
 			if (!contentType.contains("tika")) {
 				return contentType;
