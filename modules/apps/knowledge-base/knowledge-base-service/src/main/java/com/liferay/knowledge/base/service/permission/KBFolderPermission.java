@@ -100,6 +100,10 @@ public class KBFolderPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (kbFolderId == KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (actionId.equals(ActionKeys.VIEW)) {
+				return true;
+			}
+
 			return AdminPermission.contains(
 				permissionChecker, groupId, actionId);
 		}
