@@ -304,13 +304,20 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						window.location.reload();
 					}
 					else {
+						var portletNodeId = '#p_p_id_<%= portletDisplay.getId() %>_';
+
+						var portletNode = A.one(portletNodeId);
+
 						Liferay.Portlet.refresh(
-							'#p_p_id_<%= portletDisplay.getId() %>_',
-							Liferay.Util.ns(
-								'<%= namespace %>',
-								{
-									skipEditorLoading: true
-								}
+							portletNodeId,
+							A.merge(
+								Liferay.Util.ns(
+									'<%= namespace %>',
+									{
+										skipEditorLoading: true
+									}
+								),
+								portletNode.refreshURLData || {}
 							)
 						);
 					}
