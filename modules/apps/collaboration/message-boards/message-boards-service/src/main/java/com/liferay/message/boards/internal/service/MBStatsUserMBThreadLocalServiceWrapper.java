@@ -80,8 +80,8 @@ public class MBStatsUserMBThreadLocalServiceWrapper
 			message -> message.getUserId()
 		).distinct(
 		).forEach(
-			userId -> _mbStatsUserLocalService.updateStatsUser(
-				groupId, userId));
+			userId -> _mbStatsUserLocalService.updateStatsUser(groupId, userId)
+		);
 	}
 
 	@Override
@@ -101,8 +101,8 @@ public class MBStatsUserMBThreadLocalServiceWrapper
 			message -> message.getUserId()
 		).distinct(
 		).forEach(
-			userId -> _mbStatsUserLocalService.updateStatsUser(
-				groupId, userId));
+			userId -> _mbStatsUserLocalService.updateStatsUser(groupId, userId)
+		);
 	}
 
 	@Reference
