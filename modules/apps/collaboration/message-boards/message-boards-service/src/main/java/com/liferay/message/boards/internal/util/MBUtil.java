@@ -12,13 +12,28 @@
  * details.
  */
 
-package com.liferay.message.boards.model.impl;
+package com.liferay.message.boards.internal.util;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.message.boards.model.MBBan;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-@ProviderType
-public class MBBanImpl extends MBBanBaseImpl {
+public class MBUtil {
+
+	public static Date getUnbanDate(MBBan ban, int expireInterval) {
+		Date banDate = ban.getCreateDate();
+
+		Calendar cal = Calendar.getInstance();
+
+		cal.setTime(banDate);
+
+		cal.add(Calendar.DATE, expireInterval);
+
+		return cal.getTime();
+	}
+
 }
