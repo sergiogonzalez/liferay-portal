@@ -2231,10 +2231,10 @@ version 1.1.7.
 ## 5.1.11 - 2017-10-09
 
 ### Fixed
-- [LPS-63943]: Disable up-to-date check of the `mergeArtifactsPublishCommands`
-task.
-- [LPS-63943]: Fix error when executing the `writeArtifactPublishCommands` task
-from the root project directory.
+- [LPS-63943]: Disable the `mergeArtifactsPublishCommands` task's up-to-date
+check.
+- [LPS-63943]: Fix the error thrown when executing the
+`writeArtifactPublishCommands` task from the root project directory.
 
 ## 5.1.12 - 2017-10-10
 
@@ -2290,6 +2290,11 @@ from the root project directory.
 
 ### Changed
 - [LPS-74348]: Update the [Liferay Gradle Plugins] dependency to version 3.5.16.
+
+## 5.1.23 - 2017-10-20
+
+### Changed
+- [LPS-75254]: Update the [Liferay Gradle Plugins] dependency to version 3.5.17.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

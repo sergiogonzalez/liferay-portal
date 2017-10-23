@@ -90,6 +90,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 			keyProperty="layoutPageTemplateCollectionId"
 			modelVar="layoutPageTemplateCollection"
 		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
+				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
+			</portlet:renderURL>
 
 			<%
 			row.setCssClass("entry-card lfr-asset-folder");
@@ -103,6 +107,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						text="<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>"
+						url="<%= rowURL.toString() %>"
 					>
 						<liferay-frontend:horizontal-card-col>
 							<liferay-frontend:horizontal-card-icon
@@ -118,7 +123,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton() %>">
+<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
 	<portlet:renderURL var="addLayoutPageTemplateCollectionURL">
 		<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
 	</portlet:renderURL>
