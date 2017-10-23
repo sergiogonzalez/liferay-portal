@@ -55,7 +55,7 @@ public class ImageRequestTokenUtil {
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to create Signer object", e);
+				_log.debug("Unable to create signer", e);
 			}
 
 			return null;
@@ -97,7 +97,7 @@ public class ImageRequestTokenUtil {
 			if (userIdJsonPrimitive == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to find userId parameter in payload " +
+						"Unable to find \"userId\" parameter in payload " +
 							tokenString);
 				}
 
@@ -116,7 +116,8 @@ public class ImageRequestTokenUtil {
 				if (instant.isBefore(passwordModifiedDate.getTime())) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unable to accept token, password was changed");
+							"Unable to accept token beecause the password " +
+								"was changed");
 					}
 
 					return 0;
