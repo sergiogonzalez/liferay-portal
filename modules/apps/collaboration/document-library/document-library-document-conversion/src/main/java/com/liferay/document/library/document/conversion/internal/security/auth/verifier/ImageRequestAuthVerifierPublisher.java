@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Istvan Andras Dezsi
  */
 @Component(
-	configurationPid = "com.liferay.document.library.document.conversion.internal.auth.verifier.configuration.ImageRequestAuthVerifierConfiguration",
+	configurationPid = "com.liferay.document.library.document.conversion.internal.security.auth.verifier.image.request.module.configuration.ImageRequestAuthVerifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class ImageRequestAuthVerifierPublisher {
