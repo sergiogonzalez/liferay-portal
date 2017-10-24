@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.web.internal.selector;
 
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -40,7 +40,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 		throws PortalException {
 
 		KBArticle ancestorKBArticle =
-			_kbArticleLocalService.fetchLatestKBArticle(
+			_kbArticleService.fetchLatestKBArticle(
 				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
@@ -53,7 +53,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 			return new KBArticleSelection(ancestorKBArticle, true);
 		}
 
-		KBArticle kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		return getClosestMatchingDescendantKBArticle(
@@ -68,7 +68,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 		throws PortalException {
 
 		KBArticle ancestorKBArticle =
-			_kbArticleLocalService.fetchLatestKBArticle(
+			_kbArticleService.fetchLatestKBArticle(
 				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
@@ -76,7 +76,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 		}
 
 		KBArticle kbArticle =
-			_kbArticleLocalService.fetchLatestKBArticleByUrlTitle(
+			_kbArticleService.fetchLatestKBArticleByUrlTitle(
 				groupId, ancestorKBArticle.getKbFolderId(), urlTitle,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -92,7 +92,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 
 		while (candidateKBArticle != null) {
 			KBArticle matchingKBArticle =
-				_kbArticleLocalService.fetchKBArticleByUrlTitle(
+				_kbArticleService.fetchKBArticleByUrlTitle(
 					groupId, ancestorKBArticle.getKbFolderId(),
 					candidateKBArticle.getUrlTitle());
 
@@ -146,6 +146,6 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 	}
 
 	@Reference
-	private KBArticleLocalService _kbArticleLocalService;
+	private KBArticleService _kbArticleService;
 
 }
