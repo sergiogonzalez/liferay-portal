@@ -145,13 +145,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
 }
