@@ -228,6 +228,10 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	}
 
 	protected String getCustomContentType(String extension) {
+		if (Validator.isNull(extension)) {
+			return ContentTypes.APPLICATION_OCTET_STREAM;
+		}
+
 		for (Map.Entry<String, Set<String>> entry :
 				_customExtensionsMap.entrySet()) {
 
