@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.internal.auth.verifier;
+package com.liferay.document.library.document.conversion.internal.servlet.filter;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
