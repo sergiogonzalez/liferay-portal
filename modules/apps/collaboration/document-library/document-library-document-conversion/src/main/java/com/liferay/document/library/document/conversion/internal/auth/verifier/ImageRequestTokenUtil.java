@@ -116,8 +116,8 @@ public class ImageRequestTokenUtil {
 				if (instant.isBefore(passwordModifiedDate.getTime())) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unable to accept token beecause the password " +
-								"was changed");
+							"Unable to accept token because the password was " +
+								"changed");
 					}
 
 					return 0;
