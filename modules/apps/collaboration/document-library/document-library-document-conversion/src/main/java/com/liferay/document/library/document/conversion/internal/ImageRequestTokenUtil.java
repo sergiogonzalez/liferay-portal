@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.internal.auth.verifier;
+package com.liferay.document.library.document.conversion.internal;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;

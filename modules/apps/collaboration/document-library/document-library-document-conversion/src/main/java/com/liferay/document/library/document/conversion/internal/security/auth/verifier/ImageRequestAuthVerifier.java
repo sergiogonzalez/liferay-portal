@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.document.conversion.internal.security.auth.verifier;
 
+import com.liferay.document.library.document.conversion.internal.ImageRequestTokenUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;

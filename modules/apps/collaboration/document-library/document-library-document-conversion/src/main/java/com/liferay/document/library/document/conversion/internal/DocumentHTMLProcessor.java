@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.document.conversion.internal;
 
-import com.liferay.document.library.document.conversion.internal.auth.verifier.ImageRequestTokenUtil;
 import com.liferay.portal.kernel.io.AutoDeleteFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
