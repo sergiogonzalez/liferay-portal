@@ -218,6 +218,25 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return kbArticle;
 	}
 
+	@Override
+	public KBArticle fetchLatestKBArticleByUrlTitle(
+			long groupId, long kbFolderId, String urlTitle, int status)
+		throws PortalException {
+
+		KBArticle kbArticle =
+			kbArticleLocalService.fetchLatestKBArticleByUrlTitle(
+				groupId, kbFolderId, urlTitle, status);
+
+		if ((kbArticle != null) &&
+			KBArticlePermission.contains(
+				getPermissionChecker(), kbArticle, ActionKeys.VIEW)) {
+
+			return kbArticle;
+		}
+
+		return null;
+	}
+
 	/**
 	 * @deprecated As of 1.1.0, replaced by {@link
 	 *             #getAllDescendantKBArticles(long, long, int,
