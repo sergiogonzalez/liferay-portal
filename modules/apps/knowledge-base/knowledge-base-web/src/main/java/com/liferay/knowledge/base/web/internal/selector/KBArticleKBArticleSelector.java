@@ -39,9 +39,8 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 			long ancestorResourcePrimKey, long resourcePrimKey)
 		throws PortalException {
 
-		KBArticle ancestorKBArticle =
-			_kbArticleService.fetchLatestKBArticle(
-				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+		KBArticle ancestorKBArticle = _kbArticleService.fetchLatestKBArticle(
+			ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
 			return new KBArticleSelection(null, true);
@@ -67,18 +66,16 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 			String urlTitle)
 		throws PortalException {
 
-		KBArticle ancestorKBArticle =
-			_kbArticleService.fetchLatestKBArticle(
-				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+		KBArticle ancestorKBArticle = _kbArticleService.fetchLatestKBArticle(
+			ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
 			return new KBArticleSelection(null, true);
 		}
 
-		KBArticle kbArticle =
-			_kbArticleService.fetchLatestKBArticleByUrlTitle(
-				groupId, ancestorKBArticle.getKbFolderId(), urlTitle,
-				WorkflowConstants.STATUS_APPROVED);
+		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticleByUrlTitle(
+			groupId, ancestorKBArticle.getKbFolderId(), urlTitle,
+			WorkflowConstants.STATUS_APPROVED);
 
 		return getClosestMatchingDescendantKBArticle(
 			groupId, ancestorKBArticle, kbArticle);
