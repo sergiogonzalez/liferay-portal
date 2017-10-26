@@ -17,10 +17,13 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -122,13 +125,20 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		try (TikaInputStream tikaInputStream = TikaInputStream.get(
 				new CloseShieldInputStream(inputStream))) {
 
-			Metadata metadata = new Metadata();
+			String extension = getFileNameExtension(fileName);
 
-			metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+			contentType = getCustomContentType(extension);
 
-			MediaType mediaType = _detector.detect(tikaInputStream, metadata);
+			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
+				Metadata metadata = new Metadata();
 
-			contentType = mediaType.toString();
+				metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+
+				MediaType mediaType = _detector.detect(
+					tikaInputStream, metadata);
+
+				contentType = mediaType.toString();
+			}
 
 			if (contentType.contains("tika")) {
 				if (_log.isDebugEnabled()) {
@@ -161,14 +171,22 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
 
+		String contentType = null;
+
 		try {
-			Metadata metadata = new Metadata();
+			String extension = getFileNameExtension(fileName);
 
-			metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+			contentType = getCustomContentType(extension);
 
-			MediaType mediaType = _detector.detect(null, metadata);
+			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
+				Metadata metadata = new Metadata();
 
-			String contentType = mediaType.toString();
+				metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+
+				MediaType mediaType = _detector.detect(null, metadata);
+
+				contentType = mediaType.toString();
+			}
 
 			if (!contentType.contains("tika")) {
 				return contentType;
@@ -207,6 +225,40 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	@Override
 	public boolean isWebImage(String mimeType) {
 		return _webImageMimeTypes.contains(mimeType);
+	}
+
+	protected String getCustomContentType(String extension) {
+		if (Validator.isNull(extension)) {
+			return ContentTypes.APPLICATION_OCTET_STREAM;
+		}
+
+		for (Map.Entry<String, Set<String>> entry :
+				_customExtensionsMap.entrySet()) {
+
+			Set<String> valueSet = entry.getValue();
+
+			if (valueSet.contains(".".concat(extension))) {
+				return entry.getKey();
+			}
+		}
+
+		return ContentTypes.APPLICATION_OCTET_STREAM;
+	}
+
+	protected String getFileNameExtension(String fileName) {
+		if (fileName == null) {
+			return null;
+		}
+
+		int pos = fileName.lastIndexOf(CharPool.PERIOD);
+
+		if (pos > 0) {
+			return StringUtil.toLowerCase(
+				fileName.substring(pos + 1, fileName.length()));
+		}
+		else {
+			return StringPool.BLANK;
+		}
 	}
 
 	protected void read(
