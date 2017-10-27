@@ -7468,8 +7468,6 @@ public class PortalImpl implements Portal {
 		catch (Exception e) {
 		}
 
-		long plid = LayoutConstants.DEFAULT_PLID;
-
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
 
@@ -7477,16 +7475,21 @@ public class PortalImpl implements Portal {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			if (layoutTypePortlet.hasPortletId(portletId, true)) {
-				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
-					plid = layout.getPlid();
+			for (String layoutPortletId : layoutTypePortlet.getPortletIds()) {
+				String layoutPortletName = PortletIdCodec.decodePortletName(
+					layoutPortletId);
 
-					break;
+				if (layoutPortletName.equals(portletId)) {
+					if (getScopeGroupId(layout, layoutPortletId) ==
+							scopeGroupId) {
+
+						return layout.getPlid();
+					}
 				}
 			}
 		}
 
-		return plid;
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	protected List<Portlet> filterControlPanelPortlets(
