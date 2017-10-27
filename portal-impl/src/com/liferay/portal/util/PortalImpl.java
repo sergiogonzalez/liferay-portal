@@ -7455,17 +7455,15 @@ public class PortalImpl implements Portal {
 
 		long scopeGroupId = groupId;
 
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-			if (group.isLayout()) {
-				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
-					group.getClassPK());
+		if ((group != null) && group.isLayout()) {
+			Layout scopeLayout = LayoutLocalServiceUtil.fetchLayout(
+				group.getClassPK());
 
+			if (scopeLayout != null) {
 				groupId = scopeLayout.getGroupId();
 			}
-		}
-		catch (Exception e) {
 		}
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
