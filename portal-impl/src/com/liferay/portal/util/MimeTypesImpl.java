@@ -17,13 +17,11 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -125,7 +123,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		try (TikaInputStream tikaInputStream = TikaInputStream.get(
 				new CloseShieldInputStream(inputStream))) {
 
-			String extension = getFileNameExtension(fileName);
+			String extension = FileUtil.getExtension(fileName);
 
 			contentType = getCustomContentType(extension);
 
@@ -174,7 +172,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		String contentType = null;
 
 		try {
-			String extension = getFileNameExtension(fileName);
+			String extension = FileUtil.getExtension(fileName);
 
 			contentType = getCustomContentType(extension);
 
@@ -243,22 +241,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 
 		return ContentTypes.APPLICATION_OCTET_STREAM;
-	}
-
-	protected String getFileNameExtension(String fileName) {
-		if (fileName == null) {
-			return null;
-		}
-
-		int pos = fileName.lastIndexOf(CharPool.PERIOD);
-
-		if (pos > 0) {
-			return StringUtil.toLowerCase(
-				fileName.substring(pos + 1, fileName.length()));
-		}
-		else {
-			return StringPool.BLANK;
-		}
 	}
 
 	/**
