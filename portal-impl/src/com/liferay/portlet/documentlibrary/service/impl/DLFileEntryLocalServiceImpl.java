@@ -484,6 +484,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (dlFileEntry.getManualCheckInRequired() ^ manualCheckinRequired) {
 			dlFileEntry.setManualCheckInRequired(manualCheckinRequired);
+
 			dlFileEntryPersistence.update(dlFileEntry);
 		}
 
