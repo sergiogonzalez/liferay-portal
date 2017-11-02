@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/reading-time" prefix="liferay-reading-time" %>
+
 <%@ page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %>
 
 <%
