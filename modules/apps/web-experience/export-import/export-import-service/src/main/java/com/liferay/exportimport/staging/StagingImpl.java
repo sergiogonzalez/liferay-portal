@@ -3103,9 +3103,11 @@ public class StagingImpl implements Staging {
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to set recent layout revision ID with layout set " +
-						"branch " + layoutSetBranchId + " and PLID " + plid +
-							" and layout branch " + layoutBranchId,
+					StringBundler.concat(
+						"Unable to set recent layout revision ID with layout ",
+						"set branch ", String.valueOf(layoutSetBranchId),
+						" and PLID ", String.valueOf(plid),
+						" and layout branch ", String.valueOf(layoutBranchId)),
 					pe);
 			}
 		}
@@ -3239,17 +3241,6 @@ public class StagingImpl implements Staging {
 
 			Group remoteGroup = GroupServiceHttp.getGroup(
 				httpPrincipal, remoteGroupId);
-
-			if (group.equals(remoteGroup) &&
-				Objects.equals(group.getUuid(), remoteGroup.getUuid())) {
-
-				RemoteExportException ree = new RemoteExportException(
-					RemoteExportException.SAME_GROUP);
-
-				ree.setGroupId(remoteGroupId);
-
-				throw ree;
-			}
 
 			if (group.isCompany() ^
 				isCompanyGroup(httpPrincipal, remoteGroup)) {
