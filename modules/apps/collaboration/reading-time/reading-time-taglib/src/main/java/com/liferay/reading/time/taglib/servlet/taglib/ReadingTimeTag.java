@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.ReadingTimeEntryLocalServiceUtil;
+import com.liferay.reading.time.support.ReadingTimeSupportChecker;
 import com.liferay.taglib.util.AttributesTagSupport;
 
 import java.io.IOException;
+
+import java.util.Collection;
 
 import javax.portlet.RenderResponse;
 
@@ -47,7 +50,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		try {
 			JspWriter out = pageContext.getOut();
 
-			if (_model != null) {
+			if ((_model != null) && _isReadingTimeSupported()) {
 				long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 					_model.getModelClass());
 
@@ -84,8 +87,8 @@ public class ReadingTimeTag extends AttributesTagSupport {
 
 			return EVAL_PAGE;
 		}
-		catch (IOException ioe) {
-			throw new JspException(ioe);
+		catch (Exception e) {
+			throw new JspException(e);
 		}
 	}
 
@@ -123,6 +126,26 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		}
 
 		return null;
+	}
+
+	private boolean _isReadingTimeSupported() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Collection<ServiceReference<ReadingTimeSupportChecker>>
+			serviceReferences = bundleContext.getServiceReferences(
+				ReadingTimeSupportChecker.class,
+				"(model.class.name=" + _model.getModelClassName() + ")");
+
+		if ((serviceReferences != null) && !serviceReferences.isEmpty()) {
+			ReadingTimeSupportChecker readingTimeSupportChecker =
+				bundleContext.getService(serviceReferences.iterator().next());
+
+			return readingTimeSupportChecker.isEnabled();
+		}
+
+		return false;
 	}
 
 	private String _id;
