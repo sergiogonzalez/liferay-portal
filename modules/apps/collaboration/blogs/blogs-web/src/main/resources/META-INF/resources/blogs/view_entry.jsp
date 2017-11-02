@@ -119,9 +119,7 @@ if (portletTitleBasedNavigation) {
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 										<%= dateFormatDate.format(previousEntry.getDisplayDate()) %>
 
-										<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-											<liferay-reading-time:reading-time model="<%= previousEntry %>" />
-										</c:if>
+										<liferay-reading-time:reading-time model="<%= previousEntry %>" />
 									</small>
 								</div>
 
@@ -166,9 +164,7 @@ if (portletTitleBasedNavigation) {
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 										<%= dateFormatDate.format(nextEntry.getDisplayDate()) %>
 
-										<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-											<liferay-reading-time:reading-time model="<%= nextEntry %>" />
-										</c:if>
+										<liferay-reading-time:reading-time model="<%= nextEntry %>" />
 									</small>
 								</div>
 

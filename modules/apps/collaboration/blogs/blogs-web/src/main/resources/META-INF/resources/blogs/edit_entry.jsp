@@ -65,11 +65,9 @@ if (portletTitleBasedNavigation) {
 </liferay-util:buffer>
 
 <liferay-util:buffer var="readingTime">
-	<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-		<small class="text-capitalize text-muted">
-			<liferay-reading-time:reading-time id="readingTime" model="<%= entry %>" />
-		</small>
-	</c:if>
+	<small class="text-capitalize text-muted">
+		<liferay-reading-time:reading-time id="readingTime" model="<%= entry %>" />
+	</small>
 </liferay-util:buffer>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
