@@ -16,26 +16,24 @@ package com.liferay.message.boards.web.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.kernel.constants.MBConstants;
-import com.liferay.message.boards.kernel.model.MBBan;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadFlag;
-import com.liferay.message.boards.kernel.service.MBBanLocalService;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBStatsUserLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBBan;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -54,21 +52,16 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Daniel Kocsis
+ * @deprecated As of 1.3.0, replaced by {@link
+ *             com.liferay.message.boards.web.internal.exportimport.data.handler.com.liferay.message.boards.web.internal.exportimport.data.handler.MBPortletDataHandler}
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN
-	},
-	service = PortletDataHandler.class
-)
+@Deprecated
 public class MBPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "message_boards";
@@ -347,9 +340,14 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
+	/**
+	 * @deprecated As of 1.3.0, with no direct replacement
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
-	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
-		_mbBanLocalService = mbBanLocalService;
+	protected void setMBBanLocalService(
+		com.liferay.message.boards.kernel.service.MBBanLocalService
+			mbBanLocalService) {
 	}
 
 	@Reference(unbind = "-")
@@ -387,7 +385,9 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
+	@Reference
 	private MBBanLocalService _mbBanLocalService;
+
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBStatsUserLocalService _mbStatsUserLocalService;
