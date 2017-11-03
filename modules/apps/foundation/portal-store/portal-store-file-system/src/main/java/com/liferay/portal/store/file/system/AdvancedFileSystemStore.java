@@ -18,10 +18,10 @@ import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -98,9 +98,10 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 			if (!renamed) {
 				throw new SystemException(
-					"File name version file was not renamed from " +
-						fileNameVersionFile.getPath() + " to " +
-							newFileNameVersionFile.getPath());
+					StringBundler.concat(
+						"File name version file was not renamed from ",
+						fileNameVersionFile.getPath(), " to ",
+						newFileNameVersionFile.getPath()));
 			}
 		}
 	}

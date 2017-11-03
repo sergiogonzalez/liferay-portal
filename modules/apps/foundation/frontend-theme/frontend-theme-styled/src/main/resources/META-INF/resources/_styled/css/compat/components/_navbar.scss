@@ -30,6 +30,7 @@
 		height: 2px;
 		width: 22px;
 	}
+
 	.icon-bar + .icon-bar {
 		margin-top: 4px;
 	}
@@ -71,6 +72,15 @@
 .navbar-collapse {
 	.nav-tabs {
 		@include media-breakpoint-down($scaling-breakpoint-down) {
+			flex-direction: column;
+		}
+	}
+
+	.navbar-nav {
+		flex-direction: row;
+
+		@include media-breakpoint-down($scaling-breakpoint-down) {
+			flex: 1;
 			flex-direction: column;
 		}
 	}

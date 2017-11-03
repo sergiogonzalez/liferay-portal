@@ -18,9 +18,9 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
@@ -275,8 +275,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 			if ((file == null) && _log.isDebugEnabled()) {
 				_log.debug(
-					"Ignoring URL " + url + " because of unknown protocol " +
-						url.getProtocol());
+					StringBundler.concat(
+						"Ignoring URL ", String.valueOf(url),
+						" because of unknown protocol ", url.getProtocol()));
 			}
 
 			if (file.exists() && file.canRead()) {

@@ -14,9 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,6 +53,10 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 				line = trimLine(fileName, line);
 
 				String trimmedLine = StringUtil.trimLeading(line);
+
+				if (trimmedLine.startsWith("*\t")) {
+					line = StringUtil.replaceFirst(line, "*\t", "* ");
+				}
 
 				if (trimmedLine.startsWith(StringPool.DOUBLE_SLASH) ||
 					trimmedLine.startsWith(StringPool.STAR)) {

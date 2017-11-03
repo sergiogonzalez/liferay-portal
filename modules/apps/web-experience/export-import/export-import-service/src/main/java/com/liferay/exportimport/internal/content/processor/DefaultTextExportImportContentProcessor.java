@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,7 +48,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -864,9 +864,10 @@ public class DefaultTextExportImportContentProcessor
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
-					String message =
-						"Unable to get layout with ID " + layoutId +
-							" in group " + portletDataContext.getScopeGroupId();
+					String message = StringBundler.concat(
+						"Unable to get layout with ID ",
+						String.valueOf(layoutId), " in group ",
+						String.valueOf(portletDataContext.getScopeGroupId()));
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(message, e);
@@ -1069,9 +1070,17 @@ public class DefaultTextExportImportContentProcessor
 			int groupUuidPos =
 				groupFriendlyUrlPos + _DATA_HANDLER_GROUP_FRIENDLY_URL.length();
 
-			String groupUuid = content.substring(
-				groupUuidPos + 1,
-				content.indexOf(StringPool.AT, groupUuidPos + 1));
+			int endIndex = content.indexOf(StringPool.AT, groupUuidPos + 1);
+
+			if (endIndex < (groupUuidPos + 1)) {
+				content = StringUtil.replaceFirst(
+					content, _DATA_HANDLER_GROUP_FRIENDLY_URL, StringPool.BLANK,
+					groupFriendlyUrlPos);
+
+				continue;
+			}
+
+			String groupUuid = content.substring(groupUuidPos + 1, endIndex);
 
 			Group groupFriendlyUrlGroup =
 				_groupLocalService.fetchGroupByUuidAndCompanyId(

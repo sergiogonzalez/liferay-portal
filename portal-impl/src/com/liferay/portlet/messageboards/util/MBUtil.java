@@ -28,6 +28,7 @@ import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.petra.mail.JavaMailUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -63,7 +64,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -794,6 +794,11 @@ public class MBUtil {
 		return cal.getTime();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUserRankUtil}
+	 */
+	@Deprecated
 	public static String getUserRank(
 			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
 			int posts)
@@ -820,6 +825,11 @@ public class MBUtil {
 		return rank;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUserRankUtil}
+	 */
+	@Deprecated
 	public static String[] getUserRank(
 			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
 			MBStatsUser statsUser)
@@ -1157,6 +1167,11 @@ public class MBUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUserRankUtil}
+	 */
+	@Deprecated
 	private static boolean _isEntityRank(
 			long companyId, MBStatsUser statsUser, String entityType,
 			String entityValue)

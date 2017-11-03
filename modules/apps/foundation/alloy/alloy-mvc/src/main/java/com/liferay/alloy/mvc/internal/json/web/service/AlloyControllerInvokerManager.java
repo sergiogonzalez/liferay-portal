@@ -19,13 +19,13 @@ import com.liferay.alloy.mvc.AlloyPortlet;
 import com.liferay.alloy.mvc.json.web.service.AlloyControllerInvoker;
 import com.liferay.alloy.mvc.json.web.service.BaseAlloyControllerInvokerImpl;
 import com.liferay.alloy.mvc.json.web.service.JSONWebServiceMethod;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -184,10 +184,10 @@ public class AlloyControllerInvokerManager {
 					generateAlloyControllerInvokerClassData(
 						controllerClass, alloyControllerInvokerClassName);
 
-				final String fileName =
-					PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/data/alloy/" +
-						getClassBinaryName(alloyControllerInvokerClassName) +
-							".class";
+				final String fileName = StringBundler.concat(
+					PropsUtil.get(PropsKeys.LIFERAY_HOME), "/data/alloy/",
+					getClassBinaryName(alloyControllerInvokerClassName),
+					".class");
 
 				ClassLoader customClassLoader = new ClassLoader(classLoader) {
 

@@ -59,6 +59,7 @@ import com.liferay.calendar.web.internal.constants.CalendarWebKeys;
 import com.liferay.calendar.web.internal.display.context.CalendarDisplayContext;
 import com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -92,7 +93,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -619,6 +619,8 @@ public class CalendarPortlet extends MVCPortlet {
 			endTimeJCalendar.getTimeInMillis(), allDay, recurrence, reminders,
 			remindersType, instanceIndex, updateInstance, allFollowing,
 			serviceContext);
+
+		hideDefaultSuccessMessage(actionRequest);
 
 		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
 			themeDisplay, calendarBooking, timeZone);
@@ -1175,9 +1177,11 @@ public class CalendarPortlet extends MVCPortlet {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		Group group = themeDisplay.getScopeGroup();
+
 		List<CalendarBooking> childCalendarBookings =
 			_calendarBookingService.getChildCalendarBookings(
-				parentCalendarBookingId);
+				parentCalendarBookingId, group.isStagingGroup());
 
 		Collection<CalendarResource> calendarResources =
 			CalendarUtil.getCalendarResources(childCalendarBookings);
@@ -1600,7 +1604,8 @@ public class CalendarPortlet extends MVCPortlet {
 		CalendarDisplayContext calendarDisplayContext =
 			new CalendarDisplayContext(
 				_groupLocalService, _calendarBookingLocalService,
-				_calendarService, _calendarLocalService, themeDisplay);
+				_calendarBookingService, _calendarLocalService,
+				_calendarService, themeDisplay);
 
 		renderRequest.setAttribute(
 			CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT, calendarDisplayContext);

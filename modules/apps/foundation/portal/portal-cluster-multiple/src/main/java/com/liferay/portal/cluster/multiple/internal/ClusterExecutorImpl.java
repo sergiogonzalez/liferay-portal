@@ -17,6 +17,7 @@ package com.liferay.portal.cluster.multiple.internal;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -150,8 +151,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				if (clusterNodeStatus == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to get cluster node " + clusterNodeId +
-								" while executing " + clusterRequest);
+							StringBundler.concat(
+								"Unable to get cluster node ", clusterNodeId,
+								" while executing ",
+								String.valueOf(clusterRequest)));
 					}
 
 					continue;
@@ -331,8 +334,9 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				_localClusterNodeStatus.getClusterNode(),
 				clusterRequest.getUuid(),
 				new ClusterException(
-					methodHandler + " returned value " + result +
-						" that is not serializable"));
+					StringBundler.concat(
+						String.valueOf(methodHandler), " returned value ",
+						String.valueOf(result), " that is not serializable")));
 		}
 		catch (Exception e) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
@@ -462,8 +466,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
 			_log.warn(
-				"Unexpected cluster node ID " + clusterNode.getClusterNodeId() +
-					" for response container with UUID " + uuid);
+				StringBundler.concat(
+					"Unexpected cluster node ID ",
+					clusterNode.getClusterNodeId(),
+					" for response container with UUID ", uuid));
 		}
 	}
 

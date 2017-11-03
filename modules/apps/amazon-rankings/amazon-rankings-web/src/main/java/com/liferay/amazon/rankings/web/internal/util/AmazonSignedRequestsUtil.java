@@ -15,8 +15,8 @@
 package com.liferay.amazon.rankings.web.internal.util;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,8 +48,9 @@ public class AmazonSignedRequestsUtil {
 			amazonRankingsConfiguration,
 			"GET\necs.amazonaws.com\n/onca/xml\n" + canonicalizedParameters);
 
-		return "http://ecs.amazonaws.com/onca/xml?" + canonicalizedParameters +
-			"&Signature=" + signature;
+		return StringBundler.concat(
+			"http://ecs.amazonaws.com/onca/xml?", canonicalizedParameters,
+			"&Signature=", signature);
 	}
 
 	private static String _canonicalizeParameters(

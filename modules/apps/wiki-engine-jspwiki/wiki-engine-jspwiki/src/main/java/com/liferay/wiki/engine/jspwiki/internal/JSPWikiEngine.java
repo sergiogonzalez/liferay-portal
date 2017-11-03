@@ -18,12 +18,12 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -353,9 +353,9 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 				url = linkValues.substring(0, pos);
 			}
 
-			String newLink =
-				"[[" + _encodeJSPWikiName(url) + "|" +
-					_encodeJSPWikiName(name) + "]]";
+			String newLink = StringBundler.concat(
+				"[[", _encodeJSPWikiName(url), "|", _encodeJSPWikiName(name),
+				"]]");
 
 			content = StringUtil.replace(content, link, newLink);
 		}
