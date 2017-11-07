@@ -1051,7 +1051,8 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 			if (needsCheckIn) {
 				_extRepository.checkInExtRepositoryFileEntry(
-					extRepositoryFileEntryKey, majorVersion, changeLog);
+					extRepositoryFileEntry.getExtRepositoryModelKey(),
+					majorVersion, changeLog);
 
 				needsCheckIn = false;
 			}
