@@ -55,6 +55,10 @@ if (folder != null) {
 	folderId = folder.getFolderId();
 }
 
+if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folder == null)) {
+	folder = DLAppServiceUtil.getFolder(folderId);
+}
+
 int status = WorkflowConstants.STATUS_APPROVED;
 
 if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
@@ -100,7 +104,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
 		%>
 
-		<c:if test="<%= hasViewPermission %>">
+		<c:if test="<%= hasViewPermission && ((folder == null) || !folder.isMountPoint()) %>">
 			<portlet:resourceURL id="/document_library/download_folder" var="downloadURL">
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
