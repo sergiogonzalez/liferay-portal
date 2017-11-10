@@ -19,7 +19,7 @@
 <%
 String title = ParamUtil.getString(request, "title", wikiGroupServiceConfiguration.frontPageName());
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = liferayPortletResponse.createRenderURL(WikiPortletKeys.WIKI);
 
 List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, portletURL);
 %>
