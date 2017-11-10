@@ -48,8 +48,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -101,6 +103,10 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 	@Override
 	protected void doSend(PollerRequest pollerRequest) throws Exception {
+		if (pollerRequest.isStartPolling()) {
+			_processedEntryIds.clear();
+		}
+
 		addEntry(pollerRequest);
 		updateStatus(pollerRequest);
 	}
@@ -189,6 +195,10 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			PollerRequest pollerRequest, PollerResponse pollerResponse)
 		throws Exception {
 
+		JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		boolean hasProcessedEntry = false;
+
 		Status status = StatusLocalServiceUtil.getUserStatus(
 			pollerRequest.getUserId());
 
@@ -206,9 +216,11 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 		Collections.reverse(entries);
 
-		JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();
-
 		for (Entry entry : entries) {
+			hasProcessedEntry = _processedEntryIds.contains(entry.getEntryId());
+
+			_processedEntryIds.add(entry.getEntryId());
+
 			JSONObject entryJSONObject = JSONFactoryUtil.createJSONObject();
 
 			entryJSONObject.put("createDate", entry.getCreateDate());
@@ -245,7 +257,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 		pollerResponse.setParameter("entries", entriesJSONArray);
 
-		if (!entries.isEmpty()) {
+		if (!entries.isEmpty() && !hasProcessedEntry) {
 			pollerResponse.setParameter(
 				PollerResponse.POLLER_HINT_HIGH_CONNECTIVITY,
 				Boolean.TRUE.toString());
@@ -316,6 +328,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 	@Reference
 	private Portal _portal;
 
+	private final Set<Long> _processedEntryIds = new HashSet<>();
 	private UserLocalService _userLocalService;
 
 }

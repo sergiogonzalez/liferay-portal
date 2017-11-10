@@ -7,6 +7,13 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+<%@ page import="${package}.constants.${className}WebKeys" %>
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+String bootstrapRequire = (String)renderRequest.getAttribute(${className}WebKeys.BOOTSTRAP_REQUIRE);
+String stylesheetURL = (String)renderRequest.getAttribute("stylesheetURL");
+%>
