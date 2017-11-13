@@ -56,8 +56,7 @@ public class ReadingTimeMessageProviderImpl
 	@Override
 	public String provide(ReadingTimeEntry readingTimeEntry, Locale locale) {
 		return provide(
-			Duration.ofSeconds(readingTimeEntry.getReadingTimeInSeconds()),
-			locale);
+			Duration.ofMillis(readingTimeEntry.getReadingTime()), locale);
 	}
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.reading.time.web)")

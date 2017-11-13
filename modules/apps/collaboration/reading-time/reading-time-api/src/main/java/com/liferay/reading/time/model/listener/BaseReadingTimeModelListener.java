@@ -17,6 +17,7 @@ package com.liferay.reading.time.model.listener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 import com.liferay.reading.time.model.ReadingTimeEntry;
@@ -32,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-public abstract class BaseReadingTimeModelListener<T extends BaseModel<T>>
-	extends BaseModelListener<T> {
+public abstract class BaseReadingTimeModelListener
+	<T extends BaseModel<T> & GroupedModel> extends BaseModelListener<T> {
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
@@ -51,8 +52,7 @@ public abstract class BaseReadingTimeModelListener<T extends BaseModel<T>>
 					_addReadingTimeEntry(model, readingTime);
 				}
 				else {
-					readingTimeEntry.setReadingTimeInSeconds(
-						readingTime.getSeconds());
+					readingTimeEntry.setReadingTime(readingTime.toMillis());
 
 					readingTimeEntryLocalService.updateReadingTimeEntry(
 						readingTimeEntry);
@@ -98,6 +98,7 @@ public abstract class BaseReadingTimeModelListener<T extends BaseModel<T>>
 
 	private ReadingTimeEntry _getReadingTimeEntry(T model) {
 		return readingTimeEntryLocalService.fetchReadingTimeEntry(
+			model.getGroupId(),
 			classNameLocalService.getClassNameId(model.getModelClass()),
 			(Long)model.getPrimaryKeyObj());
 	}
