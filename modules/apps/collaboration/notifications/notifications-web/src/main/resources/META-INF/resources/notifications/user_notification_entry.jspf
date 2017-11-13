@@ -17,6 +17,8 @@
 <%
 UserNotificationFeedEntry userNotificationFeedEntry = UserNotificationManagerUtil.interpret(StringPool.BLANK, userNotificationEvent, ServiceContextFactory.getInstance(request));
 
+request.setAttribute("view.jsp-userNotificationFeedEntry", userNotificationFeedEntry);
+
 JSONObject jsonObject = JSONFactoryUtil.createJSONObject(userNotificationEvent.getPayload());
 
 boolean anonymous = jsonObject.getBoolean("anonymous");
