@@ -33,7 +33,7 @@ if (subscriptionId > 0) {
 	}
 }
 
-UserNotificationFeedEntry userNotificationFeedEntry = UserNotificationManagerUtil.interpret(StringPool.BLANK, userNotificationEvent, ServiceContextFactory.getInstance(request));
+UserNotificationFeedEntry userNotificationFeedEntry = (UserNotificationFeedEntry)request.getAttribute("view.jsp-userNotificationFeedEntry");
 %>
 
 <liferay-ui:icon-menu
