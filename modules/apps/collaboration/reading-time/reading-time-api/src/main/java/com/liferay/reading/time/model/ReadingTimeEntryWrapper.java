@@ -62,12 +62,13 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("readingTimeInSeconds", getReadingTimeInSeconds());
+		attributes.put("readingTime", getReadingTime());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 
 		if (entryId != null) {
 			setEntryId(entryId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -116,10 +123,10 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 			setClassPK(classPK);
 		}
 
-		Long readingTimeInSeconds = (Long)attributes.get("readingTimeInSeconds");
+		Long readingTime = (Long)attributes.get("readingTime");
 
-		if (readingTimeInSeconds != null) {
-			setReadingTimeInSeconds(readingTimeInSeconds);
+		if (readingTime != null) {
+			setReadingTime(readingTime);
 		}
 	}
 
@@ -199,6 +206,16 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	/**
+	* Returns the group ID of this reading time entry.
+	*
+	* @return the group ID of this reading time entry
+	*/
+	@Override
+	public long getGroupId() {
+		return _readingTimeEntry.getGroupId();
+	}
+
+	/**
 	* Returns the modified date of this reading time entry.
 	*
 	* @return the modified date of this reading time entry
@@ -224,13 +241,13 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	/**
-	* Returns the reading time in seconds of this reading time entry.
+	* Returns the reading time of this reading time entry.
 	*
-	* @return the reading time in seconds of this reading time entry
+	* @return the reading time of this reading time entry
 	*/
 	@Override
-	public long getReadingTimeInSeconds() {
-		return _readingTimeEntry.getReadingTimeInSeconds();
+	public long getReadingTime() {
+		return _readingTimeEntry.getReadingTime();
 	}
 
 	/**
@@ -418,6 +435,16 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	/**
+	* Sets the group ID of this reading time entry.
+	*
+	* @param groupId the group ID of this reading time entry
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_readingTimeEntry.setGroupId(groupId);
+	}
+
+	/**
 	* Sets the modified date of this reading time entry.
 	*
 	* @param modifiedDate the modified date of this reading time entry
@@ -448,13 +475,13 @@ public class ReadingTimeEntryWrapper implements ReadingTimeEntry,
 	}
 
 	/**
-	* Sets the reading time in seconds of this reading time entry.
+	* Sets the reading time of this reading time entry.
 	*
-	* @param readingTimeInSeconds the reading time in seconds of this reading time entry
+	* @param readingTime the reading time of this reading time entry
 	*/
 	@Override
-	public void setReadingTimeInSeconds(long readingTimeInSeconds) {
-		_readingTimeEntry.setReadingTimeInSeconds(readingTimeInSeconds);
+	public void setReadingTime(long readingTime) {
+		_readingTimeEntry.setReadingTime(readingTime);
 	}
 
 	/**
