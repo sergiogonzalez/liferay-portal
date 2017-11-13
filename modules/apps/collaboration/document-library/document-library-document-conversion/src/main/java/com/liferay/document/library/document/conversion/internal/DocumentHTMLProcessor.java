@@ -92,10 +92,10 @@ public class DocumentHTMLProcessor {
 	}
 
 	private static final String _DOCUMENTS_REGEX =
-		"(<img [^s]*src=\"\\/(documents\\/\\d+)\\/[^&]+)(\"[^&]+)";
+		"(<img [^s]*src=\"\\/(documents\\/\\d+)\\/[^\\s]+)(\"[^&]+)";
 
 	private static final String _IMAGE_REGEX =
-		"(<img [^s]*src=\"\\/(image)\\/[^&]+)(\"[^&]+)";
+		"(<img [^s]*src=\"\\/(image)\\/[^\\s]+)(\"[^&]+)";
 
 	private static final String _PORTLET_FILE_ENTRY_REGEX =
 		"(<img [^s]*src=\"\\/(documents\\/portlet_file_entry)\\/[^&]+)(" +
