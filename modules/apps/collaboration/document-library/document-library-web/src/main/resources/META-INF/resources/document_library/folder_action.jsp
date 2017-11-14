@@ -55,10 +55,6 @@ if (folder != null) {
 	folderId = folder.getFolderId();
 }
 
-if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folder == null)) {
-	folder = DLAppServiceUtil.getFolder(folderId);
-}
-
 int status = WorkflowConstants.STATUS_APPROVED;
 
 if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
