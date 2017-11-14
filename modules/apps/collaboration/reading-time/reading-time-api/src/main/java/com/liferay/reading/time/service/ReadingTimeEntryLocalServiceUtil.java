@@ -42,6 +42,12 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.reading.time.service.impl.ReadingTimeEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model,
+		java.time.Duration readingTime) {
+		return getService().addReadingTimeEntry(model, readingTime);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
 		long groupId, long classNameId, long classPK, long readingTime) {
 		return getService()
 				   .addReadingTimeEntry(groupId, classNameId, classPK,
@@ -77,6 +83,11 @@ public class ReadingTimeEntryLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry deleteReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model) {
+		return getService().deleteReadingTimeEntry(model);
 	}
 
 	/**
@@ -179,6 +190,11 @@ public class ReadingTimeEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model) {
+		return getService().fetchReadingTimeEntry(model);
 	}
 
 	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
@@ -312,6 +328,12 @@ public class ReadingTimeEntryLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getReadingTimeEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model,
+		java.time.Duration readingTime) {
+		return getService().updateReadingTimeEntry(model, readingTime);
 	}
 
 	/**
