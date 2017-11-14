@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.adaptive.media.image.model.AMImageEntry">
+		<field name="uuid" type="String" />
+		<field name="amImageEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="configurationUuid" type="String" />
+		<field name="fileVersionId" type="long" />
+		<field name="mimeType" type="String" />
+		<field name="height" type="int" />
+		<field name="width" type="int" />
+		<field name="size" type="long" />
+	</model>
+</model-hints>

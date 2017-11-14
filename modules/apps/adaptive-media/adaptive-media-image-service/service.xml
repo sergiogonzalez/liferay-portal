@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.adaptive.media.image">
+	<namespace>AMImageEntry</namespace>
+	<entity local-service="true" name="AMImageEntry" remote-service="false" trash-enabled="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="amImageEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="configurationUuid" type="String" />
+		<column name="fileVersionId" type="long" />
+		<column name="mimeType" type="String" />
+		<column name="height" type="int" />
+		<column name="width" type="int" />
+		<column name="size" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="ConfigurationUuid" return-type="Collection">
+			<finder-column name="configurationUuid" />
+		</finder>
+		<finder name="FileVersionId" return-type="Collection">
+			<finder-column name="fileVersionId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="configurationUuid" />
+		</finder>
+		<finder name="C_F" return-type="AMImageEntry" unique="true">
+			<finder-column name="configurationUuid" />
+			<finder-column name="fileVersionId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>DuplicateAMImageEntry</exception>
+	</exceptions>
+</service-builder>

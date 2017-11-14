@@ -1,0 +1,26 @@
+@import "bourbon";
+@import "mixins";
+
+.portlet-adaptive-media {
+	.lfr-adapted-images-column {
+		.progress-container {
+			float: left;
+			margin-top: 7px;
+			min-height: 25px;
+			width: 90%;
+
+			&.disabled .progress-bar {
+				opacity: 0.5;
+			}
+		}
+
+		.progress {
+			margin-bottom: 0;
+		}
+
+		.loading-icon {
+			float: right;
+			margin-top: 9px;
+		}
+	}
+}
