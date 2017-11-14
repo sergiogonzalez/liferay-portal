@@ -36,6 +36,14 @@ public class ReadingTimeEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model,
+		java.time.Duration readingTime) {
+		return _readingTimeEntryLocalService.addReadingTimeEntry(model,
+			readingTime);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
 		long groupId, long classNameId, long classPK, long readingTime) {
 		return _readingTimeEntryLocalService.addReadingTimeEntry(groupId,
 			classNameId, classPK, readingTime);
@@ -73,6 +81,12 @@ public class ReadingTimeEntryLocalServiceWrapper
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _readingTimeEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry deleteReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model) {
+		return _readingTimeEntryLocalService.deleteReadingTimeEntry(model);
 	}
 
 	/**
@@ -185,6 +199,12 @@ public class ReadingTimeEntryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _readingTimeEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model) {
+		return _readingTimeEntryLocalService.fetchReadingTimeEntry(model);
 	}
 
 	@Override
@@ -334,6 +354,14 @@ public class ReadingTimeEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _readingTimeEntryLocalService.getReadingTimeEntryByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model,
+		java.time.Duration readingTime) {
+		return _readingTimeEntryLocalService.updateReadingTimeEntry(model,
+			readingTime);
 	}
 
 	/**

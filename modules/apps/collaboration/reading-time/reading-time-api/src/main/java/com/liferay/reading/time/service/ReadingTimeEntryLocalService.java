@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 
 import java.io.Serializable;
+
+import java.time.Duration;
 
 import java.util.List;
 
@@ -63,6 +66,9 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ReadingTimeEntryLocalServiceUtil} to access the reading time entry local service. Add custom service methods to {@link com.liferay.reading.time.service.impl.ReadingTimeEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public ReadingTimeEntry addReadingTimeEntry(GroupedModel model,
+		Duration readingTime);
+
 	public ReadingTimeEntry addReadingTimeEntry(long groupId, long classNameId,
 		long classPK, long readingTime);
 
@@ -90,6 +96,8 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public ReadingTimeEntry deleteReadingTimeEntry(GroupedModel model);
 
 	/**
 	* Deletes the reading time entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -170,6 +178,9 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ReadingTimeEntry fetchReadingTimeEntry(GroupedModel model);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ReadingTimeEntry fetchReadingTimeEntry(long entryId);
@@ -281,6 +292,9 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
+
+	public ReadingTimeEntry updateReadingTimeEntry(GroupedModel model,
+		Duration readingTime);
 
 	/**
 	* Updates the reading time entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
