@@ -95,9 +95,9 @@ public class DocumentHTMLProcessor {
 		DocumentHTMLProcessor.class);
 
 	private static final String _documentsRegex =
-		"(<img [^s]*src=\"\\/(documents\\/\\d+)\\/[^&]+)(\"[^&]+)";
+		"(<img [^s]*src=\"\\/(documents\\/\\d+)\\/[^\\s]+)(\"[^&]+)";
 	private static final String _imageRegex =
-		"(<img [^s]*src=\"\\/(image)\\/[^&]+)(\"[^&]+)";
+		"(<img [^s]*src=\"\\/(image)\\/[^\\s]+)(\"[^&]+)";
 	private static final String _portletFileEntryRegex =
 		"(<img [^s]*src=\"\\/(documents\\/portlet_file_entry)\\/[^&]+)(" +
 			"\"[^&]+)";
