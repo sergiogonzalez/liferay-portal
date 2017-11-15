@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.message.boards.kernel.model.MBMailingList;
-import com.liferay.message.boards.kernel.model.MBMailingListModel;
+import com.liferay.message.boards.model.MBMailingList;
+import com.liferay.message.boards.model.MBMailingListModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,11 +56,8 @@ import java.util.Map;
  * @see MBMailingListImpl
  * @see MBMailingList
  * @see MBMailingListModel
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.message.boards.service.impl.MBMailingListImpl}
  * @generated
  */
-@Deprecated
 @ProviderType
 public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	implements MBMailingListModel {
@@ -136,14 +133,14 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.message.boards.kernel.model.MBMailingList"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBMailingList"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.message.boards.kernel.model.MBMailingList"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBMailingList"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.message.boards.kernel.model.MBMailingList"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBMailingList"),
 			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 	public static final long CATEGORYID_COLUMN_BITMASK = 2L;
@@ -151,8 +148,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long MAILINGLISTID_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.message.boards.kernel.model.MBMailingList"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBMailingList"));
 
 	public MBMailingListModelImpl() {
 	}
@@ -1154,7 +1151,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.kernel.model.MBMailingList");
+		sb.append("com.liferay.message.boards.model.MBMailingList");
 		sb.append("</model-name>");
 
 		sb.append(

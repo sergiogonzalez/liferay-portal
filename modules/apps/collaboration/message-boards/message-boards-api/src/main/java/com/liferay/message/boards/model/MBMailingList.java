@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -25,20 +25,17 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see MBMailingListModel
- * @see com.liferay.portlet.messageboards.model.impl.MBMailingListImpl
- * @see com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.message.boards.service.impl.MBMailingListImpl}
+ * @see com.liferay.message.boards.model.impl.MBMailingListImpl
+ * @see com.liferay.message.boards.model.impl.MBMailingListModelImpl
  * @generated
  */
-@Deprecated
-@ImplementationClassName("com.liferay.portlet.messageboards.model.impl.MBMailingListImpl")
+@ImplementationClassName("com.liferay.message.boards.model.impl.MBMailingListImpl")
 @ProviderType
 public interface MBMailingList extends MBMailingListModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBMailingListImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.message.boards.model.impl.MBMailingListImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<MBMailingList, Long> MAILING_LIST_ID_ACCESSOR = new Accessor<MBMailingList, Long>() {
 			@Override

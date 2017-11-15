@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.model.MBMailingList;
-import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
+import com.liferay.message.boards.model.MBMailingList;
+import com.liferay.message.boards.service.MBMailingListLocalServiceUtil;
 
 /**
  * The extended model base implementation for the MBMailingList service. Represents a row in the &quot;MBMailingList&quot; database table, with each column mapped to a property of this class.
@@ -29,11 +29,8 @@ import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBMailingListImpl
  * @see MBMailingList
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.message.boards.service.impl.MBMailingListImpl}
  * @generated
  */
-@Deprecated
 @ProviderType
 public abstract class MBMailingListBaseImpl extends MBMailingListModelImpl
 	implements MBMailingList {

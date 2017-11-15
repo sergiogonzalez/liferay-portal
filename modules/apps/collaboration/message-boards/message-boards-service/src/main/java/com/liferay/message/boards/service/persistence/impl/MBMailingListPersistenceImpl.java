@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.persistence.impl;
+package com.liferay.message.boards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.exception.NoSuchMailingListException;
-import com.liferay.message.boards.kernel.model.MBMailingList;
-import com.liferay.message.boards.kernel.service.persistence.MBMailingListPersistence;
+import com.liferay.message.boards.exception.NoSuchMailingListException;
+import com.liferay.message.boards.model.MBMailingList;
+import com.liferay.message.boards.model.impl.MBMailingListImpl;
+import com.liferay.message.boards.model.impl.MBMailingListModelImpl;
+import com.liferay.message.boards.service.persistence.MBMailingListPersistence;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -44,9 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-
-import com.liferay.portlet.messageboards.model.impl.MBMailingListImpl;
-import com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -71,12 +68,9 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MBMailingListPersistence
- * @see com.liferay.message.boards.kernel.service.persistence.MBMailingListUtil
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.message.boards.service.impl.MBMailingListImpl}
+ * @see com.liferay.message.boards.service.persistence.MBMailingListUtil
  * @generated
  */
-@Deprecated
 @ProviderType
 public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingList>
 	implements MBMailingListPersistence {
@@ -3103,10 +3097,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CompanyProviderWrapper.class)
+	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBMAILINGLIST = "SELECT mbMailingList FROM MBMailingList mbMailingList";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE mailingListId IN (";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE ";
