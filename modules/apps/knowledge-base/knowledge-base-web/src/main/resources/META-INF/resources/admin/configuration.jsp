@@ -218,12 +218,14 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 				<liferay-ui:section>
 					<div class="container-fluid-1280">
 						<aui:fieldset-group markupView="lexicon">
-							<liferay-ui:rss-settings
-								delta="<%= kbGroupServiceConfiguration.rssDelta() %>"
-								displayStyle="<%= kbGroupServiceConfiguration.rssDisplayStyle() %>"
-								enabled="<%= kbGroupServiceConfiguration.enableRSS() %>"
-								feedType="<%= kbGroupServiceConfiguration.rssFeedType() %>"
-							/>
+							<aui:fieldset>
+								<liferay-ui:rss-settings
+									delta="<%= kbGroupServiceConfiguration.rssDelta() %>"
+									displayStyle="<%= kbGroupServiceConfiguration.rssDisplayStyle() %>"
+									enabled="<%= kbGroupServiceConfiguration.enableRSS() %>"
+									feedType="<%= kbGroupServiceConfiguration.rssFeedType() %>"
+								/>
+							</aui:fieldset>
 						</aui:fieldset-group>
 					</div>
 				</liferay-ui:section>
