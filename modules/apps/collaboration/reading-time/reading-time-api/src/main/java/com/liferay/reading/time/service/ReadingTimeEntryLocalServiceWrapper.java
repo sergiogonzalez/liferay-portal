@@ -358,6 +358,12 @@ public class ReadingTimeEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model) {
+		return _readingTimeEntryLocalService.updateReadingTimeEntry(model);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
 		com.liferay.portal.kernel.model.GroupedModel model,
 		java.time.Duration readingTime) {
 		return _readingTimeEntryLocalService.updateReadingTimeEntry(model,
