@@ -17,10 +17,17 @@ package com.liferay.reading.time.service.impl;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.base.ReadingTimeEntryLocalServiceBaseImpl;
 
 import java.time.Duration;
+
+import java.util.Optional;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Alejandro Tardín
@@ -82,6 +89,23 @@ public class ReadingTimeEntryLocalServiceImpl
 	}
 
 	@Override
+	public ReadingTimeEntry updateReadingTimeEntry(GroupedModel model) {
+		ReadingTimeCalculator readingTimeCalculator = _getService(
+			ReadingTimeCalculator.class);
+
+		if (readingTimeCalculator != null) {
+			Optional<Duration> readingTimeOptional =
+				readingTimeCalculator.calculate(model);
+
+			if (readingTimeOptional.isPresent()) {
+				return updateReadingTimeEntry(model, readingTimeOptional.get());
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public ReadingTimeEntry updateReadingTimeEntry(
 		GroupedModel model, Duration readingTime) {
 
@@ -95,6 +119,21 @@ public class ReadingTimeEntryLocalServiceImpl
 
 			return updateReadingTimeEntry(readingTimeEntry);
 		}
+	}
+
+	private <T> T _getService(Class<T> clazz) {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		org.osgi.framework.ServiceReference<T> serviceReference =
+			bundleContext.getServiceReference(clazz);
+
+		if (serviceReference != null) {
+			return bundleContext.getService(serviceReference);
+		}
+
+		return null;
 	}
 
 	@ServiceReference(type = ClassNameLocalService.class)
