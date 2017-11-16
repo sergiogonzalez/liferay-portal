@@ -331,6 +331,11 @@ public class ReadingTimeEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel model) {
+		return getService().updateReadingTimeEntry(model);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
 		com.liferay.portal.kernel.model.GroupedModel model,
 		java.time.Duration readingTime) {
 		return getService().updateReadingTimeEntry(model, readingTime);

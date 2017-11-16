@@ -293,6 +293,8 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	public ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
+	public ReadingTimeEntry updateReadingTimeEntry(GroupedModel model);
+
 	public ReadingTimeEntry updateReadingTimeEntry(GroupedModel model,
 		Duration readingTime);
 
