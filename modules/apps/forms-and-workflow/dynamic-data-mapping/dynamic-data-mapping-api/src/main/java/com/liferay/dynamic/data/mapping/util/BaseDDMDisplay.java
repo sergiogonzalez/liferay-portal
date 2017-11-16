@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -85,8 +85,26 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
-	public String getDefaultTabTitle(Locale locale) {
-		return getTitle(locale);
+	public DDMDisplayTabItem getDefaultTabItem() {
+		return new DDMDisplayTabItem() {
+
+			@Override
+			public String getTitle(
+				LiferayPortletRequest liferayPortletRequest,
+				LiferayPortletResponse liferayPortletResponse) {
+
+				String scopeTitle = ParamUtil.getString(
+					liferayPortletRequest, "scopeTitle");
+
+				if (Validator.isNull(scopeTitle)) {
+					return BaseDDMDisplay.this.getTitle(
+						liferayPortletRequest.getLocale());
+				}
+
+				return scopeTitle;
+			}
+
+		};
 	}
 
 	@Override
@@ -176,7 +194,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	public List<DDMDisplayTabItem> getTabItems() {
-		return Collections.emptyList();
+		return Arrays.asList(getDefaultTabItem());
 	}
 
 	@Override

@@ -17,18 +17,21 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import java.util.Locale;
-
 /**
  * @author Alejandro Tardín
  */
 public interface DDMDisplayTabItem {
 
-	public String getTitle(Locale locale);
+	public String getTitle(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse);
 
-	public String getURL(
+	public default String getURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
-		throws Exception;
+		throws Exception {
+
+		return null;
+	}
 
 }

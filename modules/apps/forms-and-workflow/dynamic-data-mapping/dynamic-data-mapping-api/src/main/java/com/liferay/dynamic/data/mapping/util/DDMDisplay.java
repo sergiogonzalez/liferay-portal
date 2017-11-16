@@ -41,7 +41,7 @@ public interface DDMDisplay {
 
 	public DDMNavigationHelper getDDMNavigationHelper();
 
-	public String getDefaultTabTitle(Locale locale);
+	public DDMDisplayTabItem getDefaultTabItem();
 
 	public String getDefaultTemplateLanguage();
 
