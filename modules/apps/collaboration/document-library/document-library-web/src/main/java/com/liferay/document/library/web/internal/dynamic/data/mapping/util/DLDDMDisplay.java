@@ -45,10 +45,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
-	public String getDefaultTabTitle(Locale locale) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "metadata-sets");
+	public DDMDisplayTabItem getDefaultTabItem() {
+		return _defaultTabItem;
 	}
 
 	@Override
@@ -107,5 +105,13 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	)
 	private volatile List<DDMDisplayTabItem> _ddmDisplayTabItems =
 		new ArrayList<>();
+
+	private final DDMDisplayTabItem _defaultTabItem =
+		(liferayPortletRequest, liferayPortletResponse) -> {
+			ResourceBundle resourceBundle = getResourceBundle(
+				liferayPortletRequest.getLocale());
+
+			return LanguageUtil.get(resourceBundle, "metadata-sets");
+		};
 
 }
