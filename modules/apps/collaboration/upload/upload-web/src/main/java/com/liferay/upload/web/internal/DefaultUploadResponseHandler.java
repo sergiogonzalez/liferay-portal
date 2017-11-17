@@ -155,8 +155,20 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 
 			String[] allowedFileExtensions = dlConfiguration.fileExtensions();
 
-			allowedFileExtensionsString = StringUtil.merge(
-				allowedFileExtensions, StringPool.COMMA_AND_SPACE);
+			boolean restrictAllFileExtensions = false;
+
+			for (String allowedFileExtension : allowedFileExtensions) {
+				if (allowedFileExtension.isEmpty()) {
+					restrictAllFileExtensions = true;
+
+					break;
+				}
+			}
+
+			if (!restrictAllFileExtensions) {
+				allowedFileExtensionsString = StringUtil.merge(
+					allowedFileExtensions, StringPool.COMMA_AND_SPACE);
+			}
 		}
 		catch (ConfigurationException ce) {
 			_log.error(
