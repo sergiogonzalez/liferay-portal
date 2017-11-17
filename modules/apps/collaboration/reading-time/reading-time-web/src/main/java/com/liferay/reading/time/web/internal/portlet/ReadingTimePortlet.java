@@ -15,7 +15,7 @@
 package com.liferay.reading.time.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.reading.time.web.constants.ReadingTimePortletKeys;
+import com.liferay.reading.time.web.internal.constants.ReadingTimePortletKeys;
 
 import javax.portlet.Portlet;
 

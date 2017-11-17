@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
-import com.liferay.reading.time.web.constants.ReadingTimePortletKeys;
+import com.liferay.reading.time.web.internal.constants.ReadingTimePortletKeys;
 
 import java.time.Duration;
 

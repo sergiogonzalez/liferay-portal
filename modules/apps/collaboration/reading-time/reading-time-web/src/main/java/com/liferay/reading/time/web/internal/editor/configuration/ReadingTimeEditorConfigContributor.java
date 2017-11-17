@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.reading.time.web.constants.ReadingTimePortletKeys;
+import com.liferay.reading.time.web.internal.constants.ReadingTimePortletKeys;
 
 import java.util.Map;
 

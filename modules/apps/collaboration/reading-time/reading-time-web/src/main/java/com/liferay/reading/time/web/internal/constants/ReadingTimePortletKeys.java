@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.reading.time.web.constants;
+package com.liferay.reading.time.web.internal.constants;
 
 /**
  * @author Alejandro Tardín

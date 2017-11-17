@@ -14,14 +14,12 @@
 
 package com.liferay.reading.time.calculator;
 
-import com.liferay.portal.kernel.model.GroupedModel;
-
 import java.util.Locale;
 
 /**
  * @author Alejandro Tardín
  */
-public interface ReadingTimeModelInfo<T extends GroupedModel> {
+public interface ReadingTimeModelInfo<T> {
 
 	public String getContent(T model);
 
