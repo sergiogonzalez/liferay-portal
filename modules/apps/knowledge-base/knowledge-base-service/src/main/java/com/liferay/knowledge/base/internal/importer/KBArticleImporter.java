@@ -166,39 +166,6 @@ public class KBArticleImporter {
 		}
 	}
 
-	protected double getIntroFilePriority(
-			KBArchive.Resource introFileParentFolder)
-		throws KBArticleImportException {
-
-		String folderName = introFileParentFolder.getName();
-
-		int slashIndex = folderName.lastIndexOf(StringPool.SLASH);
-
-		String shortFolderName = StringPool.BLANK;
-
-		if ((slashIndex > -1) && (folderName.length() > (slashIndex + 1))) {
-			shortFolderName = folderName.substring(slashIndex + 1);
-		}
-
-		String leadingDigits = StringUtil.extractLeadingDigits(shortFolderName);
-
-		double priority;
-
-		try {
-			priority = Double.parseDouble(leadingDigits);
-		}
-		catch (NumberFormatException nfe) {
-			throw new KBArticleImportException(
-				"Invalid numerical prefix of folder: " + folderName, nfe);
-		}
-
-		if (priority < 1.0) {
-			priority = 1.0;
-		}
-
-		return priority;
-	}
-
 	protected Map<String, String> getMetadata(ZipReader zipReader)
 		throws KBArticleImportException {
 
@@ -308,7 +275,7 @@ public class KBArticleImporter {
 				introFileNameKBArticleMap.put(introFile, introKBArticle);
 
 				if (prioritizeByNumericalPrefix) {
-					double introFilePriority = getIntroFilePriority(folder);
+					double introFilePriority = getNonIntroFilePriority(folder);
 
 					KBArticleLocalServiceUtil.moveKBArticle(
 						userId, introKBArticle.getResourcePrimKey(),
