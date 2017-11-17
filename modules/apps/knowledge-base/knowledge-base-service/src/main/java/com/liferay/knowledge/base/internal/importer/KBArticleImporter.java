@@ -167,7 +167,7 @@ public class KBArticleImporter {
 	}
 
 	protected double getIntroFilePriority(
-			KBArchive.Folder introFileParentFolder)
+			KBArchive.Resource introFileParentFolder)
 		throws KBArticleImportException {
 
 		String folderName = introFileParentFolder.getName();
@@ -231,7 +231,7 @@ public class KBArticleImporter {
 		}
 	}
 
-	protected double getNonIntroFilePriority(KBArchive.File nonIntroFile)
+	protected double getNonIntroFilePriority(KBArchive.Resource nonIntroFile)
 		throws KBArticleImportException {
 
 		String fileName = nonIntroFile.getName();
