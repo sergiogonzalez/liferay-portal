@@ -83,7 +83,12 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public List<DDMDisplayTabItem> getTabItems() {
-		return _ddmDisplayTabItems;
+		List<DDMDisplayTabItem> ddmDisplayTabItems = new ArrayList<>(
+			_ddmDisplayTabItems);
+
+		ddmDisplayTabItems.add(getDefaultTabItem());
+
+		return ddmDisplayTabItems;
 	}
 
 	@Override
