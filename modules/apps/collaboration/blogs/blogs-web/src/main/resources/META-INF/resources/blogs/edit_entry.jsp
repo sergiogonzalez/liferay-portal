@@ -381,6 +381,14 @@ if (portletTitleBasedNavigation) {
 </portlet:actionURL>
 
 <aui:script>
+	function <portlet:namespace />OnChangeEditor(html) {
+		var blogs = Liferay.component('<portlet:namespace />Blogs');
+
+		if (blogs) {
+			blogs.setDescription(html);
+		}
+	}
+
 	function <portlet:namespace />OnChangeTitle(title) {
 		var blogs = Liferay.component('<portlet:namespace />Blogs');
 
