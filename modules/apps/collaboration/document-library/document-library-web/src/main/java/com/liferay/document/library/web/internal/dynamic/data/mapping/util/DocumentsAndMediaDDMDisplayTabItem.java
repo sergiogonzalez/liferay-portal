@@ -34,7 +34,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = {
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"service.ranking:Integer=0"
+	},
 	service = DDMDisplayTabItem.class
 )
 public class DocumentsAndMediaDDMDisplayTabItem implements DDMDisplayTabItem {
