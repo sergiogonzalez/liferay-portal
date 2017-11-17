@@ -166,6 +166,39 @@ public class KBArticleImporter {
 		}
 	}
 
+	protected double getIntroFilePriority(
+			KBArchive.Folder introFileParentFolder)
+		throws KBArticleImportException {
+
+		String folderName = introFileParentFolder.getName();
+
+		int slashIndex = folderName.lastIndexOf(StringPool.SLASH);
+
+		String shortFolderName = StringPool.BLANK;
+
+		if ((slashIndex > -1) && (folderName.length() > (slashIndex + 1))) {
+			shortFolderName = folderName.substring(slashIndex + 1);
+		}
+
+		String leadingDigits = StringUtil.extractLeadingDigits(shortFolderName);
+
+		double priority;
+
+		try {
+			priority = Double.parseDouble(leadingDigits);
+		}
+		catch (NumberFormatException nfe) {
+			throw new KBArticleImportException(
+				"Invalid numerical prefix of folder: " + folderName, nfe);
+		}
+
+		if (priority < 1.0) {
+			priority = 1.0;
+		}
+
+		return priority;
+	}
+
 	protected Map<String, String> getMetadata(ZipReader zipReader)
 		throws KBArticleImportException {
 
@@ -196,6 +229,38 @@ public class KBArticleImporter {
 		catch (IOException ioe) {
 			throw new KBArticleImportException(ioe);
 		}
+	}
+
+	protected double getNonIntroFilePriority(KBArchive.File nonIntroFile)
+		throws KBArticleImportException {
+
+		String fileName = nonIntroFile.getName();
+
+		int slashIndex = fileName.lastIndexOf(StringPool.SLASH);
+
+		String shortFileName = StringPool.BLANK;
+
+		if ((slashIndex > -1) && (fileName.length() > (slashIndex + 1))) {
+			shortFileName = fileName.substring(slashIndex + 1);
+		}
+
+		String leadingDigits = StringUtil.extractLeadingDigits(shortFileName);
+
+		double priority;
+
+		try {
+			priority = Double.parseDouble(leadingDigits);
+		}
+		catch (NumberFormatException nfe) {
+			throw new KBArticleImportException(
+				"Invalid numerical prefix of file: " + fileName, nfe);
+		}
+
+		if (priority < 1.0) {
+			priority = 1.0;
+		}
+
+		return priority;
 	}
 
 	protected int processKBArticleFiles(
@@ -292,61 +357,6 @@ public class KBArticleImporter {
 		}
 
 		return importedKBArticlesCount;
-	}
-
-	double getIntroFilePriority(KBArchive.Folder introFileParentFolder)
-			throws KBArticleImportException {
-
-		String folderName = introFileParentFolder.getName();
-		int slashIndex = folderName.lastIndexOf(StringPool.SLASH);
-		String shortFolderName = StringPool.BLANK;
-		if ((slashIndex > -1) && (folderName.length() > slashIndex + 1)) {
-			shortFolderName = folderName.substring(slashIndex + 1);
-		}
-
-		String leadingDigits = StringUtil.extractLeadingDigits(shortFolderName);
-
-		double priority;
-		try {
-			priority = Double.parseDouble(leadingDigits);
-		}
-		catch (NumberFormatException nfe) {
-			throw new KBArticleImportException(
-					"Invalid numerical prefix of folder: " + folderName);
-		}
-
-		if (priority < 1.0) {
-			priority = 1.0;
-		}
-
-		return priority;
-	}
-
-	double getNonIntroFilePriority(KBArchive.File nonIntroFile)
-			throws KBArticleImportException {
-
-		String fileName = nonIntroFile.getName();
-		int slashIndex = fileName.lastIndexOf(StringPool.SLASH);
-		String shortFileName = StringPool.BLANK;
-		if ((slashIndex > -1) && (fileName.length() > slashIndex + 1)) {
-			shortFileName = fileName.substring(slashIndex + 1);
-		}
-		String leadingDigits = StringUtil.extractLeadingDigits(shortFileName);
-
-		double priority;
-		try {
-			priority = Double.parseDouble(leadingDigits);
-		}
-		catch (NumberFormatException nfe) {
-			throw new KBArticleImportException(
-					"Invalid numerical prefix of file: " + fileName);
-		}
-
-		if (priority < 1.0) {
-			priority = 1.0;
-		}
-
-		return priority;
 	}
 
 	@Reference(unbind = "-")
