@@ -329,7 +329,7 @@ AUI.add(
 							{
 								closeable: true,
 								delay: {
-									hide: 5000,
+									hide: 8000,
 									show: 0
 								},
 								duration: 250,
