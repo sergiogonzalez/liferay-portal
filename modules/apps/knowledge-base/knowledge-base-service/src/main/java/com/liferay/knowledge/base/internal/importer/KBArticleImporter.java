@@ -53,9 +53,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 @Component(service = KBArticleImporter.class)
 public class KBArticleImporter {
 
-	public KBArticleImporter(KBArchiveFactory kbArchiveFactory,
-			Portal portal) {
-		
+	public KBArticleImporter(KBArchiveFactory kbArchiveFactory, Portal portal) {
 		_kbArchiveFactory = kbArchiveFactory;
 		_portal = portal;
 	}
@@ -89,22 +87,22 @@ public class KBArticleImporter {
 			long userId, long groupId, long parentKBFolderId,
 			long parentResourceClassNameId, long parentResourcePrimaryKey,
 			String markdown, String fileEntryName, ZipReader zipReader,
-			Map<String, String> metadata,
-			ServiceContext serviceContext) throws KBArticleImportException {
+			Map<String, String> metadata, ServiceContext serviceContext)
+		throws KBArticleImportException {
 
 		if (Validator.isNull(markdown)) {
 			throw new KBArticleImportException(
-					"Markdown is null for file entry " + fileEntryName);
+				"Markdown is null for file entry " + fileEntryName);
 		}
 
 		KBArticleMarkdownConverter kbArticleMarkdownConverter =
-				new KBArticleMarkdownConverter(markdown, fileEntryName, metadata);
+			new KBArticleMarkdownConverter(markdown, fileEntryName, metadata);
 
 		String urlTitle = kbArticleMarkdownConverter.getUrlTitle();
 
 		KBArticle kbArticle =
-				KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
-						groupId, parentKBFolderId, urlTitle);
+			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
+				groupId, parentKBFolderId, urlTitle);
 
 		boolean newKBArticle = false;
 
@@ -117,13 +115,13 @@ public class KBArticleImporter {
 				int workflowAction = serviceContext.getWorkflowAction();
 
 				serviceContext.setWorkflowAction(
-						WorkflowConstants.ACTION_SAVE_DRAFT);
+					WorkflowConstants.ACTION_SAVE_DRAFT);
 
 				kbArticle = KBArticleLocalServiceUtil.addKBArticle(
-						userId, parentResourceClassNameId, parentResourcePrimaryKey,
-						kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
-						null, kbArticleMarkdownConverter.getSourceURL(), null, null,
-						serviceContext);
+					userId, parentResourceClassNameId, parentResourcePrimaryKey,
+					kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
+					null, kbArticleMarkdownConverter.getSourceURL(), null, null,
+					serviceContext);
 
 				serviceContext.setWorkflowAction(workflowAction);
 			}
@@ -144,16 +142,15 @@ public class KBArticleImporter {
 
 		try {
 			String html =
-					kbArticleMarkdownConverter.processAttachmentsReferences(
-							userId, kbArticle, zipReader,
-							new HashMap<String, FileEntry>());
+				kbArticleMarkdownConverter.processAttachmentsReferences(
+					userId, kbArticle, zipReader, new HashMap<>());
 
 			kbArticle = KBArticleLocalServiceUtil.updateKBArticle(
-					userId, kbArticle.getResourcePrimKey(),
-					kbArticleMarkdownConverter.getTitle(), html,
-					kbArticle.getDescription(),
-					kbArticleMarkdownConverter.getSourceURL(), null, null, null,
-					serviceContext);
+				userId, kbArticle.getResourcePrimKey(),
+				kbArticleMarkdownConverter.getTitle(), html,
+				kbArticle.getDescription(),
+				kbArticleMarkdownConverter.getSourceURL(), null, null, null,
+				serviceContext);
 
 			return kbArticle;
 		}
@@ -205,15 +202,15 @@ public class KBArticleImporter {
 			long userId, long groupId, long parentKBFolderId,
 			ZipReader zipReader, Map<String, String> metadata,
 			boolean prioritizeByNumericalPrefix, ServiceContext serviceContext)
-			throws PortalException {
+		throws PortalException {
 
 		int importedKBArticlesCount = 0;
 
 		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
-				groupId, zipReader);
+			groupId, zipReader);
 
 		Map<KBArchive.File, KBArticle> introFileNameKBArticleMap =
-				new HashMap<>();
+			new HashMap<>();
 
 		for (KBArchive.Folder folder : kbArchive.getFolders()) {
 			KBArchive.File introFile = folder.getIntroFile();
@@ -222,24 +219,24 @@ public class KBArticleImporter {
 
 			if ((introFile != null) && (introKBArticle == null)) {
 				long sectionResourceClassNameId = _portal.getClassNameId(
-						KBFolderConstants.getClassName());
+					KBFolderConstants.getClassName());
 				long sectionResourcePrimaryKey = parentKBFolderId;
 
 				KBArticle parentIntroKBArticle = introFileNameKBArticleMap.get(
-						folder.getParentFolderIntroFile());
+					folder.getParentFolderIntroFile());
 
 				if (parentIntroKBArticle != null) {
 					sectionResourceClassNameId = _portal.getClassNameId(
-							KBArticleConstants.getClassName());
+						KBArticleConstants.getClassName());
 					sectionResourcePrimaryKey =
-							parentIntroKBArticle.getResourcePrimKey();
+						parentIntroKBArticle.getResourcePrimKey();
 				}
 
 				introKBArticle = addKBArticleMarkdown(
-						userId, groupId, parentKBFolderId,
-						sectionResourceClassNameId, sectionResourcePrimaryKey,
-						introFile.getContent(), introFile.getName(), zipReader,
-						metadata, serviceContext);
+					userId, groupId, parentKBFolderId,
+					sectionResourceClassNameId, sectionResourcePrimaryKey,
+					introFile.getContent(), introFile.getName(), zipReader,
+					metadata, serviceContext);
 
 				importedKBArticlesCount++;
 
@@ -248,20 +245,20 @@ public class KBArticleImporter {
 				if (prioritizeByNumericalPrefix) {
 					double introFilePriority = getIntroFilePriority(folder);
 
-					KBArticleLocalServiceUtil.moveKBArticle(userId,
-						introKBArticle.getResourcePrimKey(),
+					KBArticleLocalServiceUtil.moveKBArticle(
+						userId, introKBArticle.getResourcePrimKey(),
 						sectionResourceClassNameId, sectionResourcePrimaryKey,
 						introFilePriority);
 				}
 			}
 
 			long sectionResourceClassNameId = _portal.getClassNameId(
-					KBFolderConstants.getClassName());
+				KBFolderConstants.getClassName());
 			long sectionResourcePrimaryKey = parentKBFolderId;
 
 			if (introKBArticle != null) {
 				sectionResourceClassNameId = _portal.getClassNameId(
-						KBArticleConstants.getClassName());
+					KBArticleConstants.getClassName());
 				sectionResourcePrimaryKey = introKBArticle.getResourcePrimKey();
 			}
 
@@ -270,24 +267,24 @@ public class KBArticleImporter {
 
 				if (Validator.isNull(markdown)) {
 					if (_log.isWarnEnabled()) {
-						_log.warn("Missing Markdown in file entry "
-										+ file.getName());
+						_log.warn(
+							"Missing Markdown in file entry " + file.getName());
 					}
 				}
 
 				KBArticle kbArticle = addKBArticleMarkdown(
-						userId, groupId, parentKBFolderId,
-						sectionResourceClassNameId, sectionResourcePrimaryKey,
-						markdown, file.getName(), zipReader, metadata,
-						serviceContext);
+					userId, groupId, parentKBFolderId,
+					sectionResourceClassNameId, sectionResourcePrimaryKey,
+					markdown, file.getName(), zipReader, metadata,
+					serviceContext);
 
 				importedKBArticlesCount++;
 
 				if (prioritizeByNumericalPrefix) {
 					double nonIntroFilePriority = getNonIntroFilePriority(file);
 
-					KBArticleLocalServiceUtil.moveKBArticle(userId,
-						kbArticle.getResourcePrimKey(),
+					KBArticleLocalServiceUtil.moveKBArticle(
+						userId, kbArticle.getResourcePrimKey(),
 						sectionResourceClassNameId, sectionResourcePrimaryKey,
 						nonIntroFilePriority);
 				}
