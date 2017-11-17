@@ -164,33 +164,29 @@ public class KBArticleImporter {
 			KBArchive.Resource kbArchiveResource)
 		throws KBArticleImportException {
 
-		String fileName = kbArchiveResource.getName();
+		String kbArchiveResourceName = kbArchiveResource.getName();
 
-		int slashIndex = fileName.lastIndexOf(StringPool.SLASH);
+		int slashIndex = kbArchiveResourceName.lastIndexOf(StringPool.SLASH);
 
 		String shortFileName = StringPool.BLANK;
 
-		if ((slashIndex > -1) && (fileName.length() > (slashIndex + 1))) {
-			shortFileName = fileName.substring(slashIndex + 1);
+		if ((slashIndex > -1) &&
+			(kbArchiveResourceName.length() > (slashIndex + 1))) {
+
+			shortFileName = kbArchiveResourceName.substring(slashIndex + 1);
 		}
 
 		String leadingDigits = StringUtil.extractLeadingDigits(shortFileName);
 
-		double priority;
-
 		try {
-			priority = Double.parseDouble(leadingDigits);
+			double priority = Double.parseDouble(leadingDigits);
+
+			return Math.max(1.0, priority);
 		}
 		catch (NumberFormatException nfe) {
 			throw new KBArticleImportException(
-				"Invalid numerical prefix of file: " + fileName, nfe);
+				"Invalid numerical prefix: " + kbArchiveResourceName, nfe);
 		}
-
-		if (priority < 1.0) {
-			priority = 1.0;
-		}
-
-		return priority;
 	}
 
 	protected Map<String, String> getMetadata(ZipReader zipReader)
