@@ -33,7 +33,9 @@ if (subscriptionId > 0) {
 	}
 }
 
-UserNotificationFeedEntry userNotificationFeedEntry = (UserNotificationFeedEntry)request.getAttribute("view.jsp-userNotificationFeedEntry");
+Map<String, Object> rowData = row.getData();
+
+UserNotificationFeedEntry userNotificationFeedEntry = (UserNotificationFeedEntry)rowData.get("userNotificationFeedEntry");
 %>
 
 <liferay-ui:icon-menu
