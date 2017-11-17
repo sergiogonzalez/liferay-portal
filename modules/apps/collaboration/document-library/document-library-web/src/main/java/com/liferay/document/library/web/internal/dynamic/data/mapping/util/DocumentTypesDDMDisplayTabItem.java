@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -41,9 +40,13 @@ import org.osgi.service.component.annotations.Reference;
 public class DocumentTypesDDMDisplayTabItem implements DDMDisplayTabItem {
 
 	@Override
-	public String getTitle(Locale locale) {
+	public String getTitle(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
 		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+			_resourceBundleLoader.loadResourceBundle(
+				liferayPortletRequest.getLocale());
 
 		return LanguageUtil.get(resourceBundle, "document-types");
 	}
