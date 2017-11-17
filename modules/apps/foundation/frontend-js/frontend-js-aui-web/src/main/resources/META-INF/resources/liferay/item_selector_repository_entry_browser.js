@@ -194,7 +194,9 @@ AUI.add(
 							var errorType = error.errorType;
 
 							if (errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION) {
-								message = error.message;
+								if (error.message) {
+									message = error.message;
+								}
 							}
 							else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
 								message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [error.message]);
