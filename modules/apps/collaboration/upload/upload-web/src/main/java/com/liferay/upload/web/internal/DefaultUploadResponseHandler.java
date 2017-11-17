@@ -14,13 +14,19 @@
 
 package com.liferay.upload.web.internal;
 
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
@@ -29,6 +35,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadResponseHandler;
 
@@ -52,6 +59,7 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 		jsonObject.put("success", Boolean.FALSE);
 
 		if (pe instanceof AntivirusScannerException ||
+			pe instanceof FileExtensionException ||
 			pe instanceof FileNameException ||
 			pe instanceof FileSizeException ||
 			pe instanceof UploadRequestSizeException) {
@@ -69,6 +77,12 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 				AntivirusScannerException ase = (AntivirusScannerException)pe;
 
 				errorMessage = themeDisplay.translate(ase.getMessageKey());
+			}
+			else if (pe instanceof FileExtensionException) {
+				errorType =
+					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
+
+				errorMessage = _getAllowedFileExtensions();
 			}
 			else if (pe instanceof FileNameException) {
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
@@ -130,5 +144,29 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 
 		return jsonObject;
 	}
+
+	private String _getAllowedFileExtensions() {
+		String allowedFileExtensionsString = StringPool.BLANK;
+
+		try {
+			DLConfiguration dlConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					DLConfiguration.class);
+
+			String[] allowedFileExtensions = dlConfiguration.fileExtensions();
+
+			allowedFileExtensionsString = StringUtil.merge(
+				allowedFileExtensions, StringPool.COMMA_AND_SPACE);
+		}
+		catch (ConfigurationException ce) {
+			_log.error(
+				"Unable to get Documents and Media system configuration", ce);
+		}
+
+		return allowedFileExtensionsString;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultUploadResponseHandler.class);
 
 }
