@@ -20,7 +20,7 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.internal.importer.util.KBArticleMarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,8 +49,12 @@ import java.util.Properties;
  */
 public class KBArticleImporter {
 
-	public KBArticleImporter(KBArchiveFactory kbArchiveFactory, Portal portal) {
+	public KBArticleImporter(
+		KBArchiveFactory kbArchiveFactory,
+		KBArticleLocalService kbArticleLocalService, Portal portal) {
+
 		_kbArchiveFactory = kbArchiveFactory;
+		_kbArticleLocalService = kbArticleLocalService;
 		_portal = portal;
 	}
 
@@ -96,9 +100,8 @@ public class KBArticleImporter {
 
 		String urlTitle = kbArticleMarkdownConverter.getUrlTitle();
 
-		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
-				groupId, parentKBFolderId, urlTitle);
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+			groupId, parentKBFolderId, urlTitle);
 
 		try {
 			if (kbArticle == null) {
@@ -107,7 +110,7 @@ public class KBArticleImporter {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_SAVE_DRAFT);
 
-				kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+				kbArticle = _kbArticleLocalService.addKBArticle(
 					userId, parentResourceClassNameId, parentResourcePrimaryKey,
 					kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
 					null, kbArticleMarkdownConverter.getSourceURL(), null, null,
@@ -135,7 +138,7 @@ public class KBArticleImporter {
 				kbArticleMarkdownConverter.processAttachmentsReferences(
 					userId, kbArticle, zipReader, new HashMap<>());
 
-			kbArticle = KBArticleLocalServiceUtil.updateKBArticle(
+			kbArticle = _kbArticleLocalService.updateKBArticle(
 				userId, kbArticle.getResourcePrimKey(),
 				kbArticleMarkdownConverter.getTitle(), html,
 				kbArticle.getDescription(),
@@ -265,7 +268,7 @@ public class KBArticleImporter {
 					double introFilePriority = getKBArchiveResourcePriority(
 						folder);
 
-					KBArticleLocalServiceUtil.moveKBArticle(
+					_kbArticleLocalService.moveKBArticle(
 						userId, introKBArticle.getResourcePrimKey(),
 						sectionResourceClassNameId, sectionResourcePrimaryKey,
 						introFilePriority);
@@ -304,7 +307,7 @@ public class KBArticleImporter {
 					double nonIntroFilePriority = getKBArchiveResourcePriority(
 						file);
 
-					KBArticleLocalServiceUtil.moveKBArticle(
+					_kbArticleLocalService.moveKBArticle(
 						userId, kbArticle.getResourcePrimKey(),
 						sectionResourceClassNameId, sectionResourcePrimaryKey,
 						nonIntroFilePriority);
@@ -319,6 +322,7 @@ public class KBArticleImporter {
 		KBArticleImporter.class);
 
 	private final KBArchiveFactory _kbArchiveFactory;
+	private final KBArticleLocalService _kbArticleLocalService;
 	private final Portal _portal;
 
 }

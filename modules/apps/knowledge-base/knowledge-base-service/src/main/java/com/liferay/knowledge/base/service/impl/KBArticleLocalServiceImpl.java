@@ -293,7 +293,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			WorkflowThreadLocal.setEnabled(false);
 
 			KBArticleImporter kbArticleImporter = new KBArticleImporter(
-				kbArchiveFactory, portal);
+				kbArchiveFactory, this, portal);
 
 			return kbArticleImporter.processZipFile(
 				userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
