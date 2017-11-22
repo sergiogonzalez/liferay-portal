@@ -64,6 +64,7 @@ page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePer
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.StorageType" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
+page import="com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMNavigationHelper" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException" %><%@
