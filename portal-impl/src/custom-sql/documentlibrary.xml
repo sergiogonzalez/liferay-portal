@@ -58,7 +58,10 @@
 					DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 			WHERE
 				(DLFileVersion.groupId = ?) AND
-				(DLFileVersion.userId = ? OR DLFileEntry.userId = ?) AND
+				(
+					(DLFileVersion.userId = ?) OR
+					(DLFileEntry.userId = ?)
+				) AND
 				([$STATUS$])
 				[$FOLDER_ID$]
 		]]>
@@ -238,7 +241,10 @@
 							DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 					WHERE
 						(DLFileVersion.groupId = ?) AND
-						(DLFileVersion.userId = ? OR DLFileEntry.userId = ?) AND
+						(
+							(DLFileVersion.userId = ?) OR
+							(DLFileEntry.userId = ?)
+						) AND
 						([$STATUS$])
 						[$FOLDER_ID$]
 				) TEMP_TABLE
