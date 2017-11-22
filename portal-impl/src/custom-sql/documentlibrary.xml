@@ -59,8 +59,8 @@
 			WHERE
 				(DLFileVersion.groupId = ?) AND
 				(
-					(DLFileVersion.userId = ?) OR
-					(DLFileEntry.userId = ?)
+					(DLFileEntry.userId = ?) OR
+					(DLFileVersion.userId = ?)
 				) AND
 				([$STATUS$])
 				[$FOLDER_ID$]
@@ -242,8 +242,8 @@
 					WHERE
 						(DLFileVersion.groupId = ?) AND
 						(
-							(DLFileVersion.userId = ?) OR
-							(DLFileEntry.userId = ?)
+							(DLFileEntry.userId = ?) OR
+							(DLFileVersion.userId = ?)
 						) AND
 						([$STATUS$])
 						[$FOLDER_ID$]

@@ -920,7 +920,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testDLFileVersiondCreatorChangedByWorkflow() throws Exception {
+	public void testDLFileVersionCreatorChangedByWorkflow() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
