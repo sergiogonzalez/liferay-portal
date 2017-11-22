@@ -107,6 +107,14 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 			return hasPermission.booleanValue();
 		}
 
+		if (permissionChecker.hasOwnerPermission(
+				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
+				actionId)) {
+
+			return true;
+		}
+
 		DLFileVersion currentDLFileVersion = dlFileEntry.getFileVersion();
 
 		if (currentDLFileVersion.isPending()) {
@@ -128,14 +136,6 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 				return false;
 			}
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
-				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
-				actionId)) {
-
-			return true;
 		}
 
 		String className = dlFileEntry.getClassName();
