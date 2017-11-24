@@ -193,6 +193,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public List<DDMDisplayTabItem> getTabItems() {
 		return Arrays.asList(getDefaultTabItem());
 	}
