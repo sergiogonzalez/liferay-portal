@@ -221,6 +221,17 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
+<aui:script>
+	Analytics.send(
+		'visits',
+		'com.liferay.blogs',
+		{
+			entryId: '<%= entryId %>',
+			userId: '<%= user.getUserId() %>'
+		}
+	);
+</aui:script>
+
 <%
 PortalUtil.setPageTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), request);
 PortalUtil.setPageSubtitle(entry.getSubtitle(), request);
