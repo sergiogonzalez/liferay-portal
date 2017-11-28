@@ -108,16 +108,6 @@ public interface KBSectionPortletInstanceConfiguration {
 	)
 	public String socialBookmarksDisplayStyle();
 
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Meta.AD(
-		deflt = "bottom", name = "social-bookmarks-display-position",
-		required = false
-	)
-	public String socialBookmarksDisplayPosition();
-
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
 		name = "social-bookmarks-types", required = false
