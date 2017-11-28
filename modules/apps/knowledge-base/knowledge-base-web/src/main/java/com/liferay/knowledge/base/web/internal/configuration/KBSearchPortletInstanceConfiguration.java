@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.configuration;
+package com.liferay.knowledge.base.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

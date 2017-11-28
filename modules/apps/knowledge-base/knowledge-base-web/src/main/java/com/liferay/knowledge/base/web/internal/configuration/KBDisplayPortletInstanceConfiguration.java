@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.configuration;
+package com.liferay.knowledge.base.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Roberto Díaz
@@ -26,11 +27,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.knowledge.base.web.configuration.KBArticlePortletInstanceConfiguration",
+	id = "com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "knowledge-base-article-portlet-instance-configuration-name"
+	name = "knowledge-base-display-portlet-instance-configuration-name"
 )
-public interface KBArticlePortletInstanceConfiguration {
+public interface KBDisplayPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "0", name = "resource-prim-key", required = false)
 	public long resourcePrimKey();
@@ -65,7 +66,7 @@ public interface KBArticlePortletInstanceConfiguration {
 	public boolean enableKBArticleAssetLinks();
 
 	@Meta.AD(
-		deflt = "false", name = "enable-kb-article-view-count-increment",
+		deflt = "true", name = "enable-kb-article-view-count-increment",
 		required = false
 	)
 	public boolean enableKBArticleViewCountIncrement();
@@ -110,5 +111,13 @@ public interface KBArticlePortletInstanceConfiguration {
 		name = "social-bookmarks-types", required = false
 	)
 	public String socialBookmarksTypes();
+
+	@Meta.AD(
+		deflt = StringPool.BLANK, name = "content-root-prefix", required = false
+	)
+	public String contentRootPrefix();
+
+	@Meta.AD(deflt = "3", name = "maximum-nesting-level", required = false)
+	public int maxNestingLevel();
 
 }

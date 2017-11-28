@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.configuration;
+package com.liferay.blogs.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
