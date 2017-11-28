@@ -41,7 +41,6 @@ boolean enableKBArticleHistory = GetterUtil.getBoolean(request.getAttribute("ini
 boolean enableKBArticlePrint = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticlePrint"));
 boolean enableSocialBookmarks = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableSocialBookmarks"));
 String socialBookmarksDisplayStyle = GetterUtil.getString(request.getAttribute("init.jsp-socialBookmarksDisplayStyle"));
-String socialBookmarksDisplayPosition = GetterUtil.getString(request.getAttribute("init.jsp-socialBookmarksDisplayPosition"));
 String socialBookmarksTypes = GetterUtil.getString(request.getAttribute("init.jsp-socialBookmarksTypes"));
 
 boolean enableRSS = kbGroupServiceConfiguration.enableRSS();

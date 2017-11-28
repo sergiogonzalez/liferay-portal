@@ -17,7 +17,6 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String displayPosition = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:displayPosition");
 String displayStyle = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:displayStyle");
 boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:social-bookmarks-settings:enabled"));
 String types = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:types");
@@ -54,13 +53,6 @@ if (Validator.isNull(displayStyle)) {
 				}
 				%>
 
-			</aui:select>
-		</aui:col>
-
-		<aui:col width="<%= 50 %>">
-			<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--" value="<%= displayPosition %>">
-				<aui:option label="top" />
-				<aui:option label="bottom" />
 			</aui:select>
 		</aui:col>
 

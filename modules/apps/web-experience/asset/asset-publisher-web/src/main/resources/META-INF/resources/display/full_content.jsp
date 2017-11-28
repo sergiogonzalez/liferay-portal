@@ -127,23 +127,9 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
-
-	String socialBookmarksDisplayPosition = assetPublisherDisplayContext.getSocialBookmarksDisplayPosition();
 	%>
 
 	<div class="asset-content" id="<portlet:namespace /><%= assetEntry.getEntryId() %>">
-		<c:if test='<%= assetPublisherDisplayContext.isEnableSocialBookmarks() && socialBookmarksDisplayPosition.equals("top") && !print %>'>
-			<div class="pull-right">
-				<liferay-ui:social-bookmarks
-					contentId="<%= String.valueOf(assetEntry.getEntryId()) %>"
-					displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-					target="_blank"
-					title="<%= title %>"
-					url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
-				/>
-			</div>
-		</c:if>
-
 		<liferay-asset:asset-display
 			assetEntry="<%= assetEntry %>"
 			assetRenderer="<%= assetRenderer %>"
@@ -151,7 +137,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			showExtraInfo="<%= assetPublisherDisplayContext.isShowExtraInfo() %>"
 		/>
 
-		<c:if test='<%= assetPublisherDisplayContext.isEnableSocialBookmarks() && socialBookmarksDisplayPosition.equals("bottom") && !print %>'>
+		<c:if test="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() && !print %>">
 			<div class="pull-right">
 				<liferay-ui:social-bookmarks
 					displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"

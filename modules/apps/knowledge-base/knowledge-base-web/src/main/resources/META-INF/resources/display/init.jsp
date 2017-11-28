@@ -44,7 +44,6 @@ request.setAttribute("init.jsp-enableSocialBookmarks", kbDisplayPortletInstanceC
 request.setAttribute("init.jsp-resourcePrimKey", kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 request.setAttribute("init.jsp-showKBArticleAssetEntries", kbDisplayPortletInstanceConfiguration.showKBArticleAssetEntries());
 request.setAttribute("init.jsp-showKBArticleAttachments", kbDisplayPortletInstanceConfiguration.showKBArticleAttachments());
-request.setAttribute("init.jsp-socialBookmarksDisplayPosition", kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayPosition());
 request.setAttribute("init.jsp-socialBookmarksDisplayStyle", kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle());
 request.setAttribute("init.jsp-socialBookmarksTypes", kbDisplayPortletInstanceConfiguration.socialBookmarksTypes());
 %>

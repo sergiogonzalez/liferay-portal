@@ -27,7 +27,6 @@ request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", kbSectionPort
 request.setAttribute("init.jsp-enableSocialBookmarks", kbSectionPortletInstanceConfiguration.enableSocialBookmarks());
 request.setAttribute("init.jsp-showKBArticleAssetEntries", kbSectionPortletInstanceConfiguration.showKBArticleAssetEntries());
 request.setAttribute("init.jsp-showKBArticleAttachments", kbSectionPortletInstanceConfiguration.showKBArticleAttachments());
-request.setAttribute("init.jsp-socialBookmarksDisplayPosition", kbSectionPortletInstanceConfiguration.socialBookmarksDisplayPosition());
 request.setAttribute("init.jsp-socialBookmarksDisplayStyle", kbSectionPortletInstanceConfiguration.socialBookmarksDisplayStyle());
 request.setAttribute("init.jsp-socialBookmarksTypes", kbSectionPortletInstanceConfiguration.socialBookmarksTypes());
 %>

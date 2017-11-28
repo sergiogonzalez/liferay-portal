@@ -68,6 +68,10 @@ public interface BlogsPortletInstanceConfiguration {
 	)
 	public String pageDelta();
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "bottom", name = "social-bookmarks-display-position",
 		required = false

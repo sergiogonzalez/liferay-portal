@@ -108,6 +108,10 @@ public interface KBSectionPortletInstanceConfiguration {
 	)
 	public String socialBookmarksDisplayStyle();
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "bottom", name = "social-bookmarks-display-position",
 		required = false

@@ -923,15 +923,12 @@ public class AssetPublisherDisplayContext {
 		return _selectionStyle;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getSocialBookmarksDisplayPosition() {
-		if (_socialBookmarksDisplayPosition != null) {
-			return _socialBookmarksDisplayPosition;
-		}
-
-		_socialBookmarksDisplayPosition = _portletPreferences.getValue(
-			"socialBookmarksDisplayPosition", "bottom");
-
-		return _socialBookmarksDisplayPosition;
+		return "bottom";
 	}
 
 	public String getSocialBookmarksDisplayStyle() {
@@ -1626,7 +1623,6 @@ public class AssetPublisherDisplayContext {
 	private Boolean _showExtraInfo;
 	private Boolean _showMetadataDescriptions;
 	private Boolean _showOnlyLayoutAssets;
-	private String _socialBookmarksDisplayPosition;
 	private String _socialBookmarksDisplayStyle;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private TimeZone _timeZone;
