@@ -107,6 +107,10 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 							<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticlePrint() %>" />
 
+							<h4 class="section-header">
+								<liferay-ui:message key="social-bookmarks" />
+							</h4>
+
 							<liferay-ui:social-bookmarks-settings
 								displayStyle="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 								types="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksTypes() %>"
