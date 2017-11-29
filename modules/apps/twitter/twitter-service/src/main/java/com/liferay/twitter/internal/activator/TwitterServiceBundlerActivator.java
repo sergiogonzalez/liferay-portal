@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
-import com.liferay.twitter.internal.upgrade.TwitterUpgradeServiceModuleRelease;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
