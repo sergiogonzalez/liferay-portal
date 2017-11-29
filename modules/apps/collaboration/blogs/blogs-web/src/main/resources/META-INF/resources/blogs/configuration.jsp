@@ -48,7 +48,6 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 
 			<liferay-ui:social-bookmarks-settings
 				displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-				enabled="<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() %>"
 				types="<%= blogsPortletInstanceConfiguration.socialBookmarksTypes() %>"
 			/>
 

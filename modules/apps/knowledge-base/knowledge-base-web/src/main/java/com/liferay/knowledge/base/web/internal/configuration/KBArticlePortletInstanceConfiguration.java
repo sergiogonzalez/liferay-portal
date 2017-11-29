@@ -85,11 +85,6 @@ public interface KBArticlePortletInstanceConfiguration {
 	public boolean enableKBArticlePrint();
 
 	@Meta.AD(
-		deflt = "false", name = "enable-social-bookmarks", required = false
-	)
-	public boolean enableSocialBookmarks();
-
-	@Meta.AD(
 		deflt = "menu", name = "social-bookmarks-display-style",
 		required = false
 	)

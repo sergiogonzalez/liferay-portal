@@ -96,9 +96,7 @@ if (portletTitleBasedNavigation) {
 					<%= kbArticle.getContent() %>
 				</div>
 
-				<c:if test="<%= enableSocialBookmarks %>">
-					<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
-				</c:if>
+				<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
 
 				<liferay-expando:custom-attributes-available className="<%= KBArticle.class.getName() %>">
 					<liferay-expando:custom-attribute-list

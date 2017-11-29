@@ -280,9 +280,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						</div>
 					</c:if>
 
-					<c:if test="<%= blogsPortletInstanceConfiguration.enableSocialBookmarks() %>">
-						<liferay-util:include page="/blogs/social_bookmarks.jsp" servletContext="<%= application %>" />
-					</c:if>
+					<liferay-util:include page="/blogs/social_bookmarks.jsp" servletContext="<%= application %>" />
 
 					<c:if test="<%= viewSingleEntry && blogsPortletInstanceConfiguration.enableFlags() %>">
 						<div class="flags">

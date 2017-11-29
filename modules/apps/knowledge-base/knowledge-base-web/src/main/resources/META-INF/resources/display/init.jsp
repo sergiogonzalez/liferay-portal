@@ -40,7 +40,6 @@ request.setAttribute("init.jsp-enableKBArticlePrint", kbDisplayPortletInstanceCo
 request.setAttribute("init.jsp-enableKBArticleRatings", kbDisplayPortletInstanceConfiguration.enableKBArticleRatings());
 request.setAttribute("init.jsp-enableKBArticleSubscriptions", kbDisplayPortletInstanceConfiguration.enableKBArticleSubscriptions());
 request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", kbDisplayPortletInstanceConfiguration.enableKBArticleViewCountIncrement());
-request.setAttribute("init.jsp-enableSocialBookmarks", kbDisplayPortletInstanceConfiguration.enableSocialBookmarks());
 request.setAttribute("init.jsp-resourcePrimKey", kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 request.setAttribute("init.jsp-showKBArticleAssetEntries", kbDisplayPortletInstanceConfiguration.showKBArticleAssetEntries());
 request.setAttribute("init.jsp-showKBArticleAttachments", kbDisplayPortletInstanceConfiguration.showKBArticleAttachments());

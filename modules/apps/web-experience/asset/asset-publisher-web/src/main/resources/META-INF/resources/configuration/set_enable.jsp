@@ -133,6 +133,5 @@
 <aui:row cssClass="panel-group">
 	<liferay-ui:social-bookmarks-settings
 		displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-		enabled="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() %>"
 	/>
 </aui:row>

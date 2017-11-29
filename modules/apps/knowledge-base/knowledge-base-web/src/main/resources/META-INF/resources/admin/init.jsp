@@ -24,7 +24,6 @@ request.setAttribute("init.jsp-enableKBArticlePrint", true);
 request.setAttribute("init.jsp-enableKBArticleRatings", true);
 request.setAttribute("init.jsp-enableKBArticleSubscriptions", true);
 request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", true);
-request.setAttribute("init.jsp-enableSocialBookmarks", false);
 request.setAttribute("init.jsp-showKBArticleAssetEntries", true);
 request.setAttribute("init.jsp-showKBArticleAttachments", true);
 request.setAttribute("init.jsp-socialBookmarksDisplayStyle", "menu");

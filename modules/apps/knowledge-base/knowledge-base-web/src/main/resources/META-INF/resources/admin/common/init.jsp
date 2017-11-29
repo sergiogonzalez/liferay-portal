@@ -39,7 +39,6 @@ boolean enableKBArticleViewCountIncrement = GetterUtil.getBoolean(request.getAtt
 boolean enableKBArticleSubscriptions = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticleSubscriptions"));
 boolean enableKBArticleHistory = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticleHistory"));
 boolean enableKBArticlePrint = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticlePrint"));
-boolean enableSocialBookmarks = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableSocialBookmarks"));
 String socialBookmarksDisplayStyle = GetterUtil.getString(request.getAttribute("init.jsp-socialBookmarksDisplayStyle"));
 String socialBookmarksTypes = GetterUtil.getString(request.getAttribute("init.jsp-socialBookmarksTypes"));
 

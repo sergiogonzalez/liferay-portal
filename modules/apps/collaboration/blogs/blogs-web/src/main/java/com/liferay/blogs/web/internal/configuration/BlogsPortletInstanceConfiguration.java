@@ -56,9 +56,6 @@ public interface BlogsPortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", name = "enable-related-assets", required = false)
 	public boolean enableRelatedAssets();
 
-	@Meta.AD(deflt = "true", name = "enable-social-bookmarks", required = false)
-	public boolean enableSocialBookmarks();
-
 	@Meta.AD(deflt = "false", name = "enable-view-count", required = false)
 	public boolean enableViewCount();
 

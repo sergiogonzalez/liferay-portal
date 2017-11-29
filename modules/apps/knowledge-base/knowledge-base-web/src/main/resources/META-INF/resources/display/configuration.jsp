@@ -109,7 +109,6 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 							<liferay-ui:social-bookmarks-settings
 								displayStyle="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-								enabled="<%= kbDisplayPortletInstanceConfiguration.enableSocialBookmarks() %>"
 								types="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksTypes() %>"
 							/>
 

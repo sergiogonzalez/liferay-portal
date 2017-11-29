@@ -1177,15 +1177,12 @@ public class AssetPublisherDisplayContext {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public boolean isEnableSocialBookmarks() {
-		if (_enableSocialBookmarks != null) {
-			return _enableSocialBookmarks;
-		}
-
-		_enableSocialBookmarks = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableSocialBookmarks", null), true);
-
-		return _enableSocialBookmarks;
+		return true;
 	}
 
 	public boolean isEnableTagBasedNavigation() {
@@ -1588,7 +1585,6 @@ public class AssetPublisherDisplayContext {
 	private Boolean _enableRatings;
 	private Boolean _enableRelatedAssets;
 	private Boolean _enableRSS;
-	private Boolean _enableSocialBookmarks;
 	private Boolean _enableTagBasedNavigation;
 	private Boolean _enableViewCountIncrement;
 	private Boolean _excludeZeroViewCount;

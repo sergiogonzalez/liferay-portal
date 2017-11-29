@@ -137,16 +137,14 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			showExtraInfo="<%= assetPublisherDisplayContext.isShowExtraInfo() %>"
 		/>
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() && !print %>">
-			<div class="pull-right">
-				<liferay-ui:social-bookmarks
-					displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-					target="_blank"
-					title="<%= title %>"
-					url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
-				/>
-			</div>
-		</c:if>
+		<div class="pull-right">
+			<liferay-ui:social-bookmarks
+				displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+				target="_blank"
+				title="<%= title %>"
+				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
+			/>
+		</div>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
 

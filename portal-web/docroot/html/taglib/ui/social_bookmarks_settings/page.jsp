@@ -18,7 +18,6 @@
 
 <%
 String displayStyle = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:displayStyle");
-boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:social-bookmarks-settings:enabled"));
 String types = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:types");
 
 String[] displayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
@@ -29,16 +28,6 @@ if (Validator.isNull(displayStyle)) {
 %>
 
 <aui:fieldset>
-	<aui:row>
-		<aui:col width="<%= 50 %>">
-			<liferay-ui:message key="enable-social-bookmarks" />
-		</aui:col>
-
-		<aui:col width="<%= 50 %>">
-			<aui:input label="" name="preferences--enableSocialBookmarks--" type="toggle-switch" value="<%= enabled %>" wrapperCssClass="pull-right" />
-		</aui:col>
-	</aui:row>
-
 	<aui:row cssClass="social-boomarks-options" id="socialBookmarksOptions">
 		<aui:col width="<%= 50 %>">
 			<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
@@ -77,7 +66,3 @@ if (Validator.isNull(displayStyle)) {
 		</div>
 	</aui:row>
 </aui:fieldset>
-
-<aui:script use="aui-base">
-	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarks','<portlet:namespace />socialBookmarksOptions');
-</aui:script>

@@ -26,7 +26,6 @@ request.setAttribute("init.jsp-enableKBArticlePrint", kbSearchPortletInstanceCon
 request.setAttribute("init.jsp-enableKBArticleRatings", kbSearchPortletInstanceConfiguration.enableKBArticleRatings());
 request.setAttribute("init.jsp-enableKBArticleSubscriptions", kbSearchPortletInstanceConfiguration.enableKBArticleSubscriptions());
 request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", kbSearchPortletInstanceConfiguration.enableKBArticleViewCountIncrement());
-request.setAttribute("init.jsp-enableSocialBookmarks", kbSearchPortletInstanceConfiguration.enableSocialBookmarks());
 request.setAttribute("init.jsp-showKBArticleAssetEntries", kbSearchPortletInstanceConfiguration.showKBArticleAssetEntries());
 request.setAttribute("init.jsp-showKBArticleAttachments", kbSearchPortletInstanceConfiguration.showKBArticleAttachments());
 request.setAttribute("init.jsp-socialBookmarksDisplayStyle", kbSearchPortletInstanceConfiguration.socialBookmarksDisplayStyle());
