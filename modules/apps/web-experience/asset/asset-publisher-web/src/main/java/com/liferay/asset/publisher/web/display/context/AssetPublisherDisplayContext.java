@@ -949,6 +949,22 @@ public class AssetPublisherDisplayContext {
 		return _socialBookmarksDisplayStyle;
 	}
 
+	public String getSocialBookmarksTypes() {
+		if (_socialBookmarksTypes != null) {
+			return _socialBookmarksTypes;
+		}
+
+		_socialBookmarksTypes = _portletPreferences.getValue(
+			"socialBookmarksTypes", null);
+
+		if (_socialBookmarksTypes == null) {
+			_socialBookmarksTypes = PropsUtil.get(
+				PropsKeys.SOCIAL_BOOKMARK_TYPES);
+		}
+
+		return _socialBookmarksTypes;
+	}
+
 	public String getTagSelectorURL() {
 		try {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
@@ -1620,6 +1636,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _showMetadataDescriptions;
 	private Boolean _showOnlyLayoutAssets;
 	private String _socialBookmarksDisplayStyle;
+	private String _socialBookmarksTypes;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private TimeZone _timeZone;
 	private Long _userId;
