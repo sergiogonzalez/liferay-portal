@@ -2154,13 +2154,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!PrefsPropsUtil.getBoolean(
-				message.getCompanyId(),
-				PropsKeys.DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED)) {
-
-			return;
-		}
-
 		MBDiscussion mbDiscussion =
 			mbDiscussionLocalService.getThreadDiscussion(message.getThreadId());
 
