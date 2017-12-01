@@ -234,12 +234,20 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"showDragAndDropZone",
-			_showDragAndDropZone);
+			_isShownDragAndDropZone());
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:tabName", _tabName);
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:uploadURL",
 			_uploadURL);
+	}
+
+	private boolean _isShownDragAndDropZone() {
+		if (_uploadURL == null) {
+			return false;
+		}
+
+		return _showDragAndDropZone;
 	}
 
 	private String _getEmptyResultsMessage(HttpServletRequest request) {
