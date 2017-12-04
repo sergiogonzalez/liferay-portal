@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.internal;
+package com.liferay.wiki.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
