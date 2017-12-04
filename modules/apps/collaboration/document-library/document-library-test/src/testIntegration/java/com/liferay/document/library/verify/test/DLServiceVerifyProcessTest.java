@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
@@ -39,6 +40,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -55,6 +57,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
@@ -67,6 +70,7 @@ import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import java.io.ByteArrayInputStream;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -255,6 +259,27 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		Assert.assertNotNull(
 			AssetEntryLocalServiceUtil.fetchEntry(
 				DLFileEntry.class.getName(), fileEntryId));
+	}
+
+	@Test
+	public void testDLFileEntryWithNoDLFileVersionAdded() throws Exception {
+		String fileExtensionsString = ".jpg";
+
+		DLFileEntry dlFileEntry = addDLFileEntry();
+
+		DLFileEntryLocalServiceUtil.deleteFileVersion(
+			dlFileEntry.getUserId(),
+			dlFileEntry.getFileEntryId(),
+			String.valueOf(dlFileEntry.getFileVersion().getVersion()));
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				_getConfigurationTemporarySwapper(
+					"fileExtensions", fileExtensionsString)) {
+
+			doVerify();
+
+			Assert.assertNotNull(dlFileEntry.getFileVersion());
+		}
 	}
 
 	@Test
@@ -492,6 +517,21 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	protected VerifyProcess getVerifyProcess() {
 		return _verifyProcess;
 	}
+
+	private static ConfigurationTemporarySwapper
+			_getConfigurationTemporarySwapper(String key, Object value)
+		throws Exception {
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put(key, value);
+
+		return new ConfigurationTemporarySwapper(
+			DLValidator.class, _DL_CONFIGURATION_PID, dictionary);
+	}
+	
+	private static final String _DL_CONFIGURATION_PID =
+		"com.liferay.document.library.configuration.DLConfiguration";
 
 	@Inject
 	private static DDMFormXSDDeserializer _ddmFormXSDDeserializer;
