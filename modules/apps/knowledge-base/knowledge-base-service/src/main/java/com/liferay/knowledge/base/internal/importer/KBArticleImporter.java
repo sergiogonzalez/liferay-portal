@@ -167,6 +167,10 @@ public class KBArticleImporter {
 
 		int slashIndex = kbArchiveResourceName.lastIndexOf(StringPool.SLASH);
 
+		if (slashIndex == -1) {
+			return KBArticleConstants.DEFAULT_PRIORITY;
+		}
+
 		String shortFileName = StringPool.BLANK;
 
 		if ((slashIndex > -1) &&
