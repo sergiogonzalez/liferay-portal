@@ -311,10 +311,15 @@ public class KBArticleImporter {
 					double nonintroFilePriority = getKBArchiveResourcePriority(
 						file);
 
-					_kbArticleLocalService.moveKBArticle(
-						userId, kbArticle.getResourcePrimKey(),
-						sectionResourceClassNameId, sectionResourcePrimaryKey,
-						nonintroFilePriority);
+					if (Double.compare(
+							nonintroFilePriority, kbArticle.getPriority()) !=
+								0) {
+
+						_kbArticleLocalService.moveKBArticle(
+							userId, kbArticle.getResourcePrimKey(),
+							sectionResourceClassNameId,
+							sectionResourcePrimaryKey, nonintroFilePriority);
+					}
 				}
 			}
 		}
