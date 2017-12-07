@@ -208,6 +208,8 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
 		<div class="lfr-form-content">
+			<liferay-ui:error exception="<%= RequiredFileException.class %>" message="you-need-to-select-again-the-file" />
+
 			<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
 
 				<%
