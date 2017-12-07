@@ -30,6 +30,7 @@ import com.liferay.document.library.kernel.exception.InvalidFileEntryTypeExcepti
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.exception.RequiredFileException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -480,8 +481,24 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					 cmd.equals(Constants.UPDATE) ||
 					 cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
-				fileEntry = updateFileEntry(
-					portletConfig, actionRequest, actionResponse);
+				try {
+					fileEntry = updateFileEntry(
+						portletConfig, actionRequest, actionResponse);
+				}
+				catch (Exception e) {
+					if (!cmd.equals(Constants.ADD_DYNAMIC)) {
+						UploadPortletRequest uploadPortletRequest =
+							_portal.getUploadPortletRequest(actionRequest);
+
+						if (uploadPortletRequest.getSize("file") > 0) {
+							SessionErrors.add(
+								actionRequest, RequiredFileException.class);
+						}
+
+						throw e;
+					}
+				}
+
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				addMultipleFileEntries(
