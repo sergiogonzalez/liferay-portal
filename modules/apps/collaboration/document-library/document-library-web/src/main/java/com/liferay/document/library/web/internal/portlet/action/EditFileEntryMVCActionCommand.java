@@ -489,7 +489,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				try {
 					fileEntry = updateFileEntry(
 						portletConfig, actionRequest, actionResponse,
-							uploadPortletRequest);
+						uploadPortletRequest);
 				}
 				catch (Exception e) {
 					if (!cmd.equals(Constants.ADD_DYNAMIC) && (size > 0)) {
