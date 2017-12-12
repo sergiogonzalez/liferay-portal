@@ -189,3 +189,27 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+
+<aui:script use="aui-base">
+	function <portlet:namespace />isImageLoaded(img) {
+		var imgLoaded = true;
+
+		if (!img.get('complete')) {
+			imgLoaded = false;
+		}
+
+		if (typeof img.get('naturalWidth') != "undefined" && img.get('naturalWidth') == 0) {
+			imgLoaded = false;
+		}
+
+		return imgLoaded;
+	}
+
+	function <portlet:namespace />clearBackgroundImage(img) {
+		if (<portlet:namespace />isImageLoaded(img)) {
+			img.setStyle('background-image', 'none');
+		}
+	}
+
+	A.all('.lfr-preview-file-image-current').each(<portlet:namespace />clearBackgroundImage);
+</aui:script>
