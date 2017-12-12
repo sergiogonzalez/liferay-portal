@@ -16,6 +16,7 @@ package com.liferay.document.library.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -261,24 +262,28 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				DLFileEntry.class.getName(), fileEntryId));
 	}
 
-	@Test
+	@Test(expected = FileExtensionException.class)
 	public void testDLFileEntryWithNoDLFileVersionAdded() throws Exception {
-		String fileExtensionsString = ".jpg";
+		try {
+			String fileExtensionsString = ".jpg";
 
-		DLFileEntry dlFileEntry = addDLFileEntry();
+			DLFileEntry dlFileEntry = addDLFileEntry();
 
-		DLFileEntryLocalServiceUtil.deleteFileVersion(
-			dlFileEntry.getUserId(),
-			dlFileEntry.getFileEntryId(),
-			String.valueOf(dlFileEntry.getFileVersion().getVersion()));
+			DLFileEntryLocalServiceUtil.deleteFileVersion(
+				dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
+				String.valueOf(dlFileEntry.getFileVersion().getVersion()));
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				_getConfigurationTemporarySwapper(
-					"fileExtensions", fileExtensionsString)) {
+			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+					_getConfigurationTemporarySwapper(
+						"fileExtensions", fileExtensionsString)) {
 
-			doVerify();
+				doVerify();
 
-			Assert.assertNotNull(dlFileEntry.getFileVersion());
+				Assert.assertNotNull(dlFileEntry.getFileVersion());
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -529,7 +534,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		return new ConfigurationTemporarySwapper(
 			DLValidator.class, _DL_CONFIGURATION_PID, dictionary);
 	}
-	
+
 	private static final String _DL_CONFIGURATION_PID =
 		"com.liferay.document.library.configuration.DLConfiguration";
 
