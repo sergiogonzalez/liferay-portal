@@ -337,14 +337,17 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		try {
 			long repositoryId = getRepositoryId();
 
-			Repository repository = RepositoryLocalServiceUtil.getRepository(
+			Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 				repositoryId);
 
-			long dlFolderId = repository.getDlFolderId();
+			if (repository != null) {
+				long dlFolderId = repository.getDlFolderId();
 
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(dlFolderId);
+				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
+					dlFolderId);
 
-			return dlFolder.isHidden();
+				return dlFolder.isHidden();
+			}
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
