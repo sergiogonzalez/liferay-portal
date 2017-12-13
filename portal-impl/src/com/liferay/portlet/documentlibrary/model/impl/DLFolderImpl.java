@@ -22,6 +22,8 @@ import com.liferay.document.library.kernel.service.DLFolderServiceUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -162,6 +164,9 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 			}
 		}
 		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 
 		return false;
@@ -186,5 +191,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(DLFolderImpl.class);
 
 }
