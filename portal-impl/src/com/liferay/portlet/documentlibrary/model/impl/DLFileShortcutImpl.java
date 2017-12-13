@@ -104,6 +104,9 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 			}
 		}
 		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 
 		return false;
