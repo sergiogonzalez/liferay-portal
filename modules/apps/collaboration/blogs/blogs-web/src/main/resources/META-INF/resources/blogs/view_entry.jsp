@@ -222,6 +222,14 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
+	Analytics.registerMiddleware(
+		function(request, analytics) {
+			request.context['referrer'] = document.referrer;
+
+			return request;
+		}
+	);
+
 	Analytics.send(
 		'visits',
 		'com.liferay.blogs',
