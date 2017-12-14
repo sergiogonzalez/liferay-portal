@@ -220,6 +220,15 @@ public class DLAppHelperLocalServiceImpl
 
 		assetEntryLocalService.deleteEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
+
+		//Indexer
+
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		Indexer<DLFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFolder.class);
+
+		indexer.delete(dlFolder);
 	}
 
 	@Override
