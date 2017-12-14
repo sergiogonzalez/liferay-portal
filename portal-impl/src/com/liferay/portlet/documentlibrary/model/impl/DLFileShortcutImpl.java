@@ -79,8 +79,8 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 
 			toTitle = fileEntry.getTitle();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		return toTitle;
