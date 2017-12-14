@@ -249,6 +249,22 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
+	public void deleteRepositoryFolders(long repositoryId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
+
+		List<Folder> folders = localRepository.getFolders(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (Folder folder : folders) {
+			deleteFolder(folder);
+		}
+	}
+
+	@Override
 	public void getFileAsStream(
 		long userId, FileEntry fileEntry, boolean incrementCounter) {
 
