@@ -1379,6 +1379,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			dlAppHelperLocalService.deleteRepositoryFileEntries(repositoryId);
 
+			dlAppHelperLocalService.deleteRepositoryFolders(repositoryId);
+
 			localRepository.deleteAll();
 		}
 
