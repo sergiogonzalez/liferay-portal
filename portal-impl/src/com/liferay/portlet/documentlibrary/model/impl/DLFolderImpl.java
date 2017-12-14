@@ -151,21 +151,24 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 	@Override
 	public boolean isInHiddenFolder() {
 		try {
-			Repository repository = RepositoryLocalServiceUtil.fetchRepository(
-				getRepositoryId());
+			long repositoryId = getRepositoryId();
 
-			if (repository != null) {
-				long dlFolderId = repository.getDlFolderId();
-
-				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-					dlFolderId);
-
-				return dlFolder.isHidden();
+			if (getGroupId() == repositoryId) {
+				return false;
 			}
+
+			Repository repository = RepositoryLocalServiceUtil.getRepository(
+				repositoryId);
+
+			long dlFolderId = repository.getDlFolderId();
+
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(dlFolderId);
+
+			return dlFolder.isHidden();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(pe, pe);
 			}
 		}
 
