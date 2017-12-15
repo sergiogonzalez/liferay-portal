@@ -24,7 +24,7 @@ import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -293,7 +293,7 @@ public class MBMessageIndexer
 				for (RelatedEntryIndexer relatedEntryIndexer :
 						relatedEntryIndexers) {
 
-					Comment comment = CommentManagerUtil.fetchComment(
+					Comment comment = commentManager.fetchComment(
 						mbMessage.getMessageId());
 
 					if (comment != null) {
@@ -527,6 +527,9 @@ public class MBMessageIndexer
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	protected CommentManager commentManager;
 
 	@Reference
 	protected GroupLocalService groupLocalService;
