@@ -220,6 +220,15 @@ public class DLAppHelperLocalServiceImpl
 
 		assetEntryLocalService.deleteEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
+
+		//Indexer
+
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		Indexer<DLFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFolder.class);
+
+		indexer.delete(dlFolder);
 	}
 
 	@Override
@@ -236,6 +245,22 @@ public class DLAppHelperLocalServiceImpl
 
 		for (FileEntry fileEntry : fileEntries) {
 			deleteFileEntry(fileEntry);
+		}
+	}
+
+	@Override
+	public void deleteRepositoryFolders(long repositoryId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
+
+		List<Folder> folders = localRepository.getFolders(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (Folder folder : folders) {
+			deleteFolder(folder);
 		}
 	}
 

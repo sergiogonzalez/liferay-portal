@@ -83,6 +83,12 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	@Override
+	public void deleteRepositoryFolders(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppHelperLocalService.deleteRepositoryFolders(repositoryId);
+	}
+
+	@Override
 	public void getFileAsStream(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		boolean incrementCounter) {

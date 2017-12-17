@@ -77,6 +77,9 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public void deleteRepositoryFileEntries(long repositoryId)
 		throws PortalException;
 
+	public void deleteRepositoryFolders(long repositoryId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getFileAsStream(long userId, FileEntry fileEntry,
 		boolean incrementCounter);
