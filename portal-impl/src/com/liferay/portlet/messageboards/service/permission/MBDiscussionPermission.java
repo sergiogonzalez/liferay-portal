@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.messageboards.service.permission;
 
-import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBDiscussionLocalServiceUtil;
+import com.liferay.message.boards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -40,7 +40,7 @@ import java.util.List;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBDiscussion"
+		"model.class.name=com.liferay.message.boards.model.MBDiscussion"
 	}
 )
 public class MBDiscussionPermission implements BaseModelPermissionChecker {

@@ -58,7 +58,7 @@ import javax.portlet.PortletResponse;
 public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 	public static final String CLASS_NAME = MBThread.class.getName();
-
+	com.liferay.message.boards.kernel.model.MBDiscussionModel
 	public MBThreadIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
