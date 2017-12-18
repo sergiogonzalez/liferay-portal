@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.comment.internal;
 
+import com.liferay.comment.constants.CommentConstants;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
@@ -26,7 +27,6 @@ import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.comment.constants.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
