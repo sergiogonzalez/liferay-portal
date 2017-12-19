@@ -12,31 +12,13 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.exception;
+package com.liferay.message.boards.model.impl;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.exception.NoSuchDiscussionException}
  */
-@Deprecated
-public class NoSuchDiscussionException extends NoSuchModelException {
-
-	public NoSuchDiscussionException() {
-	}
-
-	public NoSuchDiscussionException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchDiscussionException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public NoSuchDiscussionException(Throwable cause) {
-		super(cause);
-	}
-
+@ProviderType
+public class MBDiscussionImpl extends MBDiscussionBaseImpl {
 }

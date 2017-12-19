@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
-import com.liferay.message.boards.kernel.service.MBDiscussionLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
+import com.liferay.message.boards.kernel.service.MBCategoryService;
+import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -52,8 +52,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -67,19 +66,18 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Harry Mark
  * @author Bruno Farache
  * @author Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.search.MBMessageIndexer}
  */
-@Deprecated
-@OSGiBeanProperties(
-	property = {
-		"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"
-	},
+@Component(
+	immediate = true,
+	property = {"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
 	service = {Indexer.class, RelatedEntryIndexer.class}
 )
 public class MBMessageIndexer
@@ -135,7 +133,7 @@ public class MBMessageIndexer
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+		MBMessage message = mbMessageLocalService.getMessage(entryClassPK);
 
 		if (message.isDiscussion()) {
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
@@ -152,7 +150,7 @@ public class MBMessageIndexer
 
 	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+		MBMessage message = mbMessageLocalService.getMessage(classPK);
 
 		return isVisible(message.getStatus(), status);
 	}
@@ -160,7 +158,7 @@ public class MBMessageIndexer
 	@Override
 	public boolean isVisibleRelatedEntry(long classPK, int status) {
 		try {
-			MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+			MBMessage message = mbMessageLocalService.getMessage(classPK);
 
 			if (message.isDiscussion()) {
 				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
@@ -222,7 +220,7 @@ public class MBMessageIndexer
 
 			for (long categoryId : categoryIds) {
 				try {
-					MBCategoryServiceUtil.getCategory(categoryId);
+					mbCategoryService.getCategory(categoryId);
 				}
 				catch (PortalException pe) {
 					if (_log.isDebugEnabled()) {
@@ -274,7 +272,7 @@ public class MBMessageIndexer
 		}
 
 		MBDiscussion discussion =
-			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
+			mbDiscussionLocalService.fetchThreadDiscussion(
 				mbMessage.getThreadId());
 
 		if (discussion == null) {
@@ -295,7 +293,7 @@ public class MBMessageIndexer
 				for (RelatedEntryIndexer relatedEntryIndexer :
 						relatedEntryIndexers) {
 
-					Comment comment = CommentManagerUtil.fetchComment(
+					Comment comment = commentManager.fetchComment(
 						mbMessage.getMessageId());
 
 					if (comment != null) {
@@ -342,14 +340,13 @@ public class MBMessageIndexer
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+		MBMessage message = mbMessageLocalService.getMessage(classPK);
 
 		doReindex(message);
 
 		if (message.isRoot()) {
-			List<MBMessage> messages =
-				MBMessageLocalServiceUtil.getThreadMessages(
-					message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+			List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+				message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
 
 			for (MBMessage curMessage : messages) {
 				reindex(curMessage);
@@ -408,7 +405,7 @@ public class MBMessageIndexer
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			MBCategoryLocalServiceUtil.getActionableDynamicQuery();
+			mbCategoryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -432,7 +429,7 @@ public class MBMessageIndexer
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			GroupLocalServiceUtil.getActionableDynamicQuery();
+			groupLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -455,7 +452,7 @@ public class MBMessageIndexer
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			MBMessageLocalServiceUtil.getIndexableActionableDynamicQuery();
+			mbMessageLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -513,7 +510,7 @@ public class MBMessageIndexer
 
 	protected void reindexRoot(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			GroupLocalServiceUtil.getActionableDynamicQuery();
+			groupLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -530,6 +527,24 @@ public class MBMessageIndexer
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	protected CommentManager commentManager;
+
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected MBCategoryLocalService mbCategoryLocalService;
+
+	@Reference
+	protected MBCategoryService mbCategoryService;
+
+	@Reference
+	protected MBDiscussionLocalService mbDiscussionLocalService;
+
+	@Reference
+	protected MBMessageLocalService mbMessageLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageIndexer.class);
