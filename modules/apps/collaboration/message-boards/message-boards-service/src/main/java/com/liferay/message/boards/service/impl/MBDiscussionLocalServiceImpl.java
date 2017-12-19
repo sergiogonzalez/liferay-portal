@@ -19,6 +19,7 @@ import com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
@@ -116,8 +117,7 @@ public class MBDiscussionLocalServiceImpl
 			long userId, String className, long classPK)
 		throws PortalException {
 
-		subscriptionLocalService.deleteSubscription(
-			userId, className, classPK);
+		subscriptionLocalService.deleteSubscription(userId, className, classPK);
 	}
 
 	@ServiceReference(type = SubscriptionLocalService.class)
