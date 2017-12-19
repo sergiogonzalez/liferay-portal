@@ -254,6 +254,47 @@ if (portletTitleBasedNavigation) {
 			);
 		}
 	);
+
+	var entry = document.querySelector('.entry');
+
+	var throttle = function(fn, wait) {
+		var time = Date.now();
+
+		return function() {
+			if ((time + wait - Date.now()) < 0) {
+				fn();
+				time = Date.now();
+			}
+		}
+	};
+
+	Analytics.registerPlugin(
+		function(analytics) {
+			document.addEventListener(
+				'scroll',
+				throttle(
+					function() {
+						var currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+						var entryBoundingClientRect = entry.getBoundingClientRect();
+
+						var depth = Math.truncate(100 * (currentScrollPosition - entryBoundingClientRect.top) / entryBoundingClientRect.height);
+
+						if (depth >= 0 && depth <= 100) {
+							Analytics.send(
+								'depth',
+								'com.liferay.blogs',
+								{
+									depth: depth,
+									entryId: '<%= entryId %>',
+								}
+							);
+						}
+					},
+					500,
+				)
+			);
+		}
+	);
 </aui:script>
 
 <%
