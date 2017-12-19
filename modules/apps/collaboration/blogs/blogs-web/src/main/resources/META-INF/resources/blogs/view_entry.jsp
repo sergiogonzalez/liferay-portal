@@ -221,7 +221,7 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
-<aui:script>
+<aui:script require="metal-dom/src/all/dom as dom">
 	Analytics.registerMiddleware(
 		function(request, analytics) {
 			request.context['referrer'] = document.referrer;
@@ -236,6 +236,23 @@ if (portletTitleBasedNavigation) {
 		{
 			entryId: '<%= entryId %>',
 			userId: '<%= user.getUserId() %>'
+		}
+	);
+
+	dom.delegate(
+		document.body,
+		'click',
+		'.social-bookmark',
+		function(event) {
+			Analytics.send(
+				'social',
+				'com.liferay.blogs',
+				{
+					entryId: '<%= entryId %>',
+					network: event.delegateTarget.id.substr(event.delegateTarget.id.lastIndexOf('_') + 1),
+					userId: '<%= user.getUserId() %>'
+				}
+			);
 		}
 	);
 </aui:script>
