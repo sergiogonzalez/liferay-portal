@@ -14,11 +14,14 @@
 
 package com.liferay.document.library.kernel.exception;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Jose A. Jimenez
+ * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class RequiredFileException extends PortalException {
 
 	public RequiredFileException() {
