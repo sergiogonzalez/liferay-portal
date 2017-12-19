@@ -225,6 +225,7 @@ if (portletTitleBasedNavigation) {
 	Analytics.registerMiddleware(
 		function(request, analytics) {
 			request.context['referrer'] = document.referrer;
+			request.context['userId'] = '<%= user.getUserId() %>';
 
 			return request;
 		}
@@ -234,8 +235,7 @@ if (portletTitleBasedNavigation) {
 		'visits',
 		'com.liferay.blogs',
 		{
-			entryId: '<%= entryId %>',
-			userId: '<%= user.getUserId() %>'
+			entryId: '<%= entryId %>'
 		}
 	);
 
@@ -250,7 +250,6 @@ if (portletTitleBasedNavigation) {
 				{
 					entryId: '<%= entryId %>',
 					network: event.delegateTarget.id.substr(event.delegateTarget.id.lastIndexOf('_') + 1),
-					userId: '<%= user.getUserId() %>'
 				}
 			);
 		}
