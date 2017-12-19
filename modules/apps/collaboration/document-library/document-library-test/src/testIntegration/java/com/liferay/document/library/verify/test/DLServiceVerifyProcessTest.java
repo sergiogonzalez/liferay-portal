@@ -16,7 +16,7 @@ package com.liferay.document.library.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -28,8 +28,10 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
@@ -61,6 +63,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -262,28 +265,41 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				DLFileEntry.class.getName(), fileEntryId));
 	}
 
-	@Test(expected = FileExtensionException.class)
-	public void testDLFileEntryWithNoDLFileVersionAdded() throws Exception {
+	@Test
+	public void testDLFileEntryWithNoDLFileVersionAndNoFile() throws Exception {
+		DLFileEntry dlFileEntry = addDLFileEntry();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext, new HashMap<>());
+
+		DLFileVersionLocalServiceUtil.deleteDLFileVersion(
+			dlFileEntry.getFileVersion());
+
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileEntry.getVersion());
+
 		try {
-			String fileExtensionsString = ".jpg";
+			dlFileEntry.getFileVersion();
 
-			DLFileEntry dlFileEntry = addDLFileEntry();
-
-			DLFileEntryLocalServiceUtil.deleteFileVersion(
-				dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
-				String.valueOf(dlFileEntry.getFileVersion().getVersion()));
-
-			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-					_getConfigurationTemporarySwapper(
-						"fileExtensions", fileExtensionsString)) {
-
-				doVerify();
-
-				Assert.assertNotNull(dlFileEntry.getFileVersion());
-			}
+			Assert.fail();
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (NoSuchFileVersionException nsfve) {
+		}
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				_getConfigurationTemporarySwapper("fileExtensions", ".jpg")) {
+
+			doVerify();
+
+			Assert.assertNotNull(dlFileEntry.getFileVersion());
 		}
 	}
 
