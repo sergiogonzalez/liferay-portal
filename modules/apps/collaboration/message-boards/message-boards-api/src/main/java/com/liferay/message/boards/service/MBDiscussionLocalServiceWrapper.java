@@ -240,6 +240,13 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 
 	@Override
 	public com.liferay.message.boards.model.MBDiscussion getDiscussion(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbDiscussionLocalService.getDiscussion(classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBDiscussion getDiscussion(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbDiscussionLocalService.getDiscussion(className, classPK);

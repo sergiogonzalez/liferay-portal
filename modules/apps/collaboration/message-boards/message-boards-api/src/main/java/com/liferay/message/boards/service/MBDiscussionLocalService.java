@@ -202,6 +202,10 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getDiscussion(long classNameId, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBDiscussion getDiscussion(java.lang.String className, long classPK)
 		throws PortalException;
 

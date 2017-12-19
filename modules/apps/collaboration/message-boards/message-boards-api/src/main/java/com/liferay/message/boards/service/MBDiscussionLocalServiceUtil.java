@@ -227,6 +227,12 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.model.MBDiscussion getDiscussion(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDiscussion(classNameId, classPK);
+	}
+
+	public static com.liferay.message.boards.model.MBDiscussion getDiscussion(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDiscussion(className, classPK);
