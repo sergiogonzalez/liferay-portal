@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.model.MBThread;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -25,13 +27,20 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +82,9 @@ public interface MBThreadLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MBThread addMBThread(MBThread mbThread);
 
+	public MBThread addThread(long categoryId, MBMessage message,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new message boards thread with the primary key. Does not add the message boards thread to the database.
 	*
@@ -106,6 +118,17 @@ public interface MBThreadLocalService extends BaseLocalService,
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public void deleteThread(long threadId) throws PortalException;
+
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteThread(MBThread thread) throws PortalException;
+
+	public void deleteThreads(long groupId, long categoryId)
+		throws PortalException;
+
+	public void deleteThreads(long groupId, long categoryId,
+		boolean includeTrashedEntries) throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 
@@ -181,11 +204,51 @@ public interface MBThreadLocalService extends BaseLocalService,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThread fetchThread(long threadId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoryThreadsCount(long groupId, long categoryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId, long userId,
+		boolean subscribed, boolean includeAnonymous,
+		QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId, long userId,
+		boolean subscribed, QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId, long userId,
+		QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getGroupThreads(long groupId,
+		QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupThreadsCount(long groupId, long userId,
+		boolean subscribed, boolean includeAnonymous,
+		QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupThreadsCount(long groupId, long userId,
+		boolean subscribed, QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupThreadsCount(long groupId, long userId,
+		QueryDefinition<MBThread> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupThreadsCount(long groupId,
+		QueryDefinition<MBThread> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -260,6 +323,9 @@ public interface MBThreadLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMBThreadsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getNoAssetThreads();
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -272,6 +338,76 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getPriorityThreads(long categoryId, double priority)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getPriorityThreads(long categoryId, double priority,
+		boolean inherit) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThread getThread(long threadId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getThreads(long groupId, long categoryId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadsCount(long groupId, long categoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasAnswerMessage(long threadId);
+
+	@BufferedIncrement(configuration = "MBThread", incrementClass = NumberIncrement.class)
+	public void incrementViewCounter(long threadId, int increment)
+		throws PortalException;
+
+	public void moveDependentsToTrash(long groupId, long threadId,
+		long trashEntryId) throws PortalException;
+
+	public MBThread moveThread(long groupId, long categoryId, long threadId)
+		throws PortalException;
+
+	public MBThread moveThreadFromTrash(long userId, long categoryId,
+		long threadId) throws PortalException;
+
+	public void moveThreadsToTrash(long groupId, long userId)
+		throws PortalException;
+
+	public MBThread moveThreadToTrash(long userId, long threadId)
+		throws PortalException;
+
+	public MBThread moveThreadToTrash(long userId, MBThread thread)
+		throws PortalException;
+
+	public void restoreDependentsFromTrash(long groupId, long threadId)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#restoreDependentsFromTrash(long, long)}
+	*/
+	@java.lang.Deprecated
+	public void restoreDependentsFromTrash(long groupId, long threadId,
+		long trashEntryId) throws PortalException;
+
+	public void restoreThreadFromTrash(long userId, long threadId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long groupId, long userId, long creatorUserId,
+		int status, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long groupId, long userId, long creatorUserId,
+		long startDate, long endDate, int status, int start, int end)
+		throws PortalException;
+
+	public MBThread splitThread(long userId, long messageId,
+		java.lang.String subject, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the message boards thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -280,4 +416,12 @@ public interface MBThreadLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MBThread updateMBThread(MBThread mbThread);
+
+	public MBThread updateMessageCount(long threadId);
+
+	public void updateQuestion(long threadId, boolean question)
+		throws PortalException;
+
+	public MBThread updateStatus(long userId, long threadId, int status)
+		throws PortalException;
 }

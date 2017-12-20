@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.model.MBCategory;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -28,10 +29,14 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -63,6 +68,35 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBCategoryLocalServiceUtil} to access the message boards category local service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBCategory addCategory(long userId, long parentCategoryId,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
+
+	public MBCategory addCategory(long userId, long parentCategoryId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String displayStyle, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean mailingListActive,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void addCategoryResources(long categoryId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addCategoryResources(long categoryId,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	public void addCategoryResources(MBCategory category,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addCategoryResources(MBCategory category,
+		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
 	* Adds the message boards category to the database. Also notifies the appropriate model listeners.
@@ -80,6 +114,16 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the new message boards category
 	*/
 	public MBCategory createMBCategory(long categoryId);
+
+	public void deleteCategories(long groupId) throws PortalException;
+
+	public void deleteCategory(long categoryId) throws PortalException;
+
+	public void deleteCategory(MBCategory category) throws PortalException;
+
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteCategory(MBCategory category,
+		boolean includeTrashedEntries) throws PortalException;
 
 	/**
 	* Deletes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
@@ -185,6 +229,95 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long excludedCategoryId, long parentCategoryId, int status, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] excludedCategoryIds, long[] parentCategoryIds, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long parentCategoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long parentCategoryId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
+		long[] parentCategoryIds, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBCategory getCategory(long categoryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCompanyCategories(long companyId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyCategoriesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -273,6 +406,51 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Long> getSubcategoryIds(
+		List<java.lang.Long> categoryIds, long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getSubscribedCategories(long groupId, long userId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSubscribedCategoriesCount(long groupId, long userId);
+
+	public void moveCategoriesToTrash(long groupId, long userId)
+		throws PortalException;
+
+	public MBCategory moveCategory(long categoryId, long parentCategoryId,
+		boolean mergeWithParentCategory) throws PortalException;
+
+	public MBCategory moveCategoryFromTrash(long userId, long categoryId,
+		long newCategoryId) throws PortalException;
+
+	public MBCategory moveCategoryToTrash(long userId, long categoryId)
+		throws PortalException;
+
+	public void restoreCategoryFromTrash(long userId, long categoryId)
+		throws PortalException;
+
+	public void subscribeCategory(long userId, long groupId, long categoryId)
+		throws PortalException;
+
+	public void unsubscribeCategory(long userId, long groupId, long categoryId)
+		throws PortalException;
+
+	public MBCategory updateCategory(long categoryId, long parentCategoryId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String displayStyle, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean mailingListActive,
+		boolean mergeWithParentCategory, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the message boards category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -281,4 +459,13 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MBCategory updateMBCategory(MBCategory mbCategory);
+
+	public MBCategory updateMessageCount(long categoryId);
+
+	public MBCategory updateStatistics(long categoryId);
+
+	public MBCategory updateStatus(long userId, long categoryId, int status)
+		throws PortalException;
+
+	public MBCategory updateThreadCount(long categoryId);
 }
