@@ -20,12 +20,12 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.message.boards.kernel.constants.MBConstants;
 import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.exception.SplitThreadException;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.model.MBTreeWalker;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
+import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -1111,7 +1111,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Thread
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		thread.setStatus(status);
 		thread.setStatusByUserId(user.getUserId());

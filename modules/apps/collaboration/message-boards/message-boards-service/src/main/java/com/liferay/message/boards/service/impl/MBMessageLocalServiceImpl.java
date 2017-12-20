@@ -23,13 +23,13 @@ import com.liferay.message.boards.kernel.exception.MessageBodyException;
 import com.liferay.message.boards.kernel.exception.MessageSubjectException;
 import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
 import com.liferay.message.boards.kernel.exception.RequiredMessageException;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
@@ -82,9 +82,9 @@ import com.liferay.portal.linkback.LinkbackProducerUtil;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
+import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageDisplayImpl;
-import com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl;
+import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.messageboards.util.MBSubscriptionSender;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -154,7 +154,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Message
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		userName = user.isDefaultUser() ? userName : user.getFullName();
 
@@ -1474,7 +1474,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				// Thread
 
-				User user = userPersistence.findByPrimaryKey(userId);
+				User user = userLocalService.findByPrimaryKey(userId);
 
 				updateThreadStatus(
 					thread, message, user, oldStatus, modifiedDate);
@@ -1621,7 +1621,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		int oldStatus = message.getStatus();
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		Date modifiedDate = serviceContext.getModifiedDate(now);

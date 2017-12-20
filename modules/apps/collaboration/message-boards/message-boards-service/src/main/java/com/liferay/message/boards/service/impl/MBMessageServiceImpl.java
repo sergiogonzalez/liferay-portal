@@ -15,12 +15,12 @@
 package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.kernel.exception.LockedThreadException;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.service.base.MBMessageServiceBaseImpl;
+import com.liferay.message.boards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -409,7 +409,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = companyLocalService.getCompany(companyId);
 
 		String name = company.getName();
 		String description = company.getName();

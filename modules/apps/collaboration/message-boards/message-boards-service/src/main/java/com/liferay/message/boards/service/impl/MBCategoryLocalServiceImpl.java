@@ -15,10 +15,10 @@
 package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.kernel.exception.CategoryNameException;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
-import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
+import com.liferay.message.boards.model.impl.MBCategoryImpl;
+import com.liferay.message.boards.service.base.MBCategoryLocalServiceBaseImpl;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -76,7 +76,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Category
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -607,7 +607,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			// Categories and threads
 
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = userLocalService.getUser(userId);
 
 			List<Object> categoriesAndThreads = getCategoriesAndThreads(
 				category.getGroupId(), categoryId,
@@ -644,7 +644,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Categories and threads
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		List<Object> categoriesAndThreads = getCategoriesAndThreads(
 			category.getGroupId(), categoryId);
@@ -677,7 +677,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Categories and threads
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		List<Object> categoriesAndThreads = getCategoriesAndThreads(
 			category.getGroupId(), categoryId,
@@ -805,7 +805,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Category
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
