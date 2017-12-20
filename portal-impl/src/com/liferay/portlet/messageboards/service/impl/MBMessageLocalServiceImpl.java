@@ -120,7 +120,10 @@ import net.htmlparser.jericho.StartTag;
  * @author Jorge Ferrer
  * @author Juan Fernández
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl}
  */
+@Deprecated
 public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
