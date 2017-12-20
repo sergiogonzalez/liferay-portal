@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.message.boards.internal.verify.model;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.verify.model.MBCategoryVerifiableModel}
  */
-@Deprecated
 public class MBCategoryVerifiableModel implements VerifiableResourcedModel {
 
 	@Override

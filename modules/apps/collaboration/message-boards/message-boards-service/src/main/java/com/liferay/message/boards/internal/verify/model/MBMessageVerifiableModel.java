@@ -12,32 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.message.boards.internal.verify.model;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.verify.model.MBCategoryVerifiableModel}
  */
-@Deprecated
-public class MBCategoryVerifiableModel implements VerifiableResourcedModel {
+public class MBMessageVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return MBCategory.class.getName();
+		return MBMessage.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "categoryId";
+		return "messageId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBCategory";
+		return "MBMessage";
 	}
 
 	@Override
