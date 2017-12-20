@@ -46,7 +46,10 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl}
  */
+@Deprecated
 public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
