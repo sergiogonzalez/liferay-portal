@@ -31,7 +31,8 @@ import com.liferay.message.boards.service.base.MBCategoryLocalServiceBaseImpl;
  * @see com.liferay.message.boards.service.MBCategoryLocalServiceUtil
  */
 public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.message.boards.service.MBCategoryLocalServiceUtil} to access the message boards category local service.

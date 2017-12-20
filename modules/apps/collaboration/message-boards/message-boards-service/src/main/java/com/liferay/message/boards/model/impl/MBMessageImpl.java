@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class MBMessageImpl extends MBMessageBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a message-boards message model instance should use the {@link com.liferay.message.boards.model.MBMessage} interface instead.
 	 */
 	public MBMessageImpl() {
 	}
+
 }

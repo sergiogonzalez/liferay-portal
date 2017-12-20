@@ -31,7 +31,8 @@ import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
  * @see com.liferay.message.boards.service.MBMessageLocalServiceUtil
  */
 public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.message.boards.service.MBMessageLocalServiceUtil} to access the message-boards message local service.

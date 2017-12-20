@@ -31,7 +31,8 @@ import com.liferay.message.boards.service.base.MBCategoryServiceBaseImpl;
  * @see com.liferay.message.boards.service.MBCategoryServiceUtil
  */
 public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.message.boards.service.MBCategoryServiceUtil} to access the message boards category remote service.
