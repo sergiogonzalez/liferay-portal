@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class MBCategoryImpl extends MBCategoryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a message boards category model instance should use the {@link com.liferay.message.boards.model.MBCategory} interface instead.
 	 */
 	public MBCategoryImpl() {
 	}
+
 }
