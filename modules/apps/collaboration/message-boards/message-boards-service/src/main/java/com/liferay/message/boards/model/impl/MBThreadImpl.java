@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class MBThreadImpl extends MBThreadBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a message boards thread model instance should use the {@link com.liferay.message.boards.model.MBThread} interface instead.
 	 */
 	public MBThreadImpl() {
 	}
+
 }
