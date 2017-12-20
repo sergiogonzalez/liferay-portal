@@ -53,4 +53,20 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 				return MBThread.class;
 			}
 		};
+
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long getAttachmentsFolderId();
+
+	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.lock.Lock getLock();
+
+	public long[] getParticipantUserIds();
+
+	public boolean hasLock(long userId);
+
+	public boolean isLocked();
 }
