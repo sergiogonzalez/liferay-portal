@@ -249,6 +249,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.addAttachmentsFolder();
+	}
+
+	@Override
 	public java.lang.Object clone() {
 		return new MBMessageWrapper((MBMessage)_mbMessage.clone());
 	}
@@ -288,6 +294,36 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.getAnswer();
 	}
 
+	@Override
+	public java.lang.String[] getAssetTagNames() {
+		return _mbMessage.getAssetTagNames();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFileEntries(start, end);
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFileEntriesCount();
+	}
+
+	@Override
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getAttachmentsFolderId();
+	}
+
 	/**
 	* Returns the body of this message-boards message.
 	*
@@ -296,6 +332,17 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public java.lang.String getBody() {
 		return _mbMessage.getBody();
+	}
+
+	@Override
+	public java.lang.String getBody(boolean translate) {
+		return _mbMessage.getBody(translate);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getCategory();
 	}
 
 	/**
@@ -356,6 +403,25 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public Date getCreateDate() {
 		return _mbMessage.getCreateDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getDeletedAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getDeletedAttachmentsFileEntries(start, end);
+	}
+
+	@Override
+	public int getDeletedAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getDeletedAttachmentsFileEntriesCount();
 	}
 
 	@Override
@@ -518,6 +584,18 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.getSubject();
 	}
 
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThread getThread()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getThread();
+	}
+
+	@Override
+	public long getThreadAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessage.getThreadAttachmentsFolderId();
+	}
+
 	/**
 	* Returns the thread ID of this message-boards message.
 	*
@@ -602,6 +680,11 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
+	public java.lang.String getWorkflowClassName() {
+		return _mbMessage.getWorkflowClassName();
+	}
+
+	@Override
 	public int hashCode() {
 		return _mbMessage.hashCode();
 	}
@@ -661,6 +744,11 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.isDenied();
 	}
 
+	@Override
+	public boolean isDiscussion() {
+		return _mbMessage.isDiscussion();
+	}
+
 	/**
 	* Returns <code>true</code> if this message-boards message is a draft.
 	*
@@ -684,6 +772,11 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public boolean isExpired() {
 		return _mbMessage.isExpired();
+	}
+
+	@Override
+	public boolean isFormatBBCode() {
+		return _mbMessage.isFormatBBCode();
 	}
 
 	/**
@@ -751,6 +844,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.isPending();
 	}
 
+	@Override
+	public boolean isReply() {
+		return _mbMessage.isReply();
+	}
+
+	@Override
+	public boolean isRoot() {
+		return _mbMessage.isRoot();
+	}
+
 	/**
 	* Returns <code>true</code> if this message-boards message is scheduled.
 	*
@@ -794,6 +897,11 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public void setAnswer(boolean answer) {
 		_mbMessage.setAnswer(answer);
+	}
+
+	@Override
+	public void setAttachmentsFolderId(long attachmentsFolderId) {
+		_mbMessage.setAttachmentsFolderId(attachmentsFolderId);
 	}
 
 	/**

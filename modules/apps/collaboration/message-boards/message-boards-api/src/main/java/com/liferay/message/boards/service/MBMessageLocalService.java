@@ -18,6 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
+import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBMessage;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -28,18 +31,28 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for MBMessage. Methods of this
@@ -63,6 +76,15 @@ public interface MBMessageLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMessageLocalServiceUtil} to access the message-boards message local service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBMessage addDiscussionMessage(long userId,
+		java.lang.String userName, long groupId, java.lang.String className,
+		long classPK, int workflowAction) throws PortalException;
+
+	public MBMessage addDiscussionMessage(long userId,
+		java.lang.String userName, long groupId, java.lang.String className,
+		long classPK, long threadId, long parentMessageId,
+		java.lang.String subject, java.lang.String body,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the message-boards message to the database. Also notifies the appropriate model listeners.
@@ -73,6 +95,60 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MBMessage addMBMessage(MBMessage mbMessage);
 
+	public MBMessage addMessage(long userId, java.lang.String userName,
+		long groupId, long categoryId, long threadId, long parentMessageId,
+		java.lang.String subject, java.lang.String body,
+		java.lang.String format,
+		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
+		boolean anonymous, double priority, boolean allowPingbacks,
+		ServiceContext serviceContext) throws PortalException;
+
+	public MBMessage addMessage(long userId, java.lang.String userName,
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MBMessage addMessage(long userId, java.lang.String userName,
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String format,
+		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
+		boolean anonymous, double priority, boolean allowPingbacks,
+		ServiceContext serviceContext) throws PortalException;
+
+	public MBMessage addMessage(long userId, java.lang.String userName,
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String format,
+		java.lang.String fileName, File file, boolean anonymous,
+		double priority, boolean allowPingbacks, ServiceContext serviceContext)
+		throws FileNotFoundException, PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
+	long, long, String, String, ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public MBMessage addMessage(long userId, java.lang.String userName,
+		long categoryId, java.lang.String subject, java.lang.String body,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void addMessageAttachment(long userId, long messageId,
+		java.lang.String fileName, File file, java.lang.String mimeType)
+		throws PortalException;
+
+	public void addMessageResources(long messageId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addMessageResources(long messageId,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	public void addMessageResources(MBMessage message,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addMessageResources(MBMessage message,
+		ModelPermissions modelPermissions) throws PortalException;
+
 	/**
 	* Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
 	*
@@ -80,6 +156,13 @@ public interface MBMessageLocalService extends BaseLocalService,
 	* @return the new message-boards message
 	*/
 	public MBMessage createMBMessage(long messageId);
+
+	@Indexable(type = IndexableType.DELETE)
+	public MBMessage deleteDiscussionMessage(long messageId)
+		throws PortalException;
+
+	public void deleteDiscussionMessages(java.lang.String className,
+		long classPK) throws PortalException;
 
 	/**
 	* Deletes the message-boards message with the primary key from the database. Also notifies the appropriate model listeners.
@@ -99,6 +182,19 @@ public interface MBMessageLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MBMessage deleteMBMessage(MBMessage mbMessage);
+
+	@Indexable(type = IndexableType.DELETE)
+	public MBMessage deleteMessage(long messageId) throws PortalException;
+
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public MBMessage deleteMessage(MBMessage message) throws PortalException;
+
+	public void deleteMessageAttachment(long messageId,
+		java.lang.String fileName) throws PortalException;
+
+	public void deleteMessageAttachments(long messageId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -166,6 +262,13 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void emptyMessageAttachments(long messageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage fetchFirstMessage(long threadId, long parentMessageId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage fetchMBMessage(long messageId);
 
@@ -184,8 +287,88 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
+		int status, int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoryMessagesCount(long groupId, long categoryId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCompanyMessages(long companyId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCompanyMessages(long companyId, int status,
+		int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyMessagesCount(long companyId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
+		long groupId, java.lang.String className, long classPK, int status)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
+		long groupId, java.lang.String className, long classPK, int status,
+		Comparator<MBMessage> comparator) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getDiscussionMessageDisplay(long, long, String, long, int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
+		long groupId, java.lang.String className, long classPK, int status,
+		java.lang.String threadView) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDiscussionMessagesCount(long classNameId, long classPK,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDiscussionMessagesCount(java.lang.String className,
+		long classPK, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBDiscussion> getDiscussions(java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage getFirstMessage(long threadId, long parentMessageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, int status,
+		int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, long userId,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getGroupMessages(long groupId, long userId,
+		int status, int start, int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupMessagesCount(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupMessagesCount(long groupId, long userId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -260,6 +443,58 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMBMessagesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage getMessage(long messageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
+		int status) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	long, int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
+		int status, java.lang.String threadView, boolean includePrevAndNext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status, Comparator<MBMessage> comparator) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status, java.lang.String threadView, boolean includePrevAndNext)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int, Comparator)} (
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
+		int status, java.lang.String threadView, boolean includePrevAndNext,
+		Comparator<MBMessage> comparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getMessages(java.lang.String className,
+		long classPK, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getNoAssetMessages();
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -272,6 +507,85 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPositionInThread(long messageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long threadId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long threadId, int status,
+		Comparator<MBMessage> comparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long threadId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long userId, long threadId,
+		int status, int start, int end, Comparator<MBMessage> comparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadMessagesCount(long threadId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadRepliesMessages(long threadId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getUserDiscussionMessages(long userId,
+		long classNameId, long classPK, int status, int start, int end,
+		OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getUserDiscussionMessages(long userId,
+		long[] classNameIds, int status, int start, int end,
+		OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getUserDiscussionMessages(long userId,
+		java.lang.String className, long classPK, int status, int start,
+		int end, OrderByComparator<MBMessage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId, long classNameId,
+		long classPK, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId,
+		java.lang.String className, long classPK, int status);
+
+	public long moveMessageAttachmentToTrash(long userId, long messageId,
+		java.lang.String fileName) throws PortalException;
+
+	public void restoreMessageAttachmentFromTrash(long userId, long messageId,
+		java.lang.String deletedFileName) throws PortalException;
+
+	public void subscribeMessage(long userId, long messageId)
+		throws PortalException;
+
+	public void unsubscribeMessage(long userId, long messageId)
+		throws PortalException;
+
+	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+		throws PortalException;
+
+	public void updateAnswer(MBMessage message, boolean answer, boolean cascade)
+		throws PortalException;
+
+	public void updateAsset(long userId, MBMessage message,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds) throws PortalException;
+
+	public MBMessage updateDiscussionMessage(long userId, long messageId,
+		java.lang.String className, long classPK, java.lang.String subject,
+		java.lang.String body, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the message-boards message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -280,4 +594,37 @@ public interface MBMessageLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MBMessage updateMBMessage(MBMessage mbMessage);
+
+	public MBMessage updateMessage(long userId, long messageId,
+		java.lang.String body, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MBMessage updateMessage(long userId, long messageId,
+		java.lang.String subject, java.lang.String body,
+		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
+		List<java.lang.String> existingFiles, double priority,
+		boolean allowPingbacks, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
+	public MBMessage updateMessage(long messageId, java.lang.String body)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	int, ServiceContext, Map)}
+	*/
+	@java.lang.Deprecated
+	public MBMessage updateStatus(long userId, long messageId, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public MBMessage updateStatus(long userId, long messageId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
+	public void updateUserName(long userId, java.lang.String userName);
 }
