@@ -31,7 +31,8 @@ import com.liferay.message.boards.service.base.MBMessageServiceBaseImpl;
  * @see com.liferay.message.boards.service.MBMessageServiceUtil
  */
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.message.boards.service.MBMessageServiceUtil} to access the message-boards message remote service.

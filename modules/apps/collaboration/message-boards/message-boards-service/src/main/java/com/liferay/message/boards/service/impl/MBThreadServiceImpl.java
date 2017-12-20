@@ -31,7 +31,8 @@ import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
  * @see com.liferay.message.boards.service.MBThreadServiceUtil
  */
 public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.message.boards.service.MBThreadServiceUtil} to access the message boards thread remote service.
