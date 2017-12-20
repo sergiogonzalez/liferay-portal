@@ -274,7 +274,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long permissionOwnerId, long messageId)
 		throws PortalException {
 
-		deleteDiscussionMessage(messageId);
+		mbMessageService.deleteDiscussionMessage(messageId);
 	}
 
 	@Override

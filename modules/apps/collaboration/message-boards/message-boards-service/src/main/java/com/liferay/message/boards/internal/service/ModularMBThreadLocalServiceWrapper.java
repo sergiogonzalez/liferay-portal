@@ -508,8 +508,7 @@ public class ModularMBThreadLocalServiceWrapper
 			long groupId, long threadId, long trashEntryId)
 		throws PortalException {
 
-		_mbThreadLocalService.restoreDependentsFromTrash(
-			groupId, threadId, trashEntryId);
+		super.restoreDependentsFromTrash(groupId, threadId, trashEntryId);
 	}
 
 	@Override

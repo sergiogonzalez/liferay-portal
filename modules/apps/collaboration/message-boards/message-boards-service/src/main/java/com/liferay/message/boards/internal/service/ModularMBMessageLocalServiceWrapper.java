@@ -169,10 +169,8 @@ public class ModularMBMessageLocalServiceWrapper
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		return ModelAdapterUtil.adapt(
-			MBMessage.class,
-			_mbMessageLocalService.addMessage(
-				userId, userName, categoryId, subject, body, serviceContext));
+		return super.addMessage(
+			userId, userName, categoryId, subject, body, serviceContext);
 	}
 
 	@Override
@@ -464,7 +462,7 @@ public class ModularMBMessageLocalServiceWrapper
 			int status, String threadView)
 		throws PortalException {
 
-		return _mbMessageLocalService.getDiscussionMessageDisplay(
+		return super.getDiscussionMessageDisplay(
 			userId, groupId, className, classPK, status, threadView);
 	}
 
@@ -639,7 +637,7 @@ public class ModularMBMessageLocalServiceWrapper
 			boolean includePrevAndNext)
 		throws PortalException {
 
-		return _mbMessageLocalService.getMessageDisplay(
+		return super.getMessageDisplay(
 			userId, messageId, status, threadView, includePrevAndNext);
 	}
 
@@ -674,11 +672,8 @@ public class ModularMBMessageLocalServiceWrapper
 			boolean includePrevAndNext)
 		throws PortalException {
 
-		return _mbMessageLocalService.getMessageDisplay(
-			userId,
-			ModelAdapterUtil.adapt(
-				com.liferay.message.boards.model.MBMessage.class, message),
-			status, threadView, includePrevAndNext);
+		return super.getMessageDisplay(
+			userId, message, status, threadView, includePrevAndNext);
 	}
 
 	@Override
@@ -687,12 +682,9 @@ public class ModularMBMessageLocalServiceWrapper
 			boolean includePrevAndNext, Comparator<MBMessage> comparator)
 		throws PortalException {
 
-		return _mbMessageLocalService.getMessageDisplay(
-			userId,
-			ModelAdapterUtil.adapt(
-				com.liferay.message.boards.model.MBMessage.class, message),
-			status, threadView, includePrevAndNext,
-			ModelAdapterUtil.adapt(MBMessage.class, comparator));
+		return super.getMessageDisplay(
+			userId, message, status, threadView, includePrevAndNext,
+			comparator);
 	}
 
 	@Override
@@ -793,7 +785,7 @@ public class ModularMBMessageLocalServiceWrapper
 			MBMessage.class,
 			_mbMessageLocalService.getUserDiscussionMessages(
 				userId, classNameId, classPK, status, start, end,
-				ModelAdapterUtil.adapt(MBMessage.class, comparator)));
+				ModelAdapterUtil.adapt(MBMessage.class, obc)));
 	}
 
 	@Override
@@ -805,7 +797,7 @@ public class ModularMBMessageLocalServiceWrapper
 			MBMessage.class,
 			_mbMessageLocalService.getUserDiscussionMessages(
 				userId, classNameIds, status, start, end,
-				ModelAdapterUtil.adapt(MBMessage.class, comparator)));
+				ModelAdapterUtil.adapt(MBMessage.class, obc)));
 	}
 
 	@Override
@@ -817,7 +809,7 @@ public class ModularMBMessageLocalServiceWrapper
 			MBMessage.class,
 			_mbMessageLocalService.getUserDiscussionMessages(
 				userId, className, classPK, status, start, end,
-				ModelAdapterUtil.adapt(MBMessage.class, comparator)));
+				ModelAdapterUtil.adapt(MBMessage.class, obc)));
 	}
 
 	@Override
@@ -970,9 +962,7 @@ public class ModularMBMessageLocalServiceWrapper
 	public MBMessage updateMessage(long messageId, String body)
 		throws PortalException {
 
-		return ModelAdapterUtil.adapt(
-			MBMessage.class,
-			_mbMessageLocalService.updateMessage(messageId, body));
+		return super.updateMessage(messageId, body);
 	}
 
 	@Override
@@ -981,10 +971,7 @@ public class ModularMBMessageLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return ModelAdapterUtil.adapt(
-			MBMessage.class,
-			_mbMessageLocalService.updateStatus(
-				userId, messageId, status, serviceContext));
+		return super.updateStatus(userId, messageId, status, serviceContext);
 	}
 
 	@Override
@@ -1004,6 +991,10 @@ public class ModularMBMessageLocalServiceWrapper
 	public void updateUserName(long userId, String userName) {
 		_mbMessageLocalService.updateUserName(userId, userName);
 	}
+
+	@Reference
+	private com.liferay.message.boards.service.MBCategoryLocalService
+		_mbCategoryLocalService;
 
 	@Reference
 	private com.liferay.message.boards.service.MBMessageLocalService

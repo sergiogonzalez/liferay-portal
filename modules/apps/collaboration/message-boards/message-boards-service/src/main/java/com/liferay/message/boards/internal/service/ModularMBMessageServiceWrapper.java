@@ -141,7 +141,7 @@ public class ModularMBMessageServiceWrapper extends MBMessageServiceWrapper {
 			long permissionOwnerId, long messageId)
 		throws PortalException {
 
-		_mbMessageService.deleteDiscussionMessage(
+		super.deleteDiscussionMessage(
 			groupId, className, classPK, permissionClassName, permissionClassPK,
 			permissionOwnerId, messageId);
 	}
@@ -261,7 +261,7 @@ public class ModularMBMessageServiceWrapper extends MBMessageServiceWrapper {
 			boolean includePrevAndNext)
 		throws PortalException {
 
-		return _mbMessageService.getMessageDisplay(
+		return super.getMessageDisplay(
 			messageId, status, threadView, includePrevAndNext);
 	}
 

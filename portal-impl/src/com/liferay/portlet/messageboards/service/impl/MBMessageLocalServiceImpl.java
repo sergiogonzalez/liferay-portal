@@ -427,7 +427,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			groupId = category.getGroupId();
 		}
 
-		return addMessage(
+		return mbMessageLocalService.addMessage(
 			userId, userName, groupId, categoryId, subject, body,
 			serviceContext);
 	}
@@ -1009,7 +1009,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
-		return getMessageDisplay(
+		return mbMessageLocalService.getMessageDisplay(
 			userId, message, status, threadView, includePrevAndNext);
 	}
 
@@ -1079,7 +1079,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			boolean includePrevAndNext)
 		throws PortalException {
 
-		return getMessageDisplay(
+		return mbMessageLocalService.getMessageDisplay(
 			userId, message, status, threadView, includePrevAndNext,
 			new MessageThreadComparator());
 	}
