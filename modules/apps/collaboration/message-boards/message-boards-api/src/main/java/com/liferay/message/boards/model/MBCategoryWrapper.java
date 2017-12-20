@@ -223,7 +223,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getAncestors()
+	public java.util.List<MBCategory> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategory.getAncestors();
 	}
@@ -364,7 +364,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory getParentCategory()
+	public MBCategory getParentCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategory.getParentCategory();
 	}

@@ -16,7 +16,6 @@ package com.liferay.message.boards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBMessage;
 
@@ -99,7 +98,7 @@ public interface MBMessageService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.0.0, replaced by {@link
 	#deleteDiscussionMessage(long)}
 	*/
 	@java.lang.Deprecated
@@ -166,7 +165,7 @@ public interface MBMessageService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	* @deprecated As of 1.0.0, replaced by {@link #getMessageDisplay(long,
 	int)}
 	*/
 	@java.lang.Deprecated

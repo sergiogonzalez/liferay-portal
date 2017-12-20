@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class MBCategoryServiceHttp {
-	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
+	public static com.liferay.message.boards.model.MBCategory addCategory(
 		HttpPrincipal httpPrincipal, long userId, long parentCategoryId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -80,7 +80,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBCategory)returnObj;
+			return (com.liferay.message.boards.model.MBCategory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -89,7 +89,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
+	public static com.liferay.message.boards.model.MBCategory addCategory(
 		HttpPrincipal httpPrincipal, long parentCategoryId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String displayStyle, java.lang.String emailAddress,
@@ -127,7 +127,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBCategory)returnObj;
+			return (com.liferay.message.boards.model.MBCategory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -192,7 +192,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
@@ -209,7 +209,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -218,7 +218,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
@@ -236,7 +236,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -245,7 +245,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long parentCategoryId,
 		int start, int end) {
 		try {
@@ -264,7 +264,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -273,7 +273,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long parentCategoryId,
 		int status, int start, int end) {
 		try {
@@ -292,7 +292,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -301,7 +301,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long excludedCategoryId,
 		long parentCategoryId, int status, int start, int end) {
 		try {
@@ -320,7 +320,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -329,7 +329,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long[] parentCategoryIds,
 		int start, int end) {
 		try {
@@ -348,7 +348,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -357,7 +357,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long[] parentCategoryIds,
 		int status, int start, int end) {
 		try {
@@ -376,7 +376,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -385,7 +385,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long[] excludedCategoryIds,
 		long[] parentCategoryIds, int status, int start, int end) {
 		try {
@@ -404,7 +404,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -805,7 +805,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory getCategory(
+	public static com.liferay.message.boards.model.MBCategory getCategory(
 		HttpPrincipal httpPrincipal, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -828,7 +828,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBCategory)returnObj;
+			return (com.liferay.message.boards.model.MBCategory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -893,7 +893,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getSubscribedCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getSubscribedCategories(
 		HttpPrincipal httpPrincipal, long groupId, long userId, int start,
 		int end) {
 		try {
@@ -913,7 +913,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBCategory>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -950,7 +950,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory moveCategory(
+	public static com.liferay.message.boards.model.MBCategory moveCategory(
 		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
 		boolean mergeWithParentCategory)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -974,7 +974,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBCategory)returnObj;
+			return (com.liferay.message.boards.model.MBCategory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -983,7 +983,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory moveCategoryFromTrash(
+	public static com.liferay.message.boards.model.MBCategory moveCategoryFromTrash(
 		HttpPrincipal httpPrincipal, long categoryId, long newCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1007,7 +1007,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBCategory)returnObj;
+			return (com.liferay.message.boards.model.MBCategory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1016,7 +1016,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory moveCategoryToTrash(
+	public static com.liferay.message.boards.model.MBCategory moveCategoryToTrash(
 		HttpPrincipal httpPrincipal, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -1039,7 +1039,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBCategory)returnObj;
+			return (com.liferay.message.boards.model.MBCategory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1133,7 +1133,7 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory updateCategory(
+	public static com.liferay.message.boards.model.MBCategory updateCategory(
 		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String displayStyle, java.lang.String emailAddress,
@@ -1173,7 +1173,7 @@ public class MBCategoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBCategory)returnObj;
+			return (com.liferay.message.boards.model.MBCategory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

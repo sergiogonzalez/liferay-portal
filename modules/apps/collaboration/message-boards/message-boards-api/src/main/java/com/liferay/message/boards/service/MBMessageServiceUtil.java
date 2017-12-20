@@ -41,7 +41,7 @@ public class MBMessageServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBMessageServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.message.boards.kernel.model.MBMessage addDiscussionMessage(
+	public static com.liferay.message.boards.model.MBMessage addDiscussionMessage(
 		long groupId, java.lang.String className, long classPK, long threadId,
 		long parentMessageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -51,7 +51,7 @@ public class MBMessageServiceUtil {
 			parentMessageId, subject, body, serviceContext);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
+	public static com.liferay.message.boards.model.MBMessage addMessage(
 		long groupId, long categoryId, java.lang.String subject,
 		java.lang.String body, java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
@@ -63,7 +63,7 @@ public class MBMessageServiceUtil {
 			inputStreamOVPs, anonymous, priority, allowPingbacks, serviceContext);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
+	public static com.liferay.message.boards.model.MBMessage addMessage(
 		long groupId, long categoryId, java.lang.String subject,
 		java.lang.String body, java.lang.String format,
 		java.lang.String fileName, java.io.File file, boolean anonymous,
@@ -76,14 +76,14 @@ public class MBMessageServiceUtil {
 			fileName, file, anonymous, priority, allowPingbacks, serviceContext);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
+	public static com.liferay.message.boards.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addMessage(categoryId, subject, body, serviceContext);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
+	public static com.liferay.message.boards.model.MBMessage addMessage(
 		long parentMessageId, java.lang.String subject, java.lang.String body,
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
@@ -107,7 +107,7 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.0.0, replaced by {@link
 	#deleteDiscussionMessage(long)}
 	*/
 	@Deprecated
@@ -142,7 +142,7 @@ public class MBMessageServiceUtil {
 		getService().emptyMessageAttachments(messageId);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getCategoryMessages(
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -202,7 +202,7 @@ public class MBMessageServiceUtil {
 			version, displayStyle, feedURL, entryURL, themeDisplay);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessage getMessage(
+	public static com.liferay.message.boards.model.MBMessage getMessage(
 		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMessage(messageId);
@@ -215,7 +215,7 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	* @deprecated As of 1.0.0, replaced by {@link #getMessageDisplay(long,
 	int)}
 	*/
 	@Deprecated
@@ -242,7 +242,7 @@ public class MBMessageServiceUtil {
 		return getService().getThreadAnswersCount(groupId, categoryId, threadId);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getThreadMessages(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end) {
 		return getService()
@@ -289,7 +289,7 @@ public class MBMessageServiceUtil {
 		getService().updateAnswer(messageId, answer, cascade);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
+	public static com.liferay.message.boards.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK, long messageId,
 		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -299,7 +299,7 @@ public class MBMessageServiceUtil {
 			subject, body, serviceContext);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessage updateMessage(
+	public static com.liferay.message.boards.model.MBMessage updateMessage(
 		long messageId, java.lang.String subject, java.lang.String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		java.util.List<java.lang.String> existingFiles, double priority,

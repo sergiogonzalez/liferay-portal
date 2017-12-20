@@ -18,9 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
-import com.liferay.message.boards.kernel.model.MBDiscussion;
-import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
+import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -123,7 +122,7 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws FileNotFoundException, PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
+	* @deprecated As of 1.0.0, replaced by {@link #addMessage(long, String,
 	long, long, String, String, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -320,7 +319,7 @@ public interface MBMessageLocalService extends BaseLocalService,
 		Comparator<MBMessage> comparator) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.0.0, replaced by {@link
 	#getDiscussionMessageDisplay(long, long, String, long, int)}
 	*/
 	@java.lang.Deprecated
@@ -451,7 +450,7 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int status) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	* @deprecated As of 1.0.0, replaced by {@link #getMessageDisplay(long,
 	long, int)}
 	*/
 	@java.lang.Deprecated
@@ -469,7 +468,7 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int status, Comparator<MBMessage> comparator) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	* @deprecated As of 1.0.0, replaced by {@link #getMessageDisplay(long,
 	MBMessage, int)}
 	*/
 	@java.lang.Deprecated
@@ -479,7 +478,7 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	* @deprecated As of 1.0.0, replaced by {@link #getMessageDisplay(long,
 	MBMessage, int, Comparator)} (
 	*/
 	@java.lang.Deprecated
@@ -607,14 +606,14 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of 1.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
 	public MBMessage updateMessage(long messageId, java.lang.String body)
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	* @deprecated As of 1.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
 	*/
 	@java.lang.Deprecated

@@ -18,8 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -385,7 +384,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.0.0, replaced by {@link
 	#restoreDependentsFromTrash(long, long)}
 	*/
 	@java.lang.Deprecated

@@ -33,7 +33,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage addDiscussionMessage(
+	public com.liferay.message.boards.model.MBMessage addDiscussionMessage(
 		long groupId, java.lang.String className, long classPK, long threadId,
 		long parentMessageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -43,9 +43,9 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
-		long groupId, long categoryId, java.lang.String subject,
-		java.lang.String body, java.lang.String format,
+	public com.liferay.message.boards.model.MBMessage addMessage(long groupId,
+		long categoryId, java.lang.String subject, java.lang.String body,
+		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -56,11 +56,10 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
-		long groupId, long categoryId, java.lang.String subject,
-		java.lang.String body, java.lang.String format,
-		java.lang.String fileName, java.io.File file, boolean anonymous,
-		double priority, boolean allowPingbacks,
+	public com.liferay.message.boards.model.MBMessage addMessage(long groupId,
+		long categoryId, java.lang.String subject, java.lang.String body,
+		java.lang.String format, java.lang.String fileName, java.io.File file,
+		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws java.io.FileNotFoundException,
 			com.liferay.portal.kernel.exception.PortalException {
@@ -70,7 +69,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
+	public com.liferay.message.boards.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -79,7 +78,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
+	public com.liferay.message.boards.model.MBMessage addMessage(
 		long parentMessageId, java.lang.String subject, java.lang.String body,
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
@@ -106,7 +105,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.0.0, replaced by {@link
 	#deleteDiscussionMessage(long)}
 	*/
 	@Deprecated
@@ -146,7 +145,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getCategoryMessages(
+	public java.util.List<com.liferay.message.boards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getCategoryMessages(groupId, categoryId,
@@ -211,8 +210,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage getMessage(
-		long messageId)
+	public com.liferay.message.boards.model.MBMessage getMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getMessage(messageId);
 	}
@@ -225,7 +223,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	* @deprecated As of 1.0.0, replaced by {@link #getMessageDisplay(long,
 	int)}
 	*/
 	@Deprecated
@@ -256,7 +254,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
+	public java.util.List<com.liferay.message.boards.model.MBMessage> getThreadMessages(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end) {
 		return _mbMessageService.getThreadMessages(groupId, categoryId,
@@ -307,7 +305,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
+	public com.liferay.message.boards.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK, long messageId,
 		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -317,7 +315,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage updateMessage(
+	public com.liferay.message.boards.model.MBMessage updateMessage(
 		long messageId, java.lang.String subject, java.lang.String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		java.util.List<java.lang.String> existingFiles, double priority,

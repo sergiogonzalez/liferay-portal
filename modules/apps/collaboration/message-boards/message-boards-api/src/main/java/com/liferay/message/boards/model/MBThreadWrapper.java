@@ -242,7 +242,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThread.getCategory();
 	}
