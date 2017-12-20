@@ -75,7 +75,10 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBMessageServiceImpl}
  */
+@Deprecated
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override

@@ -32,7 +32,10 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBCategoryServiceImpl}
  */
+@Deprecated
 public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override

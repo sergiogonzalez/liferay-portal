@@ -44,7 +44,10 @@ import java.util.List;
  * @author Deepak Gothe
  * @author Mika Koivisto
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBThreadServiceImpl}
  */
+@Deprecated
 public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
