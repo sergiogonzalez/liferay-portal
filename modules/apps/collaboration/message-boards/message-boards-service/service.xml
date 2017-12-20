@@ -107,15 +107,15 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="NotC_G_P" return-type="Collection">
-			<finder-column arrayable-operator="AND" comparator="!=" name="categoryId" />
-			<finder-column name="groupId" />
-			<finder-column arrayable-operator="OR" name="parentCategoryId" />
-		</finder>
 		<finder name="G_P_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="parentCategoryId" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="NotC_G_P" return-type="Collection">
+			<finder-column arrayable-operator="AND" comparator="!=" name="categoryId" />
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="parentCategoryId" />
 		</finder>
 		<finder name="NotC_G_P_S" return-type="Collection">
 			<finder-column arrayable-operator="AND" comparator="!=" name="categoryId" />
@@ -520,13 +520,13 @@
 			<finder-column name="groupId" />
 			<finder-column comparator="!=" name="categoryId" />
 		</finder>
-		<finder name="G_S" return-type="Collection" where="categoryId != -1">
-			<finder-column name="groupId" />
-			<finder-column name="status" />
-		</finder>
 		<finder name="C_P" return-type="Collection">
 			<finder-column name="categoryId" />
 			<finder-column name="priority" />
+		</finder>
+		<finder name="G_S" return-type="Collection" where="categoryId != -1">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="L_P" return-type="Collection" where="categoryId != -1">
 			<finder-column name="lastPostDate" />
