@@ -216,6 +216,18 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		return _mbCategory.compareTo(mbCategory);
 	}
 
+	@Override
+	public java.util.List<java.lang.Long> getAncestorCategoryIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbCategory.getAncestorCategoryIds();
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbCategory.getAncestors();
+	}
+
 	/**
 	* Returns the category ID of this message boards category.
 	*
@@ -349,6 +361,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public java.lang.String getName() {
 		return _mbCategory.getName();
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBCategory getParentCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbCategory.getParentCategory();
 	}
 
 	/**
@@ -637,6 +655,11 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public boolean isPending() {
 		return _mbCategory.isPending();
+	}
+
+	@Override
+	public boolean isRoot() {
+		return _mbCategory.isRoot();
 	}
 
 	/**
