@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.model.impl;
 
-import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
