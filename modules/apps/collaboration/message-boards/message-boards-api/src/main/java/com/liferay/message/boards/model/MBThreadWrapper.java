@@ -221,6 +221,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThread.addAttachmentsFolder();
+	}
+
+	@Override
 	public java.lang.Object clone() {
 		return new MBThreadWrapper((MBThread)_mbThread.clone());
 	}
@@ -228,6 +234,17 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public int compareTo(MBThread mbThread) {
 		return _mbThread.compareTo(mbThread);
+	}
+
+	@Override
+	public long getAttachmentsFolderId() {
+		return _mbThread.getAttachmentsFolderId();
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThread.getCategory();
 	}
 
 	/**
@@ -335,6 +352,11 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.getLastPublishDate();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.lock.Lock getLock() {
+		return _mbThread.getLock();
+	}
+
 	/**
 	* Returns the message count of this message boards thread.
 	*
@@ -363,6 +385,11 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public long getParentContainerModelId() {
 		return _mbThread.getParentContainerModelId();
+	}
+
+	@Override
+	public long[] getParticipantUserIds() {
+		return _mbThread.getParticipantUserIds();
 	}
 
 	/**
@@ -578,6 +605,11 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.hashCode();
 	}
 
+	@Override
+	public boolean hasLock(long userId) {
+		return _mbThread.hasLock(userId);
+	}
+
 	/**
 	* Returns <code>true</code> if this message boards thread is approved.
 	*
@@ -676,6 +708,11 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _mbThread.isInTrashImplicitly();
+	}
+
+	@Override
+	public boolean isLocked() {
+		return _mbThread.isLocked();
 	}
 
 	@Override

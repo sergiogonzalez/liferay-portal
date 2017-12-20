@@ -53,4 +53,15 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 				return MBCategory.class;
 			}
 		};
+
+	public java.util.List<java.lang.Long> getAncestorCategoryIds()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.message.boards.kernel.model.MBCategory getParentCategory()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isRoot();
 }

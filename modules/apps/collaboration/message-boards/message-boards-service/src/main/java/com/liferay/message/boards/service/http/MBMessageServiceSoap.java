@@ -16,9 +16,16 @@ package com.liferay.message.boards.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.service.MBMessageServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.message.boards.service.MBMessageServiceUtil} service utility. The
+ * {@link MBMessageServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,364 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see MBMessageServiceHttp
  * @see com.liferay.message.boards.model.MBMessageSoap
- * @see com.liferay.message.boards.service.MBMessageServiceUtil
+ * @see MBMessageServiceUtil
  * @generated
  */
 @ProviderType
 public class MBMessageServiceSoap {
+	public static com.liferay.message.boards.kernel.model.MBMessage addDiscussionMessage(
+		long groupId, java.lang.String className, long classPK, long threadId,
+		long parentMessageId, java.lang.String subject, java.lang.String body,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addDiscussionMessage(groupId,
+					className, classPK, threadId, parentMessageId, subject,
+					body, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		boolean anonymous, double priority, boolean allowPingbacks,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addMessage(groupId,
+					categoryId, subject, body, format, inputStreamOVPs,
+					anonymous, priority, allowPingbacks, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
+		long categoryId, java.lang.String subject, java.lang.String body,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addMessage(categoryId,
+					subject, body, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
+		long parentMessageId, java.lang.String subject, java.lang.String body,
+		java.lang.String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		boolean anonymous, double priority, boolean allowPingbacks,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addMessage(parentMessageId,
+					subject, body, format, inputStreamOVPs, anonymous,
+					priority, allowPingbacks, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteDiscussionMessage(long messageId)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.deleteDiscussionMessage(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#deleteDiscussionMessage(long)}
+	*/
+	@Deprecated
+	public static void deleteDiscussionMessage(long groupId,
+		java.lang.String className, long classPK,
+		java.lang.String permissionClassName, long permissionClassPK,
+		long permissionOwnerId, long messageId) throws RemoteException {
+		try {
+			MBMessageServiceUtil.deleteDiscussionMessage(groupId, className,
+				classPK, permissionClassName, permissionClassPK,
+				permissionOwnerId, messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteMessage(long messageId) throws RemoteException {
+		try {
+			MBMessageServiceUtil.deleteMessage(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteMessageAttachment(long messageId,
+		java.lang.String fileName) throws RemoteException {
+		try {
+			MBMessageServiceUtil.deleteMessageAttachment(messageId, fileName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteMessageAttachments(long messageId)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.deleteMessageAttachments(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void emptyMessageAttachments(long messageId)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.emptyMessageAttachments(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessageSoap[] getCategoryMessages(
+		long groupId, long categoryId, int status, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.kernel.model.MBMessage> returnValue =
+				MBMessageServiceUtil.getCategoryMessages(groupId, categoryId,
+					status, start, end);
+
+			return com.liferay.message.boards.kernel.model.MBMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCategoryMessagesCount(long groupId, long categoryId,
+		int status) throws RemoteException {
+		try {
+			int returnValue = MBMessageServiceUtil.getCategoryMessagesCount(groupId,
+					categoryId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getGroupMessagesCount(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = MBMessageServiceUtil.getGroupMessagesCount(groupId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessage getMessage(
+		long messageId) throws RemoteException {
+		try {
+			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.getMessage(messageId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getThreadAnswersCount(long groupId, long categoryId,
+		long threadId) throws RemoteException {
+		try {
+			int returnValue = MBMessageServiceUtil.getThreadAnswersCount(groupId,
+					categoryId, threadId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessageSoap[] getThreadMessages(
+		long groupId, long categoryId, long threadId, int status, int start,
+		int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.kernel.model.MBMessage> returnValue =
+				MBMessageServiceUtil.getThreadMessages(groupId, categoryId,
+					threadId, status, start, end);
+
+			return com.liferay.message.boards.kernel.model.MBMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getThreadMessagesCount(long groupId, long categoryId,
+		long threadId, int status) throws RemoteException {
+		try {
+			int returnValue = MBMessageServiceUtil.getThreadMessagesCount(groupId,
+					categoryId, threadId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void restoreMessageAttachmentFromTrash(long messageId,
+		java.lang.String fileName) throws RemoteException {
+		try {
+			MBMessageServiceUtil.restoreMessageAttachmentFromTrash(messageId,
+				fileName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void subscribeMessage(long messageId)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.subscribeMessage(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribeMessage(long messageId)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.unsubscribeMessage(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateAnswer(long messageId, boolean answer,
+		boolean cascade) throws RemoteException {
+		try {
+			MBMessageServiceUtil.updateAnswer(messageId, answer, cascade);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
+		java.lang.String className, long classPK, long messageId,
+		java.lang.String subject, java.lang.String body,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.updateDiscussionMessage(className,
+					classPK, messageId, subject, body, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessage updateMessage(
+		long messageId, java.lang.String subject, java.lang.String body,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		java.util.List<java.lang.String> existingFiles, double priority,
+		boolean allowPingbacks,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.updateMessage(messageId,
+					subject, body, inputStreamOVPs, existingFiles, priority,
+					allowPingbacks, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MBMessageServiceSoap.class);
 }

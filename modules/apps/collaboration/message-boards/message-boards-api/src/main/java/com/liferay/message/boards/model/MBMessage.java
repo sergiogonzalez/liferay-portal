@@ -53,4 +53,55 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 				return MBMessage.class;
 			}
 		};
+
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.lang.String[] getAssetTagNames();
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public int getAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.lang.String getBody(boolean translate);
+
+	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public int getDeletedAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.message.boards.kernel.model.MBThread getThread()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long getThreadAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.lang.String getWorkflowClassName();
+
+	public boolean isDiscussion();
+
+	public boolean isFormatBBCode();
+
+	public boolean isReply();
+
+	public boolean isRoot();
+
+	public void setAttachmentsFolderId(long attachmentsFolderId);
 }
