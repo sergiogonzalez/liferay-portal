@@ -193,7 +193,7 @@ public class MBMessageServiceUtil {
 		return getService().getMessage(messageId);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMessageDisplay(messageId, status);
