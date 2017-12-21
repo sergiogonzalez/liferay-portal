@@ -64,14 +64,14 @@ public class ModelAdapterUtil {
 		return adaptedObjects;
 	}
 
-	public static <T, V> OrderByComparator<T> adapt(
-		Class<V> clazz, OrderByComparator<V> orderByComparator) {
+	public static <T, V> Comparator<T> adapt(
+		Class<V> clazz, Comparator<V> comparator) {
 
-		if (orderByComparator == null) {
+		if (comparator == null) {
 			return null;
 		}
 
-		return new OrderByComparatorAdapter<T, V>(orderByComparator) {
+		return new ComparatorAdapter<T, V>(comparator) {
 
 			@Override
 			public V adapt(T t) {
@@ -81,14 +81,14 @@ public class ModelAdapterUtil {
 		};
 	}
 
-	public static <T, V> Comparator<T> adapt(
-		Class<V> clazz, Comparator<V> comparator) {
+	public static <T, V> OrderByComparator<T> adapt(
+		Class<V> clazz, OrderByComparator<V> orderByComparator) {
 
-		if (comparator == null) {
+		if (orderByComparator == null) {
 			return null;
 		}
 
-		return new ComparatorAdapter<T, V>(comparator) {
+		return new OrderByComparatorAdapter<T, V>(orderByComparator) {
 
 			@Override
 			public V adapt(T t) {

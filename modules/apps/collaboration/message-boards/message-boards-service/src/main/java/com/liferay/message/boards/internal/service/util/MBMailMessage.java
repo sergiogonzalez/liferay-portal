@@ -92,8 +92,7 @@ public class MBMailMessage {
 				new ByteArrayInputStream(bytes);
 
 			ObjectValuePair<String, InputStream> inputStreamOVP =
-				new ObjectValuePair<String, InputStream>(
-					key, byteArrayInputStream);
+				new ObjectValuePair<>(key, byteArrayInputStream);
 
 			inputStreamOVPs.add(inputStreamOVP);
 		}

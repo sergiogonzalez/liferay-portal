@@ -14,104 +14,41 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetLinkConstants;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.message.boards.kernel.constants.MBConstants;
-import com.liferay.message.boards.kernel.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.kernel.exception.MessageBodyException;
-import com.liferay.message.boards.kernel.exception.MessageSubjectException;
-import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
-import com.liferay.message.boards.kernel.exception.RequiredMessageException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
-import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.linkback.LinkbackProducerUtil;
-import com.liferay.portal.util.LayoutURLUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageDisplayImpl;
 import com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl;
-import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.messageboards.util.MBSubscriptionSender;
-import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
-
-import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.StartTag;
 
 /**
  * @author Brian Wing Shun Chan
@@ -206,7 +143,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	/**
@@ -326,7 +262,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public MBMessage deleteMessage(MBMessage message) throws PortalException {
-
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
@@ -623,7 +558,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	/**
@@ -679,7 +613,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	@Override
@@ -727,7 +660,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	@Override
@@ -820,7 +752,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	@Override
@@ -842,7 +773,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	@Override
@@ -873,7 +803,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	@Override
@@ -1004,7 +933,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	protected String getSubject(String subject, String body) {
@@ -1061,7 +989,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	protected void pingPingback(
@@ -1093,7 +1020,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
 					"MBMessageLocalServiceImpl");
-
 	}
 
 	protected void updatePriorities(long threadId, double priority) {

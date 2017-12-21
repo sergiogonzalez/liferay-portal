@@ -19,8 +19,7 @@ import java.util.Comparator;
 /**
  * @author Sergio González
  */
-public abstract class ComparatorAdapter<T, V>
-	implements Comparator<T> {
+public abstract class ComparatorAdapter<T, V> implements Comparator<T> {
 
 	public ComparatorAdapter(Comparator<V> comparator) {
 		_comparator = comparator;
