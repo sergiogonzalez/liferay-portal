@@ -14,15 +14,13 @@
 
 package com.liferay.social.privatemessaging.service.impl;
 
-import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
-import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.privatemessaging.model.UserThread;
 import com.liferay.social.privatemessaging.service.base.UserThreadServiceBaseImpl;
 
@@ -99,8 +97,5 @@ public class UserThreadServiceImpl extends UserThreadServiceBaseImpl {
 
 		return userThreadLocalService.getUserUserThreads(getUserId(), deleted);
 	}
-
-	@ServiceReference(type = MBMessageLocalService.class)
-	protected MBMessageLocalService mbMessageLocalService;
 
 }

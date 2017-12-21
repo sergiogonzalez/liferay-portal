@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
-import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.persistence.MBMessageFinder;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;

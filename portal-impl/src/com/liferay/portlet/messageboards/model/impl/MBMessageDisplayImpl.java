@@ -15,12 +15,12 @@
 package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.model.MBTreeWalker;
-import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 

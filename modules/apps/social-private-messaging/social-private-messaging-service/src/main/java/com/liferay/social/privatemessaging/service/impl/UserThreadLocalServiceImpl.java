@@ -16,9 +16,8 @@ package com.liferay.social.privatemessaging.service.impl;
 
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
-import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
-import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -51,7 +50,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys;
 import com.liferay.social.privatemessaging.model.PrivateMessagingConstants;
@@ -584,9 +582,6 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
 	@BeanReference(type = MailService.class)
 	private MailService _mailService;
-
-	@ServiceReference(type = MBMessageLocalService.class)
-	protected MBMessageLocalService mbMessageLocalService;
 
 	private PrivateMessagingConfiguration _privateMessagingConfiguration;
 

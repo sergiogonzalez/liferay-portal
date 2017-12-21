@@ -49,7 +49,7 @@ public class FindMessageAction extends BaseStrutsAction {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)",
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)",
 		unbind = "-"
 	)
 	protected void setFindActionHelper(FindActionHelper findActionHelper) {

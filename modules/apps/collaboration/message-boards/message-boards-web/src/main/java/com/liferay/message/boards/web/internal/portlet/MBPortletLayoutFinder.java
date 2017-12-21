@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"model.class.name=com.liferay.message.boards.kernel.model.MBCategory",
-		"model.class.name=com.liferay.message.boards.model.MBMessage",
+		"model.class.name=com.liferay.message.boards.kernel.model.MBMessage",
 		"model.class.name=com.liferay.message.boards.kernel.model.MBThread"
 	},
 	service = PortletLayoutFinder.class
