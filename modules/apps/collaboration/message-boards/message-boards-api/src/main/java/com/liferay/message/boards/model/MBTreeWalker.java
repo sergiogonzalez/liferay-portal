@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.model;
 
 import java.io.Serializable;
 

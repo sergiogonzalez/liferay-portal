@@ -12,30 +12,26 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.model;
 
 import java.io.Serializable;
 
-import java.util.List;
-
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.MBTreeWalker}
+ * @author Shuyang Zhou
  */
-@Deprecated
-public interface MBTreeWalker extends Serializable {
+public interface MBMessageDisplay extends Serializable {
 
-	public List<MBMessage> getChildren(MBMessage message);
+	public MBCategory getCategory();
 
-	public int[] getChildrenRange(MBMessage message);
+	public MBMessage getMessage();
 
-	public List<MBMessage> getMessages();
+	public MBMessage getParentMessage();
 
-	public MBMessage getRoot();
+	public MBThread getThread();
 
-	public boolean isLeaf(MBMessage message);
+	public MBTreeWalker getTreeWalker();
 
-	public boolean isOdd();
+	public boolean isDiscussionMaxComments();
 
 }

@@ -252,7 +252,9 @@ public class ModularMBMessageServiceWrapper extends MBMessageServiceWrapper {
 	public MBMessageDisplay getMessageDisplay(long messageId, int status)
 		throws PortalException {
 
-		return _mbMessageService.getMessageDisplay(messageId, status);
+		return ModelAdapterUtil.adapt(
+			MBMessageDisplay.class,
+			_mbMessageService.getMessageDisplay(messageId, status));
 	}
 
 	@Override
