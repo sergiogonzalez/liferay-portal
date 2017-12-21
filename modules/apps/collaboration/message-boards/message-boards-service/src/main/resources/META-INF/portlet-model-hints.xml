@@ -23,8 +23,12 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="parentCategoryId" type="long" />
-		<field name="name" type="String" />
-		<field name="description" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="displayStyle" type="String" />
 		<field name="threadCount" type="int" />
 		<field name="messageCount" type="int" />
@@ -100,8 +104,14 @@
 		<field name="threadId" type="long" />
 		<field name="rootMessageId" type="long" />
 		<field name="parentMessageId" type="long" />
-		<field name="subject" type="String" />
-		<field name="body" type="String" />
+		<field name="subject" type="String">
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
+		<field name="body" type="String">
+			<hint-collection name="CLOB" />
+			<validator name="required" />
+		</field>
 		<field name="format" type="String" />
 		<field name="anonymous" type="boolean" />
 		<field name="priority" type="double" />
