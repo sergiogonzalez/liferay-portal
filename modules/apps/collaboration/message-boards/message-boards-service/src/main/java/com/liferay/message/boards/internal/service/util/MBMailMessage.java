@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.internal.service.util;
 
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.portal.kernel.log.Log;
@@ -33,10 +33,7 @@ import javax.mail.internet.MimeUtility;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.service.util.MBMailMessage}
  */
-@Deprecated
 public class MBMailMessage {
 
 	public void addBytes(String fileName, byte[] bytes) {

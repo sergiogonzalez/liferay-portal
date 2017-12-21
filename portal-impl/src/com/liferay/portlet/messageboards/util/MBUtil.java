@@ -117,6 +117,13 @@ public class MBUtil {
 
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.service.util.
+	 *             MBMailMessageUtil#collectMultipartContent(
+	 *             MimeMultipart, MBMailMessage)}
+	 */
+	@Deprecated
 	public static void collectMultipartContent(
 			MimeMultipart multipart, MBMailMessage collector)
 		throws Exception {
@@ -128,6 +135,13 @@ public class MBUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.service.util.
+	 *             MBMailMessageUtil#collectPartContent(
+	 *             Part, MBMailMessage)}
+	 */
+	@Deprecated
 	public static void collectPartContent(
 			Part part, MBMailMessage mbMailMessage)
 		throws Exception {
