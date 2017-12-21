@@ -17,10 +17,10 @@ package com.liferay.message.boards.internal.search;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.comment.Comment;
@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
+	property = {"related.entry.indexer.class.name=com.liferay.message.boards.model.MBMessage"},
 	service = {Indexer.class, RelatedEntryIndexer.class}
 )
 public class MBMessageIndexer

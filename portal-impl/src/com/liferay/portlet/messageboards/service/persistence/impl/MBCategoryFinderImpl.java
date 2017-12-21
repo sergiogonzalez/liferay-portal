@@ -15,7 +15,7 @@
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.kernel.service.persistence.MBCategoryUtil;
 import com.liferay.message.boards.kernel.service.persistence.MBThreadUtil;

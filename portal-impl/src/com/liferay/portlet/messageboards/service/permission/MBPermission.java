@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.permission;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;

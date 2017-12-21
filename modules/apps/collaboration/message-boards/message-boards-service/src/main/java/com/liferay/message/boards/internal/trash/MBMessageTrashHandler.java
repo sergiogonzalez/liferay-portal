@@ -15,10 +15,10 @@
 package com.liferay.message.boards.internal.trash;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
+	property = {"model.class.name=com.liferay.message.boards.model.MBMessage"},
 	service = TrashHandler.class
 )
 public class MBMessageTrashHandler extends BaseTrashHandler {

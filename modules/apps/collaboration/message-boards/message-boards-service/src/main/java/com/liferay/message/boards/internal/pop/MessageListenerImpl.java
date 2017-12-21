@@ -16,11 +16,11 @@ package com.liferay.message.boards.internal.pop;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

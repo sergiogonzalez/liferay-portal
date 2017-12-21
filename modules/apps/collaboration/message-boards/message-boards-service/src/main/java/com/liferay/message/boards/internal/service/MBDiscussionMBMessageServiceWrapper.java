@@ -14,9 +14,9 @@
 
 package com.liferay.message.boards.internal.service;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageService;
-import com.liferay.message.boards.kernel.service.MBMessageServiceWrapper;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.service.MBMessageServiceWrapper;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;

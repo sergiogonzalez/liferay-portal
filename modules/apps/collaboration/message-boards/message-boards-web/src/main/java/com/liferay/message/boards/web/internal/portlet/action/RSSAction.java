@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
-import com.liferay.message.boards.kernel.service.MBMessageService;
+import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.struts.StrutsAction;

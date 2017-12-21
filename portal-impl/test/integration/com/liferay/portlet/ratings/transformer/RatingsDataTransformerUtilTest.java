@@ -74,7 +74,7 @@ public class RatingsDataTransformerUtilTest {
 			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"like");
 		oldPortletPreferences.setValue(
-			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",
+			"com.liferay.message.boards.model.MBMessage_RatingsType",
 			"like");
 		oldPortletPreferences.setValue(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
@@ -96,7 +96,7 @@ public class RatingsDataTransformerUtilTest {
 			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(
-			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",
+			"com.liferay.message.boards.model.MBMessage_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
@@ -128,7 +128,7 @@ public class RatingsDataTransformerUtilTest {
 			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"like");
 		oldUnicodeProperties.setProperty(
-			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",
+			"com.liferay.message.boards.model.MBMessage_RatingsType",
 			"like");
 		oldUnicodeProperties.setProperty(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
@@ -150,7 +150,7 @@ public class RatingsDataTransformerUtilTest {
 			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(
-			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",
+			"com.liferay.message.boards.model.MBMessage_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");

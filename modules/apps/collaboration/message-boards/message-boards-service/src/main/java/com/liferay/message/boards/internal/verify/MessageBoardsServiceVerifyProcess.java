@@ -21,9 +21,9 @@ import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableMo
 import com.liferay.message.boards.internal.verify.model.MBMessageVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

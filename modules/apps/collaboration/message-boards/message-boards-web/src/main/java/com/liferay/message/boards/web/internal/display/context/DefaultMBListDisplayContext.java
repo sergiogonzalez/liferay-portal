@@ -15,7 +15,7 @@
 package com.liferay.message.boards.web.internal.display.context;
 
 import com.liferay.message.boards.display.context.MBListDisplayContext;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;

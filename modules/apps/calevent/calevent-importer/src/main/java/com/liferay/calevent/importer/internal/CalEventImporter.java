@@ -42,10 +42,10 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
@@ -1516,10 +1516,12 @@ public class CalEventImporter {
 	@Reference(unbind = "-")
 	private ExpandoValueLocalService _expandoValueLocalService;
 
+	@Reference(unbind = "-")
+	private MBMessageLocalService _mbMessageLocalService;
+
 	private GroupLocalService _groupLocalService;
 	private JSONSerializer _jsonSerializer;
 	private MBDiscussionLocalService _mbDiscussionLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 	private RatingsStatsLocalService _ratingsStatsLocalService;

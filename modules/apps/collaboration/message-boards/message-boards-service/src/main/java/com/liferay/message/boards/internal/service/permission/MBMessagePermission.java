@@ -18,10 +18,10 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"
+		"model.class.name=com.liferay.message.boards.model.MBMessage"
 	},
 	service = BaseModelPermissionChecker.class
 )
