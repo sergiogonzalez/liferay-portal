@@ -112,7 +112,7 @@
 		<property name="rootMessageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="parentMessageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="body" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="body" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="format" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="anonymous" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

@@ -93,7 +93,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 			{ "rootMessageId", Types.BIGINT },
 			{ "parentMessageId", Types.BIGINT },
 			{ "subject", Types.VARCHAR },
-			{ "body", Types.VARCHAR },
+			{ "body", Types.CLOB },
 			{ "format", Types.VARCHAR },
 			{ "anonymous", Types.BOOLEAN },
 			{ "priority", Types.DOUBLE },
@@ -123,7 +123,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		TABLE_COLUMNS_MAP.put("rootMessageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentMessageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("body", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("format", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("anonymous", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
@@ -136,7 +136,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,subject VARCHAR(75) null,body VARCHAR(75) null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbMessage.createDate ASC, mbMessage.messageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBMessage.createDate ASC, MBMessage.messageId ASC";
