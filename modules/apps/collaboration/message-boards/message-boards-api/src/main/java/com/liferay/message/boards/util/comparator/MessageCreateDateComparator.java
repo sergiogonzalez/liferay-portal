@@ -12,19 +12,15 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.util.comparator;
+package com.liferay.message.boards.util.comparator;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.util.comparator.
- *             MessageCreateDateComparator}
  */
-@Deprecated
 public class MessageCreateDateComparator extends OrderByComparator<MBMessage> {
 
 	public static final String ORDER_BY_ASC = "MBMessage.createDate ASC";

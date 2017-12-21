@@ -22,7 +22,7 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBTreeWalker;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
+import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.comment.Comment;
