@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.message.boards.service.permission.MBMessagePermission;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;

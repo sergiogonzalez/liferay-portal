@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.permission;
+package com.liferay.message.boards.service.permission;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
@@ -25,11 +25,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 /**
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.service.permission.
- *             MBCategoryPermission}
  */
-@Deprecated
 public class MBCategoryPermission implements BaseModelPermissionChecker {
 
 	public static void check(

@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
+import com.liferay.message.boards.service.permission.MBCategoryPermission;
+import com.liferay.message.boards.service.permission.MBPermission;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.message.boards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;

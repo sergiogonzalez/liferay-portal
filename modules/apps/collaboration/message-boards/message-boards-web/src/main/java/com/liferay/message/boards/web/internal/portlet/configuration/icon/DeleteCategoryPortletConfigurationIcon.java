@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
+import com.liferay.message.boards.service.permission.MBCategoryPermission;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;

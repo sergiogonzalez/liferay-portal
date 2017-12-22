@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
+import com.liferay.message.boards.service.permission.MBCategoryPermission;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.IOException;

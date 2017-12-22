@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
+import com.liferay.message.boards.service.permission.MBPermission;
 
 /**
  * @author Brian Wing Shun Chan

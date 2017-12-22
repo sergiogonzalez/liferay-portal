@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
+import com.liferay.message.boards.service.permission.MBCategoryPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

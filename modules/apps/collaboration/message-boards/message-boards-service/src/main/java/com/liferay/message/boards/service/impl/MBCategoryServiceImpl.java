@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
+import com.liferay.message.boards.service.permission.MBCategoryPermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
