@@ -255,6 +255,8 @@ if (portletTitleBasedNavigation) {
 		}
 	);
 
+	var scrollSessionId = Date.now().toISOString();
+
 	var entry = document.querySelector('.entry');
 
 	var throttle = function(fn, wait) {
@@ -286,6 +288,7 @@ if (portletTitleBasedNavigation) {
 								{
 									depth: depth,
 									entryId: '<%= entryId %>',
+									sessionId: scrollSessionId
 								}
 							);
 						}
