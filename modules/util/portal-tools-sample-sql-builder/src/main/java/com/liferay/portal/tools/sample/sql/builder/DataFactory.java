@@ -204,7 +204,7 @@ import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
-import com.liferay.portlet.messageboards.social.MBActivityKeys;
+import com.liferay.message.boards.constants.MBActivityKeys;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.messageboards.social.MBActivityKeys;
+import com.liferay.message.boards.constants.MBActivityKeys;
 
 import java.io.InputStream;
 

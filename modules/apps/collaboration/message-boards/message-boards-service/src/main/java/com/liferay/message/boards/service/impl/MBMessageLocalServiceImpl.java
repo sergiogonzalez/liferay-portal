@@ -83,7 +83,7 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
-import com.liferay.portlet.messageboards.social.MBActivityKeys;
+import com.liferay.message.boards.constants.MBActivityKeys;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.util.TrashUtil;

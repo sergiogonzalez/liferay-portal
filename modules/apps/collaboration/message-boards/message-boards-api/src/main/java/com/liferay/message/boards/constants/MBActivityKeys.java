@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.social;
+package com.liferay.message.boards.constants;
+
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.constants.MBActivityKeys}
  */
-@Deprecated
 public class MBActivityKeys {
 
 	public static final int ADD_MESSAGE = 1;
