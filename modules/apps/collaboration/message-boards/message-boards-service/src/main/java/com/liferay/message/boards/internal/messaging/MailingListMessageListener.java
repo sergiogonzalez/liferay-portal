@@ -19,7 +19,7 @@ import com.liferay.message.boards.internal.service.util.MBMailMessage;
 import com.liferay.message.boards.internal.service.util.MBMailMessageUtil;
 import com.liferay.message.boards.internal.util.MailingListThreadLocal;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.util.MBUtil;

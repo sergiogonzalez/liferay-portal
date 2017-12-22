@@ -17,7 +17,7 @@ package com.liferay.social.privatemessaging.service.impl;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanReference;

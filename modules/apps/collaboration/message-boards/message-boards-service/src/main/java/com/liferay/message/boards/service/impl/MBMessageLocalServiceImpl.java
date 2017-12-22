@@ -23,7 +23,7 @@ import com.liferay.message.boards.kernel.exception.MessageSubjectException;
 import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
 import com.liferay.message.boards.kernel.exception.RequiredMessageException;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;

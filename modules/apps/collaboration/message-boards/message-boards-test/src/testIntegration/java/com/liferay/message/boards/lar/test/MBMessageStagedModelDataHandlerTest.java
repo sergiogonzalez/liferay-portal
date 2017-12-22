@@ -26,7 +26,7 @@ import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandl
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;

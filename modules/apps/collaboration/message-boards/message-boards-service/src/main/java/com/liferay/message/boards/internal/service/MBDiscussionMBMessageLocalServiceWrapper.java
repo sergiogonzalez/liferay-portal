@@ -18,7 +18,7 @@ import com.liferay.message.boards.kernel.exception.DiscussionMaxCommentsExceptio
 import com.liferay.message.boards.kernel.exception.MessageBodyException;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageLocalServiceWrapper;
