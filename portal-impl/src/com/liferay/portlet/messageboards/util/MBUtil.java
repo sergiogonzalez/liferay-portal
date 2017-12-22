@@ -243,6 +243,11 @@ public class MBUtil {
 			pathThemeImages + EMOTICONS);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil
+	 *             #getBBCodeQuoteBody(HttpServletRequest, MBMessage)}
+	 */
 	public static String getBBCodeQuoteBody(
 		HttpServletRequest request, MBMessage parentMessage) {
 
@@ -270,6 +275,11 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil
+	 *             #getBBCodeSplitThreadBody(HttpServletRequest)}
+	 */
 	public static String getBBCodeSplitThreadBody(HttpServletRequest request) {
 		StringBundler sb = new StringBundler(5);
 
@@ -560,6 +570,11 @@ public class MBUtil {
 		return entries;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil
+	 *             #getHtmlQuoteBody(HttpServletRequest, MBMessage)}
+	 */
 	public static String getHtmlQuoteBody(
 		HttpServletRequest request, MBMessage parentMessage) {
 
@@ -584,6 +599,12 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil
+	 *             #getHtmlSplitThreadBody(HttpServletRequest)}
+	 */
+	@Deprecated
 	public static String getHtmlSplitThreadBody(HttpServletRequest request) {
 		StringBundler sb = new StringBundler(5);
 

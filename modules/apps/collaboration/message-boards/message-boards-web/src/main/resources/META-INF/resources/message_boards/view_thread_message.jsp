@@ -232,10 +232,10 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								String quoteText = null;
 
 								if (messageFormat.equals("bbcode")) {
-									quoteText = MBUtil.getBBCodeQuoteBody(request, message);
+									quoteText = com.liferay.message.boards.web.internal.util.MBUtil(request, message);
 								}
 								else {
-									quoteText = MBUtil.getHtmlQuoteBody(request, message);
+									quoteText = com.liferay.message.boards.web.internal.util.MBUtil.getHtmlQuoteBody(request, message);
 								}
 
 								quoteText = HtmlUtil.escapeJS(quoteText);

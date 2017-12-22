@@ -17,10 +17,10 @@
 <%
 if (Validator.isNull(body)) {
 	if (quote && (curParentMessage != null)) {
-		body = MBUtil.getBBCodeQuoteBody(request, curParentMessage);
+		body = com.liferay.message.boards.web.internal.util.MBUtil.getBBCodeQuoteBody(request, curParentMessage);
 	}
 	else if (splitThread) {
-		body = MBUtil.getBBCodeSplitThreadBody(request);
+		body = com.liferay.message.boards.web.internal.util.MBUtil.getBBCodeSplitThreadBody(request);
 	}
 }
 

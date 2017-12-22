@@ -18,7 +18,7 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
+import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.model.MBTreeWalker;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
