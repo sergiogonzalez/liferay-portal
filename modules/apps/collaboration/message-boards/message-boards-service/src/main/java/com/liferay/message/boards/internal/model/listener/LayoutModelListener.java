@@ -12,20 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model;
+package com.liferay.message.boards.internal.model.listener;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ModelListener;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.model.listener.
- *             LayoutModelListener}
  */
-@Deprecated
+@Component(immediate = true, service = ModelListener.class)
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
