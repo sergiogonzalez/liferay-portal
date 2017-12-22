@@ -17,7 +17,7 @@ package com.liferay.message.boards.internal.service.permission;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.exception.PortalException;

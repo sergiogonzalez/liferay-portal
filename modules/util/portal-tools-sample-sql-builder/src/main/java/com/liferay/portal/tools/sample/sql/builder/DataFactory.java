@@ -98,7 +98,7 @@ import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBCategoryModel;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.constants.MBMessageConstants;

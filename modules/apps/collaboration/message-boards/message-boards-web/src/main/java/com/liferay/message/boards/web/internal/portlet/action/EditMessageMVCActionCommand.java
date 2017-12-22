@@ -30,7 +30,7 @@ import com.liferay.message.boards.kernel.exception.MessageSubjectException;
 import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
 import com.liferay.message.boards.kernel.exception.RequiredMessageException;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;

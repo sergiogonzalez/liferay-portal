@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.util;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBBan;
@@ -22,12 +24,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import javax.mail.Message;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +45,40 @@ public class MBUtil {
 		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
 			"edit_message.bb_code.jsp";
 
+
+	public static long getCategoryId(
+		HttpServletRequest request, MBCategory category) {
+
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+
+		if (category != null) {
+			categoryId = category.getCategoryId();
+		}
+
+		categoryId = ParamUtil.getLong(request, "mbCategoryId", categoryId);
+
+		return categoryId;
+	}
+
+	public static long getCategoryId(
+		HttpServletRequest request, MBMessage message) {
+
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+
+		if (message != null) {
+			categoryId = message.getCategoryId();
+		}
+
+		categoryId = ParamUtil.getLong(request, "mbCategoryId", categoryId);
+
+		return categoryId;
+	}
+
+	public static long getCategoryId(String messageIdString) {
+		String[] parts = _getMessageIdStringParts(messageIdString);
+
+		return GetterUtil.getLong(parts[0]);
+	}
 
 	public static Date getUnbanDate(MBBan ban, int expireInterval) {
 		Date banDate = ban.getCreateDate();

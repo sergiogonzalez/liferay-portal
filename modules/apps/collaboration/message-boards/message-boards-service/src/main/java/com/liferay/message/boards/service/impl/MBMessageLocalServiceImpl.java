@@ -22,7 +22,7 @@ import com.liferay.message.boards.kernel.exception.MessageBodyException;
 import com.liferay.message.boards.kernel.exception.MessageSubjectException;
 import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
 import com.liferay.message.boards.kernel.exception.RequiredMessageException;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.constants.MBThreadConstants;

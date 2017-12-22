@@ -16,7 +16,7 @@ package com.liferay.message.boards.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.message.boards.kernel.constants.MBConstants;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;

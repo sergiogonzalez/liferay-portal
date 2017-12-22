@@ -200,6 +200,12 @@ public class MBUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil
+	 *             #getAbsolutePath(PortletRequest, long)}
+	 */
+	@Deprecated
 	public static String getAbsolutePath(
 			PortletRequest portletRequest, long mbCategoryId)
 		throws PortalException {
@@ -293,6 +299,11 @@ public class MBUtil {
 			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ccom.liferay.message.boards.util.MBUtil#getCategoryId(
+	 *             HttpServletRequest, MBCategory)}
+	 */
 	public static long getCategoryId(
 		HttpServletRequest request, MBCategory category) {
 
@@ -307,6 +318,11 @@ public class MBUtil {
 		return categoryId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ccom.liferay.message.boards.util.MBUtil#getCategoryId(
+	 *             HttpServletRequest, MBMessage)}
+	 */
 	public static long getCategoryId(
 		HttpServletRequest request, MBMessage message) {
 
@@ -321,6 +337,11 @@ public class MBUtil {
 		return categoryId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ccom.liferay.message.boards.util.MBUtil#getCategoryId(
+	 *             String)}
+	 */
 	public static long getCategoryId(String messageIdString) {
 		String[] parts = _getMessageIdStringParts(messageIdString);
 

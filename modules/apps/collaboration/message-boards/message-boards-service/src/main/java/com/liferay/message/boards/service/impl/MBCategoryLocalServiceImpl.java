@@ -15,7 +15,7 @@
 package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.kernel.exception.CategoryNameException;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;

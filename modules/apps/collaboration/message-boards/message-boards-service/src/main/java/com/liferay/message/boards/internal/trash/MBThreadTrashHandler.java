@@ -14,8 +14,9 @@
 
 package com.liferay.message.boards.internal.trash;
 
+import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.message.boards.service.permission.MBCategoryPermission;
 import com.liferay.message.boards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.ArrayList;
 import java.util.List;
