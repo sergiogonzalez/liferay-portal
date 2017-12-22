@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
@@ -36,19 +36,60 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class MBUtilTest {
 
 	@Test
-	public void testGetCategoryId() {
+	public void testGetMessageId() {
 		Assert.assertEquals(
-			10640,
-			MBUtil.getCategoryId(
+			20646,
+			MBUtil.getMessageId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
 	}
 
 	@Test
-	public void testGetCategoryIdWithNoSurroundingChevrons() {
+	public void testGetMessageIdWithNoSurroundingChevrons() {
 		Assert.assertEquals(
-			10640,
-			MBUtil.getCategoryId(
+			20646,
+			MBUtil.getMessageId(
 				"mb_message.10640.20646.1425017183884@events.gmail.com"));
 	}
 
-}
+	@Test
+	public void testGetParentMessageIdWithTheInReplyToHeader()
+		throws Exception {
+
+		Message message = Mockito.mock(Message.class);
+
+		Mockito.when(
+			message.getHeader("In-Reply-To")
+		).thenReturn(
+			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
+		);
+
+		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+	}
+
+	@Test
+	public void testGetParentMessageIdWithTheReferencesHeader()
+		throws Exception {
+
+		Message message = Mockito.mock(Message.class);
+
+		Mockito.when(
+			message.getHeader("References")
+		).thenReturn(
+			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
+		);
+
+		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+	}
+
+	@Test
+	public void testGetParentMessageWithTheInReplyToHeader() throws Exception {
+		Message message = Mockito.mock(Message.class);
+
+		Mockito.when(
+			message.getHeader("In-Reply-To")
+		).thenReturn(
+			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
+		);
+
+		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+	}}

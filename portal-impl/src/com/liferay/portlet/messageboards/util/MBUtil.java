@@ -109,6 +109,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MBUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #BB_CODE_EDITOR_WYSIWYG_IMPL_KEY}
+	 */
+	@Deprecated
 	public static final String BB_CODE_EDITOR_WYSIWYG_IMPL_KEY =
 		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
 			"edit_message.bb_code.jsp";
@@ -591,12 +597,23 @@ public class MBUtil {
 			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil#getMessageId(String)}
+	 */
+	@Deprecated
 	public static long getMessageId(String messageIdString) {
 		String[] parts = _getMessageIdStringParts(messageIdString);
 
 		return GetterUtil.getLong(parts[1]);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #getSubjectForEmail(MBMessage)}
+	 */
+	@Deprecated
 	public static int getMessageIdStringOffset() {
 		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
 			return 1;
@@ -605,6 +622,12 @@ public class MBUtil {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #getParentMessageId(MBMessage)}
+	 */
+	@Deprecated
 	public static long getParentMessageId(Message message) throws Exception {
 		long parentMessageId = -1;
 
@@ -625,6 +648,12 @@ public class MBUtil {
 		return parentMessageId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #getParentMessageIdString(MBMessage)}
+	 */
+	@Deprecated
 	public static String getParentMessageIdString(Message message)
 		throws Exception {
 
@@ -722,6 +751,12 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #getSubjectForEmail(MBMessage)}
+	 */
+	@Deprecated
 	public static String getSubjectForEmail(MBMessage message)
 		throws Exception {
 
@@ -736,6 +771,12 @@ public class MBUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #getSubjectWithoutMessageId(MBMessage)}
+	 */
+	@Deprecated
 	public static String getSubjectWithoutMessageId(Message message)
 		throws Exception {
 
@@ -907,6 +948,12 @@ public class MBUtil {
 		return rank;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #hasMailIdHeader(MBMessage)}
+	 */
+	@Deprecated
 	public static boolean hasMailIdHeader(Message message) throws Exception {
 		String[] messageIds = message.getHeader("Message-ID");
 
@@ -925,6 +972,12 @@ public class MBUtil {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil
+	 *             #isValidMessageFormat(String)}
+	 */
+	@Deprecated
 	public static boolean isValidMessageFormat(String messageFormat) {
 		String editorName = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
