@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 
 import java.util.ArrayList;
 import java.util.Calendar;

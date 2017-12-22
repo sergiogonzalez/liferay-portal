@@ -17,10 +17,16 @@ package com.liferay.message.boards.web.internal.util;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +34,52 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sergio González
  */
 public class MBUtil {
+
+	public static String[] getThreadPriority(
+		MBGroupServiceSettings mbGroupServiceSettings, String languageId,
+		double value)
+		throws Exception {
+
+		String[] priorities = mbGroupServiceSettings.getPriorities(languageId);
+
+		String[] priorityPair = _findThreadPriority(value, priorities);
+
+		if (priorityPair == null) {
+			String defaultLanguageId = LocaleUtil.toLanguageId(
+				LocaleUtil.getSiteDefault());
+
+			priorities = mbGroupServiceSettings.getPriorities(
+				defaultLanguageId);
+
+			priorityPair = _findThreadPriority(value, priorities);
+		}
+
+		return priorityPair;
+	}
+
+	private static String[] _findThreadPriority(
+		double value, String[] priorities) {
+
+		for (int i = 0; i < priorities.length; i++) {
+			String[] priority = StringUtil.split(
+				priorities[i], StringPool.PIPE);
+
+			try {
+				String priorityName = priority[0];
+				String priorityImage = priority[1];
+				double priorityValue = GetterUtil.getDouble(priority[2]);
+
+				if (value == priorityValue) {
+					return new String[] {priorityName, priorityImage};
+				}
+			}
+			catch (Exception e) {
+				_log.error("Unable to determine thread priority", e);
+			}
+		}
+
+		return null;
+	}
 
 	public static String getBBCodeSplitThreadBody(HttpServletRequest request) {
 		StringBundler sb = new StringBundler(5);
@@ -106,6 +158,6 @@ public class MBUtil {
 		return sb.toString();
 	}
 
-
+	private static final Log _log = LogFactoryUtil.getLog(MBUtil.class);
 
 }

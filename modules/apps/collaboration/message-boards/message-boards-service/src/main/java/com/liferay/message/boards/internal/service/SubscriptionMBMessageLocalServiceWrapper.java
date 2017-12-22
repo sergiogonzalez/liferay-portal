@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.service.permission.MBPermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;

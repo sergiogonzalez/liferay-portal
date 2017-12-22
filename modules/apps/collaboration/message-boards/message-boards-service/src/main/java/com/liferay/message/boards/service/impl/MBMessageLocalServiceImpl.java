@@ -81,7 +81,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.messageboards.util.MBUtil;

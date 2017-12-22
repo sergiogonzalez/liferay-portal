@@ -837,6 +837,13 @@ public class MBUtil {
 		return subject;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.
+	 *             MBUtil#getThreadPriority(MBGroupServiceSettings, String,
+	 *             double)}
+	 */
+	@Deprecated
 	public static String[] getThreadPriority(
 			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
 			double value)

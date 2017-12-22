@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.service.permission.MBCategoryPermission;
 import com.liferay.subscription.service.SubscriptionLocalService;
 

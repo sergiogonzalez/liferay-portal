@@ -225,7 +225,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 								</aui:a>
 
 								<%
-								String[] threadPriority = MBUtil.getThreadPriority(mbGroupServiceSettings, themeDisplay.getLanguageId(), thread.getPriority());
+								String[] threadPriority = com.liferay.message.boards.web.internal.util.MBUtil.getThreadPriority(mbGroupServiceSettings, themeDisplay.getLanguageId(), thread.getPriority());
 								%>
 
 								<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
