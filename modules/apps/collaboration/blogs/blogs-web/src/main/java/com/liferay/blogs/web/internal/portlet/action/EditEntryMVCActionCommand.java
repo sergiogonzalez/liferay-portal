@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -487,11 +488,16 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				coverImageImageSelector, smallImageImageSelector,
 				serviceContext);
 
-			content = _updateContent(entry, content, themeDisplay);
+			List<FileEntry> tempBlogsEntryAttachments =
+				BlogsEntryAttachmentFileEntryUtil.
+					getTempBlogsEntryAttachmentFileEntries(content);
+			if(!tempBlogsEntryAttachments.isEmpty()){
+				content = _updateContent(entry, content, themeDisplay);
 
-			entry.setContent(content);
+				entry.setContent(content);
 
-			_blogsEntryLocalService.updateBlogsEntry(entry);
+				_blogsEntryLocalService.updateBlogsEntry(entry);
+			}
 		}
 		else {
 
