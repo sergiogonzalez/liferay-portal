@@ -226,25 +226,6 @@ public class RepositoryStagedModelDataHandler
 		PortletDataContext portletDataContext, Repository stagedModel) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRepositoryEntryLocalService(
-		RepositoryEntryLocalService repositoryEntryLocalService) {
-
-		_repositoryEntryLocalService = repositoryEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRepositoryLocalService(
-		RepositoryLocalService repositoryLocalService) {
-
-		_repositoryLocalService = repositoryLocalService;
-	}
-
 	private long _getRepositoryClassNameId(
 		Element repositoryElement, long defaultValue) {
 
@@ -264,8 +245,13 @@ public class RepositoryStagedModelDataHandler
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private RepositoryEntryLocalService _repositoryEntryLocalService;
+
+	@Reference
 	private RepositoryLocalService _repositoryLocalService;
 
 }
