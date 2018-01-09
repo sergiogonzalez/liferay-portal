@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RepositoryEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -115,6 +117,9 @@ public class RepositoryStagedModelDataHandler
 				"hidden", String.valueOf(dlFolder.isHidden()));
 		}
 
+		repositoryElement.addAttribute(
+			"repositoryClassName", repository.getClassName());
+
 		portletDataContext.addClassedModel(
 			repositoryElement, ExportImportPathUtil.getModelPath(repository),
 			repository);
@@ -161,9 +166,12 @@ public class RepositoryStagedModelDataHandler
 				if (existingRepository == null) {
 					serviceContext.setUuid(repository.getUuid());
 
+					long repositoryClassNameId = _getRepositoryClassNameId(
+						repositoryElement, repository.getClassNameId());
+
 					importedRepository = _repositoryLocalService.addRepository(
 						userId, portletDataContext.getScopeGroupId(),
-						repository.getClassNameId(),
+						repositoryClassNameId,
 						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 						repository.getName(), repository.getDescription(),
 						repository.getPortletId(),
@@ -179,9 +187,12 @@ public class RepositoryStagedModelDataHandler
 				}
 			}
 			else if (existingRepository == null) {
+				long repositoryClassNameId = _getRepositoryClassNameId(
+					repositoryElement, repository.getClassNameId());
+
 				importedRepository = _repositoryLocalService.addRepository(
 					userId, portletDataContext.getScopeGroupId(),
-					repository.getClassNameId(),
+					repositoryClassNameId,
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					repository.getName(), repository.getDescription(),
 					repository.getPortletId(),
@@ -234,8 +245,24 @@ public class RepositoryStagedModelDataHandler
 		_repositoryLocalService = repositoryLocalService;
 	}
 
+	private long _getRepositoryClassNameId(
+		Element repositoryElement, long defaultValue) {
+
+		String repositoryClassName = repositoryElement.attributeValue(
+			"repositoryClassName");
+
+		if (Validator.isNull(repositoryClassName)) {
+			return defaultValue;
+		}
+
+		return _classNameLocalService.getClassNameId(repositoryClassName);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RepositoryStagedModelDataHandler.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	private DLAppLocalService _dlAppLocalService;
 	private RepositoryEntryLocalService _repositoryEntryLocalService;
