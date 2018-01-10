@@ -260,21 +260,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		mbMessageLocalService.deleteDiscussionMessage(messageId);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #deleteDiscussionMessage(long)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteDiscussionMessage(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long messageId)
-		throws PortalException {
-
-		deleteDiscussionMessage(messageId);
-	}
-
 	@Override
 	public void deleteMessage(long messageId) throws PortalException {
 		MBMessagePermission.check(
@@ -571,25 +556,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		return mbMessageLocalService.getMessageDisplay(
 			getGuestOrUserId(), messageId, status);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	 *             int)}
-	 */
-	@Deprecated
-	@Override
-	public MBMessageDisplay getMessageDisplay(
-			long messageId, int status, String threadView,
-			boolean includePrevAndNext)
-		throws PortalException {
-
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.VIEW);
-
-		return mbMessageLocalService.getMessageDisplay(
-			getGuestOrUserId(), messageId, status, threadView,
-			includePrevAndNext);
 	}
 
 	@Override
