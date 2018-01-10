@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -39,10 +39,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.impl.MBMessageImpl}
  */
-@Deprecated
 public class MBMessageImpl extends MBMessageBaseImpl {
 
 	@Override

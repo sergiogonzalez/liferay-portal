@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.message.boards.kernel.constants.MBConstants;
@@ -39,10 +39,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.impl.MBThreadImpl}
  */
-@Deprecated
 public class MBThreadImpl extends MBThreadBaseImpl {
 
 	@Override
