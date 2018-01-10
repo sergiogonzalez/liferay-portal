@@ -12,28 +12,78 @@
  * details.
  */
 
-package com.liferay.message.boards.model.impl;
+package com.liferay.portlet.messageboards.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * The extended model implementation for the MBCategory service. Represents a row in the &quot;MBCategory&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.message.boards.model.MBCategory} interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.model.impl.MBCategoryImpl}
  */
-@ProviderType
+@Deprecated
 public class MBCategoryImpl extends MBCategoryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a message boards category model instance should use the {@link com.liferay.message.boards.model.MBCategory} interface instead.
-	 */
-	public MBCategoryImpl() {
+	@Override
+	public List<Long> getAncestorCategoryIds() throws PortalException {
+		List<Long> ancestorCategoryIds = new ArrayList<>();
+
+		MBCategory category = this;
+
+		while (!category.isRoot()) {
+			category = MBCategoryLocalServiceUtil.getCategory(
+				category.getParentCategoryId());
+
+			ancestorCategoryIds.add(category.getCategoryId());
+		}
+
+		return ancestorCategoryIds;
+	}
+
+	@Override
+	public List<MBCategory> getAncestors() throws PortalException {
+		List<MBCategory> ancestors = new ArrayList<>();
+
+		MBCategory category = this;
+
+		while (!category.isRoot()) {
+			category = category.getParentCategory();
+
+			ancestors.add(category);
+		}
+
+		return ancestors;
+	}
+
+	@Override
+	public MBCategory getParentCategory() throws PortalException {
+		long parentCategoryId = getParentCategoryId();
+
+		if ((parentCategoryId ==
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
+			(parentCategoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
+
+			return null;
+		}
+
+		return MBCategoryLocalServiceUtil.getCategory(getParentCategoryId());
+	}
+
+	@Override
+	public boolean isRoot() {
+		if (getParentCategoryId() ==
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }
