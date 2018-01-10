@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.impl;
+package com.liferay.message.boards.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
@@ -120,10 +120,7 @@ import net.htmlparser.jericho.StartTag;
  * @author Jorge Ferrer
  * @author Juan Fernández
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl}
  */
-@Deprecated
 public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
