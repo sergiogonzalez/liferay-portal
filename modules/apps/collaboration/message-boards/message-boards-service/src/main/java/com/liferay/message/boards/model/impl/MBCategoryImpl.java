@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
@@ -24,10 +24,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.impl.MBCategoryImpl}
  */
-@Deprecated
 public class MBCategoryImpl extends MBCategoryBaseImpl {
 
 	@Override
