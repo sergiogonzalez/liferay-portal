@@ -828,19 +828,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #restoreDependentsFromTrash(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public void restoreDependentsFromTrash(
-			long groupId, long threadId, long trashEntryId)
-		throws PortalException {
-
-		mbThreadLocalService.restoreDependentsFromTrash(groupId, threadId);
-	}
-
 	@Override
 	public void restoreThreadFromTrash(long userId, long threadId)
 		throws PortalException {
