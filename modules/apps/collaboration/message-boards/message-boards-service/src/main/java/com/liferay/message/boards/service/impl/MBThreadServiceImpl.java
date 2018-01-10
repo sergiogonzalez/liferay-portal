@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.impl;
+package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.kernel.exception.LockedThreadException;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
@@ -44,10 +44,7 @@ import java.util.List;
  * @author Deepak Gothe
  * @author Mika Koivisto
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.service.impl.MBThreadServiceImpl}
  */
-@Deprecated
 public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
