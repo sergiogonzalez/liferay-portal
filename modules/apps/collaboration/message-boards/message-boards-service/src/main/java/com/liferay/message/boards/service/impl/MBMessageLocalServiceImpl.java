@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.message.boards.kernel.constants.MBConstants;
-import com.liferay.message.boards.kernel.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.kernel.exception.MessageBodyException;
 import com.liferay.message.boards.kernel.exception.MessageSubjectException;
 import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
@@ -59,7 +58,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -86,7 +84,6 @@ import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageDisplayImpl;
 import com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
-import com.liferay.portlet.messageboards.util.MBSubscriptionSender;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -401,31 +398,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return addMessage(
 			userId, userName, groupId, categoryId, 0, 0, subject, body, format,
 			inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
-	 *             long, long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public MBMessage addMessage(
-			long userId, String userName, long categoryId, String subject,
-			String body, ServiceContext serviceContext)
-		throws PortalException {
-
-		long groupId = serviceContext.getScopeGroupId();
-
-		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-				categoryId);
-
-			groupId = category.getGroupId();
-		}
-
-		return addMessage(
-			userId, userName, groupId, categoryId, subject, body,
 			serviceContext);
 	}
 
@@ -862,21 +834,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getDiscussionMessageDisplay(long, long, String, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public MBMessageDisplay getDiscussionMessageDisplay(
-			long userId, long groupId, String className, long classPK,
-			int status, String threadView)
-		throws PortalException {
-
-		return mbMessageLocalService.getDiscussionMessageDisplay(
-			userId, groupId, className, classPK, status);
-	}
-
 	@Override
 	public int getDiscussionMessagesCount(
 		long classNameId, long classPK, int status) {
@@ -993,23 +950,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return getMessageDisplay(userId, message, status);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	 *             long, int)}
-	 */
-	@Deprecated
-	@Override
-	public MBMessageDisplay getMessageDisplay(
-			long userId, long messageId, int status, String threadView,
-			boolean includePrevAndNext)
-		throws PortalException {
-
-		MBMessage message = getMessage(messageId);
-
-		return getMessageDisplay(
-			userId, message, status, threadView, includePrevAndNext);
-	}
-
 	@Override
 	public MBMessageDisplay getMessageDisplay(
 			long userId, MBMessage message, int status)
@@ -1063,42 +1003,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return new MBMessageDisplayImpl(
 			userId, message, parentMessage, category, thread, status, this,
 			comparator);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	 *             MBMessage, int)}
-	 */
-	@Deprecated
-	@Override
-	public MBMessageDisplay getMessageDisplay(
-			long userId, MBMessage message, int status, String threadView,
-			boolean includePrevAndNext)
-		throws PortalException {
-
-		return getMessageDisplay(
-			userId, message, status, threadView, includePrevAndNext,
-			new MessageThreadComparator());
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	 *             MBMessage, int, Comparator)} (
-	 */
-	@Deprecated
-	@Override
-	public MBMessageDisplay getMessageDisplay(
-			long userId, MBMessage message, int status, String threadView,
-			boolean includePrevAndNext, Comparator<MBMessage> comparator)
-		throws PortalException {
-
-		MBMessageDisplay messageDisplay = getMessageDisplay(
-			userId, message, status, comparator);
-
-		return new MBMessageDisplayImpl(
-			messageDisplay.getMessage(), messageDisplay.getParentMessage(),
-			messageDisplay.getCategory(), messageDisplay.getThread(), null,
-			null, status, threadView, this, comparator);
 	}
 
 	@Override
@@ -1575,39 +1479,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return message;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public MBMessage updateMessage(long messageId, String body)
-		throws PortalException {
-
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		message.setBody(body);
-
-		mbMessagePersistence.update(message);
-
-		return message;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	 *             int, ServiceContext, Map)}
-	 */
-	@Deprecated
-	@Override
-	public MBMessage updateStatus(
-			long userId, long messageId, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return mbMessageLocalService.updateStatus(
-			userId, messageId, status, serviceContext,
-			new HashMap<String, Serializable>());
-	}
-
 	@Override
 	public MBMessage updateStatus(
 			long userId, long messageId, int status,
@@ -1871,42 +1742,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subject;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected MBSubscriptionSender getSubscriptionSender(
-		long userId, MBCategory category, MBMessage message, String messageURL,
-		String entryTitle, boolean htmlFormat, String messageBody,
-		String messageSubject, String messageSubjectPrefix, String inReplyTo,
-		String fromName, String fromAddress, String replyToAddress,
-		String emailAddress, String fullName,
-		LocalizedValuesMap subjectLocalizedValuesMap,
-		LocalizedValuesMap bodyLocalizedValuesMap,
-		ServiceContext serviceContext) {
-
-		return null;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected void notifyDiscussionSubscribers(
-			long userId, MBMessage message, ServiceContext serviceContext)
-		throws PortalException {
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected void notifySubscribers(
-			long userId, MBMessage message, String messageURL,
-			ServiceContext serviceContext)
-		throws PortalException {
-	}
-
 	protected void pingPingback(
 		MBMessage message, ServiceContext serviceContext) {
 
@@ -2090,27 +1925,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (Validator.isNull(subject) && Validator.isNull(body)) {
 			throw new MessageSubjectException("Subject and body are null");
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected void validateDiscussionMaxComments(String className, long classPK)
-		throws PortalException {
-
-		if (PropsValues.DISCUSSION_MAX_COMMENTS <= 0) {
-			return;
-		}
-
-		int count = mbMessageLocalService.getDiscussionMessagesCount(
-			className, classPK, WorkflowConstants.STATUS_APPROVED);
-
-		if (count >= PropsValues.DISCUSSION_MAX_COMMENTS) {
-			int max = PropsValues.DISCUSSION_MAX_COMMENTS - 1;
-
-			throw new DiscussionMaxCommentsException(count + " exceeds " + max);
 		}
 	}
 
