@@ -241,7 +241,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 									delta="<%= rssDelta %>"
 									displayStyle="<%= rssDisplayStyle %>"
 									feedType="<%= rssFeedType %>"
-									url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
+									url="<%= MBRSSUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
 								/>
 							</c:if>
 
@@ -364,7 +364,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 							displayStyle="<%= rssDisplayStyle %>"
 							feedType="<%= rssFeedType %>"
 							message="rss"
-							url="<%= MBUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
+							url="<%= MBRSSUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
 						/>
 					</c:if>
 

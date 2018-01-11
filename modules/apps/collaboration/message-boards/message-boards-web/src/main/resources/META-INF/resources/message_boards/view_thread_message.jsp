@@ -362,7 +362,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		String msgBody = message.getBody();
 
 		if (message.isFormatBBCode()) {
-			msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
+			msgBody = com.liferay.message.boards.util.MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
 		}
 		%>
 
