@@ -679,7 +679,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		HttpPrincipal httpPrincipal, long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -702,7 +702,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBMessageDisplay)returnObj;
+			return (com.liferay.message.boards.model.MBMessageDisplay)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
