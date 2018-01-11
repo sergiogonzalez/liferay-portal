@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBTreeWalker;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBTreeWalker;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,10 +30,7 @@ import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.impl.MBTreeWalkerImpl}
  */
-@Deprecated
 public class MBTreeWalkerImpl implements MBTreeWalker {
 
 	public MBTreeWalkerImpl(
@@ -89,7 +86,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #MBTreeWalkerImpl(long, int,
+	 * @deprecated As of 1.0.0, replaced by {@link #MBTreeWalkerImpl(long, int,
 	 *             MBMessageLocalService, Comparator)}
 	 */
 	@Deprecated
