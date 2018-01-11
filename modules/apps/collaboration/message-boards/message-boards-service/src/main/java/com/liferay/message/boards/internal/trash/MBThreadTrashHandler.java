@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.internal.trash;
 
+import com.liferay.message.boards.internal.util.MBTrashUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,7 +157,8 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		return MBUtil.getAbsolutePath(portletRequest, thread.getCategoryId());
+		return MBTrashUtil.getAbsolutePath(
+			portletRequest, thread.getCategoryId());
 	}
 
 	@Override
