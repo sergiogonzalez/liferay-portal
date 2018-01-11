@@ -285,19 +285,19 @@ public class MBThreadPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_P() throws Exception {
-		_persistence.countByC_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextDouble());
-
-		_persistence.countByC_P(0L, 0D);
-	}
-
-	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_P() throws Exception {
+		_persistence.countByC_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDouble());
+
+		_persistence.countByC_P(0L, 0D);
 	}
 
 	@Test
