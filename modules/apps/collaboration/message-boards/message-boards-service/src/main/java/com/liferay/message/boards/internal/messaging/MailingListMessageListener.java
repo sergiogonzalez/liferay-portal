@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -163,7 +162,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 			MailingListRequest mailingListRequest, Message mailMessage)
 		throws Exception {
 
-		if (MBUtil.hasMailIdHeader(mailMessage)) {
+		if (MBMailUtil.hasMailIdHeader(mailMessage)) {
 			return;
 		}
 
@@ -205,7 +204,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 				companyId, mailingListRequest.getUserId());
 		}
 
-		long parentMessageId = MBUtil.getParentMessageId(mailMessage);
+		long parentMessageId = MBMailUtil.getParentMessageId(mailMessage);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Parent message id " + parentMessageId);
@@ -230,7 +229,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		MailingListThreadLocal.setSourceMailingList(true);
 
-		String subject = MBUtil.getSubjectWithoutMessageId(mailMessage);
+		String subject = MBMailUtil.getSubjectWithoutMessageId(mailMessage);
 
 		ServiceContext serviceContext = new ServiceContext();
 
