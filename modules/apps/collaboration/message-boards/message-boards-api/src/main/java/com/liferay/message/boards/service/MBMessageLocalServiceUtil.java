@@ -124,21 +124,6 @@ public class MBMessageLocalServiceUtil {
 			serviceContext);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
-	long, long, String, String, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
-		long userId, java.lang.String userName, long categoryId,
-		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addMessage(userId, userName, categoryId, subject, body,
-			serviceContext);
-	}
-
 	public static void addMessageAttachment(long userId, long messageId,
 		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -418,20 +403,6 @@ public class MBMessageLocalServiceUtil {
 			classPK, status, comparator);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getDiscussionMessageDisplay(long, long, String, long, int)}
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getDiscussionMessageDisplay(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int status, java.lang.String threadView)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getDiscussionMessageDisplay(userId, groupId, className,
-			classPK, status, threadView);
-	}
-
 	public static int getDiscussionMessagesCount(long classNameId,
 		long classPK, int status) {
 		return getService()
@@ -590,20 +561,6 @@ public class MBMessageLocalServiceUtil {
 		return getService().getMessageDisplay(userId, messageId, status);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	long, int)}
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long userId, long messageId, int status, java.lang.String threadView,
-		boolean includePrevAndNext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getMessageDisplay(userId, messageId, status, threadView,
-			includePrevAndNext);
-	}
-
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
 		int status) throws com.liferay.portal.kernel.exception.PortalException {
@@ -617,35 +574,6 @@ public class MBMessageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getMessageDisplay(userId, message, status, comparator);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int)}
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
-		int status, java.lang.String threadView, boolean includePrevAndNext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getMessageDisplay(userId, message, status, threadView,
-			includePrevAndNext);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, Comparator)} (
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
-		int status, java.lang.String threadView, boolean includePrevAndNext,
-		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getMessageDisplay(userId, message, status, threadView,
-			includePrevAndNext, comparator);
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getMessages(
@@ -846,29 +774,6 @@ public class MBMessageLocalServiceUtil {
 				   .updateMessage(userId, messageId, subject, body,
 			inputStreamOVPs, existingFiles, priority, allowPingbacks,
 			serviceContext);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessage updateMessage(
-		long messageId, java.lang.String body)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateMessage(messageId, body);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessage updateStatus(
-		long userId, long messageId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateStatus(userId, messageId, status, serviceContext);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBMessage updateStatus(
