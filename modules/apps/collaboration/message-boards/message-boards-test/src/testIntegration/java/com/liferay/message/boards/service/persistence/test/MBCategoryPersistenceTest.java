@@ -285,21 +285,6 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_S() throws Exception {
-		_persistence.countByG_P_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByG_P_S(0L, 0L, 0);
-	}
-
-	@Test
-	public void testCountByG_P_SArrayable() throws Exception {
-		_persistence.countByG_P_S(RandomTestUtil.nextLong(),
-			new long[] { RandomTestUtil.nextLong(), 0L },
-			RandomTestUtil.nextInt());
-	}
-
-	@Test
 	public void testCountByNotC_G_P() throws Exception {
 		_persistence.countByNotC_G_P(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -312,6 +297,21 @@ public class MBCategoryPersistenceTest {
 		_persistence.countByNotC_G_P(new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextLong(),
 			new long[] { RandomTestUtil.nextLong(), 0L });
+	}
+
+	@Test
+	public void testCountByG_P_S() throws Exception {
+		_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_P_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_P_SArrayable() throws Exception {
+		_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.nextInt());
 	}
 
 	@Test
