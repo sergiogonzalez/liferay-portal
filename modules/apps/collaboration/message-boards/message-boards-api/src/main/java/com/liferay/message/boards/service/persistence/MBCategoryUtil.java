@@ -638,6 +638,70 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns all the message boards categories that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByGroupId(long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByGroupId(long groupId, int start,
+		int end) {
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permissions to view where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByGroupId(long groupId, int start,
+		int end, OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63;.
+	*
+	* @param categoryId the primary key of the current message boards category
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards category
+	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
+	*/
+	public static MBCategory[] filterFindByGroupId_PrevAndNext(
+		long categoryId, long groupId,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+		return getPersistence()
+				   .filterFindByGroupId_PrevAndNext(categoryId, groupId,
+			orderByComparator);
+	}
+
+	/**
 	* Removes all the message boards categories where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -654,6 +718,16 @@ public class MBCategoryUtil {
 	*/
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByGroupId(long groupId) {
+		return getPersistence().filterCountByGroupId(groupId);
 	}
 
 	/**
@@ -972,6 +1046,131 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P(long groupId,
+		long parentCategoryId) {
+		return getPersistence().filterFindByG_P(groupId, parentCategoryId);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P(long groupId,
+		long parentCategoryId, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P(groupId, parentCategoryId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permissions to view where groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P(long groupId,
+		long parentCategoryId, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P(groupId, parentCategoryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* @param categoryId the primary key of the current message boards category
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards category
+	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
+	*/
+	public static MBCategory[] filterFindByG_P_PrevAndNext(long categoryId,
+		long groupId, long parentCategoryId,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+		return getPersistence()
+				   .filterFindByG_P_PrevAndNext(categoryId, groupId,
+			parentCategoryId, orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P(long groupId,
+		long[] parentCategoryIds) {
+		return getPersistence().filterFindByG_P(groupId, parentCategoryIds);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P(long groupId,
+		long[] parentCategoryIds, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P(groupId, parentCategoryIds, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P(long groupId,
+		long[] parentCategoryIds, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P(groupId, parentCategoryIds, start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the message boards categories where groupId = &#63; and parentCategoryId = any &#63;.
 	*
 	* <p>
@@ -1081,6 +1280,28 @@ public class MBCategoryUtil {
 	*/
 	public static int countByG_P(long groupId, long[] parentCategoryIds) {
 		return getPersistence().countByG_P(groupId, parentCategoryIds);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByG_P(long groupId, long parentCategoryId) {
+		return getPersistence().filterCountByG_P(groupId, parentCategoryId);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByG_P(long groupId, long[] parentCategoryIds) {
+		return getPersistence().filterCountByG_P(groupId, parentCategoryIds);
 	}
 
 	/**
@@ -1235,6 +1456,75 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_S(long groupId, int status) {
+		return getPersistence().filterFindByG_S(groupId, status);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_S(long groupId, int status,
+		int start, int end) {
+		return getPersistence().filterFindByG_S(groupId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permissions to view where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_S(long groupId, int status,
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S(groupId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* @param categoryId the primary key of the current message boards category
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards category
+	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
+	*/
+	public static MBCategory[] filterFindByG_S_PrevAndNext(long categoryId,
+		long groupId, int status,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+		return getPersistence()
+				   .filterFindByG_S_PrevAndNext(categoryId, groupId, status,
+			orderByComparator);
+	}
+
+	/**
 	* Removes all the message boards categories where groupId = &#63; and status = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1253,6 +1543,17 @@ public class MBCategoryUtil {
 	*/
 	public static int countByG_S(long groupId, int status) {
 		return getPersistence().countByG_S(groupId, status);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByG_S(long groupId, int status) {
+		return getPersistence().filterCountByG_S(groupId, status);
 	}
 
 	/**
@@ -1582,6 +1883,122 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns all the message boards categories that the user has permission to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P(long categoryId,
+		long groupId, long parentCategoryId) {
+		return getPersistence()
+				   .filterFindByNotC_G_P(categoryId, groupId, parentCategoryId);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P(long categoryId,
+		long groupId, long parentCategoryId, int start, int end) {
+		return getPersistence()
+				   .filterFindByNotC_G_P(categoryId, groupId, parentCategoryId,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permissions to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P(long categoryId,
+		long groupId, long parentCategoryId, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByNotC_G_P(categoryId, groupId, parentCategoryId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P(long[] categoryIds,
+		long groupId, long[] parentCategoryIds) {
+		return getPersistence()
+				   .filterFindByNotC_G_P(categoryIds, groupId, parentCategoryIds);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P(long[] categoryIds,
+		long groupId, long[] parentCategoryIds, int start, int end) {
+		return getPersistence()
+				   .filterFindByNotC_G_P(categoryIds, groupId,
+			parentCategoryIds, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P(long[] categoryIds,
+		long groupId, long[] parentCategoryIds, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByNotC_G_P(categoryIds, groupId,
+			parentCategoryIds, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the message boards categories where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63;.
 	*
 	* <p>
@@ -1706,6 +2123,35 @@ public class MBCategoryUtil {
 		long[] parentCategoryIds) {
 		return getPersistence()
 				   .countByNotC_G_P(categoryIds, groupId, parentCategoryIds);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByNotC_G_P(long categoryId, long groupId,
+		long parentCategoryId) {
+		return getPersistence()
+				   .filterCountByNotC_G_P(categoryId, groupId, parentCategoryId);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63;.
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByNotC_G_P(long[] categoryIds, long groupId,
+		long[] parentCategoryIds) {
+		return getPersistence()
+				   .filterCountByNotC_G_P(categoryIds, groupId,
+			parentCategoryIds);
 	}
 
 	/**
@@ -1882,6 +2328,142 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P_S(long groupId,
+		long parentCategoryId, int status) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentCategoryId, status);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P_S(long groupId,
+		long parentCategoryId, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentCategoryId, status, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permissions to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P_S(long groupId,
+		long parentCategoryId, int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentCategoryId, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* @param categoryId the primary key of the current message boards category
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards category
+	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
+	*/
+	public static MBCategory[] filterFindByG_P_S_PrevAndNext(long categoryId,
+		long groupId, long parentCategoryId, int status,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+		return getPersistence()
+				   .filterFindByG_P_S_PrevAndNext(categoryId, groupId,
+			parentCategoryId, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P_S(long groupId,
+		long[] parentCategoryIds, int status) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentCategoryIds, status);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P_S(long groupId,
+		long[] parentCategoryIds, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentCategoryIds, status,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByG_P_S(long groupId,
+		long[] parentCategoryIds, int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentCategoryIds, status,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the message boards categories where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
 	*
 	* <p>
@@ -2002,6 +2584,34 @@ public class MBCategoryUtil {
 	public static int countByG_P_S(long groupId, long[] parentCategoryIds,
 		int status) {
 		return getPersistence().countByG_P_S(groupId, parentCategoryIds, status);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByG_P_S(long groupId, long parentCategoryId,
+		int status) {
+		return getPersistence()
+				   .filterCountByG_P_S(groupId, parentCategoryId, status);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByG_P_S(long groupId,
+		long[] parentCategoryIds, int status) {
+		return getPersistence()
+				   .filterCountByG_P_S(groupId, parentCategoryIds, status);
 	}
 
 	/**
@@ -2169,6 +2779,130 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns all the message boards categories that the user has permission to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P_S(long categoryId,
+		long groupId, long parentCategoryId, int status) {
+		return getPersistence()
+				   .filterFindByNotC_G_P_S(categoryId, groupId,
+			parentCategoryId, status);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P_S(long categoryId,
+		long groupId, long parentCategoryId, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByNotC_G_P_S(categoryId, groupId,
+			parentCategoryId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permissions to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P_S(long categoryId,
+		long groupId, long parentCategoryId, int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByNotC_G_P_S(categoryId, groupId,
+			parentCategoryId, status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @return the matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P_S(long[] categoryIds,
+		long groupId, long[] parentCategoryIds, int status) {
+		return getPersistence()
+				   .filterFindByNotC_G_P_S(categoryIds, groupId,
+			parentCategoryIds, status);
+	}
+
+	/**
+	* Returns a range of all the message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P_S(long[] categoryIds,
+		long groupId, long[] parentCategoryIds, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByNotC_G_P_S(categoryIds, groupId,
+			parentCategoryIds, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories that the user has permission to view
+	*/
+	public static List<MBCategory> filterFindByNotC_G_P_S(long[] categoryIds,
+		long groupId, long[] parentCategoryIds, int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .filterFindByNotC_G_P_S(categoryIds, groupId,
+			parentCategoryIds, status, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the message boards categories where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
 	*
 	* <p>
@@ -2304,6 +3038,38 @@ public class MBCategoryUtil {
 		return getPersistence()
 				   .countByNotC_G_P_S(categoryIds, groupId, parentCategoryIds,
 			status);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
+	*
+	* @param categoryId the category ID
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param status the status
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByNotC_G_P_S(long categoryId, long groupId,
+		long parentCategoryId, int status) {
+		return getPersistence()
+				   .filterCountByNotC_G_P_S(categoryId, groupId,
+			parentCategoryId, status);
+	}
+
+	/**
+	* Returns the number of message boards categories that the user has permission to view where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
+	*
+	* @param categoryIds the category IDs
+	* @param groupId the group ID
+	* @param parentCategoryIds the parent category IDs
+	* @param status the status
+	* @return the number of matching message boards categories that the user has permission to view
+	*/
+	public static int filterCountByNotC_G_P_S(long[] categoryIds, long groupId,
+		long[] parentCategoryIds, int status) {
+		return getPersistence()
+				   .filterCountByNotC_G_P_S(categoryIds, groupId,
+			parentCategoryIds, status);
 	}
 
 	/**
