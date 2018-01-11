@@ -106,21 +106,6 @@ public class MBMessageServiceUtil {
 		getService().deleteDiscussionMessage(messageId);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#deleteDiscussionMessage(long)}
-	*/
-	@Deprecated
-	public static void deleteDiscussionMessage(long groupId,
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteDiscussionMessage(groupId, className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId, messageId);
-	}
-
 	public static void deleteMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteMessage(messageId);
@@ -212,20 +197,6 @@ public class MBMessageServiceUtil {
 		long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMessageDisplay(messageId, status);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	int)}
-	*/
-	@Deprecated
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long messageId, int status, java.lang.String threadView,
-		boolean includePrevAndNext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getMessageDisplay(messageId, status, threadView,
-			includePrevAndNext);
 	}
 
 	/**

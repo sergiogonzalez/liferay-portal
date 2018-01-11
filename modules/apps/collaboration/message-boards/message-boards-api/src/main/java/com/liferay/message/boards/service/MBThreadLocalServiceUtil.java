@@ -477,17 +477,6 @@ public class MBThreadLocalServiceUtil {
 		getService().restoreDependentsFromTrash(groupId, threadId);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#restoreDependentsFromTrash(long, long)}
-	*/
-	@Deprecated
-	public static void restoreDependentsFromTrash(long groupId, long threadId,
-		long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreDependentsFromTrash(groupId, threadId, trashEntryId);
-	}
-
 	public static void restoreThreadFromTrash(long userId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreThreadFromTrash(userId, threadId);
