@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.internal.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
@@ -31,15 +31,15 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author John Zhao
  */
-@PrepareForTest({MBUtil.class, StringPool.class, PropsValues.class})
+@PrepareForTest({MBMailUtil.class, StringPool.class, PropsValues.class})
 @RunWith(PowerMockRunner.class)
-public class MBUtilTest {
+public class MBMailUtilTest {
 
 	@Test
 	public void testGetCategoryId() {
 		Assert.assertEquals(
 			10640,
-			MBUtil.getCategoryId(
+			MBMailUtil.getCategoryId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
 	}
 
@@ -47,7 +47,7 @@ public class MBUtilTest {
 	public void testGetCategoryIdWithNoSurroundingChevrons() {
 		Assert.assertEquals(
 			10640,
-			MBUtil.getCategoryId(
+			MBMailUtil.getCategoryId(
 				"mb_message.10640.20646.1425017183884@events.gmail.com"));
 	}
 
@@ -55,7 +55,7 @@ public class MBUtilTest {
 	public void testGetMessageId() {
 		Assert.assertEquals(
 			20646,
-			MBUtil.getMessageId(
+			MBMailUtil.getMessageId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
 	}
 
@@ -63,7 +63,7 @@ public class MBUtilTest {
 	public void testGetMessageIdWithNoSurroundingChevrons() {
 		Assert.assertEquals(
 			20646,
-			MBUtil.getMessageId(
+			MBMailUtil.getMessageId(
 				"mb_message.10640.20646.1425017183884@events.gmail.com"));
 	}
 
@@ -79,7 +79,7 @@ public class MBUtilTest {
 			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
 		);
 
-		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+		Assert.assertEquals(20646, MBMailUtil.getParentMessageId(message));
 	}
 
 	@Test
@@ -94,7 +94,7 @@ public class MBUtilTest {
 			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
 		);
 
-		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+		Assert.assertEquals(20646, MBMailUtil.getParentMessageId(message));
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class MBUtilTest {
 			new String[] {"<mb_message.10640.20646.1425017183884@gmail.com>"}
 		);
 
-		Assert.assertEquals(20646, MBUtil.getParentMessageId(message));
+		Assert.assertEquals(20646, MBMailUtil.getParentMessageId(message));
 	}
 
 }

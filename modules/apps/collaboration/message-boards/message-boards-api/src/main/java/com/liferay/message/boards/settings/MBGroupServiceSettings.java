@@ -15,6 +15,7 @@
 package com.liferay.message.boards.settings;
 
 import com.liferay.message.boards.kernel.constants.MBConstants;
+import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.RSSUtil;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Map;
 
