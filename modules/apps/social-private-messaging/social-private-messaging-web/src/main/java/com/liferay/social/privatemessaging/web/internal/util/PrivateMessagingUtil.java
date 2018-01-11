@@ -16,7 +16,7 @@ package com.liferay.social.privatemessaging.web.internal.util;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
+import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
