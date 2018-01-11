@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.kernel.exception.LockedThreadException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
@@ -48,7 +49,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
