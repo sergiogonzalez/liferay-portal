@@ -203,7 +203,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getMessageDisplay(messageId, status);
