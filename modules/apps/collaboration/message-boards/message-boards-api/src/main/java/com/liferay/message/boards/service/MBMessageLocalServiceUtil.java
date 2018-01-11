@@ -385,7 +385,7 @@ public class MBMessageLocalServiceUtil {
 		return getService().getCompanyMessagesCount(companyId, status);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getDiscussionMessageDisplay(
+	public static com.liferay.message.boards.model.MBMessageDisplay getDiscussionMessageDisplay(
 		long userId, long groupId, java.lang.String className, long classPK,
 		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -393,7 +393,7 @@ public class MBMessageLocalServiceUtil {
 			classPK, status);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getDiscussionMessageDisplay(
+	public static com.liferay.message.boards.model.MBMessageDisplay getDiscussionMessageDisplay(
 		long userId, long groupId, java.lang.String className, long classPK,
 		int status,
 		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator)
@@ -555,19 +555,19 @@ public class MBMessageLocalServiceUtil {
 		return getService().getMessage(messageId);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long userId, long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMessageDisplay(userId, messageId, status);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
 		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMessageDisplay(userId, message, status);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
 		int status,
 		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator)

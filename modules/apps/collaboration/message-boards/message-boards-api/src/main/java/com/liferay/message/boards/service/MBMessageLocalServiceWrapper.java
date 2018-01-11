@@ -413,7 +413,7 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getDiscussionMessageDisplay(
+	public com.liferay.message.boards.model.MBMessageDisplay getDiscussionMessageDisplay(
 		long userId, long groupId, java.lang.String className, long classPK,
 		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getDiscussionMessageDisplay(userId,
@@ -421,7 +421,7 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getDiscussionMessageDisplay(
+	public com.liferay.message.boards.model.MBMessageDisplay getDiscussionMessageDisplay(
 		long userId, long groupId, java.lang.String className, long classPK,
 		int status,
 		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator)
@@ -605,7 +605,7 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long userId, long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getMessageDisplay(userId, messageId,
@@ -613,14 +613,14 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
 		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getMessageDisplay(userId, message, status);
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+	public com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
 		int status,
 		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator)

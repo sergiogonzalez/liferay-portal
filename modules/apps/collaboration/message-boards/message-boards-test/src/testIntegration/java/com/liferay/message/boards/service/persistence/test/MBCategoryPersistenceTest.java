@@ -353,6 +353,12 @@ public class MBCategoryPersistenceTest {
 			getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<MBCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBCategory", "uuid", true,
 			"categoryId", true, "groupId", true, "companyId", true, "userId",
