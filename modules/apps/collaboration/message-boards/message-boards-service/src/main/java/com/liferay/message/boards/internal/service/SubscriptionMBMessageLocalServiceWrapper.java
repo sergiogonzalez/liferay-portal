@@ -14,7 +14,9 @@
 
 package com.liferay.message.boards.internal.service;
 
+import com.liferay.message.boards.internal.util.MBMailUtil;
 import com.liferay.message.boards.internal.util.MBSubscriptionSender;
+import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.internal.util.MailingListThreadLocal;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
@@ -61,7 +63,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
@@ -226,7 +227,7 @@ public class SubscriptionMBMessageLocalServiceWrapper
 		Date modifiedDate = message.getModifiedDate();
 
 		subscriptionSender.setMailId(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX, message.getCategoryId(),
+			MBMailUtil.MESSAGE_POP_PORTLET_PREFIX, message.getCategoryId(),
 			message.getMessageId(), modifiedDate.getTime());
 
 		int notificationType =
@@ -411,7 +412,7 @@ public class SubscriptionMBMessageLocalServiceWrapper
 		String replyToAddress = StringPool.BLANK;
 
 		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
-			replyToAddress = MBUtil.getReplyToAddress(
+			replyToAddress = MBMailUtil.getReplyToAddress(
 				message.getCategoryId(), message.getMessageId(),
 				company.getMx(), fromAddress);
 		}
@@ -473,7 +474,7 @@ public class SubscriptionMBMessageLocalServiceWrapper
 			Date modifiedDate = parentMessage.getModifiedDate();
 
 			inReplyTo = _portal.getMailId(
-				company.getMx(), MBUtil.MESSAGE_POP_PORTLET_PREFIX,
+				company.getMx(), MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
 				message.getCategoryId(), parentMessage.getMessageId(),
 				modifiedDate.getTime());
 
