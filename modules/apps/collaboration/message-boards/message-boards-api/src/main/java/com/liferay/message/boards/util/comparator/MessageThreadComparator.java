@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.util.comparator;
+package com.liferay.message.boards.util.comparator;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -23,11 +23,7 @@ import java.util.Comparator;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.util.comparator.
- *             MessageThreadComparator}
  */
-@Deprecated
 public class MessageThreadComparator
 	implements Comparator<MBMessage>, Serializable {
 
