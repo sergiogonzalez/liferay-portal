@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.util.comparator;
+package com.liferay.message.boards.util.comparator;
 
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -20,11 +20,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.util.comparator.
- *             ThreadLastPostDateComparator}
  */
-@Deprecated
 public class ThreadLastPostDateComparator extends OrderByComparator<MBThread> {
 
 	public static final String ORDER_BY_ASC =
