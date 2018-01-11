@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards;
+package com.liferay.message.boards.settings;
 
 import com.liferay.message.boards.kernel.constants.MBConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,10 +33,8 @@ import java.util.Map;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.settings.MBGroupServiceSettings}
  */
-@Deprecated
+@Settings.Config(settingsIds = MBConstants.SERVICE_NAME)
 public class MBGroupServiceSettings {
 
 	public static final String[] ALL_KEYS = {};
