@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
-import com.liferay.message.boards.kernel.model.MBTreeWalker;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBMessageDisplay;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.model.MBTreeWalker;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
@@ -29,10 +29,7 @@ import java.util.Comparator;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.MBMessageDisplayImpl}
  */
-@Deprecated
 public class MBMessageDisplayImpl implements MBMessageDisplay {
 
 	public MBMessageDisplayImpl(
@@ -69,7 +66,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #MBMessageDisplayImpl(long,
+	 * @deprecated As of 1.0.0, replaced by {@link #MBMessageDisplayImpl(long,
 	 *             MBMessage, MBMessage, MBCategory, MBThread, int,
 	 *             MBMessageLocalService, Comparator)}
 	 */
@@ -85,7 +82,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 1.0.0, replaced by {@link
 	 *             #MBMessageDisplayImpl(MBMessage, MBMessage, MBCategory,
 	 *             MBThread, int, MBMessageLocalService, Comparator)}
 	 */
@@ -139,7 +136,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 1.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -153,7 +150,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 1.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -167,7 +164,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 1.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
