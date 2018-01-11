@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.model;
 
 import java.io.Serializable;
 
@@ -20,10 +20,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.MBTreeWalker}
  */
-@Deprecated
 public interface MBTreeWalker extends Serializable {
 
 	public List<MBMessage> getChildren(MBMessage message);

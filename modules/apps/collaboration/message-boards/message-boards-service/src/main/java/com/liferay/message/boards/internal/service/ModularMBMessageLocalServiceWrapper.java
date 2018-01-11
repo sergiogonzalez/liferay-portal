@@ -441,8 +441,10 @@ public class ModularMBMessageLocalServiceWrapper
 			int status)
 		throws PortalException {
 
-		return _mbMessageLocalService.getDiscussionMessageDisplay(
-			userId, groupId, className, classPK, status);
+		return ModelAdapterUtil.adapt(
+			MBMessageDisplay.class,
+			_mbMessageLocalService.getDiscussionMessageDisplay(
+				userId, groupId, className, classPK, status));
 	}
 
 	@Override
@@ -451,9 +453,11 @@ public class ModularMBMessageLocalServiceWrapper
 			int status, Comparator<MBMessage> comparator)
 		throws PortalException {
 
-		return _mbMessageLocalService.getDiscussionMessageDisplay(
-			userId, groupId, className, classPK, status,
-			ModelAdapterUtil.adapt(MBMessage.class, comparator));
+		return ModelAdapterUtil.adapt(
+			MBMessageDisplay.class,
+			_mbMessageLocalService.getDiscussionMessageDisplay(
+				userId, groupId, className, classPK, status,
+				ModelAdapterUtil.adapt(MBMessage.class, comparator)));
 	}
 
 	@Override
@@ -627,8 +631,10 @@ public class ModularMBMessageLocalServiceWrapper
 			long userId, long messageId, int status)
 		throws PortalException {
 
-		return _mbMessageLocalService.getMessageDisplay(
-			userId, messageId, status);
+		return ModelAdapterUtil.adapt(
+			MBMessageDisplay.class,
+			_mbMessageLocalService.getMessageDisplay(
+				userId, messageId, status));
 	}
 
 	@Override
@@ -646,11 +652,13 @@ public class ModularMBMessageLocalServiceWrapper
 			long userId, MBMessage message, int status)
 		throws PortalException {
 
-		return _mbMessageLocalService.getMessageDisplay(
-			userId,
-			ModelAdapterUtil.adapt(
-				com.liferay.message.boards.model.MBMessage.class, message),
-			status);
+		return ModelAdapterUtil.adapt(
+			MBMessageDisplay.class,
+			_mbMessageLocalService.getMessageDisplay(
+				userId,
+				ModelAdapterUtil.adapt(
+					com.liferay.message.boards.model.MBMessage.class, message),
+				status));
 	}
 
 	@Override
@@ -659,11 +667,13 @@ public class ModularMBMessageLocalServiceWrapper
 			Comparator<MBMessage> comparator)
 		throws PortalException {
 
-		return _mbMessageLocalService.getMessageDisplay(
-			userId,
-			ModelAdapterUtil.adapt(
-				com.liferay.message.boards.model.MBMessage.class, message),
-			status, ModelAdapterUtil.adapt(MBMessage.class, comparator));
+		return ModelAdapterUtil.adapt(
+			MBMessageDisplay.class,
+			_mbMessageLocalService.getMessageDisplay(
+				userId,
+				ModelAdapterUtil.adapt(
+					com.liferay.message.boards.model.MBMessage.class, message),
+				status, ModelAdapterUtil.adapt(MBMessage.class, comparator)));
 	}
 
 	@Override
