@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.model;
 
 import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.MBMessageDisplay}
  */
-@Deprecated
 public interface MBMessageDisplay extends Serializable {
 
 	public MBCategory getCategory();
@@ -30,7 +27,7 @@ public interface MBMessageDisplay extends Serializable {
 	public MBMessage getMessage();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 3.2.0, with no direct replacement
 	 */
 	@Deprecated
 	public MBThread getNextThread();
@@ -38,7 +35,7 @@ public interface MBMessageDisplay extends Serializable {
 	public MBMessage getParentMessage();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 3.2.0, with no direct replacement
 	 */
 	@Deprecated
 	public MBThread getPreviousThread();
@@ -46,7 +43,7 @@ public interface MBMessageDisplay extends Serializable {
 	public MBThread getThread();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 3.2.0, with no direct replacement
 	 */
 	@Deprecated
 	public String getThreadView();
