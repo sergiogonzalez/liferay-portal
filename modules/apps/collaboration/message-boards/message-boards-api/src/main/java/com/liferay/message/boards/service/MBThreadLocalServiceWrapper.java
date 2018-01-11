@@ -527,19 +527,6 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		_mbThreadLocalService.restoreDependentsFromTrash(groupId, threadId);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#restoreDependentsFromTrash(long, long)}
-	*/
-	@Deprecated
-	@Override
-	public void restoreDependentsFromTrash(long groupId, long threadId,
-		long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbThreadLocalService.restoreDependentsFromTrash(groupId, threadId,
-			trashEntryId);
-	}
-
 	@Override
 	public void restoreThreadFromTrash(long userId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {

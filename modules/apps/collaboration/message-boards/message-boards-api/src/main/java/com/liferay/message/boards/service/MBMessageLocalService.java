@@ -122,15 +122,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 		double priority, boolean allowPingbacks, ServiceContext serviceContext)
 		throws FileNotFoundException, PortalException;
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
-	long, long, String, String, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public MBMessage addMessage(long userId, java.lang.String userName,
-		long categoryId, java.lang.String subject, java.lang.String body,
-		ServiceContext serviceContext) throws PortalException;
-
 	public void addMessageAttachment(long userId, long messageId,
 		java.lang.String fileName, File file, java.lang.String mimeType)
 		throws PortalException;
@@ -319,16 +310,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 		long groupId, java.lang.String className, long classPK, int status,
 		Comparator<MBMessage> comparator) throws PortalException;
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getDiscussionMessageDisplay(long, long, String, long, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getDiscussionMessageDisplay(long userId,
-		long groupId, java.lang.String className, long classPK, int status,
-		java.lang.String threadView) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDiscussionMessagesCount(long classNameId, long classPK,
 		int status);
@@ -450,16 +431,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
 		int status) throws PortalException;
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	long, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, long messageId,
-		int status, java.lang.String threadView, boolean includePrevAndNext)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
 		int status) throws PortalException;
@@ -467,26 +438,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
 		int status, Comparator<MBMessage> comparator) throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
-		int status, java.lang.String threadView, boolean includePrevAndNext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, Comparator)} (
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long userId, MBMessage message,
-		int status, java.lang.String threadView, boolean includePrevAndNext,
-		Comparator<MBMessage> comparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getMessages(java.lang.String className,
@@ -605,21 +556,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 		List<java.lang.String> existingFiles, double priority,
 		boolean allowPingbacks, ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@java.lang.Deprecated
-	public MBMessage updateMessage(long messageId, java.lang.String body)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
-	*/
-	@java.lang.Deprecated
-	public MBMessage updateStatus(long userId, long messageId, int status,
-		ServiceContext serviceContext) throws PortalException;
 
 	public MBMessage updateStatus(long userId, long messageId, int status,
 		ServiceContext serviceContext,

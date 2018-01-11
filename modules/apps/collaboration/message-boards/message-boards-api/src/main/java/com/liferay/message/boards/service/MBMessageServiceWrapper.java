@@ -105,21 +105,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		_mbMessageService.deleteDiscussionMessage(messageId);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#deleteDiscussionMessage(long)}
-	*/
-	@Deprecated
-	@Override
-	public void deleteDiscussionMessage(long groupId,
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMessageService.deleteDiscussionMessage(groupId, className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId, messageId);
-	}
-
 	@Override
 	public void deleteMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -222,20 +207,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getMessageDisplay(messageId, status);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	int)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long messageId, int status, java.lang.String threadView,
-		boolean includePrevAndNext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getMessageDisplay(messageId, status,
-			threadView, includePrevAndNext);
 	}
 
 	/**
