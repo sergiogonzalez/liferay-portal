@@ -384,14 +384,6 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public void restoreDependentsFromTrash(long groupId, long threadId)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#restoreDependentsFromTrash(long, long)}
-	*/
-	@java.lang.Deprecated
-	public void restoreDependentsFromTrash(long groupId, long threadId,
-		long trashEntryId) throws PortalException;
-
 	public void restoreThreadFromTrash(long userId, long threadId)
 		throws PortalException;
 

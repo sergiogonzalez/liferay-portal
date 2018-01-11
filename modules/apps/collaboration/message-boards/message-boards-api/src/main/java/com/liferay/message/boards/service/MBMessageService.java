@@ -98,16 +98,6 @@ public interface MBMessageService extends BaseService {
 	public void deleteDiscussionMessage(long messageId)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#deleteDiscussionMessage(long)}
-	*/
-	@java.lang.Deprecated
-	public void deleteDiscussionMessage(long groupId,
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId) throws PortalException;
-
 	public void deleteMessage(long messageId) throws PortalException;
 
 	public void deleteMessageAttachment(long messageId,
@@ -163,16 +153,6 @@ public interface MBMessageService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessageDisplay getMessageDisplay(long messageId, int status)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long messageId, int status,
-		java.lang.String threadView, boolean includePrevAndNext)
 		throws PortalException;
 
 	/**
