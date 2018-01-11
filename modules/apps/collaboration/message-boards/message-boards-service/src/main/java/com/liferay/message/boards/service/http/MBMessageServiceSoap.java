@@ -155,27 +155,6 @@ public class MBMessageServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#deleteDiscussionMessage(long)}
-	*/
-	@Deprecated
-	public static void deleteDiscussionMessage(long groupId,
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId) throws RemoteException {
-		try {
-			MBMessageServiceUtil.deleteDiscussionMessage(groupId, className,
-				classPK, permissionClassName, permissionClassPK,
-				permissionOwnerId, messageId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void deleteMessage(long messageId) throws RemoteException {
 		try {
 			MBMessageServiceUtil.deleteMessage(messageId);
