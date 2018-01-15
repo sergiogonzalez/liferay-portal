@@ -56,7 +56,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 		}
 	);
 
-	var scrollSessionId = Date.now().toISOString();
+	var scrollSessionId = new Date().toISOString();
 
 	var entry = document.querySelector('.entry');
 
@@ -80,7 +80,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 						var currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 						var entryBoundingClientRect = entry.getBoundingClientRect();
 
-						var depth = Math.truncate(100 * (currentScrollPosition - entryBoundingClientRect.top) / entryBoundingClientRect.height);
+						var depth = Math.trunc(100 * (currentScrollPosition - entryBoundingClientRect.top) / entryBoundingClientRect.height);
 
 						if (depth >= 0 && depth <= 100) {
 							Analytics.send(
