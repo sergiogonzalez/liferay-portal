@@ -33,6 +33,7 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
+import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -84,7 +85,6 @@ import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl;
-import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.util.TrashUtil;
 
