@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;
@@ -141,7 +141,7 @@ public class DeleteThreadPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (MBMessagePermission.contains(
+			if (_messageModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), message,
 					ActionKeys.DELETE) &&
 				!thread.isLocked()) {
@@ -176,6 +176,11 @@ public class DeleteThreadPortletConfigurationIcon
 
 		return false;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

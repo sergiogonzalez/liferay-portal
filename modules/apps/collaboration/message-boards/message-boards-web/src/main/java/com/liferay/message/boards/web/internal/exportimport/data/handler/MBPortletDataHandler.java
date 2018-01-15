@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import java.util.List;
 
@@ -146,7 +145,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(MBPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(
+			com.liferay.message.boards.constants.MBConstants.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -195,7 +195,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortletPermissions(MBPermission.RESOURCE_NAME);
+		portletDataContext.importPortletPermissions(
+			com.liferay.message.boards.constants.MBConstants.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories") ||
 			portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {

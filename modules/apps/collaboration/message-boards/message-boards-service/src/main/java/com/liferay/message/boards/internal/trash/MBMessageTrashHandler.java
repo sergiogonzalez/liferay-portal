@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -111,7 +111,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return MBMessagePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -137,5 +137,10 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 }

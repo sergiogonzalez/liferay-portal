@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.service.permission;
+package com.liferay.message.boards.web.internal.security.permission;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -24,32 +23,31 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Adolfo Pérez
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Sergio González
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"
-	},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class MBMessagePermission implements BaseModelPermissionChecker {
+@Component(immediate = true)
+public class MBMessagePermission {
 
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long messageId,
+	public static boolean contains(
+			PermissionChecker permissionChecker, long messageId,
 			String actionId)
 		throws PortalException {
 
-		_messageModelResourcePermission.check(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, messageId, actionId);
 	}
 
+	public static boolean contains(
+			PermissionChecker permissionChecker, MBMessage message,
+			String actionId)
+		throws PortalException {
+
+		return _messageModelResourcePermission.contains(
+			permissionChecker, message, actionId);
+	}
+
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)",
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(
