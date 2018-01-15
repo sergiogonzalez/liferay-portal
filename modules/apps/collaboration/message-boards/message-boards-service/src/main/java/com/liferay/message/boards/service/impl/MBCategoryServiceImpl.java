@@ -19,12 +19,14 @@ import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.service.base.MBCategoryServiceBaseImpl;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,9 +43,10 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			parentCategoryId, ActionKeys.ADD_CATEGORY);
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			serviceContext.getScopeGroupId(), parentCategoryId,
+			ActionKeys.ADD_CATEGORY);
 
 		return mbCategoryLocalService.addCategory(
 			userId, parentCategoryId, name, description, serviceContext);
@@ -61,9 +64,10 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			boolean allowAnonymousEmail, ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			parentCategoryId, ActionKeys.ADD_CATEGORY);
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			serviceContext.getScopeGroupId(), parentCategoryId,
+			ActionKeys.ADD_CATEGORY);
 
 		return mbCategoryLocalService.addCategory(
 			getUserId(), parentCategoryId, name, description, displayStyle,
@@ -80,7 +84,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		MBCategoryPermission.check(
+		_categoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.DELETE);
 
 		mbCategoryLocalService.deleteCategory(category, includeTrashedEntries);
@@ -90,8 +94,9 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	public void deleteCategory(long groupId, long categoryId)
 		throws PortalException {
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), groupId, categoryId, ActionKeys.DELETE);
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(), groupId,
+			categoryId, ActionKeys.DELETE);
 
 		mbCategoryLocalService.deleteCategory(categoryId);
 	}
@@ -326,7 +331,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		MBCategoryPermission.check(
+		_categoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.VIEW);
 
 		return category;
@@ -408,7 +413,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		MBCategoryPermission.check(
+		_categoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.UPDATE);
 
 		return mbCategoryLocalService.moveCategory(
@@ -422,7 +427,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		MBCategoryPermission.check(
+		_categoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.UPDATE);
 
 		return mbCategoryLocalService.moveCategoryFromTrash(
@@ -436,7 +441,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		MBCategoryPermission.check(
+		_categoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.DELETE);
 
 		return mbCategoryLocalService.moveCategoryToTrash(
@@ -450,7 +455,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		MBCategoryPermission.check(
+		_categoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.DELETE);
 
 		mbCategoryLocalService.restoreCategoryFromTrash(
@@ -461,8 +466,9 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	public void subscribeCategory(long groupId, long categoryId)
 		throws PortalException {
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), groupId, categoryId, ActionKeys.SUBSCRIBE);
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(), groupId,
+			categoryId, ActionKeys.SUBSCRIBE);
 
 		mbCategoryLocalService.subscribeCategory(
 			getUserId(), groupId, categoryId);
@@ -472,8 +478,9 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	public void unsubscribeCategory(long groupId, long categoryId)
 		throws PortalException {
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), groupId, categoryId, ActionKeys.SUBSCRIBE);
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(), groupId,
+			categoryId, ActionKeys.SUBSCRIBE);
 
 		mbCategoryLocalService.unsubscribeCategory(
 			getUserId(), groupId, categoryId);
@@ -495,7 +502,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		MBCategoryPermission.check(
+		_categoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.UPDATE);
 
 		return mbCategoryLocalService.updateCategory(
@@ -506,5 +513,11 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			mailingListActive, allowAnonymousEmail, mergeWithParentCategory,
 			serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				MBCategoryServiceImpl.class, "_categoryModelResourcePermission",
+				MBCategory.class);
 
 }

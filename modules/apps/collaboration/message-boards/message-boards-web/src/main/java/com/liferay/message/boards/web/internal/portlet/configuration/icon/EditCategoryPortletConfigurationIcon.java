@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -102,7 +102,7 @@ public class EditCategoryPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (MBCategoryPermission.contains(
+			if (_categoryModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), category,
 					ActionKeys.UPDATE)) {
 
@@ -124,6 +124,12 @@ public class EditCategoryPortletConfigurationIcon
 
 		return categoryId;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

@@ -25,15 +25,16 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -105,7 +106,7 @@ public class CategoryPermissionsPortletConfigurationIcon
 		try {
 			MBCategory category = ActionUtil.getCategory(portletRequest);
 
-			if (!MBCategoryPermission.contains(
+			if (!_categoryModelResourcePermission.contains(
 					permissionChecker, category, ActionKeys.PERMISSIONS)) {
 
 				return false;
@@ -127,5 +128,11 @@ public class CategoryPermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 }
