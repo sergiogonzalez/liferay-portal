@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.exception.LockedThreadException;
 import com.liferay.message.boards.exception.MessageBodyException;
@@ -30,7 +31,6 @@ import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
