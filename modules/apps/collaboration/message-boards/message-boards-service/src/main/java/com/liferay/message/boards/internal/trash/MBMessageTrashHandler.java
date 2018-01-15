@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,7 +95,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			classPK);
 
-		MBMessage message = MBMessageAttachmentsUtil.getMessage(classPK);
+		MBMessage message = _mbMessageLocalService.getFileEntryMessage(classPK);
 
 		_mbMessageService.restoreMessageAttachmentFromTrash(
 			message.getMessageId(), fileEntry.getTitle());
