@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.permission;
+package com.liferay.message.boards.internal.service.permission;
 
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.service.permission.
- *             MBThreadPermission}
  */
-@Deprecated
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property =
-		{"model.class.name=com.liferay.message.boards.kernel.model.MBThread"}
+		{"model.class.name=com.liferay.message.boards.kernel.model.MBThread"},
+	service = BaseModelPermissionChecker.class
 )
 public class MBThreadPermission
 	extends MBMessagePermission implements BaseModelPermissionChecker {
