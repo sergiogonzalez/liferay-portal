@@ -338,6 +338,13 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public com.liferay.message.boards.kernel.model.MBMessage fetchFileEntryMessage(
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.fetchFileEntryMessage(fileEntryId);
+	}
+
+	@Override
 	public com.liferay.message.boards.kernel.model.MBMessage fetchFirstMessage(
 		long threadId, long parentMessageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -454,6 +461,13 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _mbMessageLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMessage getFileEntryMessage(
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getFileEntryMessage(fileEntryId);
 	}
 
 	@Override
