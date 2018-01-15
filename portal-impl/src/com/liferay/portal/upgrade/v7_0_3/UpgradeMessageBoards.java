@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_3;
 
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
@@ -44,15 +43,14 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 					"create table ", tempTableName, " (threadId LONG NOT NULL ",
 					"PRIMARY KEY)"));
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("insert into ");
 			sb.append(tempTableName);
 			sb.append(" select MBMessage.threadId from MBMessage inner join ");
 			sb.append("MBThread on MBMessage.threadId = MBThread.threadId ");
-			sb.append("where MBThread.categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" group by MBMessage.threadId having ");
+			sb.append("where MBThread.categoryId = -1 ");
+			sb.append("group by MBMessage.threadId having ");
 			sb.append("count(MBMessage.messageId) = 1");
 
 			runSQL(sb.toString());
