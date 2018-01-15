@@ -18,6 +18,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.kernel.service.persistence.MBThreadUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -105,7 +105,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -160,7 +160,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -219,7 +219,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U_LPD);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_LPD);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(
@@ -276,7 +276,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U_A);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_A);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -331,7 +331,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -401,7 +401,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_C);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
@@ -466,7 +466,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
@@ -515,7 +515,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -544,7 +544,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -591,7 +591,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -642,7 +642,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U_LPD);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_LPD);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(
@@ -691,7 +691,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U_A);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_A);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -730,7 +730,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_S_G_U);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_S_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -770,7 +770,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_A);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C_A);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -848,7 +848,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_C);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -897,7 +897,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_S_G_U);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_S_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -944,7 +944,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_S_G_U_C);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_S_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -1031,7 +1031,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -1073,7 +1073,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_S_G_U_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_S_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
