@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.internal.service;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceWrapper;
 import com.liferay.message.boards.model.MBMailingList;
