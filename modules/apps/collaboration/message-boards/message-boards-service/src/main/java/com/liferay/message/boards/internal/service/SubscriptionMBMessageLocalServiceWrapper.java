@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.internal.service;
 
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.internal.util.MBMailUtil;
 import com.liferay.message.boards.internal.util.MBSubscriptionSender;
 import com.liferay.message.boards.internal.util.MBUtil;
@@ -62,7 +63,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
@@ -167,7 +167,7 @@ public class SubscriptionMBMessageLocalServiceWrapper
 		ServiceContext serviceContext) {
 
 		MBSubscriptionSender subscriptionSender = new MBSubscriptionSender(
-			MBPermission.RESOURCE_NAME);
+			MBConstants.RESOURCE_NAME);
 
 		subscriptionSender.setAnonymous(message.isAnonymous());
 		subscriptionSender.setBulk(PropsValues.MESSAGE_BOARDS_EMAIL_BULK);

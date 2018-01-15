@@ -47,7 +47,7 @@ else {
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey = String.valueOf(scopeGroupId);
 
-	showPermissionsURL = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+	showPermissionsURL = MBResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
 %>
 
@@ -98,7 +98,7 @@ else {
 	else {
 		categorySubscriptionClassPK = scopeGroupId;
 
-		hasSubscriptionPermission = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
+		hasSubscriptionPermission = MBResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
 	}
 	%>
 
