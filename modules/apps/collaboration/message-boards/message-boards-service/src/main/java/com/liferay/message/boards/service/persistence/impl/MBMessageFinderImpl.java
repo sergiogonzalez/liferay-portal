@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence.impl;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.persistence.MBMessageFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;
 
@@ -81,7 +81,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_C_T);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_T);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -188,7 +188,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -218,7 +218,8 @@ public class MBMessageFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				FIND_BY_THREAD_ID, queryDefinition, MBMessageImpl.TABLE_NAME);
+				getClass(), FIND_BY_THREAD_ID, queryDefinition,
+				MBMessageImpl.TABLE_NAME);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -273,7 +274,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_S);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -348,7 +349,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U_MD_C_S);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_MD_C_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -425,7 +426,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_A_S);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C_A_S);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -494,7 +495,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_S);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -559,7 +560,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U_MD_C_S);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_MD_C_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -626,7 +627,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_A_S);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C_A_S);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
