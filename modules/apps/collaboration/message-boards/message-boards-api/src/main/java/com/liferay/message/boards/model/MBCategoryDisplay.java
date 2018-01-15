@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.model;
 
 import java.util.List;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.MBCategoryDisplay}
  */
-@Deprecated
 public interface MBCategoryDisplay {
 
 	public List<MBCategory> getAllCategories();

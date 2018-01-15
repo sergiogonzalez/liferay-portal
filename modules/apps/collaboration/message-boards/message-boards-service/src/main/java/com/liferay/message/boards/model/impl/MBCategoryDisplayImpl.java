@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBCategoryDisplay;
-import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBCategoryDisplay;
+import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListTree;
@@ -31,10 +31,7 @@ import java.util.Map;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.MBCategoryDisplayImpl}
  */
-@Deprecated
 public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 	public MBCategoryDisplayImpl(long scopeGroupId, long categoryId) {
@@ -58,9 +55,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 	@Override
 	public List<MBCategory> getCategories() {
-		TreeNode<MBCategory> rootNode = _categoryTree.getRootNode();
-
-		return rootNode.getChildValues();
+		return _categoryTree.getRootNode().getChildValues();
 	}
 
 	@Override
@@ -73,9 +68,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 	@Override
 	public MBCategory getRootCategory() {
-		TreeNode<MBCategory> rootNode = _categoryTree.getRootNode();
-
-		return rootNode.getValue();
+		return _categoryTree.getRootNode().getValue();
 	}
 
 	@Override
@@ -83,10 +76,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		TreeNode<MBCategory> node = _categoryNodesMap.get(
 			category.getCategoryId());
 
-		List<TreeNode<MBCategory>> childNodes = _categoryTree.getChildNodes(
-			node);
-
-		return childNodes.size();
+		return _categoryTree.getChildNodes(node).size();
 	}
 
 	@Override
