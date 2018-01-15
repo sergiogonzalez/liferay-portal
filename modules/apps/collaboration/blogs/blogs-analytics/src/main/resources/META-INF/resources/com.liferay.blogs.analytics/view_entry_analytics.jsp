@@ -94,7 +94,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 							);
 						}
 					},
-					500,
+					500
 				)
 			);
 		}
