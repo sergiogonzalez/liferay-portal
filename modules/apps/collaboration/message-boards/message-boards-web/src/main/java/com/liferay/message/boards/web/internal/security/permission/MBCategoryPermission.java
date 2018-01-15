@@ -12,43 +12,57 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.service.permission;
+package com.liferay.message.boards.web.internal.security.permission;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Mate Thurzo
- * @author Adolfo Pérez
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Sergio González
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"
-	},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class MBCategoryPermission implements BaseModelPermissionChecker {
+@Component(immediate = true)
+public class MBCategoryPermission {
 
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, long categoryId,
 			String actionId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
-			_categoryModelResourcePermission, permissionChecker, groupId,
-			primaryKey, actionId);
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			PortletResourcePermission portletResourcePermission =
+				_categoryModelResourcePermission.getPortletResourcePermission();
+
+			return portletResourcePermission.contains(
+				permissionChecker, groupId, actionId);
+		}
+
+		return _categoryModelResourcePermission.contains(
+			permissionChecker, categoryId, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long categoryId,
+			String actionId)
+		throws PortalException {
+
+		return _categoryModelResourcePermission.contains(
+			permissionChecker, categoryId, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, MBCategory category,
+			String actionId)
+		throws PortalException {
+
+		return _categoryModelResourcePermission.contains(
+			permissionChecker, category, actionId);
 	}
 
 	@Reference(
@@ -61,7 +75,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 		_categoryModelResourcePermission = modelResourcePermission;
 	}
 
-	private ModelResourcePermission<MBCategory>
+	private static ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
 
 }

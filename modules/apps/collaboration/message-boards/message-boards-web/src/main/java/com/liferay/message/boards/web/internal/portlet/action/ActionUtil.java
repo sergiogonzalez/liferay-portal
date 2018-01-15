@@ -23,6 +23,7 @@ import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.service.MBBanLocalServiceUtil;
+import com.liferay.message.boards.web.internal.security.permission.MBResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import javax.portlet.PortletRequest;
 
@@ -56,7 +56,7 @@ public class ActionUtil {
 			themeDisplay.getPermissionChecker();
 
 		if (mvcRenderCommandName.equals("/message_boards/view_banned_users") &&
-			!MBPermission.contains(
+			!MBResourcePermission.contains(
 				permissionChecker, themeDisplay.getScopeGroupId(),
 				ActionKeys.BAN_USER)) {
 
@@ -75,7 +75,7 @@ public class ActionUtil {
 			category = MBCategoryServiceUtil.getCategory(categoryId);
 		}
 		else {
-			MBPermission.check(
+			MBResourcePermission.check(
 				permissionChecker, themeDisplay.getScopeGroupId(),
 				ActionKeys.VIEW);
 		}
