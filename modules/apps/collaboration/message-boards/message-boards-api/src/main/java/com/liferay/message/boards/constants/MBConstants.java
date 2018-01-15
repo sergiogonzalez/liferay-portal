@@ -21,4 +21,6 @@ public class MBConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.message.boards";
 
+	public static final String SERVICE_NAME = "com.liferay.message.boards";
+
 }
