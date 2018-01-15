@@ -19,6 +19,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.kernel.service.persistence.MBCategoryUtil;
 import com.liferay.message.boards.kernel.service.persistence.MBThreadUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -139,7 +139,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_C_BY_S_G_U_P);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_C_BY_S_G_U_P);
 
 			if (ArrayUtil.isEmpty(parentCategoryIds)) {
 				sql = StringUtil.replace(
@@ -213,7 +213,8 @@ public class MBCategoryFinderImpl
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
 			String sql = CustomSQLUtil.get(
-				COUNT_T_BY_G_C, queryDefinition, MBThreadImpl.TABLE_NAME);
+				getClass(), COUNT_T_BY_G_C, queryDefinition,
+				MBThreadImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -225,7 +226,8 @@ public class MBCategoryFinderImpl
 			sb.append(") UNION ALL (");
 
 			sql = CustomSQLUtil.get(
-				COUNT_C_BY_G_P, queryDefinition, MBCategoryImpl.TABLE_NAME);
+				getClass(), COUNT_C_BY_G_P, queryDefinition,
+				MBCategoryImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -296,7 +298,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_C_BY_S_G_U_P);
+			String sql = CustomSQLUtil.get(getClass(), FIND_C_BY_S_G_U_P);
 
 			if (ArrayUtil.isEmpty(parentCategoryIds)) {
 				sql = StringUtil.replace(
@@ -357,7 +359,8 @@ public class MBCategoryFinderImpl
 			sb.append("SELECT * FROM (");
 
 			String sql = CustomSQLUtil.get(
-				FIND_T_BY_G_C, queryDefinition, MBThreadImpl.TABLE_NAME);
+				getClass(), FIND_T_BY_G_C, queryDefinition,
+				MBThreadImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -369,7 +372,8 @@ public class MBCategoryFinderImpl
 			sb.append(" UNION ALL ");
 
 			sql = CustomSQLUtil.get(
-				FIND_C_BY_G_P, queryDefinition, MBCategoryImpl.TABLE_NAME);
+				getClass(), FIND_C_BY_G_P, queryDefinition,
+				MBCategoryImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
