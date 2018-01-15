@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.settings;
 
-import com.liferay.message.boards.kernel.constants.MBConstants;
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
