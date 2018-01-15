@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.constants;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -20,10 +20,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 /**
  * @author Alexander Chow
  * @author Juan Fernández
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.constants.MBMessageConstants}
  */
-@Deprecated
 public class MBMessageConstants {
 
 	public static final String DEFAULT_FORMAT = PropsUtil.get(
