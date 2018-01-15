@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.internal.util;
 
-import com.liferay.message.boards.kernel.constants.MBConstants;
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
