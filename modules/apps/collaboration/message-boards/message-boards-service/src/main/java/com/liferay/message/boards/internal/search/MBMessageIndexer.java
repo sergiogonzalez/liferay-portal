@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -110,7 +109,7 @@ public class MBMessageIndexer
 
 		FileEntry fileEntry = (FileEntry)obj;
 
-		MBMessage message = MBMessageAttachmentsUtil.fetchMessage(
+		MBMessage message = mbMessageLocalService.fetchFileEntryMessage(
 			fileEntry.getFileEntryId());
 
 		if (message == null) {
