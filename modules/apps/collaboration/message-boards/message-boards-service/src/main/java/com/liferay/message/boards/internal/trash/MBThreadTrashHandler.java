@@ -14,9 +14,9 @@
 
 package com.liferay.message.boards.internal.trash;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.internal.util.MBTrashUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;

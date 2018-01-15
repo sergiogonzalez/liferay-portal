@@ -14,14 +14,14 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.LockedThreadException;
 import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;

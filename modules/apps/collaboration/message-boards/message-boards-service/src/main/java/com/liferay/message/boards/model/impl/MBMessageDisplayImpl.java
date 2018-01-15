@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.model.impl;
 
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
+import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
