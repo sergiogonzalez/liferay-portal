@@ -24,6 +24,7 @@ import com.liferay.message.boards.kernel.service.persistence.MBCategoryPersisten
 import com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -121,6 +122,24 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	public void setMBMessagePersistence(
 		MBMessagePersistence mbMessagePersistence) {
 		this.mbMessagePersistence = mbMessagePersistence;
+	}
+
+	/**
+	 * Returns the message-boards message finder.
+	 *
+	 * @return the message-boards message finder
+	 */
+	public MBMessageFinder getMBMessageFinder() {
+		return mbMessageFinder;
+	}
+
+	/**
+	 * Sets the message-boards message finder.
+	 *
+	 * @param mbMessageFinder the message-boards message finder
+	 */
+	public void setMBMessageFinder(MBMessageFinder mbMessageFinder) {
+		this.mbMessageFinder = mbMessageFinder;
 	}
 
 	/**
@@ -894,6 +913,8 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	protected MBMessageService mbMessageService;
 	@BeanReference(type = MBMessagePersistence.class)
 	protected MBMessagePersistence mbMessagePersistence;
+	@BeanReference(type = MBMessageFinder.class)
+	protected MBMessageFinder mbMessageFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.mail.kernel.service.MailService.class)
