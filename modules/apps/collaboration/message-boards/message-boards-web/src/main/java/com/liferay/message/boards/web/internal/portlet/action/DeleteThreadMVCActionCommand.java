@@ -15,7 +15,7 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.exception.LockedThreadException;
+import com.liferay.message.boards.exception.LockedThreadException;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.portal.kernel.model.TrashedModel;

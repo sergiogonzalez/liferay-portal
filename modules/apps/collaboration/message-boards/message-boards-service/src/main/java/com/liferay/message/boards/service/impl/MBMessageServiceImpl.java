@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.exception.LockedThreadException;
 import com.liferay.message.boards.internal.util.MBUtil;
-import com.liferay.message.boards.kernel.exception.LockedThreadException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
