@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
-import com.liferay.message.boards.kernel.exception.BannedUserException;
-import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
+import com.liferay.message.boards.exception.BannedUserException;
+import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
