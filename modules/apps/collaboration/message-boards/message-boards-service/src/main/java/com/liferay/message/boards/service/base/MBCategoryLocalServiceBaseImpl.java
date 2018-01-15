@@ -33,6 +33,7 @@ import com.liferay.message.boards.kernel.service.persistence.MBMessagePersistenc
 import com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -534,6 +535,24 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	public void setMBCategoryPersistence(
 		MBCategoryPersistence mbCategoryPersistence) {
 		this.mbCategoryPersistence = mbCategoryPersistence;
+	}
+
+	/**
+	 * Returns the message boards category finder.
+	 *
+	 * @return the message boards category finder
+	 */
+	public MBCategoryFinder getMBCategoryFinder() {
+		return mbCategoryFinder;
+	}
+
+	/**
+	 * Sets the message boards category finder.
+	 *
+	 * @param mbCategoryFinder the message boards category finder
+	 */
+	public void setMBCategoryFinder(MBCategoryFinder mbCategoryFinder) {
+		this.mbCategoryFinder = mbCategoryFinder;
 	}
 
 	/**
@@ -1044,6 +1063,8 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	protected MBCategoryLocalService mbCategoryLocalService;
 	@BeanReference(type = MBCategoryPersistence.class)
 	protected MBCategoryPersistence mbCategoryPersistence;
+	@BeanReference(type = MBCategoryFinder.class)
+	protected MBCategoryFinder mbCategoryFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
