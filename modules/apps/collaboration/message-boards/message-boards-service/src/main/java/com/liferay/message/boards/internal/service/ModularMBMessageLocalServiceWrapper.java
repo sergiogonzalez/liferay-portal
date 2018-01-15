@@ -20,6 +20,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceWrapper;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -1003,8 +1004,7 @@ public class ModularMBMessageLocalServiceWrapper
 	}
 
 	@Reference
-	private com.liferay.message.boards.service.MBCategoryLocalService
-		_mbCategoryLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Reference
 	private com.liferay.message.boards.service.MBMessageLocalService
