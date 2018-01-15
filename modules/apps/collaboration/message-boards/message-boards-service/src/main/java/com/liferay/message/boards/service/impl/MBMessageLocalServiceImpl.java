@@ -731,6 +731,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public MBMessage fetchFileEntryMessage(long fileEntryId)
+		throws PortalException {
+
+		return mbMessagePersistence.fetchByPrimaryKey(
+			_getFileEntryMessageId(fileEntryId));
+	}
+
+	@Override
 	public MBMessage fetchFirstMessage(long threadId, long parentMessageId)
 		throws PortalException {
 
@@ -853,6 +861,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public List<MBDiscussion> getDiscussions(String className) {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public MBMessage getFileEntryMessage(long fileEntryId)
+		throws PortalException {
+
+		return mbMessagePersistence.findByPrimaryKey(
+			_getFileEntryMessageId(fileEntryId));
 	}
 
 	@Override
@@ -1928,6 +1944,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (Validator.isNull(subject) && Validator.isNull(body)) {
 			throw new MessageSubjectException("Subject and body are null");
 		}
+	}
+
+	private long _getFileEntryMessageId(long fileEntryId)
+		throws PortalException {
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			fileEntryId);
+
+		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+			fileEntry.getFolderId());
+
+		return GetterUtil.getLong(folder.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

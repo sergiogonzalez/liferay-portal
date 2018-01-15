@@ -167,7 +167,6 @@ page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.messageboards.model.impl.MBCategoryDisplayImpl" %><%@
 page import="com.liferay.portlet.messageboards.model.impl.MBMessageImpl" %><%@
-page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.ui.InputEditorTag" %>
