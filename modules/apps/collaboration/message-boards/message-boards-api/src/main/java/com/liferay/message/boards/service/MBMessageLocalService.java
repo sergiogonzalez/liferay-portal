@@ -257,6 +257,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage fetchFileEntryMessage(long fileEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage fetchFirstMessage(long threadId, long parentMessageId)
 		throws PortalException;
 
@@ -324,6 +328,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage getFileEntryMessage(long fileEntryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage getFirstMessage(long threadId, long parentMessageId)
