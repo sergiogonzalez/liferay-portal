@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.persistence.impl;
+package com.liferay.message.boards.service.persistence.impl;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -44,11 +44,7 @@ import java.util.List;
 /**
  * @author Raymond Augé
  * @author Sergio González
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.service.persistence.impl#
- *             MBCategoryFinderImpl}
  */
-@Deprecated
 public class MBCategoryFinderImpl
 	extends MBCategoryFinderBaseImpl implements MBCategoryFinder {
 
