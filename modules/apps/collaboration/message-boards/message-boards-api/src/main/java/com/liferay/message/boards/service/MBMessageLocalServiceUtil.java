@@ -323,6 +323,12 @@ public class MBMessageLocalServiceUtil {
 		getService().emptyMessageAttachments(messageId);
 	}
 
+	public static com.liferay.message.boards.kernel.model.MBMessage fetchFileEntryMessage(
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchFileEntryMessage(fileEntryId);
+	}
+
 	public static com.liferay.message.boards.kernel.model.MBMessage fetchFirstMessage(
 		long threadId, long parentMessageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -423,6 +429,12 @@ public class MBMessageLocalServiceUtil {
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBMessage getFileEntryMessage(
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFileEntryMessage(fileEntryId);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBMessage getFirstMessage(
