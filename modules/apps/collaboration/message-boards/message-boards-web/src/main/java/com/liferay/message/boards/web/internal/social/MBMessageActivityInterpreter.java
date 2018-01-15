@@ -20,6 +20,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.Http;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -173,7 +173,7 @@ public class MBMessageActivityInterpreter
 		MBMessage message = _mbMessageLocalService.getMessage(
 			activity.getClassPK());
 
-		return MBMessagePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, message.getMessageId(), actionId);
 	}
 
@@ -196,6 +196,11 @@ public class MBMessageActivityInterpreter
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 	private ResourceBundleLoader _resourceBundleLoader;
 

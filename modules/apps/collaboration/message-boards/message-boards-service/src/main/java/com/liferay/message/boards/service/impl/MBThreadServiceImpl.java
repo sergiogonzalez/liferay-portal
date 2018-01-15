@@ -15,6 +15,7 @@
 package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.kernel.exception.LockedThreadException;
+import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -26,13 +27,14 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 import com.liferay.portlet.messageboards.service.base.MBThreadServiceBaseImpl;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +66,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			threadId);
 
 		for (MBMessage message : messages) {
-			MBMessagePermission.check(
+			_messageModelResourcePermission.check(
 				getPermissionChecker(), message.getMessageId(),
 				ActionKeys.DELETE);
 		}
@@ -288,8 +290,9 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public Lock lockThread(long threadId) throws PortalException {
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
 		return LockManagerUtil.lock(
@@ -315,13 +318,14 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.MOVE_THREAD);
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), thread.getGroupId(), categoryId,
-			ActionKeys.MOVE_THREAD);
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			thread.getGroupId(), categoryId, ActionKeys.MOVE_THREAD);
 
 		return mbThreadLocalService.moveThread(
 			thread.getGroupId(), categoryId, threadId);
@@ -333,9 +337,9 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
-			ActionKeys.UPDATE);
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			thread.getGroupId(), thread.getCategoryId(), ActionKeys.UPDATE);
 
 		return mbThreadLocalService.moveThreadFromTrash(
 			getUserId(), categoryId, threadId);
@@ -358,7 +362,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			threadId);
 
 		for (MBMessage message : messages) {
-			MBMessagePermission.check(
+			_messageModelResourcePermission.check(
 				getPermissionChecker(), message.getMessageId(),
 				ActionKeys.DELETE);
 		}
@@ -372,7 +376,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			threadId);
 
 		for (MBMessage message : messages) {
-			MBMessagePermission.check(
+			_messageModelResourcePermission.check(
 				getPermissionChecker(), message.getMessageId(),
 				ActionKeys.DELETE);
 		}
@@ -409,11 +413,12 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		MBMessage message = mbMessageLocalService.getMessage(messageId);
 
-		MBCategoryPermission.check(
-			permissionChecker, message.getGroupId(), message.getCategoryId(),
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			message.getGroupId(), message.getCategoryId(),
 			ActionKeys.MOVE_THREAD);
 
-		MBMessagePermission.check(
+		_messageModelResourcePermission.check(
 			permissionChecker, messageId, ActionKeys.VIEW);
 
 		return mbThreadLocalService.splitThread(
@@ -424,8 +429,9 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public void unlockThread(long threadId) throws PortalException {
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(),
+			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
 		LockManagerUtil.unlock(MBThread.class.getName(), threadId);
@@ -488,5 +494,16 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 				groupId, userId, false, queryDefinition);
 		}
 	}
+
+	private static volatile ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				MBCategoryServiceImpl.class, "_categoryModelResourcePermission",
+				MBCategory.class);
+	private static volatile ModelResourcePermission<MBMessage>
+		_messageModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				MBMessageServiceImpl.class, "_messageModelResourcePermission",
+				MBMessage.class);
 
 }

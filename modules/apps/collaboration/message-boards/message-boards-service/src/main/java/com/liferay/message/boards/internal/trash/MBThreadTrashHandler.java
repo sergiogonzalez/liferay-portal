@@ -17,6 +17,7 @@ package com.liferay.message.boards.internal.trash;
 import com.liferay.message.boards.internal.util.MBTrashUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
@@ -29,6 +30,8 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
@@ -37,8 +40,6 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,8 +179,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return MBCategoryPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_MESSAGE);
+			return ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission, permissionChecker, groupId,
+				classPK, ActionKeys.ADD_MESSAGE);
 		}
 
 		return super.hasTrashPermission(
@@ -283,7 +285,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		return MBMessagePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, thread.getRootMessageId(), actionId);
 	}
 
@@ -311,8 +313,19 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		_trashRendererFactory = trashRendererFactory;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
+
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 	@Reference
 	private Portal _portal;
