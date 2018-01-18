@@ -159,7 +159,6 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.messageboards.MBGroupServiceSettings" %><%@
 page import="com.liferay.portlet.messageboards.model.impl.MBCategoryDisplayImpl" %><%@
 page import="com.liferay.portlet.messageboards.model.impl.MBMessageImpl" %><%@
-page import="com.liferay.portlet.messageboards.model.impl.MBMessageIteratorImpl" %><%@
 page import="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" %><%@
 page import="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" %><%@
 page import="com.liferay.portlet.messageboards.service.permission.MBPermission" %><%@
