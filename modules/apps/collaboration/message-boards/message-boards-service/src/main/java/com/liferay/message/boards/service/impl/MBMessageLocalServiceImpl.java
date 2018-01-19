@@ -27,18 +27,21 @@ import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.internal.util.MBUtil;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -86,11 +89,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
-import com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -2183,10 +2183,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = MBDiscussionLocalService.class)
+	@BeanReference(type = MBDiscussionLocalService.class)
 	protected MBDiscussionLocalService mbDiscussionLocalService;
 
-	@ServiceReference(type = MBStatsUserLocalService.class)
+	@BeanReference(type = MBStatsUserLocalService.class)
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 
 	private long _getFileEntryMessageId(long fileEntryId)

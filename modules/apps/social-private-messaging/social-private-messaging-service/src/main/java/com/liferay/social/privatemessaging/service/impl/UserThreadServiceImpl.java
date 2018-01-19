@@ -14,8 +14,8 @@
 
 package com.liferay.social.privatemessaging.service.impl;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.comment.internal;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.model.User;
