@@ -17,7 +17,6 @@ package com.liferay.message.boards.model.impl;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBTreeWalker;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -83,20 +82,6 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 
 		_messages = messages;
 		_rootMessage = rootMessage;
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #MBTreeWalkerImpl(long, int,
-	 *             MBMessageLocalService, Comparator)}
-	 */
-	@Deprecated
-	public MBTreeWalkerImpl(
-		MBMessage message, int status,
-		MBMessageLocalService messageLocalService) {
-
-		this(
-			message.getThreadId(), status, messageLocalService,
-			new MessageThreadComparator());
 	}
 
 	@Override
