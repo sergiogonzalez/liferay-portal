@@ -16,9 +16,11 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.exception.LockedThreadException;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.model.impl.MBThreadModelImpl;
+import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -33,8 +35,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
-import com.liferay.portlet.messageboards.service.base.MBThreadServiceBaseImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;

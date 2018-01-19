@@ -15,7 +15,7 @@
 package com.liferay.message.boards.web.internal.security.permission;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -66,7 +66,7 @@ public class MBCategoryPermission {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(

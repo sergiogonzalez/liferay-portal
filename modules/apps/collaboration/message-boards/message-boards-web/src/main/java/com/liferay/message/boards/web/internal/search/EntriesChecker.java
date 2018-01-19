@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.web.internal.search;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission;
 import com.liferay.message.boards.web.internal.security.permission.MBMessagePermission;
 import com.liferay.petra.string.StringPool;

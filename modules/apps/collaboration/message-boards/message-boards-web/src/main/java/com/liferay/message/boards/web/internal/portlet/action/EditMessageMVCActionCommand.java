@@ -30,13 +30,13 @@ import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.exception.RequiredMessageException;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBCategoryService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
@@ -621,7 +621,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private MBThreadService _mbThreadService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)"
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
 	)
 	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
