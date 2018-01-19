@@ -26,27 +26,9 @@ public interface MBMessageDisplay extends Serializable {
 
 	public MBMessage getMessage();
 
-	/**
-	 * @deprecated As of 3.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public MBThread getNextThread();
-
 	public MBMessage getParentMessage();
 
-	/**
-	 * @deprecated As of 3.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public MBThread getPreviousThread();
-
 	public MBThread getThread();
-
-	/**
-	 * @deprecated As of 3.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public String getThreadView();
 
 	public MBTreeWalker getTreeWalker();
 
