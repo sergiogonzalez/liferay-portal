@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
@@ -64,6 +66,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * The persistence implementation for the document library file entry service.
@@ -14869,6 +14872,53 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			else {
 				dlFileEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
+
+		if(!isNew){
+			String newFileVersion = dlFileEntryModelImpl.getVersion();
+			try {
+				DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(
+					true);
+
+				if(dlFileVersion != null) {
+					String latestVersion = dlFileVersion.getVersion();
+
+					if (!newFileVersion.equals(latestVersion)) {
+						String[] splitNewVersion = newFileVersion.split(
+							Pattern.quote("."));
+						String[] splitLatestVersion = latestVersion.split(
+							Pattern.quote("."));
+
+						try {
+							int firstTokenNew = Integer.valueOf(
+								splitNewVersion[0]);
+							int firstTokenLatest = Integer.valueOf(
+								splitLatestVersion[0]);
+
+							if (firstTokenNew < firstTokenLatest) {
+								dlFileEntryModelImpl.setVersion(latestVersion);
+							}
+							else {
+								int secondTokenNew = Integer.valueOf(
+									splitNewVersion[1]);
+								int secondTokenLatest = Integer.valueOf(
+									splitLatestVersion[1]);
+
+								if (secondTokenNew < secondTokenLatest) {
+									dlFileEntryModelImpl.setVersion(
+										latestVersion);
+								}
+							}
+						}
+						catch(NumberFormatException nfe) {
+							_log.warn("File version is non-numeric.");
+						}
+					}
+				}
+			}
+			catch (PortalException pe) {
+				_log.warn("No file version found.");
 			}
 		}
 
