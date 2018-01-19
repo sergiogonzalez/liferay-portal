@@ -14,10 +14,11 @@
 
 package com.liferay.message.boards.service.persistence.impl;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.persistence.MBThreadFinder;
-import com.liferay.message.boards.kernel.service.persistence.MBThreadUtil;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.model.impl.MBThreadImpl;
+import com.liferay.message.boards.service.persistence.MBThreadFinder;
+import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 
 import java.util.Date;
 import java.util.Iterator;

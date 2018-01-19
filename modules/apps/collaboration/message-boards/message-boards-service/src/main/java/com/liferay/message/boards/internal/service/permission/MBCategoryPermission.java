@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.internal.service.permission;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"
-	},
+	property = {"model.class.name=com.liferay.message.boards.model.MBCategory"},
 	service = BaseModelPermissionChecker.class
 )
 @Deprecated
@@ -52,7 +50,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(
