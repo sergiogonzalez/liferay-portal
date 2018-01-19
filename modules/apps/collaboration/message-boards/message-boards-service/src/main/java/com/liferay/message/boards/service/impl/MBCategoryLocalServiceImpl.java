@@ -76,7 +76,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Category
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -607,7 +607,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			// Categories and threads
 
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = userLocalService.getUser(userId);
 
 			List<Object> categoriesAndThreads = getCategoriesAndThreads(
 				category.getGroupId(), categoryId,
@@ -644,7 +644,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Categories and threads
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		List<Object> categoriesAndThreads = getCategoriesAndThreads(
 			category.getGroupId(), categoryId);
@@ -677,7 +677,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Categories and threads
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		List<Object> categoriesAndThreads = getCategoriesAndThreads(
 			category.getGroupId(), categoryId,
@@ -805,7 +805,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Category
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
@@ -911,8 +911,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			mergeCategories(category, toCategoryId);
 		}
 
-		List<MBThread> threads = mbThreadPersistence.findByG_C(
-			fromCategory.getGroupId(), fromCategory.getCategoryId());
+		List<MBThread> threads = mbThreadLocalService.getThreads(
+			fromCategory.getGroupId(), fromCategory.getCategoryId(),
+			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (MBThread thread : threads) {
 
@@ -920,10 +921,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			thread.setCategoryId(toCategoryId);
 
-			mbThreadPersistence.update(thread);
+			mbThreadLocalService.updateMBThread(thread);
 
-			List<MBMessage> messages = mbMessagePersistence.findByThreadId(
-				thread.getThreadId());
+			List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+				thread.getThreadId(), WorkflowConstants.STATUS_ANY, null);
 
 			for (MBMessage message : messages) {
 
@@ -931,7 +932,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				message.setCategoryId(toCategoryId);
 
-				mbMessagePersistence.update(message);
+				mbMessageLocalService.updateMBMessage(message);
 
 				// Indexer
 
@@ -974,7 +975,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				mbThreadPersistence.update(thread);
+				mbThreadLocalService.updateMBThread(thread);
 
 				// Trash
 
@@ -1058,7 +1059,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(oldStatus);
 
-				mbThreadPersistence.update(thread);
+				mbThreadLocalService.updateMBThread(thread);
 
 				// Threads
 
