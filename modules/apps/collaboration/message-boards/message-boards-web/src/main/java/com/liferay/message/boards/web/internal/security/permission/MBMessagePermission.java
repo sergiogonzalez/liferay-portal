@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.internal.security.permission;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -47,7 +47,7 @@ public class MBMessagePermission {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(
