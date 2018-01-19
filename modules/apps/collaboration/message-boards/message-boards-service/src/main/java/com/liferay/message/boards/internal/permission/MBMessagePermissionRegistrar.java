@@ -18,13 +18,13 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBBanLocalService;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.DynamicInheritancePermissionLogic;
@@ -139,7 +139,7 @@ public class MBMessagePermissionRegistrar {
 	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)"
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
 	)
 	private ModelResourcePermission<MBCategory>
 		_mbCategoryModelResourcePermission;

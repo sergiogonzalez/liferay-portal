@@ -15,10 +15,10 @@
 package com.liferay.message.boards.internal.trash;
 
 import com.liferay.message.boards.internal.util.MBTrashUtil;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"},
+	property = {"model.class.name=com.liferay.message.boards.model.MBCategory"},
 	service = TrashHandler.class
 )
 public class MBCategoryTrashHandler extends BaseTrashHandler {
@@ -442,7 +442,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)",
 		unbind = "-"
 	)
 	protected void setTrashRendererFactory(
@@ -452,7 +452,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)"
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
 	)
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
