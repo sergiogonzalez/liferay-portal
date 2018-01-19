@@ -23,6 +23,7 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.model.MBMessageDisplay;
+import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -87,6 +88,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		throws PortalException {
 
 		User user = getGuestOrUser();
+
+		MBDiscussionPermission.check(
+			getPermissionChecker(), user.getCompanyId(),
+			serviceContext.getScopeGroupId(), className, classPK,
+			ActionKeys.ADD_DISCUSSION);
 
 		return mbMessageLocalService.addDiscussionMessage(
 			user.getUserId(), null, groupId, className, classPK, threadId,
@@ -259,6 +265,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public void deleteDiscussionMessage(long messageId) throws PortalException {
+		MBDiscussionPermission.check(
+			getPermissionChecker(), messageId, ActionKeys.DELETE_DISCUSSION);
+
 		mbMessageLocalService.deleteDiscussionMessage(messageId);
 	}
 
@@ -696,6 +705,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			String className, long classPK, long messageId, String subject,
 			String body, ServiceContext serviceContext)
 		throws PortalException {
+
+		MBDiscussionPermission.check(
+			getPermissionChecker(), messageId, ActionKeys.UPDATE_DISCUSSION);
 
 		return mbMessageLocalService.updateDiscussionMessage(
 			getUserId(), messageId, className, classPK, subject, body,
