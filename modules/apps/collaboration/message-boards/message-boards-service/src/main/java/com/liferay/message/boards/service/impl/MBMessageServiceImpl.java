@@ -161,8 +161,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
+		MBCategory category = mbCategoryLocalService.getCategory(categoryId);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
@@ -407,7 +406,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = companyLocalService.getCompany(companyId);
 
 		String name = company.getName();
 		String description = company.getName();

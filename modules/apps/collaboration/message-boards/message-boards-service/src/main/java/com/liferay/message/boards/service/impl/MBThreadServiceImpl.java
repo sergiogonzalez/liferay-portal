@@ -62,8 +62,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			throw new LockedThreadException(sb.toString());
 		}
 
-		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
-			threadId);
+		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+			threadId, WorkflowConstants.STATUS_ANY, null);
 
 		for (MBMessage message : messages) {
 			_messageModelResourcePermission.check(
@@ -358,8 +358,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			throw new LockedThreadException(sb.toString());
 		}
 
-		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
-			threadId);
+		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+			threadId, WorkflowConstants.STATUS_ANY, null);
 
 		for (MBMessage message : messages) {
 			_messageModelResourcePermission.check(
@@ -372,8 +372,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public void restoreThreadFromTrash(long threadId) throws PortalException {
-		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
-			threadId);
+		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+			threadId, WorkflowConstants.STATUS_ANY, null);
 
 		for (MBMessage message : messages) {
 			_messageModelResourcePermission.check(
