@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_3;
 
-import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -49,9 +48,9 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			sb.append(tempTableName);
 			sb.append(" select MBMessage.threadId from MBMessage inner join ");
 			sb.append("MBThread on MBMessage.threadId = MBThread.threadId ");
-			sb.append("where MBThread.categoryId = -1 ");
-			sb.append("group by MBMessage.threadId having ");
-			sb.append("count(MBMessage.messageId) = 1");
+			sb.append("where MBThread.categoryId = -1 group by ");
+			sb.append("MBMessage.threadId having count(MBMessage.messageId) ");
+			sb.append("= 1");
 
 			runSQL(sb.toString());
 
@@ -107,7 +106,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 	private void _deleteAssetEntry(String tempTableName) throws Exception {
 		long classNameId = PortalUtil.getClassNameId(
-			MBDiscussion.class.getName());
+			"com.liferay.message.boards.kernel.model.MBDiscussion");
 
 		StringBundler sb = new StringBundler(7);
 

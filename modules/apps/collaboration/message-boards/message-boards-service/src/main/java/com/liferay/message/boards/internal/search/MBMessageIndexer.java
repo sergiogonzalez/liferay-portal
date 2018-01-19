@@ -16,13 +16,13 @@ package com.liferay.message.boards.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBCategoryService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
+	property = {"related.entry.indexer.class.name=com.liferay.message.boards.model.MBMessage"},
 	service = {Indexer.class, RelatedEntryIndexer.class}
 )
 public class MBMessageIndexer
@@ -550,7 +550,7 @@ public class MBMessageIndexer
 		MBMessageIndexer.class);
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)"
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
 	)
 	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 

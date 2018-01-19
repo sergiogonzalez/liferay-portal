@@ -16,9 +16,9 @@ package com.liferay.message.boards.internal.service;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.internal.util.MBSubscriptionHelper;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceWrapper;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBCategoryLocalServiceWrapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;

@@ -14,9 +14,9 @@
 
 package com.liferay.message.boards.internal.service;
 
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalServiceWrapper;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBThreadLocalServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.subscription.service.SubscriptionLocalService;

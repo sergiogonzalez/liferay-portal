@@ -15,9 +15,9 @@
 package com.liferay.message.boards.web.internal.social;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -198,7 +198,7 @@ public class MBMessageActivityInterpreter
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBMessage)"
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
 	)
 	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
