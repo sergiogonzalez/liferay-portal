@@ -63,7 +63,9 @@ import com.liferay.trash.kernel.model.TrashVersion;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -192,6 +194,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			// Indexer
 
 			messageIndexer.delete(message);
+
+			// Statistics
+
+			if (!message.isDiscussion()) {
+				mbStatsUserLocalService.updateStatsUser(
+					message.getGroupId(), message.getUserId());
+			}
 
 			// Workflow
 
@@ -515,6 +524,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			long groupId, long threadId, long trashEntryId)
 		throws PortalException {
 
+		Set<Long> userIds = new HashSet<>();
+
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
@@ -533,6 +544,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
 			mbMessagePersistence.update(message);
+
+			userIds.add(message.getUserId());
 
 			// Trash
 
@@ -576,6 +589,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 					message.getCompanyId(), message.getGroupId(),
 					MBMessage.class.getName(), message.getMessageId());
 			}
+		}
+
+		// Statistics
+
+		for (long userId : userIds) {
+			mbStatsUserLocalService.updateStatsUser(groupId, userId);
 		}
 	}
 
@@ -771,6 +790,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public void restoreDependentsFromTrash(long groupId, long threadId)
 		throws PortalException {
 
+		Set<Long> userIds = new HashSet<>();
+
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
@@ -796,6 +817,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setStatus(oldStatus);
 
 			mbMessagePersistence.update(message);
+
+			userIds.add(message.getUserId());
 
 			// Trash
 
@@ -825,6 +848,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBMessage.class);
 
 			indexer.reindex(message);
+		}
+
+		// Statistics
+
+		for (long userId : userIds) {
+			mbStatsUserLocalService.updateStatsUser(groupId, userId);
 		}
 	}
 
