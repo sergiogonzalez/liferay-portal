@@ -202,7 +202,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 			long classNameId = classNameLocalService.getClassNameId(className);
 
-			MBDiscussion discussion = mbMessageLocalService.fetchDiscussion(
+			MBDiscussion discussion = mbDiscussionLocalService.fetchDiscussion(
 				classNameId, classPK);
 
 			if (discussion == null) {
@@ -1053,9 +1053,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public List<MBDiscussion> getDiscussions(String className) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mbDiscussionLocalService.getDiscussions(classNameId);
+		return mbDiscussionLocalService.getDiscussions(className);
 	}
 
 	@Override
