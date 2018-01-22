@@ -79,10 +79,9 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 					'scroll',
 					throttle(
 						function() {
-							var currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 							var entryBoundingClientRect = entry.getBoundingClientRect();
 
-							var depth = Math.trunc(100 * (currentScrollPosition - entryBoundingClientRect.top) / entryBoundingClientRect.height);
+							var depth = Math.trunc(100 * (-entryBoundingClientRect.top) / entryBoundingClientRect.height);
 
 							if (depth >= 0 && depth <= 100) {
 								Analytics.send(
