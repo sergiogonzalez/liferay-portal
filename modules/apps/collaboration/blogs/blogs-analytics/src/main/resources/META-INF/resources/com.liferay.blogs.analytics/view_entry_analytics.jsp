@@ -22,7 +22,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 %>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="metal-dom/src/all/dom as dom,metal-debounce/src/debounce">
 	if (window.Analytics) {
 		var applicationId = 'blogs';
 
@@ -62,6 +62,8 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 		var entry = document.querySelector('.entry');
 
+		var debounce = metalDebounceSrcDebounce.default;
+
 		var throttle = function(fn, wait) {
 			var time = Date.now();
 
@@ -73,31 +75,30 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 			}
 		};
 
+		var sendEvent = function() {
+			var entryBoundingClientRect = entry.getBoundingClientRect();
+
+			var depth = Math.trunc(100 * (-entryBoundingClientRect.top) / entryBoundingClientRect.height);
+
+			console.log(depth);
+
+			if (depth >= 0 && depth <= 100) {
+				Analytics.send(
+					'depth',
+					applicationId,
+					{
+						depth: depth,
+						entryId: '<%= entryId %>',
+						sessionId: scrollSessionId
+					}
+				);
+			}
+		};
+
 		Analytics.registerPlugin(
 			function(analytics) {
-				document.addEventListener(
-					'scroll',
-					throttle(
-						function() {
-							var entryBoundingClientRect = entry.getBoundingClientRect();
-
-							var depth = Math.trunc(100 * (-entryBoundingClientRect.top) / entryBoundingClientRect.height);
-
-							if (depth >= 0 && depth <= 100) {
-								Analytics.send(
-									'depth',
-									applicationId,
-									{
-										depth: depth,
-										entryId: '<%= entryId %>',
-										sessionId: scrollSessionId
-									}
-								);
-							}
-						},
-						500
-					)
-				);
+				document.addEventListener('scroll', throttle(sendEvent, 500));
+				document.addEventListener('scroll', debounce(sendEvent, 1500));
 			}
 		);
 	}
