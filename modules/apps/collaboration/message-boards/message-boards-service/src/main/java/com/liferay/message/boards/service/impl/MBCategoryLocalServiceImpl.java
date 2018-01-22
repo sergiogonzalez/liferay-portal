@@ -16,9 +16,11 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.exception.CategoryNameException;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMailingList;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMailingListLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -114,6 +117,15 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			addCategoryResources(
 				category, serviceContext.getModelPermissions());
 		}
+
+		// Mailing list
+
+		_mbMailingListLocalService.addMailingList(
+			userId, groupId, category.getCategoryId(), emailAddress, inProtocol,
+			inServerName, inServerPort, inUseSSL, inUserName, inPassword,
+			inReadInterval, outEmailAddress, outCustom, outServerName,
+			outServerPort, outUseSSL, outUserName, outPassword, allowAnonymous,
+			mailingListActive, serviceContext);
 
 		return category;
 	}
@@ -227,6 +239,16 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		mbThreadLocalService.deleteThreads(
 			category.getGroupId(), category.getCategoryId(),
 			includeTrashedEntries);
+
+		// Mailing list
+
+		MBMailingList mbMailingList =
+			_mbMailingListLocalService.fetchCategoryMailingList(
+				category.getGroupId(), category.getCategoryId());
+
+		if (mbMailingList != null) {
+			_mbMailingListLocalService.deleteMailingList(mbMailingList);
+		}
 
 		// Expando
 
@@ -754,6 +776,30 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		mbCategoryPersistence.update(category);
 
+		// Mailing list
+
+		MBMailingList mailingList =
+			_mbMailingListLocalService.fetchCategoryMailingList(
+				category.getGroupId(), category.getCategoryId());
+
+		if (mailingList != null) {
+			_mbMailingListLocalService.updateMailingList(
+				mailingList.getMailingListId(), emailAddress, inProtocol,
+				inServerName, inServerPort, inUseSSL, inUserName, inPassword,
+				inReadInterval, outEmailAddress, outCustom, outServerName,
+				outServerPort, outUseSSL, outUserName, outPassword,
+				allowAnonymous, mailingListActive, serviceContext);
+		}
+		else {
+			_mbMailingListLocalService.addMailingList(
+				category.getUserId(), category.getGroupId(),
+				category.getCategoryId(), emailAddress, inProtocol,
+				inServerName, inServerPort, inUseSSL, inUserName, inPassword,
+				inReadInterval, outEmailAddress, outCustom, outServerName,
+				outServerPort, outUseSSL, outUserName, outPassword,
+				allowAnonymous, mailingListActive, serviceContext);
+		}
+
 		return category;
 	}
 
@@ -857,9 +903,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		return parentCategoryId;
 	}
 
-	/**
-	 * @see com.liferay.message.boards.internal.service.MBMailingListMBCategoryLocalServiceWrapper#_getParentCategoryId(MBCategory, long)
-	 */
 	protected long getParentCategoryId(
 		MBCategory category, long parentCategoryId) {
 
@@ -1142,5 +1185,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			throw new CategoryNameException("Name is null");
 		}
 	}
+
+	@ServiceReference(type = MBMailingListLocalService.class)
+	private MBMailingListLocalService _mbMailingListLocalService;
 
 }
