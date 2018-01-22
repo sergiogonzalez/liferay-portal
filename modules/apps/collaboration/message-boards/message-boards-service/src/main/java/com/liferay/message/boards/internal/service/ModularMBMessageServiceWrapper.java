@@ -16,8 +16,8 @@ package com.liferay.message.boards.internal.service;
 
 import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBMessageServiceWrapper;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBMessageDisplay;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
