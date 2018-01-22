@@ -29,12 +29,14 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.message.boards.kernel.service.persistence.MBMessagePersistence;
-import com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
+import com.liferay.message.boards.service.persistence.MBMessageFinder;
+import com.liferay.message.boards.service.persistence.MBMessagePersistence;
+import com.liferay.message.boards.service.persistence.MBThreadFinder;
+import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -819,81 +821,6 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the message-boards message local service.
-	 *
-	 * @return the message-boards message local service
-	 */
-	public com.liferay.message.boards.kernel.service.MBMessageLocalService getMBMessageLocalService() {
-		return mbMessageLocalService;
-	}
-
-	/**
-	 * Sets the message-boards message local service.
-	 *
-	 * @param mbMessageLocalService the message-boards message local service
-	 */
-	public void setMBMessageLocalService(
-		com.liferay.message.boards.kernel.service.MBMessageLocalService mbMessageLocalService) {
-		this.mbMessageLocalService = mbMessageLocalService;
-	}
-
-	/**
-	 * Returns the message-boards message persistence.
-	 *
-	 * @return the message-boards message persistence
-	 */
-	public MBMessagePersistence getMBMessagePersistence() {
-		return mbMessagePersistence;
-	}
-
-	/**
-	 * Sets the message-boards message persistence.
-	 *
-	 * @param mbMessagePersistence the message-boards message persistence
-	 */
-	public void setMBMessagePersistence(
-		MBMessagePersistence mbMessagePersistence) {
-		this.mbMessagePersistence = mbMessagePersistence;
-	}
-
-	/**
-	 * Returns the message boards thread local service.
-	 *
-	 * @return the message boards thread local service
-	 */
-	public com.liferay.message.boards.kernel.service.MBThreadLocalService getMBThreadLocalService() {
-		return mbThreadLocalService;
-	}
-
-	/**
-	 * Sets the message boards thread local service.
-	 *
-	 * @param mbThreadLocalService the message boards thread local service
-	 */
-	public void setMBThreadLocalService(
-		com.liferay.message.boards.kernel.service.MBThreadLocalService mbThreadLocalService) {
-		this.mbThreadLocalService = mbThreadLocalService;
-	}
-
-	/**
-	 * Returns the message boards thread persistence.
-	 *
-	 * @return the message boards thread persistence
-	 */
-	public MBThreadPersistence getMBThreadPersistence() {
-		return mbThreadPersistence;
-	}
-
-	/**
-	 * Sets the message boards thread persistence.
-	 *
-	 * @param mbThreadPersistence the message boards thread persistence
-	 */
-	public void setMBThreadPersistence(MBThreadPersistence mbThreadPersistence) {
-		this.mbThreadPersistence = mbThreadPersistence;
-	}
-
-	/**
 	 * Returns the ratings stats local service.
 	 *
 	 * @return the ratings stats local service
@@ -1007,6 +934,117 @@ public abstract class MBCategoryLocalServiceBaseImpl
 		this.trashVersionPersistence = trashVersionPersistence;
 	}
 
+	/**
+	 * Returns the message-boards message local service.
+	 *
+	 * @return the message-boards message local service
+	 */
+	public com.liferay.message.boards.service.MBMessageLocalService getMBMessageLocalService() {
+		return mbMessageLocalService;
+	}
+
+	/**
+	 * Sets the message-boards message local service.
+	 *
+	 * @param mbMessageLocalService the message-boards message local service
+	 */
+	public void setMBMessageLocalService(
+		com.liferay.message.boards.service.MBMessageLocalService mbMessageLocalService) {
+		this.mbMessageLocalService = mbMessageLocalService;
+	}
+
+	/**
+	 * Returns the message-boards message persistence.
+	 *
+	 * @return the message-boards message persistence
+	 */
+	public MBMessagePersistence getMBMessagePersistence() {
+		return mbMessagePersistence;
+	}
+
+	/**
+	 * Sets the message-boards message persistence.
+	 *
+	 * @param mbMessagePersistence the message-boards message persistence
+	 */
+	public void setMBMessagePersistence(
+		MBMessagePersistence mbMessagePersistence) {
+		this.mbMessagePersistence = mbMessagePersistence;
+	}
+
+	/**
+	 * Returns the message-boards message finder.
+	 *
+	 * @return the message-boards message finder
+	 */
+	public MBMessageFinder getMBMessageFinder() {
+		return mbMessageFinder;
+	}
+
+	/**
+	 * Sets the message-boards message finder.
+	 *
+	 * @param mbMessageFinder the message-boards message finder
+	 */
+	public void setMBMessageFinder(MBMessageFinder mbMessageFinder) {
+		this.mbMessageFinder = mbMessageFinder;
+	}
+
+	/**
+	 * Returns the message boards thread local service.
+	 *
+	 * @return the message boards thread local service
+	 */
+	public com.liferay.message.boards.service.MBThreadLocalService getMBThreadLocalService() {
+		return mbThreadLocalService;
+	}
+
+	/**
+	 * Sets the message boards thread local service.
+	 *
+	 * @param mbThreadLocalService the message boards thread local service
+	 */
+	public void setMBThreadLocalService(
+		com.liferay.message.boards.service.MBThreadLocalService mbThreadLocalService) {
+		this.mbThreadLocalService = mbThreadLocalService;
+	}
+
+	/**
+	 * Returns the message boards thread persistence.
+	 *
+	 * @return the message boards thread persistence
+	 */
+	public MBThreadPersistence getMBThreadPersistence() {
+		return mbThreadPersistence;
+	}
+
+	/**
+	 * Sets the message boards thread persistence.
+	 *
+	 * @param mbThreadPersistence the message boards thread persistence
+	 */
+	public void setMBThreadPersistence(MBThreadPersistence mbThreadPersistence) {
+		this.mbThreadPersistence = mbThreadPersistence;
+	}
+
+	/**
+	 * Returns the message boards thread finder.
+	 *
+	 * @return the message boards thread finder
+	 */
+	public MBThreadFinder getMBThreadFinder() {
+		return mbThreadFinder;
+	}
+
+	/**
+	 * Sets the message boards thread finder.
+	 *
+	 * @param mbThreadFinder the message boards thread finder
+	 */
+	public void setMBThreadFinder(MBThreadFinder mbThreadFinder) {
+		this.mbThreadFinder = mbThreadFinder;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.message.boards.model.MBCategory",
 			mbCategoryLocalService);
@@ -1093,14 +1131,6 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@ServiceReference(type = ExpandoRowPersistence.class)
 	protected ExpandoRowPersistence expandoRowPersistence;
-	@ServiceReference(type = com.liferay.message.boards.kernel.service.MBMessageLocalService.class)
-	protected com.liferay.message.boards.kernel.service.MBMessageLocalService mbMessageLocalService;
-	@ServiceReference(type = MBMessagePersistence.class)
-	protected MBMessagePersistence mbMessagePersistence;
-	@ServiceReference(type = com.liferay.message.boards.kernel.service.MBThreadLocalService.class)
-	protected com.liferay.message.boards.kernel.service.MBThreadLocalService mbThreadLocalService;
-	@ServiceReference(type = MBThreadPersistence.class)
-	protected MBThreadPersistence mbThreadPersistence;
 	@ServiceReference(type = com.liferay.ratings.kernel.service.RatingsStatsLocalService.class)
 	protected com.liferay.ratings.kernel.service.RatingsStatsLocalService ratingsStatsLocalService;
 	@ServiceReference(type = RatingsStatsPersistence.class)
@@ -1113,6 +1143,18 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	protected com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService;
 	@ServiceReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
+	@BeanReference(type = com.liferay.message.boards.service.MBMessageLocalService.class)
+	protected com.liferay.message.boards.service.MBMessageLocalService mbMessageLocalService;
+	@BeanReference(type = MBMessagePersistence.class)
+	protected MBMessagePersistence mbMessagePersistence;
+	@BeanReference(type = MBMessageFinder.class)
+	protected MBMessageFinder mbMessageFinder;
+	@BeanReference(type = com.liferay.message.boards.service.MBThreadLocalService.class)
+	protected com.liferay.message.boards.service.MBThreadLocalService mbThreadLocalService;
+	@BeanReference(type = MBThreadPersistence.class)
+	protected MBThreadPersistence mbThreadPersistence;
+	@BeanReference(type = MBThreadFinder.class)
+	protected MBThreadFinder mbThreadFinder;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }
