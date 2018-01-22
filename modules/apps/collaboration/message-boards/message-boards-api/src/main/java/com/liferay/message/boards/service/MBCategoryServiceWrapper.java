@@ -33,7 +33,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory addCategory(
+	public com.liferay.message.boards.model.MBCategory addCategory(
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -43,7 +43,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory addCategory(
+	public com.liferay.message.boards.model.MBCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,
@@ -77,33 +77,33 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId) {
 		return _mbCategoryService.getCategories(groupId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, int status) {
 		return _mbCategoryService.getCategories(groupId, status);
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryId,
 			start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int status, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryId,
 			status, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long excludedCategoryId, long parentCategoryId,
 		int status, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, excludedCategoryId,
@@ -111,21 +111,21 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
 			start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int status, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
 			status, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
 		int status, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, excludedCategoryIds,
@@ -227,7 +227,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory getCategory(
+	public com.liferay.message.boards.model.MBCategory getCategory(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.getCategory(categoryId);
@@ -257,7 +257,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getSubscribedCategories(
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getSubscribedCategories(
 		long groupId, long userId, int start, int end) {
 		return _mbCategoryService.getSubscribedCategories(groupId, userId,
 			start, end);
@@ -269,7 +269,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory moveCategory(
+	public com.liferay.message.boards.model.MBCategory moveCategory(
 		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.moveCategory(categoryId, parentCategoryId,
@@ -277,7 +277,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory moveCategoryFromTrash(
+	public com.liferay.message.boards.model.MBCategory moveCategoryFromTrash(
 		long categoryId, long newCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.moveCategoryFromTrash(categoryId,
@@ -285,7 +285,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory moveCategoryToTrash(
+	public com.liferay.message.boards.model.MBCategory moveCategoryToTrash(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.moveCategoryToTrash(categoryId);
@@ -310,7 +310,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory updateCategory(
+	public com.liferay.message.boards.model.MBCategory updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,
