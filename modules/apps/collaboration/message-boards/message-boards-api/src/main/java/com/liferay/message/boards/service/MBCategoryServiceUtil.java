@@ -41,7 +41,7 @@ public class MBCategoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBCategoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
+	public static com.liferay.message.boards.model.MBCategory addCategory(
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -51,7 +51,7 @@ public class MBCategoryServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
+	public static com.liferay.message.boards.model.MBCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,
@@ -83,28 +83,28 @@ public class MBCategoryServiceUtil {
 		getService().deleteCategory(groupId, categoryId);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId) {
 		return getService().getCategories(groupId);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, int status) {
 		return getService().getCategories(groupId, status);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end) {
 		return getService().getCategories(groupId, parentCategoryId, start, end);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int status, int start, int end) {
 		return getService()
 				   .getCategories(groupId, parentCategoryId, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long excludedCategoryId, long parentCategoryId,
 		int status, int start, int end) {
 		return getService()
@@ -112,18 +112,18 @@ public class MBCategoryServiceUtil {
 			parentCategoryId, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 		return getService().getCategories(groupId, parentCategoryIds, start, end);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int status, int start, int end) {
 		return getService()
 				   .getCategories(groupId, parentCategoryIds, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
 		int status, int start, int end) {
 		return getService()
@@ -214,7 +214,7 @@ public class MBCategoryServiceUtil {
 			parentCategoryIds, status);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory getCategory(
+	public static com.liferay.message.boards.model.MBCategory getCategory(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCategory(categoryId);
@@ -239,7 +239,7 @@ public class MBCategoryServiceUtil {
 		return getService().getSubcategoryIds(categoryIds, groupId, categoryId);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getSubscribedCategories(
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getSubscribedCategories(
 		long groupId, long userId, int start, int end) {
 		return getService().getSubscribedCategories(groupId, userId, start, end);
 	}
@@ -248,7 +248,7 @@ public class MBCategoryServiceUtil {
 		return getService().getSubscribedCategoriesCount(groupId, userId);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory moveCategory(
+	public static com.liferay.message.boards.model.MBCategory moveCategory(
 		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -256,13 +256,13 @@ public class MBCategoryServiceUtil {
 			mergeWithParentCategory);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory moveCategoryFromTrash(
+	public static com.liferay.message.boards.model.MBCategory moveCategoryFromTrash(
 		long categoryId, long newCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveCategoryFromTrash(categoryId, newCategoryId);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory moveCategoryToTrash(
+	public static com.liferay.message.boards.model.MBCategory moveCategoryToTrash(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveCategoryToTrash(categoryId);
@@ -283,7 +283,7 @@ public class MBCategoryServiceUtil {
 		getService().unsubscribeCategory(groupId, categoryId);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBCategory updateCategory(
+	public static com.liferay.message.boards.model.MBCategory updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,

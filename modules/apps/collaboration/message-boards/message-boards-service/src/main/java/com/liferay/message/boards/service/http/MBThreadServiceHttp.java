@@ -81,7 +81,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
+	public static java.util.List<com.liferay.message.boards.model.MBThread> getGroupThreads(
 		HttpPrincipal httpPrincipal, long groupId, long userId,
 		java.util.Date modifiedDate, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -105,7 +105,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBThread>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBThread>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -114,7 +114,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
+	public static java.util.List<com.liferay.message.boards.model.MBThread> getGroupThreads(
 		HttpPrincipal httpPrincipal, long groupId, long userId, int status,
 		boolean subscribed, boolean includeAnonymous, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -138,7 +138,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBThread>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBThread>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -147,7 +147,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
+	public static java.util.List<com.liferay.message.boards.model.MBThread> getGroupThreads(
 		HttpPrincipal httpPrincipal, long groupId, long userId, int status,
 		boolean subscribed, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -171,7 +171,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBThread>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBThread>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -180,7 +180,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
+	public static java.util.List<com.liferay.message.boards.model.MBThread> getGroupThreads(
 		HttpPrincipal httpPrincipal, long groupId, long userId, int status,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -204,7 +204,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBThread>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBThread>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -322,7 +322,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getThreads(
+	public static java.util.List<com.liferay.message.boards.model.MBThread> getThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int status,
 		int start, int end) {
 		try {
@@ -341,7 +341,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.message.boards.kernel.model.MBThread>)returnObj;
+			return (java.util.List<com.liferay.message.boards.model.MBThread>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -408,7 +408,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThread moveThread(
+	public static com.liferay.message.boards.model.MBThread moveThread(
 		HttpPrincipal httpPrincipal, long categoryId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -431,7 +431,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBThread)returnObj;
+			return (com.liferay.message.boards.model.MBThread)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -440,7 +440,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThread moveThreadFromTrash(
+	public static com.liferay.message.boards.model.MBThread moveThreadFromTrash(
 		HttpPrincipal httpPrincipal, long categoryId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -463,7 +463,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBThread)returnObj;
+			return (com.liferay.message.boards.model.MBThread)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -472,7 +472,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThread moveThreadToTrash(
+	public static com.liferay.message.boards.model.MBThread moveThreadToTrash(
 		HttpPrincipal httpPrincipal, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -494,7 +494,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBThread)returnObj;
+			return (com.liferay.message.boards.model.MBThread)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -597,7 +597,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThread splitThread(
+	public static com.liferay.message.boards.model.MBThread splitThread(
 		HttpPrincipal httpPrincipal, long messageId, java.lang.String subject,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -621,7 +621,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.message.boards.kernel.model.MBThread)returnObj;
+			return (com.liferay.message.boards.model.MBThread)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
