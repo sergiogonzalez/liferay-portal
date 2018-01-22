@@ -18,8 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

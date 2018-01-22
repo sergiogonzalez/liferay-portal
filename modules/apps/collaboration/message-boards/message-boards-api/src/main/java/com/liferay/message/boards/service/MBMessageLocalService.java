@@ -18,8 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
-import com.liferay.message.boards.kernel.model.MBDiscussion;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
 
@@ -290,6 +289,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int status, int start, int end, OrderByComparator<MBMessage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
+		long threadId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoryMessagesCount(long groupId, long categoryId,
 		int status);
 
@@ -481,8 +484,14 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long threadId, long parentMessageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getThreadMessages(long userId, long threadId,
 		int status, int start, int end, Comparator<MBMessage> comparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadMessagesCount(long threadId, boolean answer);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadMessagesCount(long threadId, int status);
