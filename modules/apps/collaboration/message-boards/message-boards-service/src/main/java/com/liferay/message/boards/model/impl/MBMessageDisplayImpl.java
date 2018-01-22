@@ -47,10 +47,6 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 			userId, message.getThreadId(), status, messageLocalService,
 			comparator);
 
-		_previousThread = null;
-		_nextThread = null;
-		_threadView = MBThreadConstants.THREAD_VIEW_TREE;
-
 		int dicussionMessagesCount = 0;
 
 		if (message.isDiscussion() &&

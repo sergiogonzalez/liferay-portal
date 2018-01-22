@@ -144,7 +144,7 @@ public class MBMessageIndexer
 				ActionKeys.VIEW);
 		}
 
-		_messageModelResourcePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
