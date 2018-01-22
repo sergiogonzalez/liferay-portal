@@ -29,7 +29,6 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 		Analytics.registerMiddleware(
 			function(request, analytics) {
 				request.context['referrer'] = document.referrer;
-				request.context['userId'] = '<%= user.getUserId() %>';
 
 				return request;
 			}
