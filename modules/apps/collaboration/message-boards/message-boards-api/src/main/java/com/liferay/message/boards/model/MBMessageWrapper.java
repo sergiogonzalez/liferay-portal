@@ -340,7 +340,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessage.getCategory();
 	}
@@ -585,7 +585,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBThread getThread()
+	public MBThread getThread()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessage.getThread();
 	}
