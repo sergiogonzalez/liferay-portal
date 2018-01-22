@@ -23,7 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.constants.MBConstants.MBConstants;
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.model.MBCategory;
