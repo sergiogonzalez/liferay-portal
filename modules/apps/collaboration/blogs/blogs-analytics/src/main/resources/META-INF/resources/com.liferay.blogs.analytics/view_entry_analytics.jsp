@@ -24,6 +24,8 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	if (window.Analytics) {
+		var applicationId = 'blogs';
+
 		Analytics.registerMiddleware(
 			function(request, analytics) {
 				request.context['referrer'] = document.referrer;
@@ -35,7 +37,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 		Analytics.send(
 			'visits',
-			'com.liferay.blogs',
+			applicationId,
 			{
 				entryId: '<%= entryId %>'
 			}
@@ -48,7 +50,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 			function(event) {
 				Analytics.send(
 					'social',
-					'com.liferay.blogs',
+					applicationId,
 					{
 						entryId: '<%= entryId %>',
 						network: event.delegateTarget.id.substr(event.delegateTarget.id.lastIndexOf('_') + 1)
@@ -86,7 +88,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 							if (depth >= 0 && depth <= 100) {
 								Analytics.send(
 									'depth',
-									'com.liferay.blogs',
+									applicationId,
 									{
 										depth: depth,
 										entryId: '<%= entryId %>',
