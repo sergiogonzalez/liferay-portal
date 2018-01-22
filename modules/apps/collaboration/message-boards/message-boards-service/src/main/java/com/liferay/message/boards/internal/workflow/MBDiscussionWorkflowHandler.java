@@ -52,19 +52,4 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
-	@Override
-	protected MBMessageLocalService getMBMessageLocalService() {
-		return _mbMessageLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	private MBMessageLocalService _mbMessageLocalService;
-
 }
