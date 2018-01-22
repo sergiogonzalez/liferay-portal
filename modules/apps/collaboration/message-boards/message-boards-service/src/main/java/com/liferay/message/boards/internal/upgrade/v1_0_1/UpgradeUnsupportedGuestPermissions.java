@@ -15,9 +15,9 @@
 package com.liferay.message.boards.internal.upgrade.v1_0_1;
 
 import com.liferay.message.boards.constants.MBConstants;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
