@@ -35,7 +35,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 		);
 
 		Analytics.send(
-			'visits',
+			'VISITS',
 			applicationId,
 			{
 				entryId: '<%= entryId %>'
@@ -48,7 +48,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 			'.social-bookmark',
 			function(event) {
 				Analytics.send(
-					'social',
+					'SOCIAL',
 					applicationId,
 					{
 						entryId: '<%= entryId %>',
@@ -84,7 +84,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 			if (depth >= 0 && depth <= 100) {
 				Analytics.send(
-					'depth',
+					'DEPTH',
 					applicationId,
 					{
 						depth: depth,
