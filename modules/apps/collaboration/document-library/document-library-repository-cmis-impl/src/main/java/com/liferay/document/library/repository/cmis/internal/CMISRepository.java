@@ -86,6 +86,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.FileableCmisObject;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.ObjectId;
+import org.apache.chemistry.opencmis.client.api.OperationContext;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.client.runtime.ObjectIdImpl;
@@ -1538,8 +1539,13 @@ public class CMISRepository extends BaseCmisRepository {
 
 			Folder parentFolder = toFolder(cmisParentFolder);
 
-			ItemIterable<CmisObject> cmisObjects =
-				cmisParentFolder.getChildren();
+			OperationContext operationContext =
+				session.createOperationContext();
+
+			operationContext.setLoadSecondaryTypeProperties(true);
+
+			ItemIterable<CmisObject> cmisObjects = cmisParentFolder.getChildren(
+				operationContext);
 
 			for (CmisObject cmisObject : cmisObjects) {
 				if (cmisObject instanceof
@@ -1557,10 +1563,17 @@ public class CMISRepository extends BaseCmisRepository {
 					_cmisModelCache.putFolder(cmisFolder);
 				}
 				else if (cmisObject instanceof Document) {
+					Document document = (Document)cmisObject;
+
 					CMISFileEntry cmisFileEntry = (CMISFileEntry)toFileEntry(
-						(Document)cmisObject);
+						document);
 
 					cmisFileEntry.setParentFolder(parentFolder);
+
+					if (document.isPrivateWorkingCopy()) {
+						foldersAndFileEntries.remove(cmisFileEntry);
+						fileEntries.remove(cmisFileEntry);
+					}
 
 					foldersAndFileEntries.add(cmisFileEntry);
 					fileEntries.add(cmisFileEntry);
