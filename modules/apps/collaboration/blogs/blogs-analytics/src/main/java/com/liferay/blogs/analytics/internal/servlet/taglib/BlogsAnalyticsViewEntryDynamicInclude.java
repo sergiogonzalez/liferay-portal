@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.analytics.internal.web;
+package com.liferay.blogs.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class ViewBlogsEntryAnalyticsDynamicInclude extends BaseDynamicInclude {
+public class BlogsAnalyticsViewEntryDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -65,7 +65,7 @@ public class ViewBlogsEntryAnalyticsDynamicInclude extends BaseDynamicInclude {
 		"/com.liferay.blogs.analytics/view_entry_analytics.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewBlogsEntryAnalyticsDynamicInclude.class);
+		BlogsAnalyticsViewEntryDynamicInclude.class);
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.blogs.analytics)")
 	private ServletContext _servletContext;
