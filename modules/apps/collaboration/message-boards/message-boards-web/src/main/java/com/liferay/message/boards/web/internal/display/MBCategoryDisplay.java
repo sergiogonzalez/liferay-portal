@@ -16,7 +16,7 @@ package com.liferay.message.boards.web.internal.display;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.impl.MBCategoryImpl;
+import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,27 +43,8 @@ public class MBCategoryDisplay {
 		}
 	}
 
-	public List<MBCategory> getAllCategories() {
-		return _allCategories;
-	}
-
 	public int getAllCategoriesCount() {
 		return _allCategories.size();
-	}
-
-	public List<MBCategory> getCategories() {
-		return _categoryTree.getRootNode().getChildValues();
-	}
-
-	public List<MBCategory> getCategories(MBCategory category) {
-		TreeNode<MBCategory> node = _categoryNodesMap.get(
-			category.getCategoryId());
-
-		return node.getChildValues();
-	}
-
-	public MBCategory getRootCategory() {
-		return _categoryTree.getRootNode().getValue();
 	}
 
 	public int getSubcategoriesCount(MBCategory category) {
@@ -109,23 +90,14 @@ public class MBCategoryDisplay {
 		return count;
 	}
 
-	public void getSubcategoryIds(MBCategory category, List<Long> categoryIds) {
-		List<MBCategory> categories = getCategories(category);
-
-		for (MBCategory curCategory : categories) {
-			categoryIds.add(curCategory.getCategoryId());
-
-			getSubcategoryIds(curCategory, categoryIds);
-		}
-	}
-
 	protected void init(long scopeGroupId, long categoryId) throws Exception {
 		_allCategories = MBCategoryServiceUtil.getCategories(
 			scopeGroupId, WorkflowConstants.STATUS_APPROVED);
 
-		_rootCategory = new MBCategoryImpl();
-
-		_rootCategory.setCategoryId(categoryId);
+		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			_rootCategory = MBCategoryLocalServiceUtil.fetchMBCategory(
+				categoryId);
+		}
 
 		_categoryTree = new ListTree<>(_rootCategory);
 
@@ -156,14 +128,17 @@ public class MBCategoryDisplay {
 
 		MBCategory category = node.getValue();
 
-		if (category.getCategoryId() ==
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 
-			_categoryNodesMap.put(category.getCategoryId(), node);
+		if (category != null) {
+			categoryId = category.getCategoryId();
 		}
 
-		List<MBCategory> categories = categoriesMap.get(
-			category.getCategoryId());
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			_categoryNodesMap.put(categoryId, node);
+		}
+
+		List<MBCategory> categories = categoriesMap.get(categoryId);
 
 		if (categories == null) {
 			return;
@@ -176,6 +151,13 @@ public class MBCategoryDisplay {
 
 			populateCategoryNodesMap(curNode, categoriesMap);
 		}
+	}
+
+	private List<MBCategory> _getCategories(MBCategory category) {
+		TreeNode<MBCategory> node = _categoryNodesMap.get(
+			category.getCategoryId());
+
+		return node.getChildValues();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

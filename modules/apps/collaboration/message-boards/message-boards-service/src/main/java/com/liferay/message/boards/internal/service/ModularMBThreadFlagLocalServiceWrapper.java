@@ -293,8 +293,7 @@ public class ModularMBThreadFlagLocalServiceWrapper
 			_mbThreadFlagLocalService.getThreadFlag(
 				userId,
 				ModelAdapterUtil.adapt(
-					com.liferay.message.boards.model.MBThread.class,
-					thread)));
+					com.liferay.message.boards.model.MBThread.class, thread)));
 	}
 
 	@Override
@@ -304,8 +303,7 @@ public class ModularMBThreadFlagLocalServiceWrapper
 		return _mbThreadFlagLocalService.hasThreadFlag(
 			userId,
 			ModelAdapterUtil.adapt(
-				com.liferay.message.boards.model.MBThread.class,
-				thread));
+				com.liferay.message.boards.model.MBThread.class, thread));
 	}
 
 	@Override
