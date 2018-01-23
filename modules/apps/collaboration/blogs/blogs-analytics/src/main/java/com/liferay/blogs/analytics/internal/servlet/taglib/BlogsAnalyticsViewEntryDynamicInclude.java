@@ -62,7 +62,7 @@ public class BlogsAnalyticsViewEntryDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String _JSP_PATH =
-		"/com.liferay.blogs.analytics/view_entry_analytics.jsp";
+		"/com.liferay.blogs.analytics/view_entry.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsAnalyticsViewEntryDynamicInclude.class);
