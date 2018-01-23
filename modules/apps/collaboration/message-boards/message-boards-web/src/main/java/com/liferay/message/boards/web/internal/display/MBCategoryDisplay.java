@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.message.boards.model.impl;
+package com.liferay.message.boards.web.internal.display;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.MBCategoryDisplay;
+import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,9 +32,9 @@ import java.util.Map;
 /**
  * @author Shuyang Zhou
  */
-public class MBCategoryDisplayImpl implements MBCategoryDisplay {
+public class MBCategoryDisplay {
 
-	public MBCategoryDisplayImpl(long scopeGroupId, long categoryId) {
+	public MBCategoryDisplay(long scopeGroupId, long categoryId) {
 		try {
 			init(scopeGroupId, categoryId);
 		}
@@ -43,22 +43,18 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		}
 	}
 
-	@Override
 	public List<MBCategory> getAllCategories() {
 		return _allCategories;
 	}
 
-	@Override
 	public int getAllCategoriesCount() {
 		return _allCategories.size();
 	}
 
-	@Override
 	public List<MBCategory> getCategories() {
 		return _categoryTree.getRootNode().getChildValues();
 	}
 
-	@Override
 	public List<MBCategory> getCategories(MBCategory category) {
 		TreeNode<MBCategory> node = _categoryNodesMap.get(
 			category.getCategoryId());
@@ -66,12 +62,10 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		return node.getChildValues();
 	}
 
-	@Override
 	public MBCategory getRootCategory() {
 		return _categoryTree.getRootNode().getValue();
 	}
 
-	@Override
 	public int getSubcategoriesCount(MBCategory category) {
 		TreeNode<MBCategory> node = _categoryNodesMap.get(
 			category.getCategoryId());
@@ -79,7 +73,6 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		return _categoryTree.getChildNodes(node).size();
 	}
 
-	@Override
 	public int getSubcategoriesMessagesCount(MBCategory category) {
 		int count = category.getMessageCount();
 
@@ -98,7 +91,6 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		return count;
 	}
 
-	@Override
 	public int getSubcategoriesThreadsCount(MBCategory category) {
 		int count = category.getThreadCount();
 
@@ -117,7 +109,6 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		return count;
 	}
 
-	@Override
 	public void getSubcategoryIds(MBCategory category, List<Long> categoryIds) {
 		List<MBCategory> categories = getCategories(category);
 
@@ -188,7 +179,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MBCategoryDisplayImpl.class);
+		MBCategoryDisplay.class);
 
 	private List<MBCategory> _allCategories;
 	private Map<Long, TreeNode<MBCategory>> _categoryNodesMap;
