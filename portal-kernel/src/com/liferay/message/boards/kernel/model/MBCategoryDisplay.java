@@ -18,8 +18,7 @@ import java.util.List;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.MBCategoryDisplay}
+ * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated
 public interface MBCategoryDisplay {
