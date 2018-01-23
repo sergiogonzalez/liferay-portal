@@ -76,6 +76,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1542,7 +1543,12 @@ public class CMISRepository extends BaseCmisRepository {
 			OperationContext operationContext =
 				session.createOperationContext();
 
-			operationContext.setLoadSecondaryTypeProperties(true);
+			operationContext.setFilter(
+				_toSet(
+					"cmis:isPrivateWorkingCopy",
+					"cmis:isVersionSeriesCheckedOut",
+					"cmis:lastModificationDate", "cmis:name",
+					"cmis:versionSeriesId"));
 
 			ItemIterable<CmisObject> cmisObjects = cmisParentFolder.getChildren(
 				operationContext);
@@ -2316,6 +2322,16 @@ public class CMISRepository extends BaseCmisRepository {
 		if (objectId != null) {
 			throw new DuplicateFolderNameException(title);
 		}
+	}
+
+	private final <T> Set<T> _toSet(T... items) {
+		HashSet<T> set = new HashSet<>();
+
+		for (T item : items) {
+			set.add(item);
+		}
+
+		return set;
 	}
 
 	private static final int _DELETE_DEEP = -1;
