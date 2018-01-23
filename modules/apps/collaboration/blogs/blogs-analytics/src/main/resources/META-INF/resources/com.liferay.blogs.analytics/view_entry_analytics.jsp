@@ -24,7 +24,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 <aui:script require="metal-dom/src/all/dom as dom,metal-debounce/src/debounce">
 	if (window.Analytics) {
-		var applicationId = 'blogs';
+		var applicationId = 'Blogs';
 
 		Analytics.registerMiddleware(
 			function(request, analytics) {
