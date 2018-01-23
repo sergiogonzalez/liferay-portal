@@ -98,7 +98,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 			portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
 		}
 
-		MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
+		MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 		%>
 
 		<div class="main-content-body">

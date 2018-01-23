@@ -145,8 +145,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(
-			com.liferay.message.boards.constants.MBConstants.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(MBConstants.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -195,8 +194,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortletPermissions(
-			com.liferay.message.boards.constants.MBConstants.RESOURCE_NAME);
+		portletDataContext.importPortletPermissions(MBConstants.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories") ||
 			portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
