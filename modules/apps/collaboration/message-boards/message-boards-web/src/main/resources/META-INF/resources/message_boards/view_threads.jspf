@@ -83,7 +83,7 @@
 			message = message.toEscapedModel();
 
 			row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
-			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message,ActionKeys.VIEW));
+			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 		}
 		%>
 
