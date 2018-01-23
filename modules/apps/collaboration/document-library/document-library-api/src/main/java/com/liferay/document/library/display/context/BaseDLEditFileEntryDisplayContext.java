@@ -146,8 +146,8 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public boolean isPermissionsTabVisible() throws PortalException {
-		return parentDisplayContext.isPermissionsTabVisible();
+	public boolean isPermissionsVisible() throws PortalException {
+		return parentDisplayContext.isPermissionsVisible();
 	}
 
 	@Override
