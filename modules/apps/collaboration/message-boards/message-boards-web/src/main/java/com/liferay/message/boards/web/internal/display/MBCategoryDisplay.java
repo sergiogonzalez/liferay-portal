@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.message.boards.model.impl;
+package com.liferay.message.boards.web.internal.display;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.MBCategoryDisplay;
+import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,9 +32,9 @@ import java.util.Map;
 /**
  * @author Shuyang Zhou
  */
-public class MBCategoryDisplayImpl implements MBCategoryDisplay {
+public class MBCategoryDisplay {
 
-	public MBCategoryDisplayImpl(long scopeGroupId, long categoryId) {
+	public MBCategoryDisplay(long scopeGroupId, long categoryId) {
 		try {
 			init(scopeGroupId, categoryId);
 		}
@@ -43,43 +43,20 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		}
 	}
 
-	@Override
-	public List<MBCategory> getAllCategories() {
-		return _allCategories;
-	}
-
-	@Override
 	public int getAllCategoriesCount() {
 		return _allCategories.size();
 	}
 
-	@Override
-	public List<MBCategory> getCategories() {
-		return _categoryTree.getRootNode().getChildValues();
-	}
-
-	@Override
-	public List<MBCategory> getCategories(MBCategory category) {
-		TreeNode<MBCategory> node = _categoryNodesMap.get(
-			category.getCategoryId());
-
-		return node.getChildValues();
-	}
-
-	@Override
-	public MBCategory getRootCategory() {
-		return _categoryTree.getRootNode().getValue();
-	}
-
-	@Override
 	public int getSubcategoriesCount(MBCategory category) {
 		TreeNode<MBCategory> node = _categoryNodesMap.get(
 			category.getCategoryId());
 
-		return _categoryTree.getChildNodes(node).size();
+		List<TreeNode<MBCategory>> childNodes = _categoryTree.getChildNodes(
+			node);
+
+		return childNodes.size();
 	}
 
-	@Override
 	public int getSubcategoriesMessagesCount(MBCategory category) {
 		int count = category.getMessageCount();
 
@@ -98,7 +75,6 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		return count;
 	}
 
-	@Override
 	public int getSubcategoriesThreadsCount(MBCategory category) {
 		int count = category.getThreadCount();
 
@@ -117,24 +93,14 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		return count;
 	}
 
-	@Override
-	public void getSubcategoryIds(MBCategory category, List<Long> categoryIds) {
-		List<MBCategory> categories = getCategories(category);
-
-		for (MBCategory curCategory : categories) {
-			categoryIds.add(curCategory.getCategoryId());
-
-			getSubcategoryIds(curCategory, categoryIds);
-		}
-	}
-
 	protected void init(long scopeGroupId, long categoryId) throws Exception {
 		_allCategories = MBCategoryServiceUtil.getCategories(
 			scopeGroupId, WorkflowConstants.STATUS_APPROVED);
 
-		_rootCategory = new MBCategoryImpl();
-
-		_rootCategory.setCategoryId(categoryId);
+		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			_rootCategory = MBCategoryLocalServiceUtil.fetchMBCategory(
+				categoryId);
+		}
 
 		_categoryTree = new ListTree<>(_rootCategory);
 
@@ -165,14 +131,17 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 		MBCategory category = node.getValue();
 
-		if (category.getCategoryId() ==
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 
-			_categoryNodesMap.put(category.getCategoryId(), node);
+		if (category != null) {
+			categoryId = category.getCategoryId();
 		}
 
-		List<MBCategory> categories = categoriesMap.get(
-			category.getCategoryId());
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			_categoryNodesMap.put(categoryId, node);
+		}
+
+		List<MBCategory> categories = categoriesMap.get(categoryId);
 
 		if (categories == null) {
 			return;
@@ -187,8 +156,15 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		}
 	}
 
+	private List<MBCategory> _getCategories(MBCategory category) {
+		TreeNode<MBCategory> node = _categoryNodesMap.get(
+			category.getCategoryId());
+
+		return node.getChildValues();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		MBCategoryDisplayImpl.class);
+		MBCategoryDisplay.class);
 
 	private List<MBCategory> _allCategories;
 	private Map<Long, TreeNode<MBCategory>> _categoryNodesMap;
