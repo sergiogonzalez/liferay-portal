@@ -468,18 +468,19 @@ AUI.add(
 								function(item, index) {
 									var title = item;
 
+									var tempTitle = title;
+
 									var tempRandomSuffix = instance.get('tempRandomSuffix');
 
 									if (tempRandomSuffix) {
-										var posTempRandomSuffix = title.indexOf(tempRandomSuffix);
 										var lastIndexOfPeriod = title.lastIndexOf('.');
+										var posTempRandomSuffix = title.indexOf(tempRandomSuffix);
 
 										if (posTempRandomSuffix != -1) {
+											tempTitle = title.substr(0, posTempRandomSuffix);
+
 											if (lastIndexOfPeriod > 0) {
-												title = title.substr(0, posTempRandomSuffix) + title.substr(lastIndexOfPeriod);
-											}
-											else {
-												title = title.substr(0, posTempRandomSuffix);
+												tempTitle += title.substr(lastIndexOfPeriod);
 											}
 										}
 									}
@@ -488,7 +489,7 @@ AUI.add(
 										id: A.guid(),
 										name: item,
 										temp: true,
-										title: title
+										title: tempTitle
 									};
 								}
 							);
