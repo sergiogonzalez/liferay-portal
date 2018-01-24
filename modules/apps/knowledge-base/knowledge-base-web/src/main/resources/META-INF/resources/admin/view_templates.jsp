@@ -25,11 +25,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
 portletURL.setParameter("orderBycol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(LanguageUtil.get(request, "templates"));
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
