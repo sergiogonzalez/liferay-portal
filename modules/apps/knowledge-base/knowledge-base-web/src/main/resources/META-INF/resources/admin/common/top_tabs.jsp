@@ -30,7 +30,19 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 			<aui:nav-item
 				href="<%= viewKBObjectsURL %>"
 				label="articles"
-				selected='<%= !mvcPath.equals("/admin/view_suggestions.jsp") %>'
+				selected='<%= !mvcPath.equals("/admin/view_suggestions.jsp") && !mvcPath.equals("/admin/view_templates.jsp") %>'
+			/>
+		</c:if>
+
+		<c:if test="<%= AdminPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_KB_TEMPLATES) %>">
+			<portlet:renderURL var="viewKBTemplatesURL">
+				<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
+			</portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewKBTemplatesURL %>"
+				label="templates"
+				selected='<%= mvcPath.equals("/admin/view_templates.jsp") %>'
 			/>
 		</c:if>
 
