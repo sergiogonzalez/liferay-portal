@@ -97,12 +97,35 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
 
+		long[] fileShortcutIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsDLFileShortcut");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
 			_dlAppService.checkInFileEntry(
 				fileEntryId, false, StringPool.BLANK, serviceContext);
+		}
+
+		for (long fileShortcutId : fileShortcutIds)
+		{
+			boolean flag = true;
+			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
+				fileShortcutId);
+
+			long toFileEntryId = fileShortcut.getToFileEntryId();
+
+			for (long fileEntryId : fileEntryIds) {
+				if (toFileEntryId == fileEntryId) {
+					flag = false;
+				}
+			}
+
+			if (flag == true) {
+				_dlAppService.checkInFileEntry(
+					toFileEntryId, false, StringPool.BLANK, serviceContext);
+			}
 		}
 	}
 
@@ -112,11 +135,34 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
 
+		long[] fileShortcutIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsDLFileShortcut");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
 			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+		}
+
+		for (long fileShortcutId : fileShortcutIds)
+		{
+			boolean flag = true;
+
+			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
+				fileShortcutId);
+
+			long toFileEntryId = fileShortcut.getToFileEntryId();
+
+			for (long fileEntryId : fileEntryIds) {
+				if (toFileEntryId == fileEntryId) {
+					flag = false;
+				}
+			}
+
+			if (flag == true) {
+				_dlAppService.checkOutFileEntry(toFileEntryId, serviceContext);
+			}
 		}
 	}
 
