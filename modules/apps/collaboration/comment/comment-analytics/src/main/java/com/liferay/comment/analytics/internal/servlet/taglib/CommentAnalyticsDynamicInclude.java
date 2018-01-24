@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comment.analytics.internal.server.taglib;
+package com.liferay.comment.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
