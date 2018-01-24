@@ -44,18 +44,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "templates"));
 			selected="<%= true %>"
 		/>
 	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL %>" method="get" name="fm2">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <%
@@ -102,6 +90,18 @@ String keywords = ParamUtil.getString(request, "keywords");
 				orderColumns='<%= new String[] {"title", "user-name", "create-date", "modified-date"} %>'
 				portletURL="<%= sortURL %>"
 			/>
+
+			<li>
+				<liferay-portlet:renderURL varImpl="searchURL">
+					<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
+				</liferay-portlet:renderURL>
+
+				<aui:form action="<%= searchURL %>" method="get" name="fm2">
+					<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+					<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
+				</aui:form>
+			</li>
 		</liferay-frontend:management-bar-filters>
 	</c:if>
 
