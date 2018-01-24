@@ -188,7 +188,6 @@ entriesSearchContainer.setResults(entriesResults);
 					<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
 				</aui:form>
 			</li>
-
 		</liferay-frontend:management-bar-filters>
 	</c:if>
 
