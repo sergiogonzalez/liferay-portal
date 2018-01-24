@@ -257,12 +257,6 @@ if (portletTitleBasedNavigation) {
 
 			<liferay-asset:asset-tags-error />
 
-			<aui:translation-manager
-				availableLocales="<%= availableLocales %>"
-				defaultLanguageId="<%= defaultLanguageId %>"
-				id="translationManager"
-			/>
-
 			<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 			<aui:fieldset-group markupView="lexicon">
@@ -403,6 +397,12 @@ if (portletTitleBasedNavigation) {
 										catch (Exception e) {
 										}
 							%>
+
+										<aui:translation-manager
+											availableLocales="<%= availableLocales %>"
+											defaultLanguageId="<%= defaultLanguageId %>"
+											id="translationManager"
+										/>
 
 										<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
 											<div class="hide">
