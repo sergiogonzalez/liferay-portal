@@ -32,19 +32,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "templates"));
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewTemplatesURL">
-			<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewTemplatesURL %>"
-			label="templates"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
 <%
 String keywords = ParamUtil.getString(request, "keywords");
