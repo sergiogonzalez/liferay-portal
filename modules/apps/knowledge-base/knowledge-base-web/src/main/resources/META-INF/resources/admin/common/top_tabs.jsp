@@ -46,17 +46,4 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 			/>
 		</c:if>
 	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/admin/search.jsp" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-			<liferay-ui:input-search id="keywords" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
