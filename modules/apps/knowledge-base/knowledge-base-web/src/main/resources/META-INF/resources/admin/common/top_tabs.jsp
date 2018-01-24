@@ -17,45 +17,10 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-String mvcPath = ParamUtil.getString(request, "mvcPath");
+KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, liferayPortletResponse);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), KBActionKeys.VIEW) %>">
-			<portlet:renderURL var="viewKBObjectsURL">
-				<portlet:param name="mvcPath" value="/admin/view.jsp" />
-			</portlet:renderURL>
-
-			<aui:nav-item
-				href="<%= viewKBObjectsURL %>"
-				label="articles"
-				selected='<%= !mvcPath.equals("/admin/view_suggestions.jsp") && !mvcPath.equals("/admin/view_templates.jsp") %>'
-			/>
-		</c:if>
-
-		<c:if test="<%= AdminPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_KB_TEMPLATES) %>">
-			<portlet:renderURL var="viewKBTemplatesURL">
-				<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
-			</portlet:renderURL>
-
-			<aui:nav-item
-				href="<%= viewKBTemplatesURL %>"
-				label="templates"
-				selected='<%= mvcPath.equals("/admin/view_templates.jsp") %>'
-			/>
-		</c:if>
-
-		<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_SUGGESTIONS) %>">
-			<portlet:renderURL var="viewKBSuggestionsURL">
-				<portlet:param name="mvcPath" value="/admin/view_suggestions.jsp" />
-			</portlet:renderURL>
-
-			<aui:nav-item
-				href="<%= viewKBSuggestionsURL %>"
-				label="suggestions"
-				selected='<%= mvcPath.equals("/admin/view_suggestions.jsp") %>'
-			/>
-		</c:if>
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= kbAdminNavigationDisplayContext.getNavigationItems() %>"
+/>
