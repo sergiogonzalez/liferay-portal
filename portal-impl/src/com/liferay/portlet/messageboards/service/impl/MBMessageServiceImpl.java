@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -360,7 +361,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 			categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 			name = group.getDescriptiveName();
-			description = group.getDescription();
+			description = group.getDescription(
+				LocaleUtil.getMostRelevantLocale());
 		}
 		else {
 			groupId = category.getGroupId();
@@ -497,7 +499,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		Group group = groupLocalService.getGroup(groupId);
 
 		String name = group.getDescriptiveName();
-		String description = group.getDescriptiveName();
+		String description = group.getDescription(
+			LocaleUtil.getMostRelevantLocale());
 
 		return exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
@@ -543,7 +546,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		Group group = groupLocalService.getGroup(groupId);
 
 		String name = group.getDescriptiveName();
-		String description = group.getDescriptiveName();
+		String description = group.getDescription(
+			LocaleUtil.getMostRelevantLocale());
 
 		return exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
