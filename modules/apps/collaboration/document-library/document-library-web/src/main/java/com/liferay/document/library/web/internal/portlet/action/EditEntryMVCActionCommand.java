@@ -110,16 +110,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long fileShortcutId : fileShortcutIds) {
-			boolean flag = false;
-
 			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
 				fileShortcutId);
 
 			long toFileEntryId = fileShortcut.getToFileEntryId();
 
-			flag = ArrayUtil.contains(fileEntryIds, toFileEntryId);
-
-			if (flag == false) {
+			if (!ArrayUtil.contains(fileEntryIds, toFileEntryId)) {
 				_dlAppService.checkInFileEntry(
 					toFileEntryId, false, StringPool.BLANK, serviceContext);
 			}
@@ -143,16 +139,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long fileShortcutId : fileShortcutIds) {
-			boolean flag = false;
-
 			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
 				fileShortcutId);
 
 			long toFileEntryId = fileShortcut.getToFileEntryId();
 
-			flag = ArrayUtil.contains(fileEntryIds, toFileEntryId);
-
-			if (flag == false) {
+			if (!ArrayUtil.contains(fileEntryIds, toFileEntryId)) {
 				_dlAppService.checkOutFileEntry(toFileEntryId, serviceContext);
 			}
 		}
