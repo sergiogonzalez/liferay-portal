@@ -98,9 +98,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
 
-		long[] fileShortcutIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsDLFileShortcut");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
@@ -108,6 +105,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.checkInFileEntry(
 				fileEntryId, false, StringPool.BLANK, serviceContext);
 		}
+
+		long[] fileShortcutIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsDLFileShortcut");
 
 		for (long fileShortcutId : fileShortcutIds) {
 			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
@@ -128,15 +128,15 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
 
-		long[] fileShortcutIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsDLFileShortcut");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
 			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
 		}
+
+		long[] fileShortcutIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsDLFileShortcut");
 
 		for (long fileShortcutId : fileShortcutIds) {
 			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
