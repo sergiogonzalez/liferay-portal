@@ -658,7 +658,7 @@ public class WikiPageLocalServiceTest {
 		String[] finalAssetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			WikiPage.class.getName(), renamedPage.getResourcePrimKey());
 
-		_assertArrayEquals(finalAssetTagNames, assetTagNames);
+		_assertArrayEquals(assetTagNames, finalAssetTagNames);
 	}
 
 	@Test
@@ -796,7 +796,7 @@ public class WikiPageLocalServiceTest {
 			WikiPage.class.getName(), renamedPage.getResourcePrimKey());
 
 		_assertArrayEquals(
-			finalAssetTagNames, nonDefaultVersionPageAssetTagNames);
+			nonDefaultVersionPageAssetTagNames, finalAssetTagNames);
 	}
 
 	@Test
