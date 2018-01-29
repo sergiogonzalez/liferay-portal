@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -68,6 +69,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -163,6 +166,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			PortletFileRepositoryUtil.deletePortletFolder(folderId);
 		}
+
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			thread.getCompanyId(), MBThread.class.getName(),
+			thread.getThreadId());
 
 		// Messages
 
@@ -1216,5 +1225,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@BeanReference(type = MBStatsUserLocalService.class)
 	protected MBStatsUserLocalService mbStatsUserLocalService;
+
+	@Reference
+	protected SubscriptionLocalService subscriptionLocalService;
 
 }
