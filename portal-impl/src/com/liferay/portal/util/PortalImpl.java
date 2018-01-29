@@ -1756,15 +1756,28 @@ public class PortalImpl implements Portal {
 			createAccountURL.setPortletMode(PortletMode.VIEW);
 			createAccountURL.setWindowState(WindowState.MAXIMIZED);
 
+			String url = createAccountURL.toString();
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (layout.isPrivateLayout()) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(getPortalURL(themeDisplay));
+				sb.append(StringPool.QUESTION);
+				sb.append(HttpUtil.getQueryString(url));
+
+				url = sb.toString();
+			}
+
 			if (!PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS) {
-				return createAccountURL.toString();
+				return url;
 			}
 
 			String portalURL = getPortalURL(request);
 			String portalURLSecure = getPortalURL(request, true);
 
-			return StringUtil.replaceFirst(
-				createAccountURL.toString(), portalURL, portalURLSecure);
+			return StringUtil.replaceFirst(url, portalURL, portalURLSecure);
 		}
 
 		try {
