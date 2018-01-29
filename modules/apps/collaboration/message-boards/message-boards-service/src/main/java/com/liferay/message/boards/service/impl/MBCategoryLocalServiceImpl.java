@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -249,6 +251,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		if (mbMailingList != null) {
 			_mbMailingListLocalService.deleteMailingList(mbMailingList);
 		}
+
+		// Subscriptions
+
+		_subscriptionLocalService.deleteSubscriptions(
+			category.getCompanyId(), MBCategory.class.getName(),
+			category.getCategoryId());
 
 		// Expando
 
@@ -715,11 +723,25 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	@Override
 	public void subscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException {
+
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			categoryId = groupId;
+		}
+
+		_subscriptionLocalService.addSubscription(
+			userId, groupId, MBCategory.class.getName(), categoryId);
 	}
 
 	@Override
 	public void unsubscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException {
+
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			categoryId = groupId;
+		}
+
+		_subscriptionLocalService.deleteSubscription(
+			userId, MBCategory.class.getName(), categoryId);
 	}
 
 	@Override
@@ -1188,5 +1210,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@BeanReference(type = MBMailingListLocalService.class)
 	private MBMailingListLocalService _mbMailingListLocalService;
+
+	@ServiceReference(type = SubscriptionLocalService.class)
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }
