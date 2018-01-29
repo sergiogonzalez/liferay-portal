@@ -1777,8 +1777,7 @@ public class PortalImpl implements Portal {
 			String portalURL = getPortalURL(request);
 			String portalURLSecure = getPortalURL(request, true);
 
-			return StringUtil.replaceFirst(
-				createAccountURL.toString(), portalURL, portalURLSecure);
+			return StringUtil.replaceFirst(url, portalURL, portalURLSecure);
 		}
 
 		try {
