@@ -688,7 +688,9 @@ public class WikiPageLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
 
-		WikiTestUtil.updatePage(page);
+		WikiTestUtil.updatePage(
+			page, TestPropsValues.getUserId(), StringUtil.randomString(),
+			serviceContext);
 
 		serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -729,7 +731,9 @@ public class WikiPageLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
 
-		WikiTestUtil.updatePage(page);
+		WikiTestUtil.updatePage(
+			page, TestPropsValues.getUserId(), StringUtil.randomString(),
+			serviceContext);
 
 		serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
