@@ -45,9 +45,19 @@ public class UpgradeUserNotificationEventTest {
 			DBInspector dbInspector = new DBInspector(con);
 
 			Assert.assertTrue(dbInspector.hasTable("UserNotificationEvent"));
+
 			Assert.assertTrue(
 				dbInspector.hasColumn(
 					"UserNotificationEvent", "actionRequired"));
+			Assert.assertTrue(
+				dbInspector.hasColumn("UserNotificationEvent", "delivered"));
+			Assert.assertTrue(
+				dbInspector.hasColumn("UserNotificationEvent", "deliveryType"));
+			Assert.assertTrue(
+				dbInspector.hasColumn("UserNotificationEvent", "payload"));
+			Assert.assertTrue(
+				dbInspector.hasColumn(
+					"UserNotificationEvent", "userNotificationEventId"));
 		}
 	}
 
