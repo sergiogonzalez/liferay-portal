@@ -176,6 +176,34 @@ public class DocumentHTMLProcessorTest {
 	}
 
 	@Test
+	public void testProcessImgTagWithAttributesAndSimplePortletFileEntryURL()
+		throws Exception {
+
+		DocumentHTMLProcessor documentHTMLProcessor =
+			new DocumentHTMLProcessor();
+
+		String originalHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body>",
+			"<img class=\"test\" src=\"/documents/portlet_file_entry/10766",
+			"/test-title/f17b2a6b-ae6e-61cf\"/></body></html>");
+
+		InputStream originalIS = new ByteArrayInputStream(
+			originalHTML.getBytes());
+
+		InputStream processedIS = documentHTMLProcessor.process(originalIS);
+
+		String processedHTML = IOUtils.toString(processedIS, "UTF-8");
+
+		String expectedHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body>",
+			"<img class=\"test\" src=\"/documents/portlet_file_entry/10766",
+			"/test-title/f17b2a6b-ae6e-61cf?auth_token=authtoken\"/></body>",
+			"</html>");
+
+		Assert.assertEquals(expectedHTML, processedHTML);
+	}
+
+	@Test
 	public void testProcessSimpleDocumentURL() throws Exception {
 		DocumentHTMLProcessor documentHTMLProcessor =
 			new DocumentHTMLProcessor();
@@ -222,6 +250,31 @@ public class DocumentHTMLProcessorTest {
 			"/image/image_gallery?uuid=f17b2a6b-70ee-4121-ae6e-61c22ff47",
 			"&groupId=807138&t=12798459506&auth_token=authtoken\"/>",
 			"</body></html>");
+
+		Assert.assertEquals(expectedHTML, processedHTML);
+	}
+
+	@Test
+	public void testProcessSimplePortletFileEntryURL() throws Exception {
+		DocumentHTMLProcessor documentHTMLProcessor =
+			new DocumentHTMLProcessor();
+
+		String originalHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body><img src=\"",
+			"/documents/portlet_file_entry/10766/test-title/f17b2a6b-ae6e-61cf",
+			"\"/></body></html>");
+
+		InputStream originalIS = new ByteArrayInputStream(
+			originalHTML.getBytes());
+
+		InputStream processedIS = documentHTMLProcessor.process(originalIS);
+
+		String processedHTML = IOUtils.toString(processedIS, "UTF-8");
+
+		String expectedHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body><img src=\"",
+			"/documents/portlet_file_entry/10766/test-title/f17b2a6b-ae6e-61cf",
+			"?auth_token=authtoken\"/></body></html>");
 
 		Assert.assertEquals(expectedHTML, processedHTML);
 	}
