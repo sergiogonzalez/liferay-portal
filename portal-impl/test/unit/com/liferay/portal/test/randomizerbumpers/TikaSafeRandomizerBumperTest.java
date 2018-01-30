@@ -48,7 +48,7 @@ public class TikaSafeRandomizerBumperTest {
 	@Test
 	public void testAcceptAny() {
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
-			TikaSafeRandomizerBumper.INSTANCE;
+			TikaSafeRandomizerBumper.INSTANCE_NULL;
 
 		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, true, Level.OFF);
 		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, true, Level.OFF);
@@ -78,7 +78,7 @@ public class TikaSafeRandomizerBumperTest {
 	@Test
 	public void testAcceptText() {
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
-			TikaSafeRandomizerBumper.TEXT_PLAIN;
+			TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN;
 
 		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, true, Level.OFF);
 		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, false, Level.OFF);
