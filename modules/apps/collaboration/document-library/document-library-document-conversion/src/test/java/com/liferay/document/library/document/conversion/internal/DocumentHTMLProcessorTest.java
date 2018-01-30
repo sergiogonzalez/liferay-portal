@@ -118,6 +118,64 @@ public class DocumentHTMLProcessorTest {
 	}
 
 	@Test
+	public void testProcessImgTagWithAttributesAndSimpleDocumentURL()
+		throws Exception {
+
+		DocumentHTMLProcessor documentHTMLProcessor =
+			new DocumentHTMLProcessor();
+
+		String originalHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body>",
+			"<img class=\"test\" src=\"/documents/29543/100903188/how-long",
+			"/4e69-b2cc-e6ef21c10?t=1513212\"/></body></html>");
+
+		InputStream originalIS = new ByteArrayInputStream(
+			originalHTML.getBytes());
+
+		InputStream processedIS = documentHTMLProcessor.process(originalIS);
+
+		String processedHTML = IOUtils.toString(processedIS, "UTF-8");
+
+		String expectedHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body>",
+			"<img class=\"test\" src=\"/documents/29543/100903188/how-long",
+			"/4e69-b2cc-e6ef21c10?t=1513212&auth_token=authtoken\"/></body>",
+			"</html>");
+
+		Assert.assertEquals(expectedHTML, processedHTML);
+	}
+
+	@Test
+	public void testProcessImgTagWithAttributesAndSimpleImageURL()
+		throws Exception {
+
+		DocumentHTMLProcessor documentHTMLProcessor =
+			new DocumentHTMLProcessor();
+
+		String originalHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body>",
+			"<img class=\"test\" src=\"/image",
+			"/image_gallery?uuid=f17b2a6b-70ee-4121-ae6e-61c22ff47",
+			"&groupId=807138&t=12798459506\"/></body></html>");
+
+		InputStream originalIS = new ByteArrayInputStream(
+			originalHTML.getBytes());
+
+		InputStream processedIS = documentHTMLProcessor.process(originalIS);
+
+		String processedHTML = IOUtils.toString(processedIS, "UTF-8");
+
+		String expectedHTML = StringBundler.concat(
+			"<html><head><title>test-title</title></head><body>",
+			"<img class=\"test\" src=\"/image",
+			"/image_gallery?uuid=f17b2a6b-70ee-4121-ae6e-61c22ff47",
+			"&groupId=807138&t=12798459506&auth_token=authtoken\"/>",
+			"</body></html>");
+
+		Assert.assertEquals(expectedHTML, processedHTML);
+	}
+
+	@Test
 	public void testProcessSimpleDocumentURL() throws Exception {
 		DocumentHTMLProcessor documentHTMLProcessor =
 			new DocumentHTMLProcessor();
