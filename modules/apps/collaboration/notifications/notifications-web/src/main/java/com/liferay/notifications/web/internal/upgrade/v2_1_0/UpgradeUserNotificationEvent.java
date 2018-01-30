@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -56,8 +55,8 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			sb.append("update UserNotificationEvent set actionRequired = ");
 			sb.append("TRUE where userNotificationEventId in (select ");
 			sb.append("userNotificationEventId from ");
-			sb.append("Notifications_UserNotificationEvent ");
-			sb.append("where actionRequired = TRUE)");
+			sb.append("Notifications_UserNotificationEvent where ");
+			sb.append("actionRequired = TRUE)");
 
 			runSQL(sb.toString());
 
@@ -83,9 +82,10 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			runSQL("update UserNotificationEvent set delivered = TRUE");
 
 			runSQL(
-				"update UserNotificationEvent set deliveryType = " +
-					UserNotificationDeliveryConstants.TYPE_WEBSITE + " where " +
-						"deliveryType = 0 or deliveryType is null");
+				StringBundler.concat(
+					"update UserNotificationEvent set deliveryType = ",
+					UserNotificationDeliveryConstants.TYPE_WEBSITE,
+					" where deliveryType = 0 or deliveryType is null"));
 
 			while (rs.next()) {
 				long userNotificationEventId = rs.getLong(
