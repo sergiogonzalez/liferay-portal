@@ -84,7 +84,8 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			runSQL(
 				StringBundler.concat(
 					"update UserNotificationEvent set deliveryType = ",
-					UserNotificationDeliveryConstants.TYPE_WEBSITE,
+					String.valueOf(
+						UserNotificationDeliveryConstants.TYPE_WEBSITE),
 					" where deliveryType = 0 or deliveryType is null"));
 
 			while (rs.next()) {
