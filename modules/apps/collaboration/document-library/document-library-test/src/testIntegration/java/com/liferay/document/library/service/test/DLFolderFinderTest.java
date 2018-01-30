@@ -380,10 +380,11 @@ public class DLFolderFinderTest {
 				groupId, TestPropsValues.getUserId());
 
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
-			TikaSafeRandomizerBumper.INSTANCE;
+			TikaSafeRandomizerBumper.INSTANCE_NULL;
 
 		if (mimeType.equals(ContentTypes.TEXT_PLAIN)) {
-			tikaSafeRandomizerBumper = TikaSafeRandomizerBumper.TEXT_PLAIN;
+			tikaSafeRandomizerBumper =
+				TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN;
 		}
 
 		return DLAppLocalServiceUtil.addFileEntry(

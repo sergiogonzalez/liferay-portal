@@ -37,10 +37,10 @@ import org.apache.tika.sax.WriteOutContentHandler;
  */
 public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
-	public static final TikaSafeRandomizerBumper INSTANCE =
+	public static final TikaSafeRandomizerBumper INSTANCE_NULL =
 		new TikaSafeRandomizerBumper(null);
 
-	public static final TikaSafeRandomizerBumper TEXT_PLAIN =
+	public static final TikaSafeRandomizerBumper INSTANCE_TEXT_PLAIN =
 		new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
 
 	public TikaSafeRandomizerBumper(String contentType) {
