@@ -208,9 +208,19 @@ if (portletTitleBasedNavigation) {
 					</dl>
 
 					<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+
+						<%
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("download", true);
+						data.put("file-entry-id", fileEntry.getFileEntryId());
+						data.put("file-version-id", fileVersion.getFileVersionId());
+						%>
+
 						<div class="sidebar-block">
 							<span class="download-document">
 								<liferay-ui:icon
+									data="<%= data %>"
 									iconCssClass="icon-download"
 									label="<%= true %>"
 									message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
@@ -226,6 +236,7 @@ if (portletTitleBasedNavigation) {
 								%>
 
 									<liferay-ui:icon
+										data="<%= data %>"
 										iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
 										label="<%= true %>"
 										message="<%= StringUtil.toUpperCase(conversion) %>"

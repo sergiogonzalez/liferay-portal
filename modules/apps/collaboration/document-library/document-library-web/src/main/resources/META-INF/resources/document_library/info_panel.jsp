@@ -152,8 +152,16 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						</div>
 					</c:if>
 
+					<%
+					Map<String, Object> data = new HashMap<>();
+
+					data.put("download", true);
+					data.put("file-entry-id", fileEntry.getFileEntryId());
+					data.put("file-version-id", fileVersion.getFileVersionId());
+					%>
+
 					<aui:button-row>
-						<aui:button cssClass="btn-sm" href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>" value="download" />
+						<aui:button cssClass="btn-sm" data="<%= data %>" href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>" value="download" />
 					</aui:button-row>
 
 					<div class="sidebar-block">

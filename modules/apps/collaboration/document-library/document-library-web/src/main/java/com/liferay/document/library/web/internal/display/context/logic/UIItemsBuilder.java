@@ -459,6 +459,9 @@ public class UIItemsBuilder {
 
 		Map<String, Object> data = new HashMap<>();
 
+		data.put("download", "true");
+		data.put("file-entry-id", _fileEntry.getFileEntryId());
+		data.put("file-version-id", _fileVersion.getFileVersionId());
 		data.put("senna-off", "true");
 
 		urlMenuItem.setData(data);
