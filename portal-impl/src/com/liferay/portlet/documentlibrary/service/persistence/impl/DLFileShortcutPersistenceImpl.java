@@ -6539,6 +6539,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		dlFileShortcutImpl.setNew(dlFileShortcut.isNew());
 		dlFileShortcutImpl.setPrimaryKey(dlFileShortcut.getPrimaryKey());
 
+		dlFileShortcutImpl.setMvccVersion(dlFileShortcut.getMvccVersion());
 		dlFileShortcutImpl.setUuid(dlFileShortcut.getUuid());
 		dlFileShortcutImpl.setFileShortcutId(dlFileShortcut.getFileShortcutId());
 		dlFileShortcutImpl.setGroupId(dlFileShortcut.getGroupId());

@@ -3543,6 +3543,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		dlFileEntryTypeImpl.setNew(dlFileEntryType.isNew());
 		dlFileEntryTypeImpl.setPrimaryKey(dlFileEntryType.getPrimaryKey());
 
+		dlFileEntryTypeImpl.setMvccVersion(dlFileEntryType.getMvccVersion());
 		dlFileEntryTypeImpl.setUuid(dlFileEntryType.getUuid());
 		dlFileEntryTypeImpl.setFileEntryTypeId(dlFileEntryType.getFileEntryTypeId());
 		dlFileEntryTypeImpl.setGroupId(dlFileEntryType.getGroupId());

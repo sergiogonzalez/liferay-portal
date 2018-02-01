@@ -60,6 +60,7 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileEntryTypeId", getFileEntryTypeId());
 		attributes.put("groupId", getGroupId());
@@ -78,6 +79,12 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -327,6 +334,16 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	@Override
 	public Date getModifiedDate() {
 		return _dlFileEntryType.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this document library file entry type.
+	*
+	* @return the mvcc version of this document library file entry type
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _dlFileEntryType.getMvccVersion();
 	}
 
 	/**
@@ -666,6 +683,16 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_dlFileEntryType.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this document library file entry type.
+	*
+	* @param mvccVersion the mvcc version of this document library file entry type
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_dlFileEntryType.setMvccVersion(mvccVersion);
 	}
 
 	/**

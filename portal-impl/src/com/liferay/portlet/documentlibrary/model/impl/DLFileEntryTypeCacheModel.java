@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -38,7 +39,7 @@ import java.util.Date;
  */
 @ProviderType
 public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +52,8 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 
 		DLFileEntryTypeCacheModel dlFileEntryTypeCacheModel = (DLFileEntryTypeCacheModel)obj;
 
-		if (fileEntryTypeId == dlFileEntryTypeCacheModel.fileEntryTypeId) {
+		if ((fileEntryTypeId == dlFileEntryTypeCacheModel.fileEntryTypeId) &&
+				(mvccVersion == dlFileEntryTypeCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -60,14 +62,28 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, fileEntryTypeId);
+		int hashCode = HashUtil.hash(0, fileEntryTypeId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileEntryTypeId=");
 		sb.append(fileEntryTypeId);
@@ -99,6 +115,8 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 	@Override
 	public DLFileEntryType toEntityModel() {
 		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
+
+		dlFileEntryTypeImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			dlFileEntryTypeImpl.setUuid("");
@@ -168,6 +186,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fileEntryTypeId = objectInput.readLong();
@@ -189,6 +208,8 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -238,6 +259,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long fileEntryTypeId;
 	public long groupId;

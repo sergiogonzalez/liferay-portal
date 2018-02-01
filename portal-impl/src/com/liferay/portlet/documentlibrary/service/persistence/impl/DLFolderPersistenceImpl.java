@@ -12960,6 +12960,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		dlFolderImpl.setNew(dlFolder.isNew());
 		dlFolderImpl.setPrimaryKey(dlFolder.getPrimaryKey());
 
+		dlFolderImpl.setMvccVersion(dlFolder.getMvccVersion());
 		dlFolderImpl.setUuid(dlFolder.getUuid());
 		dlFolderImpl.setFolderId(dlFolder.getFolderId());
 		dlFolderImpl.setGroupId(dlFolder.getGroupId());

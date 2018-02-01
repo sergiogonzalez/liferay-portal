@@ -60,6 +60,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileShortcutId", getFileShortcutId());
 		attributes.put("groupId", getGroupId());
@@ -84,6 +85,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -310,6 +317,16 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public Date getModifiedDate() {
 		return _dlFileShortcut.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this document library file shortcut.
+	*
+	* @return the mvcc version of this document library file shortcut
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _dlFileShortcut.getMvccVersion();
 	}
 
 	/**
@@ -734,6 +751,16 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_dlFileShortcut.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this document library file shortcut.
+	*
+	* @param mvccVersion the mvcc version of this document library file shortcut
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_dlFileShortcut.setMvccVersion(mvccVersion);
 	}
 
 	@Override
