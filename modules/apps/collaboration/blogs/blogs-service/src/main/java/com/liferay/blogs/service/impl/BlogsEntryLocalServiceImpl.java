@@ -2330,6 +2330,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@ServiceReference(type = ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
 
+	@ServiceReference(type = CommentManager.class)
+	protected CommentManager commentManager;
+
 	@ServiceReference(type = FriendlyURLEntryLocalService.class)
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;
 
@@ -2344,9 +2347,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@ServiceReference(type = UnsubscribeHelper.class)
 	protected UnsubscribeHelper unsubscribeHelper;
-
-	@ServiceReference(type = CommentManager.class)
-	protected CommentManager commentManager;
 
 	private boolean _attachmentExists(
 		long groupId, long folderId, String fileName) {

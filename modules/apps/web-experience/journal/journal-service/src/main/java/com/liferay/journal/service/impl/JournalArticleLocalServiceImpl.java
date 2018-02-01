@@ -8957,6 +8957,9 @@ public class JournalArticleLocalServiceImpl
 	@ServiceReference(type = AttachmentContentUpdater.class)
 	private AttachmentContentUpdater _attachmentContentUpdater;
 
+	@ServiceReference(type = CommentManager.class)
+	private CommentManager _commentManager;
+
 	@ServiceReference(type = JournalFileUploadsConfiguration.class)
 	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;
 
@@ -8967,8 +8970,5 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = TrashHelper.class)
 	private TrashHelper _trashHelper;
-
-	@ServiceReference(type = CommentManager.class)
-	private CommentManager _commentManager;
 
 }
