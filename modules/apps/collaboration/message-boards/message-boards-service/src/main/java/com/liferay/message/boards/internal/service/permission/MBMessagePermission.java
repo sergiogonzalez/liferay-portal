@@ -47,7 +47,7 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(
