@@ -51,7 +51,10 @@ public class MBCategoryDisplay {
 		TreeNode<MBCategory> node = _categoryNodesMap.get(
 			category.getCategoryId());
 
-		return _categoryTree.getChildNodes(node).size();
+		List<TreeNode<MBCategory>> childNodes = _categoryTree.getChildNodes(
+			node);
+
+		return childNodes.size();
 	}
 
 	public int getSubcategoriesMessagesCount(MBCategory category) {
