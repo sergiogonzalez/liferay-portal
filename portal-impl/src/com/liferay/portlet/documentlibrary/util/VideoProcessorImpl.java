@@ -378,7 +378,18 @@ public class VideoProcessorImpl
 				}
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				Throwable throwable = e.getCause();
+
+				if (throwable instanceof ProcessException) {
+					throwable = throwable.getCause();
+				}
+
+				_log.error(
+					StringBundler.concat(
+						"Unable to process ",
+						String.valueOf(fileVersion.getFileVersionId()), " ",
+						fileVersion.getTitle(), ". ", throwable.getMessage()),
+					e);
 			}
 
 			storeThumbnailImages(fileVersion, thumbnailTempFile);
@@ -548,7 +559,18 @@ public class VideoProcessorImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			Throwable throwable = e.getCause();
+
+			if (throwable instanceof ProcessException) {
+				throwable = throwable.getCause();
+			}
+
+			_log.error(
+				StringBundler.concat(
+					"Unable to process ",
+					String.valueOf(fileVersion.getFileVersionId()), " ",
+					fileVersion.getTitle(), ". ", throwable.getMessage()),
+				e);
 		}
 
 		addFileToStore(
