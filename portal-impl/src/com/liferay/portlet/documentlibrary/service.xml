@@ -580,6 +580,7 @@
 		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<exceptions>
+		<exception>Converter</exception>
 		<exception>DirectoryName</exception>
 		<exception>DuplicateDirectory</exception>
 		<exception>DuplicateFile</exception>

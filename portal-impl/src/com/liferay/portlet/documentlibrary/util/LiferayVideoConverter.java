@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.document.library.kernel.exception.ConverterException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -125,7 +126,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		int inputStreamsCount = _inputIContainer.getNumStreams();
 
 		if (inputStreamsCount < 0) {
-			throw new RuntimeException("Input URL does not have any streams");
+			throw new ConverterException("Input URL does not have any streams");
 		}
 
 		IAudioResampler[] iAudioResamplers =
@@ -176,7 +177,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		}
 
 		if (_outputIContainer.writeHeader() < 0) {
-			throw new RuntimeException("Unable to write container header");
+			throw new ConverterException("Unable to write container header");
 		}
 
 		boolean keyPacketFound = false;
@@ -237,7 +238,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 					if (value <= 0) {
 						if (inputIPacket.isKey()) {
-							throw new RuntimeException(
+							throw new ConverterException(
 								"Unable to decode video stream " + streamIndex);
 						}
 
@@ -259,7 +260,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		flush(outputIStreamCoders, _outputIContainer);
 
 		if (_outputIContainer.writeTrailer() < 0) {
-			throw new RuntimeException(
+			throw new ConverterException(
 				"Unable to write trailer to output file");
 		}
 
@@ -351,7 +352,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		ICodec iCodec = getVideoEncodingICodec(inputICodecType, outputURL);
 
 		if (iCodec == null) {
-			throw new RuntimeException(
+			throw new ConverterException(
 				StringBundler.concat(
 					"Unable to determine ", String.valueOf(inputICodecType),
 					" encoder for ", outputURL));
@@ -402,7 +403,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		outputIStreamCoder.setFrameRate(iRational);
 
 		if (inputIStreamCoder.getHeight() <= 0) {
-			throw new RuntimeException(
+			throw new ConverterException(
 				"Unable to determine height for " + _inputURL);
 		}
 
@@ -418,7 +419,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 				iRational.getDenominator(), iRational.getNumerator()));
 
 		if (inputIStreamCoder.getWidth() <= 0) {
-			throw new RuntimeException(
+			throw new ConverterException(
 				"Unable to determine width for " + _inputURL);
 		}
 

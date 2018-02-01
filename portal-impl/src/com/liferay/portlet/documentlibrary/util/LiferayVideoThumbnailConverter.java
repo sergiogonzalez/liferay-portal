@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.document.library.kernel.exception.ConverterException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -71,7 +72,7 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 		int inputStreamsCount = _inputIContainer.getNumStreams();
 
 		if (inputStreamsCount < 0) {
-			throw new RuntimeException("Input URL does not have any streams");
+			throw new ConverterException("Input URL does not have any streams");
 		}
 
 		IVideoPicture[] inputIVideoPictures =
@@ -175,7 +176,7 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 
 				if (value <= 0) {
 					if (inputIPacket.isKey()) {
-						throw new RuntimeException(
+						throw new ConverterException(
 							"Unable to decode video stream " + streamIndex);
 					}
 
