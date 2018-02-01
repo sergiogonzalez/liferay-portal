@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
@@ -46,8 +47,6 @@ import com.liferay.trash.kernel.model.TrashVersion;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1212,7 +1211,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	@BeanReference(type = MBMailingListLocalService.class)
 	private MBMailingListLocalService _mbMailingListLocalService;
 
-	@Reference
+	@ServiceReference(type = SubscriptionLocalService.class)
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }
