@@ -53,6 +53,12 @@ public interface VideoProcessor {
 
 	public Set<String> getVideoMimeTypes();
 
+	public default boolean hasValidVideoPreview(FileVersion fileVersion)
+		throws Exception {
+
+		return true;
+	}
+
 	public boolean hasVideo(FileVersion fileVersion);
 
 	public void importGeneratedFiles(
