@@ -28,9 +28,9 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 public class FileEntryDisplayContextHelper {
 
 	public FileEntryDisplayContextHelper(
-		PermissionChecker permissionChecker, FileEntry fileEntry) {
+		PermissionChecker permissionFileChecker, FileEntry fileEntry) {
 
-		_permissionChecker = permissionChecker;
+		permissionChecker = permissionFileChecker;
 		_fileEntry = fileEntry;
 
 		if (_fileEntry == null) {
@@ -55,7 +55,7 @@ public class FileEntryDisplayContextHelper {
 	public boolean hasDeletePermission() throws PortalException {
 		if (_hasDeletePermission == null) {
 			_hasDeletePermission = DLFileEntryPermission.contains(
-				_permissionChecker, _fileEntry, ActionKeys.DELETE);
+				permissionChecker, _fileEntry, ActionKeys.DELETE);
 		}
 
 		return _hasDeletePermission;
@@ -72,7 +72,7 @@ public class FileEntryDisplayContextHelper {
 	public boolean hasOverrideCheckoutPermission() throws PortalException {
 		if (_hasOverrideCheckoutPermission == null) {
 			_hasOverrideCheckoutPermission = DLFileEntryPermission.contains(
-				_permissionChecker, _fileEntry, ActionKeys.OVERRIDE_CHECKOUT);
+				permissionChecker, _fileEntry, ActionKeys.OVERRIDE_CHECKOUT);
 		}
 
 		return _hasOverrideCheckoutPermission;
@@ -81,7 +81,7 @@ public class FileEntryDisplayContextHelper {
 	public boolean hasPermissionsPermission() throws PortalException {
 		if (_hasPermissionsPermission == null) {
 			_hasPermissionsPermission = DLFileEntryPermission.contains(
-				_permissionChecker, _fileEntry, ActionKeys.PERMISSIONS);
+				permissionChecker, _fileEntry, ActionKeys.PERMISSIONS);
 		}
 
 		return _hasPermissionsPermission;
@@ -90,7 +90,7 @@ public class FileEntryDisplayContextHelper {
 	public boolean hasUpdatePermission() throws PortalException {
 		if (_hasUpdatePermission == null) {
 			_hasUpdatePermission = DLFileEntryPermission.contains(
-				_permissionChecker, _fileEntry, ActionKeys.UPDATE);
+				permissionChecker, _fileEntry, ActionKeys.UPDATE);
 		}
 
 		return _hasUpdatePermission;
@@ -99,7 +99,7 @@ public class FileEntryDisplayContextHelper {
 	public boolean hasViewPermission() throws PortalException {
 		if (_hasViewPermission == null) {
 			_hasViewPermission = DLFileEntryPermission.contains(
-				_permissionChecker, _fileEntry, ActionKeys.VIEW);
+				permissionChecker, _fileEntry, ActionKeys.VIEW);
 		}
 
 		return _hasViewPermission;
@@ -218,6 +218,8 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
+	protected final PermissionChecker permissionChecker;
+
 	private void _setValuesForNullFileEntry() {
 		_checkedOut = false;
 		_dlFileEntry = true;
@@ -239,7 +241,6 @@ public class FileEntryDisplayContextHelper {
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
 	private Boolean _hasViewPermission;
-	private final PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
 
 }
