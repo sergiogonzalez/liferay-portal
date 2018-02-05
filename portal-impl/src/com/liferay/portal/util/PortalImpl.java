@@ -1744,22 +1744,17 @@ public class PortalImpl implements Portal {
 		throws Exception {
 
 		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
+			long plid = themeDisplay.getPlid();
+
 			Layout layout = themeDisplay.getLayout();
 
-			PortletURL createAccountURL = null;
-
 			if (layout.isPrivateLayout()) {
-				long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+				plid = LayoutLocalServiceUtil.getDefaultPlid(
 					layout.getGroupId(), false);
+			}
 
-				createAccountURL = PortletURLFactoryUtil.create(
-					request, PortletKeys.LOGIN, defaultPlid,
-					PortletRequest.RENDER_PHASE);
-			}
-			else {
-				createAccountURL = PortletURLFactoryUtil.create(
-					request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
-			}
+			PortletURL createAccountURL = PortletURLFactoryUtil.create(
+				request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
 
 			createAccountURL.setParameter(
 				"saveLastPath", Boolean.FALSE.toString());
