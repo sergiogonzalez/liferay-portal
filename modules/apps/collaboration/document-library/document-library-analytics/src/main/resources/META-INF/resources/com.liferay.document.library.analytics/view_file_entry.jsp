@@ -14,7 +14,24 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ include file="/com.liferay.document.library.analytics/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%
+FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
+%>
+
+<aui:script>
+	if (window.Analytics) {
+		Analytics.send(
+			'PREVIEW',
+			'DocumentLibrary',
+			{
+				fileEntryId: '<%= fileEntry.getFileEntryId() %>',
+				groupId: '<%= fileEntry.getGroupId() %>',
+				fileEntryUUID: '<%= fileEntry.getUuid() %>',
+				version: '<%= fileEntry.getVersion() %>'
+			}
+		);
+
+	}
+</aui:script>
