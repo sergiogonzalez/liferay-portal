@@ -18,6 +18,7 @@ import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
@@ -102,9 +103,13 @@ public class UIItemsBuilder {
 	public void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.
+		if ((_fileShortcut == null) &&
+			!_fileEntryDisplayContextHelper.
 				isCancelCheckoutDocumentActionAvailable()) {
 
+			return;
+		}
+		else if (_fileShortcut != null) {
 			return;
 		}
 
@@ -138,7 +143,12 @@ public class UIItemsBuilder {
 	public void addCheckinMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.isCheckinActionAvailable()) {
+		if ((_fileShortcut == null) &&
+			!_fileEntryDisplayContextHelper.isCheckinActionAvailable()) {
+
+			return;
+		}
+		else if (_fileShortcut != null) {
 			return;
 		}
 
@@ -197,9 +207,13 @@ public class UIItemsBuilder {
 	public void addCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.
+		if ((_fileShortcut == null) &&
+			!_fileEntryDisplayContextHelper.
 				isCheckoutDocumentActionAvailable()) {
 
+			return;
+		}
+		else if (_fileShortcut != null) {
 			return;
 		}
 
@@ -310,10 +324,18 @@ public class UIItemsBuilder {
 
 		String cmd = null;
 
-		if (isDeleteActionAvailable()) {
+		if ((_fileShortcut == null) && isDeleteActionAvailable()) {
 			cmd = Constants.DELETE;
 		}
-		else if (isMoveToTheRecycleBinActionAvailable()) {
+		else if ((_fileShortcut == null) &&
+				 isMoveToTheRecycleBinActionAvailable()) {
+
+			cmd = Constants.MOVE_TO_TRASH;
+		}
+		else if (isFileShortcutDeleteActionAvailable()) {
+			cmd = Constants.DELETE;
+		}
+		else if (isFileShortcutMoveToTheRecycleBinActionAvailable()) {
 			cmd = Constants.MOVE_TO_TRASH;
 		}
 		else {
@@ -484,7 +506,12 @@ public class UIItemsBuilder {
 	public void addEditMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.isEditActionAvailable()) {
+		if ((_fileShortcut == null) &&
+			!_fileEntryDisplayContextHelper.isEditActionAvailable()) {
+
+			return;
+		}
+		else if (!_fileShortcutDisplayContextHelper.isEditActionAvailable()) {
 			return;
 		}
 
@@ -522,7 +549,12 @@ public class UIItemsBuilder {
 	public void addMoveMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.isMoveActionAvailable()) {
+		if ((_fileShortcut == null) &&
+			!_fileEntryDisplayContextHelper.isMoveActionAvailable()) {
+
+			return;
+		}
+		else if (!_fileShortcutDisplayContextHelper.isMoveActionAvailable()) {
 			return;
 		}
 
@@ -699,21 +731,44 @@ public class UIItemsBuilder {
 	public void addPermissionsMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_fileEntryDisplayContextHelper.isPermissionsButtonVisible()) {
+		if ((_fileShortcut == null) &&
+			!_fileEntryDisplayContextHelper.isPermissionsButtonVisible()) {
+
+			return;
+		}
+		else if (!_fileShortcutDisplayContextHelper.
+					isPermissionsButtonVisible()) {
+
 			return;
 		}
 
 		String url = null;
 
-		try {
-			url = PermissionsURLTag.doTag(
-				null, DLFileEntryConstants.getClassName(),
-				HtmlUtil.unescape(_fileEntry.getTitle()), null,
-				String.valueOf(_fileEntry.getFileEntryId()),
-				LiferayWindowState.POP_UP.toString(), null, _request);
+		if (_fileShortcut != null) {
+			try {
+				url = PermissionsURLTag.doTag(
+					null, DLFileShortcutConstants.getClassName(),
+					HtmlUtil.unescape(_fileShortcut.getToTitle()), null,
+					String.valueOf(_fileShortcut.getFileShortcutId()),
+					LiferayWindowState.POP_UP.toString(), null, _request);
+			}
+			catch (Exception e) {
+				throw new SystemException(
+					"Unable to create permissions URL", e);
+			}
 		}
-		catch (Exception e) {
-			throw new SystemException("Unable to create permissions URL", e);
+		else {
+			try {
+				url = PermissionsURLTag.doTag(
+					null, DLFileEntryConstants.getClassName(),
+					HtmlUtil.unescape(_fileEntry.getTitle()), null,
+					String.valueOf(_fileEntry.getFileEntryId()),
+					LiferayWindowState.POP_UP.toString(), null, _request);
+			}
+			catch (Exception e) {
+				throw new SystemException(
+					"Unable to create permissions URL", e);
+			}
 		}
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
@@ -929,6 +984,30 @@ public class UIItemsBuilder {
 		return false;
 	}
 
+	protected boolean isFileShortcutDeleteActionAvailable()
+		throws PortalException {
+
+		if (_fileShortcutDisplayContextHelper.isFileShortcutDeletable() &&
+			!_isFileShortcutTrashable()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isFileShortcutMoveToTheRecycleBinActionAvailable()
+		throws PortalException {
+
+		if (!isFileShortcutDeleteActionAvailable() &&
+			_fileShortcutDisplayContextHelper.isFileShortcutDeletable()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isMoveToTheRecycleBinActionAvailable()
 		throws PortalException {
 
@@ -966,6 +1045,11 @@ public class UIItemsBuilder {
 
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry);
+
+			_fileShortcutDisplayContextHelper =
+				new FileShortcutDisplayContextHelper(
+					_themeDisplay.getPermissionChecker(), _fileEntry,
+					_fileShortcut);
 
 			_fileVersionDisplayContextHelper =
 				new FileVersionDisplayContextHelper(fileVersion);
@@ -1105,6 +1189,16 @@ public class UIItemsBuilder {
 		return false;
 	}
 
+	private boolean _isFileShortcutTrashable() throws PortalException {
+		if (_fileShortcutDisplayContextHelper.isDLFileShortcut() &&
+			_isTrashEnabled()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isIEOnWin32() {
 		if (_ieOnWin32 == null) {
 			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(_request);
@@ -1123,9 +1217,15 @@ public class UIItemsBuilder {
 		if (_dlTrashUtil == null) {
 			return _trashEnabled;
 		}
-
-		_trashEnabled = _dlTrashUtil.isTrashEnabled(
-			_themeDisplay.getScopeGroupId(), _fileEntry.getRepositoryId());
+		else if (_fileShortcut != null) {
+			_trashEnabled = _dlTrashUtil.isTrashEnabled(
+				_themeDisplay.getScopeGroupId(),
+				_fileShortcut.getRepositoryId());
+		}
+		else {
+			_trashEnabled = _dlTrashUtil.isTrashEnabled(
+				_themeDisplay.getScopeGroupId(), _fileEntry.getRepositoryId());
+		}
 
 		return _trashEnabled;
 	}
@@ -1141,6 +1241,8 @@ public class UIItemsBuilder {
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private FileShortcut _fileShortcut;
+	private final FileShortcutDisplayContextHelper
+		_fileShortcutDisplayContextHelper;
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
