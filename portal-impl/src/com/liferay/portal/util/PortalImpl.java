@@ -1749,8 +1749,11 @@ public class PortalImpl implements Portal {
 			PortletURL createAccountURL = null;
 
 			if (layout.isPrivateLayout()) {
+				long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+					layout.getGroupId(), false);
+
 				createAccountURL = PortletURLFactoryUtil.create(
-					request, PortletKeys.LOGIN, null,
+					request, PortletKeys.LOGIN, defaultPlid,
 					PortletRequest.RENDER_PHASE);
 			}
 			else {
