@@ -61,6 +61,9 @@ public class DocumentLibraryAnalyticsViewFileEntryDynamicInclude
 		dynamicIncludeRegistry.register(
 			"com.liferay.document.library.web#/document_library" +
 				"/view_file_entry.jsp#post");
+		dynamicIncludeRegistry.register(
+			"com.liferay.document.library.web#/document_library" +
+			"/view_file_entry_simple_view.jsp#post");
 	}
 
 	private static final String _JSP_PATH =
