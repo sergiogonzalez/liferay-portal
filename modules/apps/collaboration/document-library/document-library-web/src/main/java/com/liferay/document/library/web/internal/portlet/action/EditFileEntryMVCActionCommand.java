@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -84,6 +85,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.RenderParametersPool;
 import com.liferay.trash.service.TrashEntryService;
 
 import java.io.InputStream;
@@ -600,6 +602,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 			}
+
+			LiferayPortletRequest liferayPortletRequest =
+				_portal.getLiferayPortletRequest(actionRequest);
+
+			RenderParametersPool.clear(
+				liferayPortletRequest.getHttpServletRequest(),
+				liferayPortletRequest.getPlid(),
+				liferayPortletRequest.getPortletName());
 		}
 		catch (Exception e) {
 			handleUploadException(
