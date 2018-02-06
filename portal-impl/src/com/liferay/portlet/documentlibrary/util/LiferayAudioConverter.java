@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.document.library.kernel.exception.ConverterException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -74,7 +75,7 @@ public class LiferayAudioConverter extends LiferayConverter {
 		int inputStreamsCount = _inputIContainer.getNumStreams();
 
 		if (inputStreamsCount < 0) {
-			throw new RuntimeException("Input URL does not have any streams");
+			throw new ConverterException("Input URL does not have any streams");
 		}
 
 		IAudioResampler[] iAudioResamplers =
@@ -112,7 +113,7 @@ public class LiferayAudioConverter extends LiferayConverter {
 		}
 
 		if (_outputIContainer.writeHeader() < 0) {
-			throw new RuntimeException("Unable to write container header");
+			throw new ConverterException("Unable to write container header");
 		}
 
 		IPacket inputIPacket = IPacket.make();
@@ -158,7 +159,7 @@ public class LiferayAudioConverter extends LiferayConverter {
 		flush(outputIStreamCoders, _outputIContainer);
 
 		if (_outputIContainer.writeTrailer() < 0) {
-			throw new RuntimeException(
+			throw new ConverterException(
 				"Unable to write trailer to output file");
 		}
 

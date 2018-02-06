@@ -248,6 +248,9 @@ page import="com.liferay.trash.model.TrashEntry" %>
 
 <%@ page import="java.io.IOException" %>
 
+<%@ page import="java.net.URL" %><%@
+page import="java.net.URLConnection" %>
+
 <%@ page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %>
 

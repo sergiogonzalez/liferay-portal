@@ -24,6 +24,8 @@
 	String[] previewFileURLs = null;
 	String videoThumbnailURL = null;
 
+	boolean validPreview = false;
+
 	if (hasAudio || hasImages || hasPDFImages || hasVideo) {
 		String previewQueryString = null;
 
@@ -54,7 +56,19 @@
 			previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length];
 
 			for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length; i++) {
-				previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]);
+				String previewURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]);
+
+				URL url = new URL(previewURL);
+
+				URLConnection conn = url.openConnection();
+
+				if (conn.getContentLength() == 0) {
+					continue;
+				}
+
+				previewFileURLs[i] = previewURL;
+
+				validPreview = true;
 			}
 		}
 		else if (hasVideo) {
@@ -62,7 +76,19 @@
 				previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
 
 				for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
-					previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+					String previewURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+
+					URL url = new URL(previewURL);
+
+					URLConnection conn = url.openConnection();
+
+					if (conn.getContentLength() == 0) {
+						continue;
+					}
+
+					previewFileURLs[i] = previewURL;
+
+					validPreview = true;
 				}
 			}
 			else {
@@ -107,6 +133,11 @@
 					</div>
 				</c:when>
 			</c:choose>
+		</c:when>
+		<c:when test="<%= !validPreview %>">
+			<div class="alert alert-info">
+				<liferay-ui:message arguments="<%= fileEntry.getFileName() %>" key="cannot-generate-preview-for-x" />
+			</div>
 		</c:when>
 		<c:otherwise>
 			<c:choose>

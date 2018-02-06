@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.document.library.kernel.exception.ConverterException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.AudioProcessor;
@@ -401,8 +402,38 @@ public class AudioProcessorImpl
 						fileVersion.getTitle()));
 			}
 		}
+		catch (ConverterException ce) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Could not process ",
+						String.valueOf(fileVersion.getFileVersionId()), " ",
+						fileVersion.getTitle(), ". ", ce.getMessage()));
+			}
+		}
 		catch (Exception e) {
-			_log.error(e, e);
+			Throwable throwable = e.getCause();
+
+			if (throwable instanceof ProcessException) {
+				throwable = throwable.getCause();
+
+				if (throwable instanceof ConverterException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Could not process ",
+								String.valueOf(fileVersion.getFileVersionId()),
+								" ", fileVersion.getTitle(), ". ",
+								throwable.getMessage()));
+					}
+				}
+				else {
+					_log.error(e, e);
+				}
+			}
+			else {
+				_log.error(e, e);
+			}
 		}
 
 		addFileToStore(

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.document.library.kernel.exception.ConverterException;
 import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
@@ -149,7 +150,7 @@ public abstract class LiferayConverter {
 			inputIStreamCoder.getSampleFormat());
 
 		if (iAudioResampler == null) {
-			throw new RuntimeException("Audio resampling is not supported");
+			throw new ConverterException("Audio resampling is not supported");
 		}
 
 		return iAudioResampler;
@@ -180,7 +181,7 @@ public abstract class LiferayConverter {
 			inputIStreamCoder.getPixelType());
 
 		if (iVideoResampler == null) {
-			throw new RuntimeException("Video resampling is not supported");
+			throw new ConverterException("Video resampling is not supported");
 		}
 
 		return iVideoResampler;
@@ -207,7 +208,7 @@ public abstract class LiferayConverter {
 				if ((previousPacketSize == currentPacketSize) &&
 					(previousPacketSize != -1)) {
 
-					throw new RuntimeException(
+					throw new ConverterException(
 						"Unable to decode audio stream " + streamIndex);
 				}
 				else {
@@ -347,7 +348,7 @@ public abstract class LiferayConverter {
 				outputIPacket, outputIAudioSample, consumedSamplesCount);
 
 			if (value <= 0) {
-				throw new RuntimeException("Unable to encode audio");
+				throw new ConverterException("Unable to encode audio");
 			}
 
 			consumedSamplesCount += value;
@@ -356,7 +357,8 @@ public abstract class LiferayConverter {
 				value = outputIContainer.writePacket(outputIPacket, true);
 
 				if (value < 0) {
-					throw new RuntimeException("Unable to write audio packet");
+					throw new ConverterException(
+						"Unable to write audio packet");
 				}
 			}
 		}
@@ -371,14 +373,14 @@ public abstract class LiferayConverter {
 			outputIPacket, outputIVideoPicture, 0);
 
 		if (value < 0) {
-			throw new RuntimeException("Unable to encode video");
+			throw new ConverterException("Unable to encode video");
 		}
 
 		if (outputIPacket.isComplete()) {
 			value = outputIContainer.writePacket(outputIPacket, true);
 
 			if (value < 0) {
-				throw new RuntimeException("Unable to write video packet");
+				throw new ConverterException("Unable to write video packet");
 			}
 		}
 	}
@@ -635,10 +637,10 @@ public abstract class LiferayConverter {
 
 		if (value < 0) {
 			if (writeContainer) {
-				throw new RuntimeException("Unable to open output URL");
+				throw new ConverterException("Unable to open output URL");
 			}
 			else {
-				throw new RuntimeException("Unable to open input URL");
+				throw new ConverterException("Unable to open input URL");
 			}
 		}
 	}
@@ -651,12 +653,12 @@ public abstract class LiferayConverter {
 				IStreamCoder.CodecStandardsCompliance.COMPLIANCE_EXPERIMENTAL);
 
 			if (result < 0) {
-				throw new RuntimeException(
+				throw new ConverterException(
 					"Unable to set compliance mode to experimental");
 			}
 
 			if (iStreamCoder.open(null, null) < 0) {
-				throw new RuntimeException("Unable to open coder");
+				throw new ConverterException("Unable to open coder");
 			}
 		}
 	}
@@ -678,7 +680,7 @@ public abstract class LiferayConverter {
 		}
 
 		if (iCodec == null) {
-			throw new RuntimeException(
+			throw new ConverterException(
 				StringBundler.concat(
 					"Unable to determine ", String.valueOf(inputICodecType),
 					" encoder for ", outputURL));
@@ -772,7 +774,7 @@ public abstract class LiferayConverter {
 		if (iVideoResampler.resample(
 				resampledIVideoPicture, inputIVideoPicture) < 0) {
 
-			throw new RuntimeException("Unable to resample video");
+			throw new ConverterException("Unable to resample video");
 		}
 
 		return resampledIVideoPicture;
@@ -801,7 +803,7 @@ public abstract class LiferayConverter {
 			value = rewind(i);
 
 			if (value < 0) {
-				throw new RuntimeException("Error while seeking file");
+				throw new ConverterException("Error while seeking file");
 			}
 
 			break;
@@ -823,7 +825,7 @@ public abstract class LiferayConverter {
 		}
 
 		if (value < 0) {
-			throw new RuntimeException("Error while seeking file");
+			throw new ConverterException("Error while seeking file");
 		}
 
 		return value;
@@ -839,7 +841,7 @@ public abstract class LiferayConverter {
 		int value = inputIContainer.seekKeyFrame(index, timeStamp, 0);
 
 		if (value < 0) {
-			throw new RuntimeException("Error while seeking file");
+			throw new ConverterException("Error while seeking file");
 		}
 
 		return value;
@@ -868,7 +870,7 @@ public abstract class LiferayConverter {
 			value = seek(i, timeStamp);
 
 			if (value < 0) {
-				throw new RuntimeException("Error while seeking file");
+				throw new ConverterException("Error while seeking file");
 			}
 
 			break;
