@@ -74,8 +74,8 @@ public abstract class BaseUserNotificationHandler
 						LanguageUtil.format(
 							locale, "notification-for-x-was-deleted",
 							portletTitle, false),
-						serviceContext.translate(
-							"notification-no-longer-applies")
+						LanguageUtil.get(
+							locale, "notification-no-longer-applies")
 					});
 
 				userNotificationFeedEntry = new UserNotificationFeedEntry(
