@@ -49,6 +49,12 @@ public interface AudioProcessor {
 
 	public boolean hasAudio(FileVersion fileVersion);
 
+	public default boolean hasValidAudioPreview(FileVersion fileVersion)
+		throws Exception {
+
+		return true;
+	}
+
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)

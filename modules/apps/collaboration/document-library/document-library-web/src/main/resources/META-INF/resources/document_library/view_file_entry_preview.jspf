@@ -24,7 +24,16 @@
 	String[] previewFileURLs = null;
 	String videoThumbnailURL = null;
 
-	if (hasAudio || hasImages || hasPDFImages || hasVideo) {
+	boolean hasValidPreview = true;
+
+	if (hasAudio) {
+		hasValidPreview = AudioProcessorUtil.hasValidAudioPreview(fileVersion);
+	}
+	else if (hasVideo) {
+		hasValidPreview = VideoProcessorUtil.hasValidVideoPreview(fileVersion);
+	}
+
+	if ((hasAudio || hasImages || hasPDFImages || hasVideo) && hasValidPreview) {
 		String previewQueryString = null;
 
 		if (hasAudio) {
@@ -82,20 +91,25 @@
 		if (!hasPDFImages) {
 			previewFileCount = 1;
 		}
+
+		request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
+
+		request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
+		request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
+
+		request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
+		request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 	}
-
-	request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
-
-	request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
-	request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
-
-	request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
-	request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 	%>
 
 	<c:choose>
 		<c:when test="<%= previewFileCount == 0 %>">
 			<c:choose>
+				<c:when test="<%= !hasValidPreview %>">
+					<div class="alert alert-info">
+						<liferay-ui:message arguments="<%= fileEntry.getFileName() %>" key="cannot-generate-preview-for-x" />
+					</div>
+				</c:when>
 				<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && (AudioProcessorUtil.isAudioSupported(fileVersion.getMimeType()) || ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) || PDFProcessorUtil.isDocumentSupported(fileVersion.getMimeType()) || VideoProcessorUtil.isVideoSupported(fileVersion.getMimeType())) %>">
 					<div class="alert alert-info">
 						<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />

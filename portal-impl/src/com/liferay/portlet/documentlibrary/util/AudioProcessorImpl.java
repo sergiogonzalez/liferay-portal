@@ -153,6 +153,13 @@ public class AudioProcessorImpl
 	}
 
 	@Override
+	public boolean hasValidAudioPreview(FileVersion fileVersion)
+		throws Exception {
+
+		return hasValidPreview(fileVersion);
+	}
+
+	@Override
 	public boolean isAudioSupported(FileVersion fileVersion) {
 		return isSupported(fileVersion);
 	}
@@ -402,7 +409,18 @@ public class AudioProcessorImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			Throwable throwable = e.getCause();
+
+			if (throwable instanceof ProcessException) {
+				throwable = throwable.getCause();
+			}
+
+			_log.error(
+				StringBundler.concat(
+					"Unable to process ",
+					String.valueOf(fileVersion.getFileVersionId()), " ",
+					fileVersion.getTitle(), ". ", throwable.getMessage()),
+				e);
 		}
 
 		addFileToStore(
