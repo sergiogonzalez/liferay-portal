@@ -81,7 +81,7 @@ if (notificationUnread) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= Validator.isNotNull(userNotificationFeedEntry.getLink()) %>">
+<c:if test="<%= (userNotificationFeedEntry != null) && Validator.isNotNull(userNotificationFeedEntry.getLink()) %>">
 	<liferay-ui:search-container-column-jsp
 		path="/notifications/notification_action.jsp"
 	/>
