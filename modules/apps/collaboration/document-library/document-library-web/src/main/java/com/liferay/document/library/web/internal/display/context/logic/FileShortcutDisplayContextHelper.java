@@ -16,7 +16,6 @@ package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -25,15 +24,12 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPerm
 /**
  * @author IL (Brian) Kim
  */
-public class FileShortcutDisplayContextHelper
-	extends FileEntryDisplayContextHelper {
+public class FileShortcutDisplayContextHelper {
 
 	public FileShortcutDisplayContextHelper(
-		PermissionChecker permissionChecker, FileEntry fileEntry,
-		FileShortcut fileShortcut) {
+		PermissionChecker permissionChecker, FileShortcut fileShortcut) {
 
-		super(permissionChecker, fileEntry);
-
+		_permissionChecker = permissionChecker;
 		_fileShortcut = fileShortcut;
 
 		if (_fileShortcut == null) {
@@ -41,45 +37,31 @@ public class FileShortcutDisplayContextHelper
 		}
 	}
 
-	@Override
 	public boolean hasDeletePermission() throws PortalException {
-		if (_hasShortcutDeletePermission == null) {
-			_hasShortcutDeletePermission = DLFileShortcutPermission.contains(
-				permissionChecker, _fileShortcut, ActionKeys.DELETE);
+		if (_hasDeletePermission == null) {
+			_hasDeletePermission = DLFileShortcutPermission.contains(
+				_permissionChecker, _fileShortcut, ActionKeys.DELETE);
 		}
 
-		return _hasShortcutDeletePermission;
+		return _hasDeletePermission;
 	}
 
-	@Override
 	public boolean hasPermissionsPermission() throws PortalException {
-		if (_hasShortcutPermissionsPermission == null) {
-			_hasShortcutPermissionsPermission =
-				DLFileShortcutPermission.contains(
-					permissionChecker, _fileShortcut, ActionKeys.PERMISSIONS);
+		if (_hasPermissionsPermission == null) {
+			_hasPermissionsPermission = DLFileShortcutPermission.contains(
+				_permissionChecker, _fileShortcut, ActionKeys.PERMISSIONS);
 		}
 
-		return _hasShortcutPermissionsPermission;
+		return _hasPermissionsPermission;
 	}
 
-	@Override
 	public boolean hasUpdatePermission() throws PortalException {
-		if (_hasShortcutUpdatePermission == null) {
-			_hasShortcutUpdatePermission = DLFileShortcutPermission.contains(
-				permissionChecker, _fileShortcut, ActionKeys.UPDATE);
+		if (_hasUpdatePermission == null) {
+			_hasUpdatePermission = DLFileShortcutPermission.contains(
+				_permissionChecker, _fileShortcut, ActionKeys.UPDATE);
 		}
 
-		return _hasShortcutUpdatePermission;
-	}
-
-	@Override
-	public boolean hasViewPermission() throws PortalException {
-		if (_hasShortcutViewPermission == null) {
-			_hasShortcutViewPermission = DLFileShortcutPermission.contains(
-				permissionChecker, _fileShortcut, ActionKeys.VIEW);
-		}
-
-		return _hasShortcutViewPermission;
+		return _hasUpdatePermission;
 	}
 
 	public boolean isDLFileShortcut() {
@@ -95,50 +77,37 @@ public class FileShortcutDisplayContextHelper
 		return _dlFileShortcut;
 	}
 
-	@Override
 	public boolean isEditActionAvailable() throws PortalException {
 		return isUpdatable();
 	}
 
 	public boolean isFileShortcutDeletable() throws PortalException {
-		if (hasDeletePermission()) {
-			return true;
-		}
-
-		return false;
+		return hasDeletePermission();
 	}
 
-	@Override
 	public boolean isMoveActionAvailable() throws PortalException {
 		return isUpdatable();
 	}
 
-	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
 		return hasPermissionsPermission();
 	}
 
-	@Override
 	public boolean isUpdatable() throws PortalException {
-		if (hasUpdatePermission()) {
-			return true;
-		}
-
-		return false;
+		return hasUpdatePermission();
 	}
 
 	private void _setValuesForNullFileShortcut() {
-		_hasShortcutDeletePermission = false;
-		_hasShortcutPermissionsPermission = true;
-		_hasShortcutUpdatePermission = true;
-		_hasShortcutViewPermission = false;
+		_hasDeletePermission = false;
+		_hasPermissionsPermission = false;
+		_hasUpdatePermission = false;
 	}
 
 	private Boolean _dlFileShortcut;
 	private final FileShortcut _fileShortcut;
-	private Boolean _hasShortcutDeletePermission;
-	private Boolean _hasShortcutPermissionsPermission;
-	private Boolean _hasShortcutUpdatePermission;
-	private Boolean _hasShortcutViewPermission;
+	private Boolean _hasDeletePermission;
+	private Boolean _hasPermissionsPermission;
+	private Boolean _hasUpdatePermission;
+	private final PermissionChecker _permissionChecker;
 
 }
