@@ -125,7 +125,16 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 			UploadPortletRequest uploadPortletRequest, FileEntry fileEntry)
 		throws PortalException {
 
-		return JSONFactoryUtil.createJSONObject();
+		String sourceFileName = uploadPortletRequest.getFileName("file");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("groupId", fileEntry.getGroupId());
+		jsonObject.put("name", fileEntry.getTitle());
+		jsonObject.put("title", sourceFileName);
+		jsonObject.put("uuid", fileEntry.getUuid());
+
+		return jsonObject;
 	}
 
 	@Activate
