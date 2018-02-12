@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UploadResponseHandler;
 
 import java.io.InputStream;
 
@@ -90,6 +91,13 @@ public class EditMessageAttachmentsMVCActionCommand
 			jsonObject.put("name", fileEntry.getTitle());
 			jsonObject.put("title", sourceFileName);
 			jsonObject.put("uuid", fileEntry.getUuid());
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
+		catch (PortalException pe) {
+			JSONObject jsonObject = _multipleUploadResponseHandler.onFailure(
+				actionRequest, pe);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -215,6 +223,9 @@ public class EditMessageAttachmentsMVCActionCommand
 
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;
+
+	@Reference(target = "(upload.response.handler=multiple)")
+	private UploadResponseHandler _multipleUploadResponseHandler;
 
 	@Reference
 	private Portal _portal;
