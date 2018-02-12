@@ -85,12 +85,8 @@ public class EditMessageAttachmentsMVCActionCommand
 				MBMessageConstants.TEMP_FOLDER_NAME, tempFileName, inputStream,
 				mimeType);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("groupId", fileEntry.getGroupId());
-			jsonObject.put("name", fileEntry.getTitle());
-			jsonObject.put("title", sourceFileName);
-			jsonObject.put("uuid", fileEntry.getUuid());
+			JSONObject jsonObject = _multipleUploadResponseHandler.onSuccess(
+				uploadPortletRequest, fileEntry);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
