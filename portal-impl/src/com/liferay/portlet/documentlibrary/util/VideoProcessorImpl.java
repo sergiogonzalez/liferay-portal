@@ -157,6 +157,13 @@ public class VideoProcessorImpl
 	}
 
 	@Override
+	public boolean hasValidVideoPreview(FileVersion fileVersion)
+		throws Exception {
+
+		return hasValidPreview(fileVersion);
+	}
+
+	@Override
 	public boolean hasVideo(FileVersion fileVersion) {
 		boolean hasVideo = false;
 
@@ -378,7 +385,12 @@ public class VideoProcessorImpl
 				}
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				_log.error(
+					StringBundler.concat(
+						"Unable to process ",
+						String.valueOf(fileVersion.getFileVersionId()), " ",
+						fileVersion.getTitle(), "."),
+					e);
 			}
 
 			storeThumbnailImages(fileVersion, thumbnailTempFile);
@@ -548,7 +560,12 @@ public class VideoProcessorImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(
+				StringBundler.concat(
+					"Unable to process ",
+					String.valueOf(fileVersion.getFileVersionId()), " ",
+					fileVersion.getTitle(), "."),
+				e);
 		}
 
 		addFileToStore(

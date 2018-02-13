@@ -103,6 +103,18 @@ public class VideoProcessorUtil {
 			DLProcessorConstants.VIDEO_PROCESSOR);
 	}
 
+	public static boolean hasValidVideoPreview(FileVersion fileVersion)
+		throws Exception {
+
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return false;
+		}
+
+		return videoProcessor.hasValidVideoPreview(fileVersion);
+	}
+
 	public static boolean hasVideo(FileVersion fileVersion) {
 		VideoProcessor videoProcessor = getVideoProcessor();
 
