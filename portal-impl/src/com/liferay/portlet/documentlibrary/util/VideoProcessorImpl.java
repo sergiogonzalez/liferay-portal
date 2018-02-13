@@ -157,13 +157,6 @@ public class VideoProcessorImpl
 	}
 
 	@Override
-	public boolean hasValidVideoPreview(FileVersion fileVersion)
-		throws Exception {
-
-		return hasValidPreview(fileVersion);
-	}
-
-	@Override
 	public boolean hasVideo(FileVersion fileVersion) {
 		boolean hasVideo = false;
 

@@ -88,18 +88,6 @@ public class AudioProcessorUtil {
 		return audioProcessor.hasAudio(fileVersion);
 	}
 
-	public static boolean hasValidAudioPreview(FileVersion fileVersion)
-		throws Exception {
-
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
-			return false;
-		}
-
-		return audioProcessor.hasValidAudioPreview(fileVersion);
-	}
-
 	public static boolean isAudioSupported(FileVersion fileVersion) {
 		AudioProcessor audioProcessor = getAudioProcessor();
 

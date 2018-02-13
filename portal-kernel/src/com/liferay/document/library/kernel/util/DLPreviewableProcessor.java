@@ -907,31 +907,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected boolean hasPreview(FileVersion fileVersion, String type)
 		throws Exception {
 
-		return hasPreview(fileVersion, type, false);
-	}
-
-	protected boolean hasPreview(
-			FileVersion fileVersion, String type, boolean checkValid)
-		throws Exception {
-
 		String previewFilePath = getPreviewFilePath(fileVersion, type);
 
 		if (DLStoreUtil.hasFile(
 				fileVersion.getCompanyId(), REPOSITORY_ID, previewFilePath)) {
 
-			if (checkValid) {
-				if (DLStoreUtil.getFileSize(
-						fileVersion.getCompanyId(), REPOSITORY_ID,
-						previewFilePath) > 0) {
-
-					return true;
-				}
-
-				return false;
-			}
-			else {
-				return true;
-			}
+			return true;
 		}
 		else {
 			return false;
@@ -939,18 +920,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected boolean hasPreviews(FileVersion fileVersion) throws Exception {
-		return hasPreviews(fileVersion, false);
-	}
-
-	protected boolean hasPreviews(FileVersion fileVersion, boolean checkValid)
-		throws Exception {
-
 		int count = 0;
 
 		String[] previewTypes = getPreviewTypes();
 
 		for (String previewType : previewTypes) {
-			if (hasPreview(fileVersion, previewType, checkValid)) {
+			if (hasPreview(fileVersion, previewType)) {
 				count++;
 			}
 		}
@@ -990,20 +965,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 
 		return true;
-	}
-
-	protected boolean hasValidPreview(FileVersion fileVersion)
-		throws Exception {
-
-		if (!isSupported(fileVersion)) {
-			return false;
-		}
-
-		if (hasPreviews(fileVersion, true)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void importPreview(

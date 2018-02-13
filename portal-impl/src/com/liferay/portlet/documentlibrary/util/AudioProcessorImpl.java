@@ -153,13 +153,6 @@ public class AudioProcessorImpl
 	}
 
 	@Override
-	public boolean hasValidAudioPreview(FileVersion fileVersion)
-		throws Exception {
-
-		return hasValidPreview(fileVersion);
-	}
-
-	@Override
 	public boolean isAudioSupported(FileVersion fileVersion) {
 		return isSupported(fileVersion);
 	}

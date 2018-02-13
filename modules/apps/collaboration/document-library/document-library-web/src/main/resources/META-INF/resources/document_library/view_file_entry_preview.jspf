@@ -24,16 +24,9 @@
 	String[] previewFileURLs = null;
 	String videoThumbnailURL = null;
 
-	boolean hasValidPreview = true;
+	boolean emptyPreview = false;
 
-	if (hasAudio) {
-		hasValidPreview = AudioProcessorUtil.hasValidAudioPreview(fileVersion);
-	}
-	else if (hasVideo) {
-		hasValidPreview = VideoProcessorUtil.hasValidVideoPreview(fileVersion);
-	}
-
-	if ((hasAudio || hasImages || hasPDFImages || hasVideo) && hasValidPreview) {
+	if (hasAudio || hasImages || hasPDFImages || hasVideo) {
 		String previewQueryString = null;
 
 		if (hasAudio) {
@@ -62,22 +55,36 @@
 		if (hasAudio) {
 			previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length];
 
+			emptyPreview = true;
+
 			for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length; i++) {
-				previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]);
+				if (AudioProcessorUtil.getPreviewFileSize(fileVersion, PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]) > 0) {
+					previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]);
+
+					emptyPreview = false;
+				}
 			}
 		}
 		else if (hasVideo) {
+			emptyPreview = true;
+
 			if (PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length > 0) {
 				previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
 
 				for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
-					previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+					if (VideoProcessorUtil.getPreviewFileSize(fileVersion, PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]) > 0) {
+						previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+
+						emptyPreview = false;
+					}
 				}
 			}
 			else {
 				previewFileURLs = new String[1];
 
 				previewFileURLs[0] = videoThumbnailURL;
+
+				emptyPreview = false;
 			}
 		}
 		else {
@@ -91,25 +98,25 @@
 		if (!hasPDFImages) {
 			previewFileCount = 1;
 		}
-
-		request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
-
-		request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
-		request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
-
-		request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
-		request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 	}
+
+	request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
+
+	request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
+	request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
+
+	request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
+	request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 	%>
 
 	<c:choose>
+		<c:when test="<%= emptyPreview %>">
+			<div class="alert alert-info">
+				<liferay-ui:message arguments="<%= fileEntry.getFileName() %>" key="cannot-generate-preview-for-x" />
+			</div>
+		</c:when>
 		<c:when test="<%= previewFileCount == 0 %>">
 			<c:choose>
-				<c:when test="<%= !hasValidPreview %>">
-					<div class="alert alert-info">
-						<liferay-ui:message arguments="<%= fileEntry.getFileName() %>" key="cannot-generate-preview-for-x" />
-					</div>
-				</c:when>
 				<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && (AudioProcessorUtil.isAudioSupported(fileVersion.getMimeType()) || ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) || PDFProcessorUtil.isDocumentSupported(fileVersion.getMimeType()) || VideoProcessorUtil.isVideoSupported(fileVersion.getMimeType())) %>">
 					<div class="alert alert-info">
 						<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
