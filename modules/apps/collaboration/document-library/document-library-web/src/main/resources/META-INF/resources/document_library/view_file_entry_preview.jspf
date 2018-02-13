@@ -112,7 +112,7 @@
 	<c:choose>
 		<c:when test="<%= emptyPreview %>">
 			<div class="alert alert-info">
-				<liferay-ui:message arguments="<%= fileEntry.getFileName() %>" key="cannot-generate-preview-for-x" />
+				<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="cannot-generate-preview-for-x" />
 			</div>
 		</c:when>
 		<c:when test="<%= previewFileCount == 0 %>">
