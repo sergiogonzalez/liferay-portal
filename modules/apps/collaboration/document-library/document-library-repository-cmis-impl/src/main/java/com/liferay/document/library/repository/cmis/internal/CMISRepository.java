@@ -1548,7 +1548,7 @@ public class CMISRepository extends BaseCmisRepository {
 					"cmis:isPrivateWorkingCopy",
 					"cmis:isVersionSeriesCheckedOut",
 					"cmis:lastModificationDate", "cmis:name",
-					"cmis:versionSeriesId"));
+					"cmis:versionLabel", "cmis:versionSeriesId"));
 
 			ItemIterable<CmisObject> cmisObjects = cmisParentFolder.getChildren(
 				operationContext);
@@ -1579,7 +1579,11 @@ public class CMISRepository extends BaseCmisRepository {
 					Boolean privateWorkingCopy =
 						document.isPrivateWorkingCopy();
 
-					if ((privateWorkingCopy != null) && privateWorkingCopy) {
+					String versionLabel = document.getVersionLabel();
+
+					if (((privateWorkingCopy != null) && privateWorkingCopy) ||
+						((versionLabel != null) && versionLabel.equals("pwc"))) {
+
 						foldersAndFileEntries.remove(cmisFileEntry);
 						fileEntries.remove(cmisFileEntry);
 					}
