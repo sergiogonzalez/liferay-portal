@@ -1576,7 +1576,10 @@ public class CMISRepository extends BaseCmisRepository {
 
 					cmisFileEntry.setParentFolder(parentFolder);
 
-					if (document.isPrivateWorkingCopy()) {
+					Boolean privateWorkingCopy =
+						document.isPrivateWorkingCopy();
+
+					if ((privateWorkingCopy != null) && privateWorkingCopy) {
 						foldersAndFileEntries.remove(cmisFileEntry);
 						fileEntries.remove(cmisFileEntry);
 					}
