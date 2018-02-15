@@ -51,8 +51,8 @@ public class MBMessageFinderImpl
 	public static final String COUNT_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".countByG_U_C_S";
 
-	public static final String COUNT_BY_G_U_MD_C_S =
-		MBMessageFinder.class.getName() + ".countByG_U_MD_C_S";
+	public static final String COUNT_BY_G_U_MD_C_A_S =
+		MBMessageFinder.class.getName() + ".countByG_U_MD_C_A_S";
 
 	public static final String COUNT_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".countByG_U_C_A_S";
@@ -66,8 +66,8 @@ public class MBMessageFinderImpl
 	public static final String FIND_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_S";
 
-	public static final String FIND_BY_G_U_MD_C_S =
-		MBMessageFinder.class.getName() + ".findByG_U_MD_C_S";
+	public static final String FIND_BY_G_U_MD_C_A_S =
+		MBMessageFinder.class.getName() + ".findByG_U_MD_C_A_S";
 
 	public static final String FIND_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_A_S";
@@ -447,7 +447,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_MD_C_S);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_MD_C_A_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -663,7 +663,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_MD_C_S);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_MD_C_A_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
