@@ -20,7 +20,7 @@
 	<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
 		<div class="clearfix">
 			<div class="pull-right">
-				<liferay-ui:rss
+				<liferay-rss:rss
 					delta="<%= feedDelta %>"
 					displayStyle="<%= feedDisplayStyle %>"
 					feedType="<%= feedType %>"
