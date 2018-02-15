@@ -177,14 +177,22 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 			calendar.add(Calendar.DATE, -offset);
 
+			boolean includeAnonymous = false;
+
+			if (groupThreadsUserId == themeDisplay.getUserId()) {
+				includeAnonymous = true;
+			}
+
 			searchContainer.setTotal(
 				MBThreadServiceUtil.getGroupThreadsCount(
 					themeDisplay.getScopeGroupId(), groupThreadsUserId,
-					calendar.getTime(), WorkflowConstants.STATUS_APPROVED));
+					calendar.getTime(), includeAnonymous,
+					WorkflowConstants.STATUS_APPROVED));
 			searchContainer.setResults(
 				MBThreadServiceUtil.getGroupThreads(
 					themeDisplay.getScopeGroupId(), groupThreadsUserId,
-					calendar.getTime(), WorkflowConstants.STATUS_APPROVED,
+					calendar.getTime(), includeAnonymous,
+					WorkflowConstants.STATUS_APPROVED,
 					searchContainer.getStart(), searchContainer.getEnd()));
 		}
 		else if (isShowMyPosts()) {
