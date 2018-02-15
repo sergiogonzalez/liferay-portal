@@ -80,22 +80,6 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedEnabled = feedEnabled;
 	}
 
-	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #setFeedURL(String)}
-	 */
-	@Deprecated
-	public void setFeedLink(String feedLink) {
-		_feedURL = feedLink;
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #setFeedURLMessage(String)}
-	 */
-	@Deprecated
-	public void setFeedLinkMessage(String feedLinkMessage) {
-		_feedURLMessage = feedLinkMessage;
-	}
-
 	public void setFeedResourceURL(ResourceURL feedResourceURL) {
 		_feedResourceURL = feedResourceURL;
 	}
