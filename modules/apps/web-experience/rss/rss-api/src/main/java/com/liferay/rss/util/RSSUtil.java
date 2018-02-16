@@ -15,11 +15,15 @@
 package com.liferay.rss.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import javax.portlet.ResourceURL;
 
 /**
  * @author Brian Wing Shun Chan
@@ -137,6 +141,65 @@ public class RSSUtil {
 		}
 
 		return VERSION_DEFAULT;
+	}
+
+	public static ResourceURL getURL(
+		ResourceURL resourceURL, int delta, String displayStyle,
+		String feedType, String name) {
+
+		if ((delta > 0) && (delta != SearchContainer.DEFAULT_DELTA)) {
+			resourceURL.setParameter("max", String.valueOf(delta));
+		}
+
+		if (Validator.isNotNull(displayStyle) &&
+			!displayStyle.equals(RSSUtil.DISPLAY_STYLE_DEFAULT)) {
+
+			resourceURL.setParameter("displayStyle", displayStyle);
+		}
+
+		if (Validator.isNotNull(feedType) &&
+			!feedType.equals(RSSUtil.FEED_TYPE_DEFAULT)) {
+
+			resourceURL.setParameter("type", getFeedTypeFormat(feedType));
+			resourceURL.setParameter(
+				"version", String.valueOf(getFeedTypeVersion(feedType)));
+		}
+
+		if (Validator.isNotNull(name)) {
+			resourceURL.setParameter("feedTitle", name);
+		}
+
+		return resourceURL;
+	}
+
+	public static String getURL(
+		String url, int delta, String displayStyle, String feedType,
+		String name) {
+
+		if ((delta > 0) && (delta != SearchContainer.DEFAULT_DELTA)) {
+			url = HttpUtil.addParameter(url, "max", delta);
+		}
+
+		if (Validator.isNotNull(displayStyle) &&
+			!displayStyle.equals(RSSUtil.DISPLAY_STYLE_DEFAULT)) {
+
+			url = HttpUtil.addParameter(url, "displayStyle", displayStyle);
+		}
+
+		if (Validator.isNotNull(feedType) &&
+			!feedType.equals(RSSUtil.FEED_TYPE_DEFAULT)) {
+
+			url = HttpUtil.addParameter(
+				url, "type", getFeedTypeFormat(feedType));
+			url = HttpUtil.addParameter(
+				url, "version", String.valueOf(getFeedTypeVersion(feedType)));
+		}
+
+		if (Validator.isNotNull(name)) {
+			url = HttpUtil.addParameter(url, "feedTitle", name);
+		}
+
+		return url;
 	}
 
 	private static String _getDisplayStyleDefault() {
