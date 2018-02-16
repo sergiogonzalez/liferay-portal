@@ -12,14 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.rss.util;
+
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.rss.util.RSSUtil}
  */
-@Deprecated
 public class RSSUtil {
 
 	public static final String ATOM = "atom";
