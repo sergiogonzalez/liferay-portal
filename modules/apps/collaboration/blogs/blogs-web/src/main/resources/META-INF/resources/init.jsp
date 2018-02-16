@@ -135,7 +135,6 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
-page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
@@ -150,6 +149,7 @@ page import="com.liferay.ratings.kernel.model.RatingsEntry" %><%@
 page import="com.liferay.ratings.kernel.model.RatingsStats" %><%@
 page import="com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil" %><%@
 page import="com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil" %><%@
+page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
