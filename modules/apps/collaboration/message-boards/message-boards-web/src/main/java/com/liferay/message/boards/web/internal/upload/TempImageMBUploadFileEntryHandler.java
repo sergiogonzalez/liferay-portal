@@ -15,12 +15,9 @@
 package com.liferay.message.boards.web.internal.upload;
 
 import com.liferay.message.boards.constants.MBMessageConstants;
-import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,12 +47,6 @@ public class TempImageMBUploadFileEntryHandler
 				WebKeys.THEME_DISPLAY);
 
 		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
-
-		ModelResourcePermissionHelper.check(
-			_categoryModelResourcePermission,
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			categoryId, ActionKeys.ADD_FILE);
-
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);
@@ -65,8 +56,8 @@ public class TempImageMBUploadFileEntryHandler
 
 			String tempFileName = TempFileEntryUtil.getTempFileName(fileName);
 
-			return TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			return _mbMessageService.addTempAttachment(
+				themeDisplay.getScopeGroupId(), categoryId,
 				MBMessageConstants.TEMP_FOLDER_NAME, tempFileName, inputStream,
 				contentType);
 		}
@@ -74,10 +65,7 @@ public class TempImageMBUploadFileEntryHandler
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
-	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
-	)
-	private ModelResourcePermission<MBCategory>
-		_categoryModelResourcePermission;
+	@Reference
+	private MBMessageService _mbMessageService;
 
 }
