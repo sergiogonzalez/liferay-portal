@@ -1582,7 +1582,8 @@ public class CMISRepository extends BaseCmisRepository {
 					String versionLabel = document.getVersionLabel();
 
 					if (((privateWorkingCopy != null) && privateWorkingCopy) ||
-						((versionLabel != null) && versionLabel.equals("pwc"))) {
+						((versionLabel != null) &&
+						 versionLabel.equals("pwc"))) {
 
 						foldersAndFileEntries.remove(cmisFileEntry);
 						fileEntries.remove(cmisFileEntry);
