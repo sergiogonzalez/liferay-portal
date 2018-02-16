@@ -16,7 +16,6 @@ package com.liferay.rss.taglib.servlet.taglib;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.rss.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.rss.util.RSSUtil;
@@ -96,59 +95,14 @@ public class RSSTag extends IncludeTag {
 
 	private String _getURL() {
 		if (_resourceURL != null) {
-			if ((_delta > 0) && (_delta != SearchContainer.DEFAULT_DELTA)) {
-				_resourceURL.setParameter("max", String.valueOf(_delta));
-			}
+			ResourceURL resourceURL = RSSUtil.getURL(
+				_resourceURL, _delta, _displayStyle, _feedType, _name);
 
-			if (Validator.isNotNull(_displayStyle) &&
-				!_displayStyle.equals(RSSUtil.DISPLAY_STYLE_DEFAULT)) {
-
-				_resourceURL.setParameter("displayStyle", _displayStyle);
-			}
-
-			if (Validator.isNotNull(_feedType) &&
-				!_feedType.equals(RSSUtil.FEED_TYPE_DEFAULT)) {
-
-				_resourceURL.setParameter(
-					"type", RSSUtil.getFeedTypeFormat(_feedType));
-				_resourceURL.setParameter(
-					"version",
-					String.valueOf(RSSUtil.getFeedTypeVersion(_feedType)));
-			}
-
-			if (Validator.isNotNull(_name)) {
-				_resourceURL.setParameter("feedTitle", _name);
-			}
-
-			return _resourceURL.toString();
+			return resourceURL.toString();
 		}
 		else if (Validator.isNotNull(_url)) {
-			if ((_delta > 0) && (_delta != SearchContainer.DEFAULT_DELTA)) {
-				_url = HttpUtil.addParameter(_url, "max", _delta);
-			}
-
-			if (Validator.isNotNull(_displayStyle) &&
-				!_displayStyle.equals(RSSUtil.DISPLAY_STYLE_DEFAULT)) {
-
-				_url = HttpUtil.addParameter(
-					_url, "displayStyle", _displayStyle);
-			}
-
-			if (Validator.isNotNull(_feedType) &&
-				!_feedType.equals(RSSUtil.FEED_TYPE_DEFAULT)) {
-
-				_url = HttpUtil.addParameter(
-					_url, "type", RSSUtil.getFeedTypeFormat(_feedType));
-				_url = HttpUtil.addParameter(
-					_url, "version",
-					String.valueOf(RSSUtil.getFeedTypeVersion(_feedType)));
-			}
-
-			if (Validator.isNotNull(_name)) {
-				_url = HttpUtil.addParameter(_url, "feedTitle", _name);
-			}
-
-			return _url;
+			return RSSUtil.getURL(
+				_url, _delta, _displayStyle, _feedType, _name);
 		}
 
 		return StringPool.BLANK;
