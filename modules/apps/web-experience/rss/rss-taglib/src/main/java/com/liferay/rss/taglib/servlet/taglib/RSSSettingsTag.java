@@ -15,8 +15,8 @@
 package com.liferay.rss.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.rss.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.rss.util.RSSUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

@@ -16,6 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.RSSUtil" %>
+<%@ page import="com.liferay.rss.util.RSSUtil" %>
 
 <%@ include file="/rss_settings/init-ext.jsp" %>
