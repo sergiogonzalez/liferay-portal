@@ -65,14 +65,20 @@ public class EditMessageAttachmentsMVCActionCommand
 			_multipleUploadResponseHandler, actionRequest, actionResponse);
 	}
 
-	protected void deleteAttachment(ActionRequest actionRequest)
+	protected void deleteAttachment(
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		_mbMessageService.deleteMessageAttachment(messageId, fileName);
+		if (moveToTrash) {
+			_mbMessageService.moveMessageAttachmentToTrash(messageId, fileName);
+		}
+		else {
+			_mbMessageService.deleteMessageAttachment(messageId, fileName);
+		}
 	}
 
 	protected void deleteTempAttachment(
@@ -122,13 +128,16 @@ public class EditMessageAttachmentsMVCActionCommand
 				addTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteAttachment(actionRequest);
+				deleteAttachment(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				deleteTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.EMPTY_TRASH)) {
 				emptyTrash(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteAttachment(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreEntries(actionRequest);
