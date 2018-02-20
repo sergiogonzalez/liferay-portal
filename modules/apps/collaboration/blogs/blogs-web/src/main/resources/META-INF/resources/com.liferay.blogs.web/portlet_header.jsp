@@ -33,6 +33,31 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 	</liferay-util:html-top>
 </c:if>
 
+<%
+BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
+%>
+
+<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
+	<c:choose>
+		<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
+			<portlet:actionURL name="/blogs/edit_entry" var="unsubscribeURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
+			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= unsubscribeURL.toString() %>" label='<%= LanguageUtil.get(request, "unsubscribe") %>' />
+		</c:when>
+		<c:otherwise>
+			<portlet:actionURL name="/blogs/edit_entry" var="subscribeURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
+			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= subscribeURL.toString() %>" label='<%= LanguageUtil.get(request, "subscribe") %>' />
+		</c:otherwise>
+	</c:choose>
+</c:if>
+
 <c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 	<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
