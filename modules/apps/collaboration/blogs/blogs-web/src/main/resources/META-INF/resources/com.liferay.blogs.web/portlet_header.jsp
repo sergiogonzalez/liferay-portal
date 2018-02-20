@@ -16,6 +16,23 @@
 
 <%@ include file="/com.liferay.blogs.web/init.jsp" %>
 
+<%
+BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
+%>
+
+<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>">
+
+	<%
+	String rssURL = RSSUtil.getURL(StringBundler.concat(themeDisplay.getPathMain(), "/blogs/rss?p_l_id=", String.valueOf(themeDisplay.getPlid()), "&groupId=", String.valueOf(themeDisplay.getScopeGroupId())), GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()), blogsGroupServiceOverriddenConfiguration.rssDisplayStyle(), blogsGroupServiceOverriddenConfiguration.rssFeedType(), null);
+	%>
+
+	<clay:link buttonStyle="borderless" elementClasses="btn-sm" href="<%= rssURL %>" icon="rss" label='<%= LanguageUtil.get(request, "rss") %>' />
+
+	<liferay-util:html-top>
+		<link href="<%= HtmlUtil.escapeAttribute(rssURL) %>" rel="alternate" title="RSS" type="application/rss+xml" />
+	</liferay-util:html-top>
+</c:if>
+
 <c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 	<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
