@@ -193,7 +193,6 @@ if (portletTitleBasedNavigation) {
 						</span>
 
 						<%
-						request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
 						request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
 						request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
 						request.setAttribute("edit_message.jsp-category", null);
