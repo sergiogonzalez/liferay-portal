@@ -23,15 +23,6 @@ long messageId = BeanParamUtil.getLong(message, request, "messageId");
 
 MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/message_boards/edit_message");
-portletURL.setParameter("messageId", String.valueOf(message.getMessageId()));
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), portletURL.toString());
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "removed-attachments"), currentURL);
-
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
 iteratorURL.setParameter("mvcRenderCommandName", "/message_boards/view_deleted_message_attachments");
@@ -102,8 +93,8 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				align="right"
 				cssClass="entry-action"
+				name="action"
 				path="/message_boards/deleted_message_attachment_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
