@@ -28,6 +28,12 @@ boolean notificationUnread = !actionRequired && !userNotificationEvent.isArchive
 if (notificationUnread) {
 	row.setCssClass("unread");
 }
+
+boolean appliableUserNotificationFeedEntry = true;
+
+if ((userNotificationFeedEntry == null) || Validator.isNull(userNotificationFeedEntry.getLink())) {
+	appliableUserNotificationFeedEntry = false;
+}
 %>
 
 <c:choose>
@@ -45,9 +51,9 @@ if (notificationUnread) {
 </c:choose>
 
 <c:choose>
-	<c:when test="<%= userNotificationFeedEntry == null %>">
+	<c:when test="<%= !appliableUserNotificationFeedEntry %>">
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-			<liferay-ui:message key="notification-no-longer-applies" />
+			<liferay-ui:message key='<%= userNotificationFeedEntry == null ? "notification-no-longer-applies" : userNotificationFeedEntry.getBody() %>' />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
@@ -73,9 +79,9 @@ if (notificationUnread) {
 				</span>
 			</h5>
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/notifications/notification_action.jsp"
+		/>
 	</c:otherwise>
 </c:choose>
-
-<liferay-ui:search-container-column-jsp
-	path="/notifications/notification_action.jsp"
-/>
