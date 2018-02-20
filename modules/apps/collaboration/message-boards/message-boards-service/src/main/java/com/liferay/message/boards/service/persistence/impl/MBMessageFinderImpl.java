@@ -136,21 +136,21 @@ public class MBMessageFinderImpl
 	}
 
 	@Override
-	public int filterCountByG_U_MD_C_S(
-		long groupId, long userId, Date modifiedDate, long[] categoryIds,
-		int status) {
-
-		return doCountByG_U_MD_C_S(
-			groupId, userId, modifiedDate, categoryIds, status, true);
-	}
-
-	@Override
 	public int filterCountByG_U_C_A_S(
 		long groupId, long userId, long[] categoryIds, boolean anonymous,
 		int status) {
 
 		return doCountByG_U_C_A_S(
 			groupId, userId, categoryIds, anonymous, status, true);
+	}
+
+	@Override
+	public int filterCountByG_U_MD_C_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status) {
+
+		return doCountByG_U_MD_C_S(
+			groupId, userId, modifiedDate, categoryIds, status, true);
 	}
 
 	@Override
@@ -173,6 +173,15 @@ public class MBMessageFinderImpl
 	}
 
 	@Override
+	public List<Long> filterFindByG_U_C_A_S(
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status, int start, int end) {
+
+		return doFindByG_U_C_A_S(
+			groupId, userId, categoryIds, anonymous, status, start, end, true);
+	}
+
+	@Override
 	public List<Long> filterFindByG_U_MD_C_S(
 		long groupId, long userId, Date modifiedDate, long[] categoryIds,
 		int status, int start, int end) {
@@ -180,15 +189,6 @@ public class MBMessageFinderImpl
 		return doFindByG_U_MD_C_S(
 			groupId, userId, modifiedDate, categoryIds, status, start, end,
 			true);
-	}
-
-	@Override
-	public List<Long> filterFindByG_U_C_A_S(
-		long groupId, long userId, long[] categoryIds, boolean anonymous,
-		int status, int start, int end) {
-
-		return doFindByG_U_C_A_S(
-			groupId, userId, categoryIds, anonymous, status, start, end, true);
 	}
 
 	@Override
@@ -360,15 +360,6 @@ public class MBMessageFinderImpl
 		}
 	}
 
-	protected int doCountByG_U_MD_C_S(
-		long groupId, long userId, Date modifiedDate, long[] categoryIds,
-		int status, boolean inlineSQLHelper) {
-
-		return doCountByG_U_MD_C_A_S(
-			groupId, userId, modifiedDate, categoryIds, true, status,
-			inlineSQLHelper);
-	}
-
 	protected int doCountByG_U_C_A_S(
 		long groupId, long userId, long[] categoryIds, boolean anonymous,
 		int status, boolean inlineSQLHelper) {
@@ -436,6 +427,15 @@ public class MBMessageFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected int doCountByG_U_MD_C_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status, boolean inlineSQLHelper) {
+
+		return doCountByG_U_MD_C_A_S(
+			groupId, userId, modifiedDate, categoryIds, true, status,
+			inlineSQLHelper);
 	}
 
 	protected int doCountByG_U_MD_C_A_S(
@@ -585,15 +585,6 @@ public class MBMessageFinderImpl
 		}
 	}
 
-	protected List<Long> doFindByG_U_MD_C_S(
-		long groupId, long userId, Date modifiedDate, long[] categoryIds,
-		int status, int start, int end, boolean inlineSQLHelper) {
-
-		return doFindByG_U_MD_C_A_S(
-			groupId, userId, modifiedDate, categoryIds, true, status, start,
-			end, inlineSQLHelper);
-	}
-
 	protected List<Long> doFindByG_U_C_A_S(
 		long groupId, long userId, long[] categoryIds, boolean anonymous,
 		int status, int start, int end, boolean inlineSQLHelper) {
@@ -651,6 +642,15 @@ public class MBMessageFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected List<Long> doFindByG_U_MD_C_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status, int start, int end, boolean inlineSQLHelper) {
+
+		return doFindByG_U_MD_C_A_S(
+			groupId, userId, modifiedDate, categoryIds, true, status, start,
+			end, inlineSQLHelper);
 	}
 
 	protected List<Long> doFindByG_U_MD_C_A_S(
