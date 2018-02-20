@@ -45,7 +45,7 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
-			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= unsubscribeURL.toString() %>" label='<%= LanguageUtil.get(request, "unsubscribe") %>' />
+			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= unsubscribeURL %>" label='<%= LanguageUtil.get(request, "unsubscribe") %>' />
 		</c:when>
 		<c:otherwise>
 			<portlet:actionURL name="/blogs/edit_entry" var="subscribeURL">
@@ -53,7 +53,7 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
-			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= subscribeURL.toString() %>" label='<%= LanguageUtil.get(request, "subscribe") %>' />
+			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= subscribeURL %>" label='<%= LanguageUtil.get(request, "subscribe") %>' />
 		</c:otherwise>
 	</c:choose>
 </c:if>
@@ -64,5 +64,5 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
-	<clay:link buttonStyle="primary" elementClasses="btn-sm" href="<%= editEntryURL.toString() %>" icon="plus" label='<%= LanguageUtil.get(request, "add-blog-entry") %>' />
+	<clay:link buttonStyle="primary" elementClasses="btn-sm" href="<%= editEntryURL %>" icon="plus" label='<%= LanguageUtil.get(request, "add-blog-entry") %>' />
 </c:if>
