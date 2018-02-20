@@ -64,5 +64,5 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
-	<clay:link buttonStyle="primary" elementClasses="btn-sm" href="<%= editEntryURL %>" icon="plus" label='<%= LanguageUtil.get(request, "add-blog-entry") %>' />
+	<clay:link buttonStyle="primary" elementClasses="btn-sm" href="<%= editEntryURL %>" label='<%= LanguageUtil.get(request, "new-blog-entry") %>' />
 </c:if>
