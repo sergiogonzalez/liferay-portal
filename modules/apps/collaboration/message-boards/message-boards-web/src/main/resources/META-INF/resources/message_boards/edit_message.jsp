@@ -239,52 +239,59 @@ if (portletTitleBasedNavigation) {
 					<liferay-util:include page="/message_boards/edit_message_attachment.jsp" servletContext="<%= application %>" />
 
 					<c:if test="<%= existingAttachmentsFileEntries.size() > 0 %>">
-						<ul>
+						<liferay-ui:search-container
+							emptyResultsMessage="this-message-does-not-have-file-attachments"
+							headerNames="file-name,size,action"
+							total="<%= existingAttachmentsFileEntries.size() %>"
+						>
+							<liferay-ui:search-container-results
+								results="<%= existingAttachmentsFileEntries %>"
+							/>
 
-							<%
-							for (int i = 0; i < existingAttachmentsFileEntries.size(); i++) {
-								FileEntry fileEntry = existingAttachmentsFileEntries.get(i);
-							%>
+							<liferay-ui:search-container-row
+								className="com.liferay.portal.kernel.repository.model.FileEntry"
+								escapedModel="<%= true %>"
+								keyProperty="fileEntryId"
+								modelVar="fileEntry"
+							>
 
-								<liferay-portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
-									<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
-									<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
-								</liferay-portlet:actionURL>
+								<%
+								String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
+								%>
 
-								<li class="message-attachment">
-									<span id="<portlet:namespace />existingFile<%= i + 1 %>">
-										<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
+								<liferay-ui:search-container-column-text
+									href="<%= rowURL %>"
+									name="file-name"
+									value="<%= fileEntry.getTitle() %>"
+								/>
 
-										<%
-										AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+								<liferay-ui:search-container-column-text
+									name="size"
+									value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+								/>
 
-										AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
-										%>
+								<liferay-ui:search-container-column-text
+									cssClass="entry-action"
+									name="action"
+								>
+									<liferay-portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
+										<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+										<portlet:param name="redirect" value="<%= currentURL %>" />
+										<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
+										<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
+									</liferay-portlet:actionURL>
 
-										<liferay-ui:icon
-											icon="<%= assetRenderer.getIconCssClass() %>"
-											label="<%= true %>"
-											markupView="lexicon"
-											message="<%= fileEntry.getTitle() %>"
+									<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
+										<liferay-ui:icon-delete
+											trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+											url="<%= deleteURL %>"
 										/>
-									</span>
+									</liferay-ui:icon-menu>
+								</liferay-ui:search-container-column-text>
+							</liferay-ui:search-container-row>
 
-									<liferay-ui:icon-delete
-										label="<%= true %>"
-										message='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
-										method="get"
-										trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-										url="<%= deleteURL %>"
-									/>
-								</li>
-
-							<%
-							}
-							%>
-
-						</ul>
+							<liferay-ui:search-iterator markupView="lexicon" />
+						</liferay-ui:search-container>
 					</c:if>
 				</aui:fieldset>
 			</c:if>
