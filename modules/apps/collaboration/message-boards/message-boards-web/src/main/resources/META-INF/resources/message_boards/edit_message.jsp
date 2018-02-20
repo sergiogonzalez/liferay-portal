@@ -244,13 +244,14 @@ if (portletTitleBasedNavigation) {
 							<%
 							for (int i = 0; i < existingAttachmentsFileEntries.size(); i++) {
 								FileEntry fileEntry = existingAttachmentsFileEntries.get(i);
-
-								String taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "trashAttachment(" + (i + 1) + ", '" + Constants.MOVE_TO_TRASH + "');";
-
-								if (!trashHelper.isTrashEnabled(scopeGroupId)) {
-									taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
-								}
 							%>
+
+								<liferay-portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
+									<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
+									<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
+								</liferay-portlet:actionURL>
 
 								<li class="message-attachment">
 									<span id="<portlet:namespace />existingFile<%= i + 1 %>">
@@ -271,34 +272,12 @@ if (portletTitleBasedNavigation) {
 									</span>
 
 									<liferay-ui:icon-delete
-										id='<%= "removeExisting" + (i + 1) %>'
 										label="<%= true %>"
-										message='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
+										message='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
 										method="get"
 										trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-										url="<%= taglibDeleteAttachment %>"
+										url="<%= deleteURL %>"
 									/>
-
-									<c:if test="<%= trashHelper.isTrashEnabled(scopeGroupId) %>">
-
-										<%
-										StringBundler sb = new StringBundler(7);
-
-										sb.append("javascript:");
-										sb.append(renderResponse.getNamespace());
-										sb.append("trashAttachment(");
-										sb.append(i + 1);
-										sb.append(", '");
-										sb.append(Constants.RESTORE);
-										sb.append("');");
-										%>
-
-										<span class="hide" id="<portlet:namespace />undoFile<%= i + 1 %>">
-											<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
-
-											<span class="undo">(<liferay-ui:message key="marked-as-removed" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
-										</span>
-									</c:if>
 								</li>
 
 							<%
@@ -473,41 +452,4 @@ if (portletTitleBasedNavigation) {
 			rootNode: '#<portlet:namespace />mbEditPageContainer'
 		}
 	);
-</aui:script>
-
-<aui:script>
-	<c:choose>
-		<c:when test="<%= trashHelper.isTrashEnabled(scopeGroupId) %>">
-			function <portlet:namespace />trashAttachment(index, action) {
-				var $ = AUI.$;
-
-				var existingPath = $('#<portlet:namespace />existingPath' + index);
-				var removeExisting = $('#<portlet:namespace />removeExisting' + index);
-				var undoFile = $('#<portlet:namespace />undoFile' + index);
-
-				if (action == '<%= Constants.MOVE_TO_TRASH %>') {
-					removeExisting.addClass('hide');
-					undoFile.removeClass('hide');
-
-					existingPath.val('');
-				}
-				else {
-					removeExisting.removeClass('hide');
-					undoFile.addClass('hide');
-
-					var undoPath = $('#<portlet:namespace />undoPath' + index);
-
-					existingPath.val(undoPath.val());
-				}
-			}
-		</c:when>
-		<c:otherwise>
-			function <portlet:namespace />deleteAttachment(index) {
-				var $ = AUI.$;
-
-				$('#<portlet:namespace />removeExisting' + index).remove();
-				$('#<portlet:namespace />existingFile' + index).remove();
-			}
-		</c:otherwise>
-	</c:choose>
 </aui:script>
