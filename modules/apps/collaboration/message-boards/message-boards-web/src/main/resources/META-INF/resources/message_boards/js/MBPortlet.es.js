@@ -117,21 +117,23 @@ class MBPortlet extends PortletBase {
 	updateMultipleMBMessageAttachments_() {
 		let selectedFileNameContainer = this.one('#selectedFileNameContainer');
 
-		const inputName = this.ns('selectUploadedFile');
-
-		const input = [].slice.call(this.all(`input[name=${inputName}]:checked`));
-
-		const data = input.map(
-			(item, index) => {
-				const namespace = this.namespace;
-				const id = index;
-				const value = item.value;
-
-				return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${value}" />`;
-			}
-		).join('');
-
-		selectedFileNameContainer.innerHTML = data;
+		if (selectedFileNameContainer) {
+			const inputName = this.ns('selectUploadedFile');
+	
+			const input = [].slice.call(this.all(`input[name=${inputName}]:checked`));
+	
+			const data = input.map(
+				(item, index) => {
+					const namespace = this.namespace;
+					const id = index;
+					const value = item.value;
+	
+					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${value}" />`;
+				}
+			).join('');
+	
+			selectedFileNameContainer.innerHTML = data;
+		}
 	}
 
 	/**
