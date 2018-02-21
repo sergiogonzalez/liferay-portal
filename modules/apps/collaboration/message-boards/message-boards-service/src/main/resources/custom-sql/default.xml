@@ -108,7 +108,7 @@
 				(currentMessage.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.countByG_U_MD_C_S">
+	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.countByG_U_MD_C_A_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT currentMessage.rootMessageId) AS COUNT_VALUE
@@ -177,7 +177,7 @@
 				MAX(currentMessage.modifiedDate) DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.findByG_U_MD_C_S">
+	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.findByG_U_MD_C_A_S">
 		<![CDATA[
 			SELECT
 				currentMessage.threadId, currentMessage.rootMessageId
