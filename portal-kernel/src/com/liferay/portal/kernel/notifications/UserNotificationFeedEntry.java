@@ -22,12 +22,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class UserNotificationFeedEntry {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link UserNotificationFeedEntry(
+	 * boolean, String, String, boolean)}
+	 */
+	@Deprecated
 	public UserNotificationFeedEntry(
 		boolean actionable, String body, String link) {
 
-		setActionable(actionable);
-		setBody(body);
-		setLink(link);
+		this(actionable, body, link, true);
 	}
 
 	public UserNotificationFeedEntry(
