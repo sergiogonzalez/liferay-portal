@@ -235,13 +235,13 @@ Flags.STATE = {
 	portletNamespace: Config.string().required(),
 
 	/**
-	 * List of possible reasons to flag
-	 * a content.
+	 * Map (original language key and translated language key)
+	 * of possible reasons to flag a content.
 	 * @instance
 	 * @memberof Flags
-	 * @type {List}
+	 * @type {Object}
 	 */
-	reasons: Config.arrayOf(Config.string()).required(),
+	reasons: Config.object().required(),
 
 	/**
 	 * Email of the user who reports
