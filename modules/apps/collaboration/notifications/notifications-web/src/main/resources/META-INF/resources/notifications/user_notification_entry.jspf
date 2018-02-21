@@ -78,9 +78,9 @@ if (notificationUnread) {
 				</span>
 			</h5>
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/notifications/notification_action.jsp"
+		/>
 	</c:otherwise>
 </c:choose>
-
-<liferay-ui:search-container-column-jsp
-	path="/notifications/notification_action.jsp"
-/>
