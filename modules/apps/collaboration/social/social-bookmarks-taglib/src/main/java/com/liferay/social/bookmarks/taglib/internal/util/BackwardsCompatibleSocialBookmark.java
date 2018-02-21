@@ -41,6 +41,11 @@ public class BackwardsCompatibleSocialBookmark implements SocialBookmark {
 	}
 
 	@Override
+	public String getIcon(HttpServletRequest request) {
+		return PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(_type));
+	}
+
+	@Override
 	public String getName(Locale locale) {
 		return LanguageUtil.get(locale, _type);
 	}
