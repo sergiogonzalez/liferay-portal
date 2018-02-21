@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface SocialBookmark {
 
+	public String getIcon(HttpServletRequest request);
+
 	public String getName(Locale locale);
 
 	public String getPostUrl(String title, String url);
