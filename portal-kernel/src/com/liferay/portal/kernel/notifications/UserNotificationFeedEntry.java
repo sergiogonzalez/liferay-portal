@@ -30,6 +30,15 @@ public class UserNotificationFeedEntry {
 		setLink(link);
 	}
 
+	public UserNotificationFeedEntry(
+		boolean actionable, String body, String link, boolean applicable) {
+
+		setActionable(actionable);
+		setBody(body);
+		setLink(link);
+		setApplicable(applicable);
+	}
+
 	public String getBody() {
 		return _body;
 	}
@@ -46,12 +55,20 @@ public class UserNotificationFeedEntry {
 		return _actionable;
 	}
 
+	public boolean isApplicable() {
+		return _applicable;
+	}
+
 	public boolean isOpenDialog() {
 		return _openDialog;
 	}
 
 	public void setActionable(boolean actionable) {
 		_actionable = actionable;
+	}
+
+	public void setApplicable(boolean applicable) {
+		_applicable = applicable;
 	}
 
 	public void setBody(String body) {
@@ -71,6 +88,7 @@ public class UserNotificationFeedEntry {
 	}
 
 	private boolean _actionable;
+	private boolean _applicable = true;
 	private String _body;
 	private String _link;
 	private boolean _openDialog;
