@@ -17,8 +17,12 @@
 		line-height: 2;
 	}
 
-	.aspect-ratio {
+	.aspect-ratio-detail {
 		padding-bottom: 480px;
+
+		@include media-breakpoint-down($scaling-breakpoint-down) {
+			padding-bottom: 37.5%;
+		}
 	}
 }
 
@@ -33,10 +37,6 @@
 		flex-direction: column;
 		height: 100%;
 		margin-top: 8px;
-	}
-
-	.aspect-ratio {
-		padding-bottom: 42%;
 	}
 
 	.widget-topbar .title-link {
