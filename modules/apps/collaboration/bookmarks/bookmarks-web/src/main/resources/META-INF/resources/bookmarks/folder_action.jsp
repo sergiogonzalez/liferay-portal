@@ -123,4 +123,15 @@ if (row == null) {
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= folder != null %>">
+		<portlet:actionURL name="/bookmarks/publish_folder" var="publishFolderURL">
+			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="publish-folder"
+			url="<%= publishFolderURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>
