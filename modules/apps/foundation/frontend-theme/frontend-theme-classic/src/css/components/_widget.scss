@@ -32,7 +32,7 @@
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		margin-top: 8px;
+		padding: 24px;
 	}
 
 	.aspect-ratio {
@@ -73,6 +73,7 @@
 
 	.card-footer {
 		background-color: transparent;
+		padding: 0 1rem 1rem;
 	}
 
 	.widget-toolbar {
