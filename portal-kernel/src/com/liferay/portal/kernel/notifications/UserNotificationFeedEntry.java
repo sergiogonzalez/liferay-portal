@@ -37,9 +37,9 @@ public class UserNotificationFeedEntry {
 		boolean actionable, String body, String link, boolean applicable) {
 
 		setActionable(actionable);
+		setApplicable(applicable);
 		setBody(body);
 		setLink(link);
-		setApplicable(applicable);
 	}
 
 	public String getBody() {
