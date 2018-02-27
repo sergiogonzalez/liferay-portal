@@ -19,8 +19,6 @@
 <%
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
-int total = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
@@ -34,7 +32,6 @@ portletURL.setParameter("tag", StringPool.BLANK);
 %>
 
 <liferay-frontend:management-bar
-	disabled="<%= total == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="<%= searchContainerId %>"
 >
