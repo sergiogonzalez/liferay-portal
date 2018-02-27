@@ -124,7 +124,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= folder != null %>">
+	<c:if test="<%= (folder != null) && portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) %>">
 		<portlet:actionURL name="/bookmarks/publish_folder" var="publishFolderURL">
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:actionURL>
