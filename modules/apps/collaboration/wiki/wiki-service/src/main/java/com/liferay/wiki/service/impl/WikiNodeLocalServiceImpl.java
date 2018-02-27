@@ -206,7 +206,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		boolean clearCache = WikiCacheThreadLocal.isClearCache();
 
 		try {
-			WikiCacheThreadLocal.setClearCache(true);
+			WikiCacheThreadLocal.setClearCache(false);
 
 			wikiPageLocalService.deletePages(node.getNodeId());
 		}
@@ -406,7 +406,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		boolean clearCache = WikiCacheThreadLocal.isClearCache();
 
 		try {
-			WikiCacheThreadLocal.setClearCache(true);
+			WikiCacheThreadLocal.setClearCache(false);
 
 			return moveNodeToTrash(userId, node);
 		}
