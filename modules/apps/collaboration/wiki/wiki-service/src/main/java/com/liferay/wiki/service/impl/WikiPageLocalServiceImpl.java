@@ -789,8 +789,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_serviceTrackerMap.close();
 
 		_portalCache.removeAll();
-
-		multiVMPool.removePortalCache(WikiPageDisplay.class.getName());
 	}
 
 	@Override
