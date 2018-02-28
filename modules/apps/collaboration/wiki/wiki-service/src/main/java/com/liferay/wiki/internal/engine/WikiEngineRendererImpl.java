@@ -151,6 +151,9 @@ public class WikiEngineRendererImpl implements WikiEngineRenderer {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
+		_portalCache = _multiVMPool.getPortalCache(
+			WikiPageDisplay.class.getName());
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, WikiEngine.class, null,
 			(serviceReference, emitter) -> {
@@ -186,9 +189,6 @@ public class WikiEngineRendererImpl implements WikiEngineRenderer {
 				}
 
 			});
-
-		_portalCache = _multiVMPool.getPortalCache(
-			WikiPageDisplay.class.getName());
 	}
 
 	@Deactivate
