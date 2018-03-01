@@ -84,6 +84,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 				"clay-", _moduleBaseName, "/lib/", _componentBaseName));
 	}
 
+	public String getNamespace() {
+		return _namespace;
+	}
+
 	@Override
 	public void setComponentId(String componentId) {
 		_componentId = componentId;
@@ -101,6 +105,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		putValue("id", id);
 	}
 
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
+	}
+
 	public void setSpritemap(String spritemap) {
 		putValue("spritemap", spritemap);
 	}
@@ -109,5 +117,6 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 	private String _componentId;
 	private final boolean _hydrate;
 	private final String _moduleBaseName;
+	private String _namespace;
 
 }

@@ -18,6 +18,10 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Map;
 
 /**
  * @author Carlos Lancha
@@ -26,6 +30,31 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public ManagementToolbarTag() {
 		super("management-toolbar", "ClayManagementToolbar", true);
+	}
+
+	@Override
+	public int doStartTag() {
+		Map<String, Object> context = getContext();
+
+		if (Validator.isNull(context.get("searchValue")) && Validator.isNotNull(context.get("searchInputName"))) {
+			putValue("searchValue", ParamUtil.getString(request, (String)context.get("searchInputName")));
+		}
+
+		if (Validator.isNotNull(getNamespace())) {
+			if (Validator.isNotNull(context.get("searchContainerId"))) {
+				putValue("searchContainerId", getNamespace() + context.get("searchContainerId"));
+			}
+
+			if (Validator.isNotNull(context.get("searchFormName"))) {
+				putValue("searchFormName", getNamespace() + context.get("searchFormName"));
+			}
+
+			if (Validator.isNotNull(context.get("searchInputName"))) {
+				putValue("searchInputName", getNamespace() + context.get("searchInputName"));
+			}
+		}
+
+		return super.doStartTag();
 	}
 
 	@Override
@@ -70,6 +99,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setSearchInputName(String searchInputName) {
 		putValue("searchInputName", searchInputName);
+	}
+
+	public void setSearchValue(String searchValue) {
+		putValue("searchValue", searchValue);
 	}
 
 	public void setSelectable(Boolean selectable) {
