@@ -31,6 +31,10 @@ public class DropdownItem extends NavigationItem {
 		return _icon;
 	}
 
+	public String getId() {
+		return _id;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -47,6 +51,10 @@ public class DropdownItem extends NavigationItem {
 		_icon = icon;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setQuickAction(boolean quickAction) {
 		_quickAction = quickAction;
 	}
@@ -56,6 +64,7 @@ public class DropdownItem extends NavigationItem {
 	}
 
 	private String _icon;
+	private String _id;
 	private boolean _quickAction;
 	private boolean _separator;
 	private String _type;
