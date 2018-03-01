@@ -36,21 +36,32 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
 
-		if (Validator.isNull(context.get("searchValue")) && Validator.isNotNull(context.get("searchInputName"))) {
-			putValue("searchValue", ParamUtil.getString(request, (String)context.get("searchInputName")));
+		if (Validator.isNull(context.get("searchValue")) &&
+			Validator.isNotNull(context.get("searchInputName"))) {
+
+			putValue(
+				"searchValue",
+				ParamUtil.getString(
+					request, (String)context.get("searchInputName")));
 		}
 
 		if (Validator.isNotNull(getNamespace())) {
 			if (Validator.isNotNull(context.get("searchContainerId"))) {
-				putValue("searchContainerId", getNamespace() + context.get("searchContainerId"));
+				putValue(
+					"searchContainerId",
+					getNamespace() + context.get("searchContainerId"));
 			}
 
 			if (Validator.isNotNull(context.get("searchFormName"))) {
-				putValue("searchFormName", getNamespace() + context.get("searchFormName"));
+				putValue(
+					"searchFormName",
+					getNamespace() + context.get("searchFormName"));
 			}
 
 			if (Validator.isNotNull(context.get("searchInputName"))) {
-				putValue("searchInputName", getNamespace() + context.get("searchInputName"));
+				putValue(
+					"searchInputName",
+					getNamespace() + context.get("searchInputName"));
 			}
 		}
 
