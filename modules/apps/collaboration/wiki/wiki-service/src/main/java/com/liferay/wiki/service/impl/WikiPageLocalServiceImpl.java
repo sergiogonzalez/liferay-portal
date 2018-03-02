@@ -1139,9 +1139,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<WikiPage> getOrphans(long nodeId) throws PortalException {
-		List<WikiPage> pages = wikiPagePersistence.findByN_H_S(
-			nodeId, true, WorkflowConstants.STATUS_APPROVED);
+	public List<WikiPage> getOrphans(List<WikiPage> pages)
+		throws PortalException {
 
 		List<Map<String, Boolean>> pageTitles = new ArrayList<>();
 
@@ -1176,6 +1175,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		orphans = ListUtil.sort(orphans);
 
 		return orphans;
+	}
+
+	@Override
+	public List<WikiPage> getOrphans(long nodeId) throws PortalException {
+		List<WikiPage> pages = wikiPagePersistence.findByN_H_S(
+			nodeId, true, WorkflowConstants.STATUS_APPROVED);
+
+		return getOrphans(pages);
 	}
 
 	@Override

@@ -405,20 +405,11 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		_wikiNodeModelResourcePermission.check(
 			permissionChecker, node, ActionKeys.VIEW);
 
-		List<WikiPage> orphans = wikiPageLocalService.getOrphans(
-			node.getNodeId());
+		List<WikiPage> pages = wikiPagePersistence.filterFindByG_N_H_S(
+			node.getGroupId(), node.getNodeId(), true,
+			WorkflowConstants.STATUS_APPROVED);
 
-		List<WikiPage> viewableOrphans = new ArrayList<>(orphans.size());
-
-		for (WikiPage orphan : orphans) {
-			if (_wikiPageModelResourcePermission.contains(
-					permissionChecker, orphan, ActionKeys.VIEW)) {
-
-				viewableOrphans.add(orphan);
-			}
-		}
-
-		return viewableOrphans;
+		return wikiPageLocalService.getOrphans(pages);
 	}
 
 	@Override
