@@ -485,6 +485,12 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
+		java.util.List<com.liferay.wiki.model.WikiPage> pages)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrphans(pages);
+	}
+
+	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
 		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrphans(nodeId);
 	}

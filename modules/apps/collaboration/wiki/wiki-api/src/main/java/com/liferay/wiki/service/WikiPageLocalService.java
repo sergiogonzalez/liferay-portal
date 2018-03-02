@@ -368,6 +368,10 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public List<WikiPage> getNoAssetPages();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getOrphans(List<WikiPage> pages)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getOrphans(long nodeId) throws PortalException;
 
 	/**
