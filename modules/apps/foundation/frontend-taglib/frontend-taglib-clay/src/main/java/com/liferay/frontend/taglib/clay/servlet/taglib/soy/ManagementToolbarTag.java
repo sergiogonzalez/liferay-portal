@@ -36,33 +36,26 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
 
-		if (Validator.isNull(context.get("searchValue")) &&
-			Validator.isNotNull(context.get("searchInputName"))) {
+		Boolean hideFiltersDoneButton = (Boolean)context.get(
+			"hideFiltersDoneButton");
 
-			putValue(
-				"searchValue",
-				ParamUtil.getString(
-					request, (String)context.get("searchInputName")));
+		if (hideFiltersDoneButton == null) {
+			setHideFiltersDoneButton(true);
 		}
 
-		if (Validator.isNotNull(getNamespace())) {
-			if (Validator.isNotNull(context.get("searchContainerId"))) {
-				putValue(
-					"searchContainerId",
-					getNamespace() + context.get("searchContainerId"));
-			}
+		String searchInputName = (String)context.get("searchInputName");
+		String searchValue = (String)context.get("searchValue");
 
-			if (Validator.isNotNull(context.get("searchFormName"))) {
-				putValue(
-					"searchFormName",
-					getNamespace() + context.get("searchFormName"));
-			}
+		if (Validator.isNull(searchValue) &&
+			Validator.isNotNull(searchInputName)) {
 
-			if (Validator.isNotNull(context.get("searchInputName"))) {
-				putValue(
-					"searchInputName",
-					getNamespace() + context.get("searchInputName"));
-			}
+			setSearchValue(ParamUtil.getString(request, searchInputName));
+		}
+
+		Boolean selectable = (Boolean)context.get("selectable");
+
+		if (selectable == null) {
+			setSelectable(true);
 		}
 
 		return super.doStartTag();
@@ -151,5 +144,13 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public void setViewTypes(Object viewTypes) {
 		putValue("viewTypes", viewTypes);
 	}
+
+	@Override
+	protected String[] getNamespacedParams() {
+		return _NAMESPACED_PARAMS;
+	}
+
+	private static final String[] _NAMESPACED_PARAMS =
+		{"searchContainerId", "searchFormName", "searchInputName"};
 
 }

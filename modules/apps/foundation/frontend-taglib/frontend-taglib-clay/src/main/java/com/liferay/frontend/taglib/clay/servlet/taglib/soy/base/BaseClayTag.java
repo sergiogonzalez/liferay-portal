@@ -55,6 +55,19 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
 		}
 
+		String namespace = getNamespace();
+		String[] namespacedParams = getNamespacedParams();
+
+		if (Validator.isNotNull(namespace) &&
+			Validator.isNotNull(namespacedParams)) {
+
+			for (String parameterName : namespacedParams) {
+				String parameterValue = (String)context.get(parameterName);
+
+				putValue(parameterName, namespace + parameterValue);
+			}
+		}
+
 		super.setComponentId(_componentId);
 
 		if (_hydrate || Validator.isNotNull(_componentId) ||
@@ -111,6 +124,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 	public void setSpritemap(String spritemap) {
 		putValue("spritemap", spritemap);
+	}
+
+	protected String[] getNamespacedParams() {
+		return null;
 	}
 
 	private final String _componentBaseName;
