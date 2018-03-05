@@ -120,6 +120,18 @@ public class AssetTagsDisplayContext {
 		return _displayStyle;
 	}
 
+	public String getEditTagURL() {
+		if (!isShowAddButton()) {
+			return null;
+		}
+
+		PortletURL editTagURL = _renderResponse.createRenderURL();
+
+		editTagURL.setParameter("mvcPath", "/edit_tag.jsp");
+
+		return editTagURL.toString();
+	}
+
 	public JSPDropdownItemList getFilterItemsItemList(PageContext pageContext) {
 		JSPDropdownItemList orderByDropdownItemList =
 			new JSPDropdownItemList(pageContext) {
@@ -244,6 +256,14 @@ public class AssetTagsDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	public String getSearchTagURL() {
+		PortletURL searchTagURL = _renderResponse.createRenderURL();
+
+		searchTagURL.setParameter("keywords", getKeywords());
+
+		return searchTagURL.toString();
 	}
 
 	public AssetTag getTag() {

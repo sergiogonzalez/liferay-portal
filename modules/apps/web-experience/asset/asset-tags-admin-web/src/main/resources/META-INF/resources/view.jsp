@@ -16,14 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-portlet:renderURL varImpl="portletURL">
-	<liferay-portlet:param name="keywords" value="<%= assetTagsDisplayContext.getKeywords() %>" />
-</liferay-portlet:renderURL>
-
-<portlet:renderURL var="editTagURL">
-	<portlet:param name="mvcPath" value="/edit_tag.jsp" />
-</portlet:renderURL>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	items="<%= assetTagsDisplayContext.getNavigationItems() %>"
@@ -32,10 +24,10 @@
 <clay:management-toolbar
 	actionItems="<%= assetTagsDisplayContext.getActionItemsItemList(pageContext) %>"
 	componentId="assetTagsManagementToolbar"
-	creationMenu="<%= assetTagsDisplayContext.isShowAddButton() ? editTagURL : null %>"
+	creationMenu="<%= assetTagsDisplayContext.getEditTagURL() %>"
 	filterItems="<%= assetTagsDisplayContext.getFilterItemsItemList(pageContext) %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	searchActionURL="<%= portletURL.toString() %>"
+	searchActionURL="<%= assetTagsDisplayContext.getSearchTagURL() %>"
 	searchContainerId="assetTags"
 	searchFormName="searchFm"
 	searchInputName="keywords"
