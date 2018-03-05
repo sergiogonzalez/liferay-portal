@@ -368,6 +368,12 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
+	public int getTagsSearchContainerTotal() throws PortalException {
+		SearchContainer tagsSearchContainer = getTagsSearchContainer();
+
+		return tagsSearchContainer.getTotal();
+	}
+
 	public JSPViewTypeItemList getViewTypesItemList(PageContext pageContext) {
 		return new JSPViewTypeItemList(pageContext) {
 			{
