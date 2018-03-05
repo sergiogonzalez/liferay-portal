@@ -147,8 +147,7 @@
 
 						location.href = mergeURL.replace(
 							escape('[$MERGE_TAGS_IDS$]'),
-							Liferay.Util.listCheckedExcept(document.querySelector('#<portlet:namespace />fm'),
-							'<portlet:namespace />allRowIds')
+							Liferay.Util.listCheckedExcept(document.querySelector('#<portlet:namespace />fm'), '<portlet:namespace />allRowIds')
 						);
 					}
 					else if (action.id == 'delete') {
