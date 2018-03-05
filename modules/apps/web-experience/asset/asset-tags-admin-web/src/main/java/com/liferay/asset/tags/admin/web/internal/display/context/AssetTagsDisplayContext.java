@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPDropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPViewTypeItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,12 +48,14 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Juergen Kappler
@@ -64,6 +69,30 @@ public class AssetTagsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+	}
+
+	public JSPDropdownItemList getActionItemsItemList(PageContext pageContext) {
+		return new JSPDropdownItemList(pageContext) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setIcon("change");
+						dropdownItem.setId("merge");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "merge"));
+						dropdownItem.setQuickAction(true);
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setIcon("trash");
+						dropdownItem.setId("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
 	}
 
 	public String getAssetTitle() {
@@ -89,6 +118,44 @@ public class AssetTagsDisplayContext {
 			"list");
 
 		return _displayStyle;
+	}
+
+	public JSPDropdownItemList getFilterItemsItemList(PageContext pageContext) {
+		JSPDropdownItemList orderByDropdownItemList =
+			new JSPDropdownItemList(pageContext) {
+				{
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								renderResponse.createRenderURL(), "keywords",
+								getKeywords(), "orderByType", getOrderByType(),
+								"orderByCol", "name");
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "name"));
+						});
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								renderResponse.createRenderURL(), "keywords",
+								getKeywords(), "orderByType", getOrderByType(),
+								"orderByCol", "usages");
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "usages"));
+						});
+				}
+			};
+
+		return new JSPDropdownItemList(pageContext) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setLabel("Order By");
+						dropdownGroupItem.setDropdownItems(
+							orderByDropdownItemList);
+					});
+			}
+		};
 	}
 
 	public long getFullTagsCount(AssetTag tag) {
@@ -299,6 +366,45 @@ public class AssetTagsDisplayContext {
 		_tagsSearchContainer = tagsSearchContainer;
 
 		return _tagsSearchContainer;
+	}
+
+	public JSPViewTypeItemList getViewTypesItemList(PageContext pageContext) {
+		return new JSPViewTypeItemList(pageContext) {
+			{
+				addCardViewType(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "icon"));
+						viewTypeItem.setHref(
+							renderResponse.createActionURL(), "redirect",
+							PortalUtil.getCurrentURL(request), "displayStyle",
+							"icon");
+						viewTypeItem.setLabel("Cards");
+					});
+
+				addListViewType(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "descriptive"));
+						viewTypeItem.setHref(
+							renderResponse.createActionURL(), "redirect",
+							PortalUtil.getCurrentURL(request), "displayStyle",
+							"descriptive");
+						viewTypeItem.setLabel("List");
+					});
+
+				addTableViewType(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "list"));
+						viewTypeItem.setHref(
+							renderResponse.createActionURL(), "redirect",
+							PortalUtil.getCurrentURL(request), "displayStyle",
+							"list");
+						viewTypeItem.setLabel("Table");
+					});
+			}
+		};
 	}
 
 	public boolean isShowAddButton() {

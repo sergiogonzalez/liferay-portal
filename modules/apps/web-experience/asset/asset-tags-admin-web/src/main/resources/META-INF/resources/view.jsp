@@ -29,76 +29,11 @@
 	items="<%= assetTagsDisplayContext.getNavigationItems() %>"
 />
 
-<%
-JSPDropdownItemList orderByDropdownItemList = new JSPDropdownItemList(pageContext) {
-	{
-		add(
-			dropdownItem -> {
-				PortletURL nameURL = renderResponse.createRenderURL();
-
-				nameURL.setParameter("keywords", assetTagsDisplayContext.getKeywords());
-				nameURL.setParameter("orderByType", assetTagsDisplayContext.getOrderByType());
-				nameURL.setParameter("orderByCol", "name");
-
-				dropdownItem.setHref(nameURL);
-				dropdownItem.setLabel(LanguageUtil.get(request, "name"));
-			}
-		);
-
-		add(
-			dropdownItem -> {
-				PortletURL usagesURL = renderResponse.createRenderURL();
-
-				usagesURL.setParameter("keywords", assetTagsDisplayContext.getKeywords());
-				usagesURL.setParameter("orderByType", assetTagsDisplayContext.getOrderByType());
-				usagesURL.setParameter("orderByCol", "usages");
-
-				dropdownItem.setHref(usagesURL);
-				dropdownItem.setLabel(LanguageUtil.get(request, "usages"));
-			}
-		);
-	}
-};
-%>
-
 <clay:management-toolbar
-	actionItems="<%=
-		new JSPDropdownItemList(pageContext) {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setIcon("change");
-						dropdownItem.setId("merge");
-						dropdownItem.setLabel(LanguageUtil.get(request, "merge"));
-						dropdownItem.setQuickAction(true);
-					}
-				);
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setIcon("trash");
-						dropdownItem.setId("delete");
-						dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
-						dropdownItem.setQuickAction(true);
-					}
-				);
-			}
-		}
-	%>"
+	actionItems="<%= assetTagsDisplayContext.getActionItemsItemList(pageContext) %>"
 	componentId="assetTagsManagementToolbar"
 	creationMenu="<%= assetTagsDisplayContext.isShowAddButton() ? editTagURL : null %>"
-	filterItems="<%=
-		new JSPDropdownItemList(pageContext) {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setLabel("Order By");
-						dropdownGroupItem.setDropdownItems(orderByDropdownItemList);
-					}
-				);
-			}
-		}
-	%>"
+	filterItems="<%= assetTagsDisplayContext.getFilterItemsItemList(pageContext) %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="assetTags"
@@ -107,35 +42,7 @@ JSPDropdownItemList orderByDropdownItemList = new JSPDropdownItemList(pageContex
 	showSearch="<%= assetTagsDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsDisplayContext.getOrderByType() %>"
 	totalItems="<%= assetTagsDisplayContext.getTagsSearchContainer().getTotal() %>"
-	viewTypes="<%=
-		new JSPViewTypeItemList(pageContext) {
-			{
-				addCardViewType(
-					viewTypeItem -> {
-						viewTypeItem.setActive(Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "icon"));
-						viewTypeItem.setHref(renderResponse.createActionURL(), "redirect", PortalUtil.getCurrentURL(request), "displayStyle", "icon");
-						viewTypeItem.setLabel("Cards");
-					}
-				);
-
-				addListViewType(
-					viewTypeItem -> {
-						viewTypeItem.setActive(Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "descriptive"));
-						viewTypeItem.setHref(renderResponse.createActionURL(), "redirect", PortalUtil.getCurrentURL(request), "displayStyle", "descriptive");
-						viewTypeItem.setLabel("List");
-					}
-				);
-
-				addTableViewType(
-					viewTypeItem -> {
-						viewTypeItem.setActive(Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list"));
-						viewTypeItem.setHref(renderResponse.createActionURL(), "redirect", PortalUtil.getCurrentURL(request), "displayStyle", "list");
-						viewTypeItem.setLabel("Table");
-					}
-				);
-			}
-		}
-	%>"
+	viewTypes="<%= assetTagsDisplayContext.getViewTypesItemList(pageContext) %>"
 />
 
 <portlet:actionURL name="deleteTag" var="deleteTagURL">
