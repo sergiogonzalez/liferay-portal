@@ -41,7 +41,7 @@
 	searchInputName="keywords"
 	showSearch="<%= assetTagsDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsDisplayContext.getOrderByType() %>"
-	totalItems="<%= assetTagsDisplayContext.getTagsSearchContainer().getTotal() %>"
+	totalItems="<%= assetTagsDisplayContext.getTagsSearchContainerTotal() %>"
 	viewTypes="<%= assetTagsDisplayContext.getViewTypesItemList(pageContext) %>"
 />
 
