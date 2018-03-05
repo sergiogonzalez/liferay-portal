@@ -301,16 +301,6 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
-	public boolean isDisabledTagsManagementBar() throws PortalException {
-		SearchContainer tagsSearchContainer = getTagsSearchContainer();
-
-		if (tagsSearchContainer.getTotal() <= 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
