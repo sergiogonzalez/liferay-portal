@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -386,7 +385,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
 
 		String description = StringPool.BLANK;
-		String content = ParamUtil.getString(actionRequest, "content");
 
 		boolean customAbstract = ParamUtil.getBoolean(
 			actionRequest, "customAbstract");
@@ -398,10 +396,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				throw new EntryDescriptionException();
 			}
 		}
-		else {
-			description = StringUtil.shorten(HtmlUtil.stripHtml(content), 400);
-		}
 
+		String content = ParamUtil.getString(actionRequest, "content");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
