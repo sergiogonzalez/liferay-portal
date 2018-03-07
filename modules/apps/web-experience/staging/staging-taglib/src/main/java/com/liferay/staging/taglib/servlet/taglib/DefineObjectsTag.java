@@ -17,6 +17,7 @@ package com.liferay.staging.taglib.servlet.taglib;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -25,11 +26,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Levente Hudák
@@ -122,6 +126,10 @@ public class DefineObjectsTag extends IncludeTag {
 			}
 		}
 
+		StagingGroupHelper stagingGroupHelper = _serviceTracker.getService();
+
+		pageContext.setAttribute("stagingGroupHelper", stagingGroupHelper);
+
 		return SKIP_BODY;
 	}
 
@@ -143,6 +151,9 @@ public class DefineObjectsTag extends IncludeTag {
 
 		_portletId = null;
 	}
+
+	private static final ServiceTracker<StagingGroupHelper, StagingGroupHelper>
+		_serviceTracker = ServiceTrackerFactory.open(StagingGroupHelper.class);
 
 	private String _portletId;
 

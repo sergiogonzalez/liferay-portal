@@ -17,6 +17,7 @@ package com.liferay.staging.taglib.servlet.taglib;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.staging.StagingGroupHelper;
 
 import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
@@ -54,6 +55,9 @@ public class DefineObjectsTei extends TagExtraInfo {
 				VariableInfo.AT_END),
 			new VariableInfo(
 				"stagingGroup", Group.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"stagingGroupHelper", StagingGroupHelper.class.getName(), true,
 				VariableInfo.AT_END),
 			new VariableInfo(
 				"stagingGroupId", Long.class.getName(), true,
