@@ -210,12 +210,7 @@ for (int i = 0; i < pages.size(); i++) {
 	// Date
 
 	if (!curWikiPage.isNew()) {
-		Date curDate = new Date();
-		Date modifiedDate = curWikiPage.getStatusDate();
-
-		Date versionLastModified = new Date(curDate.getTime() - (curDate.getTime() - modifiedDate.getTime()));
-
-		row.addDate(versionLastModified, rowURL);
+		row.addDate(curWikiPage.getStatusDate(), rowURL);
 	}
 	else {
 		row.addText(StringPool.BLANK);
