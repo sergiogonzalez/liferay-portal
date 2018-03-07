@@ -74,7 +74,7 @@ if (portletTitleBasedNavigation) {
 
 					<liferay-ui:icon
 						iconCssClass="icon-plus"
-						message="post-new-thread"
+						message="new-thread"
 						url="<%= addMessageURL %>"
 					/>
 				</c:if>
@@ -160,7 +160,7 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-ui:icon
 								iconCssClass="icon-unlock"
-								message="unlock-thread"
+								message="unlock"
 								url="<%= unlockThreadURL %>"
 							/>
 						</c:when>
@@ -173,7 +173,7 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-ui:icon
 								iconCssClass="icon-lock"
-								message="lock-thread"
+								message="lock"
 								url="<%= lockThreadURL %>"
 							/>
 						</c:otherwise>
@@ -190,7 +190,7 @@ if (portletTitleBasedNavigation) {
 
 					<liferay-ui:icon
 						iconCssClass="icon-move"
-						message="move-thread"
+						message="move"
 						url="<%= editThreadURL %>"
 					/>
 				</c:if>
@@ -316,7 +316,7 @@ if (portletTitleBasedNavigation) {
 		String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + rootMessage.getMessageId() + "', false);";
 		%>
 
-		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply-to-main-thread" />
+		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply" />
 	</c:if>
 
 	<c:if test="<%= moreMessagesPagination %>">
