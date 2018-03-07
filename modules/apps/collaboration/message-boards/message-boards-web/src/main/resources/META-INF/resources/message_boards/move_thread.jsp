@@ -120,12 +120,6 @@ if (portletTitleBasedNavigation) {
 	}
 </aui:script>
 
-<%
-MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"), currentURL);
-%>
-
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />selectCategoryButton').on(
 		'click',
