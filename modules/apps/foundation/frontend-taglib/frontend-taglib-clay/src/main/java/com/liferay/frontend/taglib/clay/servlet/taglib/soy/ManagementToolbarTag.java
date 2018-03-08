@@ -36,11 +36,11 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
 
-		Boolean hideFiltersDoneButton = (Boolean)context.get(
-			"hideFiltersDoneButton");
+		Boolean showFiltersDoneButton = (Boolean)context.get(
+			"showFiltersDoneButton");
 
-		if (hideFiltersDoneButton == null) {
-			setHideFiltersDoneButton(true);
+		if (showFiltersDoneButton == null) {
+			setShowFiltersDoneButton(false);
 		}
 
 		String searchInputName = (String)context.get("searchInputName");
@@ -79,6 +79,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setContentRenderer(String contentRenderer) {
 		putValue("contentRenderer", contentRenderer);
+	}
+
+	public void setClearResultsURL(String clearResultsURL) {
+		putValue("clearResultsURL", clearResultsURL);
 	}
 
 	public void setCreationMenu(Object creationMenu) {
@@ -131,6 +135,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setShowSearch(Boolean showSearch) {
 		putValue("showSearch", showSearch);
+	}
+
+	public void setSortingURL(String sortingURL) {
+		putValue("sortingURL", sortingURL);
 	}
 
 	public void setSortingOrder(String sortingOrder) {
