@@ -771,6 +771,6 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	private final Map<String, String> _orderedListStyles;
 	private final Map<String, String> _unorderedListStyles;
 	private final Pattern _urlPattern = Pattern.compile(
-		"^[-;/?:@&=+$,_.!~*'()%0-9a-z#]{1,2048}$", Pattern.CASE_INSENSITIVE);
+		"^[-;/?:@&=+$,_.!~*'()%0-9a-zÀ-ÿ#]{1,2048}$", Pattern.CASE_INSENSITIVE);
 
 }
