@@ -136,7 +136,7 @@ if (row == null) {
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message="publish-folder"
+			message="publish"
 			url="<%= publishFolderURL %>"
 		/>
 	</c:if>
