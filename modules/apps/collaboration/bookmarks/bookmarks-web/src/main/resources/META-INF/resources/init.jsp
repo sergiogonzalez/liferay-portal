@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/export-import-changeset" prefix="liferay-expo
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -113,6 +114,8 @@ page import="java.util.Set" %>
 page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />
+
+<liferay-staging:defineObjects />
 
 <liferay-theme:defineObjects />
 
