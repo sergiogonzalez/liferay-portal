@@ -28,16 +28,19 @@ if (Validator.isNull(redirect)) {
 ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL);
 String ddmFormHTML = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML);
 
+String bindRedirectURL = currentURL;
+
+if (configurationModel.isFactory()) {
+	PortletURL viewFactoryInstancesURL = renderResponse.createRenderURL();
+
+	viewFactoryInstancesURL.setParameter("factoryPid", configurationModel.getFactoryPid());
+	viewFactoryInstancesURL.setParameter("mvcRenderCommandName", "/view_factory_instances");
+
+	bindRedirectURL = viewFactoryInstancesURL.toString();
+}
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(portletURL.toString());
-
-ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
-
-ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
-
-ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
-
-String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
 
 renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationModel.getCategory()));
 %>
@@ -63,12 +66,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 		<div class="col-md-9">
 			<div class="sheet sheet-lg">
 				<aui:form action="<%= bindConfigurationActionURL %>" method="post" name="fm">
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+					<aui:input name="redirect" type="hidden" value="<%= bindRedirectURL %>" />
 					<aui:input name="factoryPid" type="hidden" value="<%= configurationModel.getFactoryPid() %>" />
 					<aui:input name="pid" type="hidden" value="<%= configurationModel.getID() %>" />
 
 					<h2>
-						<%= configurationModelName %>
+
+						<%
+						ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
+
+						ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
+
+						ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
+						%>
+
+						<%= (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName() %>
 
 						<c:if test="<%= configurationModel.hasConfiguration() %>">
 							<liferay-ui:icon-menu

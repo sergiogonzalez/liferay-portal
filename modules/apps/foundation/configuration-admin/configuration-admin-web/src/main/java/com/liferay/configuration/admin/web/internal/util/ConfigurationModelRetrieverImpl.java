@@ -17,7 +17,7 @@ package com.liferay.configuration.admin.web.internal.util;
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
-import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -123,8 +123,8 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	@Override
-	public List<ConfigurationCategorySetDisplay>
-		getConfigurationCategorySetDisplays() {
+	public List<ConfigurationCategorySectionDisplay>
+		getConfigurationCategorySectionDisplays() {
 
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
@@ -134,14 +134,14 @@ public class ConfigurationModelRetrieverImpl
 		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
 			categorizeConfigurationModels(configurationModelsMap);
 
-		Map<String, ConfigurationCategorySetDisplay>
-			configurationCategorySetDisplaysMap = new HashMap<>();
+		Map<String, ConfigurationCategorySectionDisplay>
+			configurationCategorySectionDisplaysMap = new HashMap<>();
 
 		for (String curConfigurationCategoryKey :
 				categorizedConfigurationModels.keySet()) {
 
 			ConfigurationCategory curConfigurationCategory =
-				_categoryServiceTrackerMap.getService(
+				_configurationCategoryServiceTrackerMap.getService(
 					curConfigurationCategoryKey);
 
 			if (curConfigurationCategory == null) {
@@ -149,33 +149,35 @@ public class ConfigurationModelRetrieverImpl
 					curConfigurationCategoryKey);
 			}
 
-			ConfigurationCategorySetDisplay configurationCategorySetDisplay =
-				configurationCategorySetDisplaysMap.get(
-					curConfigurationCategory.getCategorySetKey());
+			ConfigurationCategorySectionDisplay
+				configurationCategorySectionDisplay =
+					configurationCategorySectionDisplaysMap.get(
+						curConfigurationCategory.getCategorySection());
 
-			if (configurationCategorySetDisplay == null) {
-				configurationCategorySetDisplay =
-					new ConfigurationCategorySetDisplay(
-						curConfigurationCategory.getCategorySetKey());
+			if (configurationCategorySectionDisplay == null) {
+				configurationCategorySectionDisplay =
+					new ConfigurationCategorySectionDisplay(
+						curConfigurationCategory.getCategorySection());
 
-				configurationCategorySetDisplaysMap.put(
-					curConfigurationCategory.getCategorySetKey(),
-					configurationCategorySetDisplay);
+				configurationCategorySectionDisplaysMap.put(
+					curConfigurationCategory.getCategorySection(),
+					configurationCategorySectionDisplay);
 			}
 
 			ConfigurationCategoryDisplay configurationCategoryDisplay =
 				new ConfigurationCategoryDisplay(curConfigurationCategory);
 
-			configurationCategorySetDisplay.add(configurationCategoryDisplay);
+			configurationCategorySectionDisplay.add(
+				configurationCategoryDisplay);
 		}
 
-		Set<ConfigurationCategorySetDisplay> configurationCategorySets =
-			new TreeSet(new ConfigurationCategoryDisplaySetComparator());
+		Set<ConfigurationCategorySectionDisplay> configurationCategorySections =
+			new TreeSet(new ConfigurationCategorySectionDisplayComparator());
 
-		configurationCategorySets.addAll(
-			configurationCategorySetDisplaysMap.values());
+		configurationCategorySections.addAll(
+			configurationCategorySectionDisplaysMap.values());
 
-		return new ArrayList<>(configurationCategorySets);
+		return new ArrayList<>(configurationCategorySections);
 	}
 
 	@Override
@@ -267,7 +269,16 @@ public class ConfigurationModelRetrieverImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_categoryServiceTrackerMap =
+		_configurationCategoriesServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ConfigurationCategory.class, null,
+				(serviceReference, emitter) -> {
+					ConfigurationCategory configurationCategory =
+						bundleContext.getService(serviceReference);
+
+					emitter.emit(configurationCategory.getCategorySection());
+				});
+		_configurationCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ConfigurationCategory.class, null,
 				(serviceReference, emitter) -> {
@@ -275,16 +286,6 @@ public class ConfigurationModelRetrieverImpl
 						bundleContext.getService(serviceReference);
 
 					emitter.emit(configurationCategory.getKey());
-				});
-
-		_categorySetServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ConfigurationCategory.class, null,
-				(serviceReference, emitter) -> {
-					ConfigurationCategory configurationCategory =
-						bundleContext.getService(serviceReference);
-
-					emitter.emit(configurationCategory.getCategorySetKey());
 				});
 	}
 
@@ -341,11 +342,11 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	protected List<ConfigurationCategory> getConfigurationCategories(
-		String configurationCategorySetKey) {
+		String configurationCategorySection) {
 
 		List<ConfigurationCategory> configurationCategories =
-			_categorySetServiceTrackerMap.getService(
-				configurationCategorySetKey);
+			_configurationCategoriesServiceTrackerMap.getService(
+				configurationCategorySection);
 
 		if (configurationCategories == null) {
 			configurationCategories = Collections.emptyList();
@@ -357,7 +358,8 @@ public class ConfigurationModelRetrieverImpl
 	protected ConfigurationCategory getConfigurationCategory(
 		String configurationCategoryKey) {
 
-		return _categoryServiceTrackerMap.getService(configurationCategoryKey);
+		return _configurationCategoryServiceTrackerMap.getService(
+			configurationCategoryKey);
 	}
 
 	protected ConfigurationModel getConfigurationModel(
@@ -456,36 +458,43 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, ConfigurationCategory>
-		_categoryServiceTrackerMap;
-	private ServiceTrackerMap<String, List<ConfigurationCategory>>
-		_categorySetServiceTrackerMap;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
+	private ServiceTrackerMap<String, List<ConfigurationCategory>>
+		_configurationCategoriesServiceTrackerMap;
+	private ServiceTrackerMap<String, ConfigurationCategory>
+		_configurationCategoryServiceTrackerMap;
+
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;
 
-	private static class ConfigurationCategoryDisplaySetComparator
-		implements Comparator<ConfigurationCategorySetDisplay> {
+	private static class ConfigurationCategorySectionDisplayComparator
+		implements Comparator<ConfigurationCategorySectionDisplay> {
 
 		@Override
 		public int compare(
-			ConfigurationCategorySetDisplay configurationCategoryDisplay1,
-			ConfigurationCategorySetDisplay configurationCategoryDisplay2) {
+			ConfigurationCategorySectionDisplay
+				configurationCategorySectionDisplay1,
+			ConfigurationCategorySectionDisplay
+				configurationCategorySectionDisplay2) {
 
-			String configurationCategory1 =
-				configurationCategoryDisplay1.getKey();
-			String configurationCategory2 =
-				configurationCategoryDisplay2.getKey();
+			String configurationCategorySection1 =
+				configurationCategorySectionDisplay1.
+					getConfigurationCategorySection();
+			String configurationCategorySection2 =
+				configurationCategorySectionDisplay2.
+					getConfigurationCategorySection();
 
-			int index1 = _orderedCategories.indexOf(configurationCategory1);
-			int index2 = _orderedCategories.indexOf(
-				configurationCategoryDisplay2.getKey());
+			int index1 = _orderedConfigurationCategorySections.indexOf(
+				configurationCategorySection1);
+			int index2 = _orderedConfigurationCategorySections.indexOf(
+				configurationCategorySection2);
 
 			if ((index1 == -1) && (index2 == -1)) {
-				return configurationCategory1.compareTo(configurationCategory2);
+				return configurationCategorySection1.compareTo(
+					configurationCategorySection2);
 			}
 			else if (index1 == -1) {
 				return 1;
@@ -500,14 +509,16 @@ public class ConfigurationModelRetrieverImpl
 				return -1;
 			}
 
-			return configurationCategory1.compareTo(configurationCategory2);
+			return configurationCategorySection1.compareTo(
+				configurationCategorySection2);
 		}
 
-		private final List<String> _orderedCategories = ListUtil.fromArray(
-			new String[] {
-				"content-management", "social", "commerce", "platform",
-				"security"
-			});
+		private final List<String> _orderedConfigurationCategorySections =
+			ListUtil.fromArray(
+				new String[] {
+					"content-management", "social", "commerce", "platform",
+					"security"
+				});
 
 	}
 
