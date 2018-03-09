@@ -16,7 +16,7 @@
 			<div class="card">
 				<div class="card-header">
 					<#if cardImage>
-						<div class="aspect-ratio aspect-ratio-16-to-9">
+						<div class="aspect-ratio aspect-ratio-8-to-3">
 							<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="${curBlogEntry.getCoverImageURL(themeDisplay)}">
 						</div>
 					</#if>
