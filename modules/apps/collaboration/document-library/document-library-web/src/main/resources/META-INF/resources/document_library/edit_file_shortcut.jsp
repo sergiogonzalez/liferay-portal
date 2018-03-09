@@ -109,7 +109,7 @@ if (portletTitleBasedNavigation) {
 				String toGroupName = StringPool.BLANK;
 
 				if (toGroup != null) {
-					toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
+					toGroupName = toGroup.getDescriptiveName(locale);
 				}
 				%>
 
@@ -120,7 +120,7 @@ if (portletTitleBasedNavigation) {
 				</div>
 
 				<%
-				String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
+				String toFileEntryTitle = HtmlUtil.unescape(BeanPropertiesUtil.getString(toFileEntry, "title"));
 				%>
 
 				<div class="form-group">
@@ -175,7 +175,7 @@ if (portletTitleBasedNavigation) {
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
 					document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = 0;
 
-					document.getElementById('<portlet:namespace />toGroupName').value = _.escape(event.groupdescriptivename);
+					document.getElementById('<portlet:namespace />toGroupName').value = event.groupdescriptivename;
 
 					Liferay.Util.toggleDisabled('#<portlet:namespace />selectToFileEntryButton', false);
 				}
