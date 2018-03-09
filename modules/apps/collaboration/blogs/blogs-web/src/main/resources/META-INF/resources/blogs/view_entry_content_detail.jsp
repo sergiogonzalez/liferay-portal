@@ -23,10 +23,6 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
 
-if (assetEntry == null) {
-	assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
-}
-
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
 %>
@@ -97,7 +93,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 									<div>
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
-										<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
+										<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() && (assetEntry != null) %>">
 											- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' />
 										</c:if>
 									</div>
