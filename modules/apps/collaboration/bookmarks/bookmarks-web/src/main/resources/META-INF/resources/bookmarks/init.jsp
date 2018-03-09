@@ -73,6 +73,8 @@ if (!portletId.equals(BookmarksPortletKeys.BOOKMARKS) && !portletId.equals(Bookm
 }
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+
+StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 %>
 
 <%@ include file="/bookmarks/init-ext.jsp" %>
