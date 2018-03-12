@@ -31,7 +31,6 @@
 	searchActionURL="<%= assetTagsDisplayContext.getSearchTagURL() %>"
 	searchContainerId="assetTags"
 	searchFormName="searchFm"
-	searchInputName="keywords"
 	showSearch="<%= assetTagsDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetTagsDisplayContext.getSortingURL() %>"
