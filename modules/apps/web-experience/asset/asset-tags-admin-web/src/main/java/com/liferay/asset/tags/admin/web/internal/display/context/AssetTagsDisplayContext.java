@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -402,7 +403,8 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "icon"));
 						viewTypeItem.setHref(
-							renderResponse.createActionURL(), "redirect",
+							renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							"changeDisplayStyle", "redirect",
 							PortalUtil.getCurrentURL(request), "displayStyle",
 							"icon");
 						viewTypeItem.setLabel("Cards");
@@ -413,7 +415,8 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "descriptive"));
 						viewTypeItem.setHref(
-							renderResponse.createActionURL(), "redirect",
+							renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							"changeDisplayStyle", "redirect",
 							PortalUtil.getCurrentURL(request), "displayStyle",
 							"descriptive");
 						viewTypeItem.setLabel("List");
@@ -424,7 +427,8 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "list"));
 						viewTypeItem.setHref(
-							renderResponse.createActionURL(), "redirect",
+							renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							"changeDisplayStyle", "redirect",
 							PortalUtil.getCurrentURL(request), "displayStyle",
 							"list");
 						viewTypeItem.setLabel("Table");
