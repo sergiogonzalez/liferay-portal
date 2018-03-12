@@ -19,9 +19,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPDropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPViewTypeItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -56,7 +56,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Juergen Kappler
@@ -72,15 +71,15 @@ public class AssetTagsDisplayContext {
 		_request = request;
 	}
 
-	public JSPDropdownItemList getActionItemsItemList(PageContext pageContext) {
-		return new JSPDropdownItemList(pageContext) {
+	public DropdownItemList getActionItemsItemList() {
+		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setIcon("change");
 						dropdownItem.setId("merge");
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "merge"));
+							LanguageUtil.get(_request, "merge"));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -89,7 +88,7 @@ public class AssetTagsDisplayContext {
 						dropdownItem.setIcon("trash");
 						dropdownItem.setId("delete");
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "delete"));
+							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -142,33 +141,33 @@ public class AssetTagsDisplayContext {
 		return editTagURL.toString();
 	}
 
-	public JSPDropdownItemList getFilterItemsItemList(PageContext pageContext) {
-		JSPDropdownItemList orderByDropdownItemList =
-			new JSPDropdownItemList(pageContext) {
+	public DropdownItemList getFilterItemsItemList() {
+		DropdownItemList orderByDropdownItemList =
+			new DropdownItemList() {
 				{
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								renderResponse.createRenderURL(), "keywords",
+								_renderResponse.createRenderURL(), "keywords",
 								getKeywords(), "orderByType", getOrderByType(),
 								"orderByCol", "name");
 							dropdownItem.setLabel(
-								LanguageUtil.get(request, "name"));
+								LanguageUtil.get(_request, "name"));
 						});
 
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								renderResponse.createRenderURL(), "keywords",
+								_renderResponse.createRenderURL(), "keywords",
 								getKeywords(), "orderByType", getOrderByType(),
 								"orderByCol", "usages");
 							dropdownItem.setLabel(
-								LanguageUtil.get(request, "usages"));
+								LanguageUtil.get(_request, "usages"));
 						});
 				}
 			};
 
-		return new JSPDropdownItemList(pageContext) {
+		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
@@ -414,17 +413,17 @@ public class AssetTagsDisplayContext {
 		return tagsSearchContainer.getTotal();
 	}
 
-	public JSPViewTypeItemList getViewTypesItemList(PageContext pageContext) {
-		return new JSPViewTypeItemList(pageContext) {
+	public ViewTypeItemList getViewTypesItemList() {
+		return new ViewTypeItemList() {
 			{
 				addCardViewType(
 					viewTypeItem -> {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "icon"));
 						viewTypeItem.setHref(
-							renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
 							"changeDisplayStyle", "redirect",
-							PortalUtil.getCurrentURL(request), "displayStyle",
+							PortalUtil.getCurrentURL(_request), "displayStyle",
 							"icon");
 						viewTypeItem.setLabel("Cards");
 					});
@@ -434,9 +433,9 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "descriptive"));
 						viewTypeItem.setHref(
-							renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
 							"changeDisplayStyle", "redirect",
-							PortalUtil.getCurrentURL(request), "displayStyle",
+							PortalUtil.getCurrentURL(_request), "displayStyle",
 							"descriptive");
 						viewTypeItem.setLabel("List");
 					});
@@ -446,9 +445,9 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "list"));
 						viewTypeItem.setHref(
-							renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
 							"changeDisplayStyle", "redirect",
-							PortalUtil.getCurrentURL(request), "displayStyle",
+							PortalUtil.getCurrentURL(_request), "displayStyle",
 							"list");
 						viewTypeItem.setLabel("Table");
 					});
