@@ -18,6 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -44,6 +45,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 		}
 
 		String searchInputName = (String)context.get("searchInputName");
+
+		if (Validator.isNull(searchInputName)) {
+			searchInputName = DisplayTerms.KEYWORDS;
+			setSearchInputName(searchInputName);
+		}
+
 		String searchValue = (String)context.get("searchValue");
 
 		if (Validator.isNull(searchValue) &&
