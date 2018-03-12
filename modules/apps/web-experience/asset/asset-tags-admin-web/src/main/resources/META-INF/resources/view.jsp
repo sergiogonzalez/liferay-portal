@@ -23,6 +23,7 @@
 
 <clay:management-toolbar
 	actionItems="<%= assetTagsDisplayContext.getActionItemsItemList(pageContext) %>"
+	clearResultsURL="<%= assetTagsDisplayContext.getClearResultsURL() %>"
 	componentId="assetTagsManagementToolbar"
 	creationMenu="<%= assetTagsDisplayContext.getEditTagURL() %>"
 	filterItems="<%= assetTagsDisplayContext.getFilterItemsItemList(pageContext) %>"
@@ -33,6 +34,7 @@
 	searchInputName="keywords"
 	showSearch="<%= assetTagsDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= assetTagsDisplayContext.getSortingURL() %>"
 	totalItems="<%= assetTagsDisplayContext.getTagsSearchContainerTotal() %>"
 	viewTypes="<%= assetTagsDisplayContext.getViewTypesItemList(pageContext) %>"
 />

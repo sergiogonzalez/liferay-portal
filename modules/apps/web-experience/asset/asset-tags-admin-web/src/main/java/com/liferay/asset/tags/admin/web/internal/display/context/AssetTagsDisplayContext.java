@@ -106,6 +106,15 @@ public class AssetTagsDisplayContext {
 		return tag.getName();
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = _renderResponse.createRenderURL();
+
+		clearResultsURL.setParameter("orderByType", getOrderByType());
+		clearResultsURL.setParameter("orderByCol", getOrderByCol());
+
+		return clearResultsURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -265,6 +274,16 @@ public class AssetTagsDisplayContext {
 		searchTagURL.setParameter("keywords", getKeywords());
 
 		return searchTagURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = _renderResponse.createRenderURL();
+
+		sortingURL.setParameter("keywords", getKeywords());
+		sortingURL.setParameter("orderByCol", getOrderByCol());
+		sortingURL.setParameter("orderByType", getOrderByType());
+
+		return sortingURL.toString();
 	}
 
 	public AssetTag getTag() {
