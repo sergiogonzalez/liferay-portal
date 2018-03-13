@@ -31,20 +31,26 @@
 }
 
 .widget-mode-card {
-	.card-body {
-		margin-top: 8px;
+	&.card-columns {
+		@include media-breakpoint-down(md) {
+			column-count: 1;
+		}
 	}
 
-	.widget-metadata {
-		margin-bottom: 16px;
+	&.card-deck {
+		@include media-breakpoint-down(md) {
+			flex-flow: column;
+		}
 	}
 
-	.card-footer {
-		padding: 1rem;
+	.card {
+		margin-bottom: 24px;
+		position: inherit;
 	}
 
-	.widget-toolbar {
-		padding-top: 8px;
+	.card-header {
+		overflow: hidden;
+		padding: 0;
 	}
 }
 
