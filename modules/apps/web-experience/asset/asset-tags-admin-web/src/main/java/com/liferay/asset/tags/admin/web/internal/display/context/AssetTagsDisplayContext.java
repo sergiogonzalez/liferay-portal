@@ -142,39 +142,38 @@ public class AssetTagsDisplayContext {
 	}
 
 	public DropdownItemList getFilterItemsItemList() {
-		DropdownItemList orderByDropdownItemList =
-			new DropdownItemList() {
-				{
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_renderResponse.createRenderURL(), "keywords",
-								getKeywords(), "orderByType", getOrderByType(),
-								"orderByCol", "name");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "name"));
-						});
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_renderResponse.createRenderURL(), "keywords",
-								getKeywords(), "orderByType", getOrderByType(),
-								"orderByCol", "usages");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "usages"));
-						});
-				}
-			};
-
 		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setLabel("Order By");
 						dropdownGroupItem.setDropdownItems(
-							orderByDropdownItemList);
-					});
+							new DropdownItemList() {
+								{
+									add(
+										dropdownItem -> {
+											dropdownItem.setHref(
+												_renderResponse.createRenderURL(), "keywords",
+												getKeywords(), "orderByType", getOrderByType(),
+												"orderByCol", "name");
+											dropdownItem.setLabel(
+												LanguageUtil.get(_request, "name"));
+										});
+
+									add(
+										dropdownItem -> {
+											dropdownItem.setHref(
+												_renderResponse.createRenderURL(), "keywords",
+												getKeywords(), "orderByType", getOrderByType(),
+												"orderByCol", "usages");
+											dropdownItem.setLabel(
+												LanguageUtil.get(_request, "usages"));
+										});
+								}
+							}
+						);
+						dropdownGroupItem.setLabel("Order By");
+					}
+				);
 			}
 		};
 	}
