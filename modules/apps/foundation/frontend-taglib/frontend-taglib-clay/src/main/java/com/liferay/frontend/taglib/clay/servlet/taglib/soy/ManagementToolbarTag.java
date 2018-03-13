@@ -84,12 +84,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("actionItems", actionItems);
 	}
 
-	public void setContentRenderer(String contentRenderer) {
-		putValue("contentRenderer", contentRenderer);
-	}
-
 	public void setClearResultsURL(String clearResultsURL) {
 		putValue("clearResultsURL", clearResultsURL);
+	}
+
+	public void setContentRenderer(String contentRenderer) {
+		putValue("contentRenderer", contentRenderer);
 	}
 
 	public void setCreationMenu(Object creationMenu) {
@@ -144,12 +144,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("showSearch", showSearch);
 	}
 
-	public void setSortingURL(String sortingURL) {
-		putValue("sortingURL", sortingURL);
-	}
-
 	public void setSortingOrder(String sortingOrder) {
 		putValue("sortingOrder", sortingOrder);
+	}
+
+	public void setSortingURL(String sortingURL) {
+		putValue("sortingURL", sortingURL);
 	}
 
 	public void setTotalItems(int totalItems) {
