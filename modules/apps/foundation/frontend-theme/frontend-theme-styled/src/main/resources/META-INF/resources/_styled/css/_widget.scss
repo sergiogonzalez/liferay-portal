@@ -41,6 +41,17 @@
 		overflow: hidden;
 		padding: 0;
 	}
+
+	.card-title {
+		position: relative;
+	}
+
+	.visible-interaction {
+		@include media-breakpoint-up(md) {
+			position: absolute;
+			right: -8px;
+		}
+	}
 }
 
 .widget-mode-simple {
