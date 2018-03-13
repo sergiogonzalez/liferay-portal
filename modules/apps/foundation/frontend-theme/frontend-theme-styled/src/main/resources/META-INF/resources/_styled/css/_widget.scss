@@ -31,21 +31,10 @@
 }
 
 .widget-mode-card {
-	&.card-columns {
-		@include media-breakpoint-down(md) {
-			column-count: 1;
-		}
-	}
-
-	&.card-deck {
-		@include media-breakpoint-down(md) {
-			flex-flow: column;
-		}
-	}
-
 	.card {
+		display: flex;
+		height: calc(100% - 24px);
 		margin-bottom: 24px;
-		position: inherit;
 	}
 
 	.card-header {
