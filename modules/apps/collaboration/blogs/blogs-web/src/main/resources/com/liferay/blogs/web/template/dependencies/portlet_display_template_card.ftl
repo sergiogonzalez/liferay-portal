@@ -18,6 +18,7 @@
 					</#if>
 
 					<div class="card-body widget-topbar">
+						<div class="autofit-row card-title">
 							<div class="autofit-col autofit-col-expand">
 								<#assign viewEntryPortletURL = renderResponse.createRenderURL() />
 
