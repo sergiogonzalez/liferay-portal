@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.petra.function.UnsafeConsumer;
-
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -27,7 +25,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	public ViewTypeItemList() {
 	}
 
-	public <E extends Exception> void add(UnsafeConsumer<ViewTypeItem, E> consumer) throws E {
+	public void add(Consumer<ViewTypeItem> consumer) {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		consumer.accept(viewTypeItem);
@@ -35,7 +34,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		add(viewTypeItem);
 	}
 
-	public <E extends Exception> void addCardViewType(UnsafeConsumer<ViewTypeItem, E> consumer) throws E {
+	public void addCardViewType(Consumer<ViewTypeItem> consumer) {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("cards2");
@@ -45,7 +45,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		add(viewTypeItem);
 	}
 
-	public <E extends Exception> void addListViewType(UnsafeConsumer<ViewTypeItem, E> consumer) throws E {
+	public void addListViewType(Consumer<ViewTypeItem> consumer) {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("list");
@@ -55,7 +56,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		add(viewTypeItem);
 	}
 
-	public <E extends Exception> void addTableViewType(UnsafeConsumer<ViewTypeItem, E> consumer) throws E {
+	public void addTableViewType(Consumer<ViewTypeItem> consumer) {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("table");

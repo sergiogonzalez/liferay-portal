@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.petra.function.UnsafeConsumer;
-
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -24,10 +22,9 @@ import java.util.function.Consumer;
  */
 public class DropdownItemList extends ArrayList<DropdownItem> {
 
-	public DropdownItemList() {
-	}
+	public DropdownItemList() {}
 
-	public <E extends Exception> void add(UnsafeConsumer<DropdownItem, E> consumer) throws E {
+	public void add(Consumer<DropdownItem> consumer) {
 		DropdownItem dropdownItem = new DropdownItem();
 
 		consumer.accept(dropdownItem);
@@ -35,7 +32,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownItem);
 	}
 
-	public <E extends Exception> void addCheckbox(UnsafeConsumer<DropdownCheckboxItem, E> consumer) throws E {
+	public void addCheckbox(Consumer<DropdownCheckboxItem> consumer){
+
 		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
 
 		consumer.accept(dropdownCheckboxItem);
@@ -43,7 +41,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownCheckboxItem);
 	}
 
-	public <E extends Exception> void addGroup(UnsafeConsumer<DropdownGroupItem, E> consumer) throws E {
+	public void addGroup(Consumer<DropdownGroupItem> consumer) {
 		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
 
 		consumer.accept(dropdownGroupItem);
@@ -51,7 +49,9 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownGroupItem);
 	}
 
-	public <E extends Exception> void addRadio(UnsafeConsumer<DropdownRadioItem, E> consumer) throws E {
+	public void addRadio(
+			Consumer<DropdownRadioItem> consumer) {
+
 		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
 
 		consumer.accept(dropdownRadioItem);
@@ -59,7 +59,9 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownRadioItem);
 	}
 
-	public <E extends Exception> void addRadioGroup(UnsafeConsumer<DropdownRadioGroupItem, E> consumer) throws E {
+	public void addRadioGroup(
+			Consumer<DropdownRadioGroupItem> consumer) {
+
 		DropdownRadioGroupItem dropdownRadioGroupItem =
 			new DropdownRadioGroupItem();
 

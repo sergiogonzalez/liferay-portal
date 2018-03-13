@@ -16,10 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import com.liferay.portal.kernel.json.JSON;
 
-import com.liferay.petra.function.UnsafeConsumer;
-
 import java.io.Serializable;
-
 import java.util.function.Consumer;
 
 /**
@@ -27,22 +24,21 @@ import java.util.function.Consumer;
  */
 public class CreationMenu implements Serializable {
 
- 	public CreationMenu() {
-	}
+	public CreationMenu() {}
 
-  public <E extends Exception> void addDropdownItemList(UnsafeConsumer<DropdownItemList, E> consumer) throws E {
-    DropdownItemList dropdownItemList = new DropdownItemList();
+public void addDropdownItemList(Consumer<DropdownItemList> consumer) {
+	DropdownItemList dropdownItemList = new DropdownItemList();
 
-    consumer.accept(dropdownItemList);
+	consumer.accept(dropdownItemList);
 
-    _dropdownItemList = dropdownItemList;
-  }
+	_dropdownItemList = dropdownItemList;
+}
 
 	@JSON(name = "items")
-  public DropdownItemList getDropdownItems() {
-    return _dropdownItemList;
-  }
+public DropdownItemList getDropdownItems() {
+	return _dropdownItemList;
+}
 
-  private DropdownItemList _dropdownItemList = new DropdownItemList();
+private DropdownItemList _dropdownItemList = new DropdownItemList();
 
 }
