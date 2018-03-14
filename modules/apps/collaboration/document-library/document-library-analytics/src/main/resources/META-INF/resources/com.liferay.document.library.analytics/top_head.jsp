@@ -18,7 +18,7 @@
 
 <script data-senna-track="temporary" type="text/javascript">
 	if (window.Analytics) {
-		window.isViewFileEntry = false;
+		window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry = false;
 	}
 </script>
 
