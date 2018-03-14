@@ -1054,12 +1054,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>clearResultsURL</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1145,6 +1139,12 @@
 		<attribute>
 			<description></description>
 			<name>actionItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>clearResultsURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
