@@ -18,7 +18,7 @@
 
 <script data-senna-track="temporary" type="text/javascript">
 	if (window.Analytics) {
-		window.isViewFileEntry = false;
+		window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry = false;
 	}
 </script>
 
@@ -46,7 +46,7 @@
 						'DOWNLOAD',
 						'DocumentLibrary',
 						{
-							preview: !!window.isViewFileEntry,
+							preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 							groupId: match[1],
 							fileEntryUUID: match[4],
 							version: uri.getParameterValue('version')

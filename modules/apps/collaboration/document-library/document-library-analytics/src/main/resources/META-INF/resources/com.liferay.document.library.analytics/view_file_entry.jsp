@@ -22,7 +22,7 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 
 <script data-senna-track="temporary" type="text/javascript">
 	if (window.Analytics) {
-		window.isViewFileEntry = true;
+		window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry = true;
 	}
 </script>
 
