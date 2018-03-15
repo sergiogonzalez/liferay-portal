@@ -384,7 +384,7 @@ public class DDMFormAdminDisplayContext {
 		return sb.toString();
 	}
 
-	public List<NavigationItem> getNavigationItems() {
+	public List<NavigationItem> getNavigationItems() throws Exception {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 

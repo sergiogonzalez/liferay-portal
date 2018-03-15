@@ -237,7 +237,7 @@ public class DDLDisplayContext {
 			_ddlRequestHelper.getRenderRequest(), "formDDMTemplateId");
 	}
 
-	public List<NavigationItem> getNavigationItems() {
+	public List<NavigationItem> getNavigationItems() throws Exception {
 		HttpServletRequest request = _ddlRequestHelper.getRequest();
 
 		return new NavigationItemList() {
