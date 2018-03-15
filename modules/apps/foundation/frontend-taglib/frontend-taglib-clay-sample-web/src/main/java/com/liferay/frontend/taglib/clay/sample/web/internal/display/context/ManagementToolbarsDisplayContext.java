@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class ManagementToolbarsDisplayContext {
 
-	public DropdownItemList getActionDropdownItems() {
+	public DropdownItemList getActionDropdownItems() throws Exception {
 		if (_actionDropdownItems != null) {
 			return _actionDropdownItems;
 		}
@@ -55,7 +55,7 @@ public class ManagementToolbarsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public Map<String, Object> getCreationMenu() {
+	public Map<String, Object> getCreationMenu() throws Exception {
 		if (_creationMenu != null) {
 			return _creationMenu;
 		}
@@ -95,7 +95,7 @@ public class ManagementToolbarsDisplayContext {
 		return _creationMenu;
 	}
 
-	public DropdownItemList getFilterItems() {
+	public DropdownItemList getFilterItems() throws Exception {
 		if (_filterItems != null) {
 			return _filterItems;
 		}
@@ -151,7 +151,7 @@ public class ManagementToolbarsDisplayContext {
 		return _filterItems;
 	}
 
-	public DropdownItemList getViewTypesItems() {
+	public DropdownItemList getViewTypesItems() throws Exception {
 		if (_viewTypes != null) {
 			return _viewTypes;
 		}

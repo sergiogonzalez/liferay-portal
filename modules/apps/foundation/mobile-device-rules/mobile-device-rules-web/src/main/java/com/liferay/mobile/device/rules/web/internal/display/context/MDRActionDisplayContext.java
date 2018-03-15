@@ -51,7 +51,7 @@ public class MDRActionDisplayContext {
 	}
 
 	public List<NavigationItem> getActionNavigationItems()
-		throws PortalException {
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

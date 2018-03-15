@@ -163,7 +163,8 @@ public class RoleDisplayContext {
 		};
 	}
 
-	public List<NavigationItem> getSelectRoleNavigationItems(String label) {
+	public List<NavigationItem> getSelectRoleNavigationItems(String label)
+		throws Exception {
 		return new NavigationItemList() {
 			{
 				add(

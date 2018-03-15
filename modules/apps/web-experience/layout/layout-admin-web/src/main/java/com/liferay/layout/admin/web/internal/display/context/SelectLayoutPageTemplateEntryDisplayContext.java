@@ -101,7 +101,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return layoutPrototypes.size();
 	}
 
-	public List<NavigationItem> getNavigationItems() throws PortalException {
+	public List<NavigationItem> getNavigationItems() throws Exception {
 		return new NavigationItemList() {
 			{
 				List<LayoutPageTemplateCollection>

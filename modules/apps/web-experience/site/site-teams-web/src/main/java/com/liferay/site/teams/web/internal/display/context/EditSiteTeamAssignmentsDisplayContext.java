@@ -56,7 +56,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 		return portletURL;
 	}
 
-	public List<NavigationItem> getNavigationItems() throws PortletException {
+	public List<NavigationItem> getNavigationItems() throws Exception {
 		return new NavigationItemList() {
 			{
 				add(
