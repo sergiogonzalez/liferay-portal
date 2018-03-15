@@ -19,6 +19,7 @@ import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.web.internal.util.WebKeys;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -119,6 +121,14 @@ public class MicroblogsEntryAssetRenderer
 
 			long portletPlid = PortalUtil.getPlidFromPortletId(
 				user.getGroupId(), true, MicroblogsPortletKeys.MICROBLOGS);
+
+			if (portletPlid == LayoutConstants.DEFAULT_PLID) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				portletPlid = themeDisplay.getPlid();
+			}
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				liferayPortletRequest, MicroblogsPortletKeys.MICROBLOGS,
