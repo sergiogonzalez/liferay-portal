@@ -14,24 +14,31 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.ArrayList;
+import com.liferay.portal.kernel.json.JSON;
+
+import java.io.Serializable;
 import java.util.function.Consumer;
 
 /**
  * @author Carlos Lancha
  */
-public class LabelItemList extends ArrayList<LabelItem> {
+public class CreationMenu implements Serializable {
 
-	public LabelItemList() {
-	}
+	public CreationMenu() {}
 
-	public void add(Consumer<LabelItem> consumer) {
+public void addDropdownItemList(Consumer<DropdownItemList> consumer) {
+	DropdownItemList dropdownItemList = new DropdownItemList();
 
-		LabelItem labelItem = new LabelItem();
+	consumer.accept(dropdownItemList);
 
-		consumer.accept(labelItem);
+	_dropdownItemList = dropdownItemList;
+}
 
-		add(labelItem);
-	}
+	@JSON(name = "items")
+public DropdownItemList getDropdownItems() {
+	return _dropdownItemList;
+}
+
+private DropdownItemList _dropdownItemList = new DropdownItemList();
 
 }

@@ -14,24 +14,19 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.ArrayList;
-import java.util.function.Consumer;
-
 /**
  * @author Carlos Lancha
  */
-public class LabelItemList extends ArrayList<LabelItem> {
+public class ViewTypeItem extends NavigationItem {
 
-	public LabelItemList() {
+	public String getIcon() {
+		return _icon;
 	}
 
-	public void add(Consumer<LabelItem> consumer) {
-
-		LabelItem labelItem = new LabelItem();
-
-		consumer.accept(labelItem);
-
-		add(labelItem);
+	public void setIcon(String icon) {
+		_icon = icon;
 	}
+
+	private String _icon;
 
 }

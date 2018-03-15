@@ -22,8 +22,7 @@ import java.util.function.Consumer;
  */
 public class DropdownItemList extends ArrayList<DropdownItem> {
 
-	public DropdownItemList() {
-	}
+	public DropdownItemList() {}
 
 	public void add(Consumer<DropdownItem> consumer) {
 		DropdownItem dropdownItem = new DropdownItem();
@@ -33,7 +32,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownItem);
 	}
 
-	public void addCheckbox(Consumer<DropdownCheckboxItem> consumer) {
+	public void addCheckbox(Consumer<DropdownCheckboxItem> consumer){
+
 		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
 
 		consumer.accept(dropdownCheckboxItem);
@@ -49,7 +49,9 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownGroupItem);
 	}
 
-	public void addRadio(Consumer<DropdownRadioItem> consumer) {
+	public void addRadio(
+			Consumer<DropdownRadioItem> consumer) {
+
 		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
 
 		consumer.accept(dropdownRadioItem);
@@ -57,7 +59,9 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownRadioItem);
 	}
 
-	public void addRadioGroup(Consumer<DropdownRadioGroupItem> consumer) {
+	public void addRadioGroup(
+			Consumer<DropdownRadioGroupItem> consumer) {
+
 		DropdownRadioGroupItem dropdownRadioGroupItem =
 			new DropdownRadioGroupItem();
 

@@ -19,7 +19,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,7 +48,9 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -66,6 +71,30 @@ public class AssetTagsDisplayContext {
 		_request = request;
 	}
 
+	public DropdownItemList getActionItemsItemList() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setIcon("change");
+						dropdownItem.setId("merge");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "merge"));
+						dropdownItem.setQuickAction(true);
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setIcon("trash");
+						dropdownItem.setId("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
 	public String getAssetTitle() {
 		AssetTag tag = getTag();
 
@@ -74,6 +103,15 @@ public class AssetTagsDisplayContext {
 		}
 
 		return tag.getName();
+	}
+
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = _renderResponse.createRenderURL();
+
+		clearResultsURL.setParameter("orderByType", getOrderByType());
+		clearResultsURL.setParameter("orderByCol", getOrderByCol());
+
+		return clearResultsURL.toString();
 	}
 
 	public String getDisplayStyle() {
@@ -89,6 +127,55 @@ public class AssetTagsDisplayContext {
 			"list");
 
 		return _displayStyle;
+	}
+
+	public String getEditTagURL() {
+		if (!isShowAddButton()) {
+			return null;
+		}
+
+		PortletURL editTagURL = _renderResponse.createRenderURL();
+
+		editTagURL.setParameter("mvcPath", "/edit_tag.jsp");
+
+		return editTagURL.toString();
+	}
+
+	public DropdownItemList getFilterItemsItemList() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										dropdownItem -> {
+											dropdownItem.setHref(
+												_renderResponse.createRenderURL(), "keywords",
+												getKeywords(), "orderByType", getOrderByType(),
+												"orderByCol", "name");
+											dropdownItem.setLabel(
+												LanguageUtil.get(_request, "name"));
+										});
+
+									add(
+										dropdownItem -> {
+											dropdownItem.setHref(
+												_renderResponse.createRenderURL(), "keywords",
+												getKeywords(), "orderByType", getOrderByType(),
+												"orderByCol", "usages");
+											dropdownItem.setLabel(
+												LanguageUtil.get(_request, "usages"));
+										});
+								}
+							}
+						);
+						dropdownGroupItem.setLabel("Order By");
+					}
+				);
+			}
+		};
 	}
 
 	public long getFullTagsCount(AssetTag tag) {
@@ -177,6 +264,24 @@ public class AssetTagsDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	public String getSearchTagURL() {
+		PortletURL searchTagURL = _renderResponse.createRenderURL();
+
+		searchTagURL.setParameter("keywords", getKeywords());
+
+		return searchTagURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = _renderResponse.createRenderURL();
+
+		sortingURL.setParameter("keywords", getKeywords());
+		sortingURL.setParameter("orderByCol", getOrderByCol());
+		sortingURL.setParameter("orderByType", getOrderByType());
+
+		return sortingURL.toString();
 	}
 
 	public AssetTag getTag() {
@@ -301,14 +406,52 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
-	public boolean isDisabledTagsManagementBar() throws PortalException {
+	public int getTagsSearchContainerTotal() throws PortalException {
 		SearchContainer tagsSearchContainer = getTagsSearchContainer();
 
-		if (tagsSearchContainer.getTotal() <= 0) {
-			return true;
-		}
+		return tagsSearchContainer.getTotal();
+	}
 
-		return false;
+	public ViewTypeItemList getViewTypesItemList() {
+		return new ViewTypeItemList() {
+			{
+				addCardViewType(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "icon"));
+						viewTypeItem.setHref(
+							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							"changeDisplayStyle", "redirect",
+							PortalUtil.getCurrentURL(_request), "displayStyle",
+							"icon");
+						viewTypeItem.setLabel("Cards");
+					});
+
+				addListViewType(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "descriptive"));
+						viewTypeItem.setHref(
+							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							"changeDisplayStyle", "redirect",
+							PortalUtil.getCurrentURL(_request), "displayStyle",
+							"descriptive");
+						viewTypeItem.setLabel("List");
+					});
+
+				addTableViewType(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "list"));
+						viewTypeItem.setHref(
+							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
+							"changeDisplayStyle", "redirect",
+							PortalUtil.getCurrentURL(_request), "displayStyle",
+							"list");
+						viewTypeItem.setLabel("Table");
+					});
+			}
+		};
 	}
 
 	public boolean isShowAddButton() {

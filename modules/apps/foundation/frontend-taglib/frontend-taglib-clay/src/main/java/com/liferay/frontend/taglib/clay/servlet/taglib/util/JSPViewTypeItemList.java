@@ -14,24 +14,22 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.ArrayList;
-import java.util.function.Consumer;
+import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Carlos Lancha
  */
-public class LabelItemList extends ArrayList<LabelItem> {
+public class JSPViewTypeItemList extends ViewTypeItemList {
 
-	public LabelItemList() {
+	public JSPViewTypeItemList(PageContext pageContext) {
+		renderResponse = (RenderResponse)pageContext.findAttribute(
+			"renderResponse");
+		request = (HttpServletRequest)pageContext.getRequest();
 	}
 
-	public void add(Consumer<LabelItem> consumer) {
-
-		LabelItem labelItem = new LabelItem();
-
-		consumer.accept(labelItem);
-
-		add(labelItem);
-	}
+	protected RenderResponse renderResponse;
+	protected HttpServletRequest request;
 
 }

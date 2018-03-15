@@ -31,6 +31,14 @@ public class DropdownItem extends NavigationItem {
 		return _icon;
 	}
 
+	public String getId() {
+		return _id;
+	}
+
+public boolean getOpenInModal() {
+	return _openInModal;
+}
+
 	public String getType() {
 		return _type;
 	}
@@ -47,15 +55,25 @@ public class DropdownItem extends NavigationItem {
 		_icon = icon;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setQuickAction(boolean quickAction) {
 		_quickAction = quickAction;
 	}
+
+public void setOpenInModal(boolean openInModal) {
+	_openInModal = openInModal;
+}
 
 	public void setSeparator(boolean separator) {
 		_separator = separator;
 	}
 
 	private String _icon;
+	private String _id;
+	private boolean _openInModal;
 	private boolean _quickAction;
 	private boolean _separator;
 	private String _type;
