@@ -110,11 +110,11 @@ public class CreationMenuDropdown implements Serializable {
 	}
 
 	private String _caption;
-	private String _viewMoreURL;
 	private DropdownItemList _favoriteDropdownItemList = new DropdownItemList();
 	private String _helpText;
 	private DropdownItemList _primaryDropdownItemList = new DropdownItemList();
 	private final HttpServletRequest _request;
 	private DropdownItemList _restDropdownItemList = new DropdownItemList();
+	private String _viewMoreURL;
 
 }
