@@ -24,7 +24,9 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	public DropdownItemList() {
 	}
 
-	public void add(ThrowableConsumer<DropdownItem> throwableConsumer) throws Exception {
+	public void add(ThrowableConsumer<DropdownItem> throwableConsumer)
+		throws Exception {
+
 		DropdownItem dropdownItem = new DropdownItem();
 
 		throwableConsumer.accept(dropdownItem);
@@ -32,8 +34,10 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownItem);
 	}
 
-	public void addCheckbox(ThrowableConsumer<DropdownCheckboxItem> throwableConsumer)
+	public void addCheckbox(
+			ThrowableConsumer<DropdownCheckboxItem> throwableConsumer)
 		throws Exception {
+
 		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
 
 		throwableConsumer.accept(dropdownCheckboxItem);
@@ -43,6 +47,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 
 	public void addGroup(ThrowableConsumer<DropdownGroupItem> throwableConsumer)
 		throws Exception {
+
 		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
 
 		throwableConsumer.accept(dropdownGroupItem);
@@ -52,6 +57,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 
 	public void addRadio(ThrowableConsumer<DropdownRadioItem> throwableConsumer)
 		throws Exception {
+
 		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
 
 		throwableConsumer.accept(dropdownRadioItem);
@@ -59,8 +65,10 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		add(dropdownRadioItem);
 	}
 
-	public void addRadioGroup(ThrowableConsumer<DropdownRadioGroupItem> throwableConsumer)
+	public void addRadioGroup(
+			ThrowableConsumer<DropdownRadioGroupItem> throwableConsumer)
 		throws Exception {
+
 		DropdownRadioGroupItem dropdownRadioGroupItem =
 			new DropdownRadioGroupItem();
 
