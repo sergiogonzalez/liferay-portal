@@ -24,7 +24,9 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	public ViewTypeItemList() {
 	}
 
-	public void add(ThrowableConsumer<ViewTypeItem> throwableConsumer) throws Exception {
+	public void add(ThrowableConsumer<ViewTypeItem> throwableConsumer)
+		throws Exception {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		throwableConsumer.accept(viewTypeItem);
@@ -32,8 +34,10 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		add(viewTypeItem);
 	}
 
-	public void addCardViewType(ThrowableConsumer<ViewTypeItem> throwableConsumer)
+	public void addCardViewType(
+			ThrowableConsumer<ViewTypeItem> throwableConsumer)
 		throws Exception {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("cards2");
@@ -43,8 +47,10 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		add(viewTypeItem);
 	}
 
-	public void addListViewType(ThrowableConsumer<ViewTypeItem> throwableConsumer)
+	public void addListViewType(
+			ThrowableConsumer<ViewTypeItem> throwableConsumer)
 		throws Exception {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("list");
@@ -54,8 +60,10 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		add(viewTypeItem);
 	}
 
-	public void addTableViewType(ThrowableConsumer<ViewTypeItem> throwableConsumer)
+	public void addTableViewType(
+			ThrowableConsumer<ViewTypeItem> throwableConsumer)
 		throws Exception {
+
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("table");
