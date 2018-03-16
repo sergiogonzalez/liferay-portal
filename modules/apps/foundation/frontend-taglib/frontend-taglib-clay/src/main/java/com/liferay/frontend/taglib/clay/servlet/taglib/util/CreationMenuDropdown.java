@@ -93,6 +93,10 @@ public class CreationMenuDropdown implements Serializable {
 		return secondaryDropdownItemList;
 	}
 
+	public String getViewMoreURL() {
+		return _viewMoreURL;
+	}
+
 	public void setCaption(String caption) {
 		_caption = caption;
 	}
@@ -101,7 +105,12 @@ public class CreationMenuDropdown implements Serializable {
 		_helpText = helpText;
 	}
 
+	public void setViewMoreURL(String viewMoreURL) {
+		_viewMoreURL = viewMoreURL;
+	}
+
 	private String _caption;
+	private String _viewMoreURL;
 	private DropdownItemList _favoriteDropdownItemList = new DropdownItemList();
 	private String _helpText;
 	private DropdownItemList _primaryDropdownItemList = new DropdownItemList();
