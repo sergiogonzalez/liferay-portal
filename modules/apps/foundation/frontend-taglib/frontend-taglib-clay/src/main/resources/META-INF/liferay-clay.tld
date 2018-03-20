@@ -1264,13 +1264,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>sortingURL</name>
+			<name>sortingOrder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>sortingOrder</name>
+			<name>sortingURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

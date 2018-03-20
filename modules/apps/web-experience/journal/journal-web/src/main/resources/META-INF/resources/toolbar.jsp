@@ -21,7 +21,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <clay:management-toolbar
-	actionItems="<%= journalDisplayContext.getActionItemsItemList() %>"
+	actionItems="<%= journalDisplayContext.getActionItemsDropdownItemList() %>"
 	clearResultsURL="<%= journalDisplayContext.getClearResultsURL() %>"
 	componentId="journalWebManagementToolbar"
 	creationMenu="<%= journalDisplayContext.getCreationMenuDropdown() %>"

@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Defines a {@code Consumer} that can throw an exception.
@@ -29,15 +29,16 @@ import java.util.Objects;
 @FunctionalInterface
 public interface ThrowableConsumer<A> {
 
-	/**
-	 * Returns an empty {@code ThrowableConsumer} that doesn't perform any
-	 * operation.
-	 *
-	 * @return an empty {@code ThrowableConsumer} that doesn't perform any
-	 *         operation
-	 */
-	public static <A> ThrowableConsumer<A> empty() {
-		return __ -> {
+	public static <T> Consumer<T> ignore(
+		ThrowableConsumer<T> throwableConsumer) {
+
+		return t -> {
+			try {
+				throwableConsumer.accept(t);
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		};
 	}
 
@@ -48,27 +49,5 @@ public interface ThrowableConsumer<A> {
 	 * @param a the first function argument
 	 */
 	public void accept(A a) throws Exception;
-
-	/**
-	 * Returns the {@code ThrowableConsumer} function that first executes the
-	 * current {@code ThrowableConsumer} instance's {@code accept} method, then
-	 * executes the {@code after} parameter's {@code accept} method.
-	 *
-	 * @param  after the {@code ThrowableConsumer} instance to execute after the
-	 *         current instance
-	 * @return the {@code ThrowableConsumer} that executes the current
-	 *         instance's {@code accept} method, as well as that of {@code
-	 *         after}
-	 */
-	public default ThrowableConsumer<A> andThen(
-		ThrowableConsumer<? super A> after) {
-
-		Objects.requireNonNull(after);
-
-		return a -> {
-			accept(a);
-			after.accept(a);
-		};
-	}
 
 }

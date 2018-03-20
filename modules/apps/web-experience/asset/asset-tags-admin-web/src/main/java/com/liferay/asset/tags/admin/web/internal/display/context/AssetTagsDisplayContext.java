@@ -71,13 +71,14 @@ public class AssetTagsDisplayContext {
 		_request = request;
 	}
 
-	public DropdownItemList getActionItemsItemList() throws Exception {
+	public DropdownItemList getActionItemsDropdownItemList() throws Exception {
 		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() + "mergeTags();");
+							"javascript:" + _renderResponse.getNamespace() +
+								"mergeTags();");
 						dropdownItem.setIcon("change");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "merge"));
@@ -87,7 +88,8 @@ public class AssetTagsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() + "deleteTags();");
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteTags();");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -143,40 +145,44 @@ public class AssetTagsDisplayContext {
 		return editTagURL.toString();
 	}
 
-	public DropdownItemList getFilterItemsItemList() throws Exception {
+	public DropdownItemList getFilterItemsDropdownItemList() throws Exception {
 		return new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										dropdownItem -> {
-											dropdownItem.setHref(
-												_renderResponse.createRenderURL(), "keywords",
-												getKeywords(), "orderByType", getOrderByType(),
-												"orderByCol", "name");
-											dropdownItem.setLabel(
-												LanguageUtil.get(_request, "name"));
-										});
-
-									add(
-										dropdownItem -> {
-											dropdownItem.setHref(
-												_renderResponse.createRenderURL(), "keywords",
-												getKeywords(), "orderByType", getOrderByType(),
-												"orderByCol", "usages");
-											dropdownItem.setLabel(
-												LanguageUtil.get(_request, "usages"));
-										});
-								}
-							}
-						);
-						dropdownGroupItem.setLabel("Order By");
-					}
-				);
+							_getDropdownGroupItemDropdownItemList());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
 			}
+
+			private DropdownItemList _getDropdownGroupItemDropdownItemList() {
+				return new DropdownItemList() {
+					{
+						add(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									_renderResponse.createRenderURL(),
+									"keywords", getKeywords(), "orderByType",
+									getOrderByType(), "orderByCol", "name");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "name"));
+							});
+
+						add(
+							dropdownItem -> {
+								dropdownItem.setHref(
+									_renderResponse.createRenderURL(),
+									"keywords", getKeywords(), "orderByType",
+									getOrderByType(), "orderByCol", "usages");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "usages"));
+							});
+					}
+				};
+			}
+
 		};
 	}
 
@@ -408,13 +414,13 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
-	public int getTagsSearchContainerTotal() throws PortalException {
+	public int getTotal() throws PortalException {
 		SearchContainer tagsSearchContainer = getTagsSearchContainer();
 
 		return tagsSearchContainer.getTotal();
 	}
 
-	public ViewTypeItemList getViewTypesItemList() throws Exception {
+	public ViewTypeItemList getViewTypeItemList() throws Exception {
 		return new ViewTypeItemList() {
 			{
 				addCardViewType(
@@ -422,11 +428,12 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "icon"));
 						viewTypeItem.setHref(
-							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
-							"changeDisplayStyle", "redirect",
-							PortalUtil.getCurrentURL(_request), "displayStyle",
-							"icon");
-						viewTypeItem.setLabel("Cards");
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME, "changeDisplayStyle",
+							"redirect", PortalUtil.getCurrentURL(_request),
+							"displayStyle", "icon");
+						viewTypeItem.setLabel(
+							LanguageUtil.get(_request, "cards"));
 					});
 
 				addListViewType(
@@ -434,11 +441,12 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "descriptive"));
 						viewTypeItem.setHref(
-							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
-							"changeDisplayStyle", "redirect",
-							PortalUtil.getCurrentURL(_request), "displayStyle",
-							"descriptive");
-						viewTypeItem.setLabel("List");
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME, "changeDisplayStyle",
+							"redirect", PortalUtil.getCurrentURL(_request),
+							"displayStyle", "descriptive");
+						viewTypeItem.setLabel(
+							LanguageUtil.get(_request, "list"));
 					});
 
 				addTableViewType(
@@ -446,11 +454,12 @@ public class AssetTagsDisplayContext {
 						viewTypeItem.setActive(
 							Objects.equals(getDisplayStyle(), "list"));
 						viewTypeItem.setHref(
-							_renderResponse.createActionURL(), ActionRequest.ACTION_NAME,
-							"changeDisplayStyle", "redirect",
-							PortalUtil.getCurrentURL(_request), "displayStyle",
-							"list");
-						viewTypeItem.setLabel("Table");
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME, "changeDisplayStyle",
+							"redirect", PortalUtil.getCurrentURL(_request),
+							"displayStyle", "list");
+						viewTypeItem.setLabel(
+							LanguageUtil.get(_request, "table"));
 					});
 			}
 		};
@@ -472,7 +481,7 @@ public class AssetTagsDisplayContext {
 		return false;
 	}
 
-	public boolean isShowTagsSearch() throws PortalException {
+	public boolean isShowSearch() throws PortalException {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}

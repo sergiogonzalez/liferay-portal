@@ -73,14 +73,8 @@ public class ItemSelectorPortlet extends MVCPortlet {
 				renderRequest.getParameterMap(), themeDisplay);
 
 		LocalizedItemSelectorRendering localizedItemSelectorRendering =
-			null;
-		try {
-			localizedItemSelectorRendering = new LocalizedItemSelectorRendering(
+			new LocalizedItemSelectorRendering(
 				renderRequest.getLocale(), itemSelectorRendering);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 
 		localizedItemSelectorRendering.store(renderRequest);
 

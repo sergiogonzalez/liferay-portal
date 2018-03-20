@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class CardsDisplayContext {
 
-	public DropdownItemList getActionDropdownItems() throws Exception {
+	public DropdownItemList getActionDropdownItems() {
 		if (_actionDropdownItems != null) {
 			return _actionDropdownItems;
 		}

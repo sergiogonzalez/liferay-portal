@@ -48,6 +48,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		if (Validator.isNull(searchInputName)) {
 			searchInputName = DisplayTerms.KEYWORDS;
+
 			setSearchInputName(searchInputName);
 		}
 

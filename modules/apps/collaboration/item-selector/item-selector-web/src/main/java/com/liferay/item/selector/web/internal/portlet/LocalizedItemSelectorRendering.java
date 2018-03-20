@@ -41,8 +41,7 @@ public class LocalizedItemSelectorRendering {
 	}
 
 	public LocalizedItemSelectorRendering(
-		Locale locale, ItemSelectorRendering itemSelectorRendering)
-		throws Exception {
+		Locale locale, ItemSelectorRendering itemSelectorRendering) {
 
 		_locale = locale;
 		_itemSelectorRendering = itemSelectorRendering;
@@ -54,8 +53,7 @@ public class LocalizedItemSelectorRendering {
 		}
 	}
 
-	public void add(ItemSelectorViewRenderer itemSelectorViewRenderer)
-		throws Exception {
+	public void add(ItemSelectorViewRenderer itemSelectorViewRenderer) {
 		ItemSelectorView<?> itemSelectorView =
 			itemSelectorViewRenderer.getItemSelectorView();
 

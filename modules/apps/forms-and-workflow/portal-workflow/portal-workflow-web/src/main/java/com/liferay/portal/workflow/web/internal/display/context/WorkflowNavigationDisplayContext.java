@@ -47,7 +47,7 @@ public class WorkflowNavigationDisplayContext {
 
 	public List<NavigationItem> getNavigationItems(
 		WorkflowPortletTab selectedWorkflowPortletTab,
-		List<WorkflowPortletTab> workflowPortletTabs) throws Exception {
+		List<WorkflowPortletTab> workflowPortletTabs) {
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(

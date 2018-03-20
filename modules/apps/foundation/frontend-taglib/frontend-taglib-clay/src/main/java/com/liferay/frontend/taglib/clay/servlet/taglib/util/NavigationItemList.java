@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -24,12 +25,10 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 	public NavigationItemList() {
 	}
 
-	public void add(ThrowableConsumer<NavigationItem> throwableConsumer)
-		throws Exception {
-
+	public void add(Consumer<NavigationItem> consumer) {
 		NavigationItem navigationItem = new NavigationItem();
 
-		throwableConsumer.accept(navigationItem);
+		consumer.accept(navigationItem);
 
 		add(navigationItem);
 	}

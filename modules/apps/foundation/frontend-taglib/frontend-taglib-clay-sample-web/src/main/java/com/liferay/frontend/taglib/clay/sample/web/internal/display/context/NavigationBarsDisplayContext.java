@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
  */
 public class NavigationBarsDisplayContext {
 
-	public NavigationItemList getNavigationItems() throws Exception {
+	public NavigationItemList getNavigationItems() {
 		if (_navigationItems != null) {
 			return _navigationItems;
 		}

@@ -37,7 +37,7 @@ public class ServerDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public List<NavigationItem> getServerNavigationItems() throws Exception {
+	public List<NavigationItem> getServerNavigationItems() {
 		String tabs1 = ParamUtil.getString(_request, "tabs1", "resources");
 		String tabs2 = ParamUtil.getString(_request, "tabs2");
 

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.io.Serializable;
 
+import java.util.function.Consumer;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -30,30 +32,32 @@ public class CreationMenuDropdown implements Serializable {
 		_request = request;
 	}
 
-	public void addDropdownItem(
-			ThrowableConsumer<DropdownItem> throwableConsumer)
-		throws Exception {
-
-		addDropdownItem(throwableConsumer, "primary");
+	public void addDropdownItem(Consumer<DropdownItem> consumer) {
+		addPrimaryDropdownItem(consumer);
 	}
 
-	public void addDropdownItem(
-			ThrowableConsumer<DropdownItem> throwableConsumer, String type)
-		throws Exception {
-
+	public void addFavoriteDropdownItem(Consumer<DropdownItem> consumer) {
 		DropdownItem dropdownItem = new DropdownItem();
 
-		throwableConsumer.accept(dropdownItem);
+		consumer.accept(dropdownItem);
 
-		if (type.equals("primary")) {
-			_primaryDropdownItemList.add(dropdownItem);
-		}
-		else if (type.equals("favorite")) {
-			_favoriteDropdownItemList.add(dropdownItem);
-		}
-		else {
-			_restDropdownItemList.add(dropdownItem);
-		}
+		_favoriteDropdownItemList.add(dropdownItem);
+	}
+
+	public void addPrimaryDropdownItem(Consumer<DropdownItem> consumer) {
+		DropdownItem dropdownItem = new DropdownItem();
+
+		consumer.accept(dropdownItem);
+
+		_primaryDropdownItemList.add(dropdownItem);
+	}
+
+	public void addRestDropdownItem(Consumer<DropdownItem> consumer) {
+		DropdownItem dropdownItem = new DropdownItem();
+
+		consumer.accept(dropdownItem);
+
+		_restDropdownItemList.add(dropdownItem);
 	}
 
 	public String getHelpText() {

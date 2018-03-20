@@ -101,8 +101,7 @@ public class DDMDisplayContext {
 		return _ddmWebRequestHelper.getDDMGroupServiceConfiguration();
 	}
 
-	public List<NavigationItem> getNavigationItem(String label)
-		throws Exception {
+	public List<NavigationItem> getNavigationItem(String label) {
 		return new NavigationItemList() {
 			{
 				add(

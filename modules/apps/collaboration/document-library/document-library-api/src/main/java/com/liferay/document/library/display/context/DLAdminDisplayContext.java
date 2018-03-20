@@ -23,6 +23,6 @@ import java.util.List;
  */
 public interface DLAdminDisplayContext {
 
-	public List<NavigationItem> getNavigationItems() throws Exception;
+	public List<NavigationItem> getNavigationItems();
 
 }

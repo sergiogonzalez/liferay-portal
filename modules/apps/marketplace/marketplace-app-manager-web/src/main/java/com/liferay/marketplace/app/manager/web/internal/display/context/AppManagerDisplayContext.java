@@ -38,7 +38,7 @@ public class AppManagerDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public List<NavigationItem> getModuleNavigationItems() throws Exception {
+	public List<NavigationItem> getModuleNavigationItems() {
 		String pluginType = ParamUtil.getString(
 			_request, "pluginType", "components");
 
@@ -64,8 +64,7 @@ public class AppManagerDisplayContext {
 		};
 	}
 
-	public List<NavigationItem> getNavigationItems(String url, String label)
-		throws Exception {
+	public List<NavigationItem> getNavigationItems(String url, String label) {
 		return new NavigationItemList() {
 			{
 				add(

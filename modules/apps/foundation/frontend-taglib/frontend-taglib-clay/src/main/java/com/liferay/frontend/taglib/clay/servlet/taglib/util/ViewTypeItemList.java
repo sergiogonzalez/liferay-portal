@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * @author Carlos Lancha
@@ -24,51 +25,40 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	public ViewTypeItemList() {
 	}
 
-	public void add(ThrowableConsumer<ViewTypeItem> throwableConsumer)
-		throws Exception {
-
+	public void add(Consumer<ViewTypeItem> consumer) {
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
-		throwableConsumer.accept(viewTypeItem);
+		consumer.accept(viewTypeItem);
 
 		add(viewTypeItem);
 	}
 
-	public void addCardViewType(
-			ThrowableConsumer<ViewTypeItem> throwableConsumer)
-		throws Exception {
-
+	public void addCardViewType(Consumer<ViewTypeItem> consumer) {
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("cards2");
 
-		throwableConsumer.accept(viewTypeItem);
+		consumer.accept(viewTypeItem);
 
 		add(viewTypeItem);
 	}
 
-	public void addListViewType(
-			ThrowableConsumer<ViewTypeItem> throwableConsumer)
-		throws Exception {
-
+	public void addListViewType(Consumer<ViewTypeItem> consumer) {
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("list");
 
-		throwableConsumer.accept(viewTypeItem);
+		consumer.accept(viewTypeItem);
 
 		add(viewTypeItem);
 	}
 
-	public void addTableViewType(
-			ThrowableConsumer<ViewTypeItem> throwableConsumer)
-		throws Exception {
-
+	public void addTableViewType(Consumer<ViewTypeItem> consumer) {
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 
 		viewTypeItem.setIcon("table");
 
-		throwableConsumer.accept(viewTypeItem);
+		consumer.accept(viewTypeItem);
 
 		add(viewTypeItem);
 	}

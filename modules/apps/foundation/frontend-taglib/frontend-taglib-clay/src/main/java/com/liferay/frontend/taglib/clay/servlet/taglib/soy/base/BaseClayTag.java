@@ -58,9 +58,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		String namespace = getNamespace();
 		String[] namespacedParams = getNamespacedParams();
 
-		if (Validator.isNotNull(namespace) &&
-			Validator.isNotNull(namespacedParams)) {
-
+		if (Validator.isNotNull(namespace) && (namespacedParams != null)) {
 			for (String parameterName : namespacedParams) {
 				String parameterValue = (String)context.get(parameterName);
 
