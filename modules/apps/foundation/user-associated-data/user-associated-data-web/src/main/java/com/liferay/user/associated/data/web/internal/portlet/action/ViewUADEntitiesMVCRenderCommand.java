@@ -87,10 +87,15 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
 			new ViewUADEntitiesDisplay();
 
-		viewUADEntitiesDisplay.setNavigationItems(
-			_getNaviagationItems(
-				uadEntitySetName, uadRegistryKey, currentURL,
-				liferayPortletResponse));
+		try {
+			viewUADEntitiesDisplay.setNavigationItems(
+				_getNaviagationItems(
+					uadEntitySetName, uadRegistryKey, currentURL,
+					liferayPortletResponse));
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		viewUADEntitiesDisplay.setSearchContainer(
 			_getSearchContainer(
@@ -111,7 +116,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			String uadEntitySetName, String uadRegistryKey,
 			PortletURL currentURL,
 			LiferayPortletResponse liferayPortletResponse)
-		throws PortletException {
+		throws Exception {
 
 		NavigationItemList navigationItemList = new NavigationItemList();
 

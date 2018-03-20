@@ -12,17 +12,21 @@
  * details.
  */
 
-package com.liferay.document.library.display.context;
-
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-
-import java.util.List;
+package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 /**
- * @author Alejandro Tardín
+ * @author Carlos Lancha
  */
-public interface DLAdminDisplayContext {
+public class ViewTypeItem extends NavigationItem {
 
-	public List<NavigationItem> getNavigationItems() throws Exception;
+	public String getIcon() {
+		return _icon;
+	}
+
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
+	private String _icon;
 
 }

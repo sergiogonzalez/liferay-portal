@@ -59,7 +59,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	@Override
-	public List<NavigationItem> getNavigationItems() {
+	public List<NavigationItem> getNavigationItems() throws Exception {
 		String mvcRenderCommandName = ParamUtil.getString(
 			_liferayPortletRequest, "mvcRenderCommandName",
 			"/document_library/view");

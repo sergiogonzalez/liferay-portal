@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,43 +24,55 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	public DropdownItemList() {
 	}
 
-	public void add(Consumer<DropdownItem> consumer) {
+	public void add(ThrowableConsumer<DropdownItem> throwableConsumer)
+		throws Exception {
+
 		DropdownItem dropdownItem = new DropdownItem();
 
-		consumer.accept(dropdownItem);
+		throwableConsumer.accept(dropdownItem);
 
 		add(dropdownItem);
 	}
 
-	public void addCheckbox(Consumer<DropdownCheckboxItem> consumer) {
+	public void addCheckbox(
+			ThrowableConsumer<DropdownCheckboxItem> throwableConsumer)
+		throws Exception {
+
 		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
 
-		consumer.accept(dropdownCheckboxItem);
+		throwableConsumer.accept(dropdownCheckboxItem);
 
 		add(dropdownCheckboxItem);
 	}
 
-	public void addGroup(Consumer<DropdownGroupItem> consumer) {
+	public void addGroup(ThrowableConsumer<DropdownGroupItem> throwableConsumer)
+		throws Exception {
+
 		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
 
-		consumer.accept(dropdownGroupItem);
+		throwableConsumer.accept(dropdownGroupItem);
 
 		add(dropdownGroupItem);
 	}
 
-	public void addRadio(Consumer<DropdownRadioItem> consumer) {
+	public void addRadio(ThrowableConsumer<DropdownRadioItem> throwableConsumer)
+		throws Exception {
+
 		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
 
-		consumer.accept(dropdownRadioItem);
+		throwableConsumer.accept(dropdownRadioItem);
 
 		add(dropdownRadioItem);
 	}
 
-	public void addRadioGroup(Consumer<DropdownRadioGroupItem> consumer) {
+	public void addRadioGroup(
+			ThrowableConsumer<DropdownRadioGroupItem> throwableConsumer)
+		throws Exception {
+
 		DropdownRadioGroupItem dropdownRadioGroupItem =
 			new DropdownRadioGroupItem();
 
-		consumer.accept(dropdownRadioGroupItem);
+		throwableConsumer.accept(dropdownRadioGroupItem);
 
 		add(dropdownRadioGroupItem);
 	}

@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
  */
 public class DropdownsDisplayContext {
 
-	public DropdownItemList getDefaultDropdownItems() {
+	public DropdownItemList getDefaultDropdownItems() throws Exception {
 		if (_defaultDropdownItems != null) {
 			return _defaultDropdownItems;
 		}
@@ -59,7 +59,7 @@ public class DropdownsDisplayContext {
 		return _defaultDropdownItems;
 	}
 
-	public DropdownItemList getGroupDropdownItems() {
+	public DropdownItemList getGroupDropdownItems() throws Exception {
 		if (_groupDropdownItems != null) {
 			return _groupDropdownItems;
 		}
@@ -116,7 +116,7 @@ public class DropdownsDisplayContext {
 		return _groupDropdownItems;
 	}
 
-	public DropdownItemList getIconDropdownItems() {
+	public DropdownItemList getIconDropdownItems() throws Exception {
 		if (_iconDropdownItems != null) {
 			return _iconDropdownItems;
 		}
@@ -170,7 +170,7 @@ public class DropdownsDisplayContext {
 		return _iconDropdownItems;
 	}
 
-	public DropdownItemList getInputDropdownItems() {
+	public DropdownItemList getInputDropdownItems() throws Exception {
 		if (_inputDropdownItems != null) {
 			return _inputDropdownItems;
 		}

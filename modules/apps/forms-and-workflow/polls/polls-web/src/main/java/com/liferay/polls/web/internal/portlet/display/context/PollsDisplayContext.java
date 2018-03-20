@@ -59,7 +59,7 @@ public class PollsDisplayContext {
 		return portletURL;
 	}
 
-	public List<NavigationItem> getNavigationItems() {
+	public List<NavigationItem> getNavigationItems() throws Exception {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();

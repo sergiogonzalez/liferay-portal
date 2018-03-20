@@ -12,17 +12,25 @@
  * details.
  */
 
-package com.liferay.document.library.display.context;
+package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import javax.portlet.RenderResponse;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
- * @author Alejandro Tardín
+ * @author Carlos Lancha
  */
-public interface DLAdminDisplayContext {
+public class JSPViewTypeItemList extends ViewTypeItemList {
 
-	public List<NavigationItem> getNavigationItems() throws Exception;
+	public JSPViewTypeItemList(PageContext pageContext) {
+		renderResponse = (RenderResponse)pageContext.findAttribute(
+			"renderResponse");
+		request = (HttpServletRequest)pageContext.getRequest();
+	}
+
+	protected RenderResponse renderResponse;
+	protected HttpServletRequest request;
 
 }
