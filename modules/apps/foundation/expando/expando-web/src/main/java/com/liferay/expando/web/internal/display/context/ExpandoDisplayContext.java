@@ -32,7 +32,8 @@ public class ExpandoDisplayContext {
 		_request = request;
 	}
 
-	public List<NavigationItem> getNavigationItems(final String label) {
+	public List<NavigationItem> getNavigationItems(final String label)
+		throws Exception {
 		return new NavigationItemList() {
 			{
 				add(

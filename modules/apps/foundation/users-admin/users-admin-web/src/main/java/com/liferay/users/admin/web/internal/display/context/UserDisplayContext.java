@@ -143,7 +143,8 @@ public class UserDisplayContext {
 		return inheritedSites;
 	}
 
-	public List<NavigationItem> getNavigationItems(final String label) {
+	public List<NavigationItem> getNavigationItems(final String label)
+		throws Exception {
 		return new NavigationItemList() {
 			{
 				add(
@@ -273,7 +274,8 @@ public class UserDisplayContext {
 		return userGroups;
 	}
 
-	public List<NavigationItem> getViewNavigationItems(String portletName) {
+	public List<NavigationItem> getViewNavigationItems(String portletName)
+		throws Exception {
 		return new NavigationItemList() {
 			{
 				String toolbarItem = ParamUtil.getString(

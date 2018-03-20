@@ -153,7 +153,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return "list";
 	}
 
-	public List<NavigationItem> getNavigationItems() {
+	public List<NavigationItem> getNavigationItems() throws Exception {
 		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 		return new NavigationItemList() {
