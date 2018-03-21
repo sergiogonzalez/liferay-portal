@@ -152,9 +152,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 							<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>">
 								<span class="inline-item inline-item-before">
-									<clay:icon
-										symbol="comments"
-									/>
 								</span>
 
 								<%= String.valueOf(messagesCount) %>
@@ -166,9 +163,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						<div class="autofit-col">
 							<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" type="button">
 								<span class="inline-item inline-item-before">
-									<clay:icon
-										symbol="time"
-									/>
 								</span>
 
 								<liferay-reading-time:reading-time
