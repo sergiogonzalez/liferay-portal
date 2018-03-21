@@ -155,6 +155,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 							<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>">
 								<span class="inline-item inline-item-before">
+									<svg aria-hidden="true" class="icon-monospaced lexicon-icon lexicon-icon-comments">
+										<use xlink:href="<%= themeDisplayPath %>/lexicon/icons.svg#comments" />
+									</svg>
 								</span>
 
 								<%= String.valueOf(messagesCount) %>
@@ -166,6 +169,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						<div class="autofit-col">
 							<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" type="button">
 								<span class="inline-item inline-item-before">
+									<svg aria-hidden="true" class="icon-monospaced lexicon-icon lexicon-icon-time">
+										<use xlink:href="<%= themeDisplayPath %>/lexicon/icons.svg#time" />
+									</svg>
 								</span>
 
 								<liferay-reading-time:reading-time
