@@ -80,6 +80,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
+<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="navItemSelected" value="threads" />
+</liferay-util:include>
+
 <%
 MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
 
