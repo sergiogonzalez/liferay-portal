@@ -349,7 +349,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<c:if test="<%= (categoryEntriesSearchContainer.getTotal() <= 0) && (threadEntriesSearchContainer.getTotal() <= 0) %>">
-						<liferay-ui:empty-result-message message="there-are-no-threads-or-categories" />
+						<liferay-ui:empty-result-message
+							message="there-are-no-threads-or-categories"
+						/>
 					</c:if>
 
 					<%

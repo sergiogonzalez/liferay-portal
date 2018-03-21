@@ -59,7 +59,9 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 			/>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 			<c:choose>
 				<c:when test="<%= ((message != null) && (thread.getMessageCount() == 1)) %>">
 
@@ -175,7 +177,11 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new MBResultRowSplitter() %>" />
+	<liferay-ui:search-iterator
+		displayStyle="descriptive"
+		markupView="lexicon"
+		resultRowSplitter="<%= new MBResultRowSplitter() %>"
+	/>
 </liferay-ui:search-container>
 
 <%!

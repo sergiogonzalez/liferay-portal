@@ -44,7 +44,9 @@ SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAtt
 			toggleRowChecker="<%= true %>"
 		/>
 
-		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 			<h4>
 				<aui:a href="<%= rowURL.toString() %>">
 					<%= category.getName() %>
@@ -73,5 +75,9 @@ SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAtt
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new MBResultRowSplitter() %>" />
+	<liferay-ui:search-iterator
+		displayStyle="descriptive"
+		markupView="lexicon"
+		resultRowSplitter="<%= new MBResultRowSplitter() %>"
+	/>
 </liferay-ui:search-container>
