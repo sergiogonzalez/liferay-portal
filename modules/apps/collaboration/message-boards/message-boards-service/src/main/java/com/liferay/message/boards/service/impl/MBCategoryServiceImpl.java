@@ -158,7 +158,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			queryDefinition.setOwnerUserId(getUserId());
 		}
 
-		return mbCategoryFinder.filterFindByG_P(
+		return mbCategoryFinder.filterFindC_ByG_P(
 			groupId, parentCategoryId, queryDefinition);
 	}
 
@@ -335,7 +335,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			queryDefinition.setOwnerUserId(getUserId());
 		}
 
-		return mbCategoryFinder.filterCountByG_P(
+		return mbCategoryFinder.filterCountC_ByG_P(
 			groupId, parentCategoryId, queryDefinition);
 	}
 

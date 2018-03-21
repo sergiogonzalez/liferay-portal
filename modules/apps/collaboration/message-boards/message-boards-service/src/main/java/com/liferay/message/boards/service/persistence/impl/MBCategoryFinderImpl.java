@@ -59,9 +59,6 @@ import java.util.List;
 public class MBCategoryFinderImpl
 	extends MBCategoryFinderBaseImpl implements MBCategoryFinder {
 
-	public static final String COUNT_BY_G_P =
-		MBCategoryFinder.class.getName() + ".countByG_P";
-
 	public static final String COUNT_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".countC_ByG_P";
 
@@ -70,9 +67,6 @@ public class MBCategoryFinderImpl
 
 	public static final String COUNT_T_BY_G_C =
 		MBCategoryFinder.class.getName() + ".countT_ByG_C";
-
-	public static final String FIND_BY_G_P =
-		MBCategoryFinder.class.getName() + ".findByG_P";
 
 	public static final String FIND_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".findC_ByG_P";
@@ -84,11 +78,12 @@ public class MBCategoryFinderImpl
 		MBCategoryFinder.class.getName() + ".findT_ByG_C";
 
 	@Override
-	public int countByG_P(
+	public int countC_ByG_P(
 		long groupId, long parentCategoryId,
 		QueryDefinition<?> queryDefinition) {
 
-		return doCountByG_P(groupId, parentCategoryId, queryDefinition, false);
+		return doCountC_ByG_P(
+			groupId, parentCategoryId, queryDefinition, false);
 	}
 
 	@Override
@@ -108,11 +103,11 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
-	public int filterCountByG_P(
+	public int filterCountC_ByG_P(
 		long groupId, long parentCategoryId,
 		QueryDefinition<?> queryDefinition) {
 
-		return doCountByG_P(groupId, parentCategoryId, queryDefinition, true);
+		return doCountC_ByG_P(groupId, parentCategoryId, queryDefinition, true);
 	}
 
 	@Override
@@ -132,11 +127,11 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
-	public List<MBCategory> filterFindByG_P(
+	public List<MBCategory> filterFindC_ByG_P(
 		long groupId, long parentCategoryId,
 		QueryDefinition<?> queryDefinition) {
 
-		return doFindByG_P(groupId, parentCategoryId, queryDefinition, true);
+		return doFindC_ByG_P(groupId, parentCategoryId, queryDefinition, true);
 	}
 
 	@Override
@@ -156,11 +151,11 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
-	public List<MBCategory> findByG_P(
+	public List<MBCategory> findC_ByG_P(
 		long groupId, long parentCategoryId,
 		QueryDefinition<?> queryDefinition) {
 
-		return doFindByG_P(groupId, parentCategoryId, queryDefinition, false);
+		return doFindC_ByG_P(groupId, parentCategoryId, queryDefinition, false);
 	}
 
 	@Override
@@ -179,7 +174,7 @@ public class MBCategoryFinderImpl
 		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, false);
 	}
 
-	protected int doCountByG_P(
+	protected int doCountC_ByG_P(
 		long groupId, long parentCategoryId, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -207,7 +202,7 @@ public class MBCategoryFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				getClass(), COUNT_BY_G_P, queryDefinition,
+				getClass(), COUNT_C_BY_G_P, queryDefinition,
 				MBCategoryImpl.TABLE_NAME);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -425,7 +420,7 @@ public class MBCategoryFinderImpl
 		}
 	}
 
-	protected List<MBCategory> doFindByG_P(
+	protected List<MBCategory> doFindC_ByG_P(
 		long groupId, long parentCategoryId, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -456,10 +451,8 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler sb = new StringBundler(0);
-
 			String sql = CustomSQLUtil.get(
-				getClass(), FIND_BY_G_P, queryDefinition,
+				getClass(), FIND_C_BY_G_P, queryDefinition,
 				MBCategoryImpl.TABLE_NAME);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -468,7 +461,8 @@ public class MBCategoryFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("MBCategory", MBCategoryImpl.class);
+			q.addScalar("modelId", Type.LONG);
+			q.addScalar("modelCategory", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -484,9 +478,23 @@ public class MBCategoryFinderImpl
 				}
 			}
 
-			return (List<MBCategory>)QueryUtil.list(
+			List<MBCategory> categories = new ArrayList<>();
+
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
 				q, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				long modelId = (Long)array[0];
+
+				MBCategory category = MBCategoryUtil.findByPrimaryKey(modelId);
+
+				categories.add(category);
+			}
+
+			return categories;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
