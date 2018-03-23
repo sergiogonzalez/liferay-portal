@@ -106,17 +106,7 @@ data.put("qa-id", "customizations");
 
 				<c:if test="<%= hasUpdateLayoutPermission %>">
 					<li class="control-menu-nav-item">
-						<aui:input
-							id='<%= portletNamespace + "manageCustomization" %>'
-							inlineField="<%= true %>"
-							label="<%= StringPool.BLANK %>"
-							labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>'
-							labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>'
-							name="manageCustomization"
-							type="toggle-switch"
-							useNamespace="<%= false %>"
-							wrappedField="<%= true %>"
-						/>
+						<aui:input id='<%= portletNamespace + "manageCustomization" %>' inlineField="<%= true %>" label="<%= StringPool.BLANK %>" labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>' labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>' name="manageCustomization" type="toggle-switch" useNamespace="<%= false %>" wrappedField="<%= true %>" />
 
 						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
 							<div class="layout-customizable-controls">
@@ -167,7 +157,13 @@ data.put("qa-id", "customizations");
 				%>
 
 				<li class="control-menu-nav-item hidden-xs">
-					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+					<liferay-ui:icon-menu
+						direction="left-side"
+						icon="<%= StringPool.BLANK %>"
+						markupView="lexicon"
+						message="<%= StringPool.BLANK %>"
+						showWhenSingleIcon="<%= true %>"
+					>
 						<liferay-ui:icon
 							message="<%= toggleCustomizedViewMessage %>"
 							url="<%= toggleCustomizationViewURL %>"

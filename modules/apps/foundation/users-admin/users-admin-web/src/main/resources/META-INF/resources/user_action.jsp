@@ -26,7 +26,13 @@ User user2 = (User)row.getObject();
 long userId = user2.getUserId();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 
 	<%
 	boolean hasUpdatePermission = UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.UPDATE);
@@ -112,10 +118,14 @@ long userId = user2.getUserId();
 		<c:if test="<%= userId != user.getUserId() %>">
 			<c:choose>
 				<c:when test="<%= user2.isActive() %>">
-					<liferay-ui:icon-deactivate url="<%= deleteUserURL %>" />
+					<liferay-ui:icon-deactivate
+						url="<%= deleteUserURL %>"
+					/>
 				</c:when>
 				<c:when test="<%= !user2.isActive() && PropsValues.USERS_DELETE %>">
-					<liferay-ui:icon-delete url="<%= deleteUserURL %>" />
+					<liferay-ui:icon-delete
+						url="<%= deleteUserURL %>"
+					/>
 				</c:when>
 			</c:choose>
 		</c:if>

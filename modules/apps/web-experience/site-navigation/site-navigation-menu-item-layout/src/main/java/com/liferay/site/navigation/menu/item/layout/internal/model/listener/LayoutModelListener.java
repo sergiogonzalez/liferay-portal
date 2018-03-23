@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -46,13 +47,35 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
-				layout.getGroupId());
+		boolean addToAutoMenus = GetterUtil.getBoolean(
+			layout.getTypeSettingsProperty("addToAutoMenus"));
 
-		if ((siteNavigationMenu == null) || layout.isHidden()) {
+		if (layout.isHidden() || !addToAutoMenus) {
 			return;
 		}
+
+		List<SiteNavigationMenu> siteNavigationMenus =
+			_siteNavigationMenuLocalService.getAutoSiteNavigationMenus(
+				layout.getGroupId());
+
+		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
+			_addSiteNavigationMenuItem(siteNavigationMenu, layout);
+		}
+	}
+
+	@Override
+	public void onAfterRemove(Layout layout) throws ModelListenerException {
+		List<SiteNavigationMenu> siteNavigationMenus =
+			_siteNavigationMenuLocalService.getSiteNavigationMenus(
+				layout.getGroupId());
+
+		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
+			_deleteSiteNavigationMenuItem(siteNavigationMenu, layout);
+		}
+	}
+
+	private void _addSiteNavigationMenuItem(
+		SiteNavigationMenu siteNavigationMenu, Layout layout) {
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
@@ -80,15 +103,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 	}
 
-	@Override
-	public void onAfterRemove(Layout layout) throws ModelListenerException {
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
-				layout.getGroupId());
-
-		if (siteNavigationMenu == null) {
-			return;
-		}
+	private void _deleteSiteNavigationMenuItem(
+		SiteNavigationMenu siteNavigationMenu, Layout layout) {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
@@ -107,15 +123,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			if (Objects.equals(layout.getUuid(), layoutUuid)) {
 				_siteNavigationMenuItemLocalService.
 					deleteSiteNavigationMenuItem(siteNavigationMenuItem);
-
-				break;
 			}
 		}
 	}
 
 	private long _getParentSiteNavigationMenuItemId(
-			long parentPlid, long siteNavigationMenuItemId)
-		throws PortalException {
+		long parentPlid, long siteNavigationMenuItemId) {
 
 		if (parentPlid == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 			return 0;

@@ -2976,6 +2976,123 @@ version 2.2.0.
 ### Changed
 - [LPS-78493]: Update the [Liferay Gradle Plugins] dependency to version 3.8.12.
 
+## 5.3.23 - 2018-03-08
+
+### Changed
+- [LPS-78558]: Update the [Find Security Bugs] dependency to version
+1.7.1.LIFERAY-PATCHED-1.
+- [LPS-78571]: Update the [Liferay Gradle Plugins] dependency to version 3.8.13.
+
+## 5.3.24 - 2018-03-09
+
+### Changed
+- [LPS-77524]: Allow a `testIntegrationCompile` dependency from a project with
+path `:test:arquillian-extension-junit-bridge` to not have a `.lfrbuild-portal`
+marker file.
+
+## 5.3.25 - 2018-03-10
+
+### Changed
+- [LPS-78308]: Update the [Liferay Gradle Plugins] dependency to version 3.8.14.
+
+## 5.3.26 - 2018-03-12
+
+### Changed
+- [LPS-78669]: Update the [Liferay Gradle Plugins] dependency to version 3.8.15.
+
+## 5.3.27 - 2018-03-12
+
+### Changed
+- [LPS-78269]: Update the [Liferay Gradle Plugins] dependency to version 3.8.16.
+
+## 5.3.28 - 2018-03-13
+
+### Changed
+- [LPS-78767]: Update the [Liferay Gradle Plugins] dependency to version 3.8.17.
+
+## 5.3.29 - 2018-03-13
+
+### Changed
+- [LPS-78767]: Update the [Liferay Gradle Plugins] dependency to version 3.8.18.
+
+## 5.3.30 - 2018-03-15
+
+### Changed
+- [LPS-78741]: Configure the `npmInstall` task to run `npm ci` instead of
+`npm install` when not on Jenkins.
+- [LPS-78741]: Update the [Liferay Gradle Plugins] dependency to version 3.8.19.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.2.
+
+## 5.3.31 - 2018-03-16
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.8.20.
+
+## 5.3.32 - 2018-03-16
+
+### Changed
+- [LPS-78845]: Update the [Liferay Gradle Plugins] dependency to version 3.8.21.
+
+## 5.3.33 - 2018-03-16
+
+### Changed
+- [LPS-77425]: Update the [Liferay Gradle Plugins] dependency to version 3.9.0.
+
+## 5.3.34 - 2018-03-17
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.1.
+
+## 5.3.35 - 2018-03-18
+
+### Changed
+- [LPS-78911]: Update the [Liferay Gradle Plugins] dependency to version 3.9.2.
+
+## 5.3.36 - 2018-03-19
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.3.
+
+## 5.3.37 - 2018-03-19
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.4.
+
+## 5.3.38 - 2018-03-20
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.5.
+
+## 5.3.39 - 2018-03-20
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.9.6.
+
+## 5.3.40 - 2018-03-20
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.9.7.
+
+## 5.3.41 - 2018-03-21
+
+### Changed
+- [LPS-78750]: Update the [Liferay Gradle Plugins] dependency to version 3.9.8.
+
+## 5.3.42 - 2018-03-21
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.9.
+
+## 5.3.43 - 2018-03-22
+
+### Changed
+- [LPS-78741]: Configure the `npmInstall` task to run `npm install` instead of
+`npm ci`.
+- [LPS-78741]: Update the [Liferay Gradle Plugins] dependency to version 3.9.8.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.3.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3280,6 +3397,7 @@ version 2.2.0.
 [LPS-76644]: https://issues.liferay.com/browse/LPS-76644
 [LPS-76747]: https://issues.liferay.com/browse/LPS-76747
 [LPS-76840]: https://issues.liferay.com/browse/LPS-76840
+[LPS-76926]: https://issues.liferay.com/browse/LPS-76926
 [LPS-76954]: https://issues.liferay.com/browse/LPS-76954
 [LPS-76957]: https://issues.liferay.com/browse/LPS-76957
 [LPS-76997]: https://issues.liferay.com/browse/LPS-76997
@@ -3295,6 +3413,7 @@ version 2.2.0.
 [LPS-77423]: https://issues.liferay.com/browse/LPS-77423
 [LPS-77425]: https://issues.liferay.com/browse/LPS-77425
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
+[LPS-77524]: https://issues.liferay.com/browse/LPS-77524
 [LPS-77532]: https://issues.liferay.com/browse/LPS-77532
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
@@ -3314,10 +3433,20 @@ version 2.2.0.
 [LPS-78231]: https://issues.liferay.com/browse/LPS-78231
 [LPS-78261]: https://issues.liferay.com/browse/LPS-78261
 [LPS-78266]: https://issues.liferay.com/browse/LPS-78266
+[LPS-78269]: https://issues.liferay.com/browse/LPS-78269
+[LPS-78308]: https://issues.liferay.com/browse/LPS-78308
 [LPS-78436]: https://issues.liferay.com/browse/LPS-78436
 [LPS-78459]: https://issues.liferay.com/browse/LPS-78459
 [LPS-78493]: https://issues.liferay.com/browse/LPS-78493
+[LPS-78558]: https://issues.liferay.com/browse/LPS-78558
 [LPS-78571]: https://issues.liferay.com/browse/LPS-78571
+[LPS-78669]: https://issues.liferay.com/browse/LPS-78669
+[LPS-78741]: https://issues.liferay.com/browse/LPS-78741
+[LPS-78750]: https://issues.liferay.com/browse/LPS-78750
+[LPS-78767]: https://issues.liferay.com/browse/LPS-78767
+[LPS-78772]: https://issues.liferay.com/browse/LPS-78772
+[LPS-78845]: https://issues.liferay.com/browse/LPS-78845
+[LPS-78911]: https://issues.liferay.com/browse/LPS-78911
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

@@ -32,7 +32,7 @@ import com.liferay.frontend.taglib.chart.model.point.line.LineChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.scatter.ScatterChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.spline.SplineChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.step.StepChartConfig;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import javax.portlet.PortletRequest;
 
@@ -53,6 +53,7 @@ public class ChartSampleDisplayContext {
 		_initGeomapConfig();
 		_initLineChartConfig();
 		_initPieChartConfig();
+		_initPollingIntervalLineChartConfig();
 		_initScatterChartConfig();
 		_initSplineChartConfig();
 		_initStepChartConfig();
@@ -96,6 +97,10 @@ public class ChartSampleDisplayContext {
 
 	public PieChartConfig getPieChartConfig() {
 		return _pieChartConfig;
+	}
+
+	public LineChartConfig getPollingIntervalLineChartConfig() {
+		return _pollingIntervalLineChartConfig;
 	}
 
 	public ScatterChartConfig getScatterChartConfig() {
@@ -193,6 +198,14 @@ public class ChartSampleDisplayContext {
 			new SingleValueColumn("data2", 70));
 	}
 
+	private void _initPollingIntervalLineChartConfig() {
+		_pollingIntervalLineChartConfig.addColumns(
+			new MultiValueColumn("data1", 100, 20, 30),
+			new MultiValueColumn("data2", 20, 70, 100));
+
+		_pollingIntervalLineChartConfig.setPollingInterval(2000);
+	}
+
 	private void _initScatterChartConfig() {
 		_scatterChartConfig.addColumns(
 			new MultiValueColumn("data1", 100, 20, 30),
@@ -224,6 +237,8 @@ public class ChartSampleDisplayContext {
 	private GeomapConfig _geomapConfig2 = new GeomapConfig();
 	private LineChartConfig _lineChartConfig = new LineChartConfig();
 	private PieChartConfig _pieChartConfig = new PieChartConfig();
+	private LineChartConfig _pollingIntervalLineChartConfig =
+		new LineChartConfig();
 	private final PortletRequest _portletRequest;
 	private ScatterChartConfig _scatterChartConfig = new ScatterChartConfig();
 	private SplineChartConfig _splineChartConfig = new SplineChartConfig();

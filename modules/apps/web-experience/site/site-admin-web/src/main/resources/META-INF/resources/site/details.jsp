@@ -62,7 +62,10 @@ else if (group != null) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
@@ -157,7 +160,9 @@ else if (group != null) {
 	}
 	%>
 
-	<liferay-util:buffer var="removeGroupIcon">
+	<liferay-util:buffer
+		var="removeGroupIcon"
+	>
 		<liferay-ui:icon
 			icon="times"
 			markupView="lexicon"
@@ -200,7 +205,10 @@ else if (group != null) {
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+			paginate="<%= false %>"
+		/>
 	</liferay-ui:search-container>
 
 	<div class="button-holder">

@@ -24,11 +24,16 @@ List<Group> inheritedSites = userDisplayContext.getInheritedSites();
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="sites" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="sites"
+/>
 
 <liferay-ui:membership-policy-error />
 
-<liferay-util:buffer var="removeGroupIcon">
+<liferay-util:buffer
+	var="removeGroupIcon"
+>
 	<liferay-ui:icon
 		icon="times"
 		markupView="lexicon"
@@ -91,7 +96,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -282,5 +289,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>

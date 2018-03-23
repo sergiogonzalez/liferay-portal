@@ -141,13 +141,7 @@ public class AssetBrowserDisplayContext {
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
-		if (Validator.isNull(getKeywords())) {
-			if (Validator.isNotNull(getAddButtonURL())) {
-				assetBrowserSearch.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
-			}
-		}
-		else {
+		if (Validator.isNotNull(getKeywords())) {
 			assetBrowserSearch.setSearch(true);
 		}
 
@@ -400,12 +394,13 @@ public class AssetBrowserDisplayContext {
 			portletURL.setParameter(
 				"selectedGroupId", String.valueOf(selectedGroupId));
 		}
+		else {
+			long[] selectedGroupIds = getSelectedGroupIds();
 
-		long[] selectedGroupIds = getSelectedGroupIds();
-
-		if (selectedGroupIds.length > 0) {
-			portletURL.setParameter(
-				"selectedGroupIds", StringUtil.merge(selectedGroupIds));
+			if (selectedGroupIds.length > 0) {
+				portletURL.setParameter(
+					"selectedGroupIds", StringUtil.merge(selectedGroupIds));
+			}
 		}
 
 		portletURL.setParameter(

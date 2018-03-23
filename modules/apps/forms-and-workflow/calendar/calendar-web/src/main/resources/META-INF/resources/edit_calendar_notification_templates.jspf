@@ -45,21 +45,13 @@ String notificationTemplateSubject = BeanPropertiesUtil.getString(calendarNotifi
 		navigationURL.setParameter("tabs3", "invite-email");
 		%>
 
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="invite-email"
-			selected='<%= tabs3.equals("invite-email") %>'
-		/>
+		<aui:nav-item href="<%= navigationURL.toString() %>" label="invite-email" selected='<%= tabs3.equals("invite-email") %>' />
 
 		<%
 		navigationURL.setParameter("tabs3", "reminder-email");
 		%>
 
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="reminder-email"
-			selected='<%= tabs3.equals("reminder-email") %>'
-		/>
+		<aui:nav-item href="<%= navigationURL.toString() %>" label="reminder-email" selected='<%= tabs3.equals("reminder-email") %>' />
 	</aui:nav>
 </aui:nav-bar>
 
@@ -86,7 +78,10 @@ String notificationTemplateSubject = BeanPropertiesUtil.getString(calendarNotifi
 		<aui:input name="subject" value="<%= notificationTemplateSubject %>" />
 
 		<aui:field-wrapper label="body">
-			<liferay-ui:input-editor contents="<%= notificationTemplateBody %>" editorImpl="ckeditor" />
+			<liferay-ui:input-editor
+				contents="<%= notificationTemplateBody %>"
+				editorImpl="ckeditor"
+			/>
 
 			<aui:input name="body" type="hidden" value="<%= notificationTemplateBody %>" />
 		</aui:field-wrapper>

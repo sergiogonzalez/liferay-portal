@@ -27,7 +27,13 @@ AppDisplay appDisplay = (AppDisplay)row.getObject();
 String bundleIds = _getBundleIds(appDisplay);
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 
 	<%
 	String storeURL = appDisplay.getStoreURL(request);
@@ -77,7 +83,10 @@ String bundleIds = _getBundleIds(appDisplay);
 			<portlet:param name="bundleIds" value="<%= bundleIds %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete message="uninstall" url="<%= uninstallBundlesURL %>" />
+		<liferay-ui:icon-delete
+			message="uninstall"
+			url="<%= uninstallBundlesURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>
 

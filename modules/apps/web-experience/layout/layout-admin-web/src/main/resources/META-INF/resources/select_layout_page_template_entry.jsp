@@ -75,7 +75,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="icon"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 
 			<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
@@ -85,6 +88,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 			</portlet:actionURL>
+
+			<%
+			String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames();
+			%>
 
 			<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 				var addLayoutActionOptionQueryClickHandler = dom.delegate(
@@ -96,9 +103,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 						modalCommands.openSimpleInputModal(
 							{
+								<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
+									checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
+									checkboxFieldName: 'TypeSettingsProperties--addToAutoMenus--',
+									checkboxFieldValue: true,
+								</c:if>
+
 								dialogTitle: '<liferay-ui:message key="add-page" />',
 								formSubmitURL: '<%= addLayoutURL %>',
-								idFieldName: 'layoutPageTemplateEntryId',
+								idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
 								idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
 								mainFieldName: 'name',
 								mainFieldLabel: '<liferay-ui:message key="name" />',

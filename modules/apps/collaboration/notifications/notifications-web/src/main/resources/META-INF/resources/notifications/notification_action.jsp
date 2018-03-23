@@ -34,7 +34,13 @@ if (subscriptionId > 0) {
 }
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= !userNotificationEvent.isActionRequired() %>">
 		<c:choose>
 			<c:when test="<%= !userNotificationEvent.isArchived() %>">
@@ -43,7 +49,10 @@ if (subscriptionId > 0) {
 					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon message="mark-as-read" url="<%= markNotificationAsReadURL.toString() %>" />
+				<liferay-ui:icon
+					message="mark-as-read"
+					url="<%= markNotificationAsReadURL.toString() %>"
+				/>
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL name="markNotificationAsUnread" var="markNotificationAsUnreadURL">
@@ -51,7 +60,10 @@ if (subscriptionId > 0) {
 					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon message="mark-as-unread" url="<%= markNotificationAsUnreadURL.toString() %>" />
+				<liferay-ui:icon
+					message="mark-as-unread"
+					url="<%= markNotificationAsUnreadURL.toString() %>"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -62,7 +74,10 @@ if (subscriptionId > 0) {
 			<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon message="stop-receiving-notifications-from-this-asset" url="<%= unsubscribeURL.toString() %>" />
+		<liferay-ui:icon
+			message="stop-receiving-notifications-from-this-asset"
+			url="<%= unsubscribeURL.toString() %>"
+		/>
 	</c:if>
 
 	<portlet:actionURL name="deleteUserNotificationEvent" var="deleteURL">
@@ -70,5 +85,8 @@ if (subscriptionId > 0) {
 		<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon message="delete" url="<%= deleteURL.toString() %>" />
+	<liferay-ui:icon
+		message="delete"
+		url="<%= deleteURL.toString() %>"
+	/>
 </liferay-ui:icon-menu>

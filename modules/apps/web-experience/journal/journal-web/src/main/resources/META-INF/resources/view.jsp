@@ -32,18 +32,7 @@ if (Validator.isNotNull(title)) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "web-content"));
-					});
-			}
-		}
-	%>"
+	items='<%= journalDisplayContext.getNavigationBarItems("web-content") %>'
 />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
@@ -65,7 +54,9 @@ if (Validator.isNotNull(title)) {
 
 		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
+				<c:if test="<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() %>">
+					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
+				</c:if>
 			</div>
 
 			<%

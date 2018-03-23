@@ -25,9 +25,13 @@ List<String> titles = (List<String>)request.getAttribute("liferay-trash:undo:tit
 int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-trash:undo:trashedEntriesCount"));
 %>
 
-<liferay-util:buffer var="alertMessage">
+<liferay-util:buffer
+	var="alertMessage"
+>
 	<aui:form action="<%= portletURL %>" cssClass="alert-trash-form" name="undoForm">
-		<liferay-util:buffer var="trashLink">
+		<liferay-util:buffer
+			var="trashLink"
+		>
 
 			<%
 			PortletURL trashURL = PortletProviderUtil.getPortletURL(request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
@@ -74,7 +78,9 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 				}
 				%>
 
-				<liferay-util:buffer var="trashEntityLink">
+				<liferay-util:buffer
+					var="trashEntityLink"
+				>
 					<c:if test="<%= Validator.isNotNull(title) %>">
 						<strong><em class="delete-entry-title"><%= HtmlUtil.escape(title) %></em></strong>
 					</c:if>

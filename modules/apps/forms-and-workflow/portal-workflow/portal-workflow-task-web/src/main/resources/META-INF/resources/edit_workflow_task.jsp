@@ -74,7 +74,9 @@ renderResponse.setTitle(headerTitle);
 									<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
 										<div class="card-col-field">
 											<div class="list-group-card-icon">
-												<liferay-ui:user-portrait userId="<%= workflowTask.getAssigneeUserId() %>" />
+												<liferay-ui:user-portrait
+													userId="<%= workflowTask.getAssigneeUserId() %>"
+												/>
 											</div>
 										</div>
 
@@ -128,11 +130,22 @@ renderResponse.setTitle(headerTitle);
 				</c:if>
 			</aui:fieldset>
 
-			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>">
+			<liferay-ui:panel-container
+				cssClass="task-panel-container"
+				extended="<%= false %>"
+			>
 				<c:if test="<%= assetRenderer != null %>">
-					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">
+					<liferay-ui:panel
+						extended="<%= true %>"
+						markupView="lexicon"
+						title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>"
+					>
 						<div class="locale-actions">
-							<liferay-ui:language formAction="<%= currentURL %>" languageId="<%= languageId %>" languageIds="<%= availableLanguageIds %>" />
+							<liferay-ui:language
+								formAction="<%= currentURL %>"
+								languageId="<%= languageId %>"
+								languageIds="<%= availableLanguageIds %>"
+							/>
 						</div>
 
 						<div class="task-content-actions">
@@ -160,7 +173,11 @@ renderResponse.setTitle(headerTitle);
 									/>
 
 									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
-										<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>" />
+										<liferay-ui:icon
+											iconCssClass="icon-copy"
+											message="diffs"
+											url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
+										/>
 									</c:if>
 								</c:if>
 
@@ -200,7 +217,11 @@ renderResponse.setTitle(headerTitle);
 						/>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="comments">
+					<liferay-ui:panel
+						extended="<%= true %>"
+						markupView="lexicon"
+						title="comments"
+					>
 						<liferay-comment:discussion
 							assetEntryVisible="<%= false %>"
 							className="<%= assetRenderer.getClassName() %>"
@@ -213,7 +234,10 @@ renderResponse.setTitle(headerTitle);
 					</liferay-ui:panel>
 				</c:if>
 
-				<liferay-ui:panel markupView="lexicon" title="activities">
+				<liferay-ui:panel
+					markupView="lexicon"
+					title="activities"
+				>
 
 					<%
 					List<WorkflowLog> workflowLogs = workflowTaskDisplayContext.getWorkflowLogs(workflowTask);

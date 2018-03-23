@@ -44,8 +44,20 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (A
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetEntriesSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:panel-container extended="<%= true %>" id='<%= renderResponse.getNamespace() + "facetAssetEntriesPanelContainer" %>' markupView="lexicon" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" id='<%= renderResponse.getNamespace() + "facetAssetEntriesPanel" %>' markupView="lexicon" persistState="<%= true %>" title="type">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			id='<%= renderResponse.getNamespace() + "facetAssetEntriesPanelContainer" %>'
+			markupView="lexicon"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="search-facet"
+				id='<%= renderResponse.getNamespace() + "facetAssetEntriesPanel" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="type"
+			>
 				<aui:form method="post" name="assetEntriesFacetForm">
 					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetEntriesSearchFacetDisplayContext.getParameterValue() %>" />
 					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= assetEntriesSearchFacetDisplayContext.getParameterName() %>" />
@@ -62,15 +74,7 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (A
 
 								<li class="facet-value">
 									<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-										<input
-											class="facet-term"
-											data-term-id="<%= assetEntriesSearchFacetTermDisplayContext.getAssetType() %>"
-											id="<portlet:namespace />term_<%= i %>"
-											name="<portlet:namespace />term_<%= i %>"
-											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-											type="checkbox"
-											<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
-										/>
+										<input class="facet-term" data-term-id="<%= assetEntriesSearchFacetTermDisplayContext.getAssetType() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
 										<span class="term-name">
 											<%= HtmlUtil.escape(assetEntriesSearchFacetTermDisplayContext.getTypeName()) %>

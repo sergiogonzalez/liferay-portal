@@ -80,17 +80,15 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 			</c:if>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
-				<aui:a
-					cssClass="goto-link list-group-heading"
-					href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
-					label="go-to-site"
-				/>
+				<aui:a cssClass="goto-link list-group-heading" href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>" label="go-to-site" />
 			</c:if>
 		</div>
 	</div>
 
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteAdministration() %>">
-		<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+		<liferay-application-list:panel-category-body
+			panelCategory="<%= panelCategory %>"
+		/>
 	</c:if>
 </c:if>
 

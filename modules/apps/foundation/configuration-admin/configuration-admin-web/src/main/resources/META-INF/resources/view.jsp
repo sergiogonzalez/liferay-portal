@@ -31,7 +31,10 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 			</portlet:renderURL>
 
 			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+				<liferay-ui:input-search
+					autoFocus="<%= true %>"
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -46,7 +49,7 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 
 			<li class="list-group-header">
 				<h3 class="list-group-header-title text-uppercase">
-					<liferay-ui:message key='<%= "category-set." + configurationCategorySectionDisplay.getConfigurationCategorySection() %>' />
+					<liferay-ui:message key='<%= "category-section." + configurationCategorySectionDisplay.getConfigurationCategorySection() %>' />
 				</h3>
 			</li>
 			<li class="list-group-card">
@@ -57,16 +60,19 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 					%>
 
 						<portlet:renderURL var="categoryURL">
-							<portlet:param name="mvcRenderCommandName" value="/category" />
-							<portlet:param name="configurationCategory" value="<%= configurationCategoryDisplay.getKey() %>" />
+							<portlet:param name="mvcRenderCommandName" value="/view_category" />
+							<portlet:param name="configurationCategory" value="<%= configurationCategoryDisplay.getCategoryKey() %>" />
 						</portlet:renderURL>
 
 						<li class="list-group-card-item">
 							<a href="<%= categoryURL %>">
-								<clay:icon elementClasses="user-icon-sm" symbol="<%= configurationCategoryDisplay.getIcon() %>" />
+								<clay:icon
+									elementClasses="user-icon-sm"
+									symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>"
+								/>
 
 								<span class="list-group-card-item-text">
-									<liferay-ui:message key='<%= "category." + configurationCategoryDisplay.getKey() %>' />
+									<liferay-ui:message key='<%= "category." + configurationCategoryDisplay.getCategoryKey() %>' />
 								</span>
 							</a>
 						</li>

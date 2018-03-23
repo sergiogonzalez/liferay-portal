@@ -210,7 +210,7 @@ for (int i = 0; i < pages.size(); i++) {
 	// Date
 
 	if (!curWikiPage.isNew()) {
-		row.addDate(curWikiPage.getCreateDate(), rowURL);
+		row.addDate(curWikiPage.getStatusDate(), rowURL);
 	}
 	else {
 		row.addText(StringPool.BLANK);
@@ -259,7 +259,10 @@ for (int i = 0; i < pages.size(); i++) {
 	portletURL="<%= portletURL %>"
 />
 
-<liferay-ui:search-iterator paginate='<%= navigation.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-iterator
+	paginate='<%= navigation.equals("history") ? false : true %>'
+	searchContainer="<%= searchContainer %>"
+/>
 
 <c:if test='<%= navigation.equals("history") %>'>
 	<aui:script>

@@ -69,7 +69,13 @@
 
 			<execute macro="SitePages#addPublicPage">
 				<var name="pageName" value="${portlet} Full Page Application" />
+				<var name="sitePageType" value="Full Page Application" />
+			</execute>
+
+			<execute macro="SitePages#configurePage">
+				<var name="pageName" value="${portlet} Full Page Application" />
 				<var name="portlet" value="${portlet}" />
+				<var name="privacy" value="Public" />
 				<var name="sitePageType" value="Full Page Application" />
 			</execute>
 
@@ -154,14 +160,14 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName" >
+		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
 			<execute macro="SitePages#addPublicChildPage">
 				<var name="childPageName" value="${childPageName}" />
 				<var name="parentPageName" value="Site Page" />
 			</execute>
 		</for>
 
-		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName" >
+		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
 			<execute macro="Page#view">
 				<var name="depth" value="1" />
 				<var name="pageName" value="${childPageName}" />
@@ -205,12 +211,10 @@
 			<var name="url" value="${portalURL}/group/site-name/site-child-page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPrivatePages" />
-
 		<execute macro="Page#view">
 			<var name="depth" value="1" />
 			<var name="pageName" value="Site Child Page" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Private" />
 		</execute>
 	</command>
 
@@ -881,6 +885,7 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page" />
+			<var name="sitePageType" value="Embedded" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

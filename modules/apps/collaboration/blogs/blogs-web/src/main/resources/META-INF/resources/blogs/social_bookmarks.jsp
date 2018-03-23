@@ -35,11 +35,12 @@ String socialBookmarksDisplayStyle = blogsPortletInstanceConfiguration.socialBoo
 	</c:choose>
 </portlet:renderURL>
 
-<liferay-ui:social-bookmarks
-	contentId="<%= String.valueOf(entry.getEntryId()) %>"
+<liferay-social-bookmarks:bookmarks
+	className="<%= BlogsEntry.class.getName() %>"
+	classPK="<%= entry.getEntryId() %>"
 	displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 	target="_blank"
 	title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
-	types="<%= blogsPortletInstanceConfiguration.socialBookmarksTypes() %>"
+	types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
 	url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, layout) %>"
 />

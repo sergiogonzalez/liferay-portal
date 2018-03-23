@@ -10,7 +10,33 @@
 	<short-name>liferay-staging</short-name>
 	<uri>http://liferay.com/tld/staging</uri>
 	<tag>
-		<description>Renders the UI section for an <![CDATA[<code>ExportImportConfiguration</code>]]> object's basic information.</description>
+		<description>Renders the UI section for an alert.</description>
+		<name>alert</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.AlertTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Whether the alert is dismissible. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>dismissible</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether the alert is fluid. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>fluid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>The alert's type. Available alert types include <![CDATA[<code>ERROR</code>]]>, <![CDATA[<code>INFO</code>]]>, <![CDATA[<code>SUCCESS</code>]]>, and <![CDATA[<code>WARNING</code>]]>. The default value is <![CDATA[<code>INFO</code>]]>.</description>
+			<name>type</name>
+			<required>true</required>
+			<type>com.liferay.staging.taglib.servlet.taglib.AlertType</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders the UI section for an <![CDATA[<code>exportImportConfiguration</code>]]> object's basic information.</description>
 		<name>configuration-header</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ConfigurationHeaderTag</tag-class>
 		<body-content>JSP</body-content>

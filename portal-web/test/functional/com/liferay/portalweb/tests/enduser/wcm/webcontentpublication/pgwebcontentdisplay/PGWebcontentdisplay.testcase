@@ -293,7 +293,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageStructures" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Structures" />
+		</execute>
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -317,7 +319,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateFieldNames" value="Text" />
@@ -408,7 +412,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateFieldNames" value="Content,Content,Content" />
@@ -1071,13 +1077,17 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute function="Click" locator1="Language#LANGUAGE_MENU_CHINESE" />
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="locale" value="zh-cn" />
+		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="世界您好 Content" />
 		</execute>
 
-		<execute function="Click" locator1="Language#LANGUAGE_MENU_ENGLISH" />
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="locale" value="en-us" />
+		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />

@@ -81,7 +81,12 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 }
 %>
 
-<liferay-ui:tabs cssClass="navbar-no-collapse" names="<%= sections %>" refresh="<%= false %>" type="dropdown">
+<liferay-ui:tabs
+	cssClass="navbar-no-collapse"
+	names="<%= sections %>"
+	refresh="<%= false %>"
+	type="dropdown"
+>
 	<liferay-ui:section>
 		<div class="sidebar-body">
 			<c:choose>
@@ -169,7 +174,9 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						/>
 					</c:if>
 
-					<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+					<liferay-expando:custom-attributes-available
+						className="<%= WikiPage.class.getName() %>"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
@@ -230,7 +237,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 								</div>
 
 								<div class="h6 sidebar-caption">
-									<liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(Validator.isNotNull(curPage.getUserName()) ? curPage.getUserName() : "Liferay"), dateFormatDateTime.format(curPage.getCreateDate())} %>' key="by-x-on-x" />
+									<liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(Validator.isNotNull(curPage.getUserName()) ? curPage.getUserName() : "Liferay"), dateFormatDateTime.format(curPage.getStatusDate())} %>' key="by-x-on-x" />
 								</div>
 							</div>
 

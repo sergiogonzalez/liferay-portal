@@ -195,6 +195,12 @@
 		</execute>
 	</command>
 
+	<command name="getFieldName" returns="fieldName">
+		<var method="selenium#getElementValue(FormFields#FIELD_NAME_EDIT)" name="fieldName" />
+
+		<return name="fieldName" value="${fieldName}" />
+	</command>
+
 	<command name="moveOptionsRow">
 		<var name="key_rowNumber1" value="${rowNumberStart}" />
 		<var name="key_rowNumber2" value="${rowNumberEnd}" />

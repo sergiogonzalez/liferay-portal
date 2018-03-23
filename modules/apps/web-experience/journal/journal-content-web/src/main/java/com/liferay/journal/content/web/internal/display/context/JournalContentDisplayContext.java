@@ -168,10 +168,6 @@ public class JournalContentDisplayContext {
 	}
 
 	public JournalArticleDisplay getArticleDisplay() {
-		if (_articleDisplay != null) {
-			return _articleDisplay;
-		}
-
 		_articleDisplay = (JournalArticleDisplay)_portletRequest.getAttribute(
 			WebKeys.JOURNAL_ARTICLE_DISPLAY);
 
@@ -971,21 +967,9 @@ public class JournalContentDisplayContext {
 			return null;
 		}
 
-		DDMTemplate ddmTemplate = null;
-
-		try {
-			ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-				articleDisplay.getGroupId(), _ddmStructureClassNameId,
-				ddmTemplateKey, true);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get DDM template for article " +
-					articleDisplay.getId(),
-				pe);
-		}
-
-		return ddmTemplate;
+		return DDMTemplateLocalServiceUtil.fetchTemplate(
+			articleDisplay.getGroupId(), _ddmStructureClassNameId,
+			ddmTemplateKey, true);
 	}
 
 	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =

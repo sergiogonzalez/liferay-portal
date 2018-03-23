@@ -79,20 +79,11 @@ if (ratingsType == null) {
 		</aui:form>
 	</div>
 
-	<liferay-ui:success
-		key="suggestionDeleted"
-		message="suggestion-deleted-successfully"
-	/>
+	<liferay-ui:success key="suggestionDeleted" message="suggestion-deleted-successfully" />
 
-	<liferay-ui:success
-		key="suggestionStatusUpdated"
-		message="suggestion-status-updated-successfully"
-	/>
+	<liferay-ui:success key="suggestionStatusUpdated" message="suggestion-status-updated-successfully" />
 
-	<liferay-ui:success
-		key="suggestionSaved"
-		message="suggestion-saved-successfully"
-	/>
+	<liferay-ui:success key="suggestionSaved" message="suggestion-saved-successfully" />
 
 	<c:choose>
 		<c:when test="<%= kbCommentsCount == 1 %>">
@@ -196,7 +187,9 @@ if (ratingsType == null) {
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator markupView="lexicon" />
+					<liferay-ui:search-iterator
+						markupView="lexicon"
+					/>
 				</liferay-ui:search-container>
 			</c:if>
 		</c:otherwise>

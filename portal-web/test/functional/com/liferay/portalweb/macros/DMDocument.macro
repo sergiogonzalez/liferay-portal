@@ -545,6 +545,25 @@
 		<execute function="SelectFrame" locator1="relative=top" />
 	</command>
 
+	<command name="addPGViaAPWithValidationPosition">
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Basic Document" />
+		</execute>
+
+		<execute macro="DMDocument#editDocument">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Button#CANCEL_GIVEN_POSITION" />
+		<execute function="AssertElementPresent" locator1="Button#PUBLISH_GIVEN_POSITION" />
+
+		<execute macro="Button#clickPublish" />
+
+		<execute function="SelectFrame" locator1="relative=top" />
+	</command>
+
 	<command name="addPGViaFlashUploader">
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
@@ -1111,7 +1130,7 @@
 				<contains string="${dmDocumentTitleEdit}" substring="{dmDocumentTitleEdit}" />
 			</not>
 			<then>
-				<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitleEdit}"  />
+				<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitleEdit}" />
 			</then>
 		</if>
 
@@ -1238,7 +1257,7 @@
 				<contains string="${dmDocumentTitleEdit}" substring="{dmDocumentTitleEdit}" />
 			</not>
 			<then>
-				<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitleEdit}"  />
+				<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitleEdit}" />
 			</then>
 		</if>
 
@@ -1885,6 +1904,7 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFileType" value="${dmDocumentFileType}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentType" value="${dmDocumentType}" />
 			<var name="tagName" value="${tagName}" />
 			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
@@ -2417,10 +2437,18 @@
 
 	<command name="viewPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmDocumentType" value="${dmDocumentType}" />
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
+
+		<if>
+			<isset var="dmDocumentType" />
+			<then>
+				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TYPE" value1="${dmDocumentType}" />
+			</then>
+		</if>
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
@@ -2681,8 +2709,8 @@
 		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
 		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_LOCK_ICON_BUTTON" />
-		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_UNLOCK_ICON_BUTTON"  />
-		<execute function="AssertVisible" locator1="Button#MOVE"  />
+		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_UNLOCK_ICON_BUTTON" />
+		<execute function="AssertVisible" locator1="Button#MOVE" />
 		<execute function="AssertVisible" locator1="Button#RECYCLE_BIN" />
 
 		<execute macro="Navigator#gotoSitePage">

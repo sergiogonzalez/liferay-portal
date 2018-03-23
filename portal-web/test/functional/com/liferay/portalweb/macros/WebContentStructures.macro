@@ -35,7 +35,7 @@
 	<command name="addLocalization">
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="localizationNameKey" value="${localization1NameKey}" />
+			<var name="locale" value="${locale}" />
 		</execute>
 
 		<execute macro="WebContentStructures#addName">
@@ -43,11 +43,11 @@
 		</execute>
 
 		<if>
-			<isset var="localization2NameKey" />
+			<isset var="locale2" />
 			<then>
 				<execute macro="PortletEntry#changeLocale">
 					<var name="fieldName" value="Name" />
-					<var name="localizationNameKey" value="${localization2NameKey}" />
+					<var name="locale" value="${locale2}" />
 				</execute>
 
 				<execute macro="WebContentStructures#addName">
@@ -121,7 +121,9 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="WebContentNavigator#gotoManageStructures" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Structures" />
+		</execute>
 
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
@@ -153,12 +155,9 @@
 			<var name="searchTerm" value="${substructureName}" />
 		</execute>
 
-		<var name="key_rowEntry" value="${substructureName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Default Values">
-			<var name="key_menuItem" value="Edit Default Values" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit Default Values" />
+			<var name="rowEntry" value="${substructureName}" />
 		</execute>
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
@@ -176,7 +175,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageStructures" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Structures" />
+		</execute>
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${substructureName}" />
@@ -202,12 +203,9 @@
 		<if>
 			<isset var="addRoleViewPermissions" />
 			<then>
-				<var name="key_rowEntry" value="${structureName}" />
-
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-					<var name="key_menuItem" value="Permissions" />
+				<execute macro="LexiconEntry#gotoEntryMenuItem">
+					<var name="menuItem" value="Permissions" />
+					<var name="rowEntry" value="${structureName}" />
 				</execute>
 
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -231,7 +229,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageStructures" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Structures" />
+		</execute>
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="2" />

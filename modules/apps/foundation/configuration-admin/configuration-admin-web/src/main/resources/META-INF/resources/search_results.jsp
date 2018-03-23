@@ -20,6 +20,7 @@
 String redirect = renderRequest.getParameter("redirect");
 
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
+ConfigurationModelRetriever configurationModelRetriever = (ConfigurationModelRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_RETRIEVER);
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -45,7 +46,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			</portlet:renderURL>
 
 			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+				<liferay-ui:input-search
+					autoFocus="<%= true %>"
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -100,6 +104,30 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 						<aui:a href="<%= editURL %>"><strong><%= configurationModelName %></strong></aui:a>
 					</c:otherwise>
 				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="category"
+			>
+
+				<%
+				ConfigurationCategory configurationCategory = configurationModelRetriever.getConfigurationCategory(configurationModel.getCategory());
+
+				String categorySection = null;
+				String category = null;
+
+				if (configurationCategory != null) {
+					categorySection = LanguageUtil.get(request, "category-section." + configurationCategory.getCategorySection());
+					category = LanguageUtil.get(request, "category." + configurationCategory.getCategoryKey());
+				}
+				else {
+					categorySection = LanguageUtil.get(request, "other");
+					category = configurationModel.getCategory();
+				}
+				%>
+
+				<liferay-ui:message key="<%= categorySection %>" /> &gt; <liferay-ui:message key="<%= category %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -178,6 +206,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

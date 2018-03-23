@@ -45,8 +45,6 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 
 SearchContainer rulesSearchContainer = new SearchContainer(renderRequest, portletURL, null, "no-classification-rules-are-configured-for-this-device-family");
 
-rulesSearchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 
 rulesSearchContainer.setOrderByCol(orderByCol);
@@ -113,8 +111,13 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-classification-rule") %>' url="<%= addURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(resourceBundle, "add-classification-rule") %>'
+				url="<%= addURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -214,6 +217,10 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="more" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			type="more"
+		/>
 	</liferay-ui:search-container>
 </div>

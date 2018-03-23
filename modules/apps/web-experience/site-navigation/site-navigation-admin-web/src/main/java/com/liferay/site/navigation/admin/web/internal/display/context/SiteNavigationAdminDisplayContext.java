@@ -78,14 +78,6 @@ public class SiteNavigationAdminDisplayContext {
 					SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
 	}
 
-	public SiteNavigationMenu getAutoSiteNavigationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return SiteNavigationMenuLocalServiceUtil.fetchAutoSiteNavigationMenu(
-			themeDisplay.getScopeGroupId());
-	}
-
 	public JSONArray getAvailableItemsJSONArray() throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -274,16 +266,7 @@ public class SiteNavigationAdminDisplayContext {
 			_liferayPortletRequest, getPortletURL(), null,
 			"there-are-no-navigation-menus");
 
-		if (Validator.isNull(getKeywords())) {
-			if (isShowAddButton()) {
-				searchContainer.setEmptyResultsMessageCssClass(
-					"there-are-no-navigation-menus-you-can-add-a-menu-by-" +
-						"clicking-the-plus-button-on-the-bottom-right-corner");
-				searchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
-			}
-		}
-		else {
+		if (Validator.isNotNull(getKeywords())) {
 			searchContainer.setSearch(true);
 		}
 
@@ -417,21 +400,6 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean isShowAutoSiteNavigationMenuMessage()
-		throws PortalException {
-
-		SiteNavigationMenu autoSiteNavigationMenu = getAutoSiteNavigationMenu();
-
-		if ((autoSiteNavigationMenu == null) ||
-			(autoSiteNavigationMenu.getSiteNavigationMenuId() ==
-				getSiteNavigationMenuId())) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	public boolean isShowPrimarySiteNavigationMenuMessage() {

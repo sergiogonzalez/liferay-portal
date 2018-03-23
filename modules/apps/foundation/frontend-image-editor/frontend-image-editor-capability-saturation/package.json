@@ -4,7 +4,6 @@
 		"metal-component": "^2.13.2",
 		"metal-debounce": "^2.0.0",
 		"metal-promise": "^2.0.1",
-		"metal-slider": "^2.1.1",
 		"metal-soy": "^2.13.2"
 	},
 	"devDependencies": {
@@ -12,5 +11,5 @@
 		"metal-cli": "^4.0.1"
 	},
 	"name": "frontend-image-editor-capability-saturation",
-	"version": "1.0.15"
+	"version": "2.0.0"
 }

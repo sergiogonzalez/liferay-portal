@@ -35,7 +35,10 @@ if (selContact != null) {
 String organizationIdsString = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
@@ -149,7 +152,10 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-ui:user-name-fields contact="<%= selContact %>" user="<%= selUser %>" />
+		<liferay-ui:user-name-fields
+			contact="<%= selContact %>"
+			user="<%= selUser %>"
+		/>
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="col-md-5">

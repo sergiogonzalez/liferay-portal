@@ -112,30 +112,22 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKBComments();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKBComments();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:success
-		key="suggestionDeleted"
-		message="suggestion-deleted-successfully"
-	/>
+	<liferay-ui:success key="suggestionDeleted" message="suggestion-deleted-successfully" />
 
-	<liferay-ui:success
-		key="suggestionsDeleted"
-		message="suggestions-deleted-successfully"
-	/>
+	<liferay-ui:success key="suggestionsDeleted" message="suggestions-deleted-successfully" />
 
-	<liferay-ui:success
-		key="suggestionStatusUpdated"
-		message="suggestion-status-updated-successfully"
-	/>
+	<liferay-ui:success key="suggestionStatusUpdated" message="suggestion-status-updated-successfully" />
 
-	<liferay-ui:success
-		key="suggestionSaved"
-		message="suggestion-saved-successfully"
-	/>
+	<liferay-ui:success key="suggestionSaved" message="suggestion-saved-successfully" />
 
 	<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
 </div>

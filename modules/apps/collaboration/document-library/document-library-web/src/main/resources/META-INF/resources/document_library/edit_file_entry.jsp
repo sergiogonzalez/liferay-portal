@@ -386,11 +386,7 @@ if (portletTitleBasedNavigation) {
 								try {
 							%>
 
-									<aui:translation-manager
-										availableLocales="<%= availableLocales %>"
-										defaultLanguageId="<%= defaultLanguageId %>"
-										id="translationManager"
-									/>
+									<aui:translation-manager availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 
 							<%
 									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
@@ -438,12 +434,7 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= (fileEntry != null) && !checkedOut %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
-						<aui:input
-							label="customize-the-version-number-increment-and-describe-my-changes"
-							name="updateVersionDetails"
-							type="toggle-switch"
-							value="<%= updateVersionDetails %>"
-						/>
+						<aui:input label="customize-the-version-number-increment-and-describe-my-changes" name="updateVersionDetails" type="toggle-switch" value="<%= updateVersionDetails %>" />
 
 						<div id="<portlet:namespace />versionDetails" style="<%= (updateVersionDetails) ? StringPool.BLANK : "display: none" %>">
 							<aui:input checked="<%= majorVersion %>" label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
@@ -460,7 +451,9 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
-					<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+					<liferay-expando:custom-attributes-available
+						className="<%= DLFileEntryConstants.getClassName() %>"
+					>
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 							<liferay-expando:custom-attribute-list
 								className="<%= DLFileEntryConstants.getClassName() %>"
@@ -474,9 +467,16 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-						<liferay-asset:asset-categories-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" />
+						<liferay-asset:asset-categories-selector
+							className="<%= DLFileEntry.class.getName() %>"
+							classPK="<%= assetClassPK %>"
+							classTypePK="<%= fileEntryTypeId %>"
+						/>
 
-						<liferay-asset:asset-tags-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" />
+						<liferay-asset:asset-tags-selector
+							className="<%= DLFileEntry.class.getName() %>"
+							classPK="<%= assetClassPK %>"
+						/>
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">

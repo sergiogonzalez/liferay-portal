@@ -30,14 +30,6 @@ RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, Por
 
 RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)ruleGroupSearch.getSearchTerms();
 
-boolean hasAddRuleGroupPermission = MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP);
-
-if (!searchTerms.isSearch() && hasAddRuleGroupPermission) {
-	ruleGroupSearch.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-}
-
-ruleGroupSearch.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
-
 LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 params.put("includeGlobalScope", Boolean.TRUE);
@@ -84,7 +76,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<c:if test="<%= hasAddRuleGroupPermission %>">
+		<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 			<portlet:renderURL var="viewRulesURL">
 				<portlet:param name="mvcRenderCommandName" value="/view.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -99,8 +91,13 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>' url="<%= addRuleGroupURL %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>'
+					url="<%= addRuleGroupURL %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -127,14 +124,21 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		<c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedDeviceFamilies" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedDeviceFamilies"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -238,7 +242,11 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="more" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			type="more"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

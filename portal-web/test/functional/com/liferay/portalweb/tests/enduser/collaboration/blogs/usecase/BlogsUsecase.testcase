@@ -291,7 +291,7 @@
 
 		<var name="dmDocumentCounterList" value="1,2" />
 
-		<for list="${dmDocumentCounterList}" param="entryCount" >
+		<for list="${dmDocumentCounterList}" param="entryCount">
 			<execute macro="DMDocument#addCP">
 				<var name="dmDocumentDescription" value="DM Document Description" />
 				<var name="dmDocumentFile" value="Document_${entryCount}.jpg" />
@@ -615,9 +615,10 @@
 			<var name="entryTitle" value="Blogs Entry3 Title" />
 		</execute>
 
+		<var name="key_entryContent" value="Blogs Entry3 Content" />
 		<var name="key_entryTitle" value="Blogs Entry3 Title" />
 
-		<execute function="AssertClick" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry3 Content" />
@@ -685,9 +686,10 @@
 			<var name="entryTitle" value="Blogs Entry5 Title" />
 		</execute>
 
+		<var name="key_entryContent" value="Blogs Entry5 Content" />
 		<var name="key_entryTitle" value="Blogs Entry5 Title" />
 
-		<execute function="AssertClick" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry5 Content" />
@@ -1078,6 +1080,7 @@
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Blogs" />
 			<var name="checkPageName" value="Blogs Page 1" />
 		</execute>
 
@@ -1157,6 +1160,7 @@
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Blogs" />
 			<var name="checkPageName" value="Blogs Page 2" />
 			<var name="contentDateRange" value="All" />
 		</execute>
@@ -1346,6 +1350,7 @@
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Blogs" />
 			<var name="checkPageName" value="Blogs Page" />
 		</execute>
 
@@ -1371,8 +1376,20 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
@@ -1505,11 +1522,9 @@
 			<var name="pageName" value="Private Blogs Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="www.able.com" />
+		<execute macro="Navigator#openPrivateURL">
+			<var name="baseURL" value="http://www.able.com:8080" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
@@ -1537,12 +1552,6 @@
 			<var name="userEmailAddress" value="test@www.able.com" />
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="www.able.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />

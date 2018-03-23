@@ -131,7 +131,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 						}
 						%>
 
-						<liferay-ui:search-container-column-text name="<%= columnLabel %>">
+						<liferay-ui:search-container-column-text
+							name="<%= columnLabel %>"
+						>
 							<aui:a href="<%= editFactoryInstanceURL %>"><strong><%= curConfigurationModel.getLabel() %></strong></aui:a>
 						</liferay-ui:search-container-column-text>
 
@@ -179,7 +181,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator markupView="lexicon" />
+					<liferay-ui:search-iterator
+						markupView="lexicon"
+					/>
 				</liferay-ui:search-container>
 			</div>
 		</div>

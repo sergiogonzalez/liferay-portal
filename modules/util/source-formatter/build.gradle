@@ -4,6 +4,12 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 buildPluginDescriptor {
+	dependsOn ":apps:foundation:petra:petra-content:install"
+	dependsOn ":apps:foundation:petra:petra-xml:install"
+	dependsOn ":core:petra:petra-concurrent:install"
+	dependsOn ":core:petra:petra-memory:install"
+	dependsOn ":core:petra:petra-reflect:install"
+
 	ext {
 		autoClean = false
 	}
@@ -57,6 +63,7 @@ liferayOSGi {
 }
 
 updateFileVersions {
+	match(/<artifactId>com\.liferay\.source\.formatter<\/artifactId>\s+<version>(.+)<\/version>/, "../../etl/talend/pom.xml")
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 	match(/com\.liferay\.source\.formatter=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 

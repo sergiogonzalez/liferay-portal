@@ -26,7 +26,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
@@ -65,8 +71,15 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deleteEntryURL %>" />
+		<liferay-ui:icon-delete
+			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+			url="<%= deleteEntryURL %>"
+		/>
 	</c:if>
 
-	<liferay-export-import-changeset:publish-entity-menu-item className="<%= BlogsEntry.class.getName() %>" groupId="<%= entry.getGroupId() %>" uuid="<%= entry.getUuid() %>" />
+	<liferay-export-import-changeset:publish-entity-menu-item
+		className="<%= BlogsEntry.class.getName() %>"
+		groupId="<%= entry.getGroupId() %>"
+		uuid="<%= entry.getUuid() %>"
+	/>
 </liferay-ui:icon-menu>

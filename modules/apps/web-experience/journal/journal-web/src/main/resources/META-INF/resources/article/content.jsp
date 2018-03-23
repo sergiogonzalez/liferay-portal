@@ -48,7 +48,10 @@ if (!searchRestriction) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="content" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="content"
+/>
 
 <aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
@@ -189,18 +192,14 @@ if (!searchRestriction) {
 			'ddm.searchRestrictionClassNameId': <%= ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class) %>,
 			'ddm.searchRestrictionClassPK': <%= folderId %>,
 			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
-			descriptionInputLocalized: Liferay.component('<portlet:namespace />descriptionMapAsXML'),
 			editStructure: '#<portlet:namespace />editDDMStructure',
 			editTemplate: '#<portlet:namespace />editDDMTemplate',
-			friendlyURLInputLocalized: '<portlet:namespace />friendlyURL',
 			namespace: '<portlet:namespace />',
 			selectStructure: '#<portlet:namespace />selectStructure',
 			selectTemplate: '#<portlet:namespace />selectTemplate',
 			'strings.draft': '<liferay-ui:message key="draft" />',
 			'strings.editStructure': '<liferay-ui:message key="editing-the-current-structure-deletes-all-unsaved-content" />',
 			'strings.editTemplate': '<liferay-ui:message key="editing-the-current-template-deletes-all-unsaved-content" />',
-			titleInputLocalized: Liferay.component('<portlet:namespace />titleMapAsXML'),
-			translationManager: Liferay.component('<portlet:namespace />translationManager'),
 			'urls.editStructure': '<%= editStructureURL %>',
 			'urls.editTemplate': '<%= editTemplateURL %>'
 		}

@@ -69,7 +69,14 @@ if (hints != null) {
 			}
 			%>
 
-			<liferay-ui:input-checkbox cssClass="<%= cssClass %>" defaultValue="<%= value %>" disabled="<%= disabled %>" formName="<%= formName %>" id="<%= namespace + id %>" param="<%= fieldParam %>" />
+			<liferay-ui:input-checkbox
+				cssClass="<%= cssClass %>"
+				defaultValue="<%= value %>"
+				disabled="<%= disabled %>"
+				formName="<%= formName %>"
+				id="<%= namespace + id %>"
+				param="<%= fieldParam %>"
+			/>
 		</c:when>
 		<c:when test='<%= type.equals("Date") %>'>
 
@@ -258,14 +265,14 @@ if (hints != null) {
 					var checkbox = $('#<portlet:namespace /><%= formName + fieldParam %>');
 
 					checkbox.one(
-						'click mouseover',
+						'click',
 						function() {
 							Liferay.component('<portlet:namespace /><%= fieldParam %>DatePicker');
 						}
 					);
 
 					checkbox.on(
-						'click mouseover',
+						'click',
 						function(event) {
 							var checked = checkbox.prop('checked');
 

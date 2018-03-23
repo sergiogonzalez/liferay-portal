@@ -56,12 +56,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= advancedPublishURL %>"
-			iconCssClass="icon-cog"
-			label="switch-to-advanced-publication"
-			selected="<%= false %>"
-		/>
+		<aui:nav-item href="<%= advancedPublishURL %>" iconCssClass="icon-cog" label="switch-to-advanced-publication" selected="<%= false %>" />
 	</aui:nav>
 </aui:nav-bar>
 
@@ -113,7 +108,9 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 								LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
 								%>
 
-								<liferay-util:buffer var="badgeHTML">
+								<liferay-util:buffer
+									var="badgeHTML"
+								>
 									<span class="badge badge-info">
 
 										<%
@@ -172,7 +169,9 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 										if (((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
 								%>
 
-											<liferay-util:buffer var="badgeHTML">
+											<liferay-util:buffer
+												var="badgeHTML"
+											>
 												<span class="badge badge-info"><%= (exportModelCount > 0) ? exportModelCount : StringPool.BLANK %></span>
 
 												<span class="badge badge-warning deletions"><%= (modelDeletionCount > 0) ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>

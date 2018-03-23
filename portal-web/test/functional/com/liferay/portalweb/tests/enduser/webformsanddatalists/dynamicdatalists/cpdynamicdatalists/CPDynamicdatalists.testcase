@@ -110,7 +110,7 @@
 	</command>
 
 	<command name="AddFormTemplate" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -4706,7 +4706,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewListRecordAndAssertAnchorLink"  priority="3">
+	<command name="ViewListRecordAndAssertAnchorLink" priority="3">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

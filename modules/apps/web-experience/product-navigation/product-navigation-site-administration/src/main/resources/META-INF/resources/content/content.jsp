@@ -21,7 +21,10 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 %>
 
-<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
+<liferay-application-list:panel-category
+	panelCategory="<%= panelCategory %>"
+	showBody="<%= false %>"
+>
 
 	<%
 	Group curSite = themeDisplay.getSiteGroup();
@@ -31,7 +34,9 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 
 	<c:choose>
 		<c:when test="<%= scopeLayouts.isEmpty() %>">
-			<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+			<liferay-application-list:panel-category-body
+				panelCategory="<%= panelCategory %>"
+			/>
 		</c:when>
 		<c:otherwise>
 
@@ -109,7 +114,9 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 									</ul>
 							</div>
 
-						<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+						<liferay-application-list:panel-category-body
+							panelCategory="<%= panelCategory %>"
+						/>
 					</li>
 				</ul>
 			</c:if>

@@ -69,7 +69,9 @@ else if (group.isStagingGroup()) {
 	String successMessage = (String)MultiSessionMessages.get(renderRequest, "requestProcessed");
 	%>
 
-	<liferay-util:buffer var="successHtml">
+	<liferay-util:buffer
+		var="successHtml"
+	>
 		<c:choose>
 			<c:when test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
 				<%= HtmlUtil.escape(successMessage) %>
@@ -89,10 +91,7 @@ else if (group.isStagingGroup()) {
 		</c:if>
 	</liferay-util:buffer>
 
-	<liferay-ui:success
-		key="requestProcessed"
-		message="<%= successHtml %>"
-	/>
+	<liferay-ui:success key="requestProcessed" message="<%= successHtml %>" />
 </c:if>
 
 <liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION %>" message="you-have-successfully-updated-the-setup" />

@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
 import java.util.Locale;
@@ -41,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/user_associated_data/forget_personal_site"
+		"mvc.command.name=/forget_personal_site"
 	},
 	service = MVCActionCommand.class
 )
@@ -53,28 +52,26 @@ public class ForgetPersonalSiteMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
+		User selectedUser = _portal.getSelectedUser(actionRequest);
 
-		User selUser = _userLocalService.getUserById(selUserId);
-
-		if (selUser.isDefaultUser()) {
+		if (selectedUser.isDefaultUser()) {
 			throw new RequiredUserException();
 		}
 
-		_groupLocalService.deleteGroup(selUser.getGroup());
+		_groupLocalService.deleteGroup(selectedUser.getGroup());
 
 		_groupLocalService.addGroup(
-			selUser.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			User.class.getName(), selUser.getUserId(),
+			selectedUser.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			User.class.getName(), selectedUser.getUserId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, (Map<Locale, String>)null,
 			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			StringPool.SLASH + selUser.getScreenName(), false, true, null);
+			StringPool.SLASH + selectedUser.getScreenName(), false, true, null);
 	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private Portal _portal;
 
 }

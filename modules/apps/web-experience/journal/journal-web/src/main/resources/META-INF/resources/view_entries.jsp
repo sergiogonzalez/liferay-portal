@@ -114,7 +114,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 							<c:if test="<%= journalDisplayContext.isSearch() %>">
 								<h5>
-									<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>
+									<%= JournalHelperUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>
 								</h5>
 							</c:if>
 
@@ -196,7 +196,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="path"
-								value="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
+								value="<%= JournalHelperUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
 							/>
 						</c:if>
 
@@ -302,7 +302,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
 						%>
 
-						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
 							<liferay-frontend:horizontal-card
 								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/folder_action.jsp" : null %>'
 								actionJspServletContext="<%= application %>"
@@ -376,5 +378,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= journalDisplayContext.isSearch() ? null : new JournalResultRowSplitter() %>" searchContainer="<%= articleSearchContainer %>" />
+	<liferay-ui:search-iterator
+		displayStyle="<%= displayStyle %>"
+		markupView="lexicon"
+		resultRowSplitter="<%= journalDisplayContext.isSearch() ? null : new JournalResultRowSplitter() %>"
+		searchContainer="<%= articleSearchContainer %>"
+	/>
 </liferay-ui:search-container>

@@ -171,13 +171,18 @@ version 3.2.1.
 ## 1.9.0 - *(Unreleased)*
 
 ### Added
+- [LPS-77425]: Automatically set the `portal.version` property for all projects
+based on the value of the `liferay.workspace.bundle.url` property.
 - [LPS-77586]: Add support for relative file URLs in the
 `liferay.workspace.bundle.url` project property.
 - [LPS-78149]: Add the ability to deploy additional 3rd-party OSGi modules via
 the `providedModules` configuration of the root project.
-- [LPS-78149]: Apply the [`com.liferay.target.platform.ide`](https://github.com/Ithildir/liferay-portal/tree/master/modules/sdk/gradle-plugins-target-platform)
+- [LPS-78149]: Apply the [`com.liferay.target.platform.ide`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-target-platform)
 Gradle plugin to the root project, if the `target.platform.version` property in
 `gradle.properties` is set.
+
+### Changed
+- [LPS-78023]: Update the [Liferay Gradle Plugins] dependency to version 3.8.20.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -217,5 +222,7 @@ Gradle plugin to the root project, if the `target.platform.version` property in
 [LPS-75479]: https://issues.liferay.com/browse/LPS-75479
 [LPS-76221]: https://issues.liferay.com/browse/LPS-76221
 [LPS-76271]: https://issues.liferay.com/browse/LPS-76271
+[LPS-77425]: https://issues.liferay.com/browse/LPS-77425
 [LPS-77586]: https://issues.liferay.com/browse/LPS-77586
+[LPS-78023]: https://issues.liferay.com/browse/LPS-78023
 [LPS-78149]: https://issues.liferay.com/browse/LPS-78149

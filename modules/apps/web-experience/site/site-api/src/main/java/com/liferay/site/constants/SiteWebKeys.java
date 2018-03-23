@@ -16,8 +16,12 @@ package com.liferay.site.constants;
 
 /**
  * @author Julio Camarero
+ * @author Marco Leo
  */
 public class SiteWebKeys {
+
+	public static final String GROUP_INITIALIZER_REGISTRY =
+		"GROUP_INITIALIZER_REGISTRY";
 
 	public static final String GROUP_SEARCH_PROVIDER = "GROUP_SEARCH_PROVIDER";
 

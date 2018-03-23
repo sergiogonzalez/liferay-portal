@@ -73,7 +73,10 @@
 
 					<mkdir dir="${tstamp.value}" />
 
-					<unzip dest="${tstamp.value}" src="${test.build.liferay.portal.zip.file.name}" />
+					<unzip
+						dest="${tstamp.value}"
+						src="${test.build.liferay.portal.zip.file.name}"
+					/>
 
 					<copy
 						file="portal-impl/src/portal-ext.properties"
@@ -89,7 +92,10 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<delete file="${test.build.liferay.portal.zip.file.name}" />
 
-					<zip basedir="${tstamp.value}" destfile="${test.build.liferay.portal.zip.file.name}" />
+					<zip
+						basedir="${tstamp.value}"
+						destfile="${test.build.liferay.portal.zip.file.name}"
+					/>
 
 					<delete dir="${tstamp.value}" />
 
@@ -300,183 +306,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-env-app-server">
-		<sequential>
-			<propertyregex
-				input="${app.server.version}"
-				override="true"
-				property="app.server.major.version"
-				regexp="(\d+\.\d+).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${app.server.major.version}"
-				global="true"
-				input="${app.server.major.version}"
-				override="true"
-				property="app.server.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.app.server.${app.server.type}${app.server.major.version.build}"
-				name="env.option.app.server"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-env-browser">
-		<sequential>
-			<propertyregex
-				input="${browser.version}"
-				override="true"
-				property="browser.major.version"
-				regexp="(\d+\.\d+).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${browser.major.version}"
-				global="true"
-				input="${browser.major.version}"
-				override="true"
-				property="browser.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.browser.${browser.type}${browser.major.version.build}"
-				name="env.option.browser"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-env-database">
-		<sequential>
-			<get-database-property property.name="database.version" />
-
-			<propertyregex
-				input="${database.version}"
-				override="true"
-				property="database.major.version"
-				regexp="(\d+\.?\d+?(r2)?).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${database.major.version}"
-				global="true"
-				input="${database.major.version}"
-				override="true"
-				property="database.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.database.${database.type}${database.major.version.build}"
-				name="env.option.database"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-env-java-jdk">
-		<sequential>
-			<propertycopy
-				from="env.option.java.jdk.${java.jdk.type}.${java.jdk.version}.${java.jdk.architecture}"
-				name="env.option.java.jdk"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-env-liferay-portal">
-		<sequential>
-			<if>
-				<not>
-					<available file="git-commit-portal" />
-				</not>
-				<then>
-					<record-git-commit-portal />
-				</then>
-			</if>
-
-			<loadfile
-				property="liferay.plugins.git.id"
-				srcfile="git-commit-plugins"
-			/>
-
-			<loadfile
-				property="liferay.portal.git.id"
-				srcfile="git-commit-portal"
-			/>
-
-			<if>
-				<or>
-					<not>
-						<isset property="env.SOURCE_JOB_BUILD_NUMBER" />
-					</not>
-					<equals arg1="${env.SOURCE_JOB_BUILD_NUMBER}" arg2="1" />
-				</or>
-				<then>
-					<property name="liferay.previous.plugins.git.id" value="${liferay.plugins.git.id}" />
-					<property name="liferay.previous.portal.git.id" value="${liferay.portal.git.id}" />
-				</then>
-				<else>
-					<math
-						datatype="int"
-						operand1="${env.SOURCE_JOB_BUILD_NUMBER}"
-						operand2="1"
-						operation="-"
-						result="previous.build.number"
-					/>
-
-					<property name="previous.commit.id.dir" value="${jenkins.shared.user.content.dir}/jobs/${env.SOURCE_JOB_NAME}/builds/${previous.build.number}" />
-
-					<loadfile failonerror="false" property="liferay.previous.plugins.git.id" srcfile="${previous.commit.id.dir}/git-commit-plugins">
-						<filterchain>
-							<striplinebreaks/>
-						</filterchain>
-					</loadfile>
-
-					<loadfile failonerror="false" property="liferay.previous.portal.git.id" srcfile="${previous.commit.id.dir}/git-commit-portal">
-						<filterchain>
-							<striplinebreaks/>
-						</filterchain>
-					</loadfile>
-				</else>
-			</if>
-
-			<property name="liferay.compare.urls" value="https://github.com/liferay/liferay-plugins-ee/compare/${liferay.previous.plugins.git.id}...${liferay.plugins.git.id},https://github.com/liferay/liferay-portal-ee/compare/${liferay.previous.portal.git.id}...${liferay.portal.git.id}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-env-operating-system">
-		<sequential>
-			<propertyregex
-				defaultValue="${operating.system.version}"
-				global="true"
-				input="${operating.system.version}"
-				override="true"
-				property="operating.system.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.operating.system.${operating.system.type}${operating.system.version.build}"
-				name="env.option.operating.system"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="get-fixpack-version">
 		<attribute name="patch.file.zip.url" />
 
@@ -597,7 +426,10 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<local name="jps.output" />
 
-			<loadfile property="jps.output" srcfile="jps_output" />
+			<loadfile
+				property="jps.output"
+				srcfile="jps_output"
+			/>
 
 			<if>
 				<contains string="${jps.output}" substring="@{process.name}" />
@@ -618,7 +450,10 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						]]>
 					</execute>
 
-					<loadfile property="jstack.output" srcfile="jstack_output" />
+					<loadfile
+						property="jstack.output"
+						srcfile="jstack_output"
+					/>
 				</then>
 			</if>
 
@@ -669,13 +504,20 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</antelope:stringutil>
 
 			<for param="gitrepo.file">
-				<fileset dir="${project.dir}/modules" erroronmissingdir="false" id="fileset.id">
+				<fileset
+					dir="${project.dir}/modules"
+					erroronmissingdir="false"
+					id="fileset.id"
+				>
 					<include name="**/.gitrepo" />
 				</fileset>
 				<sequential>
 					<local name="gitrepo.file.content" />
 
-					<loadfile property="gitrepo.file.content" srcfile="@{gitrepo.file}" />
+					<loadfile
+						property="gitrepo.file.content"
+						srcfile="@{gitrepo.file}"
+					/>
 
 					<if>
 						<or>
@@ -711,11 +553,17 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 			</tstamp>
 
-			<mirrors-get dest="${tstamp.value}.zip" src="@{patch.file.zip.url}" />
+			<mirrors-get
+				dest="${tstamp.value}.zip"
+				src="@{patch.file.zip.url}"
+			/>
 
 			<mkdir dir="${tstamp.value}-dir" />
 
-			<unzip dest="${tstamp.value}-dir" src="${tstamp.value}.zip" />
+			<unzip
+				dest="${tstamp.value}-dir"
+				src="${tstamp.value}.zip"
+			/>
 
 			<xmlproperty file="${tstamp.value}-dir/fixpack_documentation.xml" />
 
@@ -1158,310 +1006,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-testray-case-defect">
-		<sequential>
-			<if>
-				<isset property="test.class" />
-				<then>
-					<get-testcase-property property.name="known.issues" />
-				</then>
-			</if>
-
-			<condition else="" property="testray.case.defect" value="${known.issues}">
-				<isset property="known.issues" />
-			</condition>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-components">
-		<sequential>
-			<if>
-				<isset property="test.class" />
-				<then>
-					<get-testcase-property property.name="testray.component.names" />
-					<get-testcase-property property.name="testray.main.component.name" />
-				</then>
-			</if>
-
-			<condition property="testray.main.component.name" value="">
-				<not>
-					<isset property="testray.main.component.name" />
-				</not>
-			</condition>
-
-			<condition property="testray.component.names" value="${testray.main.component.name}">
-				<not>
-					<isset property="testray.component.names" />
-				</not>
-			</condition>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-logs">
-		<sequential>
-			<get-testray-logs-dir-name />
-
-			<property name="testray.logs.jenkins.console" value="${testray.logs.dir.name}/jenkins-console.txt.gz" />
-			<property name="testray.logs.poshi.report" value="${testray.logs.dir.name}/index.html.gz" />
-			<property name="testray.logs.poshi.summary" value="${testray.logs.dir.name}/summary.html.gz" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-logs-dir-name">
-		<sequential>
-			<var name="build.flow.time.stamp" unset="true" />
-
-			<beanshell>
-				<![CDATA[
-					import java.text.SimpleDateFormat;
-
-					String buildFlowTimeStamp = project.getProperty("env.BUILD_FLOW_TIME_STAMP");
-
-					if (buildFlowTimeStamp != null && buildFlowTimeStamp.matches("\\d+-\\d+-\\d+\\[\\d+:\\d+:\\d+\\]")) {
-						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd[HH:mm:ss]");
-
-						Date date = simpleDateFormat.parse(buildFlowTimeStamp);
-
-						project.setProperty("build.flow.time.stamp", Long.toString(date.getTime()));
-					}
-					else {
-						project.setProperty("build.flow.time.stamp", Long.toString(System.currentTimeMillis()));
-					}
-
-					String jenkinsURL = project.getProperty("env.JENKINS_URL");
-
-					if (jenkinsURL != null) {
-						if (jenkinsURL.matches("https:\\/\\/test-\\d+-\\d+.liferay.com\\/")) {
-							int x = jenkinsURL.indexOf("test");
-							int y = jenkinsURL.indexOf(".");
-
-							project.setProperty("master.hostname", jenkinsURL.substring(x, y));
-						}
-						else if (jenkinsURL.matches("https:\\/\\/test.liferay.com\\/\\d+\\/")) {
-							int x = jenkinsURL.indexOf("com/") + 4;
-							int y = jenkinsURL.length() - 1;
-
-							project.setProperty("master.hostname", "test-" + jenkinsURL.substring(x, y));
-						}
-					}
-				]]>
-			</beanshell>
-
-			<if>
-				<isset property="test.class" />
-				<then>
-					<var name="batch.dir.name" value="functional-${app.server.type}-${database.type}" />
-
-					<get-poshi-dir-name />
-
-					<var name="test.dir.name" value="${poshi.dir.name}" />
-				</then>
-				<else>
-					<var name="batch.dir.name" value="job-${app.server.type}-${database.type}" />
-
-					<var name="test.dir.name" value="${env.JOB_NAME}" />
-				</else>
-			</if>
-
-			<antelope:stringutil property="test.dir.name" string="${test.dir.name}">
-				<antelope:replace regex="," replacement="_" />
-				<antelope:replace regex="#" replacement="_" />
-			</antelope:stringutil>
-
-			<var name="testray.logs.dir.name" value="${master.hostname}/${build.flow.time.stamp}/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/${batch.dir.name}/${test.dir.name}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-project-name">
-		<sequential>
-			<propertyregex
-				input="${testray.product.version}"
-				override="true"
-				property="testray.product.major.version"
-				regexp="(\d+\.?\d+?).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${testray.product.major.version}"
-				global="true"
-				input="${testray.product.major.version}"
-				override="true"
-				property="testray.product.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="testray.project.${testray.product.type}${testray.product.major.version.build}.name"
-				name="testray.project.name"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-run-id">
-		<sequential>
-			<var name="testray.run.id" unset="true" />
-
-			<propertyregex
-				input="${app.server.version}"
-				override="true"
-				property="app.server.major.version"
-				regexp="(\d+\.\d+).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				input="${browser.version}"
-				override="true"
-				property="browser.major.version"
-				regexp="(\d+\.\d+).*"
-				replace="\1"
-			/>
-
-			<get-database-property property.name="database.version" />
-
-			<propertyregex
-				input="${database.version}"
-				override="true"
-				property="database.major.version"
-				regexp="(\d+\.?\d+?).*"
-				replace="\1"
-			/>
-
-			<property name="testray.run.id" value="${app.server.type}-${app.server.major.version} ${database.type}-${database.major.version} ${browser.type}-${browser.major.version} ${operating.system.type}-${operating.system.version} ${java.jdk.type}-jdk${java.jdk.version}-${java.jdk.architecture}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-team-name">
-		<sequential>
-			<beanshell>
-				<![CDATA[
-					import org.apache.commons.lang.WordUtils;
-
-					String testrayMainComponentName = project.getProperty("testray.main.component.name");
-					String testrayTeamNamesString = project.getProperty("testray.team.names");
-
-					String[] testrayTeamNames = testrayTeamNamesString.split(",");
-
-					for (String testrayTeamName : testrayTeamNames) {
-						StringBuilder sb = new StringBuilder();
-
-						sb.append("testray.team.");
-						sb.append(testrayTeamName);
-						sb.append(".component.names");
-
-						String testrayTeamComponentNamesString = project.getProperty(sb.toString());
-
-						Set testrayTeamComponentNames = new HashSet(Arrays.asList(testrayTeamComponentNamesString.split(",")));
-
-						if (testrayTeamComponentNames.contains(testrayMainComponentName)) {
-							project.setProperty("testray.team.name", WordUtils.capitalize(testrayTeamName.replace('-', ' ')));
-
-							break;
-						}
-					}
-				]]>
-			</beanshell>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-testcase-description">
-		<sequential>
-			<if>
-				<isset property="test.class" />
-				<then>
-					<get-testcase-property property.name="description" />
-				</then>
-			</if>
-
-			<condition else="" property="testray.testcase.description" value="${description}">
-				<isset property="description" />
-			</condition>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-testcase-name">
-		<sequential>
-			<var name="testray.testcase.name" unset="true" />
-
-			<if>
-				<isset property="test.class" />
-				<then>
-					<get-poshi-test-name />
-
-					<property name="testray.testcase.name" value="${poshi.test.name}" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-testcase-priority">
-		<sequential>
-			<var name="testray.testcase.priority" unset="true" />
-
-			<if>
-				<isset property="test.class" />
-				<then>
-					<get-testcase-property property.name="priority" />
-
-					<property name="testray.testcase.priority" value="${priority}" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-testcase-product-edition">
-		<sequential>
-			<if>
-				<isset property="test.class" />
-				<then>
-					<get-testcase-property property.name="testray.testcase.product.edition" />
-				</then>
-			</if>
-
-			<condition property="testray.testcase.product.edition" value="CE">
-				<not>
-					<isset property="testray.testcase.product.edition" />
-				</not>
-			</condition>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-testray-testcase-warnings">
-		<sequential>
-			<var name="testray.testcase.warnings" unset="true" />
-
-			<if>
-				<available file="poshi-warnings.xml" />
-				<then>
-					<loadfile property="testray.testcase.warnings" srcfile="poshi-warnings.xml" />
-
-					<propertyregex
-						global="true"
-						input="${testray.testcase.warnings}"
-						override="true"
-						property="testray.testcase.warnings"
-						regexp="(?&lt;!&lt;value&gt;\s?)&lt;!\\?\[CDATA\\?\["
-						replace="&amp;lt;!&amp;#91;CDATA&amp;#91;"
-					/>
-
-					<propertyregex
-						global="true"
-						input="${testray.testcase.warnings}"
-						override="true"
-						property="testray.testcase.warnings"
-						regexp="\\?]\\?]&gt;(?!\s*&lt;\/value&gt;)"
-						replace="&amp;#93;&amp;#93;&amp;gt;"
-					/>
-				</then>
-			</if>
-
-			<property name="testray.testcase.warnings" value="" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="install-patch">
 		<attribute name="patch.file.zip.url" />
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
@@ -1471,7 +1015,10 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<basename file="@{patch.file.zip.url}" property="patch.file.name" />
 
-			<mirrors-get dest="@{patching.tool.dir}/patches/${patch.file.name}" src="@{patch.file.zip.url}" />
+			<mirrors-get
+				dest="@{patching.tool.dir}/patches/${patch.file.name}"
+				src="@{patch.file.zip.url}"
+			/>
 
 			<if>
 				<contains string="${patch.file.name}" substring="hotfix" />
@@ -1598,12 +1145,20 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 
 						<delete dir="${test.app.server.parent.dir}" />
 
-						<copy todir="${test.app.server.parent.dir}">
-							<fileset dir="${app.server.parent.dir}" />
+						<copy
+							todir="${test.app.server.parent.dir}"
+						>
+							<fileset
+								dir="${app.server.parent.dir}"
+							/>
 						</copy>
 
-						<chmod perm="a+x">
-							<fileset dir="${test.app.server.bin.dir}">
+						<chmod
+							perm="a+x"
+						>
+							<fileset
+								dir="${test.app.server.bin.dir}"
+							>
 								<include name="*.sh" />
 							</fileset>
 						</chmod>
@@ -1656,7 +1211,9 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 							<elseif>
 								<equals arg1="${app.server.type}" arg2="weblogic" />
 								<then>
-									<replace file="${test.app.server.dir}/domains/liferay/config/config.xml">
+									<replace
+										file="${test.app.server.dir}/domains/liferay/config/config.xml"
+									>
 										<replacetoken><![CDATA[<listen-port>8080</listen-port>]]></replacetoken>
 										<replacevalue><![CDATA[<listen-port>${test.app.server.leading.port.number}080</listen-port>]]></replacevalue>
 									</replace>
@@ -1730,7 +1287,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-captcha-configuration" >
+	<macrodef name="prepare-captcha-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
 maxChallenges=&quot;-1&quot;
@@ -1771,12 +1328,18 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 
 			<stop-chrome-driver />
 
-			<unzip dest="tools/selenium" src="tools/selenium/${selenium.chrome.driver.zip}" />
+			<unzip
+				dest="tools/selenium"
+				src="tools/selenium/${selenium.chrome.driver.zip}"
+			/>
 
 			<if>
 				<os family="unix" />
 				<then>
-					<chmod file="tools/selenium/chromedriver" perm="a+x" />
+					<chmod
+						file="tools/selenium/chromedriver"
+						perm="a+x"
+					/>
 				</then>
 			</if>
 		</sequential>
@@ -1814,7 +1377,8 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 						replace="\\\\]"
 					/>
 
-					<replaceregexp file="portal-impl/src/portal-ext.properties"
+					<replaceregexp
+						file="portal-impl/src/portal-ext.properties"
 						flags="g"
 						match="${propertyName}=.*"
 						replace=""
@@ -1850,7 +1414,9 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 					/>
 				</not>
 				<then>
-					<replace file="${app.server.dir}/conf/context.xml">
+					<replace
+						file="${app.server.dir}/conf/context.xml"
+					>
 						<replacetoken><![CDATA[<Context>]]></replacetoken>
 						<replacevalue>
 							<![CDATA[
@@ -1875,7 +1441,9 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 					<get-database-property property.name="database.schema" />
 					<get-database-property property.name="database.username" />
 
-					<replace file="${app.server.dir}/conf/server.xml">
+					<replace
+						file="${app.server.dir}/conf/server.xml"
+					>
 						<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
 						<replacevalue expandproperties="true">
 							<![CDATA[
@@ -1925,7 +1493,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-elasticsearch-configuration" >
+	<macrodef name="prepare-elasticsearch-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">additionalConfigurations=&quot;cluster.routing.allocation.disk.threshold_enabled:\ false&#xa;cluster.service.slow_task_logging_threshold:\ 1800s&#xa;index.indexing.slowlog.threshold.index.warn:\ 1800s&#xa;index.search.slowlog.threshold.fetch.warn:\ 1800s&#xa;index.search.slowlog.threshold.query.warn:\ 1800s&#xa;monitor.jvm.gc.old.warn:\ 1800s&#xa;monitor.jvm.gc.young.warn:\ 1800s&#xa;threadpool.bulk.size:\ 1&#xa;threadpool.fetch_shard_started.size:\ 1&#xa;threadpool.fetch_shard_store.size:\ 1&#xa;threadpool.flush.size:\ 1&#xa;threadpool.force_merge.size:\ 1&#xa;threadpool.generic.size:\ 1&#xa;threadpool.get.size:\ 1&#xa;threadpool.index.size:\ 1&#xa;threadpool.listener.size:\ 1&#xa;threadpool.management.size:\ 1&#xa;threadpool.percolate.size:\ 1&#xa;threadpool.refresh.size:\ 1&#xa;threadpool.search.size:\ 1&#xa;threadpool.snapshot.size:\ 1&#xa;threadpool.suggest.size:\ 1&#xa;threadpool.warmer.size:\ 1&#xa;transport.local.workers:\ 1&quot;
 httpEnabled=B&quot;false&quot;
@@ -1971,12 +1539,22 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<untar compression="gzip" dest="tools/selenium" src="tools/selenium/${selenium.gecko.driver.archive}" />
+					<untar
+						compression="gzip"
+						dest="tools/selenium"
+						src="tools/selenium/${selenium.gecko.driver.archive}"
+					/>
 
-					<chmod file="tools/selenium/geckodriver" perm="a+x" />
+					<chmod
+						file="tools/selenium/geckodriver"
+						perm="a+x"
+					/>
 				</then>
 				<else>
-					<unzip dest="tools/selenium" src="tools/selenium/${selenium.gecko.driver.archive}" />
+					<unzip
+						dest="tools/selenium"
+						src="tools/selenium/${selenium.gecko.driver.archive}"
+					/>
 				</else>
 			</if>
 		</sequential>
@@ -1996,7 +1574,10 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 					<stop-ie-driver />
 
-					<unzip dest="tools/selenium" src="tools/selenium/${selenium.ie.driver.zip}" />
+					<unzip
+						dest="tools/selenium"
+						src="tools/selenium/${selenium.ie.driver.zip}"
+					/>
 				</then>
 				<else>
 					<if>
@@ -2028,7 +1609,10 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 			<local name="module.configuration.content" />
 
-			<loadfile property="module.configuration.content" srcFile="${module.configuration.path}">
+			<loadfile
+				property="module.configuration.content"
+				srcFile="${module.configuration.path}"
+			>
 				<filterchain>
 					<filterreader classname="org.apache.tools.ant.filters.LineContains">
 						<param type="contains" value="resource-root" />
@@ -2058,7 +1642,11 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 							<property name="regex" value="\s*&lt;resource-root path=&quot;@{petra.jar.file}&quot;\s/&gt;[\n\r]" />
 
-							<replaceregexp file="${module.configuration.path}" match="${regex}" replace="" />
+							<replaceregexp
+								file="${module.configuration.path}"
+								match="${regex}"
+								replace=""
+							/>
 						</then>
 					</if>
 				</sequential>
@@ -2066,29 +1654,47 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-patching-tool" >
+	<macrodef name="prepare-patching-tool">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
 		<sequential>
 			<local name="patching.tool.name" />
 			<local name="patching.tool.version" />
 
-			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
+			<mirrors-get
+				dest="${basedir}"
+				src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
+			/>
 
-			<loadfile property="patching.tool.version" srcFile="${patching.tool.latest.txt}" />
+			<loadfile
+				property="patching.tool.version"
+				srcFile="${patching.tool.latest.txt}"
+			/>
 
 			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
 
-			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.name}" />
+			<mirrors-get
+				dest="${basedir}"
+				src="${test.fix.pack.base.url}/patching-tool/${patching.tool.name}"
+			/>
 
 			<delete dir="@{patching.tool.dir}" />
 
-			<unzip dest="@{patching.tool.dir}/..">
-				<fileset dir="${basedir}" includes="patching-tool*" />
+			<unzip
+				dest="@{patching.tool.dir}/.."
+			>
+				<fileset
+					dir="${basedir}"
+					includes="patching-tool*"
+				/>
 			</unzip>
 
-			<chmod perm="a+x">
-				<fileset dir="@{patching.tool.dir}">
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="@{patching.tool.dir}"
+				>
 					<include name="*.sh" />
 				</fileset>
 			</chmod>
@@ -2104,7 +1710,10 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 		<sequential>
 			<var name="portal.legacy.file.content" unset="true" />
 
-			<loadfile property="portal.legacy.file.content" srcFile="portal-impl/src/portal-legacy-@{portal.major.version}.properties" />
+			<loadfile
+				property="portal.legacy.file.content"
+				srcFile="portal-impl/src/portal-legacy-@{portal.major.version}.properties"
+			/>
 
 			<propertyregex
 				input="${portal.legacy.file.content}"
@@ -2223,7 +1832,9 @@ tell application "Safari" to quit
 					<if>
 						<contains string="${os.version}" substring="10.11" />
 						<then>
-							<replace file="tools/selenium/safaridriver.scpt">
+							<replace
+								file="tools/selenium/safaridriver.scpt"
+							>
 								<replacefilter>
 									<replacetoken><![CDATA[repeat until (exists window 1) and subrole of window 1 is "AXDialog"]]></replacetoken>
 									<replacevalue><![CDATA[repeat until exists button 1 of sheet 1 of window 1]]></replacevalue>
@@ -2507,9 +2118,15 @@ tell application "Safari" to quit
 						src="${test.build.plugins.war.zip.url}"
 					/>
 
-					<unzip dest="." src="plugins.war.zip">
+					<unzip
+						dest="."
+						src="plugins.war.zip"
+					>
 						<mapper>
-							<globmapper from="plugins/*" to="plugins/marketplace/*" />
+							<globmapper
+								from="plugins/*"
+								to="plugins/marketplace/*"
+							/>
 						</mapper>
 					</unzip>
 
@@ -2595,7 +2212,10 @@ tell application "Safari" to quit
 			<echo>##</echo>
 			<echo></echo>
 
-			<loadfile property="file.content" srcFile="@{file.name}" />
+			<loadfile
+				property="file.content"
+				srcFile="@{file.name}"
+			/>
 
 			<echo>${file.content}</echo>
 
@@ -2610,7 +2230,10 @@ tell application "Safari" to quit
 			<if>
 				<available file="/tmp/ant-gc.log" />
 				<then>
-					<loadfile property="ant-gc-log" srcFile="/tmp/ant-gc.log" />
+					<loadfile
+						property="ant-gc-log"
+						srcFile="/tmp/ant-gc.log"
+					/>
 
 					<echo>
 Ant GC log:
@@ -2626,7 +2249,10 @@ ${ant-gc-log}
 			<if if:true="@{tomcat.gc.log}">
 				<available file="/tmp/tomcat-gc.log" />
 				<then>
-					<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
+					<loadfile
+						property="tomcat-gc-log"
+						srcFile="/tmp/tomcat-gc.log"
+					/>
 
 					<echo>
 Tomcat GC log:
@@ -2642,7 +2268,10 @@ ${tomcat-gc-log}
 			<if if:true="@{tsant.gc.log}">
 				<available file="/tmp/tsant-gc.log" />
 				<then>
-					<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />
+					<loadfile
+						property="tsant-gc-log"
+						srcFile="/tmp/tsant-gc.log"
+					/>
 
 					<echo>
 	Tsant GC log:
@@ -2968,7 +2597,10 @@ ${tomcat-gc-log}
 						<contains string="${osgi.app.includes}" substring="documentum" />
 						<then>
 							<pathconvert property="app.bnd.file">
-								<fileset dir="modules" includes="private/apps/documentum/app.bnd" />
+								<fileset
+									dir="modules"
+									includes="private/apps/documentum/app.bnd"
+								/>
 							</pathconvert>
 
 							<loadproperties srcFile="${app.bnd.file}">
@@ -3001,7 +2633,10 @@ ${tomcat-gc-log}
 
 									<mkdir dir="${tstamp.value}" />
 
-									<unzip dest="${tstamp.value}" src="${lpkg.path}">
+									<unzip
+										dest="${tstamp.value}"
+										src="${lpkg.path}"
+									>
 										<patternset>
 											<include name="documentum-hook-*.war" />
 										</patternset>
@@ -3009,11 +2644,17 @@ ${tomcat-gc-log}
 
 									<pathconvert property="war.path" setonempty="false">
 										<path>
-											<fileset dir="${tstamp.value}" includes="documentum-hook-*.war" />
+											<fileset
+												dir="${tstamp.value}"
+												includes="documentum-hook-*.war"
+											/>
 										</path>
 									</pathconvert>
 
-									<unzip dest="${tstamp.value}" src="${war.path}">
+									<unzip
+										dest="${tstamp.value}"
+										src="${war.path}"
+									>
 										<flattenmapper />
 										<patternset>
 											<include name="WEB-INF/classes/dfc.properties" />
@@ -3024,14 +2665,26 @@ ${tomcat-gc-log}
 										<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
 									</propertyfile>
 
-									<war destfile="${war.path}" update="true">
-										<zipfileset file="${tstamp.value}/dfc.properties" fullpath="WEB-INF/classes/dfc.properties" />
+									<war
+										destfile="${war.path}"
+										update="true"
+									>
+										<zipfileset
+											file="${tstamp.value}/dfc.properties"
+											fullpath="WEB-INF/classes/dfc.properties"
+										/>
 									</war>
 
 									<delete file="${tstamp.value}/dfc.properties" />
 
-									<zip destfile="${lpkg.path}" update="true">
-										<zipfileset dir="${tstamp.value}" includes="documentum-hook-*.war" />
+									<zip
+										destfile="${lpkg.path}"
+										update="true"
+									>
+										<zipfileset
+											dir="${tstamp.value}"
+											includes="documentum-hook-*.war"
+										/>
 									</zip>
 
 									<delete dir="${tstamp.value}" />
@@ -3324,10 +2977,15 @@ go</echo>
 		<sequential>
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.jboss.instance.dir}/configuration/standalone.xml" substring="source-vm" />
+					<resourcecontains
+						resource="${app.server.jboss.instance.dir}/configuration/standalone.xml"
+						substring="source-vm"
+					/>
 				</not>
 				<then>
-					<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
+					<replace
+						file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
+					>
 						<replacetoken><![CDATA[jsp-configuration development="true"]]></replacetoken>
 						<replacevalue><![CDATA[jsp-configuration development="true" source-vm="1.8" target-vm="1.8"]]></replacevalue>
 					</replace>
@@ -3352,7 +3010,10 @@ go</echo>
 		<sequential>
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${aspectj.agent}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.sh"
+						substring="${aspectj.agent}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
@@ -3372,7 +3033,10 @@ go</echo>
 					<available file="${app.server.tomcat.dir}/bin/jacocoagent.jar" />
 				</not>
 				<then>
-					<copy file="${jacoco.agent.jar}" todir="${app.server.tomcat.dir}/bin" />
+					<copy
+						file="${jacoco.agent.jar}"
+						todir="${app.server.tomcat.dir}/bin"
+					/>
 				</then>
 			</if>
 
@@ -3380,7 +3044,10 @@ go</echo>
 
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${jacoco.agent}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.sh"
+						substring="${jacoco.agent}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
@@ -3406,7 +3073,10 @@ go</echo>
 
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${testable.tomcat.jmx.opts}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.bat"
+						substring="${testable.tomcat.jmx.opts}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
@@ -3421,7 +3091,10 @@ go</echo>
 
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${testable.tomcat.jmx.opts}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.sh"
+						substring="${testable.tomcat.jmx.opts}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
@@ -3440,7 +3113,10 @@ go</echo>
 		<sequential>
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="JPDA_ADDRESS" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.sh"
+						substring="JPDA_ADDRESS"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
@@ -3459,7 +3135,10 @@ go</echo>
 				<and>
 					<equals arg1="@{testable.tomcat.debug.logging}" arg2="on" />
 					<not>
-						<resourcecontains resource="${app.server.tomcat.dir}/conf/logging.properties" substring="org.apache.catalina.level" />
+						<resourcecontains
+							resource="${app.server.tomcat.dir}/conf/logging.properties"
+							substring="org.apache.catalina.level"
+						/>
 					</not>
 				</and>
 				<then>
@@ -3520,7 +3199,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							includes="apache-tomcat-${tomcat.version}/webapps/manager/**/*"
 						/>
 						<mapper>
-							<globmapper from="apache-tomcat-${tomcat.version}/webapps/*" to="*" />
+							<globmapper
+								from="apache-tomcat-${tomcat.version}/webapps/*"
+								to="*"
+							/>
 						</mapper>
 					</unzip>
 
@@ -3529,12 +3211,30 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</if>
 
 			<xmltask dest="${app.server.tomcat.dir}/conf/tomcat-users.xml" source="${app.server.tomcat.dir}/conf/tomcat-users.xml">
-				<copy path="/tomcat-users/role[@rolename='manager-gui']/@rolename" property="tomcat.role.manager-gui.exists" />
-				<copy path="/tomcat-users/role[@rolename='manager-jmx']/@rolename" property="tomcat.role.manager-jmx.exists" />
-				<copy path="/tomcat-users/role[@rolename='manager-script']/@rolename" property="tomcat.role.manager-script.exists" />
-				<copy path="/tomcat-users/role[@rolename='manager-status']/@rolename" property="tomcat.role.manager-status.exists" />
-				<copy path="/tomcat-users/role[@rolename='tomcat']/@rolename" property="tomcat.role.tomcat.exists" />
-				<copy path="/tomcat-users/user[@username='${app.server.tomcat.manager.user}']/@username" property="tomcat.user.exists" />
+				<copy
+					path="/tomcat-users/role[@rolename='manager-gui']/@rolename"
+					property="tomcat.role.manager-gui.exists"
+				/>
+				<copy
+					path="/tomcat-users/role[@rolename='manager-jmx']/@rolename"
+					property="tomcat.role.manager-jmx.exists"
+				/>
+				<copy
+					path="/tomcat-users/role[@rolename='manager-script']/@rolename"
+					property="tomcat.role.manager-script.exists"
+				/>
+				<copy
+					path="/tomcat-users/role[@rolename='manager-status']/@rolename"
+					property="tomcat.role.manager-status.exists"
+				/>
+				<copy
+					path="/tomcat-users/role[@rolename='tomcat']/@rolename"
+					property="tomcat.role.tomcat.exists"
+				/>
+				<copy
+					path="/tomcat-users/user[@username='${app.server.tomcat.manager.user}']/@username"
+					property="tomcat.user.exists"
+				/>
 
 				<call path="/">
 					<actions>
@@ -3597,8 +3297,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="setup-testable-tomcat-osgi-modules">
 		<sequential>
-			<copy todir="${liferay.home}/osgi/modules">
-				<fileset dir="${liferay.home}/osgi/test" />
+			<copy
+				todir="${liferay.home}/osgi/modules"
+			>
+				<fileset
+					dir="${liferay.home}/osgi/test"
+				/>
 			</copy>
 		</sequential>
 	</macrodef>
@@ -3654,7 +3358,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				]]>
 			</echo>
 
-			<chmod file="wait_for_android_device.sh" perm="a+x" />
+			<chmod
+				file="wait_for_android_device.sh"
+				perm="a+x"
+			/>
 
 			<exec executable="${basedir}/wait_for_android_device.sh" timeout="300000" />
 
@@ -3784,7 +3491,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 
 					<delete failonerror="false" includeemptydirs="true">
-						<fileset dir="${test.app.server.dir}/logs" excludes="catalina.*.log" />
+						<fileset
+							dir="${test.app.server.dir}/logs"
+							excludes="catalina.*.log"
+						/>
 					</delete>
 
 					<if>
@@ -3904,11 +3614,17 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="start-test-smtp-server">
 		<sequential>
-			<mirrors-get dest="${test.smtp.server.dir}/MockMock.jar" src="${test.smtp.server.url}" />
+			<mirrors-get
+				dest="${test.smtp.server.dir}/MockMock.jar"
+				src="${test.smtp.server.url}"
+			/>
 
 			<parallel>
 				<daemons>
-					<java fork="true" jar="${test.smtp.server.dir}/MockMock.jar">
+					<java
+						fork="true"
+						jar="${test.smtp.server.dir}/MockMock.jar"
+					>
 						<arg line="-p 25000" />
 					</java>
 				</daemons>
@@ -4044,7 +3760,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 											<trycatch property="shutdown.error">
 												<try>
 													<if>
-														<resourcecontains resource="jps_output" substring="jboss-modules.jar" />
+														<resourcecontains
+															resource="jps_output"
+															substring="jboss-modules.jar"
+														/>
 														<then>
 															<fail />
 														</then>
@@ -4124,17 +3843,17 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-appium">
 		<sequential>
-			<exec executable="/bin/bash" os="${os.apple},${os.unix}" >
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
 				<arg value="-c" />
 				<arg value="killall node" />
 			</exec>
 
-			<exec executable="/bin/bash" os="${os.unix}" >
+			<exec executable="/bin/bash" os="${os.unix}">
 				<arg value="-c" />
 				<arg value="fuser -k 9515/tcp" />
 			</exec>
 
-			<exec executable="cmd.exe" os="${os.windows}" >
+			<exec executable="cmd.exe" os="${os.windows}">
 				<arg value="/c" />
 				<arg value="tskill node" />
 			</exec>
@@ -4439,10 +4158,20 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 				</tstamp>
 
-				<mirrors-get dest="${tstamp.value}.zip" src="${sql.legacy.base.url}/${portal.version.url.path}/${sql.legacy.zip}" />
+				<mirrors-get
+					dest="${tstamp.value}.zip"
+					src="${sql.legacy.base.url}/${portal.version.url.path}/${sql.legacy.zip}"
+				/>
 
-				<unzip dest="sql/legacy/${portal.version}" src="${tstamp.value}.zip">
-					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
+				<unzip
+					dest="sql/legacy/${portal.version}"
+					src="${tstamp.value}.zip"
+				>
+					<mapper
+						from="[^/]+/(.*)"
+						to="\1"
+						type="regexp"
+					/>
 				</unzip>
 
 				<delete file="${tstamp.value}.zip" />
@@ -4524,7 +4253,10 @@ create database lportal${database.index} character set utf8;</echo>
 							</then>
 						</if>
 
-						<copy file="${sql.dir}${sql.file}" tofile="create.sql" />
+						<copy
+							file="${sql.dir}${sql.file}"
+							tofile="create.sql"
+						/>
 					</else>
 				</if>
 
@@ -4533,11 +4265,15 @@ create database lportal${database.index} character set utf8;</echo>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
-						<replace file="create.sql">
+						<replace
+							file="create.sql"
+						>
 							<replacetoken>drop database lportal;</replacetoken>
 							<replacevalue></replacevalue>
 						</replace>
-						<replace file="create.sql">
+						<replace
+							file="create.sql"
+						>
 							<replacetoken>connect to lportal;</replacetoken>
 							<replacevalue>update db cfg for lportal using logprimary 2;
 update db cfg for lportal using logsecond 254;
@@ -4547,7 +4283,9 @@ connect to lportal;</replacevalue>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
-							<replace file="create.sql">
+							<replace
+								file="create.sql"
+							>
 								<replacetoken>grant connect,resource to &amp;1;</replacetoken>
 								<replacevalue>grant connect,resource to &amp;1;
 	grant unlimited tablespace to &amp;1;</replacevalue>
@@ -4557,7 +4295,9 @@ connect to lportal;</replacevalue>
 					<elseif>
 						<equals arg1="${database.type}" arg2="sybase" />
 						<then>
-							<replace file="create.sql">
+							<replace
+								file="create.sql"
+							>
 								<replacefilter>
 									<replacetoken>use master
 exec sp_dboption 'lportal', 'allow nulls by default' , true
@@ -4594,390 +4334,6 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="build-test-results-xml">
-		<get-env-app-server />
-		<get-env-browser />
-		<get-env-database />
-		<get-env-java-jdk />
-		<get-env-liferay-portal />
-		<get-env-operating-system />
-		<get-poshi-dir-name />
-		<get-testray-case-defect />
-		<get-testray-components />
-		<get-testray-logs />
-		<get-testray-project-name />
-		<get-testray-run-id />
-		<get-testray-team-name />
-		<get-testray-testcase-description />
-		<get-testray-testcase-name />
-		<get-testray-testcase-priority />
-		<get-testray-testcase-product-edition />
-		<get-testray-testcase-warnings />
-
-		<if>
-			<and>
-				<isset property="env.GITHUB_BRANCH_NAME" />
-				<isset property="env.GITHUB_USERNAME" />
-			</and>
-			<then>
-				<propertyregex
-					input="${testray.build.name}"
-					override="true"
-					property="testray.build.name"
-					regexp="(-\s)\d+(\s-)"
-					replace="\1${env.GITHUB_USERNAME} - ${env.GITHUB_BRANCH_NAME}\2"
-				/>
-			</then>
-			<elseif>
-				<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
-				<then>
-					<propertyregex
-						input="${testray.build.name}"
-						override="true"
-						property="testray.build.name"
-						regexp="(-\s)\d+(\s-)"
-						replace="\1${env.TEST_BUILD_FIX_PACK_NAME}\2"
-					/>
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<available file="portal-web/test-results/${poshi.dir.name}/index.html" />
-			<then>
-				<property name="test.case.attachments">
-					<![CDATA[
-						<attachments>
-							<file name="Jenkins Console" value="${testray.logs.jenkins.console}" />
-							<file name="Poshi Report" value="${testray.logs.poshi.report}" />
-							<file name="Poshi Summary" value="${testray.logs.poshi.summary}" />
-						</attachments>
-					]]>
-				</property>
-			</then>
-			<else>
-				<property name="test.case.attachments">
-					<![CDATA[
-						<attachments>
-							<file name="Jenkins Console" value="${testray.logs.jenkins.console}" />
-						</attachments>
-					]]>
-				</property>
-			</else>
-		</if>
-
-		<property name="test.case.properties">
-			<![CDATA[
-				<properties>
-					<property name="testray.case.defect" value="${testray.case.defect}" />
-					<property name="testray.case.type.name" value="Automated Functional Test" />
-					<property name="testray.component.names" value="${testray.component.names}" />
-					<property name="testray.main.component.name" value="${testray.main.component.name}" />
-					<property name="testray.team.name" value="${testray.team.name}" />
-					<property name="testray.testcase.description" value="${testray.testcase.description}" />
-					<property name="testray.testcase.name" value="${testray.testcase.name}" />
-					<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
-					<property name="testray.testcase.product.edition" value="${testray.testcase.product.edition}" />
-					<property name="testray.testcase.warnings">
-						${testray.testcase.warnings}
-					</property>
-				</properties>
-			]]>
-		</property>
-
-		<property name="test.suite.properties">
-			<![CDATA[
-				<environments>
-					<environment type="Application Server" option="${env.option.app.server}" />
-					<environment type="Browser" option="${env.option.browser}" />
-					<environment type="Database" option="${env.option.database}" />
-					<environment type="Java JDK" option="${env.option.java.jdk}" />
-					<environment type="Operating System" option="${env.option.operating.system}" />
-				</environments>
-				<properties>
-					<property name="app.server.type" value="${app.server.type}" />
-					<property name="app.server.version" value="${app.server.version}" />
-					<property name="browser.type" value="${browser.type}" />
-					<property name="browser.version" value="${browser.version}" />
-					<property name="database.type" value="${database.type}" />
-					<property name="database.version" value="${database.version}" />
-					<property name="liferay.compare.urls" value="${liferay.compare.urls}" />
-					<property name="liferay.plugins.git.id" value="${liferay.plugins.git.id}" />
-					<property name="liferay.portal.branch" value="${liferay.portal.branch}" />
-					<property name="liferay.portal.bundle" value="${liferay.portal.bundle}" />
-					<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
-					<property name="java.jdk.architecture" value="${java.jdk.architecture}" />
-					<property name="java.jdk.type" value="${java.jdk.type}" />
-					<property name="java.jdk.version" value="${java.jdk.version}" />
-					<property name="operating.system.type" value="${operating.system.type}" />
-					<property name="operating.system.version" value="${operating.system.version}" />
-					<property name="test.type" value="Automated Functional Test" />
-					<property name="testray.build.name" value="${testray.build.name}" />
-					<property name="testray.build.time" value="${testray.build.time}" />
-					<property name="testray.build.type" value="${testray.build.type}" />
-					<property name="testray.product.type" value="${testray.product.type}" />
-					<property name="testray.product.version" value="${testray.product.version}" />
-					<property name="testray.project.name" value="${testray.project.name}" />
-					<property name="testray.run.id" value="${testray.run.id}" />
-				</properties>
-			]]>
-		</property>
-
-		<for param="file.name">
-			<path>
-				<fileset dir="modules" erroronmissingdir="false">
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset dir="portal-impl/test-results" erroronmissingdir="false">
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset dir="portal-web/test-results" erroronmissingdir="false">
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset dir="util-java/test-results" erroronmissingdir="false">
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset dir="util-taglib/test-results" erroronmissingdir="false">
-					<include name="**/TEST-*.xml" />
-				</fileset>
-			</path>
-			<sequential>
-				<var name="file.name" value="@{file.name}" />
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="\s*\&lt;/?environment[^\n^\r]*[\n\r]"
-					replace=""
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="\s*\&lt;/?propert[^\n^\r]*[\n\r]"
-					replace=""
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="&lt;testcase[^&lt;]*?&lt;skipped[\s\S]*?testcase&gt;"
-					replace=""
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="(\s*\&lt;testcase[^/\n]*)/&gt;"
-					replace="\1&gt;${line.separator}&lt;/testcase&gt;"
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					match="&lt;testcase[^&gt;]*&gt;"
-					replace="${test.suite.properties}\0"
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="&lt;testcase[^&gt;]*&gt;"
-					replace="\0${test.case.attachments}${line.separator}${test.case.properties}"
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="(.*classname=&quot;\S+\.(\w+).*name=&quot;(\w+)[\s\S]+?)(\$\{testray\.testcase\.name\})"
-					replace="\1\2#\3"
-				/>
-
-				<if>
-					<isset property="group.index" />
-					<then>
-						<replaceregexp
-							file="@{file.name}"
-							flags="g"
-							match="\$\{testray\.testcase\.name\}"
-							replace="${testray.main.component.name}#${group.index}"
-						/>
-					</then>
-					<else>
-						<replaceregexp
-							file="@{file.name}"
-							flags="g"
-							match="\$\{testray\.testcase\.name\}"
-							replace="${testray.main.component.name}"
-						/>
-					</else>
-				</if>
-
-				<if>
-					<contains string="@{file.name}" substring="EvaluateLog" />
-					<then>
-						<replaceregexp
-							file="@{file.name}"
-							flags="g"
-							match="testray\.testcase\.name.*(?=&quot;)"
-							replace="\0_EvaluateLog"
-						/>
-					</then>
-				</if>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="\&gt;[\n\s]*\&lt;"
-					replace="\&gt;${line.separator}\&lt;"
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="(&lt;/?)error"
-					replace="\1failure"
-				/>
-
-				<replaceregexp
-					file="@{file.name}"
-					flags="g"
-					match="(&lt;failure\s*)type"
-					replace="\1message"
-				/>
-
-				<local name="file.name" />
-
-				<property name="file.name" value="@{file.name}" />
-
-				<beanshell>
-					<![CDATA[
-						import java.io.BufferedReader;
-						import java.io.File;
-						import java.io.IOException;
-
-						import java.util.regex.Matcher;
-						import java.util.regex.Pattern;
-
-						Pattern failurePattern = Pattern.compile("<failure message=\"(?<failureMessage>[^\"]*)\"");
-						Pattern testrayTestcaseNamePattern = Pattern.compile("<property name=\"testray.testcase.name\" value=\"(?<testrayTestcaseName>[^\"]*)\" ?/>");
-
-						BufferedReader bufferedReader = null;
-
-						Set testcaseFailures = new HashSet();
-						List testcaseNames = new ArrayList();
-						Map testcasePropertyLocations = new HashMap();
-
-						try {
-							File file = new File(project.getProperty("file.name"));
-
-							bufferedReader = new BufferedReader(new FileReader(file));
-
-							List lines = new ArrayList();
-
-							int lineNumber = 0;
-
-							Integer propertiesLocation = null;
-							Boolean testcaseFailed = null;
-							String testrayTestcaseName = null;
-
-							for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
-								lineNumber++;
-
-								lines.add(line);
-
-								if (line.contains("<testcase>")) {
-									propertiesLocation = null;
-									testcaseFailed = null;
-									testrayTestcaseName = null;
-
-									continue;
-								}
-
-								Matcher testrayTestcaseNameMatcher = testrayTestcaseNamePattern.matcher(line);
-
-								if (testrayTestcaseNameMatcher.find()) {
-									testrayTestcaseName = testrayTestcaseNameMatcher.group("testrayTestcaseName");
-
-									continue;
-								}
-
-								Matcher failureMatcher = failurePattern.matcher(line);
-
-								if (failureMatcher.find()) {
-									testcaseFailed = true;
-
-									continue;
-								}
-
-								if (line.contains("<properties>")) {
-									propertiesLocation = lineNumber;
-
-									continue;
-								}
-
-								if (line.contains("</testcase>")) {
-									if ((testrayTestcaseName != null) && (propertiesLocation != null)) {
-										testcaseNames.add(testrayTestcaseName);
-
-										testcasePropertyLocations.put(propertiesLocation, testrayTestcaseName);
-
-										if ((testcaseFailed != null) && (testcaseFailed.equals(Boolean.TRUE))) {
-											testcaseFailures.add(testrayTestcaseName);
-										}
-
-										testcaseFailed = null;
-										testrayTestcaseName = null;
-										propertiesLocation = null;
-									}
-									else {
-										System.out.println("WARNING: This testcase block doesn't include a testray.testcase.name property");
-									}
-
-									testcaseFailed = null;
-									testrayTestcaseName = null;
-								}
-							}
-
-							bufferedReader.close();
-
-							List propertyLocations = new ArrayList(testcasePropertyLocations.keySet());
-
-							Collections.sort(propertyLocations, Collections.reverseOrder());
-
-							for (Integer propertyLocation : propertyLocations) {
-								String testrayTestcaseName = testcasePropertyLocations.get(propertyLocation);
-
-								if (testcaseFailures.contains(testrayTestcaseName)) {
-									lines.add(propertyLocation, "<property name=\"testray.testcase.status\" value=\"failed\" />");
-								}
-								else {
-									lines.add(propertyLocation, "<property name=\"testray.testcase.status\" value=\"passed\" />");
-								}
-							}
-
-							FileWriter fileWriter = new FileWriter(file);
-
-							BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-							for (String line : lines) {
-								bufferedWriter.write(line);
-								bufferedWriter.write('\n');
-							}
-
-							bufferedWriter.close();
-						}
-						catch (IOException e) {
-							e.printStackTrace();
-						}
-					]]>
-				</beanshell>
-			</sequential>
-		</for>
-	</target>
-
 	<target name="check-config">
 		<check-config />
 	</target>
@@ -4994,7 +4350,9 @@ go]]></replacevalue>
 				<if>
 					<equals arg1="${inet.address}" arg2="127.0.0.1" />
 					<then>
-						<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
+						<replace
+							file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
+						>
 							<replacefilter>
 								<replacetoken><![CDATA[<inet-address value="${jboss.bind.address:127.0.0.1}"/>]]></replacetoken>
 								<replacevalue><![CDATA[<nic name="eth0:0" />]]></replacevalue>
@@ -5025,7 +4383,10 @@ go]]></replacevalue>
 		<antcall target="delete-liferay-home" />
 
 		<delete includeemptydirs="true">
-			<fileset dir="${app.server.parent.dir}" excludes="*.zip" />
+			<fileset
+				dir="${app.server.parent.dir}"
+				excludes="*.zip"
+			/>
 		</delete>
 	</target>
 
@@ -5051,7 +4412,10 @@ go]]></replacevalue>
 					]]>
 				</echo>
 
-				<chmod file="clean_up_db2_processes.sh" perm="a+x" />
+				<chmod
+					file="clean_up_db2_processes.sh"
+					perm="a+x"
+				/>
 
 				<exec executable="${basedir}/clean_up_db2_processes.sh" />
 
@@ -5077,7 +4441,10 @@ go]]></replacevalue>
 					]]>
 				</echo>
 
-				<chmod file="clean_up_java_processes.sh" perm="a+x" />
+				<chmod
+					file="clean_up_java_processes.sh"
+					perm="a+x"
+				/>
 
 				<exec executable="${basedir}/clean_up_java_processes.sh" />
 
@@ -5152,7 +4519,10 @@ go]]></replacevalue>
 					]]>
 				</echo>
 
-				<chmod file="clean_up_sybase_processes.sh" perm="a+x" />
+				<chmod
+					file="clean_up_sybase_processes.sh"
+					perm="a+x"
+				/>
 
 				<exec executable="${basedir}/clean_up_sybase_processes.sh" />
 
@@ -5162,7 +4532,11 @@ go]]></replacevalue>
 	</target>
 
 	<target name="clean-up-web-xml">
-		<copy file="portal-web/docroot/WEB-INF/web.xml" overwrite="true" tofile="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml" />
+		<copy
+			file="portal-web/docroot/WEB-INF/web.xml"
+			overwrite="true"
+			tofile="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
+		/>
 	</target>
 
 	<target name="clean-version-override">
@@ -5178,12 +4552,18 @@ go]]></replacevalue>
 	<target name="copy-log-file">
 		<for param="log.file">
 			<path>
-				<fileset dir="${liferay.home}/logs">
+				<fileset
+					dir="${liferay.home}/logs"
+				>
 					<include name="*.log" />
 				</fileset>
 			</path>
 			<sequential>
-				<copy file="@{log.file}" overwrite="true" tofile="log" />
+				<copy
+					file="@{log.file}"
+					overwrite="true"
+					tofile="log"
+				/>
 			</sequential>
 		</for>
 	</target>
@@ -5220,7 +4600,9 @@ go]]></replacevalue>
 					</not>
 				</and>
 				<then>
-					<copy todir="${todir}">
+					<copy
+						todir="${todir}"
+					>
 						<fileset
 							dir="lib/development"
 							includes="${jdbc.mariadb.driver}"
@@ -5236,7 +4618,9 @@ go]]></replacevalue>
 					</not>
 				</and>
 				<then>
-					<copy todir="${todir}">
+					<copy
+						todir="${todir}"
+					>
 						<fileset
 							dir="lib/development"
 							includes="${jdbc.mysql.driver}"
@@ -5270,7 +4654,9 @@ go]]></replacevalue>
 					</not>
 				</and>
 				<then>
-					<copy todir="${todir}">
+					<copy
+						todir="${todir}"
+					>
 						<fileset
 							dir="lib/development"
 							includes="${jdbc.postgresql.driver}"
@@ -5325,7 +4711,9 @@ go]]></replacevalue>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
-						<replace file="${app.server.lib.global.dir}/module.xml">
+						<replace
+							file="${app.server.lib.global.dir}/module.xml"
+						>
 							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
 							<replacevalue>
 								<![CDATA[
@@ -5339,7 +4727,9 @@ go]]></replacevalue>
 					<elseif>
 						<equals arg1="${database.type}" arg2="mariadb" />
 						<then>
-							<replace file="${app.server.lib.global.dir}/module.xml">
+							<replace
+								file="${app.server.lib.global.dir}/module.xml"
+							>
 								<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
 								<replacevalue>
 									<![CDATA[
@@ -5353,7 +4743,9 @@ go]]></replacevalue>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
-							<replace file="${app.server.lib.global.dir}/module.xml">
+							<replace
+								file="${app.server.lib.global.dir}/module.xml"
+							>
 								<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
 								<replacevalue>
 									<![CDATA[
@@ -5365,7 +4757,9 @@ go]]></replacevalue>
 						</then>
 					</elseif>
 					<else>
-						<replace file="${app.server.lib.global.dir}/module.xml">
+						<replace
+							file="${app.server.lib.global.dir}/module.xml"
+						>
 							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
 							<replacevalue>
 								<![CDATA[
@@ -5409,9 +4803,11 @@ go]]></replacevalue>
 					</not>
 					<then>
 						<delete failonerror="false" includeemptydirs="true">
-							<fileset dir="${test.app.server.liferay.home}/data">
-								<exclude name="hypersonic/lportal.properties" if:true="${keep.hypersonicdb}" />
-								<exclude name="hypersonic/lportal.script" if:true="${keep.hypersonicdb}" />
+							<fileset
+								dir="${test.app.server.liferay.home}/data"
+							>
+								<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.properties" />
+								<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.script" />
 							</fileset>
 						</delete>
 					</then>
@@ -5442,7 +4838,10 @@ go]]></replacevalue>
 
 						<echo>Copying ${liferay.training.dir}/@{liferay.training.dependency.jar} to ${liferay.home}/deploy/${training.dependency.file.name}.</echo>
 
-						<copy file="${liferay.training.dir}/@{liferay.training.dependency.jar}" todir="${liferay.home}/deploy" />
+						<copy
+							file="${liferay.training.dir}/@{liferay.training.dependency.jar}"
+							todir="${liferay.home}/deploy"
+						/>
 					</sequential>
 				</for>
 			</then>
@@ -5475,7 +4874,9 @@ go]]></replacevalue>
 			<then>
 				<for param="app.file.path">
 					<path>
-						<fileset dir="${liferay.home}/osgi/marketplace">
+						<fileset
+							dir="${liferay.home}/osgi/marketplace"
+						>
 							<include name="*.lpkg" />
 						</fileset>
 					</path>
@@ -5529,7 +4930,10 @@ go]]></replacevalue>
 
 								<delete file="${liferay.home}/osgi/marketplace/${app.file.name}" />
 
-								<copy file="${project.dir}/plugins/marketplace/${app.file.name}" tofile="${liferay.home}/osgi/marketplace/${app.file.name}" />
+								<copy
+									file="${project.dir}/plugins/marketplace/${app.file.name}"
+									tofile="${liferay.home}/osgi/marketplace/${app.file.name}"
+								/>
 							</then>
 						</if>
 					</sequential>
@@ -5544,7 +4948,10 @@ go]]></replacevalue>
 
 								<delete failonerror="false" file="${liferay.home}/osgi/marketplace/@{app.file.name}" />
 
-								<copy file="${project.dir}/plugins/marketplace/@{app.file.name}" tofile="${liferay.home}/osgi/marketplace/@{app.file.name}" />
+								<copy
+									file="${project.dir}/plugins/marketplace/@{app.file.name}"
+									tofile="${liferay.home}/osgi/marketplace/@{app.file.name}"
+								/>
 							</then>
 						</if>
 					</sequential>
@@ -5564,8 +4971,13 @@ go]]></replacevalue>
 				<antelope:repeat count="${app.server.bundles.size}">
 					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}-${app.server.bundle.index}" />
 
-					<copy todir="${test.app.server.parent.dir}/data">
-						<fileset dir="${selenium.output.dir.name}" includes="lcs-aatf-*.aatf" />
+					<copy
+						todir="${test.app.server.parent.dir}/data"
+					>
+						<fileset
+							dir="${selenium.output.dir.name}"
+							includes="lcs-aatf-*.aatf"
+						/>
 					</copy>
 
 					<math
@@ -5582,8 +4994,13 @@ go]]></replacevalue>
 			</then>
 		</if>
 
-		<move todir="${app.server.parent.dir}/data">
-			<fileset dir="${selenium.output.dir.name}" includes="lcs-aatf-*.aatf" />
+		<move
+			todir="${app.server.parent.dir}/data"
+		>
+			<fileset
+				dir="${selenium.output.dir.name}"
+				includes="lcs-aatf-*.aatf"
+			/>
 		</move>
 	</target>
 
@@ -5615,7 +5032,9 @@ go]]></replacevalue>
 
 						<for param="app.dir">
 							<path>
-								<dirset dir="modules">
+								<dirset
+									dir="modules"
+								>
 									<include name="apps/${osgi.app.name}" />
 									<include name="private/apps/${osgi.app.name}" />
 								</dirset>
@@ -5637,14 +5056,20 @@ go]]></replacevalue>
 									<then>
 										<echo>Copying ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
 
-										<copy file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+										<copy
+											file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg"
+											tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg"
+										/>
 									</then>
 									<elseif>
 										<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
 										<then>
 											<echo>Copying ${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
 
-											<copy file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+											<copy
+												file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg"
+												tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg"
+											/>
 										</then>
 									</elseif>
 									<else>
@@ -5652,7 +5077,9 @@ go]]></replacevalue>
 
 										<for param="module.dir.path">
 											<path>
-												<dirset dir="@{app.dir}">
+												<dirset
+													dir="@{app.dir}"
+												>
 													<include name="*" />
 												</dirset>
 											</path>
@@ -5660,7 +5087,9 @@ go]]></replacevalue>
 												<basename file="@{module.dir.path}" property="module.war.name" />
 
 												<delete failonerror="false" verbose="true">
-													<fileset dir="${liferay.home}/deploy">
+													<fileset
+														dir="${liferay.home}/deploy"
+													>
 														<include name="${module.war.name}*" />
 													</fileset>
 												</delete>
@@ -5750,13 +5179,24 @@ go]]></replacevalue>
 				</antelope:stringutil>
 
 				<pathconvert pathsep="," property="osgi.modules.paths">
-					<dirset dir="modules" includes="${osgi.modules.includes.pattern}">
+					<dirset
+						dir="modules"
+						includes="${osgi.modules.includes.pattern}"
+					>
 						<or>
 							<present targetdir="modules">
-								<mapper from="*" to="*/build.gradle" type="glob" />
+								<mapper
+									from="*"
+									to="*/build.gradle"
+									type="glob"
+								/>
 							</present>
 							<present targetdir="modules">
-								<mapper from="*" to="*/build.xml" type="glob" />
+								<mapper
+									from="*"
+									to="*/build.xml"
+									type="glob"
+								/>
 							</present>
 						</or>
 					</dirset>
@@ -5769,13 +5209,22 @@ go]]></replacevalue>
 
 						<dirname file="@{osgi.module.path}" property="module.base.dir" />
 
-						<move failonerror="false" file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" verbose="true" />
+						<move
+							failonerror="false"
+							file="${module.base.dir}/settings.gradle"
+							tofile="${module.base.dir}/settings.gradle.temp"
+							verbose="true"
+						/>
 
 						<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
 							<arg value="clean" />
 						</gradle-execute>
 
-						<move failonerror="false" file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
+						<move
+							failonerror="false"
+							file="${module.base.dir}/settings.gradle.temp"
+							tofile="${module.base.dir}/settings.gradle"
+						/>
 					</sequential>
 				</for>
 			</then>
@@ -5880,7 +5329,10 @@ go]]></replacevalue>
 					src="${test.sql.zip.url}"
 				/>
 
-				<unzip dest="sql/" src="sql/release-sql.zip">
+				<unzip
+					dest="sql/"
+					src="sql/release-sql.zip"
+				>
 					<patternset
 						includes="liferay-*/**"
 					/>
@@ -5894,106 +5346,6 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="generate-backup-results-xml">
-		<if>
-			<and>
-				<isset property="env.JENKINS_HOME" />
-				<isset property="jenkins.shared.user.content.dir" />
-			</and>
-			<then>
-				<if>
-					<isset property="test.class" />
-					<then>
-						<antcall target="record-test-generated-properties" />
-
-						<property file="test.generated.properties" />
-
-						<get-test-class-name />
-
-						<if>
-							<contains string="${test.class}" substring="#" />
-							<then>
-								<get-test-method-name />
-							</then>
-							<else>
-								<property name="test.method.name" value="" />
-							</else>
-						</if>
-					</then>
-				</if>
-
-				<if>
-					<isset property="group.index" />
-					<then>
-						<propertyregex
-							input="${group.index}"
-							override="true"
-							property="group.index"
-							regexp="[\w\.]+\.(\w+)"
-							replace="\1"
-						/>
-
-						<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${testray.main.component.name}_${group.index}.xml" />
-					</then>
-					<elseif>
-						<isset property="test.class" />
-						<then>
-							<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml" />
-						</then>
-					</elseif>
-					<else>
-						<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${testray.main.component.name}.xml" />
-					</else>
-				</if>
-
-				<if>
-					<equals arg1="${build.status}" arg2="pass" />
-					<then>
-						<property name="testcase.element"><![CDATA[<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00" />]]></property>
-					</then>
-					<else>
-						<property name="testcase.element"><![CDATA[
-							<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
-								<failure message="Jenkins failure prior to running test.">Jenkins failure prior to running test.</failure>
-							</testcase>
-						]]></property>
-					</else>
-				</if>
-
-				<echo file="${results.xml.file}"><![CDATA[<?xml version="1.0"?>
-
-<testsuite>
-	${testcase.element}
-	<system-out></system-out>
-	<system-err></system-err>
-</testsuite>]]></echo>
-
-				<antcall target="build-test-results-xml" />
-
-				<copy flatten="true" todir="${jenkins.shared.user.content.dir}/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results">
-					<fileset dir="modules" erroronmissingdir="false">
-						<include name="**/TEST-*.xml" />
-					</fileset>
-					<fileset dir="portal-impl/test-results" erroronmissingdir="false">
-						<include name="**/TEST-*.xml" />
-					</fileset>
-					<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
-						<include name="**/TEST-*.xml" />
-					</fileset>
-					<fileset dir="portal-web/test-results" erroronmissingdir="false">
-						<include name="**/TEST-*.xml" />
-					</fileset>
-					<fileset dir="util-java/test-results" erroronmissingdir="false">
-						<include name="**/TEST-*.xml" />
-					</fileset>
-					<fileset dir="util-taglib/test-results" erroronmissingdir="false">
-						<include name="**/TEST-*.xml" />
-					</fileset>
-				</copy>
-			</then>
-		</if>
-	</target>
-
 	<target name="generate-changelog">
 		<record-git-commit-plugins />
 		<record-git-commit-portal />
@@ -6002,10 +5354,7 @@ go]]></replacevalue>
 			<format pattern="EEEE, d MMMM yyyy, hh:mm aa" property="build.tstamp.value" />
 		</tstamp>
 
-		<property
-			name="changelog.dir"
-			value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
-		/>
+		<property name="changelog.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}" />
 
 		<math
 			datatype="int"
@@ -6015,10 +5364,7 @@ go]]></replacevalue>
 			result="previous.build.number"
 		/>
 
-		<property
-			name="previous.changelog.dir"
-			value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${previous.build.number}"
-		/>
+		<property name="previous.changelog.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${previous.build.number}" />
 
 		<if>
 			<and>
@@ -6045,10 +5391,7 @@ go]]></replacevalue>
 				<if>
 					<equals arg1="${git.commit.plugins.rev.parse}" arg2="${previous.git.commit.plugins.rev.parse}" />
 					<then>
-						<property
-							name="git.log.content.plugins"
-							value="No Changes"
-						/>
+						<property name="git.log.content.plugins" value="No Changes" />
 					</then>
 					<else>
 						<execute dir="${lp.plugins.dir}">
@@ -6065,10 +5408,7 @@ go]]></replacevalue>
 				<if>
 					<equals arg1="${git.commit.portal.rev.parse}" arg2="${previous.git.commit.portal.rev.parse}" />
 					<then>
-						<property
-							name="git.log.content.portal"
-							value="No Changes"
-						/>
+						<property name="git.log.content.portal" value="No Changes" />
 					</then>
 					<else>
 						<execute dir="${project.dir}">
@@ -6082,7 +5422,9 @@ go]]></replacevalue>
 					</else>
 				</if>
 
-				<replace file="${changelog.dir}/git-build-log.html">
+				<replace
+					file="${changelog.dir}/git-build-log.html"
+				>
 					<replacetoken><![CDATA[<!-- NEXT -->]]></replacetoken>
 					<replacevalue expandproperties="true"><![CDATA[<!-- NEXT -->
 
@@ -6276,178 +5618,57 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="merge-jenkins-test-results">
-		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
-
-		<property name="jenkins.results.xml.suite.file" value="${jenkins.test.results.dir}/test-suite/TESTS-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}.xml" />
-
-		<first id="first">
-			<fileset dir="${jenkins.test.results.dir}" includes="*.xml" />
-		</first>
-
-		<loadfile property="jenkins.results.xml.suite.file.header" srcfile="${toString:first}" />
-
-		<propertyregex
-			input="${jenkins.results.xml.suite.file.header}"
-			override="true"
-			property="jenkins.results.xml.suite.file.header"
-			regexp="&lt;testcase[\s\S.]*"
-			replace=""
-		/>
-
-		<propertyregex
-			input="${jenkins.results.xml.suite.file.header}"
-			override="true"
-			property="jenkins.results.xml.suite.file.header"
-			regexp="&lt;testsuite.*\n"
-			replace="&lt;testsuite&gt;${line.separator}"
-		/>
-
-		<echo file="${jenkins.results.xml.suite.file}">${jenkins.results.xml.suite.file.header}</echo>
-
-		<for param="jenkins.results.xml.file">
-			<path>
-				<fileset dir="${jenkins.test.results.dir}">
-					<include name="*.xml" />
-				</fileset>
-			</path>
-			<sequential>
-				<echo>Merging @{jenkins.results.xml.file}.</echo>
-
-				<var name="jenkins.results.xml.suite.file.body" unset="true" />
-
-				<loadfile property="jenkins.results.xml.suite.file.body" srcfile="@{jenkins.results.xml.file}" />
-
-				<propertyregex
-					input="${jenkins.results.xml.suite.file.body}"
-					override="true"
-					property="jenkins.results.xml.suite.file.body"
-					regexp="&lt;\?xml[\s\S]*?&lt;testcase"
-					replace="&lt;testcase"
-				/>
-
-				<propertyregex
-					input="${jenkins.results.xml.suite.file.body}"
-					override="true"
-					property="jenkins.results.xml.suite.file.body"
-					regexp="&lt;/testcase&gt;[\s\S]*"
-					replace="&lt;/testcase&gt;${line.separator}"
-				/>
-
-				<echo append="true" file="${jenkins.results.xml.suite.file}">${jenkins.results.xml.suite.file.body}</echo>
-			</sequential>
-		</for>
-
-		<echo append="true" file="${jenkins.results.xml.suite.file}">&lt;/testsuite&gt;</echo>
-
-		<if>
-			<contains string="${env.JOB_NAME}" substring="frontend" />
-			<then>
-				<copy file="${jenkins.results.xml.suite.file}" tofile="${env.WORKSPACE}/TEST-ConsolidatedResults.xml" />
-			</then>
-		</if>
-
-		<beanshell>
-			<![CDATA[
-				import java.io.BufferedReader;
-				import java.io.File;
-				import java.io.IOException;
-
-				BufferedReader bufferedReader = null;
-
-				try {
-					File jenkinsResultsXMLSuiteFile = new File(project.getProperty("jenkins.results.xml.suite.file"));
-
-					bufferedReader = new BufferedReader(new FileReader(jenkinsResultsXMLSuiteFile));
-
-					List lines = new ArrayList();
-
-					int failCount = 0;
-					int lineNumber = 0;
-					int summaryLocation = 0;
-					int totalCount = 0;
-
-					for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
-						lineNumber++;
-
-						lines.add(line);
-
-						if (line.contains("<failure")) {
-							failCount++;
-						}
-						else if (line.contains("<testcase")) {
-							totalCount++;
-						}
-						else if (line.contains("<testsuite")) {
-							summaryLocation = lineNumber;
-						}
-					}
-
-					bufferedReader.close();
-
-					int passCount = totalCount - failCount;
-
-					lines.add(summaryLocation, "\t</summary>");
-					lines.add(summaryLocation, "\t\t<property name=\"failed\" value=\"" + Integer.toString(failCount) + "\" />");
-					lines.add(summaryLocation, "\t\t<property name=\"passed\" value=\"" + Integer.toString(passCount) + "\" />");
-					lines.add(summaryLocation, "\t<summary>");
-
-					FileWriter fileWriter = new FileWriter(jenkinsResultsXMLSuiteFile);
-
-					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-					for (String line : lines) {
-						bufferedWriter.write(line);
-						bufferedWriter.write('\n');
-					}
-
-					bufferedWriter.close();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-				}
-			]]>
-		</beanshell>
-
-		<if>
-			<isset property="jenkins.testray.results.dir" />
-			<then>
-				<for list="production,uat" param="testray.base.dir.name">
-					<sequential>
-						<rsync rsync.dest="testray-results/@{testray.base.dir.name}" rsync.src="${jenkins.results.xml.suite.file}" />
-					</sequential>
-				</for>
-			</then>
-		</if>
-	</target>
-
 	<target name="merge-test-results">
 		<mkdir dir="test-results" />
 
 		<parallel timeout="1800000">
 			<junitreport todir="test-results">
-				<fileset dir="modules" erroronmissingdir="false">
+				<fileset
+					dir="modules"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="portal-impl/test-results" erroronmissingdir="false">
+				<fileset
+					dir="portal-impl/test-results"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
+				<fileset
+					dir="portal-kernel/test-results"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="portal-web/test-results" erroronmissingdir="false">
+				<fileset
+					dir="portal-web/test-results"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="util-java/test-results" erroronmissingdir="false">
+				<fileset
+					dir="util-java/test-results"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="util-taglib/test-results" erroronmissingdir="false">
+				<fileset
+					dir="util-taglib/test-results"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="${blade.samples.dir}/liferay-workspace/tests" erroronmissingdir="false">
+				<fileset
+					dir="${blade.samples.dir}/liferay-workspace/tests"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="${liferay.jenkins.dir}/commands/custom-scripts/test-results" erroronmissingdir="false">
+				<fileset
+					dir="${liferay.jenkins.dir}/commands/custom-scripts/test-results"
+					erroronmissingdir="false"
+				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
 				<report format="frames" todir="test-results/html" />
@@ -6485,7 +5706,10 @@ go]]></replacevalue>
 		<if>
 			<available file="${file}" />
 			<then>
-				<move file="${file}" tofile="${tofile}" />
+				<move
+					file="${file}"
+					tofile="${tofile}"
+				/>
 
 				<echo message="Moved file ${file} to ${tofile}." />
 			</then>
@@ -6523,12 +5747,16 @@ go]]></replacevalue>
 
 		<ant dir="${lp.plugins.dir}" inheritAll="false" target="clean" />
 
-		<ant dir="${lp.plugins.dir}" target="war" >
+		<ant dir="${lp.plugins.dir}" target="war">
 			<property name="plugins.includes" value="${plugins.includes.gateway}" />
 		</ant>
 
-		<copy todir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/webapps">
-			<fileset dir="${lp.plugins.dir}/dist" />
+		<copy
+			todir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/webapps"
+		>
+			<fileset
+				dir="${lp.plugins.dir}/dist"
+			/>
 		</copy>
 	</target>
 
@@ -6537,7 +5765,10 @@ go]]></replacevalue>
 
 		<antcall inheritAll="false" target="rebuild-database" />
 
-		<loadfile property="lcs.portal.bundle.properties" srcFile="${lfrsite-lcs.dir}/jenkins/development/portal/artifacts/liferay/portal-ext.properties" />
+		<loadfile
+			property="lcs.portal.bundle.properties"
+			srcFile="${lfrsite-lcs.dir}/jenkins/development/portal/artifacts/liferay/portal-ext.properties"
+		/>
 
 		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
@@ -6548,7 +5779,9 @@ ${lcs.portal.bundle.properties}</echo>
 			tofile="${app.server.classes.global.dir}/portal-log4j-ext.xml"
 		/>
 
-		<replace file="${app.server.bin.dir}/setenv${file.suffix.bat}">
+		<replace
+			file="${app.server.bin.dir}/setenv${file.suffix.bat}"
+		>
 			<replacetoken><![CDATA[-Djava.net.preferIPv4Stack=true]]></replacetoken>
 			<replacevalue><![CDATA[-Djava.net.preferIPv4Stack=true -Dportal:ldap.auth.search.filter=\"(&(mail=@email_address@)(member=cn=Liferay\5C, Inc.,ou=Organizations,ou=liferay.com,o=Liferay))\" -Dportal:ldap.import.user.search.filter=\"(&(objectClass=inetOrgPerson)(member=cn=Liferay\5C, Inc.,ou=Organizations,ou=liferay.com,o=Liferay))\"]]></replacevalue>
 		</replace>
@@ -6588,8 +5821,12 @@ ${lcs.portal.bundle.properties}</echo>
 	</target>
 
 	<target name="prepare-lcs-portlet-bundle">
-		<chmod perm="a+x">
-			<fileset dir="${app.server.parent.dir}/patching-tool">
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.parent.dir}/patching-tool"
+			>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
@@ -6601,7 +5838,9 @@ ${lcs.portal.bundle.properties}</echo>
 			patching-tool${file.suffix.bat} setup
 		</execute>
 
-		<replace file="${app.server.dir}/bin/setenv${file.suffix.bat}">
+		<replace
+			file="${app.server.dir}/bin/setenv${file.suffix.bat}"
+		>
 			<replacetoken><![CDATA[-XX:MaxPermSize=256m]]></replacetoken>
 			<replacevalue><![CDATA[-XX:MaxPermSize=256m -javaagent:../../patching-tool/lib/patching-tool-agent.jar]]></replacevalue>
 		</replace>
@@ -6658,8 +5897,12 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<property name="plugins.includes" value="${plugins.includes.processor}" />
 		</ant>
 
-		<copy todir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/webapps">
-			<fileset dir="${lp.plugins.dir}/dist" />
+		<copy
+			todir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/webapps"
+		>
+			<fileset
+				dir="${lp.plugins.dir}/dist"
+			/>
 		</copy>
 	</target>
 
@@ -6748,6 +5991,15 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<priority value="ERROR" />
 	</category>
 </log4j:configuration>]]></echo>
+
+		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.search.elasticsearch6.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.portal.search.elasticsearch6.internal.connection.EmbeddedElasticsearchConnection">
+		<priority value="ERROR" />
+	</category>
+</log4j:configuration>]]></echo>
 	</target>
 
 	<target name="prepare-mobile-device">
@@ -6793,7 +6045,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				<available file="${test.base.dir.name}/portal.properties" />
 			</and>
 			<then>
-				<copy file="${test.base.dir.name}/portal.properties" tofile="portal-impl/src/portal-ext.properties" />
+				<copy
+					file="${test.base.dir.name}/portal.properties"
+					tofile="portal-impl/src/portal-ext.properties"
+				/>
 			</then>
 		</if>
 
@@ -6892,7 +6147,9 @@ web.server.display.node=true</echo>
 		<if>
 			<equals arg1="${database.jndi.enabled}" arg2="true" />
 			<then>
-				<replace file="portal-impl/src/portal-ext.properties">
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+				>
 					<replacetoken>jdbc.default.jndi.name=</replacetoken>
 					<replacevalue>jdbc.default.jndi.name=jdbc/LiferayPool</replacevalue>
 				</replace>
@@ -6921,15 +6178,28 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<if>
-			<and>
-				<equals arg1="${database.type}" arg2="oracle" />
-				<equals arg1="${database.version}" arg2="11.2.0.1.0" />
-			</and>
+			<equals arg1="${database.type}" arg2="oracle" />
 			<then>
+				<if>
+					<equals arg1="${database.version}" arg2="11.2.0.1.0" />
+					<then>
+						<property name="oracle.instance.name" value="xe" />
+					</then>
+					<elseif>
+						<equals arg1="${database.version}" arg2="12.2.0.1" />
+						<then>
+							<property name="oracle.instance.name" value="orcl" />
+						</then>
+					</elseif>
+					<else>
+						<property name="oracle.instance.name" value="oracl" />
+					</else>
+				</if>
+
 				<replaceregexp
 					file="portal-impl/src/portal-ext.properties"
 					match="(jdbc:oracle:.*)oracl"
-					replace="\1xe"
+					replace="\1${oracle.instance.name}"
 				/>
 			</then>
 		</if>
@@ -6948,7 +6218,9 @@ hot.deploy.dependency.management.enabled=false</echo>
 		<if>
 			<equals arg1="${index.on.startup}" arg2="false" />
 			<then>
-				<replace file="portal-impl/src/portal-ext.properties">
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+				>
 					<replacetoken>index.on.startup=true</replacetoken>
 					<replacevalue>index.on.startup=false</replacevalue>
 				</replace>
@@ -7079,16 +6351,32 @@ upgrade.processes=${upgrade.processes.master}</echo>
 		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5" />
-				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.view.dynamic.inheritance=false" value="permissions.view.dynamic.inheritance=false" />
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="#permissions.user.check.algorithm=5"
+					value="permissions.user.check.algorithm=5"
+				/>
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="#permissions.view.dynamic.inheritance=false"
+					value="permissions.view.dynamic.inheritance=false"
+				/>
 			</then>
 		</if>
 
 		<if>
 			<isset property="set.permission.algorithm.6" />
 			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value="" />
-				<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value="" />
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="permissions.user.check.algorithm=5"
+					value=""
+				/>
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="permissions.view.dynamic.inheritance=false"
+					value=""
+				/>
 			</then>
 		</if>
 
@@ -7097,7 +6385,11 @@ upgrade.processes=${upgrade.processes.master}</echo>
 		<if>
 			<equals arg1="${setup.wizard.enabled}" arg2="true" />
 			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="setup.wizard.enabled=false" value="" />
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="setup.wizard.enabled=false"
+					value=""
+				/>
 
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
@@ -7146,7 +6438,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-portal-properties">
-		<replace file="portal-impl/src/portal.properties">
+		<replace
+			file="portal-impl/src/portal.properties"
+		>
 			<replacefilter
 				token="#upgrade.processes="
 				value="upgrade.processes="
@@ -7220,7 +6514,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 								<pathconvert property="osgi.module.jar.file">
 									<path>
-										<fileset dir="${liferay.home}/osgi">
+										<fileset
+											dir="${liferay.home}/osgi"
+										>
 											<include name="**/${osgi.module.name}.jar" />
 										</fileset>
 									</path>
@@ -7228,8 +6524,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 								<echo file="${liferay.home}/tmp/portlet-ext.properties">${osgi.module.custom.properties}</echo>
 
-								<jar destfile="${osgi.module.jar.file}" update="true">
-									<fileset dir="${liferay.home}/tmp">
+								<jar
+									destfile="${osgi.module.jar.file}"
+									update="true"
+								>
+									<fileset
+										dir="${liferay.home}/tmp"
+									>
 										<include name="portlet-ext.properties" />
 									</fileset>
 								</jar>
@@ -7461,7 +6762,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<var name="test.toggle.file.names" unset="true" />
 
 		<pathconvert pathsep="," property="test.toggle.file.names">
-			<fileset dir="${project.dir}">
+			<fileset
+				dir="${project.dir}"
+			>
 				<include name="modules/*/*/poshi.toggle" />
 				<include name="modules/*/*/*/poshi.toggle" />
 				<include name="modules/*/*/*/*/poshi.toggle" />
@@ -7730,7 +7033,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					<arg value="${mobile.android.home}/platform-tools/adb devices" />
 				</exec>
 
-				<propertyregex input="${mobile.device.name}" override="true" property="mobile.device.name" regexp=".*\n([A-z0-9]*)" select="\1" />
+				<propertyregex
+					input="${mobile.device.name}"
+					override="true"
+					property="mobile.device.name"
+					regexp=".*\n([A-z0-9]*)"
+					select="\1"
+				/>
 
 				<echo append="true" file="${test.ext.properties.file}">
 					mobile.device.name=${mobile.device.name}
@@ -8436,7 +7745,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<if>
 					<resourcecount count="0" when="greater">
-						<zipfileset src="${liferay.home}/osgi/war/${theme.file.name}">
+						<zipfileset
+							src="${liferay.home}/osgi/war/${theme.file.name}"
+						>
 							<patternset>
 								<include name="**/private.lar" />
 							</patternset>
@@ -8511,8 +7822,8 @@ log.sanitizer.enabled=false</echo>
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 	</target>
 
 	<target name="prepare-test-build-custom">
@@ -8534,14 +7845,22 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					replace="\1${env.HOSTNAME}\2"
 				/>
 
-				<chmod perm="a+x">
-					<fileset dir="${app.server.weblogic.bin.dir}">
+				<chmod
+					perm="a+x"
+				>
+					<fileset
+						dir="${app.server.weblogic.bin.dir}"
+					>
 						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
 
-				<chmod perm="a+x">
-					<fileset dir="${app.server.weblogic.instance.dir}">
+				<chmod
+					perm="a+x"
+				>
+					<fileset
+						dir="${app.server.weblogic.instance.dir}"
+					>
 						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
@@ -8553,24 +7872,38 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						dir="${app.server.websphere.dir}"
 						includes="**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.sh,**/*.txt,**/*.xml"
 					>
-						<replacefilter token="/opt/dev/projects/github/liferay-portal/bundles" value="${app.server.parent.dir}" />
+						<replacefilter
+							token="/opt/dev/projects/github/liferay-portal/bundles"
+							value="${app.server.parent.dir}"
+						/>
 					</replace>
 
 					<replace
 						dir="${app.server.websphere.dir}"
 						includes="**/*.sh"
 					>
-						<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
+						<replacefilter
+							token="#!/bin/sh"
+							value="#!/bin/bash"
+						/>
 					</replace>
 
-					<chmod perm="a+x">
-						<fileset dir="${app.server.websphere.bin.dir}">
+					<chmod
+						perm="a+x"
+					>
+						<fileset
+							dir="${app.server.websphere.bin.dir}"
+						>
 							<include name="**/*.sh" />
 						</fileset>
 					</chmod>
 
-					<chmod perm="a+x">
-						<fileset dir="${app.server.websphere.dir}">
+					<chmod
+						perm="a+x"
+					>
+						<fileset
+							dir="${app.server.websphere.dir}"
+						>
 							<include name="bin/**/*.sh" />
 							<include name="java*/bin/*" />
 						</fileset>
@@ -8632,8 +7965,8 @@ plugins.includes=marketplace-portlet</echo>
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 	</target>
 
 	<target name="prepare-test-bundle">
@@ -8662,15 +7995,28 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${test.build.bundle.zip.url}"
 				/>
 
-				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
-					<patternset includes="liferay-*/**" />
-					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
+						includes="liferay-*/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="\1"
+						type="regexp"
+					/>
 				</unzip>
 
 				<delete file="${tstamp.value}.zip" />
 
-				<chmod perm="a+x">
-					<fileset dir="${test.app.server.bin.dir}">
+				<chmod
+					perm="a+x"
+				>
+					<fileset
+						dir="${test.app.server.bin.dir}"
+					>
 						<include name="*.sh" />
 					</fileset>
 				</chmod>
@@ -8694,14 +8040,22 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<then>
 							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom" />
 
-							<chmod perm="a+x">
-								<fileset dir="${app.server.weblogic.bin.dir}">
+							<chmod
+								perm="a+x"
+							>
+								<fileset
+									dir="${app.server.weblogic.bin.dir}"
+								>
 									<include name="**/*.sh" />
 								</fileset>
 							</chmod>
 
-							<chmod perm="a+x">
-								<fileset dir="${app.server.weblogic.instance.dir}">
+							<chmod
+								perm="a+x"
+							>
+								<fileset
+									dir="${app.server.weblogic.instance.dir}"
+								>
 									<include name="**/*.sh" />
 								</fileset>
 							</chmod>
@@ -8815,7 +8169,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
 				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
 				<not>
-					<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
+					<resourcecontains
+						resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml"
+						substring="ExtResourceSet"
+					/>
 				</not>
 			</and>
 			<then>
@@ -8847,7 +8204,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						</not>
 					</and>
 					<then>
-						<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
+						<replace
+							file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml"
+						>
 							<replacetoken><![CDATA[</Context>]]></replacetoken>
 							<replacevalue><![CDATA[	<Resources>
 		<PreResources
@@ -8980,8 +8339,14 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<then>
 							<delete dir="${liferay.home}/data" includeemptydirs="true" />
 
-							<copy file="sql/${database.name}.properties" tofile="${liferay.home}/data/hypersonic/${database.name}.properties" />
-							<copy file="sql/${database.name}.script" tofile="${liferay.home}/data/hypersonic/${database.name}.script" />
+							<copy
+								file="sql/${database.name}.properties"
+								tofile="${liferay.home}/data/hypersonic/${database.name}.properties"
+							/>
+							<copy
+								file="sql/${database.name}.script"
+								tofile="${liferay.home}/data/hypersonic/${database.name}.script"
+							/>
 						</then>
 					</elseif>
 					<elseif>
@@ -9124,7 +8489,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<then>
 				<echo>chmod -v 777 ${liferay.home}</echo>
 
-				<chmod file="${liferay.home}" perm="777" type="dir" verbose="true" />
+				<chmod
+					file="${liferay.home}"
+					perm="777"
+					type="dir"
+					verbose="true"
+				/>
 
 				<echo>${db2.executable} restore database lportal from ${liferay.home} replace existing</echo>
 
@@ -9186,7 +8556,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						]]>
 					</sql>
 
-					<loadfile property="data.pump.log.content" srcFile="data.pump.log" />
+					<loadfile
+						property="data.pump.log.content"
+						srcFile="data.pump.log"
+					/>
 
 					<propertyregex
 						input="${data.pump.log.content}"
@@ -9196,7 +8569,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						replace="\1"
 					/>
 
-					<move file="${liferay.home}/${database.type}.dmp" todir="${data.pump.dir}" />
+					<move
+						file="${liferay.home}/${database.type}.dmp"
+						todir="${data.pump.dir}"
+					/>
 
 					<chown file="${data.pump.dir}/${database.type}.dmp" owner="oracle" />
 					<chgrp file="${data.pump.dir}/${database.type}.dmp" group="oracle" />
@@ -9299,12 +8675,18 @@ go</echo>
 			<arg line="log -1 --pretty=format:%cd HEAD" />
 		</exec>
 
-		<loadfile property="copyright.content" srcFile="${project.dir}/copyright.txt" />
+		<loadfile
+			property="copyright.content"
+			srcFile="${project.dir}/copyright.txt"
+		/>
 
 		<if>
 			<available file="${project.dir}/git-commit-portal" />
 			<then>
-				<loadfile property="git.commit.portal.base.branch" srcFile="${project.dir}/git-commit-portal" />
+				<loadfile
+					property="git.commit.portal.base.branch"
+					srcFile="${project.dir}/git-commit-portal"
+				/>
 
 				<antelope:stringutil property="git.commit.portal.base.branch" string="${git.commit.portal.base.branch}">
 					<antelope:trim />
@@ -9372,7 +8754,10 @@ if (ppstate.equals("normal")) {
 
 		<poshi-execute task="writePoshiProperties" />
 
-		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
+		<move
+			file="portal-web/test.case.method.names.properties"
+			tofile="test.case.method.names.properties"
+		/>
 
 		<echo></echo>
 		<echo>##</echo>
@@ -9382,7 +8767,10 @@ if (ppstate.equals("normal")) {
 
 		<var name="file.content" unset="true" />
 
-		<loadfile property="file.content" srcFile="test.case.method.names.properties" />
+		<loadfile
+			property="file.content"
+			srcFile="test.case.method.names.properties"
+		/>
 
 		<if>
 			<contains string="${file.content}" substring="RUN_TEST_CASE_METHOD_GROUP" />
@@ -9445,12 +8833,19 @@ if (ppstate.equals("normal")) {
 
 		<poshi-execute task="writePoshiProperties" />
 
-		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
+		<move
+			file="portal-web/test.generated.properties"
+			tofile="test.generated.properties"
+		/>
 
 		<if>
 			<isset property="test.class" />
 			<then>
-				<loadfile failonerror="false" property="test.generated.properties.content" srcfile="test.generated.properties" />
+				<loadfile
+					failonerror="false"
+					property="test.generated.properties.content"
+					srcfile="test.generated.properties"
+				/>
 
 				<get-poshi-class-name />
 
@@ -9615,74 +9010,14 @@ if (ppstate.equals("normal")) {
 		<echo file="test.plugin.names.properties">${test.plugin.names.properties.content}</echo>
 	</target>
 
-	<target name="record-testray-logs">
-		<if>
-			<isset property="jenkins.testray.results.dir" />
-			<then>
-				<antcall target="record-testray-logs-jenkins-console" />
-
-				<antcall target="record-testray-logs-poshi-report" />
-
-				<execute>
-					gzip -r testray-logs/
-				</execute>
-
-				<for list="production" param="testray.base.dir.name">
-					<sequential>
-						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
-					</sequential>
-				</for>
-			</then>
-		</if>
-	</target>
-
-	<target name="record-testray-logs-jenkins-console">
-		<get-testray-logs-dir-name />
-
-		<mkdir dir="testray-logs/${testray.logs.dir.name}" />
-
-		<propertyregex
-			input="${env.BUILD_URL}"
-			property="jenkins.build.url"
-			regexp="https:\/\/([^\.]+)\.[^\/]+"
-			replace="http://\1"
-		/>
-
-		<propertyregex
-			input="${jenkins.build.url}"
-			override="true"
-			property="jenkins.build.url"
-			regexp="http:\/\/([^\/]+)\/(\d+)"
-			replace="http://\1-\2/\2"
-		/>
-
-		<get dest="testray-logs/${testray.logs.dir.name}/jenkins-console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
-	</target>
-
-	<target name="record-testray-logs-poshi-report">
-		<if>
-			<isset property="test.class" />
-			<then>
-				<get-poshi-dir-name />
-
-				<get-testray-logs-dir-name />
-
-				<copy todir="testray-logs/${testray.logs.dir.name}">
-					<fileset dir="portal-web/test-results/${poshi.dir.name}" erroronmissingdir="false" />
-				</copy>
-
-				<replaceregexp flags="g" match="\.jpg" replace=".jpg.gz">
-					<fileset dir="testray-logs/${testray.logs.dir.name}" includes="*.html" />
-				</replaceregexp>
-			</then>
-		</if>
-	</target>
-
 	<target name="remove-plugin">
 		<get-auto-deploy-dir />
 
 		<delete>
-			<fileset dir="${auto.deploy.dir}" includes="${plugin.name}-*.war" />
+			<fileset
+				dir="${auto.deploy.dir}"
+				includes="${plugin.name}-*.war"
+			/>
 		</delete>
 	</target>
 
@@ -9694,14 +9029,19 @@ if (ppstate.equals("normal")) {
 		<fail message="${token} not found in ${file}.">
 			<condition>
 				<not>
-					<resourcecontains resource="${file}" substring="${token}" />
+					<resourcecontains
+						resource="${file}"
+						substring="${token}"
+					/>
 				</not>
 			</condition>
 		</fail>
 
 		<echo>Replacing ${token} with ${value} in ${file}.</echo>
 
-		<replace file="${file}">
+		<replace
+			file="${file}"
+		>
 			<replacefilter
 				token="${token}"
 				value="${value}"
@@ -9824,43 +9164,18 @@ jdbc.default.password=${database.mysql.password}</echo>
 							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 
-						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
-							<fileset dir="portal-web/test-results/${poshi.runner.results.dir}/screenshots" erroronmissingdir="false" />
+						<copy
+							todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots"
+						>
+							<fileset
+								dir="portal-web/test-results/${poshi.runner.results.dir}/screenshots"
+								erroronmissingdir="false"
+							/>
 						</copy>
 					</then>
 				</if>
 
 				<antcall target="run-poshi-evaluate-console" />
-
-				<if>
-					<istrue value="${build.test.results.xml}" />
-					<then>
-						<antcall target="build-test-results-xml" />
-
-						<first id="first">
-							<fileset dir="portal-web/test-results/" includes="**/TEST-com.liferay.portalweb.*.xml,**/TEST-com.liferay.portalweb2.*.xml,**/TEST-com.liferay.poshi.runner.*.xml" />
-						</first>
-
-						<property name="jenkins.results.xml.file" value="${toString:first}" />
-
-						<if>
-							<and>
-								<available file="${jenkins.results.xml.file}" />
-								<not>
-									<isset property="env.JENKINS_GITHUB_PULL_REQUEST_USERNAME" />
-								</not>
-							</and>
-							<then>
-								<copy
-									file="${jenkins.results.xml.file}"
-									tofile="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
-								/>
-							</then>
-						</if>
-
-						<move file="${jenkins.results.xml.file}" todir="${project.dir}/portal-web/test-results/functional" />
-					</then>
-				</if>
 			</then>
 		</if>
 
@@ -9938,11 +9253,22 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<if>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<then>
-						<move todir="${app.server.dir}/webapps/${portal.context}">
-							<fileset dir="${app.server.dir}/webapps/ROOT" />
+						<move
+							todir="${app.server.dir}/webapps/${portal.context}"
+						>
+							<fileset
+								dir="${app.server.dir}/webapps/ROOT"
+							/>
 						</move>
-						<move file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" tofile="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml" />
-						<replace file="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml" token="path=&quot;&quot;" value="path=&quot;/${portal.context}&quot;" />
+						<move
+							file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml"
+							tofile="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml"
+						/>
+						<replace
+							file="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml"
+							token="path=&quot;&quot;"
+							value="path=&quot;/${portal.context}&quot;"
+						/>
 					</then>
 					<else>
 						<fail message="Changing the portal context for ${app.server.type} is not supported." />
@@ -10194,7 +9520,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					<equals arg1="${test.run.environment}" arg2="CE" />
 					<then>
 						<delete>
-							<fileset dir="${liferay.home}/osgi/portal" includes="*.single.jar" />
+							<fileset
+								dir="${liferay.home}/osgi/portal"
+								includes="*.single.jar"
+							/>
 						</delete>
 					</then>
 				</if>
@@ -10234,12 +9563,22 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					<then>
 						<mkdir dir="${liferay.home}/tmp" />
 
-						<move todir="${liferay.home}/tmp">
-							<fileset dir="${liferay.home}/deploy" includes="${theme.file.name}" />
+						<move
+							todir="${liferay.home}/tmp"
+						>
+							<fileset
+								dir="${liferay.home}/deploy"
+								includes="${theme.file.name}"
+							/>
 						</move>
 
-						<move todir="${liferay.home}/tmp">
-							<fileset dir="${liferay.home}/osgi/marketplace" includes="*Theme*.lpkg" />
+						<move
+							todir="${liferay.home}/tmp"
+						>
+							<fileset
+								dir="${liferay.home}/osgi/marketplace"
+								includes="*Theme*.lpkg"
+							/>
 						</move>
 					</then>
 				</if>
@@ -10287,8 +9626,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<if>
 					<available file="${liferay.home}/tmp/${theme.file.name}" />
 					<then>
-						<move todir="${liferay.home}/deploy">
-							<fileset dir="${liferay.home}/tmp" includes="${theme.file.name}" />
+						<move
+							todir="${liferay.home}/deploy"
+						>
+							<fileset
+								dir="${liferay.home}/tmp"
+								includes="${theme.file.name}"
+							/>
 						</move>
 
 						<delete dir="${liferay.home}/tmp" failonerror="false" />
@@ -10302,8 +9646,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					<elseif>
 						<available file="${liferay.home}/tmp" type="dir" />
 						<then>
-							<move todir="${liferay.home}/osgi/marketplace">
-								<fileset dir="${liferay.home}/tmp" includes="*Theme*.lpkg" />
+							<move
+								todir="${liferay.home}/osgi/marketplace"
+							>
+								<fileset
+									dir="${liferay.home}/tmp"
+									includes="*Theme*.lpkg"
+								/>
 							</move>
 
 							<delete dir="${liferay.home}/tmp" failonerror="false" />
@@ -10418,8 +9767,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
-				<print-file file.name="${elasticsearch.dir}/logs/LiferayElasticsearchCluster.log" />
-
 				<ant antfile="build-test-elasticsearch.xml" target="stop-elasticsearch" />
 			</then>
 		</if>
@@ -10657,7 +10004,10 @@ jdbc.default.password=${database.password}</echo>
 				</if>
 
 				<first id="first">
-					<fileset dir="${liferay.home}/logs" includes="*.log" />
+					<fileset
+						dir="${liferay.home}/logs"
+						includes="*.log"
+					/>
 				</first>
 
 				<var name="log.file.path" value="${toString:first}" />

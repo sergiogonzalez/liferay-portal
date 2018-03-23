@@ -157,7 +157,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 							<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>">
 								<span class="inline-item inline-item-before">
-									<clay:icon symbol="comments" />
+									<clay:icon
+										symbol="comments"
+									/>
 								</span>
 
 								<%= String.valueOf(messagesCount) %>
@@ -169,10 +171,15 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						<div class="autofit-col">
 							<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" type="button">
 								<span class="inline-item inline-item-before">
-									<clay:icon symbol="time" />
+									<clay:icon
+										symbol="time"
+									/>
 								</span>
 
-								<liferay-reading-time:reading-time displayStyle="simple" model="<%= entry %>" />
+								<liferay-reading-time:reading-time
+									displayStyle="simple"
+									model="<%= entry %>"
+								/>
 							</button>
 						</div>
 					</c:if>
@@ -187,7 +194,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 									enabled="<%= !entry.isInTrash() %>"
 									message='<%= entry.isInTrash() ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
 									reportedUserId="<%= entry.getUserId() %>"
-
 								/>
 							</div>
 						</div>
@@ -202,7 +208,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 									inTrash="<%= entry.isInTrash() %>"
 									ratingsEntry="<%= ratingsEntry %>"
 									ratingsStats="<%= ratingsStats %>"
-
 								/>
 							</div>
 						</div>

@@ -56,7 +56,13 @@ if (row == null) {
 }
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= (folder != null) && BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
@@ -121,6 +127,23 @@ if (row == null) {
 		<liferay-ui:icon-delete
 			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
+		/>
+	</c:if>
+
+	<%
+	boolean bookmarksAdmin = portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN);
+	boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
+	boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, BookmarksPortletKeys.BOOKMARKS);
+	%>
+
+	<c:if test="<%= (folder != null) && bookmarksAdmin && inStagingGroup && portletStaged %>">
+		<portlet:actionURL name="/bookmarks/publish_folder" var="publishFolderURL">
+			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="publish"
+			url="<%= publishFolderURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

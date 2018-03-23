@@ -97,23 +97,9 @@ publishTemplatesURL.setParameter("publishConfigurationButtons", "saved");
 <c:if test='<%= !publishConfigurationButtons.equals("template") %>'>
 	<aui:nav-bar cssClass="collapse-basic-search navbar-collapse-absolute" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav" id="publishConfigurationButtons">
-			<aui:nav-item
-				cssClass='<%= publishConfigurationButtons.equals("custom") ? "hidden-xs" : StringPool.BLANK %>'
-				data-value="custom"
-				href="<%= customPublishURL.toString() %>"
-				iconCssClass="icon-puzzle"
-				label="custom"
-				selected='<%= publishConfigurationButtons.equals("custom") %>'
-			/>
+			<aui:nav-item cssClass='<%= publishConfigurationButtons.equals("custom") ? "hidden-xs" : StringPool.BLANK %>' data-value="custom" href="<%= customPublishURL.toString() %>" iconCssClass="icon-puzzle" label="custom" selected='<%= publishConfigurationButtons.equals("custom") %>' />
 
-			<aui:nav-item
-				cssClass='<%= publishConfigurationButtons.equals("saved") ? "hidden-xs" : StringPool.BLANK %>'
-				data-value="saved"
-				href="<%= publishTemplatesURL.toString() %>"
-				iconCssClass="icon-archive"
-				label="publish-templates"
-				selected='<%= publishConfigurationButtons.equals("saved") %>'
-			/>
+			<aui:nav-item cssClass='<%= publishConfigurationButtons.equals("saved") ? "hidden-xs" : StringPool.BLANK %>' data-value="saved" href="<%= publishTemplatesURL.toString() %>" iconCssClass="icon-archive" label="publish-templates" selected='<%= publishConfigurationButtons.equals("saved") %>' />
 
 			<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
@@ -146,11 +132,7 @@ publishTemplatesURL.setParameter("publishConfigurationButtons", "saved");
 				<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item
-				href="<%= simplePublishURL %>"
-				iconCssClass="icon-rocket"
-				label="switch-to-simple-publication"
-			/>
+			<aui:nav-item href="<%= simplePublishURL %>" iconCssClass="icon-rocket" label="switch-to-simple-publication" />
 		</aui:nav>
 
 		<c:if test='<%= publishConfigurationButtons.equals("saved") %>'>
@@ -164,7 +146,9 @@ publishTemplatesURL.setParameter("publishConfigurationButtons", "saved");
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</aui:nav-bar-search>
 		</c:if>

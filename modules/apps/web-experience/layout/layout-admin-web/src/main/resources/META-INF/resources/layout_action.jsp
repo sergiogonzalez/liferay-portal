@@ -22,7 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Layout curLayout = (Layout)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<liferay-ui:icon
 		message="edit"
 		target="_blank"
@@ -81,6 +87,10 @@ Layout curLayout = (Layout)row.getObject();
 	</c:if>
 </liferay-ui:icon-menu>
 
+<%
+String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames();
+%>
+
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 	var addLayoutPrototypeActionOptionQueryClickHandler = dom.delegate(
 		document.body,
@@ -91,6 +101,12 @@ Layout curLayout = (Layout)row.getObject();
 
 			modalCommands.openSimpleInputModal(
 				{
+					<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
+						checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
+						checkboxFieldName: 'TypeSettingsProperties--addToAutoMenus--',
+						checkboxFieldValue: true,
+					</c:if>
+
 					dialogTitle: '<liferay-ui:message key="copy-page" />',
 					formSubmitURL: '<%= layoutsAdminDisplayContext.getCopyLayoutURL(curLayout) %>',
 					mainFieldName: 'name',

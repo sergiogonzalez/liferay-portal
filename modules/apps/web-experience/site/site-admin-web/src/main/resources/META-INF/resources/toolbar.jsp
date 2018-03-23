@@ -48,7 +48,30 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
+		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
+
+			<%
+			Group group = siteAdminDisplayContext.getGroup();
+			%>
+
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-portlet:renderURL varImpl="addSiteURL">
+					<portlet:param name="jspPage" value="/select_site_initializer.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+
+					<c:if test="<%= (group != null) && siteAdminDisplayContext.hasAddChildSitePermission(group) %>">
+						<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(group.getGroupId()) %>" />
+					</c:if>
+				</liferay-portlet:renderURL>
+
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add") %>'
+					url="<%= addSiteURL.toString() %>"
+				/>
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -74,7 +97,9 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -85,7 +110,12 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 			label="info"
 		/>
 
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSites" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSites"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

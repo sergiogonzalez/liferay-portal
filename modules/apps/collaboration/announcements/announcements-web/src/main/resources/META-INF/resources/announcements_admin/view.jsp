@@ -49,21 +49,13 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewEntriesURL" />
 
-		<aui:nav-item
-			href="<%= viewEntriesURL %>"
-			label="announcements"
-			selected='<%= navigation.equals("announcements") %>'
-		/>
+		<aui:nav-item href="<%= viewEntriesURL %>" label="announcements" selected='<%= navigation.equals("announcements") %>' />
 
 		<portlet:renderURL var="viewAlertsURL">
 			<portlet:param name="navigation" value="alerts" />
 		</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewAlertsURL %>"
-			label="alerts"
-			selected='<%= navigation.equals("alerts") %>'
-		/>
+		<aui:nav-item href="<%= viewAlertsURL %>" label="alerts" selected='<%= navigation.equals("alerts") %>' />
 	</aui:nav>
 </aui:nav-bar>
 
@@ -86,8 +78,13 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 			<portlet:param name="alert" value='<%= String.valueOf(navigation.equals("alerts")) %>' />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= navigation.equals("alerts") ? LanguageUtil.get(resourceBundle, "add-alert") : LanguageUtil.get(resourceBundle, "add-announcement") %>' url="<%= addEntryURL %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= navigation.equals("alerts") ? LanguageUtil.get(resourceBundle, "add-alert") : LanguageUtil.get(resourceBundle, "add-announcement") %>'
+				url="<%= addEntryURL %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -107,7 +104,11 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -171,7 +172,10 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= announcementsEntriesSearchContainer %>" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				searchContainer="<%= announcementsEntriesSearchContainer %>"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

@@ -83,7 +83,10 @@ List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+		paginate="<%= total > SearchContainer.DEFAULT_DELTA %>"
+	/>
 </liferay-ui:search-container>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "deletedMissingAssetEntries") %>'>

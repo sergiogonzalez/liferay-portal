@@ -77,7 +77,9 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
@@ -91,12 +93,9 @@
 	</command>
 
 	<command name="addRoleViewPermissions">
-		<var name="key_rowEntry" value="${templateName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="${templateName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -144,7 +143,9 @@
 	</command>
 
 	<command name="advancedSearchCP">
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
@@ -177,7 +178,9 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
@@ -213,7 +216,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
 
@@ -225,17 +230,17 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="localizationNameKey" value="${localization1NameKey}" />
+			<var name="locale" value="${locale}" />
 		</execute>
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization1Name}" />
 
 		<if>
-			<isset var="localization2NameKey" />
+			<isset var="locale2" />
 			<then>
 				<execute macro="PortletEntry#changeLocale">
 					<var name="fieldName" value="Name" />
-					<var name="localizationNameKey" value="${localization2NameKey}" />
+					<var name="locale" value="${locale2}" />
 				</execute>
 
 				<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization2Name}" />
@@ -252,7 +257,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="2" />
@@ -294,7 +301,9 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<var name="key_ddlTemplateName" value="${templateName}" />
 

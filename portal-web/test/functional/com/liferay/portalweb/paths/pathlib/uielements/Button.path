@@ -194,6 +194,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CANCEL_GIVEN_POSITION</td>
+	<td>//div[contains(@class,'lfr-form-content')]/../div/a[contains(@class,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')] | //a[contains(@class,'btn') and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE</td>
 	<td>//button[contains(.,'Change')]</td>
 	<td></td>
@@ -359,6 +364,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_ROW</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//*[normalize-space(text())='Edit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTER</td>
 	<td>//button[contains(.,'Enter')]</td>
 	<td></td>
@@ -370,7 +380,7 @@
 </tr>
 <tr>
 	<td>EDITOR_SWITCH</td>
-	<td>//button[contains(@id,'EditorSwitch') and contains(@class,'editor-view')]</td>
+	<td>//div[@class='alloy-editor-switch']/button[contains(@id,'EditorSwitch') and contains(@class,'editor-view')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -455,7 +465,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION</td>
-	<td>//div[label[contains(.,'${key_fieldName}')]]//div[contains(@class,'localized')]//button</td>
+	<td>//div[label[contains(.,'${key_fieldName}')]]//div[contains(@class,'localized')]//button[contains(@class,'localized')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -484,13 +494,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_THREAD</td>
-	<td>//button[contains(.,'Move Thread')]</td>
+	<td>MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Move to the Recycle Bin')] | //button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//a[contains(@class,'btn') and contains(.,'Move to the Recycle Bin')] | //button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>NEW_THREAD</td>
+	<td>//span[contains(.,'New Thread')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -534,11 +544,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>POST_NEW_THREAD</td>
-	<td>//span[contains(.,'New Thread')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW</td>
 	<td>//button[contains(.,'Preview')]</td>
 	<td></td>
@@ -551,6 +556,11 @@
 <tr>
 	<td>PUBLISH</td>
 	<td>//button[span[contains(.,'Publish')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_GIVEN_POSITION</td>
+	<td>//div[contains(@class,'lfr-form-content')]/../div/button[span[contains(.,'Publish')]]</td>
 	<td></td>
 </tr>
 <tr>

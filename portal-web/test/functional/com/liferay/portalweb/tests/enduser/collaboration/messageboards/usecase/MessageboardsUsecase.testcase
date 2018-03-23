@@ -66,7 +66,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#NEW_THREAD" value1="New Thread" />
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
 
@@ -506,8 +506,8 @@
 		</execute>
 
 		<execute macro="JSONMBMessage#addMessage">
-			<var name="threadBody"><![CDATA[<script>alert(2)</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -522,10 +522,16 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewBBCodeNoXSS">
-			<var name="threadBody"><![CDATA[<script>alert(2)</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 			<var name="userName" value="Anonymous" />
 		</execute>
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
 	<command name="ViewCategoriesAndThreadsOnTwoScopes" priority="3">
@@ -1545,7 +1551,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey" >
+		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey">
 			<execute macro="Role#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 				<var name="roleTitle" value="User" />
@@ -1681,6 +1687,10 @@
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="MB Thread Message Body 1" />
 			<var name="threadSubject" value="MB Thread Message Subject 1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
@@ -1876,13 +1886,19 @@
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="" />
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 
 		<execute macro="MessageboardsThread#viewNoXSSPG">
 			<var name="threadBody" value="" />
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
 	<command name="ViewNoMBThreadXSS" priority="4">
@@ -2165,7 +2181,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP" >
+		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP">
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
@@ -2181,7 +2197,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP" >
+		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP">
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 

@@ -28,7 +28,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Friendly URL" />
-			<var name="localizationNameKey" value="${friendlyUrlLocalized}" />
+			<var name="locale" value="${friendlyUrlLocalized}" />
 		</execute>
 
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${localizedFriendlyURL}" />
@@ -93,7 +93,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="localizationNameKey" value="${pageTranslation}" />
+			<var name="locale" value="${pageTranslation}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
@@ -108,7 +108,7 @@
 
 		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW" />
 
-		<for list="${portletNameList}" param="portletName" >
+		<for list="${portletNameList}" param="portletName">
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
 			<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
@@ -213,8 +213,9 @@
 			<var name="navTab" value="General" />
 		</execute>
 
-		<execute function="Click#pauseClickAt" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED">
-			<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Name" />
+			<var name="locale" value="${friendlyUrlLocalized}" />
 		</execute>
 
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1=" " />
@@ -942,7 +943,7 @@
 		<execute function="AssertElementPresent" locator1="TextInput#SEO_HTML_TITLE" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Button#LOCALIZATION" value1="${defaultSiteLanguageKey}">
-			<var name="key_fieldName" value="HTML Title" />
+			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
@@ -1022,17 +1023,15 @@
 	</command>
 
 	<command name="viewPageTemplateTypeNotPresent">
-		<var name="key_pageName" value="${pageTemplateName}" />
-
-		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
-
-		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
+		<execute function="AssertElementNotPresent" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="${pageTemplateName}" />
+		</execute>
 	</command>
 
 	<command name="viewPageTemplateTypePresent">
-		<var name="key_pageName" value="${pageTemplateName}" />
-
-		<execute function="AssertElementPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
+		<execute function="AssertElementPresent" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="${pageTemplateName}" />
+		</execute>
 	</command>
 
 	<command name="viewPanelPortletListCP">
@@ -1062,7 +1061,7 @@
 
 		<execute function="AssertChecked#assertCheckedNotVisible" locator1="SitePages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 
-		<for list="${portletNameList}" param="portletName" >
+		<for list="${portletNameList}" param="portletName">
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
 			<execute function="AssertChecked#assertCheckedNotVisible" locator1="SitePages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
@@ -1099,8 +1098,8 @@
 	</command>
 
 	<command name="viewSiteNameTranslationsPG">
-		<execute function="Click" locator1="Language#SELECT_LANGUAGE">
-			<var name="key_language" value="${language}" />
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="locale" value="${locale}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />

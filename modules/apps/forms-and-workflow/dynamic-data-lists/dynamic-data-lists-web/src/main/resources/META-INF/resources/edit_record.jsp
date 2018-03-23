@@ -119,7 +119,12 @@ else {
 					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
 				</div>
 
-				<liferay-ui:tabs cssClass="navbar-no-collapse" names="details,versions" refresh="<%= false %>" type="dropdown">
+				<liferay-ui:tabs
+					cssClass="navbar-no-collapse"
+					names="details,versions"
+					refresh="<%= false %>"
+					type="dropdown"
+				>
 					<liferay-ui:section>
 						<div class="sidebar-body">
 							<h3 class="version">
@@ -180,12 +185,7 @@ else {
 				<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 				<c:if test="<%= !translating && !ddlDisplayContext.isFormView() %>">
-					<aui:translation-manager
-						availableLocales="<%= availableLocales %>"
-						changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
-						defaultLanguageId="<%= defaultLanguageId %>"
-						id="translationManager"
-					/>
+					<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 				</c:if>
 
 				<%

@@ -201,10 +201,31 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
+					<c:if test="<%= (template != null) && (groupId != PortalUtil.getScopeGroupId(request, refererPortletName)) %>">
+						<aui:field-wrapper>
+							<div class="alert alert-warning">
+								<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
+							</div>
+						</aui:field-wrapper>
+					</c:if>
+
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
-					<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
-						<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" markupView="lexicon" persistState="<%= true %>" title="details">
+					<liferay-ui:panel-container
+						cssClass="lfr-structure-entry-details-container"
+						extended="<%= false %>"
+						id="templateDetailsPanelContainer"
+						persistState="<%= true %>"
+					>
+						<liferay-ui:panel
+							collapsible="<%= true %>"
+							defaultState="closed"
+							extended="<%= false %>"
+							id="templateDetailsSectionPanel"
+							markupView="lexicon"
+							persistState="<%= true %>"
+							title="details"
+						>
 							<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
 								<div class="form-group">
 									<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />

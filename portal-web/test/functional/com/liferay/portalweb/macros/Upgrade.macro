@@ -113,7 +113,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageStructures" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Structures" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 
@@ -140,7 +142,9 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateDescription" value="WC Template Description" />
@@ -548,6 +552,35 @@
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="Pause" locator1="10000" />
+	</command>
+
+	<command name="resetTestUserPassword">
+		<execute macro="SetupWizard#finishConfigurationPG" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="User#acceptEndUserLicenseAgreement" />
+
+		<execute macro="User#resetPassword">
+			<var name="setupWizardEnabled" value="true" />
+		</execute>
+
+		<execute macro="User#answerPasswordReminder" />
+
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test2" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
 	</command>
 
 	<command name="searchForAssetsAfterUpgrade">
