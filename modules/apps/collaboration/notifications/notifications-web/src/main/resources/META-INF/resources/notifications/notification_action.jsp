@@ -95,5 +95,4 @@ UserNotificationFeedEntry userNotificationFeedEntry = (UserNotificationFeedEntry
 			url="<%= deleteURL.toString() %>"
 		/>
 	</c:if>
-
 </liferay-ui:icon-menu>
