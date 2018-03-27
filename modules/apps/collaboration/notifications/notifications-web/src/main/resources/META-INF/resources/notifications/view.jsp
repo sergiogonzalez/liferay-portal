@@ -201,11 +201,10 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 								if (notificationContainer) {
 									var markAsReadURL = notificationContainer.one('a').attr('href');
-
-									A.io.request(markAsReadURL);
-
 									notificationContainer.remove();
-									location.reload(true);
+
+									form.attr('method', 'post');
+									submitForm(form, markAsReadURL);
 								}
 							}
 							else {
