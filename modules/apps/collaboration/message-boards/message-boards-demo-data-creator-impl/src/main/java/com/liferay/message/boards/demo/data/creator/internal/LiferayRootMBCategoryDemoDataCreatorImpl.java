@@ -14,7 +14,8 @@
 
 package com.liferay.message.boards.demo.data.creator.internal;
 
-import com.liferay.message.boards.demo.data.creator.MBCategoryDemoDataCreator;
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.demo.data.creator.RootMBCategoryDemoDataCreator;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,14 +33,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {"source=liferay"}, service = MBCategoryDemoDataCreator.class
+	property = {"source=liferay"}, service = RootMBCategoryDemoDataCreator.class
 )
-public class LiferayMBCategoryDemoDataCreatorImplImpl
+public class LiferayRootMBCategoryDemoDataCreatorImpl
 	extends BaseMBCategoryDemoDataCreatorImpl
-	implements MBCategoryDemoDataCreator {
+	implements RootMBCategoryDemoDataCreator {
 
 	@Override
-	public MBCategory create(long userId, long parentCategoryId)
+	public MBCategory create(long userId, long groupId)
 		throws IOException, PortalException {
 
 		int randomElement = RandomUtil.nextInt(
@@ -48,18 +49,16 @@ public class LiferayMBCategoryDemoDataCreatorImplImpl
 		String name = _names.get(randomElement);
 		String description = _descriptions.get(randomElement);
 
-		MBCategory category = mbCategoryLocalService.getMBCategory(
-			parentCategoryId);
-
 		return createCategory(
-			userId, category.getGroupId(), parentCategoryId, name, description);
+			userId, groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			name, description);
 	}
 
 	private static List<String> _read(String fileName) {
 		return Arrays.asList(
 			StringUtil.split(
 				StringUtil.read(
-					LiferayMBCategoryDemoDataCreatorImplImpl.class,
+					LiferayRootMBCategoryDemoDataCreatorImpl.class,
 					"dependencies/liferay/" + fileName + ".txt"),
 				CharPool.NEW_LINE));
 	}
