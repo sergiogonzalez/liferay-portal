@@ -169,7 +169,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 				unformattedLinksTextVisitor.getUnformattedText(linkNode));
 		}
 
-		if (linkNode.isAbsoluteLink()) {
+		if (linkNode.isAbsoluteLink() || linkNode.isDLFileEntryLink()) {
 			appendAbsoluteHref(linkNode);
 		}
 		else {
