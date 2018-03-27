@@ -432,6 +432,14 @@ public class XhtmlTranslationVisitorTest {
 	}
 
 	@Test
+	public void testParseLinkDLFileEntry() {
+		Assert.assertEquals(
+			"<p><a href=\"/documents/12345/0/test.txt" +
+				"/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx\">Test Document</a> </p>",
+			translate("link-15.creole"));
+	}
+
+	@Test
 	public void testParseLinkEmpty() {
 		Assert.assertEquals("<p></p>", translate("link-8.creole"));
 	}
