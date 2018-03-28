@@ -31,19 +31,16 @@ public class NotificationsUtil {
 			long userId, boolean actionRequired)
 		throws PortalException {
 
-		long allNotificationsCount;
-
 		if (actionRequired) {
-			allNotificationsCount = UserNotificationEventLocalServiceUtil.
+			return UserNotificationEventLocalServiceUtil.
 				getArchivedUserNotificationEventsCount(
 					userId, _DELIVERY_TYPE, true, false);
-		} else {
-			allNotificationsCount = UserNotificationEventLocalServiceUtil.
+		}
+		else {
+			return UserNotificationEventLocalServiceUtil.
 				getDeliveredUserNotificationEventsCount(
 					userId, _DELIVERY_TYPE, true, false);
 		}
-
-		return allNotificationsCount;
 	}
 
 	public static void populateResults(
