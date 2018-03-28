@@ -996,6 +996,22 @@ public class SocialActivityCounterLocalServiceImpl
 		portalCache.removeAll();
 	}
 
+	protected void decrementActivityCounter(
+		SocialActivityCounter activityCounter,
+		SocialActivityCounterDefinition activityCounterDefinition) {
+
+		activityCounter.setCurrentValue(
+			activityCounter.getCurrentValue() -
+			activityCounterDefinition.getIncrement());
+		activityCounter.setTotalValue(
+			activityCounter.getTotalValue() -
+			activityCounterDefinition.getIncrement());
+
+		socialActivityCounterPersistence.update(activityCounter);
+
+		socialActivityCounterPersistence.clearCache(activityCounter);
+	}
+
 	protected long getClassNameId(AssetEntry assetEntry, int ownerType) {
 		if (ownerType == SocialActivityCounterConstants.TYPE_ASSET) {
 			return assetEntry.getClassNameId();
