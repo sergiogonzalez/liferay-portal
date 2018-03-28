@@ -400,7 +400,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-content"
 									name="description"
-									value="<%= StringUtil.shorten(fileEntry.getDescription(), 200) %>"
+									value="<%= StringUtil.shorten(fileEntry.getDescription(), 100) %>"
 								/>
 							</c:if>
 
@@ -571,7 +571,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-content"
 									name="description"
-									value="<%= StringUtil.shorten(curFolder.getDescription(), 200) %>"
+									value="<%= StringUtil.shorten(curFolder.getDescription(), 100) %>"
 								/>
 							</c:if>
 
