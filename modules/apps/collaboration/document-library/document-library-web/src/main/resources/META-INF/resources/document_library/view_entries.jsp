@@ -124,9 +124,7 @@ if (fileEntryTypeId >= 0) {
 
 	dlSearchContainer.setTotal(total);
 
-	Document[] docs = hits.getDocs();
-
-	for (Document doc : docs) {
+	for (Document doc : hits.getDocs()) {
 		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
 		FileEntry fileEntry = null;
