@@ -444,6 +444,11 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			oldCoverImageId = entry.getCoverImageFileEntryId();
 			oldCoverImageURL = entry.getCoverImageURL();
 			oldSmallImageId = entry.getSmallImageId();
+
+			if (entry.getSmallImageFileEntryId() != 0) {
+				oldSmallImageId = entry.getSmallImageFileEntryId();
+			}
+
 			oldSmallImageURL = entry.getSmallImageURL();
 		}
 
