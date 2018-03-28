@@ -126,8 +126,6 @@ if (fileEntryTypeId >= 0) {
 
 	Document[] docs = hits.getDocs();
 
-	results = new ArrayList(docs.length);
-
 	for (Document doc : docs) {
 		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
