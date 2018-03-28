@@ -85,7 +85,7 @@ dlSearchContainer.setOrderByCol(orderByCol);
 dlSearchContainer.setOrderByComparator(orderByComparator);
 dlSearchContainer.setOrderByType(orderByType);
 
-List results = null;
+List results = new ArrayList();
 int total = 0;
 
 if (fileEntryTypeId >= 0) {
