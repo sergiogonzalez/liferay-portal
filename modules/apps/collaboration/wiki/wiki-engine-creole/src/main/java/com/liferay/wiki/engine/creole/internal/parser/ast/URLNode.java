@@ -93,8 +93,7 @@ public abstract class URLNode extends ASTNode {
 			wikiGroupServiceConfiguration.parsersCreoleSupportedProtocols();
 	}
 
-	private static final String _DL_REGEX =
-		"[^\\s]*\\/documents\\/\\d+\\/[^\\s]+";
+	private static final String _DL_REGEX = "\\/documents\\/\\d+\\/[^\\s]+";
 
 	private String _link;
 	private String[] _supportedProtocols;
