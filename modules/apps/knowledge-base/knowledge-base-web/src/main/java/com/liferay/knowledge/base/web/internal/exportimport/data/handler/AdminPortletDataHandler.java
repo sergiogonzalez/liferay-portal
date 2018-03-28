@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.knowledge.base.constants.KBConstants;
@@ -67,14 +68,16 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(KBTemplate.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "kb-articles", true, true, null,
+				NAMESPACE, "kb-articles", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "kb-comments", true, false, null,
+						KBComment.class.getName())
+				},
 				KBArticle.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "kb-templates", true, true, null,
-				KBTemplate.class.getName()),
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "kb-comments", true, true, null,
-				KBComment.class.getName()));
+				NAMESPACE, "kb-templates", true, false, null,
+				KBTemplate.class.getName()));
 	}
 
 	@Override
