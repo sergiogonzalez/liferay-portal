@@ -62,6 +62,7 @@ if (notificationUnread) {
 	<c:otherwise>
 		<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
 			<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
+
 			<c:choose>
 				<c:when test="<%= userNotificationFeedEntry.getLink() == StringPool.BLANK %>">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
