@@ -49,6 +49,7 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -213,21 +214,28 @@ public class MicroblogsEntryLocalServiceImpl
 			MicroblogsEntry microblogsEntry)
 		throws PortalException {
 
-		// Microblogs entry
+		List<MicroblogsEntry> totalEntries = new ArrayList<>();
 
-		microblogsEntryPersistence.remove(microblogsEntry);
+		getAllRelatedMicroblogsEntries(totalEntries, microblogsEntry);
 
-		// Asset
+		for (MicroblogsEntry mbEntry : totalEntries) {
 
-		assetEntryLocalService.deleteEntry(
-			MicroblogsEntry.class.getName(),
-			microblogsEntry.getMicroblogsEntryId());
+			// Microblogs entry
 
-		// Social
+			microblogsEntryPersistence.remove(mbEntry);
 
-		socialActivityLocalService.deleteActivities(
-			MicroblogsEntry.class.getName(),
-			microblogsEntry.getMicroblogsEntryId());
+			// Asset
+
+			assetEntryLocalService.deleteEntry(
+				MicroblogsEntry.class.getName(),
+				mbEntry.getMicroblogsEntryId());
+
+			// Social
+
+			socialActivityLocalService.deleteActivities(
+				MicroblogsEntry.class.getName(),
+				mbEntry.getMicroblogsEntryId());
+		}
 
 		return microblogsEntry;
 	}
@@ -548,6 +556,25 @@ public class MicroblogsEntryLocalServiceImpl
 			serviceContext.getAssetTagNames());
 
 		return microblogsEntry;
+	}
+
+	protected void getAllRelatedMicroblogsEntries(
+		List<MicroblogsEntry> totalEntries, MicroblogsEntry microblogsEntry) {
+
+		totalEntries.add(microblogsEntry);
+		totalEntries.addAll(
+			microblogsEntryPersistence.findByT_P(
+				MicroblogsEntryConstants.TYPE_REPLY,
+				microblogsEntry.getMicroblogsEntryId()));
+
+		List<MicroblogsEntry> repostEntries =
+			microblogsEntryPersistence.findByT_P(
+				MicroblogsEntryConstants.TYPE_REPOST,
+				microblogsEntry.getMicroblogsEntryId());
+
+		for (MicroblogsEntry mbEntry : repostEntries) {
+			getAllRelatedMicroblogsEntries(totalEntries, mbEntry);
+		}
 	}
 
 	protected long getSubscriptionId(
