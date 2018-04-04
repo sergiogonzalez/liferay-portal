@@ -156,7 +156,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("</div>");
 	}
 
-	protected void appendAbsoluteHref(LinkNode linkNode) {
+	protected void appendLinkHref(LinkNode linkNode) {
 		append(HtmlUtil.escape(linkNode.getLink()));
 	}
 
@@ -169,8 +169,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 				unformattedLinksTextVisitor.getUnformattedText(linkNode));
 		}
 
-		if (linkNode.isAbsoluteLink()) {
-			appendAbsoluteHref(linkNode);
+		if (linkNode.isAbsoluteLink() || linkNode.isDLFileEntryLink()) {
+			appendLinkHref(linkNode);
 		}
 		else {
 			appendWikiHref(linkNode);

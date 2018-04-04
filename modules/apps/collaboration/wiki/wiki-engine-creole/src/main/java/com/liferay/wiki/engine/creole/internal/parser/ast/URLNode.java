@@ -64,6 +64,14 @@ public abstract class URLNode extends ASTNode {
 		return false;
 	}
 
+	public boolean isDLFileEntryLink() {
+		if (_link.matches(_DL_REGEX)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setLink(String link) {
 		_link = link;
 	}
@@ -84,6 +92,8 @@ public abstract class URLNode extends ASTNode {
 		_supportedProtocols =
 			wikiGroupServiceConfiguration.parsersCreoleSupportedProtocols();
 	}
+
+	private static final String _DL_REGEX = "\\/documents\\/\\d+\\/[^\\s]+";
 
 	private String _link;
 	private String[] _supportedProtocols;
