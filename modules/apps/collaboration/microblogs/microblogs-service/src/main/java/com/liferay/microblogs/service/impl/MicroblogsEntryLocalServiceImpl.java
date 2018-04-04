@@ -214,11 +214,14 @@ public class MicroblogsEntryLocalServiceImpl
 			MicroblogsEntry microblogsEntry)
 		throws PortalException {
 
-		List<MicroblogsEntry> totalEntries = new ArrayList<>();
+		List<MicroblogsEntry> microblogsEntries = new ArrayList<>();
 
-		getAllRelatedMicroblogsEntries(totalEntries, microblogsEntry);
+		microblogsEntries.add(microblogsEntry);
 
-		for (MicroblogsEntry mbEntry : totalEntries) {
+		getAllRelatedMicroblogsEntries(
+			microblogsEntries, microblogsEntry.getMicroblogsEntryId());
+
+		for (MicroblogsEntry mbEntry : microblogsEntries) {
 
 			// Microblogs entry
 
@@ -559,21 +562,21 @@ public class MicroblogsEntryLocalServiceImpl
 	}
 
 	protected void getAllRelatedMicroblogsEntries(
-		List<MicroblogsEntry> totalEntries, MicroblogsEntry microblogsEntry) {
+		List<MicroblogsEntry> microblogsEntries, long microblogsEntryId) {
 
-		totalEntries.add(microblogsEntry);
-		totalEntries.addAll(
+		microblogsEntries.addAll(
 			microblogsEntryPersistence.findByT_P(
-				MicroblogsEntryConstants.TYPE_REPLY,
-				microblogsEntry.getMicroblogsEntryId()));
+				MicroblogsEntryConstants.TYPE_REPLY, microblogsEntryId));
 
-		List<MicroblogsEntry> repostEntries =
+		List<MicroblogsEntry> repostMicroblogsEntries =
 			microblogsEntryPersistence.findByT_P(
-				MicroblogsEntryConstants.TYPE_REPOST,
-				microblogsEntry.getMicroblogsEntryId());
+				MicroblogsEntryConstants.TYPE_REPOST, microblogsEntryId);
 
-		for (MicroblogsEntry mbEntry : repostEntries) {
-			getAllRelatedMicroblogsEntries(totalEntries, mbEntry);
+		for (MicroblogsEntry microblogsEntry : repostMicroblogsEntries) {
+			microblogsEntries.add(microblogsEntry);
+
+			getAllRelatedMicroblogsEntries(
+				microblogsEntries, microblogsEntry.getMicroblogsEntryId());
 		}
 	}
 
