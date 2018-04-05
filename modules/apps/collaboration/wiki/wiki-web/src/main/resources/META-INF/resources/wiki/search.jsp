@@ -125,7 +125,7 @@ portletURL.setParameter("keywords", keywords);
 				fileEntryRelatedSearchResults="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
+				title="<%= (summary != null) ? HtmlUtil.stripHtml(summary.getTitle()) : HtmlUtil.stripHtml(wikiPage.getTitle()) %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>
