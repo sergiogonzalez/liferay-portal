@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  * @author Roberto Díaz
  */
-public class BaseAlloyEditorConfigContributor
+public abstract class BaseAlloyEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
