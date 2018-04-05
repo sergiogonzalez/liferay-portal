@@ -64,11 +64,11 @@ if (notificationUnread) {
 			<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 
 			<c:choose>
-				<c:when test="<%= userNotificationFeedEntry.getLink() == StringPool.BLANK %>">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+				<c:when test="<%= Validator.isNotNull(userNotificationFeedEntry.getLink()) %>">
+					<portlet:param name="redirect" value="<%= userNotificationFeedEntry.getLink() %>" />
 				</c:when>
 				<c:otherwise>
-					<portlet:param name="redirect" value="<%= userNotificationFeedEntry.getLink() %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</c:otherwise>
 			</c:choose>
 		</portlet:actionURL>

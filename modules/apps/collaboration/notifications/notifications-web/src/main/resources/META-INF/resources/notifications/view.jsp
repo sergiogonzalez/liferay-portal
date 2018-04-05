@@ -21,6 +21,10 @@ String navigation = ParamUtil.getString(request, "navigation", "all");
 
 boolean actionRequired = ParamUtil.getBoolean(request, "actionRequired");
 
+if (actionRequired) {
+	navigation = "unread";
+}
+
 String orderByCol = "date";
 String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
@@ -30,7 +34,6 @@ String searchContainerId = "userNotificationEvents";
 
 if (actionRequired) {
 	searchContainerId = "actionableUserNotificationEvents";
-	navigation = "unread";
 }
 
 notificationsSearchContainer.setId(searchContainerId);
@@ -74,7 +77,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	<liferay-frontend:management-bar-filters>
 
 		<%
-		String[] navigationKeys = {"all"};
+		String[] navigationKeys = {"unread"};
 
 		if (!actionRequired) {
 			navigationKeys = new String[] {"all", "unread", "read"};
@@ -202,11 +205,11 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 								if (notificationContainer) {
 									var markAsReadURL = notificationContainer.one('a').attr('href');
 
-									notificationContainer.remove();
-
 									form.attr('method', 'post');
 
 									submitForm(form, markAsReadURL);
+
+									notificationContainer.remove();
 								}
 							}
 							else {
