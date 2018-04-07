@@ -1,38 +1,4 @@
 if (!CKEDITOR.plugins.get('videoembed')) {
-	var PROVIDERS = [
-		{
-			id: 'facebook',
-			schemas: [
-				/(https?:\/\/(?:www\.)?facebook.com\/\S*\/videos\/\S*)/
-			],
-			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allowFullScreen="true" allowTransparency="true" class="embed-responsive-item" frameborder="0" height="315" src="https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=560&height=315" scrolling="no" style="border:none;overflow:hidden" width="560"></iframe></div>')
-		},
-		{
-			id: 'twitch',
-			schemas: [
-				/https?:\/\/(?:www\.)?twitch.tv\/videos\/(\S*)$/
-			],
-			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allowfullscreen="true" class="embed-responsive-item" frameborder="0" height="315" src="https://player.twitch.tv/?autoplay=false&video={embedId}" scrolling="no" width="560" ></iframe></div>')
-		},
-		{
-			id: 'vimeo',
-			schemas: [
-				/https?:\/\/(?:www\.)?vimeo\.com\/album\/.*\/video\/(\S*)/,
-				/https?:\/\/(?:www\.)?vimeo\.com\/channels\/.*\/(\S*)/,
-				/https?:\/\/(?:www\.)?vimeo\.com\/groups\/.*\/videos\/(\S*)/,
-				/https?:\/\/(?:www\.)?vimeo\.com\/(\S*)$/
-			],
-			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allowfullscreen class="embed-responsive-item" frameborder="0" height="315" mozallowfullscreen src="https://player.vimeo.com/video/{embedId}" webkitallowfullscreen width="560"></iframe></div>')
-		},
-		{
-			id: 'youtube',
-			schemas: [
-				/https?:\/\/(?:www\.)?youtube.com\/watch\?v=(\S*)$/
-			],
-			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allow="autoplay; encrypted-media" allowfullscreen height="315" class="embed-responsive-item" frameborder="0" src="https://www.youtube.com/embed/{embedId}?rel=0" width="560"></iframe></div>')
-		}
-	];
-
 	var REGEX_HTTP = /^https?/;
 
 	CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL = '<div data-embed-video-url="{url}">{videoContent}<div class="embed-video-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
@@ -52,6 +18,18 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			requires: 'widget',
 			init: function(editor) {
 				var LFR_VIDEO_EMBED_WIDGET_TPL = new CKEDITOR.template(editor.config.embedWidgetTpl || CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL);
+
+				var providers = editor.config.embedVideoProviders || [];
+
+                providers = providers.map(
+                    provider => {
+                        return {
+                            id: provider.id,
+                            schemas: provider.schemas.map(schema => new RegExp(schema)),
+                            tpl: new CKEDITOR.template(provider.tpl)
+                        }
+                    }
+				);
 
 				var generateEmbedContent = function(url, videoContent) {
 					return LFR_VIDEO_EMBED_WIDGET_TPL.output(
@@ -109,7 +87,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 							var videoContent;
 
 							if (REGEX_HTTP.test(url)) {
-								var validProvider = PROVIDERS.some(
+								var validProvider = providers.some(
 									function(provider) {
 										var schema = provider.schemas.find(
 											function(schema) {
