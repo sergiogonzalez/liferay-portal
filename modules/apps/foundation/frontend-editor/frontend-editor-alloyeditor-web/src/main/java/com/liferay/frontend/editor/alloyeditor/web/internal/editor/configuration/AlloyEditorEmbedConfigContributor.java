@@ -14,6 +14,9 @@
 
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuration;
 
+import com.liferay.frontend.editor.api.embed.EditorEmbedProvider;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -24,7 +27,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Chema Balsas
@@ -45,82 +51,48 @@ public class AlloyEditorEmbedConfigContributor
 		jsonObject.put("embedProviders", getEmbedProvidersJSONArray());
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, EditorEmbedProvider.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
+	protected JSONObject getEmbedProviderJSONObject(
+		EditorEmbedProvider editorEmbedProvider) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("id", editorEmbedProvider.getId());
+
+		JSONArray schemasJSONArray = JSONFactoryUtil.createJSONArray();
+
+		jsonObject.put("schemas", schemasJSONArray);
+
+		String[] schemas = editorEmbedProvider.getSchemas();
+
+		for (String schema : schemas) {
+			schemasJSONArray.put(schema);
+		}
+
+		jsonObject.put("tpl", editorEmbedProvider.getTpl());
+
+		return jsonObject;
+	}
+
 	protected JSONArray getEmbedProvidersJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put(getFacebookEmbedProviderJSONObject());
-		jsonArray.put(getTwitchEmbedProviderJSONObject());
-		jsonArray.put(getVimeoEmbedProviderJSONObject());
-		jsonArray.put(getYoutubeEmbedProviderJSONObject());
+		_serviceTrackerList.forEach(this::getEmbedProviderJSONObject);
 
 		return jsonArray;
 	}
 
-	protected JSONObject getFacebookEmbedProviderJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("id", "facebook");
-
-		JSONArray schemasJSONArray = JSONFactoryUtil.createJSONArray();
-
-		jsonObject.put("schemas", schemasJSONArray);
-
-		schemasJSONArray.put("(https?:\\/\\/(?:www\\.)?facebook.com\\/\\S*\\/videos\\/\\S*)");
-
-		jsonObject.put("tpl", "<div class=\"embed-responsive embed-responsive-16by9\" data-embed-id=\"{embedId}\"><iframe allowFullScreen=\"true\" allowTransparency=\"true\" class=\"embed-responsive-item\" frameborder=\"0\" height=\"315\" src=\"https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=560&height=315\" scrolling=\"no\" style=\"border:none;overflow:hidden\" width=\"560\"></iframe></div>");
-
-		return jsonObject;
-	}
-
-	protected JSONObject getTwitchEmbedProviderJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("id", "twitch");
-
-		JSONArray schemasJSONArray = JSONFactoryUtil.createJSONArray();
-
-		jsonObject.put("schemas", schemasJSONArray);
-
-		schemasJSONArray.put("https?:\\/\\/(?:www\\.)?twitch.tv\\/videos\\/(\\S*)$");
-
-		jsonObject.put("tpl", "<div class=\"embed-responsive embed-responsive-16by9\" data-embed-id=\"{embedId}\"><iframe allowfullscreen=\"true\" class=\"embed-responsive-item\" frameborder=\"0\" height=\"315\" src=\"https://player.twitch.tv/?autoplay=false&video={embedId}\" scrolling=\"no\" width=\"560\" ></iframe></div>");
-
-		return jsonObject;
-	}
-
-	protected JSONObject getVimeoEmbedProviderJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("id", "vimeo");
-
-		JSONArray schemasJSONArray = JSONFactoryUtil.createJSONArray();
-
-		jsonObject.put("schemas", schemasJSONArray);
-
-		schemasJSONArray.put("https?:\\/\\/(?:www\\.)?vimeo\\.com\\/album\\/.*\\/video\\/(\\S*)");
-		schemasJSONArray.put("https?:\\/\\/(?:www\\.)?vimeo\\.com\\/channels\\/.*\\/(\\S*)");
-		schemasJSONArray.put("https?:\\/\\/(?:www\\.)?vimeo\\.com\\/groups\\/.*\\/videos\\/(\\S*)");
-		schemasJSONArray.put("https?:\\/\\/(?:www\\.)?vimeo\\.com\\/(\\S*)$");
-
-		jsonObject.put("tpl", "<div class=\"embed-responsive embed-responsive-16by9\" data-embed-id=\"{embedId}\"><iframe allowfullscreen class=\"embed-responsive-item\" frameborder=\"0\" height=\"315\" mozallowfullscreen src=\"https://player.vimeo.com/video/{embedId}\" webkitallowfullscreen width=\"560\"></iframe></div>");
-
-		return jsonObject;
-	}
-
-	protected JSONObject getYoutubeEmbedProviderJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("id", "youtube");
-
-		JSONArray schemasJSONArray = JSONFactoryUtil.createJSONArray();
-
-		jsonObject.put("schemas", schemasJSONArray);
-
-		schemasJSONArray.put("https?:\\/\\/(?:www\\.)?youtube.com\\/watch\\?v=(\\S*)$");
-
-		jsonObject.put("tpl", "<div class=\"embed-responsive embed-responsive-16by9\" data-embed-id=\"{embedId}\"><iframe allow=\"autoplay; encrypted-media\" allowfullscreen height=\"315\" class=\"embed-responsive-item\" frameborder=\"0\" src=\"https://www.youtube.com/embed/{embedId}?rel=0\" width=\"560\"></iframe></div>");
-
-		return jsonObject;
-	}
+	private ServiceTrackerList<EditorEmbedProvider, EditorEmbedProvider>
+		_serviceTrackerList;
 
 }
