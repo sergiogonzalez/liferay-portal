@@ -19,8 +19,8 @@ package com.liferay.frontend.editor.api.embed;
  */
 public class EditorEmbedProviderTypeConstants {
 
-	public static final String VIDEO = "video";
-
 	public static final String UNKNOWN = "unknown";
+
+	public static final String VIDEO = "video";
 
 }
