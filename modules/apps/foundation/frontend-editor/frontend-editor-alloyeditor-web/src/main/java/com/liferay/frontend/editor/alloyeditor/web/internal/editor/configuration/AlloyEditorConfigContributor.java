@@ -61,10 +61,10 @@ public class AlloyEditorConfigContributor
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
 		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += ",itemselector,media,videoembed";
+			extraPlugins += ",itemselector,media,embedurl";
 		}
 		else {
-			extraPlugins = "itemselector,media,videoembed";
+			extraPlugins = "itemselector,media,embedurl";
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);
@@ -222,7 +222,7 @@ public class AlloyEditorConfigContributor
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put(getToolbarsStylesSelectionsVideoEmbedJSONObject());
+		jsonArray.put(getToolbarsStylesSelectionsEmbedURLJSONObject());
 		jsonArray.put(getToolbarsStylesSelectionsLinkJSONObject());
 		jsonArray.put(getToolbarsStylesSelectionsImageJSONObject());
 		jsonArray.put(getToolbarsStylesSelectionsTextJSONObject(locale));
@@ -283,14 +283,14 @@ public class AlloyEditorConfigContributor
 		return jsonObject;
 	}
 
-	protected JSONObject getToolbarsStylesSelectionsVideoEmbedJSONObject() {
+	protected JSONObject getToolbarsStylesSelectionsEmbedURLJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
 			"buttons",
 			toJSONArray("['imageLeft', 'imageCenter', 'imageRight']"));
-		jsonObject.put("name", "videoEmbed");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.videoembed");
+		jsonObject.put("name", "embedurl");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.embedurl");
 
 		return jsonObject;
 	}
