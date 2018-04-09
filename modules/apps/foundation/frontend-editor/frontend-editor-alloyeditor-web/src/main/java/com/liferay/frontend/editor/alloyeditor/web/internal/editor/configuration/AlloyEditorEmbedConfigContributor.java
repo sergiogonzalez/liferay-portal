@@ -15,8 +15,9 @@
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuration;
 
 import com.liferay.frontend.editor.api.embed.EditorEmbedProvider;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.frontend.editor.api.embed.EditorEmbedProviderTypeConstants;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -24,8 +25,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -48,21 +52,31 @@ public class AlloyEditorEmbedConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("embedProviders", getEmbedProvidersJSONArray());
+		jsonObject.put("embedProviders", getEditorEmbedProvidersJSONArray());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, EditorEmbedProvider.class);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, EditorEmbedProvider.class, null,
+			(serviceReference, emitter) -> {
+				String type = (String)serviceReference.getProperty("type");
+
+				if (Validator.isNull(type)) {
+					type = EditorEmbedProviderTypeConstants.UNKNOWN;
+				}
+
+				emitter.emit(type);
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		_serviceTrackerMap.close();
 	}
 
-	protected JSONObject getEmbedProviderJSONObject(
+	protected JSONObject getEditorEmbedProviderJSONObject(
+		String editorEmbedProviderType,
 		EditorEmbedProvider editorEmbedProvider) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -81,18 +95,30 @@ public class AlloyEditorEmbedConfigContributor
 
 		jsonObject.put("tpl", editorEmbedProvider.getTpl());
 
+		jsonObject.put("type", editorEmbedProviderType);
+
 		return jsonObject;
 	}
 
-	protected JSONArray getEmbedProvidersJSONArray() {
+	protected JSONArray getEditorEmbedProvidersJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		_serviceTrackerList.forEach(this::getEmbedProviderJSONObject);
+		Set<String> editorEmbedProviderTypes = _serviceTrackerMap.keySet();
+
+		editorEmbedProviderTypes.forEach(
+			editorEmbedProviderType -> {
+				List<EditorEmbedProvider> editorEmbedProviders =
+					_serviceTrackerMap.getService(editorEmbedProviderType);
+
+				editorEmbedProviders.forEach(
+					editorEmbedProvider -> getEditorEmbedProviderJSONObject(
+						editorEmbedProviderType, editorEmbedProvider));
+			});
 
 		return jsonArray;
 	}
 
-	private ServiceTrackerList<EditorEmbedProvider, EditorEmbedProvider>
-		_serviceTrackerList;
+	private ServiceTrackerMap<String, List<EditorEmbedProvider>>
+		_serviceTrackerMap;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.embed;
 
 import com.liferay.frontend.editor.api.embed.EditorEmbedProvider;
+import com.liferay.frontend.editor.api.embed.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,7 +23,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = EditorEmbedProvider.class)
+@Component(
+	immediate = true,
+	property = "type=" + EditorEmbedProviderTypeConstants.VIDEO,
+	service = EditorEmbedProvider.class
+)
 public class VimeoEditorEmbedProvider implements EditorEmbedProvider {
 
 	@Override
