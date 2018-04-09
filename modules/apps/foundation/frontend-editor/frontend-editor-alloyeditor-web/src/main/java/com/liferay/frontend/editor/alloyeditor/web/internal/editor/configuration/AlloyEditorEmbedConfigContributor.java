@@ -111,8 +111,9 @@ public class AlloyEditorEmbedConfigContributor
 					_serviceTrackerMap.getService(editorEmbedProviderType);
 
 				editorEmbedProviders.forEach(
-					editorEmbedProvider -> getEditorEmbedProviderJSONObject(
-						editorEmbedProviderType, editorEmbedProvider));
+					editorEmbedProvider -> jsonArray.put(
+						getEditorEmbedProviderJSONObject(
+							editorEmbedProviderType, editorEmbedProvider)));
 			});
 
 		return jsonArray;
