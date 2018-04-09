@@ -26,7 +26,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 						return {
 							id: provider.id,
 							schemas: provider.schemas.map(schema => new RegExp(schema)),
-							tpl: new CKEDITOR.template(provider.tpl)
+							tpl: new CKEDITOR.template(`<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}">${provider.tpl}</div>`)
 						}
 					}
 				);
