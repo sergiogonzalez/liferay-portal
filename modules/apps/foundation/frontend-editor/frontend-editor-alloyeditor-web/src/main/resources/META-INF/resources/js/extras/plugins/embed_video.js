@@ -19,16 +19,16 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			init: function(editor) {
 				var LFR_VIDEO_EMBED_WIDGET_TPL = new CKEDITOR.template(editor.config.embedWidgetTpl || CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL);
 
-				var providers = editor.config.embedVideoProviders || [];
+				var providers = editor.config.embedProviders || [];
 
-                providers = providers.map(
-                    provider => {
-                        return {
-                            id: provider.id,
-                            schemas: provider.schemas.map(schema => new RegExp(schema)),
-                            tpl: new CKEDITOR.template(provider.tpl)
-                        }
-                    }
+				providers = providers.map(
+					provider => {
+						return {
+							id: provider.id,
+							schemas: provider.schemas.map(schema => new RegExp(schema)),
+							tpl: new CKEDITOR.template(provider.tpl)
+						}
+					}
 				);
 
 				var generateEmbedContent = function(url, videoContent) {
