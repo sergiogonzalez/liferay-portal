@@ -1,23 +1,23 @@
-if (!CKEDITOR.plugins.get('videoembed')) {
+if (!CKEDITOR.plugins.get('embedurl')) {
 	var REGEX_HTTP = /^https?/;
 
-	CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL = '<div data-embed-video-url="{url}">{videoContent}<div class="embed-video-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
+	CKEDITOR.DEFAULT_LFR_EMBED_WIDGET_TPL = '<div data-embed-url="{url}">{content}<div class="embed-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
 
 	/**
-	 * CKEditor plugin which adds the infrastructure to embed video urls as media objects
+	 * CKEditor plugin which adds the infrastructure to embed urls as media objects
 	 *
-	 * This plugin adds an `embedVideoUrl` command that can be used to easily embed a URL and transform it
+	 * This plugin adds an `embedUrl` command that can be used to easily embed a URL and transform it
 	 * to an embedded content.
 	 *
-	 * @class CKEDITOR.plugins.videoembed
+	 * @class CKEDITOR.plugins.embedurl
 	 */
 
 	CKEDITOR.plugins.add(
-		'videoembed',
+		'embedurl',
 		{
 			requires: 'widget',
 			init: function(editor) {
-				var LFR_VIDEO_EMBED_WIDGET_TPL = new CKEDITOR.template(editor.config.embedWidgetTpl || CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL);
+				var LFR_EMBED_WIDGET_TPL = new CKEDITOR.template(editor.config.embedWidgetTpl || CKEDITOR.DEFAULT_LFR_EMBED_WIDGET_TPL);
 
 				var providers = editor.config.embedProviders || [];
 
@@ -31,13 +31,13 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 					}
 				);
 
-				var generateEmbedContent = function(url, videoContent) {
-					return LFR_VIDEO_EMBED_WIDGET_TPL.output(
+				var generateEmbedContent = function(url, content) {
+					return LFR_EMBED_WIDGET_TPL.output(
 						{
 							helpMessage: Liferay.Language.get('video-playback-is-disabled-during-edition-mode'),
 							helpMessageIcon: Liferay.Util.getLexiconIconTpl('info-circle'),
 							url: url,
-							videoContent: videoContent
+							content: content
 						}
 					);
 				};
@@ -45,8 +45,8 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				var defaultEmbedWidgetUpcastFn = function(element, data) {
 					var upcastWidget = false;
 
-					if (element.name === 'div' && element.attributes['data-embed-video-url']) {
-						data.url = element.attributes['data-embed-video-url'];
+					if (element.name === 'div' && element.attributes['data-embed-url']) {
+						data.url = element.attributes['data-embed-url'];
 
 						upcastWidget = true;
 					}
@@ -80,15 +80,20 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				};
 
 				editor.addCommand(
-					'embedVideoUrl',
+					'embedUrl',
 					{
 						exec: function(editor, data) {
+							var type = data.type;
 							var url = data.url;
-							var videoContent;
+							var content;
 
 							if (REGEX_HTTP.test(url)) {
-								var validProvider = providers.some(
-									function(provider) {
+								var validProvider = providers.filter(
+									provider => {
+										return type ? provider.type === type : true
+									}
+								).some(
+									provider => {
 										var schema = provider.schemas.find(
 											function(schema) {
 												return schema.test(url);
@@ -98,7 +103,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 										if (schema) {
 											var embedId = schema.exec(url)[1];
 
-											videoContent = provider.tpl.output(
+											content = provider.tpl.output(
 												{
 													embedId: embedId
 												}
@@ -110,9 +115,9 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 								);
 
 								if (validProvider) {
-									editor._selectEmbedVideoWidget = url;
+									editor._selectEmbedWidget = url;
 
-									var embedContent = generateEmbedContent(url, videoContent);
+									var embedContent = generateEmbedContent(url, content);
 
 									editor.insertHtml(embedContent);
 								}
@@ -128,21 +133,21 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				);
 
 				editor.widgets.add(
-					'videoembed',
+					'embedurl',
 					{
 						draggable: false,
 						mask: true,
-						requiredContent: 'div[data-embed-video-url]',
+						requiredContent: 'div[data-embed-url]',
 
 						data: function(event) {
 							var instance = this;
 
-							if (editor._selectEmbedVideoWidget === event.data.url) {
+							if (editor._selectEmbedWidget === event.data.url) {
 								setTimeout(
 									function() {
 										editor.getSelection().selectElement(instance.wrapper);
 
-										editor._selectEmbedVideoWidget = null;
+										editor._selectEmbedWidget = null;
 									},
 									0
 								);
@@ -170,7 +175,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 							var element = selection.getSelectedElement();
 
 							if (element) {
-								var widgetElement = element.findOne('[data-widget="videoembed"]');
+								var widgetElement = element.findOne('[data-widget="embedurl"]');
 
 								if (widgetElement) {
 									var scrollPosition = new CKEDITOR.dom.window(window).getScrollPosition();
@@ -199,7 +204,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 
 				editor.filter.addElementCallback(
 					function(element) {
-						if ('data-embed-video-url' in element.attributes) {
+						if ('data-embed-url' in element.attributes) {
 							return CKEDITOR.FILTER_SKIP_TREE;
 						}
 					}
@@ -209,4 +214,4 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 	);
 }
 
-export default CKEDITOR.plugins.get('videoembed');
+export default CKEDITOR.plugins.get('embedurl');
