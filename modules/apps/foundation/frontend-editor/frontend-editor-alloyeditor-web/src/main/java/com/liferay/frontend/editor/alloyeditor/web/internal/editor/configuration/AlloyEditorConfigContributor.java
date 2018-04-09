@@ -207,6 +207,18 @@ public class AlloyEditorConfigContributor
 		return jsonObject;
 	}
 
+	protected JSONObject getToolbarsStylesSelectionsEmbedURLJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"buttons",
+			toJSONArray("['imageLeft', 'imageCenter', 'imageRight']"));
+		jsonObject.put("name", "embedurl");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.embedurl");
+
+		return jsonObject;
+	}
+
 	protected JSONObject getToolbarsStylesSelectionsImageJSONObject() {
 		JSONObject jsonNObject = JSONFactoryUtil.createJSONObject();
 
@@ -279,18 +291,6 @@ public class AlloyEditorConfigContributor
 
 		jsonObject.put("name", "text");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
-
-		return jsonObject;
-	}
-
-	protected JSONObject getToolbarsStylesSelectionsEmbedURLJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
-			"buttons",
-			toJSONArray("['imageLeft', 'imageCenter', 'imageRight']"));
-		jsonObject.put("name", "embedurl");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.embedurl");
 
 		return jsonObject;
 	}
