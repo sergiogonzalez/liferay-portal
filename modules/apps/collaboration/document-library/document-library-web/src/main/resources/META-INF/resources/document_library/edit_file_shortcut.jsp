@@ -109,7 +109,7 @@ if (portletTitleBasedNavigation) {
 				String toGroupName = StringPool.BLANK;
 
 				if (toGroup != null) {
-					toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
+					toGroupName = toGroup.getDescriptiveName(locale);
 				}
 				%>
 
@@ -124,7 +124,7 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<div class="form-group">
-					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= toFileEntryTitle %>" />
+					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= HtmlUtil.unescape(toFileEntryTitle) %>" />
 
 					<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
 				</div>
