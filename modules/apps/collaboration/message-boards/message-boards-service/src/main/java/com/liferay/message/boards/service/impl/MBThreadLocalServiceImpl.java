@@ -1030,10 +1030,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 						curSubject, oldSubject, subject);
 				}
 
+				//
+
 				curMessage.setSubject(curSubject);
 
 				mbMessageLocalService.updateMBMessage(curMessage);
 			}
+
+			//
 
 			message.setSubject(subject);
 		}

@@ -373,6 +373,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setThreadId(thread.getThreadId());
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(parentMessageId);
+
+		//
+
 		message.setSubject(subject);
 		message.setBody(body);
 		message.setFormat(format);
