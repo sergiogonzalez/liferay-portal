@@ -175,7 +175,7 @@ if (portletTitleBasedNavigation) {
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
 					document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = 0;
 
-					document.getElementById('<portlet:namespace />toGroupName').value = _.escape(event.groupdescriptivename);
+					document.getElementById('<portlet:namespace />toGroupName').value = event.groupdescriptivename;
 
 					Liferay.Util.toggleDisabled('#<portlet:namespace />selectToFileEntryButton', false);
 				}
