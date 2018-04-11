@@ -130,6 +130,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -1628,6 +1629,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		int oldStatus = message.getStatus();
+		String oldSubject = message.getSubject();
 
 		Date modifiedDate = serviceContext.getModifiedDate(null);
 		subject = ModelHintsUtil.trimString(
@@ -1762,6 +1764,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			mbThreadLocalService.updateMBThread(thread);
 
 			updatePriorities(thread.getThreadId(), priority);
+		}
+
+		if (message.isRoot() && !Objects.equals(subject, oldSubject)) {
+			thread.setTitle(subject);
+
+			mbThreadLocalService.updateMBThread(thread);
 		}
 
 		// Asset
