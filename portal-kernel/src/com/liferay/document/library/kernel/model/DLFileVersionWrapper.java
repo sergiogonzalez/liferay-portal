@@ -60,6 +60,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileVersionId", getFileVersionId());
 		attributes.put("groupId", getGroupId());
@@ -94,6 +95,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -482,6 +489,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public Date getModifiedDate() {
 		return _dlFileVersion.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this document library file version.
+	*
+	* @return the mvcc version of this document library file version
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _dlFileVersion.getMvccVersion();
 	}
 
 	/**
@@ -929,6 +946,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_dlFileVersion.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this document library file version.
+	*
+	* @param mvccVersion the mvcc version of this document library file version
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_dlFileVersion.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -47,7 +48,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
-	ShardedModel, StagedGroupedModel, TrashedModel {
+	MVCCModel, ShardedModel, StagedGroupedModel, TrashedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,6 +68,22 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	 * @param primaryKey the primary key of this document library file entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this document library file entry.
+	 *
+	 * @return the mvcc version of this document library file entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this document library file entry.
+	 *
+	 * @param mvccVersion the mvcc version of this document library file entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this document library file entry.

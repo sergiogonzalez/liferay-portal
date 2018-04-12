@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
-	LocalizedModel, ShardedModel, StagedGroupedModel {
+	LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,6 +69,22 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	 * @param primaryKey the primary key of this document library file entry type
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this document library file entry type.
+	 *
+	 * @return the mvcc version of this document library file entry type
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this document library file entry type.
+	 *
+	 * @param mvccVersion the mvcc version of this document library file entry type
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this document library file entry type.

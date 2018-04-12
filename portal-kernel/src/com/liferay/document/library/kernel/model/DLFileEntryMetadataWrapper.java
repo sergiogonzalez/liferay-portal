@@ -57,6 +57,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
 		attributes.put("companyId", getCompanyId());
@@ -70,6 +71,12 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -192,6 +199,16 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public long getFileVersionId() {
 		return _dlFileEntryMetadata.getFileVersionId();
+	}
+
+	/**
+	* Returns the mvcc version of this document library file entry metadata.
+	*
+	* @return the mvcc version of this document library file entry metadata
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _dlFileEntryMetadata.getMvccVersion();
 	}
 
 	/**
@@ -323,6 +340,16 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public void setFileVersionId(long fileVersionId) {
 		_dlFileEntryMetadata.setFileVersionId(fileVersionId);
+	}
+
+	/**
+	* Sets the mvcc version of this document library file entry metadata.
+	*
+	* @param mvccVersion the mvcc version of this document library file entry metadata
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_dlFileEntryMetadata.setMvccVersion(mvccVersion);
 	}
 
 	@Override

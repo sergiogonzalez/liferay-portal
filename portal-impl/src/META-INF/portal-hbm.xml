@@ -1226,10 +1226,11 @@
 		<property column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl" table="DLFileEntry">
+	<class dynamic-update="true" name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl" table="DLFileEntry">
 		<id name="fileEntryId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1260,10 +1261,11 @@
 		<property name="manualCheckInRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl" table="DLFileEntryMetadata">
+	<class dynamic-update="true" name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl" table="DLFileEntryMetadata">
 		<id name="fileEntryMetadataId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="DDMStorageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1271,10 +1273,11 @@
 		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="fileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl" table="DLFileEntryType">
+	<class dynamic-update="true" name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl" table="DLFileEntryType">
 		<id name="fileEntryTypeId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1287,10 +1290,11 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl" table="DLFileShortcut">
+	<class dynamic-update="true" name="com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl" table="DLFileShortcut">
 		<id name="fileShortcutId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1309,10 +1313,11 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl" table="DLFileVersion">
+	<class dynamic-update="true" name="com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl" table="DLFileVersion">
 		<id name="fileVersionId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1341,10 +1346,11 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl" table="DLFolder">
+	<class dynamic-update="true" name="com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl" table="DLFolder">
 		<id name="folderId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

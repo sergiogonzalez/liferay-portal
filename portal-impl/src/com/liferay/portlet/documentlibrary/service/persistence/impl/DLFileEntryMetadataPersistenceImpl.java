@@ -2930,6 +2930,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		dlFileEntryMetadataImpl.setNew(dlFileEntryMetadata.isNew());
 		dlFileEntryMetadataImpl.setPrimaryKey(dlFileEntryMetadata.getPrimaryKey());
 
+		dlFileEntryMetadataImpl.setMvccVersion(dlFileEntryMetadata.getMvccVersion());
 		dlFileEntryMetadataImpl.setUuid(dlFileEntryMetadata.getUuid());
 		dlFileEntryMetadataImpl.setFileEntryMetadataId(dlFileEntryMetadata.getFileEntryMetadataId());
 		dlFileEntryMetadataImpl.setCompanyId(dlFileEntryMetadata.getCompanyId());

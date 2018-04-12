@@ -59,6 +59,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("folderId", getFolderId());
 		attributes.put("groupId", getGroupId());
@@ -88,6 +89,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -389,6 +396,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public boolean getMountPoint() {
 		return _dlFolder.getMountPoint();
+	}
+
+	/**
+	* Returns the mvcc version of this document library folder.
+	*
+	* @return the mvcc version of this document library folder
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _dlFolder.getMvccVersion();
 	}
 
 	/**
@@ -926,6 +943,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public void setMountPoint(boolean mountPoint) {
 		_dlFolder.setMountPoint(mountPoint);
+	}
+
+	/**
+	* Sets the mvcc version of this document library folder.
+	*
+	* @param mvccVersion the mvcc version of this document library folder
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_dlFolder.setMvccVersion(mvccVersion);
 	}
 
 	/**

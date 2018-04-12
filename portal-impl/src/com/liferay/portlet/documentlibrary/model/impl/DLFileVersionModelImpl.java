@@ -74,6 +74,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	 */
 	public static final String TABLE_NAME = "DLFileVersion";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "fileVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
@@ -106,6 +107,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -136,7 +138,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -176,6 +178,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		DLFileVersion model = new DLFileVersionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setFileVersionId(soapModel.getFileVersionId());
 		model.setGroupId(soapModel.getGroupId());
@@ -268,6 +271,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileVersionId", getFileVersionId());
 		attributes.put("groupId", getGroupId());
@@ -305,6 +309,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -472,6 +482,17 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1102,6 +1123,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public Object clone() {
 		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
 
+		dlFileVersionImpl.setMvccVersion(getMvccVersion());
 		dlFileVersionImpl.setUuid(getUuid());
 		dlFileVersionImpl.setFileVersionId(getFileVersionId());
 		dlFileVersionImpl.setGroupId(getGroupId());
@@ -1245,6 +1267,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	@Override
 	public CacheModel<DLFileVersion> toCacheModel() {
 		DLFileVersionCacheModel dlFileVersionCacheModel = new DLFileVersionCacheModel();
+
+		dlFileVersionCacheModel.mvccVersion = getMvccVersion();
 
 		dlFileVersionCacheModel.uuid = getUuid();
 
@@ -1413,9 +1437,11 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(getMvccVersion());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", fileVersionId=");
 		sb.append(getFileVersionId());
@@ -1478,12 +1504,16 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.document.library.kernel.model.DLFileVersion");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
@@ -1606,6 +1636,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLFileVersion.class
 		};
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileVersionId;

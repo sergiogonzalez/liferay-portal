@@ -271,6 +271,7 @@ create table Country (
 );
 
 create table DLFileEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	fileEntryId LONG not null primary key,
 	groupId LONG,
@@ -304,6 +305,7 @@ create table DLFileEntry (
 );
 
 create table DLFileEntryMetadata (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	fileEntryMetadataId LONG not null primary key,
 	companyId LONG,
@@ -314,6 +316,7 @@ create table DLFileEntryMetadata (
 );
 
 create table DLFileEntryType (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	fileEntryTypeId LONG not null primary key,
 	groupId LONG,
@@ -336,6 +339,7 @@ create table DLFileEntryTypes_DLFolders (
 );
 
 create table DLFileShortcut (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	fileShortcutId LONG not null primary key,
 	groupId LONG,
@@ -357,6 +361,7 @@ create table DLFileShortcut (
 );
 
 create table DLFileVersion (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	fileVersionId LONG not null primary key,
 	groupId LONG,
@@ -388,6 +393,7 @@ create table DLFileVersion (
 );
 
 create table DLFolder (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	folderId LONG not null primary key,
 	groupId LONG,

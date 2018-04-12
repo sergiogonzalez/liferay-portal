@@ -22,7 +22,10 @@ public class UpgradeMVCCVersion
 
 	@Override
 	protected String[] getModuleTableNames() {
-		return new String[] {"Subscription"};
+		return new String[] {
+			"DLFileEntry", "DLFileEntryMetadata", "DLFileEntryType",
+			"DLFileShortcut", "DLFileVersion", "DLFolder", "Subscription",
+		};
 	}
 
 }

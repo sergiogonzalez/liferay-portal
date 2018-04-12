@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>,
-	ShardedModel {
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,6 +62,22 @@ public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>
 	 * @param primaryKey the primary key of this document library file entry metadata
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this document library file entry metadata.
+	 *
+	 * @return the mvcc version of this document library file entry metadata
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this document library file entry metadata.
+	 *
+	 * @param mvccVersion the mvcc version of this document library file entry metadata
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this document library file entry metadata.

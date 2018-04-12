@@ -77,6 +77,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	 */
 	public static final String TABLE_NAME = "DLFolder";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "folderId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
@@ -104,6 +105,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("folderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -129,7 +131,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFolder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFolder.parentFolderId ASC, DLFolder.name ASC";
@@ -170,6 +172,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		DLFolder model = new DLFolderImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setFolderId(soapModel.getFolderId());
 		model.setGroupId(soapModel.getGroupId());
@@ -269,6 +272,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("folderId", getFolderId());
 		attributes.put("groupId", getGroupId());
@@ -301,6 +305,12 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -439,6 +449,17 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1171,6 +1192,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public Object clone() {
 		DLFolderImpl dlFolderImpl = new DLFolderImpl();
 
+		dlFolderImpl.setMvccVersion(getMvccVersion());
 		dlFolderImpl.setUuid(getUuid());
 		dlFolderImpl.setFolderId(getFolderId());
 		dlFolderImpl.setGroupId(getGroupId());
@@ -1315,6 +1337,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public CacheModel<DLFolder> toCacheModel() {
 		DLFolderCacheModel dlFolderCacheModel = new DLFolderCacheModel();
 
+		dlFolderCacheModel.mvccVersion = getMvccVersion();
+
 		dlFolderCacheModel.uuid = getUuid();
 
 		String uuid = dlFolderCacheModel.uuid;
@@ -1437,9 +1461,11 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(getMvccVersion());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", folderId=");
 		sb.append(getFolderId());
@@ -1492,12 +1518,16 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.document.library.kernel.model.DLFolder");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
@@ -1600,6 +1630,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLFolder.class
 		};
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _folderId;
