@@ -17,16 +17,16 @@ package com.liferay.portal.blogs.compat.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.blogs.attachments.test.BlogsEntryAttachmentFileEntryHelperTest;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntryTitleException;
 import com.liferay.blogs.exception.NoSuchEntryException;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.blogs.compat.attachments.test.BlogsEntryAttachmentFileEntryHelperTest;
+import com.liferay.portal.blogs.compat.test.util.BlogsTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -427,36 +427,6 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetEntryByGroupAndOldUrlTitle() throws Exception {
-		BlogsEntry expectedEntry = addEntry(false);
-
-		String oldUrlTitle = expectedEntry.getUrlTitle();
-
-		String urlTitle = "new-friendly-url";
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
-
-		BlogsEntryLocalServiceUtil.updateEntry(
-			expectedEntry.getUserId(), expectedEntry.getEntryId(),
-			expectedEntry.getTitle(), expectedEntry.getSubtitle(), urlTitle,
-			expectedEntry.getDescription(), expectedEntry.getContent(),
-			expectedEntry.getDisplayDate(), expectedEntry.isAllowPingbacks(),
-			expectedEntry.isAllowTrackbacks(), new String[0],
-			expectedEntry.getCoverImageCaption(), null, null, serviceContext);
-
-		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getEntry(
-			expectedEntry.getGroupId(), oldUrlTitle);
-
-		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
-
-		actualEntry = BlogsEntryLocalServiceUtil.getEntry(
-			expectedEntry.getGroupId(), urlTitle);
-
-		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
-	}
-
-	@Test
 	public void testGetEntryByGroupAndUrlTitle() throws Exception {
 		BlogsEntry expectedEntry = addEntry(false);
 
@@ -577,7 +547,8 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = addEntry(false);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			BlogsEntry.class.getName(), entry.getEntryId());
+			com.liferay.blogs.model.BlogsEntry.class.getName(),
+			entry.getEntryId());
 
 		Assert.assertNotNull(assetEntry);
 

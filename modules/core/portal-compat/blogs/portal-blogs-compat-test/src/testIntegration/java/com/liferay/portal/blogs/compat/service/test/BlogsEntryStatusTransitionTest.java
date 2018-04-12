@@ -17,11 +17,9 @@ package com.liferay.portal.blogs.compat.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.blogs.exception.EntryTitleException;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.blogs.social.BlogsActivityKeys;
-import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portal.blogs.compat.test.util.BlogsTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -46,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 
@@ -159,21 +158,6 @@ public class BlogsEntryStatusTransitionTest {
 		checkSocialActivity(BlogsActivityKeys.UPDATE_ENTRY, 1);
 	}
 
-	@Test(expected = EntryTitleException.class)
-	public void testDraftToApprovedWithoutTitle() throws Exception {
-		ServiceContext serviceContext = getServiceContext(entry);
-		String title = "";
-
-		BlogsEntry entryWithoutTitle = BlogsEntryLocalServiceUtil.addEntry(
-			user.getUserId(), title, RandomTestUtil.randomString(),
-			serviceContext);
-
-		BlogsEntryLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), entryWithoutTitle.getEntryId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext,
-			new HashMap<String, Serializable>());
-	}
-
 	@Test
 	public void testDraftToScheduledByAdd() throws Exception {
 		Calendar displayDate = new GregorianCalendar();
@@ -195,7 +179,8 @@ public class BlogsEntryStatusTransitionTest {
 		checkSocialActivity(BlogsActivityKeys.ADD_ENTRY, 1);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			BlogsEntry.class.getName(), entry.getEntryId());
+			com.liferay.blogs.model.BlogsEntry.class.getName(),
+			entry.getEntryId());
 
 		Assert.assertNull(assetEntry.getPublishDate());
 	}
@@ -231,7 +216,8 @@ public class BlogsEntryStatusTransitionTest {
 		checkSocialActivity(BlogsActivityKeys.UPDATE_ENTRY, 1);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			BlogsEntry.class.getName(), entry.getEntryId());
+			com.liferay.blogs.model.BlogsEntry.class.getName(),
+			entry.getEntryId());
 
 		Assert.assertNotNull(assetEntry.getPublishDate());
 	}
@@ -422,14 +408,15 @@ public class BlogsEntryStatusTransitionTest {
 
 	protected boolean isAssetEntryVisible(long blogsEntryId) throws Exception {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			BlogsEntry.class.getName(), blogsEntryId);
+			com.liferay.blogs.model.BlogsEntry.class.getName(), blogsEntryId);
 
 		return assetEntry.isVisible();
 	}
 
 	protected int searchBlogsEntriesCount(long groupId) throws Exception {
-		Indexer<BlogsEntry> indexer = IndexerRegistryUtil.getIndexer(
-			BlogsEntry.class);
+		Indexer<com.liferay.blogs.model.BlogsEntry> indexer =
+			IndexerRegistryUtil.getIndexer(
+				com.liferay.blogs.model.BlogsEntry.class);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
