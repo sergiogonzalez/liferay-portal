@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.service.impl.test;
+package com.liferay.portal.blogs.compat.service.impl.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
