@@ -15,13 +15,15 @@
 package com.liferay.portal.blogs.compat.service.impl.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,10 +51,15 @@ public class BlogsEntryLocalServiceImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@Test
 	public void testAddDiscussion() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
@@ -77,7 +85,7 @@ public class BlogsEntryLocalServiceImplTest {
 	@Test
 	public void testDeleteDiscussion() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
@@ -103,7 +111,9 @@ public class BlogsEntryLocalServiceImplTest {
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 
-	@DeleteAfterTestRun
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

@@ -16,9 +16,9 @@ package com.liferay.portal.blogs.compat.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portal.blogs.compat.test.util.BlogsTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -126,7 +126,7 @@ public class BlogsEntryTrashHandlerTest
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return BlogsEntry.class;
+		return com.liferay.blogs.model.BlogsEntry.class;
 	}
 
 	@Override
