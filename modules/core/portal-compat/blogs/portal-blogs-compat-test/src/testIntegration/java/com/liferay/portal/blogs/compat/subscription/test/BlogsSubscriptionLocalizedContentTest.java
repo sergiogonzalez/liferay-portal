@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.blogs.notifications.test;
+package com.liferay.portal.blogs.compat.subscription.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
-import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -36,10 +36,10 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
- * @author Sergio González
  */
 @RunWith(Arquillian.class)
-public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
+public class BlogsSubscriptionLocalizedContentTest
+	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,47 +48,68 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected BaseModel<?> addBaseModel() throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+				group.getGroupId(), userId);
 
 		BlogsTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		return BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
+
+		return entry.getEntryId();
 	}
 
 	@Override
-	protected String getPortletId() {
-		return BlogsPortletKeys.BLOGS;
-	}
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
 
-	@Override
-	protected void subscribeToContainer() throws Exception {
 		BlogsEntryLocalServiceUtil.subscribe(
 			user.getUserId(), group.getGroupId());
 	}
 
 	@Override
-	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
+	protected String getPortletId() {
+		return PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+	}
+
+	@Override
+	protected String getServiceName() {
+		return BlogsConstants.SERVICE_NAME;
+	}
+
+	@Override
+	protected String getSubscriptionAddedBodyPreferenceName() {
+		return "emailEntryAddedBody";
+	}
+
+	@Override
+	protected String getSubscriptionUpdatedBodyPreferenceName() {
+		return "emailEntryUpdatedBody";
+	}
+
+	@Override
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+				group.getGroupId(), userId);
 
 		BlogsTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", Boolean.TRUE);
 
-		return BlogsEntryLocalServiceUtil.updateEntry(
-			TestPropsValues.getUserId(), ((BlogsEntry)baseModel).getEntryId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		BlogsEntryLocalServiceUtil.updateEntry(
+			userId, baseModelId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 }

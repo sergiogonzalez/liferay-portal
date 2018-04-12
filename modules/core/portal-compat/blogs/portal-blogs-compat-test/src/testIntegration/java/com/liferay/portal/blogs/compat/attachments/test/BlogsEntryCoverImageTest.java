@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.attachments.test;
+package com.liferay.portal.blogs.compat.attachments.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
-public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
+public class BlogsEntryCoverImageTest extends BaseBlogsEntryImageTestCase {
 
 	@ClassRule
 	@Rule
@@ -68,7 +68,7 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 			user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, null, imageSelector,
+			new String[0], StringPool.BLANK, imageSelector, null,
 			serviceContext);
 	}
 
@@ -83,7 +83,7 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 
 		ImageSelector imageSelector = new ImageSelector(
 			FileUtil.getBytes(fileEntry.getContentStream()),
-			fileEntry.getTitle(), fileEntry.getMimeType(), StringPool.BLANK);
+			fileEntry.getTitle(), fileEntry.getMimeType(), IMAGE_CROP_REGION);
 
 		return addBlogsEntry(imageSelector);
 	}
@@ -92,12 +92,12 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 	protected void addImage(long entryId, ImageSelector imageSelector)
 		throws Exception {
 
-		BlogsEntryLocalServiceUtil.addSmallImage(entryId, imageSelector);
+		BlogsEntryLocalServiceUtil.addCoverImage(entryId, imageSelector);
 	}
 
 	@Override
 	protected long getImageFileEntryId(BlogsEntry blogsEntry) {
-		return blogsEntry.getSmallImageFileEntryId();
+		return blogsEntry.getCoverImageFileEntryId();
 	}
 
 	@Override
@@ -113,13 +113,12 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 			user.getUserId(), blogsEntryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, null, imageSelector,
+			new String[0], StringPool.BLANK, imageSelector, null,
 			serviceContext);
 	}
 
 	@Override
-	protected BlogsEntry updateBlogsEntry(
-			long blogsEntryId, String coverImageTitle)
+	protected BlogsEntry updateBlogsEntry(long blogsEntryId, String imageTitle)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -127,11 +126,11 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 				group.getGroupId(), user.getUserId());
 
 		FileEntry fileEntry = getTempFileEntry(
-			user.getUserId(), coverImageTitle, serviceContext);
+			user.getUserId(), imageTitle, serviceContext);
 
 		ImageSelector imageSelector = new ImageSelector(
 			FileUtil.getBytes(fileEntry.getContentStream()),
-			fileEntry.getTitle(), fileEntry.getMimeType(), StringPool.BLANK);
+			fileEntry.getTitle(), fileEntry.getMimeType(), IMAGE_CROP_REGION);
 
 		return updateBlogsEntry(blogsEntryId, imageSelector);
 	}
