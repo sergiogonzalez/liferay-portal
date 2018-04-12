@@ -75,8 +75,8 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 <clay:management-toolbar
 	clearResultsURL="<%= searchURL %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	selectable="<%= false %>"
 	searchActionURL="<%= searchURL %>"
+	selectable="<%= false %>"
 	showCreationMenu="<%= false %>"
 	totalItems="<%= wikiPagesSearchContainer.getTotal() %>"
 />

@@ -58,11 +58,13 @@ page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
 page import="com.liferay.wiki.web.internal.item.selector.constants.WikiItemSelectorWebKeys" %><%@
 page import="com.liferay.wiki.web.internal.item.selector.resolver.WikiPageItemSelectorReturnTypeResolver" %><%@
 page import="com.liferay.wiki.web.internal.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.wiki.web.internal.item.selector.view.display.context.WikiPageItemSelectorViewDisplayContext" %><%@
-page import="java.util.ArrayList" %><%@
+page import="com.liferay.wiki.web.internal.item.selector.view.display.context.WikiPageItemSelectorViewDisplayContext" %>
+
+<%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Date" %><%@
-page import="java.util.List" %><%@
-page import="javax.portlet.PortletURL" %>
+page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 
