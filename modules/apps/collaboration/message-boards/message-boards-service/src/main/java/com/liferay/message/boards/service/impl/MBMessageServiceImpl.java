@@ -198,23 +198,15 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		if (LockManagerUtil.isLocked(
 				MBThread.class.getName(), parentMessage.getThreadId())) {
 
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Thread is locked for class name ");
-			sb.append(MBThread.class.getName());
-			sb.append(" and class PK ");
-			sb.append(parentMessage.getThreadId());
-
-			throw new LockedThreadException(sb.toString());
+			throw new LockedThreadException(
+				StringBundler.concat(
+					"Thread is locked for class name ",
+					MBThread.class.getName(), " and class PK ",
+					String.valueOf(parentMessage.getThreadId())));
 		}
 
-		if (!ModelResourcePermissionHelper.contains(
-				_categoryModelResourcePermission, getPermissionChecker(),
-				parentMessage.getGroupId(), parentMessage.getCategoryId(),
-				ActionKeys.ADD_FILE)) {
-
-			inputStreamOVPs = Collections.emptyList();
-		}
+		inputStreamOVPs = _adjustAttachmentInputStreamOVPs(
+			parentMessage, inputStreamOVPs);
 
 		if (!ModelResourcePermissionHelper.contains(
 				_categoryModelResourcePermission, getPermissionChecker(),
@@ -241,14 +233,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		if (LockManagerUtil.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Thread is locked for class name ");
-			sb.append(MBThread.class.getName());
-			sb.append(" and class PK ");
-			sb.append(message.getThreadId());
-
-			throw new LockedThreadException(sb.toString());
+			throw new LockedThreadException(
+				StringBundler.concat(
+					"Thread is locked for class name ",
+					MBThread.class.getName(), " and class PK ",
+					String.valueOf(message.getThreadId())));
 		}
 
 		ModelResourcePermissionHelper.check(
@@ -760,58 +749,44 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	public MBMessage updateMessage(
 			long messageId, String subject, String body,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			double priority, boolean allowPingbacks,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		_checkLockAndUpdatePermission(serviceContext, messageId, message);
+
+		inputStreamOVPs = _adjustAttachmentInputStreamOVPs(
+			message, inputStreamOVPs);
+
+		priority = _adjustThreadPriority(message, priority);
+
+		return mbMessageLocalService.updateMessage(
+			getGuestOrUserId(), messageId, subject, body, inputStreamOVPs,
+			priority, allowPingbacks, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, String, String, List, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public MBMessage updateMessage(
+			long messageId, String subject, String body,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
 			List<String> existingFiles, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		boolean preview = ParamUtil.getBoolean(serviceContext, "preview");
+		_checkLockAndUpdatePermission(serviceContext, messageId, message);
 
-		if (preview &&
-			_messageModelResourcePermission.contains(
-				getPermissionChecker(), message, ActionKeys.UPDATE)) {
+		inputStreamOVPs = _adjustAttachmentInputStreamOVPs(
+			message, inputStreamOVPs);
 
-			checkReplyToPermission(
-				message.getGroupId(), message.getCategoryId(),
-				message.getParentMessageId());
-		}
-		else {
-			_messageModelResourcePermission.check(
-				getPermissionChecker(), messageId, ActionKeys.UPDATE);
-		}
-
-		if (LockManagerUtil.isLocked(
-				MBThread.class.getName(), message.getThreadId())) {
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Thread is locked for class name ");
-			sb.append(MBThread.class.getName());
-			sb.append(" and class PK ");
-			sb.append(message.getThreadId());
-
-			throw new LockedThreadException(sb.toString());
-		}
-
-		if (!ModelResourcePermissionHelper.contains(
-				_categoryModelResourcePermission, getPermissionChecker(),
-				message.getGroupId(), message.getCategoryId(),
-				ActionKeys.ADD_FILE)) {
-
-			inputStreamOVPs = Collections.emptyList();
-		}
-
-		if (!ModelResourcePermissionHelper.contains(
-				_categoryModelResourcePermission, getPermissionChecker(),
-				message.getGroupId(), message.getCategoryId(),
-				ActionKeys.UPDATE_THREAD_PRIORITY)) {
-
-			MBThread thread = mbThreadLocalService.getThread(
-				message.getThreadId());
-
-			priority = thread.getPriority();
-		}
+		priority = _adjustThreadPriority(message, priority);
 
 		return mbMessageLocalService.updateMessage(
 			getGuestOrUserId(), messageId, subject, body, inputStreamOVPs,
@@ -928,6 +903,70 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		syndFeed.setUri(feedURL);
 
 		return _rssExporter.export(syndFeed);
+	}
+
+	private List<ObjectValuePair<String, InputStream>>
+			_adjustAttachmentInputStreamOVPs(
+				MBMessage message,
+				List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
+		throws PortalException {
+
+		if (!ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission, getPermissionChecker(),
+				message.getGroupId(), message.getCategoryId(),
+				ActionKeys.ADD_FILE)) {
+
+			return Collections.emptyList();
+		}
+
+		return inputStreamOVPs;
+	}
+
+	private double _adjustThreadPriority(MBMessage message, double priority)
+		throws PortalException {
+
+		if (!ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission, getPermissionChecker(),
+				message.getGroupId(), message.getCategoryId(),
+				ActionKeys.UPDATE_THREAD_PRIORITY)) {
+
+			MBThread thread = mbThreadLocalService.getThread(
+				message.getThreadId());
+
+			return thread.getPriority();
+		}
+
+		return priority;
+	}
+
+	private void _checkLockAndUpdatePermission(
+			ServiceContext serviceContext, long messageId, MBMessage message)
+		throws PortalException {
+
+		boolean preview = ParamUtil.getBoolean(serviceContext, "preview");
+
+		if (preview &&
+			_messageModelResourcePermission.contains(
+				getPermissionChecker(), message, ActionKeys.UPDATE)) {
+
+			checkReplyToPermission(
+				message.getGroupId(), message.getCategoryId(),
+				message.getParentMessageId());
+		}
+		else {
+			_messageModelResourcePermission.check(
+				getPermissionChecker(), messageId, ActionKeys.UPDATE);
+		}
+
+		if (LockManagerUtil.isLocked(
+				MBThread.class.getName(), message.getThreadId())) {
+
+			throw new LockedThreadException(
+				StringBundler.concat(
+					"Thread is locked for class name ",
+					MBThread.class.getName(), " and class PK ",
+					String.valueOf(message.getThreadId())));
+		}
 	}
 
 	private static volatile ModelResourcePermission<MBCategory>

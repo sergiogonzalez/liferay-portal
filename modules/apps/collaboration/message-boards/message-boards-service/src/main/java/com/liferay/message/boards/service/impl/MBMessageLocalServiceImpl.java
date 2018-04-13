@@ -1590,7 +1590,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subject = getDiscussionMessageSubject(subject, body);
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs = null;
-		List<String> existingFiles = null;
 		double priority = 0.0;
 		boolean allowPingbacks = false;
 
@@ -1598,8 +1597,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
 		return mbMessageLocalService.updateMessage(
-			userId, messageId, subject, body, inputStreamOVPs, existingFiles,
-			priority, allowPingbacks, serviceContext);
+			userId, messageId, subject, body, inputStreamOVPs, priority,
+			allowPingbacks, serviceContext);
 	}
 
 	@Override
@@ -1611,10 +1610,40 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		return mbMessageLocalService.updateMessage(
-			userId, messageId, message.getSubject(), body, null, null,
+			userId, messageId, message.getSubject(), body, null,
 			message.getPriority(), message.isAllowPingbacks(), serviceContext);
 	}
 
+	@Override
+	public MBMessage updateMessage(
+			long userId, long messageId, String subject, String body,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			double priority, boolean allowPingbacks,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		MBMessage message = _updateMessage(
+			userId, messageId, subject, body, priority, allowPingbacks,
+			serviceContext);
+
+		// Attachments
+
+		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
+			Folder folder = message.addAttachmentsFolder();
+
+			PortletFileRepositoryUtil.addPortletFileEntries(
+				message.getGroupId(), userId, MBMessage.class.getName(),
+				message.getMessageId(), MBConstants.SERVICE_NAME,
+				folder.getFolderId(), inputStreamOVPs);
+		}
+
+		return message;
+	}
+
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, long, String, String, List, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage updateMessage(
 			long userId, long messageId, String subject, String body,
@@ -1625,70 +1654,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Message
 
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		int oldStatus = message.getStatus();
-
-		Date modifiedDate = serviceContext.getModifiedDate(null);
-		subject = ModelHintsUtil.trimString(
-			MBMessage.class.getName(), "subject", subject);
-
-		subject = getSubject(subject, body);
-
-		body = getBody(subject, body);
-
-		Map<String, Object> options = new HashMap<>();
-
-		options.put("discussion", message.isDiscussion());
-
-		body = SanitizerUtil.sanitize(
-			message.getCompanyId(), message.getGroupId(), userId,
-			MBMessage.class.getName(), messageId, "text/" + message.getFormat(),
-			Sanitizer.MODE_ALL, body, options);
-
-		validate(subject, body);
-
-		message.setModifiedDate(modifiedDate);
-		message.setSubject(subject);
-		message.setBody(body);
-		message.setAllowPingbacks(allowPingbacks);
-
-		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
-			message.setPriority(priority);
-		}
-
-		MBThread thread = mbThreadLocalService.getThread(message.getThreadId());
-
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			if (!message.isDraft() && !message.isPending()) {
-				message.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-				// Thread
-
-				User user = userLocalService.getUser(userId);
-
-				updateThreadStatus(
-					thread, message, user, oldStatus, modifiedDate);
-
-				// Asset
-
-				assetEntryLocalService.updateVisible(
-					message.getWorkflowClassName(), message.getMessageId(),
-					false);
-
-				if (!message.isDiscussion()) {
-
-					// Indexer
-
-					Indexer<MBMessage> indexer =
-						IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
-
-					indexer.delete(message);
-				}
-			}
-		}
+		MBMessage message = _updateMessage(
+			userId, messageId, subject, body, priority, allowPingbacks,
+			serviceContext);
 
 		// Attachments
 
@@ -1703,7 +1671,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					String fileEntryId = String.valueOf(
 						fileEntry.getFileEntryId());
 
-					if (!existingFiles.contains(fileEntryId)) {
+					if ((existingFiles != null) &&
+						!existingFiles.contains(fileEntryId)) {
+
 						if (!TrashUtil.isTrashEnabled(message.getGroupId())) {
 							deleteMessageAttachment(
 								messageId, fileEntry.getTitle());
@@ -1737,43 +1707,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			}
 		}
-
-		message.setExpandoBridgeAttributes(serviceContext);
-
-		mbMessagePersistence.update(message);
-
-		// Statistics
-
-		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			!message.isDiscussion()) {
-
-			mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId, message.getModifiedDate());
-		}
-
-		// Thread
-
-		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
-			(thread.getPriority() != priority)) {
-
-			thread.setPriority(priority);
-
-			mbThreadLocalService.updateMBThread(thread);
-
-			updatePriorities(thread.getThreadId(), priority);
-		}
-
-		// Asset
-
-		updateAsset(
-			userId, message, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		// Workflow
-
-		startWorkflowInstance(userId, message, serviceContext);
 
 		return message;
 	}
@@ -2668,6 +2601,119 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			fileEntry.getFolderId());
 
 		return GetterUtil.getLong(folder.getName());
+	}
+
+	private MBMessage _updateMessage(
+			long userId, long messageId, String subject, String body,
+			double priority, boolean allowPingbacks,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Message
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		int oldStatus = message.getStatus();
+
+		Date modifiedDate = serviceContext.getModifiedDate(null);
+		subject = ModelHintsUtil.trimString(
+			MBMessage.class.getName(), "subject", subject);
+
+		subject = getSubject(subject, body);
+
+		body = getBody(subject, body);
+
+		Map<String, Object> options = new HashMap<>();
+
+		options.put("discussion", message.isDiscussion());
+
+		body = SanitizerUtil.sanitize(
+			message.getCompanyId(), message.getGroupId(), userId,
+			MBMessage.class.getName(), messageId, "text/" + message.getFormat(),
+			Sanitizer.MODE_ALL, body, options);
+
+		validate(subject, body);
+
+		message.setModifiedDate(modifiedDate);
+		message.setSubject(subject);
+		message.setBody(body);
+		message.setAllowPingbacks(allowPingbacks);
+
+		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
+			message.setPriority(priority);
+		}
+
+		MBThread thread = mbThreadLocalService.getThread(message.getThreadId());
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			if (!message.isDraft() && !message.isPending()) {
+				message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+				// Thread
+
+				User user = userLocalService.getUser(userId);
+
+				updateThreadStatus(
+					thread, message, user, oldStatus, modifiedDate);
+
+				// Asset
+
+				assetEntryLocalService.updateVisible(
+					message.getWorkflowClassName(), message.getMessageId(),
+					false);
+
+				if (!message.isDiscussion()) {
+
+					// Indexer
+
+					Indexer<MBMessage> indexer =
+						IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
+
+					indexer.delete(message);
+				}
+			}
+		}
+
+		message.setExpandoBridgeAttributes(serviceContext);
+
+		mbMessagePersistence.update(message);
+
+		// Statistics
+
+		if ((serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) &&
+			!message.isDiscussion()) {
+
+			mbStatsUserLocalService.updateStatsUser(
+				message.getGroupId(), userId, message.getModifiedDate());
+		}
+
+		// Thread
+
+		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
+			(thread.getPriority() != priority)) {
+
+			thread.setPriority(priority);
+
+			mbThreadLocalService.updateMBThread(thread);
+
+			updatePriorities(thread.getThreadId(), priority);
+		}
+
+		// Asset
+
+		updateAsset(
+			userId, message, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		// Workflow
+
+		startWorkflowInstance(userId, message, serviceContext);
+
+		return message;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
