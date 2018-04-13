@@ -235,6 +235,13 @@ public class SocialActivityCounterLocalServiceImpl
 				activity.getGroupId(), activity.getClassName(),
 				activity.getType());
 
+		if (activity.getType() == SocialActivityConstants.TYPE_REVOKE_VOTE) {
+			activityDefinition =
+				socialActivitySettingLocalService.getActivityDefinition(
+					activity.getGroupId(), activity.getClassName(),
+					SocialActivityConstants.TYPE_ADD_VOTE);
+		}
+
 		if ((activityDefinition == null) ||
 			!activityDefinition.isCountersEnabled()) {
 
