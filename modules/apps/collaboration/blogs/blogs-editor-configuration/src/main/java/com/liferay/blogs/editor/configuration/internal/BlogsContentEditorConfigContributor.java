@@ -68,11 +68,12 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("a[*](*); ");
 		sb.append(getAllowedContentText());
-		sb.append(" div[*](*); iframe[*](*); img[*] {height, width}; ");
+		sb.append(" div[*](*); iframe[*](*); ");
+		sb.append(getAllowedContentImage());
 		sb.append(getAllowedContentLists());
 		sb.append(" p {text-align}; ");
 		sb.append(getAllowedContentTable());
@@ -95,6 +96,11 @@ public class BlogsContentEditorConfigContributor
 	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
+	}
+
+	protected String getAllowedContentImage() {
+		return "img[*] {display, float, height, margin-left, margin-right, " +
+			"width}; ";
 	}
 
 	protected String getAllowedContentLists() {
