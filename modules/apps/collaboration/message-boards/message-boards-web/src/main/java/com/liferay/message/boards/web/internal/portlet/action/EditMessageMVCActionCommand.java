@@ -486,8 +486,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				// Update message
 
 				message = _mbMessageService.updateMessage(
-					messageId, subject, body, inputStreamOVPs, null,
-					priority, allowPingbacks, serviceContext);
+					messageId, subject, body, inputStreamOVPs, priority,
+					allowPingbacks, serviceContext);
 
 				if (message.isRoot()) {
 					_mbThreadLocalService.updateQuestion(

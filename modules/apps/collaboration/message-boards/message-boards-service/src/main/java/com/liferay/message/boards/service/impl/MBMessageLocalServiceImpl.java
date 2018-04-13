@@ -1590,7 +1590,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subject = getDiscussionMessageSubject(subject, body);
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs = null;
-		List<String> existingFiles = null;
 		double priority = 0.0;
 		boolean allowPingbacks = false;
 
@@ -1598,8 +1597,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
 		return mbMessageLocalService.updateMessage(
-			userId, messageId, subject, body, inputStreamOVPs, existingFiles,
-			priority, allowPingbacks, serviceContext);
+			userId, messageId, subject, body, inputStreamOVPs, priority,
+			allowPingbacks, serviceContext);
 	}
 
 	@Override
@@ -1611,7 +1610,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		return mbMessageLocalService.updateMessage(
-			userId, messageId, message.getSubject(), body, null, null,
+			userId, messageId, message.getSubject(), body, null,
 			message.getPriority(), message.isAllowPingbacks(), serviceContext);
 	}
 
