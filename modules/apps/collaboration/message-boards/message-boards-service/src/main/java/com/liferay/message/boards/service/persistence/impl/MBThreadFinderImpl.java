@@ -355,7 +355,7 @@ public class MBThreadFinderImpl
 			sql = updateSQL(sql, queryDefinition);
 
 			if (!includeAnonymous) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (MBMessage.anonymous = [$FALSE$])");
 			}
 
@@ -820,7 +820,7 @@ public class MBThreadFinderImpl
 			sql = updateSQL(sql, queryDefinition);
 
 			if (!includeAnonymous) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (MBMessage.anonymous = [$FALSE$])");
 			}
 
