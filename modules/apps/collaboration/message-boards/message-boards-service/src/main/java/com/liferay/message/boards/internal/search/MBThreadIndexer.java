@@ -24,12 +24,13 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -207,48 +209,65 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 	protected void reindexDiscussions(final long companyId)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			groupLocalService.getActionableDynamicQuery();
+		long lastGroupId = 0;
 
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Group>() {
+		while (true) {
+			DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+				companyId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+				lastGroupId, WorkflowConstants.STATUS_APPROVED);
 
-				@Override
-				public void performAction(Group group) throws PortalException {
-					reindexThreads(
-						companyId, group.getGroupId(),
-						MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-				}
+			List<Long> groupIds = mbThreadLocalService.dynamicQuery(
+				dynamicQuery, 0, DEFAULT_INTERVAL);
 
-			});
+			if (groupIds.isEmpty()) {
+				break;
+			}
 
-		actionableDynamicQuery.performActions();
+			for (long groupId : groupIds) {
+				reindexThreads(
+					companyId, groupId,
+					MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+
+				lastGroupId = groupId;
+			}
+		}
 	}
 
 	protected void reindexRoot(final long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			groupLocalService.getActionableDynamicQuery();
+		long lastGroupId = 0;
 
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Group>() {
+		while (true) {
+			DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+				companyId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				lastGroupId, WorkflowConstants.STATUS_APPROVED);
 
-				@Override
-				public void performAction(Group group) throws PortalException {
-					reindexThreads(
-						companyId, group.getGroupId(),
-						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-				}
+			List<Long> groupIds = mbThreadLocalService.dynamicQuery(
+				dynamicQuery, 0, DEFAULT_INTERVAL);
 
-			});
+			if (groupIds.isEmpty()) {
+				break;
+			}
 
-		actionableDynamicQuery.performActions();
+			for (long groupId : groupIds) {
+				reindexThreads(
+					companyId, groupId,
+					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+				lastGroupId = groupId;
+			}
+		}
 	}
 
 	protected void reindexThreads(
 			long companyId, long groupId, final long categoryId)
 		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				String.format(
+					"reindexThreads(%d,%d,%d)", companyId, groupId,
+					categoryId));
+		}
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			mbThreadLocalService.getIndexableActionableDynamicQuery();
@@ -298,6 +317,40 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 		indexableActionableDynamicQuery.performActions();
 	}
+
+	private DynamicQuery _getDistinctGroupIdDynamicQuery(
+			long companyId, long categoryId, long lastGroupId, int status)
+		throws PortalException {
+
+		DynamicQuery dynamicQuery = mbThreadLocalService.dynamicQuery();
+
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.distinct(
+				ProjectionFactoryUtil.property("groupId")));
+
+		Property companyIdProperty = PropertyFactoryUtil.forName(
+			"companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		Property categoryIdProperty = PropertyFactoryUtil.forName(
+			"categoryId");
+
+		dynamicQuery.add(categoryIdProperty.eq(categoryId));
+
+		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(groupIdProperty.gt(lastGroupId));
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("groupId"));
+
+		Property statusProperty = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(statusProperty.eq(status));
+
+		return dynamicQuery;
+	}
+
 
 	@Reference
 	protected GroupLocalService groupLocalService;
