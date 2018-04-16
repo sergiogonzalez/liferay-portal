@@ -14,6 +14,15 @@
 
 package com.liferay.message.boards.internal.search;
 
+import java.util.List;
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
@@ -60,15 +69,10 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.List;
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -89,9 +93,13 @@ public class MBMessageIndexer
 	public MBMessageIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.ASSET_TAG_NAMES, Field.CLASS_NAME_ID, Field.CLASS_PK,
-			Field.COMPANY_ID, Field.CONTENT, Field.ENTRY_CLASS_NAME,
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
-			Field.SCOPE_GROUP_ID, Field.TITLE, Field.UID);
+			Field.SCOPE_GROUP_ID, Field.UID);
+		
+		setDefaultSelectedLocalizedFieldNames(
+				Field.CONTENT, Field.TITLE);
+		
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -245,6 +253,17 @@ public class MBMessageIndexer
 	}
 
 	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
+		throws Exception {
+
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.CONTENT, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+
+	}
+
+	@Override
 	public void updateFullQuery(SearchContext searchContext) {
 		if (searchContext.isIncludeDiscussions()) {
 			searchContext.addFullQueryEntryClassName(MBMessage.class.getName());
@@ -263,10 +282,24 @@ public class MBMessageIndexer
 		Document document = getBaseModelDocument(CLASS_NAME, mbMessage);
 
 		document.addKeyword(Field.CATEGORY_ID, mbMessage.getCategoryId());
-		document.addText(Field.CONTENT, processContent(mbMessage));
+		
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(mbMessage.getGroupId())) {
+			
+			String languageId = LocaleUtil.toLanguageId(locale);
+			
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					Field.CONTENT, languageId), processContent(mbMessage));			
+
+			document.addText(
+					LocalizationUtil.getLocalizedName(
+						Field.TITLE, languageId), mbMessage.getSubject());	
+			
+		}
+		
 		document.addKeyword(
 			Field.ROOT_ENTRY_CLASS_PK, mbMessage.getRootMessageId());
-		document.addText(Field.TITLE, mbMessage.getSubject());
 
 		if (mbMessage.isAnonymous()) {
 			document.remove(Field.USER_NAME);
