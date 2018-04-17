@@ -63,6 +63,7 @@ public class DLBreadcrumbUtil {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
@@ -89,6 +90,7 @@ public class DLBreadcrumbUtil {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileShortcut.getToFileEntryId()));
 
@@ -109,6 +111,7 @@ public class DLBreadcrumbUtil {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		Map<String, Object> data = new HashMap<>();
 
@@ -226,6 +229,8 @@ public class DLBreadcrumbUtil {
 			request, "ignoreRootFolder");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 
 		if (mvcRenderCommandName.equals(
 				"/document_library/select_file_entry") ||
