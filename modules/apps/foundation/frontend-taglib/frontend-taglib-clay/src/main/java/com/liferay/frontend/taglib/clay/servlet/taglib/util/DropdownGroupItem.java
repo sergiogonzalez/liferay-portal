@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -31,8 +33,8 @@ public class DropdownGroupItem extends DropdownItem {
 		put("type", "group");
 	}
 
-	public void setDropdownItemList(DropdownItemList dropdownItemList) {
-		put("items", dropdownItemList);
+	public void setDropdownItems(List<DropdownItem> dropdownItems) {
+		put("items", dropdownItems);
 	}
 
 }

@@ -163,16 +163,11 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutLocalPublishing() throws Exception {
-		try (CaptureAppender captureAppender1 =
+		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.exportimport.internal.background.task." +
-						"LayoutStagingBackgroundTaskExecutor",
-					Level.WARN)) {
+					Level.ERROR)) {
 
 			long targetGroupId = RandomTestUtil.nextLong();
 
@@ -181,7 +176,7 @@ public class ExportImportLifecycleEventTest {
 				false, new long[0], _parameterMap);
 
 			List<LoggingEvent> loggingEvents =
-				captureAppender1.getLoggingEvents();
+				captureAppender.getLoggingEvents();
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
@@ -194,15 +189,6 @@ public class ExportImportLifecycleEventTest {
 			Throwable throwable = throwableInformation.getThrowable();
 
 			Assert.assertSame(NoSuchGroupException.class, throwable.getClass());
-
-			loggingEvents = captureAppender2.getLoggingEvents();
-
-			loggingEvent = loggingEvents.get(0);
-
-			Assert.assertEquals(
-				"Unable to publish layout: Target group does not exists with " +
-					"the primary key " + targetGroupId,
-				loggingEvent.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -282,23 +268,18 @@ public class ExportImportLifecycleEventTest {
 	public void testFailedPortletLocalPublishing() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		try (CaptureAppender captureAppender1 =
+		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.exportimport.internal.background.task." +
-						"PortletStagingBackgroundTaskExecutor",
-					Level.WARN)) {
+					Level.ERROR)) {
 
 			StagingUtil.publishPortlet(
 				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
 				0, 0, StringPool.BLANK, _parameterMap);
 
 			List<LoggingEvent> loggingEvents =
-				captureAppender1.getLoggingEvents();
+				captureAppender.getLoggingEvents();
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
@@ -312,15 +293,6 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.assertSame(
 				NoSuchLayoutException.class, throwable.getClass());
-
-			loggingEvents = captureAppender2.getLoggingEvents();
-
-			loggingEvent = loggingEvents.get(0);
-
-			Assert.assertEquals(
-				"Unable to publish portlet: No Layout exists with the " +
-					"primary key 0",
-				loggingEvent.getMessage());
 		}
 
 		Assert.assertTrue(

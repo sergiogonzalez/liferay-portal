@@ -14,12 +14,14 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,7 +29,7 @@ import java.util.Map;
  */
 public class CardsDisplayContext {
 
-	public DropdownItemList getActionDropdownItemList() {
+	public List<DropdownItem> getActionDropdownItems() {
 		if (_actionDropdownItems != null) {
 			return _actionDropdownItems;
 		}
@@ -52,7 +54,7 @@ public class CardsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public LabelItemList getLabelItemList() {
+	public List<LabelItem> getLabelItems() {
 		return new LabelItemList() {
 			{
 				LabelItem labelItem1 = new LabelItem();
@@ -99,7 +101,7 @@ public class CardsDisplayContext {
 		return _labelStylesMap;
 	}
 
-	private DropdownItemList _actionDropdownItems;
+	private List<DropdownItem> _actionDropdownItems;
 	private Map<String, String> _labelStylesMap;
 
 }
