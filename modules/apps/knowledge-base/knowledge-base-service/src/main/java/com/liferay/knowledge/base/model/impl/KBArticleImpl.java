@@ -28,8 +28,6 @@ import com.liferay.knowledge.base.service.util.KBArticleAttachmentsUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -137,12 +135,11 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 
 			return kbArticle.getTitle();
 		}
-		else {
-			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-				getParentResourcePrimKey());
 
-			return kbFolder.getName();
-		}
+		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
+			getParentResourcePrimKey());
+
+		return kbFolder.getName();
 	}
 
 	@Override
@@ -169,8 +166,6 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(KBArticleImpl.class);
 
 	private long _attachmentsFolderId;
 	private long _classNameId;
