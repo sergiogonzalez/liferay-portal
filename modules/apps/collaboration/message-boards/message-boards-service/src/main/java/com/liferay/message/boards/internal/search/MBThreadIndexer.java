@@ -210,14 +210,17 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 	protected void reindexDiscussions(final long companyId)
 		throws PortalException {
 
-		DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+		DynamicQuery countDynamicQuery = _getDistinctGroupIdDynamicQuery(
 			companyId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 
 		long distinctGroupIdsCount = mbThreadLocalService.dynamicQueryCount(
-			dynamicQuery);
+			countDynamicQuery);
 
 		final IntervalActionProcessor<Void> intervalActionProcessor =
 			new IntervalActionProcessor<>((int)distinctGroupIdsCount);
+
+		DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+			companyId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
 			(start, end) -> {
@@ -237,14 +240,17 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 	}
 
 	protected void reindexRoot(final long companyId) throws PortalException {
-		DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+		DynamicQuery countDynamicQuery = _getDistinctGroupIdDynamicQuery(
 			companyId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		long distinctGroupIdsCount = mbThreadLocalService.dynamicQueryCount(
-			dynamicQuery);
+			countDynamicQuery);
 
 		final IntervalActionProcessor<Void> intervalActionProcessor =
 			new IntervalActionProcessor<>((int)distinctGroupIdsCount);
+
+		DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+			companyId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
 			(start, end) -> {
