@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -268,9 +269,10 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				String.format(
-					"reindexThreads(%d,%d,%d)", companyId, groupId,
-					categoryId));
+				StringBundler.concat(
+					"Reindexing message boards threads for message board ",
+					"category ID ", String.valueOf(categoryId),
+					" and group ID ", String.valueOf(groupId)));
 		}
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =

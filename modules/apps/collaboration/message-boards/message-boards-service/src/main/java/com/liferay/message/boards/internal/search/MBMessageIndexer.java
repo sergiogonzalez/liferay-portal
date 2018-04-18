@@ -461,9 +461,10 @@ public class MBMessageIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				String.format(
-					"reindexMessages(%d,%d,%d)", companyId, groupId,
-					categoryId));
+				StringBundler.concat(
+					"Reindexing message boards messages for message board ",
+					"category ID ", String.valueOf(categoryId),
+					" and group ID ", String.valueOf(groupId)));
 		}
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
