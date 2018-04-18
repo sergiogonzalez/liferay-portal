@@ -296,17 +296,15 @@ public class SocialActivityCounterLocalServiceImpl
 				activityDefinition.getActivityCounterDefinition(
 					activityCounter.getName());
 
-			if ((activity.getType() == SocialActivityConstants.TYPE_REVOKE_VOTE)
-				&& (activityCounter.getName().equals("contribution") ||
-					(activityCounter.getName().equals("popularity")))) {
+			if (activity.getType() == 
+					SocialActivityConstants.TYPE_REVOKE_VOTE) {
 
 				decrementActivityCounter(
 					activityCounter, activityCounterDefinition);
-
-				continue;
 			}
+			else if (checkActivityLimit(
+				user, activity, activityCounterDefinition)) {
 
-			if (checkActivityLimit(user, activity, activityCounterDefinition)) {
 				incrementActivityCounter(
 					activityCounter, activityCounterDefinition);
 			}
