@@ -15,6 +15,7 @@
 package com.liferay.wiki.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -110,7 +111,8 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		if (attachmentsFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			fileEntries = PortletFileRepositoryUtil.getPortletFileEntries(
 				getGroupId(), attachmentsFolderId,
-				WorkflowConstants.STATUS_APPROVED, start, end, null);
+				WorkflowConstants.STATUS_APPROVED, start, end,
+				new RepositoryModelTitleComparator<>());
 		}
 
 		return fileEntries;
@@ -253,7 +255,8 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		if (attachmentsFolderId != 0) {
 			fileEntries = PortletFileRepositoryUtil.getPortletFileEntries(
 				getGroupId(), attachmentsFolderId,
-				WorkflowConstants.STATUS_IN_TRASH, start, end, null);
+				WorkflowConstants.STATUS_IN_TRASH, start, end,
+				new RepositoryModelTitleComparator<>());
 		}
 
 		return fileEntries;

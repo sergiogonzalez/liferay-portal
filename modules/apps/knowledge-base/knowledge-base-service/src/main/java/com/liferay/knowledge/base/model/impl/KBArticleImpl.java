@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -24,6 +25,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.service.util.KBArticleAttachmentsUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -72,7 +74,8 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 	public List<FileEntry> getAttachmentsFileEntries() throws PortalException {
 		return PortletFileRepositoryUtil.getPortletFileEntries(
 			getGroupId(), getAttachmentsFolderId(),
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new RepositoryModelTitleComparator<>());
 	}
 
 	@Override
