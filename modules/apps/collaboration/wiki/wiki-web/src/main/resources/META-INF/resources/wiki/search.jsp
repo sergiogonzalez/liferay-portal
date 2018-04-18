@@ -107,8 +107,6 @@ portletURL.setParameter("keywords", keywords);
 			}
 
 			WikiNode curNode = wikiPage.getNode();
-
-			Summary summary = searchResult.getSummary();
 			%>
 
 			<portlet:renderURL var="rowURL">
@@ -121,11 +119,11 @@ portletURL.setParameter("keywords", keywords);
 				commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 				containerName="<%= curNode.getName() %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= (summary != null) ? HtmlUtil.stripHtml(summary.getContent()) : HtmlUtil.stripHtml(wikiPage.getSummary()) %>"
+				description="<%= HtmlUtil.stripHtml(wikiPage.getContent()) %>"
 				fileEntryRelatedSearchResults="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
+				title="<%= wikiPage.getTitle() %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>
