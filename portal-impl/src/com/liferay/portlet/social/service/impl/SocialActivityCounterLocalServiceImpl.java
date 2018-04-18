@@ -1015,12 +1015,24 @@ public class SocialActivityCounterLocalServiceImpl
 		SocialActivityCounter activityCounter,
 		SocialActivityCounterDefinition activityCounterDefinition) {
 
-		activityCounter.setCurrentValue(
+		int currentValue =
 			activityCounter.getCurrentValue() -
-			activityCounterDefinition.getIncrement());
-		activityCounter.setTotalValue(
+				activityCounterDefinition.getIncrement();
+
+		if (currentValue < 0) {
+			currentValue = 0;
+		}
+
+		int totalValue =
 			activityCounter.getTotalValue() -
-			activityCounterDefinition.getIncrement());
+				activityCounterDefinition.getIncrement();
+
+		if (totalValue < 0) {
+			totalValue = 0;
+		}
+
+		activityCounter.setCurrentValue(currentValue);
+		activityCounter.setTotalValue(totalValue);
 
 		socialActivityCounterPersistence.update(activityCounter);
 
