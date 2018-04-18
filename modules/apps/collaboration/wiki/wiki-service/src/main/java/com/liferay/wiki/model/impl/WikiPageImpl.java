@@ -105,7 +105,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		throws PortalException {
 
 		return getAttachmentsFileEntries(
-			start, end, new RepositoryModelTitleComparator());
+			start, end, new RepositoryModelTitleComparator(true));
 	}
 
 	@Override
@@ -243,7 +243,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return PortletFileRepositoryUtil.getPortletFileEntries(
 			getGroupId(), attachmentsFolderId,
 			WorkflowConstants.STATUS_IN_TRASH, start, end,
-			new RepositoryModelTitleComparator<>());
+			new RepositoryModelTitleComparator<>(true));
 	}
 
 	@Override

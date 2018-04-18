@@ -73,7 +73,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 		return PortletFileRepositoryUtil.getPortletFileEntries(
 			getGroupId(), getAttachmentsFolderId(),
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new RepositoryModelTitleComparator<>());
+			QueryUtil.ALL_POS, new RepositoryModelTitleComparator<>(true));
 	}
 
 	@Override

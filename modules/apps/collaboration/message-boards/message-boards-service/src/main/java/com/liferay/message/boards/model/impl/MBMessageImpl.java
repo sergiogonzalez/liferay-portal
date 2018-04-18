@@ -97,7 +97,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 			fileEntries = PortletFileRepositoryUtil.getPortletFileEntries(
 				getGroupId(), attachmentsFolderId,
 				WorkflowConstants.STATUS_APPROVED, start, end,
-				new RepositoryModelTitleComparator<>());
+				new RepositoryModelTitleComparator<>(true));
 		}
 
 		return fileEntries;
@@ -197,7 +197,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 			fileEntries = PortletFileRepositoryUtil.getPortletFileEntries(
 				getGroupId(), attachmentsFolderId,
 				WorkflowConstants.STATUS_IN_TRASH, start, end,
-				new RepositoryModelTitleComparator<>());
+				new RepositoryModelTitleComparator<>(true));
 		}
 
 		return fileEntries;
