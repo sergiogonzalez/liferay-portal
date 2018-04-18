@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
@@ -429,33 +429,30 @@ public class MBMessageIndexer
 	protected void reindexDiscussions(final long companyId)
 		throws PortalException {
 
-		long lastGroupId = 0;
+		DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+			companyId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 
-		Integer[] statuses = {
-			WorkflowConstants.STATUS_APPROVED,
-			WorkflowConstants.STATUS_IN_TRASH
-		};
+		long distinctGroupIdsCount = mbMessageLocalService.dynamicQueryCount(
+			dynamicQuery);
 
-		while (true) {
-			DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
-				companyId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
-				lastGroupId, statuses);
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>((int)distinctGroupIdsCount);
 
-			List<Long> groupIds = mbMessageLocalService.dynamicQuery(
-				dynamicQuery, 0, DEFAULT_INTERVAL);
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			(start, end) -> {
+				List<Long> groupIds = mbMessageLocalService.dynamicQuery(
+					dynamicQuery, start, end);
 
-			if (groupIds.isEmpty()) {
-				break;
-			}
+				for (long groupId : groupIds) {
+					reindexMessages(
+						companyId, groupId,
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+				}
 
-			for (long groupId : groupIds) {
-				reindexMessages(
-					companyId, groupId,
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+				return null;
+			});
 
-				lastGroupId = groupId;
-			}
-		}
+		intervalActionProcessor.performIntervalActions();
 	}
 
 	protected void reindexMessages(
@@ -527,69 +524,30 @@ public class MBMessageIndexer
 	}
 
 	protected void reindexRoot(final long companyId) throws PortalException {
-		long lastGroupId = 0;
+		DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
+			companyId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		Integer[] statuses = {
-			WorkflowConstants.STATUS_APPROVED,
-			WorkflowConstants.STATUS_IN_TRASH
-		};
+		long distinctGroupIdsCount = mbMessageLocalService.dynamicQueryCount(
+			dynamicQuery);
 
-		while (true) {
-			DynamicQuery dynamicQuery = _getDistinctGroupIdDynamicQuery(
-				companyId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				lastGroupId, statuses);
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>((int)distinctGroupIdsCount);
 
-			List<Long> groupIds = mbMessageLocalService.dynamicQuery(
-				dynamicQuery, 0, DEFAULT_INTERVAL);
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			(start, end) -> {
+				List<Long> groupIds = mbMessageLocalService.dynamicQuery(
+					dynamicQuery, start, end);
 
-			if (groupIds.isEmpty()) {
-				break;
-			}
+				for (long groupId : groupIds) {
+					reindexMessages(
+						companyId, groupId,
+						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+				}
 
-			for (long groupId : groupIds) {
-				reindexMessages(
-					companyId, groupId,
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+				return null;
+			});
 
-				lastGroupId = groupId;
-			}
-		}
-	}
-
-	private DynamicQuery _getDistinctGroupIdDynamicQuery(
-			long companyId, long categoryId, long lastGroupId,
-			Integer[] statuses)
-		throws PortalException {
-
-		DynamicQuery dynamicQuery = mbMessageLocalService.dynamicQuery();
-
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.distinct(
-				ProjectionFactoryUtil.property("groupId")));
-
-		Property companyIdProperty = PropertyFactoryUtil.forName(
-			"companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		Property categoryIdProperty = PropertyFactoryUtil.forName(
-			"categoryId");
-
-		dynamicQuery.add(categoryIdProperty.eq(categoryId));
-
-		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
-
-		dynamicQuery.add(groupIdProperty.gt(lastGroupId));
-
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("groupId"));
-
-		if (statuses != null) {
-			Property statusProperty = PropertyFactoryUtil.forName("status");
-
-			dynamicQuery.add(statusProperty.in(statuses));
-		}
-
-		return dynamicQuery;
+		intervalActionProcessor.performIntervalActions();
 	}
 
 	@Reference
@@ -609,6 +567,35 @@ public class MBMessageIndexer
 
 	@Reference
 	protected MBMessageLocalService mbMessageLocalService;
+
+	private DynamicQuery _getDistinctGroupIdDynamicQuery(
+			long companyId, long categoryId)
+		throws PortalException {
+
+		DynamicQuery dynamicQuery = mbMessageLocalService.dynamicQuery();
+
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.distinct(
+				ProjectionFactoryUtil.property("groupId")));
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		Property categoryIdProperty = PropertyFactoryUtil.forName("categoryId");
+
+		dynamicQuery.add(categoryIdProperty.eq(categoryId));
+
+		Integer[] statuses = {
+			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH
+		};
+
+		Property statusProperty = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(statusProperty.in(statuses));
+
+		return dynamicQuery;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageIndexer.class);
