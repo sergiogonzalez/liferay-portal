@@ -23,11 +23,11 @@
 
 	LinkedHashMap<Long, long[]> scopes = announcementsDisplayContext.getAnnouncementScopes();
 
-	int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag);
+	int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(themeDisplay.getCompanyId(), user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag);
 
 	searchContainer.setTotal(entriesCount);
 
-	List<AnnouncementsEntry> entries = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag, searchContainer.getStart(), searchContainer.getEnd());
+	List<AnnouncementsEntry> entries = AnnouncementsEntryLocalServiceUtil.getEntries(themeDisplay.getCompanyId(), user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag, searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(entries);
 
