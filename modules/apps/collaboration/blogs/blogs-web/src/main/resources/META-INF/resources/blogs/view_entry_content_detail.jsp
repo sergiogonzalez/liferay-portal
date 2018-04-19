@@ -166,7 +166,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 										/>
 									</span>
 
-									<%= String.valueOf(messagesCount) %>
+									<liferay-ui:message arguments="<%= messagesCount %>" key="comment-x" />
 								</a>
 							</liferay-util:whitespace-remover>
 						</div>
