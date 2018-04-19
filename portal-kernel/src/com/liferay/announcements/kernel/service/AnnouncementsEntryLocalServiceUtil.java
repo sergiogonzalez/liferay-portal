@@ -303,6 +303,11 @@ public class AnnouncementsEntryLocalServiceUtil {
 				   .getAnnouncementsEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long,
+	LinkedHashMap, boolean, int, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 		long userId, java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
 		boolean alert, int flagValue, int start, int end) {
@@ -310,6 +315,12 @@ public class AnnouncementsEntryLocalServiceUtil {
 				   .getEntries(userId, scopes, alert, flagValue, start, end);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long,
+	LinkedHashMap, int, int, int, int, int, int, int, int, int,
+	int, boolean, int, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 		long userId, java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -325,11 +336,70 @@ public class AnnouncementsEntryLocalServiceUtil {
 			alert, flagValue, start, end);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	boolean, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 		long classNameId, long classPK, boolean alert, int start, int end) {
 		return getService().getEntries(classNameId, classPK, alert, start, end);
 	}
 
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+		long companyId, long userId,
+		java.util.LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
+		int flagValue, int start, int end) {
+		return getService()
+				   .getEntries(companyId, userId, scopes, alert, flagValue,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+		long companyId, long userId,
+		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
+		return getService()
+				   .getEntries(companyId, userId, scopes, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue, start, end);
+	}
+
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end) {
+		return getService()
+				   .getEntries(companyId, classNameId, classPK, alert, start,
+			end);
+	}
+
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+		long companyId, long userId, long classNameId, long[] classPKs,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
+		return getService()
+				   .getEntries(companyId, userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue, start, end);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	long[], int, int, int, int, int, int, int, int, int, int,
+	boolean, int, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 		long userId, long classNameId, long[] classPKs, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -345,12 +415,23 @@ public class AnnouncementsEntryLocalServiceUtil {
 			alert, flagValue, start, end);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	LinkedHashMap, boolean, int)}
+	*/
+	@Deprecated
 	public static int getEntriesCount(long userId,
 		java.util.LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
 		int flagValue) {
 		return getService().getEntriesCount(userId, scopes, alert, flagValue);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	LinkedHashMap, int, int, int, int, int, int, int, int, int,
+	int, boolean, int)}
+	*/
+	@Deprecated
 	public static int getEntriesCount(long userId,
 		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -365,11 +446,69 @@ public class AnnouncementsEntryLocalServiceUtil {
 			alert, flagValue);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, boolean)}
+	*/
+	@Deprecated
 	public static int getEntriesCount(long classNameId, long classPK,
 		boolean alert) {
 		return getService().getEntriesCount(classNameId, classPK, alert);
 	}
 
+	public static int getEntriesCount(long companyId, long userId,
+		java.util.LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
+		int flagValue) {
+		return getService()
+				   .getEntriesCount(companyId, userId, scopes, alert, flagValue);
+	}
+
+	public static int getEntriesCount(long companyId, long userId,
+		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue) {
+		return getService()
+				   .getEntriesCount(companyId, userId, scopes,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue);
+	}
+
+	public static int getEntriesCount(long companyId, long classNameId,
+		long classPK, boolean alert) {
+		return getService()
+				   .getEntriesCount(companyId, classNameId, classPK, alert);
+	}
+
+	public static int getEntriesCount(long companyId, long userId,
+		long classNameId, long[] classPKs, boolean alert, int flagValue) {
+		return getService()
+				   .getEntriesCount(companyId, userId, classNameId, classPKs,
+			alert, flagValue);
+	}
+
+	public static int getEntriesCount(long companyId, long userId,
+		long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue) {
+		return getService()
+				   .getEntriesCount(companyId, userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			alert, flagValue);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, long[], boolean, int)}
+	*/
+	@Deprecated
 	public static int getEntriesCount(long userId, long classNameId,
 		long[] classPKs, boolean alert, int flagValue) {
 		return getService()
@@ -377,6 +516,12 @@ public class AnnouncementsEntryLocalServiceUtil {
 			flagValue);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, long[], int, int, int, int, int, int, int, int, int,
+	int, boolean, int)}
+	*/
+	@Deprecated
 	public static int getEntriesCount(long userId, long classNameId,
 		long[] classPKs, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,

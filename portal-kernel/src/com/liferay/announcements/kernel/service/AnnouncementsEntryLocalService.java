@@ -262,11 +262,22 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long,
+	LinkedHashMap, boolean, int, int, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long userId,
 		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
 		int flagValue, int start, int end);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long,
+	LinkedHashMap, int, int, int, int, int, int, int, int, int,
+	int, boolean, int, int, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long userId,
 		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
@@ -276,10 +287,48 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	boolean, int, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long classNameId, long classPK,
 		boolean alert, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnnouncementsEntry> getEntries(long companyId, long userId,
+		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
+		int flagValue, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnnouncementsEntry> getEntries(long companyId, long userId,
+		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnnouncementsEntry> getEntries(long companyId,
+		long classNameId, long classPK, boolean alert, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnnouncementsEntry> getEntries(long companyId, long userId,
+		long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end);
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	long[], int, int, int, int, int, int, int, int, int, int,
+	boolean, int, int, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long userId, long classNameId,
 		long[] classPKs, int displayDateMonth, int displayDateDay,
@@ -288,11 +337,22 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int expirationDateHour, int expirationDateMinute, boolean alert,
 		int flagValue, int start, int end);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	LinkedHashMap, boolean, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long userId,
 		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
 		int flagValue);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	LinkedHashMap, int, int, int, int, int, int, int, int, int,
+	int, boolean, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long userId,
 		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
@@ -301,13 +361,58 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, boolean)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long classNameId, long classPK, boolean alert);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long companyId, long userId,
+		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
+		int flagValue);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long companyId, long userId,
+		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long companyId, long classNameId, long classPK,
+		boolean alert);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long companyId, long userId, long classNameId,
+		long[] classPKs, boolean alert, int flagValue);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long companyId, long userId, long classNameId,
+		long[] classPKs, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean alert,
+		int flagValue);
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, long[], boolean, int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long userId, long classNameId, long[] classPKs,
 		boolean alert, int flagValue);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, long[], int, int, int, int, int, int, int, int, int,
+	int, boolean, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long userId, long classNameId, long[] classPKs,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
